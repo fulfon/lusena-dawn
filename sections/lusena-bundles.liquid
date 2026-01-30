@@ -1,0 +1,150 @@
+<section class="py-24 bg-surface-2">
+  <div class="container grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <div class="order-2 md:order-1 relative aspect-[4/3] bg-brand-bg p-8 flex items-center justify-center">
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 1400
+          | image_tag:
+            class: 'w-[80%] h-auto shadow-xl rotate-3',
+            widths: '600, 800, 1000, 1400',
+            sizes: '(min-width: 768px) 45vw, 90vw',
+            loading: 'lazy'
+        }}
+      {%- else -%}
+        <div class="w-[80%] h-auto shadow-xl rotate-3 bg-white/50 aspect-[4/3] flex items-center justify-center text-secondary text-sm">
+          {{ section.settings.image_placeholder | escape }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="order-1 md:order-2 space-y-6">
+      {%- if section.settings.kicker != blank -%}
+        <span class="text-accent-cta text-sm tracking-widest uppercase font-semibold">
+          {{ section.settings.kicker | escape }}
+        </span>
+      {%- endif -%}
+
+      <h2 class="text-3xl md:text-4xl font-serif text-primary">
+        {{ section.settings.heading | newline_to_br }}
+      </h2>
+
+      {%- if section.settings.body != blank -%}
+        <p class="text-lg text-secondary leading-relaxed">
+          {{ section.settings.body | escape }}
+        </p>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="space-y-3 py-4">
+          {%- for block in section.blocks -%}
+            <li class="flex items-center gap-3 text-secondary" {{ block.shopify_attributes }}>
+              <span class="w-1.5 h-1.5 rounded-full bg-accent-gold"></span>
+              {{ block.settings.text | escape }}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+        <a
+          href="{{ section.settings.button_link }}"
+          class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-14 px-10 text-base bg-accent-cta text-white hover:bg-[#0E5E5A]/90 hover:brightness-110"
+        >
+          {{ section.settings.button_label | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LUSENA Gift",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Gift Ready"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Perfect Gift,\nWrapped in Luxury."
+    },
+    {
+      "type": "text",
+      "id": "body",
+      "label": "Body",
+      "default": "Every LUSENA order arrives in our signature premium box. Perfect for birthdays, holidays, or a treat for yourself."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_placeholder",
+      "label": "Image placeholder text",
+      "default": "Gift box image"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop Gift Sets"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Save up to 20% on sets"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA Gift",
+      "settings": {
+        "button_link": "shopify://collections/all"
+      },
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "text": "Save up to 20% on sets"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "text": "Signature gift box included"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "text": "Free shipping on bundles"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

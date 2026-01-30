@@ -1,0 +1,180 @@
+<section class="py-24 bg-brand-bg">
+  <div class="container">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24">
+      <div class="space-y-8">
+        <span class="text-secondary text-xs md:text-sm tracking-widest uppercase font-semibold">
+          {{ section.settings.problem_label | escape }}
+        </span>
+        <h3 class="text-2xl md:text-3xl font-serif text-primary leading-tight opacity-80">
+          {{ section.settings.problem_heading | newline_to_br }}
+        </h3>
+        <div class="space-y-8 pt-4">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'problem_item' -%}
+              <div class="flex gap-4" {{ block.shopify_attributes }}>
+                {% render 'lusena-icon', name: 'x', class: 'w-5 h-5 text-red-900/40 mt-1 shrink-0', stroke_width: 1.5 %}
+                <div>
+                  <h4 class="font-medium text-lg text-primary mb-1">{{ block.settings.title | escape }}</h4>
+                  <p class="text-secondary leading-relaxed font-light">{{ block.settings.text | escape }}</p>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="space-y-8">
+        <span class="text-accent-gold text-xs md:text-sm tracking-widest uppercase font-semibold">
+          {{ section.settings.solution_label | escape }}
+        </span>
+        <h3 class="text-2xl md:text-3xl font-serif text-primary leading-tight">
+          {{ section.settings.solution_heading | newline_to_br }}
+        </h3>
+        <div class="space-y-8 pt-4">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'solution_item' -%}
+              <div class="flex gap-4" {{ block.shopify_attributes }}>
+                {% render 'lusena-icon', name: 'check', class: 'w-5 h-5 text-green-900/40 mt-1 shrink-0', stroke_width: 1.5 %}
+                <div>
+                  <h4 class="font-medium text-lg text-primary mb-1">{{ block.settings.title | escape }}</h4>
+                  <p class="text-secondary leading-relaxed font-light">{{ block.settings.text | escape }}</p>
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+
+    {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+      <div class="mt-16 text-center">
+        <a
+          href="{{ section.settings.cta_link }}"
+          class="inline-flex items-center text-accent-cta font-medium border-b border-accent-cta/30 pb-1 hover:border-accent-cta transition-all"
+        >
+          {{ section.settings.cta_label | escape }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LUSENA Problem/Solution",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "problem_label",
+      "label": "Problem label",
+      "default": "The Problem"
+    },
+    {
+      "type": "textarea",
+      "id": "problem_heading",
+      "label": "Problem heading",
+      "default": "Cotton absorbs.\nFriction & Dryness."
+    },
+    {
+      "type": "text",
+      "id": "solution_label",
+      "label": "Solution label",
+      "default": "The Solution"
+    },
+    {
+      "type": "textarea",
+      "id": "solution_heading",
+      "label": "Solution heading",
+      "default": "Silk preserves.\nHydration & Smoothness."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "Read the science behind silk"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "problem_item",
+      "name": "Problem item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Friction creates wrinkles"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Cotton fibers act like velcro on a microscopic level, pulling at delicate facial skin and creating sleep creases."
+        }
+      ]
+    },
+    {
+      "type": "solution_item",
+      "name": "Solution item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Friction-free glide"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "LUSENA 22 momme mulberry silk allows skin and hair to glide smoothly, preventing breakage and morning creases."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA Problem/Solution",
+      "blocks": [
+        {
+          "type": "problem_item",
+          "settings": {
+            "title": "Friction creates wrinkles",
+            "text": "Cotton fibers act like velcro on a microscopic level, pulling at delicate facial skin and creating sleep creases."
+          }
+        },
+        {
+          "type": "problem_item",
+          "settings": {
+            "title": "Absorbs your skincare",
+            "text": "Cotton is absorbent by nature. It soaks up your expensive night creams and natural oils, drying out your skin and hair."
+          }
+        },
+        {
+          "type": "solution_item",
+          "settings": {
+            "title": "Friction-free glide",
+            "text": "LUSENA 22 momme mulberry silk allows skin and hair to glide smoothly, preventing breakage and morning creases."
+          }
+        },
+        {
+          "type": "solution_item",
+          "settings": {
+            "title": "Retains moisture",
+            "text": "Silk proteins are similar to human skin. It repels dust mites and keeps hydration locked in your skin where it belongs."
+          }
+        }
+      ],
+      "settings": {
+        "cta_link": "shopify://pages/nasza-jakosc"
+      }
+    }
+  ]
+}
+{% endschema %}

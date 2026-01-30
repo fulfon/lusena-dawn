@@ -1,0 +1,463 @@
+<div>
+  <section class="bg-brand-bg py-24 md:py-32">
+    <div class="container text-center max-w-4xl mx-auto space-y-6">
+      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
+        {{ section.settings.hero_kicker | escape }}
+      </span>
+      <h1 class="text-5xl md:text-7xl font-serif text-primary">
+        {{ section.settings.hero_heading | newline_to_br }}
+      </h1>
+      <p class="text-lg md:text-xl font-light text-secondary leading-relaxed max-w-2xl mx-auto">
+        {{ section.settings.hero_body | escape }}
+      </p>
+    </div>
+  </section>
+
+  <section class="py-24 bg-white">
+    <div class="container grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+      <div class="bg-neutral-100 aspect-square flex items-center justify-center rounded-sm overflow-hidden">
+        {%- if section.settings.momme_image != blank -%}
+          {{
+            section.settings.momme_image
+            | image_url: width: 1400
+            | image_tag:
+              class: 'w-full h-full object-cover',
+              loading: 'lazy',
+              widths: '600, 900, 1200, 1400',
+              sizes: '(min-width: 768px) 45vw, 90vw'
+          }}
+        {%- else -%}
+          <span class="text-gray-400 font-light italic text-center px-6">
+            {{ section.settings.momme_image_placeholder | escape }}
+          </span>
+        {%- endif -%}
+      </div>
+
+      <div class="space-y-6">
+        <h2 class="text-3xl md:text-4xl font-serif text-primary">
+          {{ section.settings.momme_heading | escape }}
+        </h2>
+        <div class="space-y-4 text-secondary text-lg font-light leading-relaxed">
+          {{ section.settings.momme_body }}
+          {%- if section.blocks.size > 0 -%}
+            <ul class="list-disc pl-5 space-y-2 mt-4 ml-4">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'momme_benefit' -%}
+                  <li {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-brand-bg">
+    <div class="container text-center">
+      <h2 class="text-3xl md:text-4xl font-serif text-primary mb-12">
+        {{ section.settings.fire_heading | escape }}
+      </h2>
+
+      <div class="max-w-4xl mx-auto bg-black/5 aspect-video flex items-center justify-center rounded-sm border border-secondary/10 overflow-hidden">
+        {%- if section.settings.fire_video != blank -%}
+          {{
+            section.settings.fire_video
+            | video_tag:
+              controls: true,
+              preload: 'metadata',
+              class: 'w-full h-full object-cover'
+          }}
+        {%- else -%}
+          <span class="text-gray-500 font-light text-center px-6">
+            {{ section.settings.fire_video_placeholder | escape }}
+          </span>
+        {%- endif -%}
+      </div>
+
+      <p class="mt-8 text-secondary font-light max-w-2xl mx-auto">
+        {{ section.settings.fire_body | escape }}
+      </p>
+    </div>
+  </section>
+
+  <section class="py-24 bg-white">
+    <div class="container grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+      <div class="order-1 md:order-2 space-y-6">
+        <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
+          {{ section.settings.origin_kicker | escape }}
+        </span>
+        <h2 class="text-3xl md:text-4xl font-serif text-primary">
+          {{ section.settings.origin_heading | escape }}
+        </h2>
+        <div class="space-y-4 text-secondary text-lg font-light leading-relaxed">
+          {{ section.settings.origin_body }}
+        </div>
+      </div>
+
+      <div class="order-2 md:order-1 bg-neutral-100 aspect-[4/5] flex items-center justify-center rounded-sm overflow-hidden">
+        {%- if section.settings.origin_image != blank -%}
+          {{
+            section.settings.origin_image
+            | image_url: width: 1400
+            | image_tag:
+              class: 'w-full h-full object-cover',
+              loading: 'lazy',
+              widths: '600, 900, 1200, 1400',
+              sizes: '(min-width: 768px) 45vw, 90vw'
+          }}
+        {%- else -%}
+          <span class="text-gray-400 font-light italic text-center px-6">
+            {{ section.settings.origin_image_placeholder | escape }}
+          </span>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-brand-bg text-center">
+    <div class="container max-w-4xl mx-auto space-y-12">
+      <h2 class="text-3xl md:text-4xl font-serif text-primary">
+        {{ section.settings.qc_heading | escape }}
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'qc_step' -%}
+            <div class="p-8 bg-white/50 backdrop-blur-sm rounded-sm border border-white/40{% if block.settings.highlight %} shadow-sm relative overflow-hidden{% endif %}" {{ block.shopify_attributes }}>
+              {%- if block.settings.highlight -%}
+                <div class="absolute top-0 right-0 bg-accent-gold text-white text-[10px] px-2 py-1 uppercase tracking-wider">
+                  {{ section.settings.qc_highlight_badge | escape }}
+                </div>
+              {%- endif -%}
+              <div class="text-4xl mb-4">{{ block.settings.icon }}</div>
+              <h3 class="font-serif text-xl mb-2">{{ block.settings.title | escape }}</h3>
+              <p class="text-secondary font-light text-sm">{{ block.settings.text | escape }}</p>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-white border-t border-brand-bg">
+    <div class="container">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-serif text-primary mb-6">
+            {{ section.settings.cert_heading | escape }}
+          </h2>
+          <div class="text-secondary font-light text-lg mb-8">
+            {{ section.settings.cert_body }}
+          </div>
+          {%- if section.settings.cert_button_label != blank and section.settings.cert_button_link != blank -%}
+            <a
+              href="{{ section.settings.cert_button_link }}"
+              class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-12 px-8 py-3 border border-primary bg-transparent text-primary hover:bg-surface-2 min-w-[200px]"
+            >
+              {{ section.settings.cert_button_label | escape }}
+            </a>
+          {%- endif -%}
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-neutral-50 aspect-square flex items-center justify-center border border-neutral-100">
+            {%- if section.settings.cert_logo_1 != blank -%}
+              {{ section.settings.cert_logo_1 | image_url: width: 400 | image_tag: loading: 'lazy' }}
+            {%- else -%}
+              <span class="text-xs text-gray-400">{{ section.settings.cert_logo_1_placeholder | escape }}</span>
+            {%- endif -%}
+          </div>
+          <div class="bg-neutral-50 aspect-square flex items-center justify-center border border-neutral-100">
+            {%- if section.settings.cert_logo_2 != blank -%}
+              {{ section.settings.cert_logo_2 | image_url: width: 400 | image_tag: loading: 'lazy' }}
+            {%- else -%}
+              <span class="text-xs text-gray-400">{{ section.settings.cert_logo_2_placeholder | escape }}</span>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "LUSENA Quality (draft)",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "text",
+      "id": "hero_kicker",
+      "label": "Hero kicker",
+      "default": "Nasza Jakość"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_heading",
+      "label": "Hero heading",
+      "default": "Nie wierz nam na słowo.\nSprawdź."
+    },
+    {
+      "type": "text",
+      "id": "hero_body",
+      "label": "Hero body",
+      "default": "Jedwab LUSENA to 22 momme czystej perfekcji. Stworzony w Suzhou, kontrolowany w Polsce. Poczuj różnicę, której nie da się podrobić."
+    },
+    {
+      "type": "header",
+      "content": "22 momme"
+    },
+    {
+      "type": "image_picker",
+      "id": "momme_image",
+      "label": "Momme image"
+    },
+    {
+      "type": "text",
+      "id": "momme_image_placeholder",
+      "label": "Momme image placeholder",
+      "default": "Zdjęcie mikroskopowe: 19 vs 22 momme"
+    },
+    {
+      "type": "text",
+      "id": "momme_heading",
+      "label": "Momme heading",
+      "default": "Dlaczego 22 momme?"
+    },
+    {
+      "type": "richtext",
+      "id": "momme_body",
+      "label": "Momme body",
+      "default": "<p>Standard rynkowy to 19 momme. Dla nas to za mało.</p><p>LUSENA używa wyłącznie jedwabiu o gramaturze <strong>22 momme</strong>. Jest to splot o 30% gęstszy, co przekłada się na:</p>"
+    },
+    {
+      "type": "header",
+      "content": "Fire test"
+    },
+    {
+      "type": "text",
+      "id": "fire_heading",
+      "label": "Fire heading",
+      "default": "Test Ognia (The Fire Test)"
+    },
+    {
+      "type": "video",
+      "id": "fire_video",
+      "label": "Fire video"
+    },
+    {
+      "type": "text",
+      "id": "fire_video_placeholder",
+      "label": "Fire video placeholder",
+      "default": "Video Placeholder: Test spalania nitki jedwabiu"
+    },
+    {
+      "type": "text",
+      "id": "fire_body",
+      "label": "Fire body",
+      "default": "Prawdziwy jedwab po spaleniu pachnie jak pieczone włosy i zamienia się w sypki popiół. Poliester topi się w twardą kulkę. Nie mamy nic do ukrycia."
+    },
+    {
+      "type": "header",
+      "content": "Origin"
+    },
+    {
+      "type": "text",
+      "id": "origin_kicker",
+      "label": "Origin kicker",
+      "default": "Pochodzenie"
+    },
+    {
+      "type": "text",
+      "id": "origin_heading",
+      "label": "Origin heading",
+      "default": "Suzhou: Stolica Jedwabiu od 1430 roku"
+    },
+    {
+      "type": "richtext",
+      "id": "origin_body",
+      "label": "Origin body",
+      "default": "<p>Nie kupujemy od anonimowych pośredników. Nasz jedwab pochodzi bezpośrednio z Shengze (prefektura Suzhou) — miejsca płacącego jedwabiem podatki cesarzowi od czasów dynastii Ming.</p><p>To tutaj tradycja spotyka się z nowoczesną technologią. Od kokonu jedwabnika morwowego klasy 6A do gotowej poszewki.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "origin_image",
+      "label": "Origin image"
+    },
+    {
+      "type": "text",
+      "id": "origin_image_placeholder",
+      "label": "Origin image placeholder",
+      "default": "Zdjęcie: Mapa regionu Suzhou / Manufaktura"
+    },
+    {
+      "type": "header",
+      "content": "Quality control"
+    },
+    {
+      "type": "text",
+      "id": "qc_heading",
+      "label": "QC heading",
+      "default": "Podwójna Kontrola Jakości"
+    },
+    {
+      "type": "text",
+      "id": "qc_highlight_badge",
+      "label": "QC highlight badge",
+      "default": "Kluczowe"
+    },
+    {
+      "type": "header",
+      "content": "Certificates"
+    },
+    {
+      "type": "text",
+      "id": "cert_heading",
+      "label": "Certificates heading",
+      "default": "Certyfikaty Bezpieczeństwa"
+    },
+    {
+      "type": "richtext",
+      "id": "cert_body",
+      "label": "Certificates body",
+      "default": "<p>Twoja skóra dotyka poduszki przez 8 godzin dziennie. Musisz mieć pewność, że jest wolna od chemii. Nasz jedwab posiada certyfikat <strong>OEKO-TEX® Standard 100</strong> (Klasa I — bezpieczne nawet dla niemowląt).</p>"
+    },
+    {
+      "type": "text",
+      "id": "cert_button_label",
+      "label": "Certificate button label",
+      "default": "Pobierz Certyfikat (PDF)"
+    },
+    {
+      "type": "url",
+      "id": "cert_button_link",
+      "label": "Certificate button link"
+    },
+    {
+      "type": "image_picker",
+      "id": "cert_logo_1",
+      "label": "Certificate logo 1"
+    },
+    {
+      "type": "text",
+      "id": "cert_logo_1_placeholder",
+      "label": "Certificate logo 1 placeholder",
+      "default": "Logo OEKO-TEX"
+    },
+    {
+      "type": "image_picker",
+      "id": "cert_logo_2",
+      "label": "Certificate logo 2"
+    },
+    {
+      "type": "text",
+      "id": "cert_logo_2_placeholder",
+      "label": "Certificate logo 2 placeholder",
+      "default": "Logo 6A Grade"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "momme_benefit",
+      "name": "Momme benefit",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Wyższą trwałość — znosi pranie znacznie lepiej niż cieńsze odpowiedniki."
+        }
+      ]
+    },
+    {
+      "type": "qc_step",
+      "name": "QC step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "🇨🇳"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Produkcja"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Precyzyjne szycie w specjalistycznej manufakturze w Suzhou."
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Highlight",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA Quality (draft)",
+      "blocks": [
+        {
+          "type": "momme_benefit",
+          "settings": {
+            "text": "Wyższą trwałość — znosi pranie znacznie lepiej niż cieńsze odpowiedniki."
+          }
+        },
+        {
+          "type": "momme_benefit",
+          "settings": {
+            "text": "Gładszą fakturę — mniejsze tarcie dla Twojej skóry i włosów."
+          }
+        },
+        {
+          "type": "momme_benefit",
+          "settings": {
+            "text": "Lepszą termoregulację — chłodzi latem, grzeje zimą."
+          }
+        },
+        {
+          "type": "qc_step",
+          "settings": {
+            "icon": "🇨🇳",
+            "title": "Produkcja",
+            "text": "Precyzyjne szycie w specjalistycznej manufakturze w Suzhou.",
+            "highlight": false
+          }
+        },
+        {
+          "type": "qc_step",
+          "settings": {
+            "icon": "🇵🇱",
+            "title": "Kontrola w Polsce",
+            "text": "Każda sztuka jest ręcznie sprawdzana i prasowana w naszym magazynie pod Warszawą.",
+            "highlight": true
+          }
+        },
+        {
+          "type": "qc_step",
+          "settings": {
+            "icon": "📦",
+            "title": "Wysyłka 24h",
+            "text": "Estetyczne pakowanie \"prezentowe\" i natychmiastowa wysyłka do Ciebie.",
+            "highlight": false
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

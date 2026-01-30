@@ -1,0 +1,97 @@
+{
+  "sections": {
+    "main": {
+      "type": "lusena-page-quality",
+      "blocks": {
+        "momme-0": {
+          "type": "momme_benefit",
+          "settings": {
+            "text": "Wyższą trwałość — znosi pranie znacznie lepiej niż cieńsze odpowiedniki."
+          }
+        },
+        "momme-1": {
+          "type": "momme_benefit",
+          "settings": {
+            "text": "Gładszą fakturę — mniejsze tarcie dla Twojej skóry i włosów."
+          }
+        },
+        "momme-2": {
+          "type": "momme_benefit",
+          "settings": {
+            "text": "Lepszą termoregulację — chłodzi latem, grzeje zimą."
+          }
+        },
+        "qc-0": {
+          "type": "qc_step",
+          "settings": {
+            "icon": "🇨🇳",
+            "title": "Produkcja",
+            "text": "Precyzyjne szycie w specjalistycznej manufakturze w Suzhou.",
+            "highlight": false
+          }
+        },
+        "qc-1": {
+          "type": "qc_step",
+          "settings": {
+            "icon": "🇵🇱",
+            "title": "Kontrola w Polsce",
+            "text": "Każda sztuka jest ręcznie sprawdzana i prasowana w naszym magazynie pod Warszawą.",
+            "highlight": true
+          }
+        },
+        "qc-2": {
+          "type": "qc_step",
+          "settings": {
+            "icon": "📦",
+            "title": "Wysyłka 24h",
+            "text": "Estetyczne pakowanie \"prezentowe\" i natychmiastowa wysyłka do Ciebie.",
+            "highlight": false
+          }
+        }
+      },
+      "block_order": ["momme-0", "momme-1", "momme-2", "qc-0", "qc-1", "qc-2"],
+      "settings": {}
+    },
+    "trust": {
+      "type": "lusena-trust-bar",
+      "blocks": {
+        "item-0": {
+          "type": "item",
+          "settings": {
+            "icon": "star",
+            "title": "4.9/5 Rating",
+            "subtitle": "Based on 127 reviews"
+          }
+        },
+        "item-1": {
+          "type": "item",
+          "settings": {
+            "icon": "shield-check",
+            "title": "OEKO-TEX® Certified",
+            "subtitle": "Safe & Non-toxic 100"
+          }
+        },
+        "item-2": {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "title": "Fast Shipping",
+            "subtitle": "Ships within 24h"
+          }
+        },
+        "item-3": {
+          "type": "item",
+          "settings": {
+            "icon": "clock",
+            "title": "60-Day Trial",
+            "subtitle": "Sleep on it risk-free"
+          }
+        }
+      },
+      "block_order": ["item-0", "item-1", "item-2", "item-3"],
+      "settings": {}
+    }
+  },
+  "order": ["main", "trust"]
+}
+

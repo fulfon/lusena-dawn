@@ -1,0 +1,142 @@
+<header
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent py-6"
+  data-lusena-header
+>
+  <div class="container flex items-center justify-between">
+    <details class="lg:hidden relative">
+      <summary class="list-none p-2 cursor-pointer">
+        {% render 'lusena-icon', name: 'menu', class: 'w-6 h-6 text-primary', stroke_width: 1.5 %}
+        <span class="sr-only">Menu</span>
+      </summary>
+      {%- if section.settings.menu != blank -%}
+        <div class="absolute left-0 right-0 mt-3 bg-brand-bg shadow-sm border border-brand-bg p-4">
+          <nav class="flex flex-col gap-4">
+            {%- for link in section.settings.menu.links -%}
+              <a href="{{ link.url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">
+                {{ link.title | escape }}
+              </a>
+            {%- endfor -%}
+          </nav>
+        </div>
+      {%- endif -%}
+    </details>
+
+    <a href="{{ routes.root_url }}" class="text-2xl font-serif tracking-tight font-medium cursor-pointer">
+      {{ section.settings.logo_text | default: shop.name | escape }}
+    </a>
+
+    {%- if section.settings.menu != blank -%}
+      <nav class="hidden lg:flex items-center gap-8">
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">
+            {{ link.title | escape }}
+          </a>
+        {%- endfor -%}
+      </nav>
+    {%- else -%}
+      <div class="hidden lg:block"></div>
+    {%- endif -%}
+
+    <div class="flex items-center gap-2 md:gap-4">
+      {%- if section.settings.enable_search -%}
+        <a href="{{ routes.search_url }}" class="hidden sm:flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors">
+          {% render 'lusena-icon', name: 'search', class: 'w-5 h-5 text-primary', stroke_width: 1.5 %}
+          <span class="sr-only">Search</span>
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.enable_account and shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="hidden sm:flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors">
+          {% render 'lusena-icon', name: 'user', class: 'w-5 h-5 text-primary', stroke_width: 1.5 %}
+          <span class="sr-only">Account</span>
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.enable_cart -%}
+        <a href="{{ routes.cart_url }}" id="cart-icon-bubble" class="relative flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors">
+          {% render 'lusena-icon', name: 'shopping-bag', class: 'w-5 h-5 text-primary', stroke_width: 1.5 %}
+          <span class="sr-only">Cart</span>
+          {%- if cart.item_count > 0 -%}
+            <span class="absolute -top-1 -right-1 bg-accent-cta text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full border border-white">
+              {{ cart.item_count }}
+            </span>
+          {%- endif -%}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</header>
+
+{% javascript %}
+  (() => {
+    const header = document.querySelector('[data-lusena-header]');
+    if (!header) return;
+
+    const scrolledClasses = ['bg-brand-bg/95', 'backdrop-blur-sm', 'shadow-sm', 'py-4'];
+    const topClasses = ['bg-transparent', 'py-6'];
+
+    const update = () => {
+      const isScrolled = window.scrollY > 10;
+
+      if (isScrolled) {
+        header.classList.add(...scrolledClasses);
+        header.classList.remove(...topClasses);
+        return;
+      }
+
+      header.classList.add(...topClasses);
+      header.classList.remove(...scrolledClasses);
+    };
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+
+    if (window.Shopify?.designMode) {
+      document.addEventListener('shopify:section:load', update);
+    }
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "LUSENA header (draft)",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "LUSENA"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_search",
+      "label": "Show search icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_account",
+      "label": "Show account icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_cart",
+      "label": "Show cart icon",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA header (draft)"
+    }
+  ]
+}
+{% endschema %}

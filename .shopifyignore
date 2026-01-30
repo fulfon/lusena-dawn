@@ -1,0 +1,23 @@
+# Prevent non-theme files from being pushed to Shopify
+lusena-shop/*
+docs/*
+.agent/*
+.claude/*
+.codex/*
+.github/*
+.opencode/*
+.vscode/*
+.git/*
+
+# Repo/tooling files
+AGENTS.md
+CLAUDE.md
+copilot-instructions.md
+LICENSE.md
+README.md
+opencode.json
+release-notes.md
+translation.yml
+.gitignore
+.prettierrc.json
+.theme-check.yml

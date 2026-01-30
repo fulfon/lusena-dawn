@@ -1,0 +1,100 @@
+{%- assign known_icons = 'star,shield-check,truck,clock' | split: ',' -%}
+
+<section class="bg-surface-2 py-8 border-t border-brand-bg">
+  <div class="container px-4 md:px-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 bg-surface-2">
+      {%- for block in section.blocks -%}
+        <div class="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != blank -%}
+            <div class="p-2 bg-white rounded-full text-accent-cta">
+              {%- if known_icons contains block.settings.icon -%}
+                {% render 'lusena-icon', name: block.settings.icon, class: 'w-5 h-5', stroke_width: 1.5 %}
+              {%- else -%}
+                <span class="w-5 h-5 inline-flex items-center justify-center text-sm font-medium" aria-hidden="true">
+                  {{ block.settings.icon }}
+                </span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+          <div class="flex flex-col">
+            <span class="text-sm font-medium text-primary">{{ block.settings.title | escape }}</span>
+            <span class="text-xs text-secondary">{{ block.settings.subtitle | escape }}</span>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LUSENA Trust Bar",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon name or emoji",
+          "default": "star"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "4.9/5 Rating"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Based on 127 reviews"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA Trust Bar",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "icon": "star",
+            "title": "4.9/5 Rating",
+            "subtitle": "Based on 127 reviews"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "shield-check",
+            "title": "OEKO-TEX® Certified",
+            "subtitle": "Safe & Non-toxic 100"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "title": "Fast Shipping",
+            "subtitle": "Ships within 24h"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "clock",
+            "title": "60-Day Trial",
+            "subtitle": "Sleep on it risk-free"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

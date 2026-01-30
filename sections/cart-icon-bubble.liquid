@@ -1,0 +1,7 @@
+{% render 'lusena-icon', name: 'shopping-bag', class: 'w-5 h-5 text-primary', stroke_width: 1.5 %}
+<span class="sr-only">{{ 'templates.cart.cart' | t }}</span>
+{%- if cart.item_count > 0 -%}
+  <span class="absolute -top-1 -right-1 bg-accent-cta text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full border border-white">
+    {{ cart.item_count }}
+  </span>
+{%- endif -%}

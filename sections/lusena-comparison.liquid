@@ -1,0 +1,359 @@
+<div
+  class="lusena-comparison color-{{ section.settings.color_scheme }}"
+  style="
+    --padding-top: {{ section.settings.padding_top }}px;
+    --padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+  data-lusena-comparison
+>
+  <div class="lusena-comparison__container page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="lusena-comparison__heading {{ section.settings.heading_size }} lusena-animate-fade-up">
+        {{ section.settings.heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.subheading != blank -%}
+      <p class="lusena-comparison__subheading lusena-animate-fade-up">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+
+    <div class="lusena-comparison__grid" data-lusena-comparison-grid>
+      <div class="lusena-comparison__column lusena-comparison__column--cotton lusena-animate-fade-up">
+        <div class="lusena-comparison__header lusena-comparison__header--cotton">
+          <span class="lusena-comparison__label">{{ section.settings.cotton_label }}</span>
+        </div>
+        <ul class="lusena-comparison__list" role="list" data-lusena-stagger-rows>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'comparison_row' -%}
+              <li class="lusena-comparison__item lusena-comparison__item--negative" {{ block.shopify_attributes }}>
+                <span class="lusena-comparison__icon" aria-hidden="true">✕</span>
+                <span class="lusena-comparison__text">{{ block.settings.cotton_text }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+
+      <div class="lusena-comparison__column lusena-comparison__column--silk lusena-animate-fade-up">
+        <div class="lusena-comparison__header lusena-comparison__header--silk">
+          <span class="lusena-comparison__label">{{ section.settings.silk_label }}</span>
+        </div>
+        <ul class="lusena-comparison__list" role="list" data-lusena-stagger-rows>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'comparison_row' -%}
+              <li class="lusena-comparison__item lusena-comparison__item--positive" {{ block.shopify_attributes }}>
+                <span class="lusena-comparison__icon" aria-hidden="true">✓</span>
+                <span class="lusena-comparison__text">{{ block.settings.silk_text }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    </div>
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="lusena-comparison__cta lusena-animate-fade-up">
+        <a
+          href="{{ section.settings.button_link }}"
+          class="button {% if section.settings.button_style_secondary %}button--secondary{% else %}button--primary{% endif %}"
+        >
+          {{ section.settings.button_label }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .lusena-comparison {
+    padding-top: var(--padding-top);
+    padding-bottom: var(--padding-bottom);
+  }
+
+  .lusena-comparison__container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .lusena-comparison__heading {
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .lusena-comparison__subheading {
+    text-align: center;
+    opacity: 0.8;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .lusena-comparison__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .lusena-comparison__column {
+    border-radius: 0.75rem;
+    overflow: hidden;
+    border: 1px solid rgba(var(--color-foreground), 0.1);
+  }
+
+  .lusena-comparison__column--cotton {
+    background: rgba(var(--color-foreground), 0.03);
+  }
+
+  .lusena-comparison__column--silk {
+    background: rgba(var(--color-base-accent-1), 0.08);
+    border-color: rgba(var(--color-base-accent-1), 0.2);
+  }
+
+  .lusena-comparison__header {
+    padding: 1rem 1.25rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .lusena-comparison__header--cotton {
+    background: rgba(var(--color-foreground), 0.05);
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+  }
+
+  .lusena-comparison__header--silk {
+    background: rgba(var(--color-base-accent-1), 0.15);
+    border-bottom: 1px solid rgba(var(--color-base-accent-1), 0.2);
+  }
+
+  .lusena-comparison__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .lusena-comparison__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.06);
+  }
+
+  .lusena-comparison__item:last-child {
+    border-bottom: none;
+  }
+
+  .lusena-comparison__icon {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 0.125rem;
+  }
+
+  .lusena-comparison__item--negative .lusena-comparison__icon {
+    background: rgba(220, 38, 38, 0.1);
+    color: #dc2626;
+  }
+
+  .lusena-comparison__item--positive .lusena-comparison__icon {
+    background: rgba(22, 163, 74, 0.1);
+    color: #16a34a;
+  }
+
+  .lusena-comparison__text {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .lusena-comparison__cta {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .lusena-comparison__header {
+      padding: 1.25rem 1.5rem;
+      font-size: 1.125rem;
+    }
+
+    .lusena-comparison__item {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .lusena-comparison__icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      font-size: 0.875rem;
+    }
+
+    .lusena-comparison__text {
+      font-size: 1rem;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .lusena-comparison__grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .lusena-comparison__item {
+      padding: 0.875rem 1rem;
+    }
+
+    .lusena-comparison__text {
+      font-size: 0.875rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.lusena_comparison.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.lusena_comparison.settings.heading.label",
+      "default": "Cotton absorbs. Silk protects."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:sections.all.heading_size.label",
+      "options": [
+        { "value": "h2", "label": "t:sections.all.heading_size.options__1.label" },
+        { "value": "h1", "label": "t:sections.all.heading_size.options__2.label" },
+        { "value": "h0", "label": "t:sections.all.heading_size.options__3.label" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:sections.lusena_comparison.settings.subheading.label",
+      "default": "See why silk makes a difference for your skin and hair"
+    },
+    {
+      "type": "text",
+      "id": "cotton_label",
+      "label": "t:sections.lusena_comparison.settings.cotton_label.label",
+      "default": "Cotton"
+    },
+    {
+      "type": "text",
+      "id": "silk_label",
+      "label": "t:sections.lusena_comparison.settings.silk_label.label",
+      "default": "LUSENA Silk"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.lusena_comparison.settings.button_label.label",
+      "default": "Why 22 momme matters"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:sections.lusena_comparison.settings.button_link.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_style_secondary",
+      "label": "t:sections.lusena_comparison.settings.button_style_secondary.label",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "comparison_row",
+      "name": "t:sections.lusena_comparison.blocks.comparison_row.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "cotton_text",
+          "label": "t:sections.lusena_comparison.blocks.comparison_row.settings.cotton_text.label",
+          "default": "Absorbs moisture from hair and skin"
+        },
+        {
+          "type": "text",
+          "id": "silk_text",
+          "label": "t:sections.lusena_comparison.blocks.comparison_row.settings.silk_text.label",
+          "default": "Retains natural moisture"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.lusena_comparison.presets.name",
+      "blocks": [
+        {
+          "type": "comparison_row",
+          "settings": {
+            "cotton_text": "Absorbs moisture from hair and skin",
+            "silk_text": "Retains natural moisture"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "cotton_text": "Causes friction and creases",
+            "silk_text": "Smooth, gentle surface"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "cotton_text": "Leads to frizzy, tangled hair",
+            "silk_text": "Hair stays smooth and hydrated"
+          }
+        },
+        {
+          "type": "comparison_row",
+          "settings": {
+            "cotton_text": "Absorbs skincare products",
+            "silk_text": "Lets products work overnight"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,19 @@
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "lusena-footer",
+      "settings": {
+        "brand_heading": "LUSENA",
+        "brand_text": "<p>22 momme silk from Suzhou. Certified OEKO-TEX 100.<br>Sleep better, wake up beautiful.</p>",
+        "shop_heading": "Shop",
+        "help_heading": "Help",
+        "newsletter_heading": "Newsletter",
+        "newsletter_text": "Join the circle for early access and care tips.",
+        "newsletter_button_label": "Sign up"
+      }
+    }
+  },
+  "order": ["footer"]
+}

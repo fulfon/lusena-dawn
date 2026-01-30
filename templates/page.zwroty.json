@@ -1,0 +1,66 @@
+{
+  "sections": {
+    "main": {
+      "type": "lusena-page-returns",
+      "blocks": {
+        "step-0": {
+          "type": "step",
+          "settings": {
+            "icon": "🛒",
+            "title": "Kupujesz i Testujesz",
+            "text": "Masz pełne 60 dni od momentu otrzymania paczki. Nie musisz trzymać folii ani metek."
+          }
+        },
+        "step-1": {
+          "type": "step",
+          "settings": {
+            "icon": "📧",
+            "title": "Piszesz do nas",
+            "text": "Wystarczy krótki mail na czesc@lusena.pl. Wyślemy Ci instrukcję zwrotu."
+          }
+        },
+        "step-2": {
+          "type": "step",
+          "settings": {
+            "icon": "💰",
+            "title": "Szybki Zwrot",
+            "text": "Środki wrócą na Twoje konto w ciągu 3-5 dni roboczych od odebrania przez nas przesyłki."
+          }
+        },
+        "faq-0": {
+          "type": "faq",
+          "settings": {
+            "question": "Kto pokrywa koszt wysyłki zwrotnej?",
+            "answer": "<p>W przypadku gwarancji satysfakcji, koszt odesłania produktu leży po stronie klienta. My zwracamy 100% wartości zamówienia (produkt + pierwotna wysyłka).</p>"
+          }
+        },
+        "faq-1": {
+          "type": "faq",
+          "settings": {
+            "question": "Czy muszę mieć oryginalne pudełko?",
+            "answer": "<p>Nie, nie wymagamy oryginalnego pudełka \"prezentowego\", choć ułatwia ono bezpieczny transport. Ważne, aby produkt był zabezpieczony podczas transportu.</p>"
+          }
+        },
+        "faq-2": {
+          "type": "faq",
+          "settings": {
+            "question": "W jakim stanie musi być produkt?",
+            "answer": "<p>Akceptujemy produkty używane i prane. Gwarancja nie obejmuje jedynie uszkodzeń mechanicznych powstałych z winy użytkownika (np. rozdarcie, wypalenie, zafarbowanie w praniu z innymi rzeczami).</p>"
+          }
+        },
+        "faq-3": {
+          "type": "faq",
+          "settings": {
+            "question": "Ile czasu mam na decyzję?",
+            "answer": "<p>Masz 60 dni kalendarzowych od momentu odebrania paczki. To około 480 godzin snu na podjęcie decyzji!</p>"
+          }
+        }
+      },
+      "block_order": ["step-0", "step-1", "step-2", "faq-0", "faq-1", "faq-2", "faq-3"],
+      "settings": {
+        "contact_button_link": "shopify://pages/contact"
+      }
+    }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,173 @@
+<section class="relative h-[85vh] min-h-[600px] w-full overflow-hidden lusena-hero">
+  <div
+    class="absolute inset-0 bg-neutral-900 z-10"
+    style="opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"
+  ></div>
+
+  <div class="absolute inset-0 h-full w-full" data-lusena-hero-image>
+    {%- if section.settings.image != blank -%}
+      {{
+        section.settings.image
+        | image_url: width: 3000
+        | image_tag:
+          class: 'h-full w-full object-cover',
+          widths: '375, 550, 750, 1100, 1500, 2000, 3000',
+          sizes: '100vw',
+          loading: 'eager',
+          fetchpriority: 'high'
+      }}
+    {%- else -%}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'h-full w-full object-cover bg-surface-2' }}
+    {%- endif -%}
+  </div>
+
+  <div class="container relative h-full flex flex-col justify-center z-20">
+    <div class="max-w-xl space-y-6 md:space-y-8 pl-4 md:pl-0" data-lusena-hero-text>
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'heading' -%}
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif italic tracking-tight text-white drop-shadow-sm" {{ block.shopify_attributes }}>
+              {{ block.settings.heading }}
+            </h1>
+
+          {%- when 'subheading' -%}
+            {%- if block.settings.text != blank -%}
+              <p class="text-lg md:text-xl font-light text-white/95 max-w-md leading-relaxed drop-shadow-sm" {{ block.shopify_attributes }}>
+                {{ block.settings.text | escape }}
+              </p>
+            {%- endif -%}
+
+          {%- when 'buttons' -%}
+            <div class="pt-4 flex flex-col sm:flex-row gap-4" {{ block.shopify_attributes }}>
+              {%- if block.settings.button_label_1 != blank -%}
+                <a
+                  {% if block.settings.button_link_1 == blank %}
+                    role="link" aria-disabled="true"
+                  {% else %}
+                    href="{{ block.settings.button_link_1 }}"
+                  {% endif %}
+                  class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-14 px-10 text-base bg-white text-accent-cta hover:bg-white/90 border-none w-full sm:w-auto min-w-[180px]"
+                >
+                  {{ block.settings.button_label_1 | escape }}
+                </a>
+              {%- endif -%}
+
+              {%- if block.settings.button_label_2 != blank -%}
+                <a
+                  {% if block.settings.button_link_2 == blank %}
+                    role="link" aria-disabled="true"
+                  {% else %}
+                    href="{{ block.settings.button_link_2 }}"
+                  {% endif %}
+                  class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-14 px-10 text-base border border-white bg-transparent text-white hover:bg-white/20 hover:text-white w-full sm:w-auto min-w-[160px]"
+                >
+                  {{ block.settings.button_label_2 | escape }}
+                </a>
+              {%- endif -%}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LUSENA hero (draft)",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "%",
+      "label": "Overlay opacity",
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "heading",
+          "label": "Heading",
+          "default": "<p>Beauty Happens<br>at Night.</p>"
+        }
+      ]
+    },
+    {
+      "type": "subheading",
+      "name": "Subheading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Obudź się piękniejsza. Jedwab 22 momme z Suzhou, który chroni Twoją skórę przez całą noc."
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "Buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label_1",
+          "label": "Primary button label",
+          "default": "Shop Pillowcases"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "Primary button link"
+        },
+        {
+          "type": "text",
+          "id": "button_label_2",
+          "label": "Secondary button label",
+          "default": "Why Silk?"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Secondary button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA hero (draft)",
+      "blocks": [
+        {
+          "type": "heading"
+        },
+        {
+          "type": "subheading"
+        },
+        {
+          "type": "buttons",
+          "settings": {
+            "button_link_1": "shopify://collections/all",
+            "button_link_2": "shopify://pages/nasza-jakosc"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

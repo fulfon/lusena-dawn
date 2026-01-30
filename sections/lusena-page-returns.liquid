@@ -1,0 +1,274 @@
+<div>
+  <section class="py-24 bg-brand-bg text-center">
+    <div class="container max-w-4xl mx-auto space-y-6">
+      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
+        {{ section.settings.hero_kicker | escape }}
+      </span>
+      <h1 class="text-4xl md:text-6xl font-serif text-primary">
+        {{ section.settings.hero_heading_line_1 | escape }}<br>
+        <span class="italic">{{ section.settings.hero_heading_line_2 | escape }}</span>
+      </h1>
+      <p class="text-lg md:text-xl font-light text-secondary leading-relaxed max-w-2xl mx-auto">
+        {{ section.settings.hero_body | escape }}
+      </p>
+
+      <div class="pt-8">
+        <div class="inline-block p-4 border border-accent-gold/30 rounded-full bg-white/50 backdrop-blur-md">
+          <span class="text-accent-gold font-medium">{{ section.settings.hero_badge | escape }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-white">
+    <div class="container max-w-5xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-serif text-primary text-center mb-16">
+        {{ section.settings.steps_heading | escape }}
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+        <div class="hidden md:block absolute top-12 left-[16%] right-[16%] h-[1px] bg-secondary/20 z-0"></div>
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'step' -%}
+            <div class="relative z-10 text-center space-y-4" {{ block.shopify_attributes }}>
+              <div class="w-24 h-24 mx-auto bg-white border border-secondary/20 rounded-full flex items-center justify-center text-3xl shadow-sm">
+                {{ block.settings.icon }}
+              </div>
+              <h3 class="font-serif text-xl">{{ block.settings.title | escape }}</h3>
+              <p class="text-secondary font-light text-sm px-4">{{ block.settings.text | escape }}</p>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-brand-bg lusena-returns-faq">
+    <div class="container max-w-3xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-serif text-primary text-center mb-12">
+        {{ section.settings.faq_heading | escape }}
+      </h2>
+
+      <div class="w-full bg-white px-8 py-4 rounded-sm shadow-sm">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq' -%}
+            <details class="border-b border-secondary/20" {{ block.shopify_attributes }}>
+              <summary class="flex items-center justify-between py-4 font-medium transition-all hover:text-accent-cta cursor-pointer">
+                {{ block.settings.question | escape }}
+                {% render 'lusena-icon', name: 'chevron-down', class: 'h-4 w-4 shrink-0 transition-transform duration-200 lusena-returns-faq__chevron', stroke_width: 1.5 %}
+              </summary>
+              <div class="overflow-hidden text-sm">
+                <div class="pb-4 pt-0 text-secondary">
+                  {{ block.settings.answer }}
+                </div>
+              </div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="text-center mt-12">
+        <p class="text-secondary mb-4">{{ section.settings.contact_prompt | escape }}</p>
+        {%- if section.settings.contact_button_label != blank and section.settings.contact_button_link != blank -%}
+          <a
+            href="{{ section.settings.contact_button_link }}"
+            class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-12 px-8 py-3 border border-primary bg-transparent text-primary hover:bg-surface-2"
+          >
+            {{ section.settings.contact_button_label | escape }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+</div>
+
+{% stylesheet %}
+  .lusena-returns-faq details[open] .lusena-returns-faq__chevron {
+    transform: rotate(180deg);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "LUSENA Returns (draft)",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "text",
+      "id": "hero_kicker",
+      "label": "Hero kicker",
+      "default": "Zero Ryzyka"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading_line_1",
+      "label": "Hero heading line 1",
+      "default": "60 Dni Gwarancji"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading_line_2",
+      "label": "Hero heading line 2 (italic)",
+      "default": "Przespanych Nocy"
+    },
+    {
+      "type": "text",
+      "id": "hero_body",
+      "label": "Hero body",
+      "default": "Jesteśmy tak pewni jakości LUSENA, że dajemy Ci 60 nocy na testy. Śpij na niej, pierz ją, używaj. Jeśli nie poczujesz różnicy — oddamy Ci pieniądze."
+    },
+    {
+      "type": "text",
+      "id": "hero_badge",
+      "label": "Hero badge",
+      "default": "✨ Zwrot nawet używanego produktu"
+    },
+    {
+      "type": "header",
+      "content": "Steps"
+    },
+    {
+      "type": "text",
+      "id": "steps_heading",
+      "label": "Steps heading",
+      "default": "Jak to działa?"
+    },
+    {
+      "type": "header",
+      "content": "FAQ"
+    },
+    {
+      "type": "text",
+      "id": "faq_heading",
+      "label": "FAQ heading",
+      "default": "Pytania i Odpowiedzi"
+    },
+    {
+      "type": "text",
+      "id": "contact_prompt",
+      "label": "Contact prompt",
+      "default": "Masz inne pytanie?"
+    },
+    {
+      "type": "text",
+      "id": "contact_button_label",
+      "label": "Contact button label",
+      "default": "Skontaktuj się z nami"
+    },
+    {
+      "type": "url",
+      "id": "contact_button_link",
+      "label": "Contact button link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "🛒"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Kupujesz i Testujesz"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Masz pełne 60 dni od momentu otrzymania paczki. Nie musisz trzymać folii ani metek."
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Kto pokrywa koszt wysyłki zwrotnej?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>W przypadku gwarancji satysfakcji, koszt odesłania produktu leży po stronie klienta. My zwracamy 100% wartości zamówienia (produkt + pierwotna wysyłka).</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA Returns (draft)",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "icon": "🛒",
+            "title": "Kupujesz i Testujesz",
+            "text": "Masz pełne 60 dni od momentu otrzymania paczki. Nie musisz trzymać folii ani metek."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "📧",
+            "title": "Piszesz do nas",
+            "text": "Wystarczy krótki mail na czesc@lusena.pl. Wyślemy Ci instrukcję zwrotu."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "icon": "💰",
+            "title": "Szybki Zwrot",
+            "text": "Środki wrócą na Twoje konto w ciągu 3-5 dni roboczych od odebrania przez nas przesyłki."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Kto pokrywa koszt wysyłki zwrotnej?",
+            "answer": "<p>W przypadku gwarancji satysfakcji, koszt odesłania produktu leży po stronie klienta. My zwracamy 100% wartości zamówienia (produkt + pierwotna wysyłka).</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Czy muszę mieć oryginalne pudełko?",
+            "answer": "<p>Nie, nie wymagamy oryginalnego pudełka \"prezentowego\", choć ułatwia ono bezpieczny transport. Ważne, aby produkt był zabezpieczony podczas transportu.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "W jakim stanie musi być produkt?",
+            "answer": "<p>Akceptujemy produkty używane i prane. Gwarancja nie obejmuje jedynie uszkodzeń mechanicznych powstałych z winy użytkownika (np. rozdarcie, wypalenie, zafarbowanie w praniu z innymi rzeczami).</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Ile czasu mam na decyzję?",
+            "answer": "<p>Masz 60 dni kalendarzowych od momentu odebrania paczki. To około 480 godzin snu na podjęcie decyzji!</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

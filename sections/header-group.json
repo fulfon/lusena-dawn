@@ -1,0 +1,19 @@
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "header": {
+      "type": "lusena-header",
+      "settings": {
+        "logo_text": "LUSENA",
+        "menu": "main-menu",
+        "enable_search": true,
+        "enable_account": true,
+        "enable_cart": true
+      }
+    }
+  },
+  "order": [
+    "header"
+  ]
+}

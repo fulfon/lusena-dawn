@@ -1,0 +1,16 @@
+0000000000000000000000000000000000000000 9ccdacf81f175c7caeebc28348e50bcb02ef8fc7 Your Name <your_email@example.com> 1768681719 +0100	clone: from https://github.com/Shopify/dawn.git
+9ccdacf81f175c7caeebc28348e50bcb02ef8fc7 1b99f370b1ca858f37b0d62ee60cdb764dd67ef2 Your Name <your_email@example.com> 1768753590 +0100	commit: feat(lusena): brandbook-aligned UI + cart conversion layer
+1b99f370b1ca858f37b0d62ee60cdb764dd67ef2 d9358a1f49c288a05c499c027324c78cd9d91882 Your Name <your_email@example.com> 1768753815 +0100	commit: chore: add theme changelog + Codex workflow skill
+d9358a1f49c288a05c499c027324c78cd9d91882 e2df019adb603023622015f18722d5109aad8afd Your Name <your_email@example.com> 1768753846 +0100	commit: chore: ignore local Shopify store config
+e2df019adb603023622015f18722d5109aad8afd 80fdb86ecfb1d4714fe3f0690d88e2089b01f760 Your Name <your_email@example.com> 1768755511 +0100	commit: skills addition for antigravity and opencode
+80fdb86ecfb1d4714fe3f0690d88e2089b01f760 ce788ded6deafebb7ad2b82e7a0766b66300464b Your Name <your_email@example.com> 1768762976 +0100	commit: refactor(css,i18n): brandbook-aligned typography, animations & localization
+ce788ded6deafebb7ad2b82e7a0766b66300464b fcd1a028417bfd6e6e80d3986ec09afe3e3f390a Your Name <your_email@example.com> 1768762987 +0100	commit (amend): refactor(css,i18n): brandbook-aligned typography, animations & localization
+fcd1a028417bfd6e6e80d3986ec09afe3e3f390a 4fb73d6d30d63bc4772e2af6922a833cb4ff3ab7 Your Name <your_email@example.com> 1768762998 +0100	commit (amend): refactor(css,i18n): brandbook-aligned typography, animations & localization
+4fb73d6d30d63bc4772e2af6922a833cb4ff3ab7 c8bfcf524b70aebd71923f11bbfb6f1b6ac07bae Your Name <your_email@example.com> 1768765048 +0100	commit: feat(lusena): homepage sections per brandbook 5.1.1
+c8bfcf524b70aebd71923f11bbfb6f1b6ac07bae 265f06bebc2b0228e55af057c285f3f7d1343605 Your Name <your_email@example.com> 1768766992 +0100	commit: fix(lusena-comparison): remove invalid url default from schema
+265f06bebc2b0228e55af057c285f3f7d1343605 6682f1827af5d7556cba15429aaf2929a95bc22d Your Name <your_email@example.com> 1768856970 +0100	commit: ready for bigger frontend change - main page
+6682f1827af5d7556cba15429aaf2929a95bc22d d93971af376b6441e49b09c5cd07678ee07ee09e Your Name <your_email@example.com> 1769365282 +0100	commit: feat(lusena): migrate draft-shop UI into Dawn
+d93971af376b6441e49b09c5cd07678ee07ee09e e1b826dde193ecd27d8a1ce5984884ef4b359b40 Your Name <your_email@example.com> 1769365414 +0100	commit: docs: add migration docs + update theme changelog
+e1b826dde193ecd27d8a1ce5984884ef4b359b40 2f6787f63461270e57b05eaaf29e227eb79adfa3 Your Name <your_email@example.com> 1769798426 +0100	commit: fix(lusena): match homepage to draft spacing + CTAs
+2f6787f63461270e57b05eaaf29e227eb79adfa3 03088fc605d4507c2a646c8245da397107af1889 Your Name <your_email@example.com> 1769798481 +0100	commit: docs: add changelog entry for 2f6787f
+03088fc605d4507c2a646c8245da397107af1889 2ceec21ea22560a3f11abf801a7f9b67007915b1 Your Name <your_email@example.com> 1769798805 +0100	commit: chore: ignore lusena-shop draft

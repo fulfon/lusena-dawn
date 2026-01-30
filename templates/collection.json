@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "lusena-main-collection",
+      "settings": {
+        "products_per_page": 16,
+        "show_secondary_image": true,
+        "default_description": "Premium mulberry silk for better sleep."
+      }
+    }
+  },
+  "order": ["main"]
+}
+

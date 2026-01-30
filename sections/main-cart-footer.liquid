@@ -1,0 +1,426 @@
+{{ 'component-cart.css' | asset_url | stylesheet_tag }}
+{{ 'component-totals.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-discounts.css' | asset_url | stylesheet_tag }}
+
+{%- if settings.lusena_cart_upsell_product != blank -%}
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .lusena-cart-meta {
+    display: grid;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .lusena-free-shipping {
+    padding: 1.2rem;
+    border-radius: var(--buttons-radius-outset);
+    background: rgba(var(--color-foreground), 0.04);
+  }
+
+  .lusena-free-shipping__row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 0 0.8rem;
+  }
+
+  .lusena-progress {
+    height: 0.6rem;
+    background: rgba(var(--color-foreground), 0.14);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .lusena-progress__value {
+    height: 100%;
+    width: 0;
+    background: rgb(var(--color-button));
+    font-size: 0;
+    line-height: 0;
+  }
+
+  .lusena-cart-upsell {
+    padding: 1.2rem;
+    border-radius: var(--buttons-radius-outset);
+    background: rgba(var(--color-foreground), 0.04);
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .lusena-cart-upsell__title {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0;
+  }
+
+  .lusena-cart-upsell__title strong {
+    font-weight: 600;
+  }
+
+  .lusena-cart-upsell__body {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .lusena-cart-upsell__media {
+    width: 6rem;
+    aspect-ratio: 1;
+    border-radius: calc(var(--buttons-radius-outset) - 2px);
+    overflow: hidden;
+    background: rgba(var(--color-foreground), 0.06);
+  }
+
+  .lusena-cart-upsell__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .lusena-cart-upsell__content {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .lusena-cart-upsell__product {
+    margin: 0;
+  }
+
+  .lusena-cart-gift details {
+    padding: 1.2rem;
+    border-radius: var(--buttons-radius-outset);
+    background: rgba(var(--color-foreground), 0.04);
+  }
+
+  .lusena-cart-gift summary {
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .lusena-cart-gift summary::-webkit-details-marker {
+    display: none;
+  }
+{%- endstyle -%}
+
+<div
+  class="gradient color-{{ section.settings.color_scheme }}{% if cart == empty %} is-empty{% endif %}"
+  id="main-cart-footer"
+  data-id="{{ section.id }}"
+>
+  <div class="page-width">
+    <div class="cart__footer isolate section-{{ section.id }}-padding">
+      {%- if cart != empty -%}
+        {%- if settings.lusena_enable_gift_mode -%}
+          <div class="lusena-cart-gift">
+            <details id="Details-Cart-GiftNote"{% if cart.note != blank %} open{% endif %}>
+              <summary>
+                <span class="summary__title">
+                  {{ 'lusena.cart.gift_mode_title' | t }}
+                  {{- 'icon-caret.svg' | inline_asset_content -}}
+                </span>
+              </summary>
+              <cart-note class="cart__note field">
+                <label class="visually-hidden" for="Cart-GiftNote">{{ 'lusena.cart.gift_note_label' | t }}</label>
+                <textarea
+                  id="Cart-GiftNote"
+                  class="text-area text-area--resize-vertical field__input"
+                  name="note"
+                  form="cart"
+                  placeholder="{{ settings.lusena_gift_note_placeholder | default: 'lusena.cart.gift_note_placeholder' | t | escape }}"
+                >{{ cart.note }}</textarea>
+                <p class="caption" style="margin: 0.8rem 0 0;">{{ 'lusena.cart.gift_note_hint' | t }}</p>
+              </cart-note>
+            </details>
+          </div>
+        {%- elsif settings.show_cart_note -%}
+          <cart-note class="cart__note field">
+            <label for="Cart-note">{{ 'sections.cart.note' | t }}</label>
+            <textarea
+              class="text-area field__input"
+              name="note"
+              form="cart"
+              id="Cart-note"
+              placeholder="{{ 'sections.cart.note' | t }}"
+            >{{ cart.note }}</textarea>
+          </cart-note>
+        {%- endif -%}
+      {%- endif -%}
+
+      <div class="cart__blocks">
+        {%- if cart != empty -%}
+          <div class="lusena-cart-meta">
+            {%- liquid
+              assign free_shipping_threshold_zl = settings.lusena_free_shipping_threshold | default: 0 | plus: 0
+              assign free_shipping_threshold_cents = free_shipping_threshold_zl | times: 100
+            -%}
+
+            {%- if settings.lusena_enable_free_shipping_progress and free_shipping_threshold_cents > 0 -%}
+              {%- liquid
+                assign cart_total_cents = cart.total_price
+                assign free_shipping_progress = 0
+
+                if free_shipping_threshold_cents > 0
+                  assign free_shipping_progress = cart_total_cents | times: 100 | divided_by: free_shipping_threshold_cents
+                endif
+
+                if free_shipping_progress > 100
+                  assign free_shipping_progress = 100
+                endif
+
+                assign free_shipping_remaining_cents = free_shipping_threshold_cents | minus: cart_total_cents
+              -%}
+
+              {%- liquid
+                assign free_shipping_remaining_formatted = free_shipping_remaining_cents | money_without_trailing_zeros
+                assign free_shipping_threshold_formatted = free_shipping_threshold_cents | money_without_trailing_zeros
+              -%}
+
+              <div class="lusena-free-shipping" role="region" aria-label="{{ 'lusena.cart.free_shipping' | t }}">
+                <p class="lusena-free-shipping__row caption">
+                  {%- if free_shipping_remaining_cents > 0 -%}
+                    <span>{{ 'lusena.cart.free_shipping_remaining' | t: amount: free_shipping_remaining_formatted }}</span>
+                    <span>{{ 'lusena.cart.free_shipping_threshold' | t: amount: free_shipping_threshold_formatted }}</span>
+                  {%- else -%}
+                    <span>{{ 'lusena.cart.free_shipping_unlocked' | t }}</span>
+                    <span>{{ 'lusena.cart.free_shipping_threshold' | t: amount: free_shipping_threshold_formatted }}</span>
+                  {%- endif -%}
+                </p>
+                <div
+                  class="lusena-progress"
+                  role="progressbar"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="{{ free_shipping_progress }}"
+                >
+                  <div class="lusena-progress__value" style="width: {{ free_shipping_progress }}%;">&nbsp;</div>
+                </div>
+              </div>
+            {%- endif -%}
+
+            {%- liquid
+              assign lusena_upsell_product = settings.lusena_cart_upsell_product
+              assign lusena_upsell_variant = nil
+              assign lusena_upsell_in_cart = false
+
+              if lusena_upsell_product != blank
+                assign lusena_upsell_variant = lusena_upsell_product.selected_or_first_available_variant
+                for item in cart.items
+                  if item.product_id == lusena_upsell_product.id
+                    assign lusena_upsell_in_cart = true
+                    break
+                  endif
+                endfor
+              endif
+            -%}
+
+            {%- if lusena_upsell_product != blank and lusena_upsell_variant != nil and lusena_upsell_variant.available and lusena_upsell_in_cart == false -%}
+              <div class="lusena-cart-upsell" role="region" aria-label="{{ 'lusena.cart.upsell_add' | t }}">
+                <p class="lusena-cart-upsell__title caption">
+                  <strong>{{ settings.lusena_cart_upsell_label | default: 'lusena.cart.upsell_title' | t | escape }}</strong>
+                  <span>{{ lusena_upsell_variant.price | money_without_trailing_zeros }}</span>
+                </p>
+                <div class="lusena-cart-upsell__body">
+                  <div class="lusena-cart-upsell__media">
+                    {%- if lusena_upsell_product.featured_image -%}
+                      <img
+                        src="{{ lusena_upsell_product.featured_image | image_url: width: 160 }}"
+                        alt="{{ lusena_upsell_product.featured_image.alt | escape }}"
+                        loading="lazy"
+                        width="80"
+                        height="{{ 80 | divided_by: lusena_upsell_product.featured_image.aspect_ratio | ceil }}"
+                      >
+                    {%- endif -%}
+                  </div>
+                  <div class="lusena-cart-upsell__content">
+                    <p class="lusena-cart-upsell__product caption">{{ lusena_upsell_product.title | escape }}</p>
+                  </div>
+                </div>
+                <product-form class="product-form" data-hide-errors="true">
+                  {%- form 'product',
+                    lusena_upsell_product,
+                    id: 'Cart-Upsell-Form',
+                    class: 'form',
+                    novalidate: 'novalidate',
+                    data-type: 'add-to-cart-form'
+                  -%}
+                    <input type="hidden" name="id" value="{{ lusena_upsell_variant.id }}" class="product-variant-id">
+                    <button type="submit" class="button button--secondary button--full-width">
+                      <span>{{ 'lusena.cart.upsell_add' | t }}</span>
+                      {%- render 'loading-spinner' -%}
+                    </button>
+                  {%- endform -%}
+                </product-form>
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {% for block in section.blocks %}
+          {%- case block.type -%}
+            {%- when '@app' -%}
+              {% render block %}
+            {%- when 'subtotal' -%}
+              <div class="js-contents" {{ block.shopify_attributes }}>
+                <div>
+                  {%- if cart.cart_level_discount_applications.size > 0 -%}
+                    <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
+                      {%- for discount in cart.cart_level_discount_applications -%}
+                        <li class="discounts__discount discounts__discount--position">
+                          {{- 'icon-discount.svg' | inline_asset_content -}}
+                          {{ discount.title | escape }}
+                          (-{{ discount.total_allocated_amount | money }})
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                </div>
+
+                <div class="totals">
+                  <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
+                  <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
+                </div>
+
+                <small class="tax-note caption-large rte">
+                  {%- if cart.duties_included and cart.taxes_included -%}
+                    {%- if shop.shipping_policy.body == blank -%}
+                      {{ 'sections.cart.duties_and_taxes_included_shipping_at_checkout_without_policy' | t }}
+                    {%- else -%}
+                      {{
+                        'sections.cart.duties_and_taxes_included_shipping_at_checkout_with_policy_html'
+                        | t: link: shop.shipping_policy.url
+                      }}
+                    {%- endif -%}
+                  {%- elsif cart.duties_included == false and cart.taxes_included -%}
+                    {%- if shop.shipping_policy.body == blank -%}
+                      {{ 'sections.cart.taxes_included_shipping_at_checkout_without_policy' | t }}
+                    {%- else -%}
+                      {{
+                        'sections.cart.taxes_included_shipping_at_checkout_with_policy_html'
+                        | t: link: shop.shipping_policy.url
+                      }}
+                    {%- endif -%}
+                  {%- elsif cart.duties_included and cart.taxes_included == false -%}
+                    {%- if shop.shipping_policy.body == blank -%}
+                      {{ 'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
+                    {%- else -%}
+                      {{
+                        'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html'
+                        | t: link: shop.shipping_policy.url
+                      }}
+                    {%- endif -%}
+                  {%- elsif cart.duties_included == false and cart.taxes_included == false -%}
+                    {%- if shop.shipping_policy.body == blank -%}
+                      {{ 'sections.cart.taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
+                    {%- else -%}
+                      {{
+                        'sections.cart.taxes_at_checkout_shipping_at_checkout_with_policy_html'
+                        | t: link: shop.shipping_policy.url
+                      }}
+                    {%- endif -%}
+                  {%- endif -%}
+                </small>
+              </div>
+            {%- else -%}
+              <div class="cart__ctas" {{ block.shopify_attributes }}>
+                <button
+                  type="submit"
+                  id="checkout"
+                  class="cart__checkout-button button"
+                  name="checkout"
+                  {% if cart == empty %}
+                    disabled
+                  {% endif %}
+                  form="cart"
+                >
+                  {{ 'sections.cart.checkout' | t }}
+                </button>
+                {%- if cart != empty -%}
+                  <p class="caption" style="margin: 0.8rem 0 0;">Wysyłka w 24 h (dni robocze) • 60 dni testu</p>
+                {%- endif -%}
+              </div>
+
+              {%- if additional_checkout_buttons -%}
+                <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
+                  {{ content_for_additional_checkout_buttons }}
+                </div>
+              {%- endif -%}
+          {%- endcase -%}
+        {% endfor %}
+
+        <div id="cart-errors"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-cart-footer.name",
+  "class": "cart__footer-wrapper",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },    
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "subtotal",
+      "name": "t:sections.main-cart-footer.blocks.subtotal.name",
+      "limit": 1
+    },
+    {
+      "type": "buttons",
+      "name": "t:sections.main-cart-footer.blocks.buttons.name",
+      "limit": 1
+    },
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

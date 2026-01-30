@@ -1,0 +1,93 @@
+{
+  "sections": {
+    "main": {
+      "type": "lusena-main-product",
+      "blocks": {
+        "benefit-0": {
+          "type": "benefit",
+          "settings": {
+            "text": "Reduces sleep wrinkles and morning creases"
+          }
+        },
+        "benefit-1": {
+          "type": "benefit",
+          "settings": {
+            "text": "Keeps skin hydrated (doesn't absorb cream)"
+          }
+        },
+        "benefit-2": {
+          "type": "benefit",
+          "settings": {
+            "text": "Prevents hair breakage and frizz"
+          }
+        },
+        "accordion-0": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Product Details",
+            "content": "<ul><li>100% Mulberry Silk (22 momme)</li><li>Grade 6A fibers</li><li>OEKO-TEX® Standard 100 Certified</li><li>Hidden zipper closure</li></ul>"
+          }
+        },
+        "accordion-1": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Care Guide",
+            "content": "<p>Machine wash cold on delicate cycle. Use silk-safe detergent. Line dry out of direct sunlight. Do not bleach.</p>"
+          }
+        },
+        "accordion-2": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Shipping & Returns",
+            "content": "<p>Ships within 24 hours. Free delivery via InPost. Returns accepted within 60 days even if used.</p>"
+          }
+        },
+        "pdp-review-0": {
+          "type": "pdp_review",
+          "settings": {
+            "author": "Karolina P.",
+            "quote": "I have acne prone skin and this pillowcase has been a game changer. Less breakouts and my hair is smoother."
+          }
+        },
+        "pdp-review-1": {
+          "type": "pdp_review",
+          "settings": {
+            "author": "Ewa M.",
+            "quote": "The cooling effect is real. I sleep so much better and wake up without a puffy face."
+          }
+        }
+      },
+      "block_order": [
+        "benefit-0",
+        "benefit-1",
+        "benefit-2",
+        "accordion-0",
+        "accordion-1",
+        "accordion-2",
+        "pdp-review-0",
+        "pdp-review-1"
+      ],
+      "settings": {
+        "emotional_headline": "Wake up without creases.",
+        "reviews_label": "127 Reviews",
+        "trust_shipping": "Free Shipping",
+        "trust_oeko": "OEKO-TEX®",
+        "tagline": "The ultimate anti-aging tool for your skin and hair.",
+        "price_per_night_prefix": "Only ",
+        "price_per_night_suffix": " / night (based on 1 year use)",
+        "add_to_cart_label": "Add to Cart - Ships Today",
+        "sticky_add_to_cart_label": "Add to Cart",
+        "in_stock_label": "In stock, ready to ship.",
+        "out_of_stock_label": "Out of stock.",
+        "guarantee_heading": "60-Day Sleep Guarantee",
+        "guarantee_body": "Try it for 60 nights. If you don't feel the difference, return it for a full refund. No questions asked.",
+        "video_placeholder": "Video Preview",
+        "cross_sell_heading": "Pairs Well With",
+        "pdp_reviews_heading": "Verified Reviews",
+        "pdp_reviews_button_label": "Write a Review"
+      }
+    }
+  },
+  "order": ["main"]
+}
+

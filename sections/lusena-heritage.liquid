@@ -1,0 +1,80 @@
+<section class="py-24 bg-brand-bg overflow-hidden relative">
+  <div class="container">
+    <div class="max-w-2xl mx-auto text-center space-y-8 relative z-10">
+      {%- if section.settings.kicker != blank -%}
+        <span class="text-secondary text-sm tracking-widest uppercase font-semibold">
+          {{ section.settings.kicker | escape }}
+        </span>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="text-4xl md:text-5xl font-serif text-primary">
+          {{ section.settings.heading | escape }}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.body != blank -%}
+        <div class="space-y-6 text-lg text-secondary leading-relaxed font-light">
+          {{ section.settings.body }}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+        <div class="pt-4">
+          <a
+            href="{{ section.settings.button_link }}"
+            class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-14 px-10 text-base bg-transparent border border-primary/20 hover:bg-surface-1 text-primary"
+          >
+            {{ section.settings.button_label | escape }}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LUSENA heritage (draft)",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Our Heritage"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Born in Suzhou."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Silk isn't just a fabric to us; it's a legacy. Sourced directly from the historic silk capital of Suzhou, LUSENA silk is strictly 22 momme, Grade 6A mulberry silk.</p><p>Certified OEKO-TEX® Standard 100, free from harmful chemicals, and crafted to sustain your beauty while you sleep.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Our Story"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA heritage (draft)",
+      "settings": {
+        "button_link": "shopify://pages/o-nas"
+      }
+    }
+  ]
+}
+{% endschema %}

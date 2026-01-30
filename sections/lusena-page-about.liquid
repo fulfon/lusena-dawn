@@ -1,0 +1,207 @@
+<div>
+  <section class="py-24 md:py-32 bg-white relative overflow-hidden">
+    <div class="container max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+      <div class="space-y-8">
+        <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
+          {{ section.settings.hero_kicker | escape }}
+        </span>
+        <h1 class="text-5xl md:text-7xl font-serif text-primary leading-tight">
+          {{ section.settings.hero_heading_line_1 | escape }}<br>
+          <span class="italic text-secondary/60">{{ section.settings.hero_heading_line_2 | escape }}</span>
+        </h1>
+        <div class="text-lg md:text-xl font-light text-secondary space-y-6 leading-relaxed">
+          {{ section.settings.hero_body }}
+        </div>
+      </div>
+
+      <div class="relative h-[600px] w-full bg-neutral-100 rounded-sm overflow-hidden">
+        {%- if section.settings.hero_image != blank -%}
+          {{
+            section.settings.hero_image
+            | image_url: width: 1600
+            | image_tag:
+              class: 'absolute inset-0 w-full h-full object-cover',
+              loading: 'lazy',
+              widths: '600, 900, 1200, 1600',
+              sizes: '(min-width: 768px) 45vw, 90vw'
+          }}
+        {%- else -%}
+          <span class="absolute inset-0 flex items-center justify-center text-gray-400 font-light italic">
+            {{ section.settings.hero_image_placeholder | escape }}
+          </span>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-brand-bg">
+    <div class="container max-w-4xl mx-auto text-center space-y-12">
+      <h2 class="text-3xl md:text-4xl font-serif text-primary">
+        {{ section.settings.story_heading | escape }}
+      </h2>
+      <div class="text-secondary font-light text-lg leading-relaxed max-w-3xl mx-auto space-y-6">
+        {{ section.settings.story_body }}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-white">
+    <div class="container">
+      <div class="text-center mb-16">
+        <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
+          {{ section.settings.values_kicker | escape }}
+        </span>
+        <h2 class="text-3xl md:text-5xl font-serif text-primary mt-4">
+          {{ section.settings.values_heading | escape }}
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {%- for block in section.blocks -%}
+          <div class="p-8 bg-neutral-50 rounded-sm hover:-translate-y-1 transition-transform duration-300" {{ block.shopify_attributes }}>
+            <h3 class="font-serif text-xl mb-4 text-primary">{{ block.settings.title | escape }}</h3>
+            <p class="text-secondary font-light text-sm leading-relaxed">
+              {{ block.settings.text | escape }}
+            </p>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "LUSENA About (draft)",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "text",
+      "id": "hero_kicker",
+      "label": "Kicker",
+      "default": "O Nas"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading_line_1",
+      "label": "Heading line 1",
+      "default": "Born in Suzhou."
+    },
+    {
+      "type": "text",
+      "id": "hero_heading_line_2",
+      "label": "Heading line 2 (italic)",
+      "default": "Perfected in Poland."
+    },
+    {
+      "type": "richtext",
+      "id": "hero_body",
+      "label": "Hero body",
+      "default": "<p>Wierzymy, że sen to najważniejszy zabieg kosmetyczny dnia.</p><p>Przez lata traktowaliśmy bawełnianą pościel jako \"standard\". Ale bawełna jest chłonna jak ręcznik — wypija wilgoć z Twojej skóry i kremu na noc.</p><p>Stworzyliśmy LUSENĘ, aby zamienić Twoje 8 godzin snu w pasywną pielęgnację. Bez wysiłku. Po prostu kładziesz głowę.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "hero_image_placeholder",
+      "label": "Hero image placeholder",
+      "default": "Zdjęcie portretowe (Founder / Mood board)"
+    },
+    {
+      "type": "header",
+      "content": "Story"
+    },
+    {
+      "type": "text",
+      "id": "story_heading",
+      "label": "Story heading",
+      "default": "Nasza Historia"
+    },
+    {
+      "type": "richtext",
+      "id": "story_body",
+      "label": "Story body",
+      "default": "<p>Historia jedwabiu zaczyna się w Chinach 5000 lat temu. Nasza historia zaczyna się w momencie, gdy zrozumieliśmy, że europejski rynek \"jedwabiu\" jest pełen kompromisów. Zbyt cienki materiał, zawyżone ceny, anonimowe pochodzenie.</p><p>Udaliśmy się do źródła. Do Suzhou. Aby dostarczyć luksus bez pośredników. Jesteśmy polską marką z globalną jakością.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Values"
+    },
+    {
+      "type": "text",
+      "id": "values_kicker",
+      "label": "Values kicker",
+      "default": "Wartości"
+    },
+    {
+      "type": "text",
+      "id": "values_heading",
+      "label": "Values heading",
+      "default": "Czym się kierujemy?"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Jakość bez kompromisów"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Zawsze 22 momme. Zawsze klasa 6A. Nigdy \"jedwab satynowy\" (poliester)."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA About (draft)",
+      "blocks": [
+        {
+          "type": "value",
+          "settings": {
+            "title": "Jakość bez kompromisów",
+            "text": "Zawsze 22 momme. Zawsze klasa 6A. Nigdy \"jedwab satynowy\" (poliester)."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "Szczerość",
+            "text": "Nie obiecujemy, że jedwab cofnie zmarszczki o 10 lat. Obiecujemy, że przestanie je utrwalać każdej nocy."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "Prostota",
+            "text": "Minimalistyczny design. Opakowania bez plastiku. Przejrzysta oferta."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "title": "Lokalność",
+            "text": "Jesteśmy stąd. Podatki płacimy w Polsce. Obsługa klienta mówi po polsku."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

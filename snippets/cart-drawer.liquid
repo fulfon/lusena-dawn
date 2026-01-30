@@ -1,0 +1,410 @@
+{% doc %}
+  Renders the cart drawer matching the LUSENA draft-shop UI.
+
+  Usage:
+  {% render 'cart-drawer' %}
+{% enddoc %}
+
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign upsell_enabled = settings.lusena_enable_cart_upsell
+  if upsell_enabled == nil
+    assign upsell_enabled = true
+  endif
+
+  assign upsell_max_items = settings.lusena_cart_upsell_max_items | default: '1' | plus: 0
+  assign suppress_distinct_threshold = settings.lusena_cart_upsell_suppress_distinct_count | default: 2
+
+  assign cart_product_ids = cart.items | map: 'product_id' | uniq
+  assign distinct_count = cart_product_ids | size
+
+  assign suppress_upsell = false
+  if distinct_count >= suppress_distinct_threshold
+    assign suppress_upsell = true
+  endif
+
+  for item in cart.items
+    if item.product.metafields.lusena.upsell_suppress == true or item.product.metafields.lusena.upsell_role == 'bundle'
+      assign suppress_upsell = true
+      break
+    endif
+  endfor
+
+  assign trigger_product = nil
+  if cart != empty and suppress_upsell == false and upsell_enabled
+    for item in cart.items
+      if item.product.metafields.lusena.upsell_role == 'hero' and item.product.metafields.lusena.upsell_suppress != true
+        assign trigger_product = item.product
+        break
+      endif
+    endfor
+    if trigger_product == nil
+      assign trigger_product = cart.items.first.product
+    endif
+  endif
+
+  assign candidate_primary = blank
+  assign candidate_secondary = blank
+  assign candidate_fallback = settings.lusena_cart_upsell_global_fallback
+
+  if trigger_product != nil
+    assign primary_metafield = trigger_product.metafields.lusena.upsell_primary
+    assign secondary_metafield = trigger_product.metafields.lusena.upsell_secondary
+    assign candidate_primary = primary_metafield.value
+    assign candidate_secondary = secondary_metafield.value
+  endif
+
+  assign upsell_product_1 = blank
+  assign upsell_product_2 = blank
+
+  assign in_cart_primary = false
+  if candidate_primary != blank and cart_product_ids contains candidate_primary.id
+    assign in_cart_primary = true
+  endif
+
+  assign in_cart_secondary = false
+  if candidate_secondary != blank and cart_product_ids contains candidate_secondary.id
+    assign in_cart_secondary = true
+  endif
+
+  assign in_cart_fallback = false
+  if candidate_fallback != blank and cart_product_ids contains candidate_fallback.id
+    assign in_cart_fallback = true
+  endif
+
+  if suppress_upsell == false and upsell_enabled and cart != empty
+    if candidate_primary != blank and candidate_primary.available and in_cart_primary == false
+      assign upsell_product_1 = candidate_primary
+    elsif candidate_secondary != blank and candidate_secondary.available and in_cart_secondary == false
+      assign upsell_product_1 = candidate_secondary
+    elsif candidate_fallback != blank and candidate_fallback.available and in_cart_fallback == false
+      assign upsell_product_1 = candidate_fallback
+    endif
+
+    if upsell_max_items > 1 and upsell_product_1 != blank
+      if candidate_primary != blank and candidate_primary.id != upsell_product_1.id and candidate_primary.available and in_cart_primary == false
+        assign upsell_product_2 = candidate_primary
+      elsif candidate_secondary != blank and candidate_secondary.id != upsell_product_1.id and candidate_secondary.available and in_cart_secondary == false
+        assign upsell_product_2 = candidate_secondary
+      elsif candidate_fallback != blank and candidate_fallback.id != upsell_product_1.id and candidate_fallback.available and in_cart_fallback == false
+        assign upsell_product_2 = candidate_fallback
+      endif
+    endif
+  endif
+-%}
+
+<style>
+  cart-drawer.drawer #CartDrawer-Overlay {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  cart-drawer.drawer.active #CartDrawer-Overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  cart-drawer.drawer.active #CartDrawer {
+    --tw-translate-x: 0px;
+  }
+</style>
+
+<cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
+  <div
+    id="CartDrawer-Overlay"
+    class="fixed inset-0 bg-black/40 z-50 transition-opacity duration-300 backdrop-blur-sm"
+  ></div>
+
+  <div
+    id="CartDrawer"
+    class="drawer__inner fixed inset-y-0 right-0 z-50 w-full max-w-md bg-brand-bg shadow-2xl transform transition-transform duration-300 ease-in-out border-l border-brand-bg translate-x-full"
+    role="dialog"
+    aria-modal="true"
+    aria-label="{{ 'sections.cart.title' | t }}"
+    tabindex="-1"
+  >
+    <div class="flex flex-col h-full">
+      <div class="flex items-center justify-between p-6 border-b border-secondary/10 bg-white/50">
+        <h2 class="text-xl font-serif text-primary">Your Cart</h2>
+        <button
+          type="button"
+          onclick="this.closest('cart-drawer').close()"
+          class="p-2 hover:bg-secondary/10 rounded-full transition-colors"
+          aria-label="{{ 'accessibility.close' | t }}"
+        >
+          {% render 'lusena-icon', name: 'x', class: 'w-5 h-5 text-secondary', stroke_width: 1.5 %}
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-6 space-y-6">
+        {%- if cart == empty -%}
+          <div class="h-full flex flex-col items-center justify-center text-center space-y-4">
+            <div class="p-4 bg-white rounded-full">
+              {% render 'lusena-icon', name: 'shopping-bag', class: 'w-8 h-8 text-secondary/40', stroke_width: 1.5 %}
+            </div>
+            <p class="text-secondary">{{ 'sections.cart.empty' | t }}</p>
+            <a
+              href="{{ routes.all_products_collection_url }}"
+              class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-12 px-8 py-3 border border-primary bg-transparent text-primary hover:bg-surface-2"
+            >
+              {{ 'general.continue_shopping' | t }}
+            </a>
+          </div>
+        {%- else -%}
+          {%- for item in cart.items -%}
+            <div class="flex gap-4" data-cart-item data-key="{{ item.key }}">
+              <div class="w-20 h-24 bg-surface-2 rounded-sm overflow-hidden flex-shrink-0">
+                {%- if item.image -%}
+                  <img
+                    src="{{ item.image | image_url: width: 240 }}"
+                    alt="{{ item.image.alt | escape }}"
+                    class="w-full h-full object-cover"
+                    loading="lazy"
+                    width="80"
+                    height="{{ 96 | divided_by: item.image.aspect_ratio | ceil }}"
+                  >
+                {%- endif -%}
+              </div>
+
+              <div class="flex-1 flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start">
+                    <h3 class="text-sm font-medium text-primary">{{ item.product.title | escape }}</h3>
+                    <span class="text-sm font-medium">{{ item.final_line_price | money_without_trailing_zeros }}</span>
+                  </div>
+
+                  {%- if item.product.has_only_default_variant == false -%}
+                    <p class="text-xs text-secondary mt-1">
+                      {%- for option in item.options_with_values -%}
+                        {{ option.value }}{%- unless forloop.last -%} / {%- endunless -%}
+                      {%- endfor -%}
+                    </p>
+                  {%- endif -%}
+                </div>
+
+                <div class="flex items-center justify-between mt-2">
+                  <div class="flex items-center border border-secondary/20 rounded-sm">
+                    <button
+                      type="button"
+                      data-cart-delta="-1"
+                      class="p-1 hover:bg-surface-2 transition-colors{% if item.quantity <= 1 %} text-secondary/30{% else %} text-primary{% endif %}"
+                      {% if item.quantity <= 1 %}disabled{% endif %}
+                      aria-label="Decrease quantity"
+                    >
+                      {% render 'lusena-icon', name: 'minus', class: 'w-3 h-3', stroke_width: 1.5 %}
+                    </button>
+                    <span class="text-xs font-medium w-6 text-center" data-cart-qty>{{ item.quantity }}</span>
+                    <button
+                      type="button"
+                      data-cart-delta="1"
+                      class="p-1 hover:bg-surface-2 transition-colors text-primary"
+                      aria-label="Increase quantity"
+                    >
+                      {% render 'lusena-icon', name: 'plus', class: 'w-3 h-3', stroke_width: 1.5 %}
+                    </button>
+                  </div>
+
+                  <button
+                    type="button"
+                    data-cart-remove
+                    class="text-xs text-secondary/60 hover:text-red-500 underline transition-colors"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+
+          {%- if upsell_product_1 != blank -%}
+            {%- assign upsell_variant_1 = upsell_product_1.selected_or_first_available_variant -%}
+            <div class="border-t border-secondary/10 p-6 bg-surface-1/30">
+              <h3 class="text-sm font-serif text-primary mb-3">
+                {{ settings.lusena_cart_upsell_title | default: 'Pairs well with' | escape }}
+              </h3>
+              <div class="grid gap-3">
+                <div class="flex items-center gap-3 p-3 bg-white rounded-sm border border-transparent hover:border-secondary/10 transition-colors shadow-sm">
+                  <div class="w-16 h-16 bg-surface-2 rounded-sm overflow-hidden flex-shrink-0">
+                    {%- if upsell_product_1.featured_image -%}
+                      <img
+                        src="{{ upsell_product_1.featured_image | image_url: width: 240 }}"
+                        alt="{{ upsell_product_1.featured_image.alt | escape }}"
+                        class="w-full h-full object-cover"
+                        loading="lazy"
+                        width="64"
+                        height="{{ 64 | divided_by: upsell_product_1.featured_image.aspect_ratio | ceil }}"
+                      >
+                    {%- endif -%}
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="flex justify-between items-start">
+                      <p class="text-sm font-medium text-primary truncate pr-2">{{ upsell_product_1.title | escape }}</p>
+                      <p class="text-sm font-medium">{{ upsell_variant_1.price | money_without_trailing_zeros }}</p>
+                    </div>
+                    {%- liquid
+                      assign upsell_message_metafield = upsell_product_1.metafields.lusena.upsell_message
+                      assign upsell_message = upsell_message_metafield.value | default: settings.lusena_cart_upsell_message_fallback
+                    -%}
+                    <p class="text-xs text-secondary mt-0.5 truncate">{{ upsell_message | escape }}</p>
+
+                    <product-form class="product-form" data-hide-errors="true">
+                      {%- form 'product',
+                        upsell_product_1,
+                        id: 'CartDrawer-Upsell-Form-1',
+                        class: 'form',
+                        novalidate: 'novalidate',
+                        data-type: 'add-to-cart-form'
+                      -%}
+                        <input type="hidden" name="id" value="{{ upsell_variant_1.id }}">
+                        <button
+                          type="submit"
+                          class="mt-2 text-xs font-medium text-primary underline underline-offset-4 hover:text-accent-gold transition-colors text-left"
+                        >
+                          <span>{{ settings.lusena_cart_upsell_add_label | default: '+ Add to Order' | escape }}</span>
+                          {%- render 'loading-spinner' -%}
+                        </button>
+                      {%- endform -%}
+                    </product-form>
+                  </div>
+                </div>
+
+                {%- if upsell_product_2 != blank -%}
+                  {%- assign upsell_variant_2 = upsell_product_2.selected_or_first_available_variant -%}
+                  <div class="flex items-center gap-3 p-3 bg-white rounded-sm border border-transparent hover:border-secondary/10 transition-colors shadow-sm">
+                    <div class="w-16 h-16 bg-surface-2 rounded-sm overflow-hidden flex-shrink-0">
+                      {%- if upsell_product_2.featured_image -%}
+                        <img
+                          src="{{ upsell_product_2.featured_image | image_url: width: 240 }}"
+                          alt="{{ upsell_product_2.featured_image.alt | escape }}"
+                          class="w-full h-full object-cover"
+                          loading="lazy"
+                          width="64"
+                          height="{{ 64 | divided_by: upsell_product_2.featured_image.aspect_ratio | ceil }}"
+                        >
+                      {%- endif -%}
+                    </div>
+
+                    <div class="flex-1 min-w-0">
+                      <div class="flex justify-between items-start">
+                        <p class="text-sm font-medium text-primary truncate pr-2">{{ upsell_product_2.title | escape }}</p>
+                        <p class="text-sm font-medium">{{ upsell_variant_2.price | money_without_trailing_zeros }}</p>
+                      </div>
+                      {%- liquid
+                        assign upsell_message_2_metafield = upsell_product_2.metafields.lusena.upsell_message
+                        assign upsell_message_2 = upsell_message_2_metafield.value | default: settings.lusena_cart_upsell_message_fallback
+                      -%}
+                      <p class="text-xs text-secondary mt-0.5 truncate">{{ upsell_message_2 | escape }}</p>
+
+                      <product-form class="product-form" data-hide-errors="true">
+                        {%- form 'product',
+                          upsell_product_2,
+                          id: 'CartDrawer-Upsell-Form-2',
+                          class: 'form',
+                          novalidate: 'novalidate',
+                          data-type: 'add-to-cart-form'
+                        -%}
+                          <input type="hidden" name="id" value="{{ upsell_variant_2.id }}">
+                          <button
+                            type="submit"
+                            class="mt-2 text-xs font-medium text-primary underline underline-offset-4 hover:text-accent-gold transition-colors text-left"
+                          >
+                            <span>{{ settings.lusena_cart_upsell_add_label | default: '+ Add to Order' | escape }}</span>
+                            {%- render 'loading-spinner' -%}
+                          </button>
+                        {%- endform -%}
+                      </product-form>
+                    </div>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+
+      {%- if cart != empty -%}
+        <div class="border-t border-secondary/10 bg-white p-6 space-y-4">
+          <div class="flex justify-between items-center text-sm">
+            <span class="text-secondary">Subtotal</span>
+            <span class="text-lg font-medium text-primary">{{ cart.total_price | money_without_trailing_zeros }}</span>
+          </div>
+          <p class="text-xs text-secondary/60 text-center">
+            Shipping &amp; taxes calculated at checkout.
+          </p>
+          <a
+            href="{{ routes.checkout_url }}"
+            class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-14 px-10 text-base bg-accent-cta text-white hover:bg-[#0E5E5A]/90 hover:brightness-110 w-full"
+          >
+            Checkout
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</cart-drawer>
+
+<script>
+  (() => {
+    const drawer = document.querySelector('cart-drawer');
+    if (!drawer) return;
+
+    const updateLine = async (triggerEl, key, quantity) => {
+      if (!window.fetch || !window.routes?.cart_change_url) return;
+      if (typeof fetchConfig !== 'function') return;
+
+      const formData = new FormData();
+      formData.append('id', key);
+      formData.append('quantity', quantity);
+
+      if (typeof drawer.getSectionsToRender === 'function') {
+        formData.append(
+          'sections',
+          drawer.getSectionsToRender().map((section) => section.id)
+        );
+        formData.append('sections_url', window.location.pathname);
+      }
+
+      if (typeof drawer.setActiveElement === 'function' && triggerEl) {
+        drawer.setActiveElement(triggerEl);
+      }
+
+      const config = fetchConfig('javascript');
+      config.headers['X-Requested-With'] = 'XMLHttpRequest';
+      delete config.headers['Content-Type'];
+      config.body = formData;
+
+      const response = await fetch(window.routes.cart_change_url, config);
+      const state = await response.json();
+
+      if (typeof drawer.renderContents === 'function') {
+        drawer.renderContents(state);
+      }
+    };
+
+    drawer.addEventListener('click', (event) => {
+      const removeBtn = event.target.closest('[data-cart-remove]');
+      const qtyBtn = event.target.closest('[data-cart-delta]');
+      if (!removeBtn && !qtyBtn) return;
+
+      const itemEl = event.target.closest('[data-cart-item]');
+      if (!itemEl) return;
+
+      const key = itemEl.getAttribute('data-key');
+      if (!key) return;
+
+      if (removeBtn) {
+        updateLine(removeBtn, key, 0);
+        return;
+      }
+
+      const qtyEl = itemEl.querySelector('[data-cart-qty]');
+      const currentQty = parseInt(qtyEl?.textContent || '1', 10);
+      const delta = parseInt(qtyBtn.getAttribute('data-cart-delta') || '0', 10);
+      const nextQty = Math.max(0, currentQty + delta);
+
+      if (nextQty === currentQty) return;
+      updateLine(qtyBtn, key, nextQty);
+    });
+  })();
+</script>

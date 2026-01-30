@@ -1,0 +1,128 @@
+<section class="py-24 bg-surface-1">
+  <div class="container">
+    <div class="text-center mb-16 space-y-4">
+      <h2 class="text-3xl md:text-4xl font-serif text-primary">{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.subheading != blank -%}
+        <p class="text-secondary">{{ section.settings.subheading | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {%- for block in section.blocks -%}
+        <div class="bg-surface-2 p-8 space-y-4" {{ block.shopify_attributes }}>
+          <div class="flex gap-1 text-accent-gold" aria-hidden="true">
+            {%- for i in (1..5) -%}
+              {% render 'lusena-icon', name: 'star', class: 'w-4 h-4 fill-current', stroke_width: 1.5 %}
+            {%- endfor -%}
+          </div>
+          <blockquote class="font-serif text-lg leading-relaxed text-primary">
+            "{{ block.settings.quote | escape }}"
+          </blockquote>
+          <div class="text-xs font-medium tracking-widest uppercase text-secondary">
+            — {{ block.settings.author | escape }}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.link_label != blank -%}
+      <div class="mt-12 text-center">
+        {%- if section.settings.link_url != blank -%}
+          <a
+            href="{{ section.settings.link_url }}"
+            class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 uppercase tracking-widest text-accent-cta underline-offset-4 hover:underline"
+          >
+            {{ section.settings.link_label | escape }}
+          </a>
+        {%- else -%}
+          <span class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium uppercase tracking-widest text-accent-cta">
+            {{ section.settings.link_label | escape }}
+          </span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LUSENA reviews (draft)",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Sleepers Love Us"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Rated 4.9/5 by over 12,000 customers."
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "Read 127 verified reviews"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "Anna K."
+        },
+        {
+          "type": "text",
+          "id": "quote",
+          "label": "Quote",
+          "default": "I never thought a pillowcase could change my skin. My face cream actually stays on now, and no more sleep lines!"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA reviews (draft)",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "author": "Anna K.",
+            "quote": "I never thought a pillowcase could change my skin. My face cream actually stays on now, and no more sleep lines!"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Marta W.",
+            "quote": "The quality is unmatched. I've tried cheaper silk before, but LUSENA feels substantial and incredibly smooth."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Karolina P.",
+            "quote": "Beautiful packaging - I bought one for myself and immediately ordered two more as gifts for my sisters."
+          }
+        }
+      ],
+      "settings": {
+        "link_url": "shopify://pages/reviews"
+      }
+    }
+  ]
+}
+{% endschema %}

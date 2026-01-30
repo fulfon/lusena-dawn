@@ -1,0 +1,139 @@
+<footer class="bg-primary text-white py-16">
+  <div class="container grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div class="space-y-4">
+      <div class="text-2xl font-serif">{{ section.settings.brand_heading | escape }}</div>
+      <div class="text-sm text-gray-400 max-w-xs">
+        {{ section.settings.brand_text }}
+      </div>
+    </div>
+
+    <div>
+      <h4 class="font-serif text-lg mb-6">{{ section.settings.shop_heading | escape }}</h4>
+      {%- if section.settings.shop_menu != blank -%}
+        <ul class="space-y-3 text-sm text-gray-400">
+          {%- for link in section.settings.shop_menu.links -%}
+            <li>
+              <a href="{{ link.url }}" class="hover:text-white transition-colors">{{ link.title | escape }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+
+    <div>
+      <h4 class="font-serif text-lg mb-6">{{ section.settings.help_heading | escape }}</h4>
+      {%- if section.settings.help_menu != blank -%}
+        <ul class="space-y-3 text-sm text-gray-400">
+          {%- for link in section.settings.help_menu.links -%}
+            <li>
+              <a href="{{ link.url }}" class="hover:text-white transition-colors">{{ link.title | escape }}</a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+
+    <div>
+      <h4 class="font-serif text-lg mb-6">{{ section.settings.newsletter_heading | escape }}</h4>
+      <div class="flex flex-col gap-4">
+        <p class="text-sm text-gray-400">{{ section.settings.newsletter_text | escape }}</p>
+        {%- form 'customer', id: 'LusenaFooterNewsletter', class: 'flex flex-col gap-4' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <label class="sr-only" for="LusenaFooterNewsletterEmail">{{ 'newsletter.label' | t }}</label>
+          <input
+            id="LusenaFooterNewsletterEmail"
+            type="email"
+            name="contact[email]"
+            autocomplete="email"
+            placeholder="{{ 'newsletter.label' | t }}"
+            class="bg-transparent border-b border-gray-700 py-2 text-sm focus:outline-none focus:border-white transition-colors"
+            required
+          >
+          <button type="submit" class="sr-only">{{ section.settings.newsletter_button_label | escape }}</button>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-16 pt-8 border-t border-gray-800 text-xs text-center text-gray-500">
+    © {{ 'now' | date: '%Y' }} {{ section.settings.brand_heading | escape }}. All rights reserved.
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "LUSENA footer (draft)",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Brand"
+    },
+    {
+      "type": "text",
+      "id": "brand_heading",
+      "label": "Brand heading",
+      "default": "LUSENA"
+    },
+    {
+      "type": "richtext",
+      "id": "brand_text",
+      "label": "Brand text",
+      "default": "<p>22 momme silk from Suzhou. Certified OEKO-TEX 100.<br>Sleep better, wake up beautiful.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Menus"
+    },
+    {
+      "type": "text",
+      "id": "shop_heading",
+      "label": "Shop heading",
+      "default": "Shop"
+    },
+    {
+      "type": "link_list",
+      "id": "shop_menu",
+      "label": "Shop menu"
+    },
+    {
+      "type": "text",
+      "id": "help_heading",
+      "label": "Help heading",
+      "default": "Help"
+    },
+    {
+      "type": "link_list",
+      "id": "help_menu",
+      "label": "Help menu"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Newsletter heading",
+      "default": "Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_text",
+      "label": "Newsletter text",
+      "default": "Join the circle for early access and care tips."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_button_label",
+      "label": "Newsletter button label",
+      "default": "Sign up"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA footer (draft)"
+    }
+  ]
+}
+{% endschema %}

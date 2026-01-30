@@ -1,0 +1,28 @@
+{% doc %}
+  Adds a small set of utility-class definitions that are referenced by LUSENA sections
+  but may be missing from the currently-shipped `assets/lusena-shop.css` build.
+
+  This keeps the Shopify theme visually identical to the `lusena-shop` draft without
+  requiring a Tailwind rebuild on every change.
+{% enddoc %}
+
+{% stylesheet %}
+  @media (min-width: 768px) {
+    .md\:text-sm {
+      font-size: 1.4rem;
+      line-height: 2rem;
+    }
+  }
+
+  .opacity-80 {
+    opacity: 0.8;
+  }
+
+  .text-red-900\/40 {
+    color: rgb(127 29 29 / 0.4);
+  }
+
+  .text-green-900\/40 {
+    color: rgb(20 83 45 / 0.4);
+  }
+{% endstylesheet %}

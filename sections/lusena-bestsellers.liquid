@@ -1,0 +1,125 @@
+{%- liquid
+  assign collection = section.settings.collection
+  assign limit = section.settings.products_to_show | default: 3
+
+  assign view_all_url = routes.all_products_collection_url
+  if collection != blank
+    assign view_all_url = collection.url
+  endif
+-%}
+
+<section class="py-24 bg-surface-1 border-t border-brand-bg">
+  <div class="container">
+    <div class="flex justify-between items-end mb-12">
+      <div class="space-y-4">
+        <h2 class="text-3xl md:text-4xl font-serif text-primary">{{ section.settings.heading | escape }}</h2>
+        {%- if section.settings.subheading != blank -%}
+          <p class="text-secondary">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.view_all_label != blank -%}
+        <a
+          href="{{ view_all_url }}"
+          class="hidden md:inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 uppercase tracking-widest text-primary underline-offset-4 hover:underline"
+        >
+          {{ section.settings.view_all_label | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 md:gap-8">
+      {%- if collection != blank -%}
+        {%- for product in collection.products limit: limit -%}
+          {%- liquid
+            assign badge = ''
+            assign tags_downcase = product.tags | join: ',' | downcase
+
+            if tags_downcase contains 'bestseller'
+              assign badge = 'Bestseller'
+            elsif tags_downcase contains 'new'
+              assign badge = 'New'
+            endif
+          -%}
+          {% render 'lusena-product-card', product: product, badge: badge, show_secondary_image: true %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..3) -%}
+          <div class="group cursor-pointer">
+            <div class="relative aspect-[4/5] bg-surface-2 overflow-hidden mb-4"></div>
+            <div class="space-y-1 text-center md:text-left">
+              <div class="h-4 bg-surface-2 w-3/4"></div>
+              <div class="h-4 bg-surface-2 w-1/2"></div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.view_all_mobile_label != blank -%}
+      <div class="mt-12 text-center md:hidden">
+        <a
+          href="{{ view_all_url }}"
+          class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-12 px-8 py-3 border border-primary bg-transparent text-primary hover:bg-surface-2 w-full"
+        >
+          {{ section.settings.view_all_mobile_label | escape }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LUSENA Bestsellers",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Bestsellers"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Loved by over 12,000 sleepers."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label (desktop)",
+      "default": "View all products"
+    },
+    {
+      "type": "text",
+      "id": "view_all_mobile_label",
+      "label": "View all label (mobile)",
+      "default": "View all products"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA Bestsellers",
+      "settings": {
+        "collection": "all"
+      }
+    }
+  ]
+}
+{% endschema %}

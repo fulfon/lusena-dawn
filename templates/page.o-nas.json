@@ -1,0 +1,41 @@
+{
+  "sections": {
+    "main": {
+      "type": "lusena-page-about",
+      "blocks": {
+        "value-0": {
+          "type": "value",
+          "settings": {
+            "title": "Jakość bez kompromisów",
+            "text": "Zawsze 22 momme. Zawsze klasa 6A. Nigdy \"jedwab satynowy\" (poliester)."
+          }
+        },
+        "value-1": {
+          "type": "value",
+          "settings": {
+            "title": "Szczerość",
+            "text": "Nie obiecujemy, że jedwab cofnie zmarszczki o 10 lat. Obiecujemy, że przestanie je utrwalać każdej nocy."
+          }
+        },
+        "value-2": {
+          "type": "value",
+          "settings": {
+            "title": "Prostota",
+            "text": "Minimalistyczny design. Opakowania bez plastiku. Przejrzysta oferta."
+          }
+        },
+        "value-3": {
+          "type": "value",
+          "settings": {
+            "title": "Lokalność",
+            "text": "Jesteśmy stąd. Podatki płacimy w Polsce. Obsługa klienta mówi po polsku."
+          }
+        }
+      },
+      "block_order": ["value-0", "value-1", "value-2", "value-3"],
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}
+

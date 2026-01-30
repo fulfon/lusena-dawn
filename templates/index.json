@@ -1,0 +1,235 @@
+{
+  "sections": {
+    "hero": {
+      "type": "lusena-hero",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "<p>Beauty Happens<br>at Night.</p>"
+          }
+        },
+        "subheading": {
+          "type": "subheading",
+          "settings": {
+            "text": "Obudź się piękniejsza. Jedwab 22 momme z Suzhou, który chroni Twoją skórę przez całą noc."
+          }
+        },
+        "buttons": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop Pillowcases",
+            "button_link_1": "shopify://collections/all",
+            "button_label_2": "Why Silk?",
+            "button_link_2": "shopify://pages/nasza-jakosc"
+          }
+        }
+      },
+      "block_order": ["heading", "subheading", "buttons"],
+      "settings": {
+        "overlay_opacity": 10
+      }
+    },
+    "trust": {
+      "type": "lusena-trust-bar",
+      "blocks": {
+        "item-0": {
+          "type": "item",
+          "settings": {
+            "icon": "star",
+            "title": "4.9/5 Rating",
+            "subtitle": "Based on 127 reviews"
+          }
+        },
+        "item-1": {
+          "type": "item",
+          "settings": {
+            "icon": "shield-check",
+            "title": "OEKO-TEX® Certified",
+            "subtitle": "Safe & Non-toxic 100"
+          }
+        },
+        "item-2": {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "title": "Fast Shipping",
+            "subtitle": "Ships within 24h"
+          }
+        },
+        "item-3": {
+          "type": "item",
+          "settings": {
+            "icon": "clock",
+            "title": "60-Day Trial",
+            "subtitle": "Sleep on it risk-free"
+          }
+        }
+      },
+      "block_order": ["item-0", "item-1", "item-2", "item-3"],
+      "settings": {}
+    },
+    "problem_solution": {
+      "type": "lusena-problem-solution",
+      "blocks": {
+        "problem-0": {
+          "type": "problem_item",
+          "settings": {
+            "title": "Friction creates wrinkles",
+            "text": "Cotton fibers act like velcro on a microscopic level, pulling at delicate facial skin and creating sleep creases."
+          }
+        },
+        "problem-1": {
+          "type": "problem_item",
+          "settings": {
+            "title": "Absorbs your skincare",
+            "text": "Cotton is absorbent by nature. It soaks up your expensive night creams and natural oils, drying out your skin and hair."
+          }
+        },
+        "solution-0": {
+          "type": "solution_item",
+          "settings": {
+            "title": "Friction-free glide",
+            "text": "LUSENA 22 momme mulberry silk allows skin and hair to glide smoothly, preventing breakage and morning creases."
+          }
+        },
+        "solution-1": {
+          "type": "solution_item",
+          "settings": {
+            "title": "Retains moisture",
+            "text": "Silk proteins are similar to human skin. It repels dust mites and keeps hydration locked in your skin where it belongs."
+          }
+        }
+      },
+      "block_order": ["problem-0", "problem-1", "solution-0", "solution-1"],
+      "settings": {
+        "cta_link": "shopify://pages/nasza-jakosc"
+      }
+    },
+    "bestsellers": {
+      "type": "lusena-bestsellers",
+      "settings": {
+        "heading": "Our Bestsellers",
+        "subheading": "Loved by over 12,000 sleepers.",
+        "collection": "all",
+        "products_to_show": 3,
+        "view_all_label": "View all products",
+        "view_all_mobile_label": "View all products"
+      }
+    },
+    "heritage": {
+      "type": "lusena-heritage",
+      "settings": {
+        "kicker": "Our Heritage",
+        "heading": "Born in Suzhou.",
+        "body": "<p>Silk isn't just a fabric to us; it's a legacy. Sourced directly from the historic silk capital of Suzhou, LUSENA silk is strictly 22 momme, Grade 6A mulberry silk.</p><p>Certified OEKO-TEX® Standard 100, free from harmful chemicals, and crafted to sustain your beauty while you sleep.</p>",
+        "button_label": "Our Story",
+        "button_link": "shopify://pages/o-nas"
+      }
+    },
+    "reviews": {
+      "type": "lusena-testimonials",
+      "blocks": {
+        "review-0": {
+          "type": "review",
+          "settings": {
+            "author": "Anna K.",
+            "quote": "I never thought a pillowcase could change my skin. My face cream actually stays on now, and no more sleep lines!"
+          }
+        },
+        "review-1": {
+          "type": "review",
+          "settings": {
+            "author": "Marta W.",
+            "quote": "The quality is unmatched. I've tried cheaper silk before, but LUSENA feels substantial and incredibly smooth."
+          }
+        },
+        "review-2": {
+          "type": "review",
+          "settings": {
+            "author": "Karolina P.",
+            "quote": "Beautiful packaging - I bought one for myself and immediately ordered two more as gifts for my sisters."
+          }
+        }
+      },
+      "block_order": ["review-0", "review-1", "review-2"],
+      "settings": {
+        "heading": "Sleepers Love Us",
+        "subheading": "Rated 4.9/5 by over 12,000 customers.",
+        "link_label": "Read 127 verified reviews"
+      }
+    },
+    "gift": {
+      "type": "lusena-bundles",
+      "blocks": {
+        "benefit-0": {
+          "type": "benefit",
+          "settings": {
+            "text": "Save up to 20% on sets"
+          }
+        },
+        "benefit-1": {
+          "type": "benefit",
+          "settings": {
+            "text": "Signature gift box included"
+          }
+        },
+        "benefit-2": {
+          "type": "benefit",
+          "settings": {
+            "text": "Free shipping on bundles"
+          }
+        }
+      },
+      "block_order": ["benefit-0", "benefit-1", "benefit-2"],
+      "settings": {
+        "kicker": "Gift Ready",
+        "heading": "The Perfect Gift,\nWrapped in Luxury.",
+        "body": "Every LUSENA order arrives in our signature premium box. Perfect for birthdays, holidays, or a treat for yourself.",
+        "image_placeholder": "Gift box image",
+        "button_label": "Shop Gift Sets",
+        "button_link": "shopify://collections/all"
+      }
+    },
+    "faq": {
+      "type": "lusena-faq",
+      "blocks": {
+        "item-0": {
+          "type": "item",
+          "settings": {
+            "question": "Is it real mulberry silk?",
+            "answer": "<p>Yes, absolutely. We use only 100% Grade 6A Mulberry Silk, 22 momme thickness. It is the highest grade available, ensuring durability and the ultimate smooth feel.</p>"
+          }
+        },
+        "item-1": {
+          "type": "item",
+          "settings": {
+            "question": "How do I wash it?",
+            "answer": "<p>LUSENA silk is machine washable on a delicate/silk cycle (30°C) using pH-neutral detergent. You can also hand wash. Air dry out of direct sunlight.</p>"
+          }
+        },
+        "item-2": {
+          "type": "item",
+          "settings": {
+            "question": "Do you offer a trial period?",
+            "answer": "<p>We offer a 60-night sleep trial. If you don't love it, return it for a full refund. We believe in our quality that much.</p>"
+          }
+        },
+        "item-3": {
+          "type": "item",
+          "settings": {
+            "question": "Where do you ship from?",
+            "answer": "<p>We are a Polish brand and ship directly from our warehouse in Warsaw. Domestic delivery typically takes 1-2 business days.</p>"
+          }
+        }
+      },
+      "block_order": ["item-0", "item-1", "item-2", "item-3"],
+      "settings": {
+        "heading": "Common Questions",
+        "subheading": "Everything you need to know about sleeping on silk."
+      }
+    }
+  },
+  "order": ["hero", "trust", "problem_solution", "bestsellers", "heritage", "reviews", "gift", "faq"]
+}
+

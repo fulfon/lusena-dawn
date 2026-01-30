@@ -1,0 +1,231 @@
+<section class="py-24 bg-surface-1 lusena-faq" data-lusena-faq>
+  <div class="container max-w-3xl">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-serif text-primary mb-4">{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.subheading != blank -%}
+        <p class="text-secondary">{{ section.settings.subheading | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="w-full">
+      {%- for block in section.blocks -%}
+        <details class="lusena-faq__item border-b border-secondary/20" {{ block.shopify_attributes }}>
+          <summary class="flex items-center justify-between py-4 font-medium transition-all hover:text-accent-cta cursor-pointer">
+            {{ block.settings.question | escape }}
+            {% render 'lusena-icon', name: 'chevron-down', class: 'h-4 w-4 shrink-0 transition-transform duration-200 lusena-faq__chevron', stroke_width: 1.5 %}
+          </summary>
+          <div class="lusena-faq__content overflow-hidden text-sm">
+            <div class="lusena-faq__content-inner pb-4 pt-0 text-secondary">
+              {{ block.settings.answer }}
+            </div>
+          </div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .lusena-faq details[open] .lusena-faq__chevron {
+    transform: rotate(180deg);
+  }
+
+  .lusena-faq__content {
+    height: 0;
+    transition: height 0.2s ease-out;
+    overflow: hidden;
+  }
+
+  .lusena-faq details[open] .lusena-faq__content {
+    height: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lusena-faq__content {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    const root = document.querySelector('[data-lusena-faq]');
+    if (!root) return;
+
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+    const items = Array.from(root.querySelectorAll('details.lusena-faq__item'));
+
+    const getContent = (details) => details.querySelector('.lusena-faq__content');
+
+    const setClosedState = (details) => {
+      const content = getContent(details);
+      if (!content) return;
+      content.style.height = '0px';
+    };
+
+    const setOpenState = (details) => {
+      const content = getContent(details);
+      if (!content) return;
+      content.style.height = 'auto';
+    };
+
+    const closeItem = (details) => {
+      const content = getContent(details);
+      if (!content) return;
+
+      if (prefersReducedMotion) {
+        details.open = false;
+        setClosedState(details);
+        return;
+      }
+
+      const startHeight = content.getBoundingClientRect().height;
+      content.style.height = `${startHeight}px`;
+      // Force reflow so the browser picks up the start height before transitioning to 0.
+      void content.offsetHeight;
+
+      content.style.height = '0px';
+
+      const onEnd = (event) => {
+        if (event.target !== content || event.propertyName !== 'height') return;
+        content.removeEventListener('transitionend', onEnd);
+        details.open = false;
+      };
+
+      content.addEventListener('transitionend', onEnd);
+    };
+
+    const openItem = (details) => {
+      const content = getContent(details);
+      if (!content) return;
+
+      // Accordion behavior: only one open at a time.
+      items.forEach((other) => {
+        if (other !== details && other.open) closeItem(other);
+      });
+
+      if (prefersReducedMotion) {
+        details.open = true;
+        setOpenState(details);
+        return;
+      }
+
+      details.open = true;
+
+      // Start from 0 for a smooth open animation.
+      content.style.height = '0px';
+      void content.offsetHeight;
+
+      const targetHeight = content.scrollHeight;
+      content.style.height = `${targetHeight}px`;
+
+      const onEnd = (event) => {
+        if (event.target !== content || event.propertyName !== 'height') return;
+        content.removeEventListener('transitionend', onEnd);
+        content.style.height = 'auto';
+      };
+
+      content.addEventListener('transitionend', onEnd);
+    };
+
+    const syncInitialHeights = () => {
+      items.forEach((details) => {
+        if (details.open) setOpenState(details);
+        else setClosedState(details);
+      });
+    };
+
+    syncInitialHeights();
+
+    items.forEach((details) => {
+      const summary = details.querySelector('summary');
+      if (!summary) return;
+
+      summary.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (details.open) closeItem(details);
+        else openItem(details);
+      });
+    });
+
+    if (window.Shopify?.designMode) {
+      document.addEventListener('shopify:section:load', syncInitialHeights);
+    }
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "LUSENA FAQ (draft)",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Common Questions"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Everything you need to know about sleeping on silk."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Is it real mulberry silk?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Yes, absolutely. We use only 100% Grade 6A Mulberry Silk, 22 momme thickness. It is the highest grade available, ensuring durability and the ultimate smooth feel.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA FAQ (draft)",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "question": "Is it real mulberry silk?",
+            "answer": "<p>Yes, absolutely. We use only 100% Grade 6A Mulberry Silk, 22 momme thickness. It is the highest grade available, ensuring durability and the ultimate smooth feel.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "How do I wash it?",
+            "answer": "<p>LUSENA silk is machine washable on a delicate/silk cycle (30°C) using pH-neutral detergent. You can also hand wash. Air dry out of direct sunlight.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Do you offer a trial period?",
+            "answer": "<p>We offer a 60-night sleep trial. If you don't love it, return it for a full refund. We believe in our quality that much.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "question": "Where do you ship from?",
+            "answer": "<p>We are a Polish brand and ship directly from our warehouse in Warsaw. Domestic delivery typically takes 1-2 business days.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

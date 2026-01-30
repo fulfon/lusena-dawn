@@ -1,0 +1,14 @@
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.shopify
+.codex/.tmp/
+config/shopify.theme.tom.txt
+lusena-shop/
+.tmp-remote-check-1/

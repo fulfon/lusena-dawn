@@ -1,0 +1,324 @@
+<section
+  class="lusena-science color-{{ section.settings.color_scheme }}"
+  style="
+    --padding-top: {{ section.settings.padding_top }}px;
+    --padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+  data-lusena-science
+>
+  <div class="lusena-science__container page-width">
+    <div class="lusena-science__layout">
+      <div class="lusena-science__text" data-lusena-science-text>
+        {%- if section.settings.kicker != blank -%}
+          <span class="lusena-science__kicker lusena-animate-fade-up">{{ section.settings.kicker }}</span>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h2 class="lusena-science__heading {{ section.settings.heading_size }} lusena-animate-fade-up">
+            {{ section.settings.heading }}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.description != blank -%}
+          <div class="lusena-science__description lusena-animate-fade-up">
+            {{ section.settings.description }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank -%}
+          <a
+            href="{{ section.settings.button_link }}"
+            class="button {% if section.settings.button_style_secondary %}button--secondary{% else %}button--primary{% endif %} lusena-science__button lusena-animate-fade-up"
+          >
+            {{ section.settings.button_label }}
+          </a>
+        {%- endif -%}
+      </div>
+
+      <div class="lusena-science__images" data-lusena-science-images>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'image_card' -%}
+            <div class="lusena-science__card lusena-animate-fade-up" {{ block.shopify_attributes }}>
+              <div class="lusena-science__card-image">
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'lusena-science__img' }}
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag: 'lusena-science__placeholder' }}
+                {%- endif -%}
+              </div>
+              {%- if block.settings.caption != blank -%}
+                <p class="lusena-science__card-caption">{{ block.settings.caption }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .lusena-science {
+    padding-top: var(--padding-top);
+    padding-bottom: var(--padding-bottom);
+    overflow: hidden;
+  }
+
+  .lusena-science__layout {
+    display: grid;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .lusena-science__text {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .lusena-science__kicker {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+  }
+
+  .lusena-science__heading {
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .lusena-science__description {
+    font-size: 1rem;
+    line-height: 1.7;
+    opacity: 0.85;
+  }
+
+  .lusena-science__description p {
+    margin: 0 0 1rem 0;
+  }
+
+  .lusena-science__description p:last-child {
+    margin-bottom: 0;
+  }
+
+  .lusena-science__button {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+  }
+
+  .lusena-science__images {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .lusena-science__card {
+    background: rgba(var(--color-background), 0.5);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    border: 1px solid rgba(var(--color-foreground), 0.08);
+  }
+
+  .lusena-science__card-image {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+
+  .lusena-science__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .lusena-science__card:hover .lusena-science__img {
+    transform: scale(1.03);
+  }
+
+  .lusena-science__placeholder {
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+  }
+
+  .lusena-science__card-caption {
+    padding: 1rem 1.25rem;
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    border-top: 1px solid rgba(var(--color-foreground), 0.06);
+  }
+
+  @media screen and (min-width: 990px) {
+    .lusena-science__layout {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .lusena-science__text {
+      position: sticky;
+      top: 120px;
+      gap: 1.25rem;
+    }
+
+    .lusena-science__kicker {
+      font-size: 0.8125rem;
+    }
+
+    .lusena-science__description {
+      font-size: 1.0625rem;
+    }
+
+    .lusena-science__images {
+      gap: 2rem;
+    }
+
+    .lusena-science__card-image {
+      aspect-ratio: 3/2;
+    }
+
+    .lusena-science__card-caption {
+      padding: 1.25rem 1.5rem;
+      font-size: 1rem;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .lusena-science__heading {
+      font-size: 1.75rem;
+    }
+
+    .lusena-science__card-caption {
+      padding: 0.875rem 1rem;
+      font-size: 0.875rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.lusena_science.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "t:sections.lusena_science.settings.kicker.label",
+      "default": "The LUSENA difference"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.lusena_science.settings.heading.label",
+      "default": "Why 22 momme matters"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "t:sections.all.heading_size.label",
+      "options": [
+        { "value": "h2", "label": "t:sections.all.heading_size.options__1.label" },
+        { "value": "h1", "label": "t:sections.all.heading_size.options__2.label" },
+        { "value": "h0", "label": "t:sections.all.heading_size.options__3.label" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "t:sections.lusena_science.settings.description.label",
+      "default": "<p>Momme is the weight measurement for silk. Higher momme means denser, more durable fabric. Our 22 momme silk is the sweet spot: luxuriously thick yet breathable.</p><p>We source our silk from Suzhou, China's historic silk capital, ensuring every thread meets our quality standards.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.lusena_science.settings.button_label.label",
+      "default": "Learn more about our silk"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:sections.lusena_science.settings.button_link.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_style_secondary",
+      "label": "t:sections.lusena_science.settings.button_style_secondary.label",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-2"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_card",
+      "name": "t:sections.lusena_science.blocks.image_card.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.lusena_science.blocks.image_card.settings.image.label"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "t:sections.lusena_science.blocks.image_card.settings.caption.label",
+          "default": "22 momme silk close-up showing the dense, luxurious weave"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.lusena_science.presets.name",
+      "blocks": [
+        {
+          "type": "image_card",
+          "settings": {
+            "caption": "22 momme silk close-up showing the dense, luxurious weave"
+          }
+        },
+        {
+          "type": "image_card",
+          "settings": {
+            "caption": "The burn test: real silk forms a crisp ash and smells like burnt hair"
+          }
+        },
+        {
+          "type": "image_card",
+          "settings": {
+            "caption": "OEKO-TEX Standard 100 certification ensures safety for your skin"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
