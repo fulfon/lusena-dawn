@@ -1,11 +1,11 @@
-<section class="py-24 bg-brand-bg">
+<section class="py-24 bg-brand-bg lusena-problem-solution">
   <div class="container">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 lusena-problem-solution__grid">
       <div class="space-y-8">
-        <span class="text-secondary text-xs md:text-sm tracking-widest uppercase font-semibold">
+        <span class="text-secondary text-xs md:text-sm tracking-widest uppercase font-semibold lusena-problem-solution__kicker">
           {{ section.settings.problem_label | escape }}
         </span>
-        <h3 class="text-2xl md:text-3xl font-serif text-primary leading-tight opacity-80">
+        <h3 class="text-2xl md:text-3xl font-serif text-primary leading-tight opacity-80 lusena-problem-solution__headline">
           {{ section.settings.problem_heading | newline_to_br }}
         </h3>
         <div class="space-y-8 pt-4">
@@ -24,10 +24,10 @@
       </div>
 
       <div class="space-y-8">
-        <span class="text-accent-gold text-xs md:text-sm tracking-widest uppercase font-semibold">
+        <span class="text-accent-gold text-xs md:text-sm tracking-widest uppercase font-semibold lusena-problem-solution__kicker">
           {{ section.settings.solution_label | escape }}
         </span>
-        <h3 class="text-2xl md:text-3xl font-serif text-primary leading-tight">
+        <h3 class="text-2xl md:text-3xl font-serif text-primary leading-tight lusena-problem-solution__headline">
           {{ section.settings.solution_heading | newline_to_br }}
         </h3>
         <div class="space-y-8 pt-4">
@@ -58,6 +58,38 @@
     {%- endif -%}
   </div>
 </section>
+
+{% stylesheet %}
+  .lusena-problem-solution .lusena-problem-solution__grid {
+    gap: 48px;
+  }
+
+  .lusena-problem-solution .lusena-problem-solution__kicker {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .lusena-problem-solution .lusena-problem-solution__headline {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  @media (min-width: 768px) {
+    .lusena-problem-solution .lusena-problem-solution__grid {
+      gap: 96px;
+    }
+
+    .lusena-problem-solution .lusena-problem-solution__kicker {
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .lusena-problem-solution .lusena-problem-solution__headline {
+      font-size: 30px;
+      line-height: 36px;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
