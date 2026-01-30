@@ -1,30 +1,86 @@
 {%- assign known_icons = 'star,shield-check,truck,clock' | split: ',' -%}
 
-<section class="bg-surface-2 py-8">
+<section class="bg-surface-2 lusena-trust-bar" data-lusena-trust-bar>
   <div class="container px-4 md:px-6">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 bg-surface-2">
+    <div class="grid grid-cols-2 md:grid-cols-4 lusena-trust-bar__grid bg-surface-2">
       {%- for block in section.blocks -%}
-        <div class="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3" {{ block.shopify_attributes }}>
+        <div class="lusena-trust-bar__item" {{ block.shopify_attributes }}>
           {%- if block.settings.icon != blank -%}
-            <div class="p-2 bg-white rounded-full text-accent-cta">
+            <div class="lusena-trust-bar__icon text-accent-cta">
               {%- if known_icons contains block.settings.icon -%}
-                {% render 'lusena-icon', name: block.settings.icon, class: 'w-5 h-5', stroke_width: 1.5 %}
+                {% render 'lusena-icon', name: block.settings.icon, class: 'lusena-trust-bar__icon-svg', stroke_width: 1.5 %}
               {%- else -%}
-                <span class="w-5 h-5 inline-flex items-center justify-center text-sm font-medium" aria-hidden="true">
+                <span class="lusena-trust-bar__icon-svg inline-flex items-center justify-center text-sm font-medium" aria-hidden="true">
                   {{ block.settings.icon }}
                 </span>
               {%- endif -%}
             </div>
           {%- endif -%}
           <div class="flex flex-col">
-            <span class="text-sm font-medium text-primary">{{ block.settings.title | escape }}</span>
-            <span class="text-xs text-secondary">{{ block.settings.subtitle | escape }}</span>
+            <span class="lusena-trust-bar__title font-medium text-primary">{{ block.settings.title | escape }}</span>
+            <span class="lusena-trust-bar__subtitle text-secondary">{{ block.settings.subtitle | escape }}</span>
           </div>
         </div>
       {%- endfor -%}
     </div>
   </div>
 </section>
+
+{% stylesheet %}
+  .lusena-trust-bar {
+    padding-block: 32px;
+  }
+
+  .lusena-trust-bar__grid {
+    gap: 24px;
+  }
+
+  .lusena-trust-bar__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .lusena-trust-bar__icon {
+    padding: 8px;
+    background: #fff;
+    border-radius: 9999px;
+    line-height: 0;
+  }
+
+  .lusena-trust-bar__icon-svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .lusena-trust-bar__title {
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: normal;
+  }
+
+  .lusena-trust-bar__subtitle {
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: normal;
+  }
+
+  @media (min-width: 640px) {
+    .lusena-trust-bar__item {
+      flex-direction: row;
+      align-items: flex-start;
+      text-align: left;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .lusena-trust-bar__grid {
+      gap: 32px;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

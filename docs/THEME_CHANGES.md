@@ -14,7 +14,43 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ---
 
-## Commits
+**Note (2026-01-30):** Git history in this repo was reset (new `Initial commit`). Entries under **Legacy commits** reference the pre-reset history and won’t match the current commit hashes.
+
+## Commits (current history)
+
+### 922b24d — Initial commit
+
+**Goal:** Publish the theme to GitHub as the new baseline history after resolving `index-pack failed` push issues.
+
+**What changed**
+- Initialized the repository and pushed the full theme as a clean baseline.
+
+**Key files**
+- (baseline snapshot of the whole theme)
+
+### e47ec72 — fix(lusena): trust bar layout + remove border
+
+**Goal:** Bring the homepage trust bar closer to the draft by removing the visible divider line and ensuring a tighter, more “strip-like” layout.
+
+**What changed**
+- Adjusted `lusena-trust-bar` layout/styling and removed the top border to eliminate the thin line between hero and trust strip.
+
+**Key files**
+- `sections/lusena-trust-bar.liquid`
+
+### TBD — fix(lusena): trust bar matches draft layout (icons + height)
+
+**Goal:** Match the `lusena-shop/` draft trust strip 1:1 (icon-to-text alignment, responsive stacking, and bar height).
+
+**What changed**
+- Updated trust bar item layout to stack on mobile and align icon-left/text-right from `sm` breakpoint (matching the draft’s `flex-col sm:flex-row` behavior).
+
+**Key files**
+- `sections/lusena-trust-bar.liquid`
+
+---
+
+## Legacy commits (pre history reset)
 
 ### 2f6787f — fix(lusena): match homepage to draft spacing + CTAs
 
