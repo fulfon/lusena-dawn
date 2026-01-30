@@ -38,7 +38,7 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Key files**
 - `sections/lusena-trust-bar.liquid`
 
-### TBD — fix(lusena): trust bar matches draft layout (icons + height)
+### 90e00a8 — fix(lusena): trust bar matches draft layout (icons + height)
 
 **Goal:** Match the `lusena-shop/` draft trust strip 1:1 (icon-to-text alignment, responsive stacking, and bar height).
 
