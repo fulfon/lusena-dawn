@@ -40,6 +40,8 @@ description: Workflow for maintaining the LUSENA Shopify Dawn theme. Use when ma
   - goal (1–2 sentences)
   - “what changed” (bullets)
   - key files touched (high-signal list)
+- Keep only the **latest 8** change entries detailed in `docs/THEME_CHANGES.md`.
+- If there are more than 8 entries, compress anything older than the newest 8 into an **Older commits (summary only)** list (hash + subject only, no details).
 
 Template snippet to copy:
 
