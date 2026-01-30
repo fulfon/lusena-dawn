@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -25,8 +34,13 @@
           }
         }
       },
-      "block_order": ["heading", "subheading", "buttons"],
+      "block_order": [
+        "heading",
+        "subheading",
+        "buttons"
+      ],
       "settings": {
+        "image": "shopify://shop_images/hero.jpg",
         "overlay_opacity": 10
       }
     },
@@ -66,7 +80,12 @@
           }
         }
       },
-      "block_order": ["item-0", "item-1", "item-2", "item-3"],
+      "block_order": [
+        "item-0",
+        "item-1",
+        "item-2",
+        "item-3"
+      ],
       "settings": {}
     },
     "problem_solution": {
@@ -101,8 +120,18 @@
           }
         }
       },
-      "block_order": ["problem-0", "problem-1", "solution-0", "solution-1"],
+      "block_order": [
+        "problem-0",
+        "problem-1",
+        "solution-0",
+        "solution-1"
+      ],
       "settings": {
+        "problem_label": "The Problem",
+        "problem_heading": "Cotton absorbs.\nFriction & Dryness.",
+        "solution_label": "The Solution",
+        "solution_heading": "Silk preserves.\nHydration & Smoothness.",
+        "cta_label": "Read the science behind silk",
         "cta_link": "shopify://pages/nasza-jakosc"
       }
     },
@@ -152,11 +181,16 @@
           }
         }
       },
-      "block_order": ["review-0", "review-1", "review-2"],
+      "block_order": [
+        "review-0",
+        "review-1",
+        "review-2"
+      ],
       "settings": {
         "heading": "Sleepers Love Us",
         "subheading": "Rated 4.9/5 by over 12,000 customers.",
-        "link_label": "Read 127 verified reviews"
+        "link_label": "Read 127 verified reviews",
+        "link_url": ""
       }
     },
     "gift": {
@@ -181,7 +215,11 @@
           }
         }
       },
-      "block_order": ["benefit-0", "benefit-1", "benefit-2"],
+      "block_order": [
+        "benefit-0",
+        "benefit-1",
+        "benefit-2"
+      ],
       "settings": {
         "kicker": "Gift Ready",
         "heading": "The Perfect Gift,\nWrapped in Luxury.",
@@ -223,13 +261,26 @@
           }
         }
       },
-      "block_order": ["item-0", "item-1", "item-2", "item-3"],
+      "block_order": [
+        "item-0",
+        "item-1",
+        "item-2",
+        "item-3"
+      ],
       "settings": {
         "heading": "Common Questions",
         "subheading": "Everything you need to know about sleeping on silk."
       }
     }
   },
-  "order": ["hero", "trust", "problem_solution", "bestsellers", "heritage", "reviews", "gift", "faq"]
+  "order": [
+    "hero",
+    "trust",
+    "problem_solution",
+    "bestsellers",
+    "heritage",
+    "reviews",
+    "gift",
+    "faq"
+  ]
 }
-
