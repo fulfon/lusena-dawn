@@ -1,4 +1,4 @@
-<section class="relative h-[85vh] min-h-[600px] w-full overflow-hidden lusena-hero">
+<section class="relative w-full overflow-hidden lusena-hero" style="--lusena-hero-mobile-max-height: {{ section.settings.mobile_max_height_px }}px;">
   {%- liquid
     assign desktop_image = section.settings.image_desktop
     if desktop_image == blank
@@ -16,6 +16,13 @@
     endif
 
     assign overlay_opacity = section.settings.overlay_opacity | default: 50
+
+    assign content_position_mobile = section.settings.content_position_mobile | default: content_position
+    assign content_position_desktop = section.settings.content_position_desktop | default: content_position
+
+    assign content_offset_y = section.settings.content_offset_y | default: 0
+    assign content_offset_y_mobile = section.settings.content_offset_y_mobile | default: content_offset_y
+    assign content_offset_y_desktop = section.settings.content_offset_y_desktop | default: content_offset_y
   -%}
 
   <div class="absolute inset-0 h-full w-full z-0" data-lusena-hero-image>
@@ -59,7 +66,10 @@
     &#8203;
   </div>
 
-  <div class="container relative h-full flex flex-col z-20 lusena-hero__content lusena-hero__content--{{ content_position }}" style="--lusena-hero-content-offset-y: {{ section.settings.content_offset_y }}px;">
+  <div
+    class="container relative h-full flex flex-col z-20 lusena-hero__content lusena-hero__content--m-{{ content_position_mobile }} lusena-hero__content--d-{{ content_position_desktop }}"
+    style="--lusena-hero-content-offset-y-mobile: {{ content_offset_y_mobile }}px; --lusena-hero-content-offset-y-desktop: {{ content_offset_y_desktop }}px;"
+  >
     <div class="max-w-xl space-y-6 md:space-y-8 pl-4 md:pl-0 lusena-hero__text" data-lusena-hero-text>
       {%- for block in section.blocks -%}
         {%- case block.type -%}
@@ -110,51 +120,89 @@
 </section>
 
 {% stylesheet %}
+  .lusena-hero {
+    height: 85vh;
+    min-height: 600px;
+  }
+
+  @media (max-width: 767px) {
+    .lusena-hero {
+      min-height: 0;
+      height: min(85vh, var(--lusena-hero-mobile-max-height));
+    }
+
+    .lusena-hero [data-lusena-hero-image] img {
+      object-position: bottom;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .lusena-hero [data-lusena-hero-image] img {
+      object-position: center;
+    }
+  }
+
   .lusena-hero__content {
     justify-content: center;
     padding-top: 0;
     padding-bottom: 0;
   }
 
-  .lusena-hero__content--top {
+  .lusena-hero__content--m-top {
     justify-content: flex-start;
     padding-top: 7.2rem;
     padding-bottom: 0;
   }
 
-  .lusena-hero__content--center {
+  .lusena-hero__content--m-center {
     justify-content: center;
     padding-top: 0;
     padding-bottom: 0;
   }
 
-  .lusena-hero__content--lower {
+  .lusena-hero__content--m-lower {
     justify-content: flex-end;
     padding-top: 0;
     padding-bottom: 7.2rem;
   }
 
-  .lusena-hero__content--bottom {
+  .lusena-hero__content--m-bottom {
     justify-content: flex-end;
     padding-top: 0;
     padding-bottom: 3.6rem;
   }
 
   .lusena-hero__text {
-    transform: translateY(var(--lusena-hero-content-offset-y));
+    transform: translateY(var(--lusena-hero-content-offset-y-mobile, 0px));
   }
 
   @media (min-width: 768px) {
-    .lusena-hero__content--top {
+    .lusena-hero__content--d-top {
+      justify-content: flex-start;
       padding-top: 6rem;
+      padding-bottom: 0;
     }
 
-    .lusena-hero__content--lower {
+    .lusena-hero__content--d-center {
+      justify-content: center;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .lusena-hero__content--d-lower {
+      justify-content: flex-end;
+      padding-top: 0;
       padding-bottom: 10rem;
     }
 
-    .lusena-hero__content--bottom {
+    .lusena-hero__content--d-bottom {
+      justify-content: flex-end;
+      padding-top: 0;
       padding-bottom: 5rem;
+    }
+
+    .lusena-hero__text {
+      transform: translateY(var(--lusena-hero-content-offset-y-desktop, 0px));
     }
   }
 {% endstylesheet %}
@@ -181,6 +229,16 @@
     },
     {
       "type": "range",
+      "id": "mobile_max_height_px",
+      "min": 320,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "label": "Mobile hero max height",
+      "default": 900
+    },
+    {
+      "type": "range",
       "id": "overlay_opacity",
       "min": 0,
       "max": 90,
@@ -190,9 +248,13 @@
       "default": 50
     },
     {
+      "type": "header",
+      "content": "Text position — mobile"
+    },
+    {
       "type": "radio",
-      "id": "content_position",
-      "label": "Text vertical position",
+      "id": "content_position_mobile",
+      "label": "Text vertical position (mobile)",
       "default": "lower",
       "options": [
         { "value": "top", "label": "Top" },
@@ -203,12 +265,38 @@
     },
     {
       "type": "range",
-      "id": "content_offset_y",
+      "id": "content_offset_y_mobile",
       "min": -120,
       "max": 120,
       "step": 4,
       "unit": "px",
-      "label": "Text fine-tune (Y offset)",
+      "label": "Text fine-tune (Y offset) (mobile)",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Text position — desktop"
+    },
+    {
+      "type": "radio",
+      "id": "content_position_desktop",
+      "label": "Text vertical position (desktop)",
+      "default": "lower",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "lower", "label": "Lower" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "content_offset_y_desktop",
+      "min": -120,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Text fine-tune (Y offset) (desktop)",
       "default": 0
     }
   ],
