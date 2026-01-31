@@ -20,6 +20,18 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 ## Recent commits (detailed, last 8)
 
 
+### 7efa557 — feat(lusena): auto-hide header on scroll
+
+**Goal:** Let merchants optionally auto-hide the header on scroll down and reveal it on scroll up, with separate toggles for mobile and desktop.
+
+**What changed**
+- Added `auto_hide_on_scroll_mobile` and `auto_hide_on_scroll_desktop` toggles in the header section settings.
+- Implemented scroll-direction detection that hides the header on downward scroll and shows it on upward scroll (menu open keeps header visible).
+
+**Key files**
+- `sections/lusena-header.liquid`
+- `sections/header-group.json`
+
 ### 27fcb56 — feat(lusena): independent mobile hero offsets
 
 **Goal:** Let merchants position hero text and CTA buttons independently on mobile, including a viewport-relative (vh) fine-tune.
@@ -100,21 +112,13 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Key files**
 - `sections/lusena-page-quality.liquid`
 
-### c6e29b9 — fix(lusena): close mobile menu on outside tap
-
-**Goal:** Close the expanded mobile menu when the user taps/clicks anywhere outside the menu.
-
-**What changed**
-- Added a document-level outside-tap handler that closes the mobile menu when clicking outside the toggle and menu panel.
-
-**Key files**
-- `sections/lusena-header.liquid`
-
 ---
 
 ## Older commits (summary only)
 
 - 22e1ac1 — fix(lusena): remove homepage header spacer
+
+- c6e29b9 — fix(lusena): close mobile menu on outside tap
 
 - b441ec8 — fix(lusena): make header opaque at top
 
