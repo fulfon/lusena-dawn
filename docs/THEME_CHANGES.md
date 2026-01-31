@@ -20,6 +20,18 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 ## Recent commits (detailed, last 8)
 
 
+### 27fcb56 — feat(lusena): independent mobile hero offsets
+
+**Goal:** Let merchants position hero text and CTA buttons independently on mobile, including a viewport-relative (vh) fine-tune.
+
+**What changed**
+- Split hero text and buttons into separate wrappers so GSAP animations don’t override positioning transforms.
+- Added mobile-only fine-tune offsets (px + vh) for text and buttons so each can be adjusted independently.
+
+**Key files**
+- `sections/lusena-hero.liquid`
+- `templates/index.json`
+
 ### 6187b7d — feat(lusena): mobile hero button size controls
 
 **Goal:** Give merchants finer control over the hero button sizing on mobile.
@@ -98,16 +110,6 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Key files**
 - `sections/lusena-header.liquid`
 
-### d5e5458 — fix(lusena): align mobile menu vertical padding
-
-**Goal:** Match the top and bottom padding of the expanded mobile menu so spacing feels balanced.
-
-**What changed**
-- Made the mobile menu content use equal vertical padding (`py-4`) so the gap above “SKLEP” matches the gap below “DLACZEGO JEDWAB?”.
-
-**Key files**
-- `sections/lusena-header.liquid`
-
 ---
 
 ## Older commits (summary only)
@@ -115,6 +117,8 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - 22e1ac1 — fix(lusena): remove homepage header spacer
 
 - b441ec8 — fix(lusena): make header opaque at top
+
+- d5e5458 — fix(lusena): align mobile menu vertical padding
 
 - 1dc0edd — fix(lusena): disable header scroll transition
 - e607662 — fix(lusena): mobile header menu expands with background
