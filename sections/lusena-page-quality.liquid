@@ -40,10 +40,13 @@
         <div class="space-y-4 text-secondary text-lg font-light leading-relaxed">
           {{ section.settings.momme_body }}
           {%- if section.blocks.size > 0 -%}
-            <ul class="list-disc pl-5 space-y-2 mt-4 ml-4">
+            <ul class="space-y-2 mt-4">
               {%- for block in section.blocks -%}
                 {%- if block.type == 'momme_benefit' -%}
-                  <li {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</li>
+                  <li class="flex flex-nowrap items-start gap-3" {{ block.shopify_attributes }}>
+                    <span class="mt-2.5 w-1.5 h-1.5 rounded-full bg-accent-gold shrink-0"></span>
+                    <span class="min-w-0 flex-1">{{- block.settings.text | escape -}}</span>
+                  </li>
                 {%- endif -%}
               {%- endfor -%}
             </ul>
