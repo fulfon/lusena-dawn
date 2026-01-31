@@ -41,8 +41,17 @@
       </div>
     </details>
 
-    <a href="{{ routes.root_url }}" class="flex items-center cursor-pointer" aria-label="{{ shop.name | escape }}">
-      {%- if section.settings.logo_image != blank -%}
+    <a
+      href="{{ routes.root_url }}"
+      class="flex items-center cursor-pointer"
+      aria-label="{{ shop.name | escape }}"
+      style="color: {{ section.settings.logo_color }};"
+    >
+      {%- if section.settings.logo_svg_inline != blank -%}
+        <span style="display: inline-flex; line-height: 0; width: {{ section.settings.logo_width }}px;">
+          {{ section.settings.logo_svg_inline }}
+        </span>
+      {%- elsif section.settings.logo_image != blank -%}
         {{
           section.settings.logo_image
           | image_url: width: section.settings.logo_width
@@ -79,7 +88,7 @@
       {%- endif -%}
 
       {%- if section.settings.enable_account and shop.customer_accounts_enabled -%}
-        <a href="{{ routes.account_url }}" class="hidden sm:flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Account">
+        <a href="{{ routes.account_url }}" class="flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Account">
           {% render 'lusena-icon', name: 'user', class: 'w-5 h-5 text-primary', stroke_width: 1.5 %}
         </a>
       {%- endif -%}
@@ -95,6 +104,14 @@
         </a>
       {%- endif -%}
     </div>
+  </div>
+
+  <div class="container md:hidden mt-3">
+    <nav class="flex items-center gap-5 text-[11px] font-medium uppercase tracking-widest overflow-x-auto">
+      <a href="{{ sklep_url }}" class="whitespace-nowrap hover:text-accent-cta transition-colors">SKLEP</a>
+      <a href="{{ about_url }}" class="whitespace-nowrap hover:text-accent-cta transition-colors">O NAS</a>
+      <a href="{{ silk_url }}" class="whitespace-nowrap hover:text-accent-cta transition-colors">DLACZEGO JEDWAB?</a>
+    </nav>
   </div>
 </header>
 
@@ -139,6 +156,12 @@
       "label": "Logo image"
     },
     {
+      "type": "liquid",
+      "id": "logo_svg_inline",
+      "label": "Logo SVG (inline)",
+      "info": "Optional. Paste SVG markup here to enable dynamic coloring via the Logo color setting. Use fill=\"currentColor\" in the SVG for best results."
+    },
+    {
       "type": "range",
       "id": "logo_width",
       "label": "Logo width",
@@ -147,6 +170,12 @@
       "step": 2,
       "unit": "px",
       "default": 140
+    },
+    {
+      "type": "color",
+      "id": "logo_color",
+      "label": "Logo color",
+      "default": "#111111"
     },
     {
       "type": "text",
