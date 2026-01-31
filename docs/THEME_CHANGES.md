@@ -19,6 +19,30 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+
+### abbe143 — chore: resolve homepage template merge conflict
+
+**Goal:** Restore a valid `templates/index.json` after a merge introduced conflict markers.
+
+**What changed**
+- Resolved merge conflict markers in the homepage template and kept the latest hero images plus LUSENA hero settings.
+
+**Key files**
+- `templates/index.json`
+
+### 179d0af — fix(lusena): hero overlay opacity + copy positioning
+
+**Goal:** Make the hero overlay reliably visible (not hidden by Dawn base CSS) and allow merchants to adjust overlay opacity (0-90%) and hero copy vertical position in the theme editor.
+
+**What changed**
+- Prevented the hero overlay from being hidden by `div:empty { display: none; }` by ensuring the overlay element isn't empty.
+- Added `overlay_opacity` setting (0-90%, default 50) and applied it via `rgb(0 0 0 / X%)`.
+- Added `content_position` (radio) and `content_offset_y` (range) to fine-tune hero copy placement.
+
+**Key files**
+- `sections/lusena-hero.liquid`
+- `templates/index.json`
+
 ### 055293b — fix(lusena): center quality benefit dot on first line
 
 **Goal:** Fix the “Dlaczego 22 momme?” benefit marker alignment so the dot lines up with the first line of text (no “text under the marker” look).
@@ -80,34 +104,13 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Key files**
 - `layout/theme.liquid`
 
-### 1dc0edd — fix(lusena): disable header scroll transition
-
-**Goal:** Keep the header visually static when starting to scroll from the top (no fade/resize animation).
-
-**What changed**
-- Removed the header transition classes so the transparent → scrolled header state change doesn’t animate.
-
-**Key files**
-- `sections/lusena-header.liquid`
-
-### e607662 — fix(lusena): mobile header menu expands with background
-
-**Goal:** Make the mobile header menu feel like a single, unified header element (no background cut-off), with a smooth expand/collapse animation.
-
-**What changed**
-- Rebuilt the mobile menu panel to live inside the header flow so the header height expands/collapses instead of using an absolutely-positioned dropdown.
-- Ensured the header background switches to the same “scrolled” background while the menu is open so it reads as one element.
-- Prevented “O NAS” from wrapping on narrow viewports.
-- Improved a11y by toggling `aria-hidden` + `inert` on the mobile menu wrapper while closed.
-- Fixed hero overlay opacity behavior so the slider visibly changes the overlay (uses an RGBA overlay layer above the image).
-
-**Key files**
-- `sections/lusena-header.liquid`
-- `sections/lusena-hero.liquid`
 
 ---
 
 ## Older commits (summary only)
+
+- 1dc0edd — fix(lusena): disable header scroll transition
+- e607662 — fix(lusena): mobile header menu expands with background
 
 - 0997b8a — fix(lusena): align hero copy to top on mobile
 - f58cf0c — chore(a11y): remove skip links
@@ -130,4 +133,3 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - (pre-reset / legacy) `d93971a` — feat(lusena): migrate draft-shop UI into Dawn
 - (pre-reset / legacy) `fcd1a02` — refactor(css,i18n): brandbook-aligned typography, animations & localization
 - (pre-reset / legacy) `1b99f37` — feat(lusena): brandbook-aligned UI + cart conversion layer
-
