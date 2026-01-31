@@ -19,6 +19,16 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+### 055293b — fix(lusena): center quality benefit dot on first line
+
+**Goal:** Fix the “Dlaczego 22 momme?” benefit marker alignment so the dot lines up with the first line of text (no “text under the marker” look).
+
+**What changed**
+- Made the gold dot use a line-height-aware `calc(...)` top offset instead of a fixed spacing utility.
+
+**Key files**
+- `sections/lusena-page-quality.liquid`
+
 ### f208bdd — fix(lusena): align quality page benefit bullets
 
 **Goal:** Make the “Dlaczego 22 momme?” benefit markers match PDP styling and keep the marker aligned with its text (no stacked marker line breaks).
@@ -95,20 +105,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `sections/lusena-header.liquid`
 - `sections/lusena-hero.liquid`
 
-### 0997b8a — fix(lusena): align hero copy to top on mobile
-
-**Goal:** Align the homepage hero copy to the top on mobile so it matches the draft banner composition.
-
-**What changed**
-- Adjusted the hero content container to align to the top on mobile (with a small top padding), while keeping centered alignment on desktop.
-
-**Key files**
-- `sections/lusena-hero.liquid`
-
 ---
 
 ## Older commits (summary only)
 
+- 0997b8a — fix(lusena): align hero copy to top on mobile
 - f58cf0c — chore(a11y): remove skip links
 - 6922ae6 — feat(lusena): separate hero images for mobile/desktop
 - 701b58d — fix(a11y): show skip link only on keyboard focus
