@@ -1,4 +1,4 @@
-# LUSENA × Dawn — Theme change log (tracked in Git)
+﻿# LUSENA × Dawn — Theme change log (tracked in Git)
 
 ## What is this codebase?
 
@@ -19,6 +19,18 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+
+### cbb4d8a — fix(lusena): mobile hero max height + responsive text controls
+
+**Goal:** Let merchants precisely position hero copy separately on mobile vs desktop, and control the mobile hero image height (cropped from the bottom).
+
+**What changed**
+- Added mobile/desktop-specific hero text vertical position + fine-tune Y offset controls.
+- Added `mobile_max_height_px` to cap hero height on mobile and anchor the hero image crop from the bottom.
+
+**Key files**
+- `sections/lusena-hero.liquid`
+- `templates/index.json`
 
 ### abbe143 — chore: resolve homepage template merge conflict
 
@@ -94,20 +106,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Key files**
 - `sections/lusena-header.liquid`
 
-### 22e1ac1 — fix(lusena): remove homepage header spacer
-
-**Goal:** Remove the “blank header bar” effect at the top of the homepage so the hero starts at the very top under the fixed header.
-
-**What changed**
-- Applied the main content top padding (`pt-[72px]` / `lg:pt-[88px]`) only on non-homepage templates.
-
-**Key files**
-- `layout/theme.liquid`
-
-
 ---
 
 ## Older commits (summary only)
+
+- 22e1ac1 — fix(lusena): remove homepage header spacer
 
 - 1dc0edd — fix(lusena): disable header scroll transition
 - e607662 — fix(lusena): mobile header menu expands with background
@@ -133,3 +136,4 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - (pre-reset / legacy) `d93971a` — feat(lusena): migrate draft-shop UI into Dawn
 - (pre-reset / legacy) `fcd1a02` — refactor(css,i18n): brandbook-aligned typography, animations & localization
 - (pre-reset / legacy) `1b99f37` — feat(lusena): brandbook-aligned UI + cart conversion layer
+
