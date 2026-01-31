@@ -19,6 +19,19 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+### f58cf0c — chore(a11y): remove skip links
+
+**Goal:** Remove the “Skip to content” / “Skip to product info” skip links entirely.
+
+**What changed**
+- Removed the skip link anchors from the main theme layout, password layout, and product media gallery.
+- Removed the temporary LUSENA skip-link focus override snippet (no longer needed).
+
+**Key files**
+- `layout/theme.liquid`
+- `layout/password.liquid`
+- `snippets/product-media-gallery.liquid`
+
 ### 6922ae6 — feat(lusena): separate hero images for mobile/desktop
 
 **Goal:** Allow merchants to upload and control different hero images for mobile vs desktop on the homepage.
