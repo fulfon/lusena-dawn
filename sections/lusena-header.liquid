@@ -1,5 +1,5 @@
 <header
-  class="fixed top-0 left-0 right-0 z-50 bg-transparent py-6"
+  class="fixed top-0 left-0 right-0 z-50 bg-brand-bg/95 backdrop-blur-sm shadow-sm py-4"
   data-lusena-header
 >
   {% stylesheet %}
@@ -191,24 +191,13 @@
     };
 
     const update = () => {
-      const isScrolled = window.scrollY > 10;
       const isMenuVisible =
         !!mobileMenuDetails?.open || mobileMenuDetails?.hasAttribute('data-lusena-mobile-menu-closing');
 
-      if (isMenuVisible) {
-        header.classList.add(...scrolledClasses);
-        header.classList.remove(...topClasses);
-        return;
-      }
+      header.classList.add(...scrolledClasses);
+      header.classList.remove(...topClasses);
 
-      if (isScrolled) {
-        header.classList.add(...scrolledClasses);
-        header.classList.remove(...topClasses);
-        return;
-      }
-
-      header.classList.add(...topClasses);
-      header.classList.remove(...scrolledClasses);
+      if (isMenuVisible) return;
     };
 
     update();
