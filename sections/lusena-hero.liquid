@@ -49,7 +49,7 @@
     {%- endif -%}
   </div>
 
-  <div class="container relative h-full flex flex-col justify-center z-20">
+  <div class="container relative h-full flex flex-col z-20 lusena-hero__content">
     <div class="max-w-xl space-y-6 md:space-y-8 pl-4 md:pl-0" data-lusena-hero-text>
       {%- for block in section.blocks -%}
         {%- case block.type -%}
@@ -98,6 +98,20 @@
     </div>
   </div>
 </section>
+
+{% stylesheet %}
+  .lusena-hero__content {
+    justify-content: flex-start;
+    padding-top: 7.2rem;
+  }
+
+  @media (min-width: 768px) {
+    .lusena-hero__content {
+      justify-content: center;
+      padding-top: 0;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
