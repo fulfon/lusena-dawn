@@ -19,6 +19,19 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+### 7079328 — fix(lusena): cart drawer overlay blur + upsell styling
+
+**Goal:** Match the draft shop cart drawer overlay behavior (blur + click-outside-close) and improve the “Pairs well with” card styling.
+
+**What changed**
+- Restored the Dawn drawer overlay approach and added a blurred backdrop on the active cart drawer.
+- Switched the overlay element back to Dawn’s `.cart-drawer__overlay` so it reliably covers the viewport and is clickable to close.
+- Added missing utility-class fallbacks used by the cart upsell card so layout/typography matches the draft.
+
+**Key files**
+- `snippets/cart-drawer.liquid`
+- `snippets/lusena-missing-utilities.liquid`
+
 ### 3be1a33 — feat(lusena): nasza-jakosc certificate button + layout tweaks
 
 **Goal:** Match the `Nasza jakość` draft page and let merchants manage the OEKO‑TEX certificate PDF from Shopify Admin.
