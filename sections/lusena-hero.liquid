@@ -1,21 +1,49 @@
 <section class="relative h-[85vh] min-h-[600px] w-full overflow-hidden lusena-hero">
+  {%- liquid
+    assign desktop_image = section.settings.image_desktop
+    if desktop_image == blank
+      assign desktop_image = section.settings.image
+    endif
+
+    assign mobile_image = section.settings.image_mobile
+    if mobile_image == blank
+      assign mobile_image = desktop_image
+    endif
+  -%}
+
   <div
     class="absolute inset-0 bg-neutral-900 z-10"
     style="opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"
   ></div>
 
   <div class="absolute inset-0 h-full w-full" data-lusena-hero-image>
-    {%- if section.settings.image != blank -%}
-      {{
-        section.settings.image
-        | image_url: width: 3000
-        | image_tag:
-          class: 'h-full w-full object-cover',
-          widths: '375, 550, 750, 1100, 1500, 2000, 3000',
-          sizes: '100vw',
-          loading: 'eager',
-          fetchpriority: 'high'
-      }}
+    {%- if mobile_image != blank or desktop_image != blank -%}
+      <picture>
+        {%- if desktop_image != blank -%}
+          <source
+            media="(min-width: 768px)"
+            sizes="100vw"
+            srcset="
+              {{ desktop_image | image_url: width: 750 }} 750w,
+              {{ desktop_image | image_url: width: 1100 }} 1100w,
+              {{ desktop_image | image_url: width: 1500 }} 1500w,
+              {{ desktop_image | image_url: width: 2000 }} 2000w,
+              {{ desktop_image | image_url: width: 3000 }} 3000w
+            "
+          >
+        {%- endif -%}
+
+        {{
+          mobile_image
+          | image_url: width: 2000
+          | image_tag:
+            class: 'h-full w-full object-cover',
+            widths: '375, 550, 750, 1100, 1500, 2000',
+            sizes: '100vw',
+            loading: 'eager',
+            fetchpriority: 'high'
+        }}
+      </picture>
     {%- else -%}
       {{ 'lifestyle-2' | placeholder_svg_tag: 'h-full w-full object-cover bg-surface-2' }}
     {%- endif -%}
@@ -79,7 +107,17 @@
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Hero image"
+      "label": "Hero image (legacy/fallback)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Hero image (desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Hero image (mobile)"
     },
     {
       "type": "range",
