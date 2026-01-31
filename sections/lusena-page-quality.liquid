@@ -1,4 +1,4 @@
-<div>
+<div class="lusena-page-quality">
   <section class="bg-brand-bg py-24 md:py-32">
     <div class="container text-center max-w-4xl mx-auto space-y-6">
       <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
@@ -87,7 +87,7 @@
         <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
           {{ section.settings.origin_kicker | escape }}
         </span>
-        <h2 class="text-3xl md:text-4xl font-serif text-primary">
+        <h2 class="lusena-page-quality__origin-heading text-3xl md:text-4xl font-serif text-primary">
           {{ section.settings.origin_heading | escape }}
         </h2>
         <div class="space-y-4 text-secondary text-lg font-light leading-relaxed">
@@ -124,7 +124,7 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         {%- for block in section.blocks -%}
           {%- if block.type == 'qc_step' -%}
-            <div class="p-8 bg-white/50 backdrop-blur-sm rounded-sm border border-white/40{% if block.settings.highlight %} shadow-sm relative overflow-hidden{% endif %}" {{ block.shopify_attributes }}>
+            <div class="lusena-page-quality__qc-card p-8 bg-white/50 backdrop-blur-sm rounded-sm border border-white/40{% if block.settings.highlight %} shadow-sm relative overflow-hidden{% endif %}" {{ block.shopify_attributes }}>
               {%- if block.settings.highlight -%}
                 <div class="absolute top-0 right-0 bg-accent-gold text-white text-[10px] px-2 py-1 uppercase tracking-wider">
                   {{ section.settings.qc_highlight_badge | escape }}
@@ -150,12 +150,36 @@
           <div class="text-secondary font-light text-lg mb-8">
             {{ section.settings.cert_body }}
           </div>
-          {%- if section.settings.cert_button_label != blank and section.settings.cert_button_link != blank -%}
+
+          {%- assign certificate_url = blank -%}
+          {%- assign certificate_label = section.settings.cert_button_label -%}
+          {%- if certificate_label == blank -%}
+            {%- assign certificate_label = 'Pobierz Certyfikat (PDF)' -%}
+          {%- endif -%}
+
+          {%- if shop.metafields.lusena.oeko_tex_certificate != blank -%}
+            {%- assign certificate_file = shop.metafields.lusena.oeko_tex_certificate.value -%}
+            {%- if certificate_file != blank -%}
+              {%- if certificate_file.url != blank -%}
+                {%- assign certificate_url = certificate_file.url -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endif -%}
+
+          {%- if certificate_url == blank -%}
+            {%- if section.settings.cert_button_link != blank -%}
+              {%- assign certificate_url = section.settings.cert_button_link -%}
+            {%- endif -%}
+          {%- endif -%}
+
+          {%- if certificate_url != blank -%}
             <a
-              href="{{ section.settings.cert_button_link }}"
+              href="{{ certificate_url }}"
+              target="_blank"
+              rel="noopener"
               class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-12 px-8 py-3 border border-primary bg-transparent text-primary hover:bg-surface-2 min-w-[200px]"
             >
-              {{ section.settings.cert_button_label | escape }}
+              {{ certificate_label | escape }}
             </a>
           {%- endif -%}
         </div>
@@ -180,6 +204,18 @@
     </div>
   </section>
 </div>
+
+{% stylesheet %}
+  .lusena-page-quality {
+    letter-spacing: normal;
+  }
+
+  @media (min-width: 768px) {
+    .lusena-page-quality__origin-heading {
+      white-space: nowrap;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
@@ -337,7 +373,8 @@
     {
       "type": "url",
       "id": "cert_button_link",
-      "label": "Certificate button link"
+      "label": "Certificate button link (fallback)",
+      "info": "Preferowane: metafield sklepu `lusena.oeko_tex_certificate` (file_reference). Jeśli metafield jest pusty, użyty zostanie ten link."
     },
     {
       "type": "image_picker",
@@ -460,4 +497,3 @@
   ]
 }
 {% endschema %}
-
