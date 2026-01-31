@@ -69,57 +69,86 @@
     &#8203;
   </div>
 
-  <div
-    class="container relative h-full flex flex-col z-20 lusena-hero__content lusena-hero__content--m-{{ content_position_mobile }} lusena-hero__content--d-{{ content_position_desktop }}"
-    style="--lusena-hero-content-offset-y-mobile: {{ content_offset_y_mobile }}px; --lusena-hero-content-offset-y-desktop: {{ content_offset_y_desktop }}px;"
-  >
-    <div class="max-w-xl space-y-6 md:space-y-8 pl-4 md:pl-0 lusena-hero__text" data-lusena-hero-text>
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          {%- when 'heading' -%}
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif italic tracking-tight text-white drop-shadow-sm" {{ block.shopify_attributes }}>
-              {{ block.settings.heading }}
+<div
+  class="container relative h-full flex flex-col z-20 lusena-hero__content lusena-hero__content--m-{{ content_position_mobile }} lusena-hero__content--d-{{ content_position_desktop }}"
+  style="--lusena-hero-text-offset-y-mobile-px: {{ content_offset_y_mobile }}px; --lusena-hero-text-offset-y-mobile-vh: {{ section.settings.content_offset_y_mobile_vh | default: 0 }}; --lusena-hero-stack-offset-y-desktop-px: {{ content_offset_y_desktop }}px; --lusena-hero-buttons-offset-y-mobile-px: {{ section.settings.buttons_offset_y_mobile_px | default: 0 }}px; --lusena-hero-buttons-offset-y-mobile-vh: {{ section.settings.buttons_offset_y_mobile_vh | default: 0 }};"
+>
+  {%- liquid
+    assign heading_block = section.blocks | where: 'type', 'heading' | first
+    assign subheading_block = section.blocks | where: 'type', 'subheading' | first
+    assign buttons_block = section.blocks | where: 'type', 'buttons' | first
+
+    assign has_text = false
+    if heading_block != blank and heading_block.settings.heading != blank
+      assign has_text = true
+    endif
+    if subheading_block != blank and subheading_block.settings.text != blank
+      assign has_text = true
+    endif
+
+    assign has_buttons = false
+    if buttons_block != blank
+      if buttons_block.settings.button_label_1 != blank
+        assign has_buttons = true
+      endif
+      if buttons_block.settings.button_label_2 != blank
+        assign has_buttons = true
+      endif
+    endif
+  -%}
+
+  <div class="max-w-xl pl-4 md:pl-0 lusena-hero__stack" data-lusena-hero-text>
+    {%- if has_text -%}
+      <div class="lusena-hero__text-wrap">
+        <div class="space-y-6 md:space-y-8 lusena-hero__text">
+          {%- if heading_block != blank and heading_block.settings.heading != blank -%}
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif italic tracking-tight text-white drop-shadow-sm" {{ heading_block.shopify_attributes }}>
+              {{ heading_block.settings.heading }}
             </h1>
+          {%- endif -%}
 
-          {%- when 'subheading' -%}
-            {%- if block.settings.text != blank -%}
-              <p class="text-lg md:text-xl font-light text-white/95 max-w-md leading-relaxed drop-shadow-sm" {{ block.shopify_attributes }}>
-                {{ block.settings.text | escape }}
-              </p>
-            {%- endif -%}
+          {%- if subheading_block != blank and subheading_block.settings.text != blank -%}
+            <p class="text-lg md:text-xl font-light text-white/95 max-w-md leading-relaxed drop-shadow-sm" {{ subheading_block.shopify_attributes }}>
+              {{ subheading_block.settings.text | escape }}
+            </p>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
 
-          {%- when 'buttons' -%}
-            <div class="pt-4 flex flex-col sm:flex-row gap-4" {{ block.shopify_attributes }}>
-              {%- if block.settings.button_label_1 != blank -%}
-                <a
-                  {% if block.settings.button_link_1 == blank %}
-                    role="link" aria-disabled="true"
-                  {% else %}
-                    href="{{ block.settings.button_link_1 }}"
-                  {% endif %}
-                  class="lusena-hero__button inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest px-10 bg-white text-accent-cta hover:bg-white/90 border-none w-full sm:w-auto min-w-[180px]"
-                >
-                  {{ block.settings.button_label_1 | escape }}
-                </a>
-              {%- endif -%}
+    {%- if has_buttons -%}
+      <div class="lusena-hero__buttons-wrap" {{ buttons_block.shopify_attributes }}>
+        <div class="pt-4 flex flex-col sm:flex-row gap-4 lusena-hero__buttons">
+          {%- if buttons_block.settings.button_label_1 != blank -%}
+            <a
+              {% if buttons_block.settings.button_link_1 == blank %}
+                role="link" aria-disabled="true"
+              {% else %}
+                href="{{ buttons_block.settings.button_link_1 }}"
+              {% endif %}
+              class="lusena-hero__button inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest px-10 bg-white text-accent-cta hover:bg-white/90 border-none w-full sm:w-auto min-w-[180px]"
+            >
+              {{ buttons_block.settings.button_label_1 | escape }}
+            </a>
+          {%- endif -%}
 
-              {%- if block.settings.button_label_2 != blank -%}
-                <a
-                  {% if block.settings.button_link_2 == blank %}
-                    role="link" aria-disabled="true"
-                  {% else %}
-                    href="{{ block.settings.button_link_2 }}"
-                  {% endif %}
-                  class="lusena-hero__button inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest px-10 border border-white bg-transparent text-white hover:bg-white/20 hover:text-white w-full sm:w-auto min-w-[160px]"
-                >
-                  {{ block.settings.button_label_2 | escape }}
-                </a>
-              {%- endif -%}
-            </div>
-        {%- endcase -%}
-      {%- endfor -%}
-    </div>
+          {%- if buttons_block.settings.button_label_2 != blank -%}
+            <a
+              {% if buttons_block.settings.button_link_2 == blank %}
+                role="link" aria-disabled="true"
+              {% else %}
+                href="{{ buttons_block.settings.button_link_2 }}"
+              {% endif %}
+              class="lusena-hero__button inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest px-10 border border-white bg-transparent text-white hover:bg-white/20 hover:text-white w-full sm:w-auto min-w-[160px]"
+            >
+              {{ buttons_block.settings.button_label_2 | escape }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
   </div>
+</div>
 </section>
 
 {% stylesheet %}
@@ -163,6 +192,18 @@
     padding-bottom: 0;
   }
 
+  .lusena-hero__stack {
+    width: 100%;
+  }
+
+  .lusena-hero__text {
+    transform: translateY(calc(var(--lusena-hero-text-offset-y-mobile-px, 0px) + (var(--lusena-hero-text-offset-y-mobile-vh, 0) * 1vh)));
+  }
+
+  .lusena-hero__buttons {
+    transform: translateY(calc(var(--lusena-hero-buttons-offset-y-mobile-px, 0px) + (var(--lusena-hero-buttons-offset-y-mobile-vh, 0) * 1vh)));
+  }
+
   .lusena-hero__content--m-top {
     justify-content: flex-start;
     padding-top: 7.2rem;
@@ -187,8 +228,18 @@
     padding-bottom: 3.6rem;
   }
 
-  .lusena-hero__text {
-    transform: translateY(var(--lusena-hero-content-offset-y-mobile, 0px));
+  @media (min-width: 768px) {
+    .lusena-hero__stack {
+      transform: translateY(var(--lusena-hero-stack-offset-y-desktop-px, 0px));
+    }
+
+    .lusena-hero__text {
+      transform: none;
+    }
+
+    .lusena-hero__buttons {
+      transform: none;
+    }
   }
 
   @media (min-width: 768px) {
@@ -216,9 +267,6 @@
       padding-bottom: 5rem;
     }
 
-    .lusena-hero__text {
-      transform: translateY(var(--lusena-hero-content-offset-y-desktop, 0px));
-    }
   }
 {% endstylesheet %}
 
@@ -287,6 +335,26 @@
       "default": 16
     },
     {
+      "type": "range",
+      "id": "buttons_offset_y_mobile_px",
+      "min": -120,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Buttons fine-tune (Y offset) (mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "buttons_offset_y_mobile_vh",
+      "min": -20,
+      "max": 20,
+      "step": 1,
+      "unit": "vh",
+      "label": "Buttons fine-tune (Y offset) (mobile, relative)",
+      "default": 0
+    },
+    {
       "type": "header",
       "content": "Text position — mobile"
     },
@@ -310,6 +378,16 @@
       "step": 4,
       "unit": "px",
       "label": "Text fine-tune (Y offset) (mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_offset_y_mobile_vh",
+      "min": -20,
+      "max": 20,
+      "step": 1,
+      "unit": "vh",
+      "label": "Text fine-tune (Y offset) (mobile, relative)",
       "default": 0
     },
     {

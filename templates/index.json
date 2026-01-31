@@ -49,6 +49,9 @@
         "button_text_size_mobile_px": 16,
         "content_position_mobile": "lower",
         "content_offset_y_mobile": 0,
+        "content_offset_y_mobile_vh": 0,
+        "buttons_offset_y_mobile_px": 0,
+        "buttons_offset_y_mobile_vh": 0,
         "content_position_desktop": "lower",
         "content_offset_y_desktop": 0
       }
