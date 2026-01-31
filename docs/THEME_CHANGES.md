@@ -19,6 +19,17 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+### 0f38fbe — fix(lusena): keep PDP sticky ATC fixed
+
+**Goal:** Ensure the mobile sticky add-to-cart bar stays fixed to the viewport bottom (like the draft shop), instead of being constrained inside the PDP section.
+
+**What changed**
+- Prevented the global GSAP section reveal from applying transforms to the PDP section.
+- This avoids creating a transformed containing block, which breaks `position: fixed` descendants like the sticky ATC bar.
+
+**Key files**
+- `assets/lusena-animations.js`
+
 ### 7b69635 — feat(lusena): logo upload + primary header links
 
 **Goal:** Replace the text logo with an uploadable logo and harden the primary header navigation to match the draft (SKLEP / O NAS / DLACZEGO JEDWAB?).
