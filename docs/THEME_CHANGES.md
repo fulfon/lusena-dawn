@@ -19,6 +19,16 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+### c6e29b9 — fix(lusena): close mobile menu on outside tap
+
+**Goal:** Close the expanded mobile menu when the user taps/clicks anywhere outside the menu.
+
+**What changed**
+- Added a document-level outside-tap handler that closes the mobile menu when clicking outside the toggle and menu panel.
+
+**Key files**
+- `sections/lusena-header.liquid`
+
 ### d5e5458 — fix(lusena): align mobile menu vertical padding
 
 **Goal:** Match the top and bottom padding of the expanded mobile menu so spacing feels balanced.
@@ -97,21 +107,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `layout/password.liquid`
 - `snippets/product-media-gallery.liquid`
 
-### 6922ae6 — feat(lusena): separate hero images for mobile/desktop
-
-**Goal:** Allow merchants to upload and control different hero images for mobile vs desktop on the homepage.
-
-**What changed**
-- Added `Hero image (desktop)` and `Hero image (mobile)` settings to the LUSENA hero section.
-- Updated hero rendering to use a `<picture>` element (desktop image on `min-width: 768px`, mobile image otherwise), with fallbacks to the legacy `Hero image` setting.
-
-**Key files**
-- `sections/lusena-hero.liquid`
-
 ---
 
 ## Older commits (summary only)
 
+- 6922ae6 — feat(lusena): separate hero images for mobile/desktop
 - 701b58d — fix(a11y): show skip link only on keyboard focus
 - 99d916b — fix(lusena): remove extra header menu links
 - 27317ae — fix(lusena): desktop-only header links + bold account icon
