@@ -19,6 +19,18 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+### 27317ae — fix(lusena): desktop-only header links + bold account icon
+
+**Goal:** Show header primary links only on desktop (as in the draft) and make the account icon styling consistent with the cart icon.
+
+**What changed**
+- Replaced the utility-based breakpoint visibility with section-scoped CSS so links reliably show on desktop even if utility classes are missing.
+- Removed the mobile header links row (links remain available in the hamburger menu).
+- Made the account icon desktop-only and increased its stroke to match the cart icon weight.
+
+**Key files**
+- `sections/lusena-header.liquid`
+
 ### fcdcf27 — fix(lusena): header links on mobile + account icon + logo color
 
 **Goal:** Ensure header links are visible in the storefront preview, show the account icon as configured, and allow controlling the logo color from Theme Editor.
