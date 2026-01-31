@@ -48,7 +48,7 @@
         "button_height_mobile_px": 52,
         "button_text_size_mobile_px": 16,
         "buttons_offset_y_mobile_px": 0,
-        "buttons_offset_y_mobile_vh": 8,
+        "buttons_offset_y_mobile_vh": 10,
         "content_position_mobile": "center",
         "content_offset_y_mobile": -8,
         "content_offset_y_mobile_vh": 0,
