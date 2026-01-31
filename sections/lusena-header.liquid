@@ -182,6 +182,23 @@
     const mobileMenuDetails = header.querySelector('[data-lusena-mobile-menu-details]');
     const mobileMenuPanel = header.querySelector('[data-lusena-mobile-menu-wrapper]');
 
+    const closeMobileMenu = () => {
+      if (!mobileMenuDetails?.open) return;
+      if (mobileMenuDetails.hasAttribute('data-lusena-mobile-menu-closing')) return;
+
+      mobileMenuDetails.setAttribute('data-lusena-mobile-menu-closing', 'true');
+      header.classList.remove('lusena-header--menu-open');
+      setPanelA11y();
+      update();
+
+      window.setTimeout(() => {
+        mobileMenuDetails.removeAttribute('open');
+        mobileMenuDetails.removeAttribute('data-lusena-mobile-menu-closing');
+        setPanelA11y();
+        update();
+      }, 280);
+    };
+
     const setPanelA11y = () => {
       if (!mobileMenuDetails || !mobileMenuPanel) return;
       const shouldBeAccessible =
@@ -210,18 +227,7 @@
           if (!mobileMenuDetails.open) return;
           if (mobileMenuDetails.hasAttribute('data-lusena-mobile-menu-closing')) return;
           event.preventDefault();
-
-          mobileMenuDetails.setAttribute('data-lusena-mobile-menu-closing', 'true');
-          header.classList.remove('lusena-header--menu-open');
-          setPanelA11y();
-          update();
-
-          window.setTimeout(() => {
-            mobileMenuDetails.removeAttribute('open');
-            mobileMenuDetails.removeAttribute('data-lusena-mobile-menu-closing');
-            setPanelA11y();
-            update();
-          }, 280);
+          closeMobileMenu();
         });
       }
 
@@ -234,6 +240,18 @@
         update();
       });
     }
+
+    document.addEventListener(
+      'pointerdown',
+      (event) => {
+        if (!mobileMenuDetails?.open) return;
+        if (mobileMenuDetails.hasAttribute('data-lusena-mobile-menu-closing')) return;
+        if (mobileMenuPanel?.contains(event.target)) return;
+        if (mobileMenuDetails?.querySelector('summary')?.contains(event.target)) return;
+        closeMobileMenu();
+      },
+      { capture: true }
+    );
 
     if (window.Shopify?.designMode) {
       document.addEventListener('shopify:section:load', update);
