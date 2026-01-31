@@ -15,7 +15,7 @@
       "type": "lusena-header",
       "settings": {
         "logo_image": "shopify://shop_images/logoFinal.svg",
-        "logo_width": 120,
+        "logo_width": 116,
         "logo_text_fallback": "LUSENA",
         "about_page": "o-nas",
         "silk_page": "nasza-jakosc",
