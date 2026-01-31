@@ -43,7 +43,9 @@
         "image": "shopify://shop_images/Generated_Image_January_31_2026_-_2_49PM.jpg",
         "image_desktop": "shopify://shop_images/Generated_Image_January_31_2026_-_2_49PM.jpg",
         "image_mobile": "shopify://shop_images/Generated_Image_January_31_2026_-_4_25PM.jpg",
-        "overlay_opacity": 10
+        "overlay_opacity": 50,
+        "content_position": "lower",
+        "content_offset_y": 0
       }
     },
     "trust": {

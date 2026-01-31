@@ -9,6 +9,13 @@
     if mobile_image == blank
       assign mobile_image = desktop_image
     endif
+
+    assign content_position = section.settings.content_position
+    if content_position == blank
+      assign content_position = 'lower'
+    endif
+
+    assign overlay_opacity = section.settings.overlay_opacity | default: 50
   -%}
 
   <div class="absolute inset-0 h-full w-full z-0" data-lusena-hero-image>
@@ -46,12 +53,14 @@
 
   <div
     class="absolute inset-0 z-10 pointer-events-none"
-    style="background-color: rgba(0, 0, 0, {{ section.settings.overlay_opacity | divided_by: 100.0 }});"
+    style="background-color: rgb(0 0 0 / {{ overlay_opacity }}%);"
     aria-hidden="true"
-  ></div>
+  >
+    &#8203;
+  </div>
 
-  <div class="container relative h-full flex flex-col z-20 lusena-hero__content">
-    <div class="max-w-xl space-y-6 md:space-y-8 pl-4 md:pl-0" data-lusena-hero-text>
+  <div class="container relative h-full flex flex-col z-20 lusena-hero__content lusena-hero__content--{{ content_position }}" style="--lusena-hero-content-offset-y: {{ section.settings.content_offset_y }}px;">
+    <div class="max-w-xl space-y-6 md:space-y-8 pl-4 md:pl-0 lusena-hero__text" data-lusena-hero-text>
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'heading' -%}
@@ -102,14 +111,50 @@
 
 {% stylesheet %}
   .lusena-hero__content {
+    justify-content: center;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .lusena-hero__content--top {
     justify-content: flex-start;
     padding-top: 7.2rem;
+    padding-bottom: 0;
+  }
+
+  .lusena-hero__content--center {
+    justify-content: center;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .lusena-hero__content--lower {
+    justify-content: flex-end;
+    padding-top: 0;
+    padding-bottom: 7.2rem;
+  }
+
+  .lusena-hero__content--bottom {
+    justify-content: flex-end;
+    padding-top: 0;
+    padding-bottom: 3.6rem;
+  }
+
+  .lusena-hero__text {
+    transform: translateY(var(--lusena-hero-content-offset-y));
   }
 
   @media (min-width: 768px) {
-    .lusena-hero__content {
-      justify-content: center;
-      padding-top: 0;
+    .lusena-hero__content--top {
+      padding-top: 6rem;
+    }
+
+    .lusena-hero__content--lower {
+      padding-bottom: 10rem;
+    }
+
+    .lusena-hero__content--bottom {
+      padding-bottom: 5rem;
     }
   }
 {% endstylesheet %}
@@ -138,11 +183,33 @@
       "type": "range",
       "id": "overlay_opacity",
       "min": 0,
-      "max": 40,
+      "max": 90,
       "step": 1,
       "unit": "%",
       "label": "Overlay opacity",
-      "default": 10
+      "default": 50
+    },
+    {
+      "type": "radio",
+      "id": "content_position",
+      "label": "Text vertical position",
+      "default": "lower",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "center", "label": "Center" },
+        { "value": "lower", "label": "Lower" },
+        { "value": "bottom", "label": "Bottom" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "content_offset_y",
+      "min": -120,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Text fine-tune (Y offset)",
+      "default": 0
     }
   ],
   "blocks": [
