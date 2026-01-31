@@ -46,7 +46,7 @@
         "mobile_max_height_px": 850,
         "overlay_opacity": 30,
         "content_position_mobile": "center",
-        "content_offset_y_mobile": -68,
+        "content_offset_y_mobile": -8,
         "content_position_desktop": "lower",
         "content_offset_y_desktop": 0
       }
