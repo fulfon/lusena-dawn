@@ -10,7 +10,7 @@
 
     assign silk_url = section.settings.silk_page.url
     if silk_url == blank
-      assign silk_url = '/pages/dlaczego-jedwab'
+      assign silk_url = '/pages/nasza-jakosc'
     endif
 
     assign sklep_url = routes.all_products_collection_url
@@ -86,7 +86,7 @@
 
       {%- if section.settings.enable_cart -%}
         <a href="{{ routes.cart_url }}" id="cart-icon-bubble" class="relative flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Cart">
-          {% render 'lusena-icon', name: 'shopping-bag', class: 'w-5 h-5 text-primary', stroke_width: 1.5 %}
+          {% render 'lusena-icon', name: 'shopping-bag', class: 'w-5 h-5 text-primary', stroke_width: 2 %}
           {%- if cart.item_count > 0 -%}
             <span class="absolute -top-1 -right-1 bg-accent-cta text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full border border-white">
               {{ cart.item_count }}

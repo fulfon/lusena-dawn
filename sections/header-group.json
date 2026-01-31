@@ -5,8 +5,9 @@
     "header": {
       "type": "lusena-header",
       "settings": {
-        "logo_text": "LUSENA",
         "menu": "main-menu",
+        "logo_width": 140,
+        "logo_text_fallback": "LUSENA",
         "enable_search": true,
         "enable_account": true,
         "enable_cart": true
