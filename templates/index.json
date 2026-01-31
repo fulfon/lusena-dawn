@@ -43,7 +43,7 @@
         "image": "shopify://shop_images/Generated_Image_January_31_2026_-_2_49PM.jpg",
         "image_desktop": "shopify://shop_images/Generated_Image_January_31_2026_-_8_00PM.jpg",
         "image_mobile": "shopify://shop_images/Generated_Image_January_31_2026_-_8_01PM.jpg",
-        "mobile_max_height_px": 740,
+        "mobile_max_height_px": 600,
         "overlay_opacity": 30,
         "content_position_mobile": "center",
         "content_offset_y_mobile": -8,
