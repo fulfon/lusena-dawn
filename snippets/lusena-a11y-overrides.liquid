@@ -1,0 +1,37 @@
+{% doc %}
+  Accessibility-focused small CSS overrides for LUSENA.
+
+  Currently:
+  - Ensures the "Skip to content" link becomes visible only on keyboard focus
+    (`:focus-visible`) to avoid appearing on mouse focus.
+
+  Usage:
+  {% render 'lusena-a11y-overrides' %}
+{% enddoc %}
+
+{% stylesheet %}
+  @supports selector(:focus-visible) {
+    .skip-to-content-link:focus {
+      position: absolute !important;
+      overflow: hidden;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      border: 0;
+      clip: rect(0 0 0 0);
+      word-wrap: normal !important;
+      z-index: auto;
+    }
+
+    .skip-to-content-link:focus-visible {
+      z-index: 9999;
+      position: inherit !important;
+      overflow: auto;
+      width: auto;
+      height: auto;
+      clip: auto;
+    }
+  }
+{% endstylesheet %}
+
