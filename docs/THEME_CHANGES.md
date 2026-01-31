@@ -19,6 +19,16 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+### 1dc0edd — fix(lusena): disable header scroll transition
+
+**Goal:** Keep the header visually static when starting to scroll from the top (no fade/resize animation).
+
+**What changed**
+- Removed the header transition classes so the transparent → scrolled header state change doesn’t animate.
+
+**Key files**
+- `sections/lusena-header.liquid`
+
 ### e607662 — fix(lusena): mobile header menu expands with background
 
 **Goal:** Make the mobile header menu feel like a single, unified header element (no background cut-off), with a smooth expand/collapse animation.
@@ -103,23 +113,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Key files**
 - `sections/lusena-header.liquid`
 
-### fcdcf27 — fix(lusena): header links on mobile + account icon + logo color
-
-**Goal:** Ensure header links are visible in the storefront preview, show the account icon as configured, and allow controlling the logo color from Theme Editor.
-
-**What changed**
-- Added a compact mobile primary-links row (SKLEP / O NAS / DLACZEGO JEDWAB?) so links are visible even on small viewports without opening the menu.
-- Made the account icon visible on mobile (it was previously hidden via `hidden sm:flex`).
-- Added header settings for `logo_color` and optional `logo_svg_inline` so SVG logos can inherit the chosen color via `currentColor`.
-
-**Key files**
-- `sections/lusena-header.liquid`
-- `sections/header-group.json`
-
 ---
 
 ## Older commits (summary only)
 
+- fcdcf27 — fix(lusena): header links on mobile + account icon + logo color
 - 0f38fbe — fix(lusena): keep PDP sticky ATC fixed
 - 7b69635 — feat(lusena): logo upload + primary header links
 - 7079328 — fix(lusena): cart drawer overlay blur + upsell styling
