@@ -19,6 +19,16 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+### 0997b8a — fix(lusena): align hero copy to top on mobile
+
+**Goal:** Align the homepage hero copy to the top on mobile so it matches the draft banner composition.
+
+**What changed**
+- Adjusted the hero content container to align to the top on mobile (with a small top padding), while keeping centered alignment on desktop.
+
+**Key files**
+- `sections/lusena-hero.liquid`
+
 ### f58cf0c — chore(a11y): remove skip links
 
 **Goal:** Remove the “Skip to content” / “Skip to product info” skip links entirely.
