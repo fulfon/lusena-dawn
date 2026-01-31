@@ -19,6 +19,17 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+### 6922ae6 — feat(lusena): separate hero images for mobile/desktop
+
+**Goal:** Allow merchants to upload and control different hero images for mobile vs desktop on the homepage.
+
+**What changed**
+- Added `Hero image (desktop)` and `Hero image (mobile)` settings to the LUSENA hero section.
+- Updated hero rendering to use a `<picture>` element (desktop image on `min-width: 768px`, mobile image otherwise), with fallbacks to the legacy `Hero image` setting.
+
+**Key files**
+- `sections/lusena-hero.liquid`
+
 ### 99d916b — fix(lusena): remove extra header menu links
 
 **Goal:** Ensure only the primary header links are shown (SKLEP / O NAS / DLACZEGO JEDWAB?) and remove unwanted extra menu items (e.g. Home/Contact).
