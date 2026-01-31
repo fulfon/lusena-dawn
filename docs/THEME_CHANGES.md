@@ -19,6 +19,16 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+### d5e5458 — fix(lusena): align mobile menu vertical padding
+
+**Goal:** Match the top and bottom padding of the expanded mobile menu so spacing feels balanced.
+
+**What changed**
+- Made the mobile menu content use equal vertical padding (`py-4`) so the gap above “SKLEP” matches the gap below “DLACZEGO JEDWAB?”.
+
+**Key files**
+- `sections/lusena-header.liquid`
+
 ### b441ec8 — fix(lusena): make header opaque at top
 
 **Goal:** Avoid the header being transparent at the very top of the page.
@@ -98,21 +108,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Key files**
 - `sections/lusena-hero.liquid`
 
-### 701b58d — fix(a11y): show skip link only on keyboard focus
-
-**Goal:** Prevent the “Skip to content” link from appearing after mouse focus/clicks while keeping it accessible for keyboard users.
-
-**What changed**
-- Added a small override using `:focus-visible` (when supported) so the skip link becomes visible only on keyboard focus.
-
-**Key files**
-- `snippets/lusena-a11y-overrides.liquid`
-- `layout/theme.liquid`
-
 ---
 
 ## Older commits (summary only)
 
+- 701b58d — fix(a11y): show skip link only on keyboard focus
 - 99d916b — fix(lusena): remove extra header menu links
 - 27317ae — fix(lusena): desktop-only header links + bold account icon
 - fcdcf27 — fix(lusena): header links on mobile + account icon + logo color
