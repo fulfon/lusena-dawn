@@ -30,6 +30,17 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Key files**
 - `sections/lusena-hero.liquid`
 
+### 701b58d — fix(a11y): show skip link only on keyboard focus
+
+**Goal:** Prevent the “Skip to content” link from appearing after mouse focus/clicks while keeping it accessible for keyboard users.
+
+**What changed**
+- Added a small override using `:focus-visible` (when supported) so the skip link becomes visible only on keyboard focus.
+
+**Key files**
+- `snippets/lusena-a11y-overrides.liquid`
+- `layout/theme.liquid`
+
 ### 99d916b — fix(lusena): remove extra header menu links
 
 **Goal:** Ensure only the primary header links are shown (SKLEP / O NAS / DLACZEGO JEDWAB?) and remove unwanted extra menu items (e.g. Home/Contact).
