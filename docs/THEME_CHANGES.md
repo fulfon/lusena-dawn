@@ -19,6 +19,19 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+### 3be1a33 — feat(lusena): nasza-jakosc certificate button + layout tweaks
+
+**Goal:** Match the `Nasza jakość` draft page and let merchants manage the OEKO‑TEX certificate PDF from Shopify Admin.
+
+**What changed**
+- Added missing utility-class fallbacks used by `lusena-page-quality` so bullet lists render and indent correctly (matching the draft output).
+- Updated the certificate CTA to prefer a store metafield `lusena.oeko_tex_certificate` (type: `file_reference`) with a section setting URL fallback.
+- Normalized letter-spacing for the section and ensured the Suzhou heading stays on one line on `md+`.
+
+**Key files**
+- `sections/lusena-page-quality.liquid`
+- `snippets/lusena-missing-utilities.liquid`
+
 ### f906875 — fix(lusena): problem/solution typography + spacing
 
 **Goal:** Match the draft shop’s Problem/Solution section typography and inter-column spacing on desktop and mobile.
