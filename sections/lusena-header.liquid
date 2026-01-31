@@ -48,7 +48,7 @@
           <a href="{{ about_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">O NAS</a>
           <a href="{{ silk_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">DLACZEGO JEDWAB?</a>
 
-          {%- if section.settings.menu != blank -%}
+          {%- if section.settings.show_additional_menu and section.settings.menu != blank -%}
             {%- for link in section.settings.menu.links -%}
               {%- unless primary_urls contains link.url -%}
                 <a href="{{ link.url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">
@@ -89,7 +89,7 @@
       <a href="{{ about_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">O NAS</a>
       <a href="{{ silk_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">DLACZEGO JEDWAB?</a>
 
-      {%- if section.settings.menu != blank -%}
+      {%- if section.settings.show_additional_menu and section.settings.menu != blank -%}
         {%- for link in section.settings.menu.links -%}
           {%- unless primary_urls contains link.url -%}
             <a href="{{ link.url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">
@@ -210,6 +210,12 @@
       "id": "menu",
       "label": "Additional menu (optional)",
       "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_additional_menu",
+      "label": "Show additional menu links in header",
+      "default": false
     },
     {
       "type": "checkbox",

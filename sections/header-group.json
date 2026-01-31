@@ -6,6 +6,7 @@
       "type": "lusena-header",
       "settings": {
         "menu": "main-menu",
+        "show_additional_menu": false,
         "logo_width": 140,
         "logo_color": "#111111",
         "logo_text_fallback": "LUSENA",
