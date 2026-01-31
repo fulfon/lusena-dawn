@@ -19,6 +19,18 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+### 99d916b — fix(lusena): remove extra header menu links
+
+**Goal:** Ensure only the primary header links are shown (SKLEP / O NAS / DLACZEGO JEDWAB?) and remove unwanted extra menu items (e.g. Home/Contact).
+
+**What changed**
+- Added `show_additional_menu` setting (default off) and gated rendering of extra menu items behind it.
+- Keeps the header clean while still allowing optional extra links if explicitly enabled.
+
+**Key files**
+- `sections/lusena-header.liquid`
+- `sections/header-group.json`
+
 ### 27317ae — fix(lusena): desktop-only header links + bold account icon
 
 **Goal:** Show header primary links only on desktop (as in the draft) and make the account icon styling consistent with the cart icon.
