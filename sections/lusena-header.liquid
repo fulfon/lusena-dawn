@@ -1,10 +1,42 @@
 <header
   class="fixed top-0 left-0 right-0 z-50 bg-brand-bg/95 backdrop-blur-sm shadow-sm py-4"
-  data-lusena-header
+  data-lusena-header{% if section.settings.auto_hide_on_scroll_mobile %} data-lusena-auto-hide-on-scroll-mobile{% endif %}{% if section.settings.auto_hide_on_scroll_desktop %} data-lusena-auto-hide-on-scroll-desktop{% endif %}
 >
   {% stylesheet %}
     .lusena-header__nav {
       display: none;
+    }
+
+    @media (max-width: 767px) {
+      [data-lusena-header] {
+        transition: transform 220ms ease;
+        will-change: transform;
+      }
+
+      [data-lusena-header].lusena-header--auto-hidden {
+        transform: translateY(-110%);
+      }
+
+      [data-lusena-header].lusena-header--menu-open {
+        transform: translateY(0);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      [data-lusena-header] {
+        transition: transform 220ms ease;
+        will-change: transform;
+      }
+
+      [data-lusena-header].lusena-header--auto-hidden {
+        transform: translateY(-110%);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-lusena-header] {
+        transition: none;
+      }
     }
 
     .lusena-header__desktop-only {
@@ -175,6 +207,17 @@
   (() => {
     const header = document.querySelector('[data-lusena-header]');
     if (!header) return;
+    if (header.hasAttribute('data-lusena-autohide-init')) return;
+    header.setAttribute('data-lusena-autohide-init', 'true');
+
+    const autoHideOnScrollMobile = header.hasAttribute('data-lusena-auto-hide-on-scroll-mobile');
+    const autoHideMobileMq = window.matchMedia('(max-width: 767px)');
+    const autoHideOnScrollDesktop = header.hasAttribute('data-lusena-auto-hide-on-scroll-desktop');
+    const autoHideDesktopMq = window.matchMedia('(min-width: 1024px)');
+    const autoHideDeltaThresholdPx = 8;
+    const autoHideTopThresholdPx = 24;
+
+    let lastScrollY = window.scrollY;
 
     const scrolledClasses = ['bg-brand-bg/95', 'backdrop-blur-sm', 'shadow-sm', 'py-4'];
     const topClasses = ['bg-transparent', 'py-6'];
@@ -214,11 +257,53 @@
       header.classList.add(...scrolledClasses);
       header.classList.remove(...topClasses);
 
-      if (isMenuVisible) return;
+      const shouldAutoHide =
+        (autoHideOnScrollMobile && autoHideMobileMq.matches) ||
+        (autoHideOnScrollDesktop && autoHideDesktopMq.matches);
+
+      if (!shouldAutoHide) {
+        header.classList.remove('lusena-header--auto-hidden');
+        lastScrollY = window.scrollY;
+        return;
+      }
+
+      if (isMenuVisible) {
+        header.classList.remove('lusena-header--auto-hidden');
+        lastScrollY = window.scrollY;
+        return;
+      }
+
+      const nextScrollY = window.scrollY;
+      const delta = nextScrollY - lastScrollY;
+
+      if (Math.abs(delta) < autoHideDeltaThresholdPx) return;
+
+      if (nextScrollY < autoHideTopThresholdPx) {
+        header.classList.remove('lusena-header--auto-hidden');
+        lastScrollY = nextScrollY;
+        return;
+      }
+
+      header.classList.toggle('lusena-header--auto-hidden', delta > 0);
+      lastScrollY = nextScrollY;
     };
 
     update();
     window.addEventListener('scroll', update, { passive: true });
+    header.addEventListener('focusin', update);
+
+    if (autoHideMobileMq.addEventListener) {
+      autoHideMobileMq.addEventListener('change', () => {
+        header.classList.remove('lusena-header--auto-hidden');
+        lastScrollY = window.scrollY;
+      });
+    }
+    if (autoHideDesktopMq.addEventListener) {
+      autoHideDesktopMq.addEventListener('change', () => {
+        header.classList.remove('lusena-header--auto-hidden');
+        lastScrollY = window.scrollY;
+      });
+    }
 
     if (mobileMenuDetails) {
       const summary = mobileMenuDetails.querySelector('summary');
@@ -336,6 +421,22 @@
       "id": "enable_cart",
       "label": "Show cart icon",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Mobile behavior"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_hide_on_scroll_mobile",
+      "label": "Auto-hide header on scroll (mobile)",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_hide_on_scroll_desktop",
+      "label": "Auto-hide header on scroll (desktop)",
+      "default": false
     }
   ],
   "presets": [

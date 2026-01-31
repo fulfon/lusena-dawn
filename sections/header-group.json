@@ -24,7 +24,9 @@
         "show_additional_menu": false,
         "enable_search": true,
         "enable_account": true,
-        "enable_cart": true
+        "enable_cart": true,
+        "auto_hide_on_scroll_mobile": false,
+        "auto_hide_on_scroll_desktop": false
       }
     }
   },
