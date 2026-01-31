@@ -101,6 +101,9 @@
     sections.forEach(function(section) {
       if (!section || !(section instanceof HTMLElement)) return;
       if (section.classList.contains('lusena-hero')) return;
+      // Avoid transforming sections that contain fixed-position UI (e.g. PDP sticky add-to-cart bar).
+      // A transformed ancestor creates a new containing block, which breaks `position: fixed` descendants.
+      if (section.matches('[data-lusena-product-section], .lusena-pdp') || section.querySelector('[data-lusena-sticky-atc]')) return;
 
       gsap.fromTo(
         section,
