@@ -2,60 +2,91 @@
   class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent py-6"
   data-lusena-header
 >
+  {%- liquid
+    assign about_url = section.settings.about_page.url
+    if about_url == blank
+      assign about_url = '/pages/o-nas'
+    endif
+
+    assign silk_url = section.settings.silk_page.url
+    if silk_url == blank
+      assign silk_url = '/pages/dlaczego-jedwab'
+    endif
+
+    assign sklep_url = routes.all_products_collection_url
+    assign primary_urls = sklep_url | append: '||' | append: about_url | append: '||' | append: silk_url | split: '||'
+  -%}
+
   <div class="container flex items-center justify-between">
     <details class="lg:hidden relative">
-      <summary class="list-none p-2 cursor-pointer">
+      <summary class="list-none p-2 cursor-pointer" aria-label="Menu">
         {% render 'lusena-icon', name: 'menu', class: 'w-6 h-6 text-primary', stroke_width: 1.5 %}
-        <span class="sr-only">Menu</span>
       </summary>
-      {%- if section.settings.menu != blank -%}
-        <div class="absolute left-0 right-0 mt-3 bg-brand-bg shadow-sm border border-brand-bg p-4">
-          <nav class="flex flex-col gap-4">
+      <div class="absolute left-0 right-0 mt-3 bg-brand-bg shadow-sm border border-brand-bg p-4">
+        <nav class="flex flex-col gap-4">
+          <a href="{{ sklep_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">SKLEP</a>
+          <a href="{{ about_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">O NAS</a>
+          <a href="{{ silk_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">DLACZEGO JEDWAB?</a>
+
+          {%- if section.settings.menu != blank -%}
             {%- for link in section.settings.menu.links -%}
-              <a href="{{ link.url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">
-                {{ link.title | escape }}
-              </a>
+              {%- unless primary_urls contains link.url -%}
+                <a href="{{ link.url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">
+                  {{ link.title | escape }}
+                </a>
+              {%- endunless -%}
             {%- endfor -%}
-          </nav>
-        </div>
-      {%- endif -%}
+          {%- endif -%}
+        </nav>
+      </div>
     </details>
 
-    <a href="{{ routes.root_url }}" class="text-2xl font-serif tracking-tight font-medium cursor-pointer">
-      {{ section.settings.logo_text | default: shop.name | escape }}
+    <a href="{{ routes.root_url }}" class="flex items-center cursor-pointer" aria-label="{{ shop.name | escape }}">
+      {%- if section.settings.logo_image != blank -%}
+        {{
+          section.settings.logo_image
+          | image_url: width: section.settings.logo_width
+          | image_tag: alt: shop.name, loading: 'eager', class: 'h-auto w-auto'
+        }}
+      {%- else -%}
+        <span class="text-2xl font-serif tracking-tight font-medium">
+          {{ section.settings.logo_text_fallback | default: shop.name | escape }}
+        </span>
+      {%- endif -%}
     </a>
 
-    {%- if section.settings.menu != blank -%}
-      <nav class="hidden lg:flex items-center gap-8">
+    <nav class="hidden lg:flex items-center gap-8">
+      <a href="{{ sklep_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">SKLEP</a>
+      <a href="{{ about_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">O NAS</a>
+      <a href="{{ silk_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">DLACZEGO JEDWAB?</a>
+
+      {%- if section.settings.menu != blank -%}
         {%- for link in section.settings.menu.links -%}
-          <a href="{{ link.url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">
-            {{ link.title | escape }}
-          </a>
+          {%- unless primary_urls contains link.url -%}
+            <a href="{{ link.url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">
+              {{ link.title | escape }}
+            </a>
+          {%- endunless -%}
         {%- endfor -%}
-      </nav>
-    {%- else -%}
-      <div class="hidden lg:block"></div>
-    {%- endif -%}
+      {%- endif -%}
+    </nav>
 
     <div class="flex items-center gap-2 md:gap-4">
       {%- if section.settings.enable_search -%}
-        <a href="{{ routes.search_url }}" class="hidden sm:flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors">
+        <a href="{{ routes.search_url }}" class="hidden sm:flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Search">
           {% render 'lusena-icon', name: 'search', class: 'w-5 h-5 text-primary', stroke_width: 1.5 %}
-          <span class="sr-only">Search</span>
         </a>
       {%- endif -%}
 
       {%- if section.settings.enable_account and shop.customer_accounts_enabled -%}
-        <a href="{{ routes.account_url }}" class="hidden sm:flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors">
+        <a href="{{ routes.account_url }}" class="hidden sm:flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Account">
           {% render 'lusena-icon', name: 'user', class: 'w-5 h-5 text-primary', stroke_width: 1.5 %}
-          <span class="sr-only">Account</span>
         </a>
       {%- endif -%}
 
       {%- if section.settings.enable_cart -%}
-        <a href="{{ routes.cart_url }}" id="cart-icon-bubble" class="relative flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors">
+        <a href="{{ routes.cart_url }}" id="cart-icon-bubble" class="relative flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Cart">
           {% render 'lusena-icon', name: 'shopping-bag', class: 'w-5 h-5 text-primary', stroke_width: 1.5 %}
-          <span class="sr-only">Cart</span>
           {%- if cart.item_count > 0 -%}
             <span class="absolute -top-1 -right-1 bg-accent-cta text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full border border-white">
               {{ cart.item_count }}
@@ -103,15 +134,40 @@
   "tag": "section",
   "settings": [
     {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo width",
+      "min": 60,
+      "max": 260,
+      "step": 2,
+      "unit": "px",
+      "default": 140
+    },
+    {
       "type": "text",
-      "id": "logo_text",
-      "label": "Logo text",
+      "id": "logo_text_fallback",
+      "label": "Logo text (fallback)",
       "default": "LUSENA"
+    },
+    {
+      "type": "page",
+      "id": "about_page",
+      "label": "O NAS page"
+    },
+    {
+      "type": "page",
+      "id": "silk_page",
+      "label": "DLACZEGO JEDWAB? page"
     },
     {
       "type": "link_list",
       "id": "menu",
-      "label": "Menu",
+      "label": "Additional menu (optional)",
       "default": "main-menu"
     },
     {
