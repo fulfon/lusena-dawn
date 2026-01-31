@@ -19,6 +19,26 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+### b441ec8 — fix(lusena): make header opaque at top
+
+**Goal:** Avoid the header being transparent at the very top of the page.
+
+**What changed**
+- Made the LUSENA header always use the “scrolled” background styles (opaque + blur) instead of switching from transparent on scroll.
+
+**Key files**
+- `sections/lusena-header.liquid`
+
+### 22e1ac1 — fix(lusena): remove homepage header spacer
+
+**Goal:** Remove the “blank header bar” effect at the top of the homepage so the hero starts at the very top under the fixed header.
+
+**What changed**
+- Applied the main content top padding (`pt-[72px]` / `lg:pt-[88px]`) only on non-homepage templates.
+
+**Key files**
+- `layout/theme.liquid`
+
 ### 1dc0edd — fix(lusena): disable header scroll transition
 
 **Goal:** Keep the header visually static when starting to scroll from the top (no fade/resize animation).
@@ -89,34 +109,12 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `snippets/lusena-a11y-overrides.liquid`
 - `layout/theme.liquid`
 
-### 99d916b — fix(lusena): remove extra header menu links
-
-**Goal:** Ensure only the primary header links are shown (SKLEP / O NAS / DLACZEGO JEDWAB?) and remove unwanted extra menu items (e.g. Home/Contact).
-
-**What changed**
-- Added `show_additional_menu` setting (default off) and gated rendering of extra menu items behind it.
-- Keeps the header clean while still allowing optional extra links if explicitly enabled.
-
-**Key files**
-- `sections/lusena-header.liquid`
-- `sections/header-group.json`
-
-### 27317ae — fix(lusena): desktop-only header links + bold account icon
-
-**Goal:** Show header primary links only on desktop (as in the draft) and make the account icon styling consistent with the cart icon.
-
-**What changed**
-- Replaced the utility-based breakpoint visibility with section-scoped CSS so links reliably show on desktop even if utility classes are missing.
-- Removed the mobile header links row (links remain available in the hamburger menu).
-- Made the account icon desktop-only and increased its stroke to match the cart icon weight.
-
-**Key files**
-- `sections/lusena-header.liquid`
-
 ---
 
 ## Older commits (summary only)
 
+- 99d916b — fix(lusena): remove extra header menu links
+- 27317ae — fix(lusena): desktop-only header links + bold account icon
 - fcdcf27 — fix(lusena): header links on mobile + account icon + logo color
 - 0f38fbe — fix(lusena): keep PDP sticky ATC fixed
 - 7b69635 — feat(lusena): logo upload + primary header links
