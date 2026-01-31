@@ -1,4 +1,7 @@
-<section class="relative w-full overflow-hidden lusena-hero" style="--lusena-hero-mobile-max-height: {{ section.settings.mobile_max_height_px }}px;">
+<section
+  class="relative w-full overflow-hidden lusena-hero"
+  style="--lusena-hero-mobile-max-height: {{ section.settings.mobile_max_height_px | default: 900 }}px; --lusena-hero-button-height-mobile: {{ section.settings.button_height_mobile_px | default: 56 }}px; --lusena-hero-button-font-size-mobile: {{ section.settings.button_text_size_mobile_px | default: 16 }}px;"
+>
   {%- liquid
     assign desktop_image = section.settings.image_desktop
     if desktop_image == blank
@@ -94,7 +97,7 @@
                   {% else %}
                     href="{{ block.settings.button_link_1 }}"
                   {% endif %}
-                  class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-14 px-10 text-base bg-white text-accent-cta hover:bg-white/90 border-none w-full sm:w-auto min-w-[180px]"
+                  class="lusena-hero__button inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest px-10 bg-white text-accent-cta hover:bg-white/90 border-none w-full sm:w-auto min-w-[180px]"
                 >
                   {{ block.settings.button_label_1 | escape }}
                 </a>
@@ -107,7 +110,7 @@
                   {% else %}
                     href="{{ block.settings.button_link_2 }}"
                   {% endif %}
-                  class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-14 px-10 text-base border border-white bg-transparent text-white hover:bg-white/20 hover:text-white w-full sm:w-auto min-w-[160px]"
+                  class="lusena-hero__button inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest px-10 border border-white bg-transparent text-white hover:bg-white/20 hover:text-white w-full sm:w-auto min-w-[160px]"
                 >
                   {{ block.settings.button_label_2 | escape }}
                 </a>
@@ -139,6 +142,18 @@
   @media (min-width: 768px) {
     .lusena-hero [data-lusena-hero-image] img {
       object-position: center;
+    }
+  }
+
+  .lusena-hero__button {
+    height: var(--lusena-hero-button-height-mobile, 56px);
+    font-size: var(--lusena-hero-button-font-size-mobile, 16px);
+  }
+
+  @media (min-width: 768px) {
+    .lusena-hero__button {
+      height: 56px;
+      font-size: 16px;
     }
   }
 
@@ -246,6 +261,30 @@
       "unit": "%",
       "label": "Overlay opacity",
       "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Buttons — mobile"
+    },
+    {
+      "type": "range",
+      "id": "button_height_mobile_px",
+      "min": 44,
+      "max": 84,
+      "step": 2,
+      "unit": "px",
+      "label": "Button height (mobile)",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "button_text_size_mobile_px",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Button text size (mobile)",
+      "default": 16
     },
     {
       "type": "header",
