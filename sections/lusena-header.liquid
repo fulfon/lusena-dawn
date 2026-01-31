@@ -2,6 +2,26 @@
   class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent py-6"
   data-lusena-header
 >
+  {% stylesheet %}
+    .lusena-header__nav {
+      display: none;
+    }
+
+    .lusena-header__desktop-only {
+      display: none;
+    }
+
+    @media (min-width: 1024px) {
+      .lusena-header__nav {
+        display: flex;
+      }
+
+      .lusena-header__desktop-only {
+        display: flex;
+      }
+    }
+  {% endstylesheet %}
+
   {%- liquid
     assign about_url = section.settings.about_page.url
     if about_url == blank
@@ -64,7 +84,7 @@
       {%- endif -%}
     </a>
 
-    <nav class="hidden lg:flex items-center gap-8">
+    <nav class="lusena-header__nav items-center gap-8">
       <a href="{{ sklep_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">SKLEP</a>
       <a href="{{ about_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">O NAS</a>
       <a href="{{ silk_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">DLACZEGO JEDWAB?</a>
@@ -82,14 +102,14 @@
 
     <div class="flex items-center gap-2 md:gap-4">
       {%- if section.settings.enable_search -%}
-        <a href="{{ routes.search_url }}" class="hidden sm:flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Search">
+        <a href="{{ routes.search_url }}" class="lusena-header__desktop-only h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Search">
           {% render 'lusena-icon', name: 'search', class: 'w-5 h-5 text-primary', stroke_width: 1.5 %}
         </a>
       {%- endif -%}
 
       {%- if section.settings.enable_account and shop.customer_accounts_enabled -%}
-        <a href="{{ routes.account_url }}" class="flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Account">
-          {% render 'lusena-icon', name: 'user', class: 'w-5 h-5 text-primary', stroke_width: 1.5 %}
+        <a href="{{ routes.account_url }}" class="lusena-header__desktop-only h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Account">
+          {% render 'lusena-icon', name: 'user', class: 'w-5 h-5 text-primary', stroke_width: 2 %}
         </a>
       {%- endif -%}
 
@@ -104,14 +124,6 @@
         </a>
       {%- endif -%}
     </div>
-  </div>
-
-  <div class="container md:hidden mt-3">
-    <nav class="flex items-center gap-5 text-[11px] font-medium uppercase tracking-widest overflow-x-auto">
-      <a href="{{ sklep_url }}" class="whitespace-nowrap hover:text-accent-cta transition-colors">SKLEP</a>
-      <a href="{{ about_url }}" class="whitespace-nowrap hover:text-accent-cta transition-colors">O NAS</a>
-      <a href="{{ silk_url }}" class="whitespace-nowrap hover:text-accent-cta transition-colors">DLACZEGO JEDWAB?</a>
-    </nav>
   </div>
 </header>
 
