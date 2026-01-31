@@ -318,7 +318,12 @@
 
     {% sections 'header-group' %}
 
-    <main id="MainContent" class="content-for-layout focus-none flex-grow pt-[72px] lg:pt-[88px]" role="main" tabindex="-1">
+    <main
+      id="MainContent"
+      class="content-for-layout focus-none flex-grow{% unless request.page_type == 'index' %} pt-[72px] lg:pt-[88px]{% endunless %}"
+      role="main"
+      tabindex="-1"
+    >
       {{ content_for_layout }}
     </main>
 
