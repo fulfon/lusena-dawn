@@ -19,6 +19,21 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+### e607662 — fix(lusena): mobile header menu expands with background
+
+**Goal:** Make the mobile header menu feel like a single, unified header element (no background cut-off), with a smooth expand/collapse animation.
+
+**What changed**
+- Rebuilt the mobile menu panel to live inside the header flow so the header height expands/collapses instead of using an absolutely-positioned dropdown.
+- Ensured the header background switches to the same “scrolled” background while the menu is open so it reads as one element.
+- Prevented “O NAS” from wrapping on narrow viewports.
+- Improved a11y by toggling `aria-hidden` + `inert` on the mobile menu wrapper while closed.
+- Fixed hero overlay opacity behavior so the slider visibly changes the overlay (uses an RGBA overlay layer above the image).
+
+**Key files**
+- `sections/lusena-header.liquid`
+- `sections/lusena-hero.liquid`
+
 ### 0997b8a — fix(lusena): align hero copy to top on mobile
 
 **Goal:** Align the homepage hero copy to the top on mobile so it matches the draft banner composition.
@@ -101,102 +116,18 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `sections/lusena-header.liquid`
 - `sections/header-group.json`
 
-### 0f38fbe — fix(lusena): keep PDP sticky ATC fixed
-
-**Goal:** Ensure the mobile sticky add-to-cart bar stays fixed to the viewport bottom (like the draft shop), instead of being constrained inside the PDP section.
-
-**What changed**
-- Prevented the global GSAP section reveal from applying transforms to the PDP section.
-- This avoids creating a transformed containing block, which breaks `position: fixed` descendants like the sticky ATC bar.
-
-**Key files**
-- `assets/lusena-animations.js`
-
-### 7b69635 — feat(lusena): logo upload + primary header links
-
-**Goal:** Replace the text logo with an uploadable logo and harden the primary header navigation to match the draft (SKLEP / O NAS / DLACZEGO JEDWAB?).
-
-**What changed**
-- Added an uploadable header logo (image picker) with adjustable width and a text fallback.
-- Added primary header links on desktop and in the mobile menu (SKLEP / O NAS / DLACZEGO JEDWAB?).
-- Removed visible “Menu”/“Cart” labels by switching to `aria-label` attributes (icons only).
-
-**Key files**
-- `sections/lusena-header.liquid`
-
-### 7079328 — fix(lusena): cart drawer overlay blur + upsell styling
-
-**Goal:** Match the draft shop cart drawer overlay behavior (blur + click-outside-close) and improve the “Pairs well with” card styling.
-
-**What changed**
-- Restored the Dawn drawer overlay approach and added a blurred backdrop on the active cart drawer.
-- Switched the overlay element back to Dawn’s `.cart-drawer__overlay` so it reliably covers the viewport and is clickable to close.
-- Added missing utility-class fallbacks used by the cart upsell card so layout/typography matches the draft.
-
-**Key files**
-- `snippets/cart-drawer.liquid`
-- `snippets/lusena-missing-utilities.liquid`
-
-### 3be1a33 — feat(lusena): nasza-jakosc certificate button + layout tweaks
-
-**Goal:** Match the `Nasza jakość` draft page and let merchants manage the OEKO‑TEX certificate PDF from Shopify Admin.
-
-**What changed**
-- Added missing utility-class fallbacks used by `lusena-page-quality` so bullet lists render and indent correctly (matching the draft output).
-- Updated the certificate CTA to prefer a store metafield `lusena.oeko_tex_certificate` (type: `file_reference`) with a section setting URL fallback.
-- Normalized letter-spacing for the section and ensured the Suzhou heading stays on one line on `md+`.
-
-**Key files**
-- `sections/lusena-page-quality.liquid`
-- `snippets/lusena-missing-utilities.liquid`
-
-### f906875 — fix(lusena): problem/solution typography + spacing
-
-**Goal:** Match the draft shop’s Problem/Solution section typography and inter-column spacing on desktop and mobile.
-
-**What changed**
-- Increased the “The Problem” / “The Solution” kicker size and the main heading size to match the draft.
-- Increased the column gap on desktop to match the draft.
-- Added higher-specificity section-scoped CSS to avoid utility-order issues.
-- Added missing `.md:gap-24` utility as a fallback for other sections that rely on it.
-
-**Key files**
-- `sections/lusena-problem-solution.liquid`
-- `snippets/lusena-missing-utilities.liquid`
-
-### 90e00a8 — fix(lusena): trust bar matches draft layout (icons + height)
-
-**Goal:** Match the `lusena-shop/` draft trust strip 1:1 (icon-to-text alignment, responsive stacking, and bar height).
-
-**What changed**
-- Updated trust bar item layout to stack on mobile and align icon-left/text-right from `sm` breakpoint (matching the draft’s `flex-col sm:flex-row` behavior).
-
-**Key files**
-- `sections/lusena-trust-bar.liquid`
-
-### e47ec72 — fix(lusena): trust bar layout + remove border
-
-**Goal:** Remove the visible divider line between hero and trust strip and tighten the trust bar spacing to match the draft.
-
-**What changed**
-- Adjusted `lusena-trust-bar` layout/styling and removed the top border to eliminate the thin line between hero and trust strip.
-
-**Key files**
-- `sections/lusena-trust-bar.liquid`
-
-### 922b24d — Initial commit
-
-**Goal:** Publish the theme to GitHub as the new baseline history after resolving `index-pack failed` push issues.
-
-**What changed**
-- Initialized the repository and pushed the full theme as a clean baseline.
-
-**Key files**
-- (baseline snapshot of the whole theme)
-
 ---
 
 ## Older commits (summary only)
+
+- 0f38fbe — fix(lusena): keep PDP sticky ATC fixed
+- 7b69635 — feat(lusena): logo upload + primary header links
+- 7079328 — fix(lusena): cart drawer overlay blur + upsell styling
+- 3be1a33 — feat(lusena): nasza-jakosc certificate button + layout tweaks
+- f906875 — fix(lusena): problem/solution typography + spacing
+- 90e00a8 — fix(lusena): trust bar matches draft layout (icons + height)
+- e47ec72 — fix(lusena): trust bar layout + remove border
+- 922b24d — Initial commit
 
 - (current) `1f6a5fb` — Update from Shopify for theme lusena-dawn/main
 - (pre-reset / legacy) `2f6787f` — fix(lusena): match homepage to draft spacing + CTAs
