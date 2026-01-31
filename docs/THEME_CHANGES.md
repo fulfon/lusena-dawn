@@ -19,6 +19,18 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+### 7b69635 — feat(lusena): logo upload + primary header links
+
+**Goal:** Replace the text logo with an uploadable logo and harden the primary header navigation to match the draft (SKLEP / O NAS / DLACZEGO JEDWAB?).
+
+**What changed**
+- Added an uploadable header logo (image picker) with adjustable width and a text fallback.
+- Added primary header links on desktop and in the mobile menu (SKLEP / O NAS / DLACZEGO JEDWAB?).
+- Removed visible “Menu”/“Cart” labels by switching to `aria-label` attributes (icons only).
+
+**Key files**
+- `sections/lusena-header.liquid`
+
 ### 7079328 — fix(lusena): cart drawer overlay blur + upsell styling
 
 **Goal:** Match the draft shop cart drawer overlay behavior (blur + click-outside-close) and improve the “Pairs well with” card styling.
