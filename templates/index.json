@@ -47,7 +47,7 @@
         "overlay_opacity": 30,
         "content_position_mobile": "center",
         "content_offset_y_mobile": -8,
-        "content_position_desktop": "lower",
+        "content_position_desktop": "center",
         "content_offset_y_desktop": 0
       }
     },
