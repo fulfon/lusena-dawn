@@ -19,6 +19,19 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+### fcdcf27 — fix(lusena): header links on mobile + account icon + logo color
+
+**Goal:** Ensure header links are visible in the storefront preview, show the account icon as configured, and allow controlling the logo color from Theme Editor.
+
+**What changed**
+- Added a compact mobile primary-links row (SKLEP / O NAS / DLACZEGO JEDWAB?) so links are visible even on small viewports without opening the menu.
+- Made the account icon visible on mobile (it was previously hidden via `hidden sm:flex`).
+- Added header settings for `logo_color` and optional `logo_svg_inline` so SVG logos can inherit the chosen color via `currentColor`.
+
+**Key files**
+- `sections/lusena-header.liquid`
+- `sections/header-group.json`
+
 ### 0f38fbe — fix(lusena): keep PDP sticky ATC fixed
 
 **Goal:** Ensure the mobile sticky add-to-cart bar stays fixed to the viewport bottom (like the draft shop), instead of being constrained inside the PDP section.
