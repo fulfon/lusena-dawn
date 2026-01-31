@@ -19,6 +19,17 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
+### f208bdd — fix(lusena): align quality page benefit bullets
+
+**Goal:** Make the “Dlaczego 22 momme?” benefit markers match PDP styling and keep the marker aligned with its text (no stacked marker line breaks).
+
+**What changed**
+- Replaced the plain list marker with the same gold dot pattern used on PDP benefit lists.
+- Forced a single-row flex layout so the marker never wraps onto its own line.
+
+**Key files**
+- `sections/lusena-page-quality.liquid`
+
 ### c6e29b9 — fix(lusena): close mobile menu on outside tap
 
 **Goal:** Close the expanded mobile menu when the user taps/clicks anywhere outside the menu.
@@ -94,23 +105,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Key files**
 - `sections/lusena-hero.liquid`
 
-### f58cf0c — chore(a11y): remove skip links
-
-**Goal:** Remove the “Skip to content” / “Skip to product info” skip links entirely.
-
-**What changed**
-- Removed the skip link anchors from the main theme layout, password layout, and product media gallery.
-- Removed the temporary LUSENA skip-link focus override snippet (no longer needed).
-
-**Key files**
-- `layout/theme.liquid`
-- `layout/password.liquid`
-- `snippets/product-media-gallery.liquid`
-
 ---
 
 ## Older commits (summary only)
 
+- f58cf0c — chore(a11y): remove skip links
 - 6922ae6 — feat(lusena): separate hero images for mobile/desktop
 - 701b58d — fix(a11y): show skip link only on keyboard focus
 - 99d916b — fix(lusena): remove extra header menu links
