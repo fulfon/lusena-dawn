@@ -20,6 +20,18 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 ## Recent commits (detailed, last 8)
 
 
+### 6187b7d — feat(lusena): mobile hero button size controls
+
+**Goal:** Give merchants finer control over the hero button sizing on mobile.
+
+**What changed**
+- Added mobile-only controls for hero button height and button text size.
+- Applied sizing via CSS variables, keeping desktop button sizing unchanged.
+
+**Key files**
+- `sections/lusena-hero.liquid`
+- `templates/index.json`
+
 ### cbb4d8a — fix(lusena): mobile hero max height + responsive text controls
 
 **Goal:** Let merchants precisely position hero copy separately on mobile vs desktop, and control the mobile hero image height (cropped from the bottom).
@@ -96,21 +108,13 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Key files**
 - `sections/lusena-header.liquid`
 
-### b441ec8 — fix(lusena): make header opaque at top
-
-**Goal:** Avoid the header being transparent at the very top of the page.
-
-**What changed**
-- Made the LUSENA header always use the “scrolled” background styles (opaque + blur) instead of switching from transparent on scroll.
-
-**Key files**
-- `sections/lusena-header.liquid`
-
 ---
 
 ## Older commits (summary only)
 
 - 22e1ac1 — fix(lusena): remove homepage header spacer
+
+- b441ec8 — fix(lusena): make header opaque at top
 
 - 1dc0edd — fix(lusena): disable header scroll transition
 - e607662 — fix(lusena): mobile header menu expands with background
