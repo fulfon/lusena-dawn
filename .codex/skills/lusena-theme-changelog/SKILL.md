@@ -12,7 +12,18 @@ description: Workflow for maintaining the LUSENA Shopify Dawn theme. Use when ma
 - Brand source of truth: `docs/LUSENA_BrandBook_v1.md`.
 - Engineering changelog: `docs/THEME_CHANGES.md` (commit-linked, semi-detailed).
 
-## Workflow (for “bigger” changes)
+## What counts as a “bigger change”
+
+Create a commit + changelog entry when the work is meaningfully complete and would be useful to revert or reference later. Typical “bigger changes”:
+
+- Visible UX/behavior change (header/menu behavior, PDP UX, cart behavior, new animation).
+- New/removed section/snippet/block, or significant markup restructuring.
+- New theme setting or changes to schema/defaults.
+- Multi-file change set, or anything touching critical flows (PDP → cart → checkout).
+
+Avoid committing tiny iteration steps (e.g. “try 1”, “adjust 2px”, “maybe fix”). Batch those locally until the result is approved.
+
+## Workflow (for bigger changes)
 
 ### 1) Implement the change set
 
@@ -24,7 +35,17 @@ description: Workflow for maintaining the LUSENA Shopify Dawn theme. Use when ma
 - Run `shopify theme check` and ensure only the known baseline warnings remain.
 - If you changed theme settings (schema/data), ensure schema constraints are respected (ranges, steps, defaults).
 
-### 3) Commit (Git)
+### 3) Confirm “definition of done” (ASK THE USER)
+
+When you believe the task is complete, ask the user explicitly:
+
+1) “Is this the end of this task?”  
+2) “Should I commit these changes?”  
+3) “Should I update a changelog entry in `docs/THEME_CHANGES.md` (or another .md you specify)?”
+
+If the user says “not done yet”, continue iterating **without committing**.
+
+### 4) Commit (Git) — only after user confirmation
 
 - Stage only the files relevant to the change set.
 - Use a clear commit message (recommended: Conventional Commits):
@@ -33,7 +54,14 @@ description: Workflow for maintaining the LUSENA Shopify Dawn theme. Use when ma
   - `docs: …` for documentation only
   - `chore: …` for meta/infrastructure
 
-### 4) Update `docs/THEME_CHANGES.md`
+Default: prefer **one commit per task** that includes both code changes and the `docs/THEME_CHANGES.md` update, unless the user asks to split docs into a separate commit.
+
+### 5) Update the changelog (.md)
+
+Only do this if the user confirms they want it updated, and which file to update:
+
+- Default: `docs/THEME_CHANGES.md`
+- If the user requests a different file, update that file instead.
 
 - Add a new entry with:
   - commit hash + commit message
@@ -57,6 +85,6 @@ Template snippet to copy:
 - `path/to/file`
 ```
 
-### 5) Sanity check in dev
+### 6) Sanity check in dev
 
 - Smoke test flows impacted by the change (PDP → add to cart, cart drawer, /cart, etc.).
