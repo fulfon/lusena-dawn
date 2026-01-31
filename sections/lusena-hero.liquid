@@ -11,12 +11,7 @@
     endif
   -%}
 
-  <div
-    class="absolute inset-0 bg-neutral-900 z-10"
-    style="opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"
-  ></div>
-
-  <div class="absolute inset-0 h-full w-full" data-lusena-hero-image>
+  <div class="absolute inset-0 h-full w-full z-0" data-lusena-hero-image>
     {%- if mobile_image != blank or desktop_image != blank -%}
       <picture>
         {%- if desktop_image != blank -%}
@@ -48,6 +43,12 @@
       {{ 'lifestyle-2' | placeholder_svg_tag: 'h-full w-full object-cover bg-surface-2' }}
     {%- endif -%}
   </div>
+
+  <div
+    class="absolute inset-0 z-10 pointer-events-none"
+    style="background-color: rgba(0, 0, 0, {{ section.settings.overlay_opacity | divided_by: 100.0 }});"
+    aria-hidden="true"
+  ></div>
 
   <div class="container relative h-full flex flex-col z-20 lusena-hero__content">
     <div class="max-w-xl space-y-6 md:space-y-8 pl-4 md:pl-0" data-lusena-hero-text>

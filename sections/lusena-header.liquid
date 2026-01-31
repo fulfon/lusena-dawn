@@ -11,6 +11,45 @@
       display: none;
     }
 
+    [data-lusena-mobile-menu-wrapper] {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition: grid-template-rows 260ms cubic-bezier(0.2, 0.9, 0.2, 1), opacity 160ms ease;
+    }
+
+    [data-lusena-mobile-menu-inner] {
+      overflow: hidden;
+      background-color: inherit;
+    }
+
+    [data-lusena-header].lusena-header--menu-open [data-lusena-mobile-menu-wrapper] {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    [data-lusena-mobile-menu-content] {
+      opacity: 0;
+      transform: translateY(-0.5rem);
+      transition: opacity 160ms ease, transform 220ms cubic-bezier(0.2, 0.9, 0.2, 1);
+      will-change: transform, opacity;
+    }
+
+    [data-lusena-header].lusena-header--menu-open [data-lusena-mobile-menu-content] {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-lusena-mobile-menu-wrapper] {
+        transition: none;
+      }
+      [data-lusena-mobile-menu-content] {
+        transition: none;
+        transform: none;
+      }
+    }
+
     @media (min-width: 1024px) {
       .lusena-header__nav {
         display: flex;
@@ -38,27 +77,10 @@
   -%}
 
   <div class="container flex items-center justify-between">
-    <details class="lg:hidden relative">
-      <summary class="list-none p-2 cursor-pointer" aria-label="Menu">
+    <details class="lg:hidden relative" data-lusena-mobile-menu-details>
+      <summary class="list-none p-2 cursor-pointer" aria-label="Menu" aria-controls="lusena-mobile-menu-panel">
         {% render 'lusena-icon', name: 'menu', class: 'w-6 h-6 text-primary', stroke_width: 1.5 %}
       </summary>
-      <div class="absolute left-0 right-0 mt-3 bg-brand-bg shadow-sm border border-brand-bg p-4">
-        <nav class="flex flex-col gap-4">
-          <a href="{{ sklep_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">SKLEP</a>
-          <a href="{{ about_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">O NAS</a>
-          <a href="{{ silk_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">DLACZEGO JEDWAB?</a>
-
-          {%- if section.settings.show_additional_menu and section.settings.menu != blank -%}
-            {%- for link in section.settings.menu.links -%}
-              {%- unless primary_urls contains link.url -%}
-                <a href="{{ link.url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">
-                  {{ link.title | escape }}
-                </a>
-              {%- endunless -%}
-            {%- endfor -%}
-          {%- endif -%}
-        </nav>
-      </div>
     </details>
 
     <a
@@ -125,9 +147,31 @@
       {%- endif -%}
     </div>
   </div>
+
+  <div class="lg:hidden" id="lusena-mobile-menu-panel" data-lusena-mobile-menu-wrapper aria-hidden="true">
+    <div data-lusena-mobile-menu-inner>
+      <div class="container pb-4" data-lusena-mobile-menu-content>
+        <nav class="flex flex-col gap-4">
+          <a href="{{ sklep_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">SKLEP</a>
+          <a href="{{ about_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors whitespace-nowrap">O NAS</a>
+          <a href="{{ silk_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">DLACZEGO JEDWAB?</a>
+
+          {%- if section.settings.show_additional_menu and section.settings.menu != blank -%}
+            {%- for link in section.settings.menu.links -%}
+              {%- unless primary_urls contains link.url -%}
+                <a href="{{ link.url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">
+                  {{ link.title | escape }}
+                </a>
+              {%- endunless -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </nav>
+      </div>
+    </div>
+  </div>
 </header>
 
-{% javascript %}
+  {% javascript %}
   (() => {
     const header = document.querySelector('[data-lusena-header]');
     if (!header) return;
@@ -135,8 +179,27 @@
     const scrolledClasses = ['bg-brand-bg/95', 'backdrop-blur-sm', 'shadow-sm', 'py-4'];
     const topClasses = ['bg-transparent', 'py-6'];
 
+    const mobileMenuDetails = header.querySelector('[data-lusena-mobile-menu-details]');
+    const mobileMenuPanel = header.querySelector('[data-lusena-mobile-menu-wrapper]');
+
+    const setPanelA11y = () => {
+      if (!mobileMenuDetails || !mobileMenuPanel) return;
+      const shouldBeAccessible =
+        mobileMenuDetails.open && !mobileMenuDetails.hasAttribute('data-lusena-mobile-menu-closing');
+      mobileMenuPanel.inert = !shouldBeAccessible;
+      mobileMenuPanel.setAttribute('aria-hidden', shouldBeAccessible ? 'false' : 'true');
+    };
+
     const update = () => {
       const isScrolled = window.scrollY > 10;
+      const isMenuVisible =
+        !!mobileMenuDetails?.open || mobileMenuDetails?.hasAttribute('data-lusena-mobile-menu-closing');
+
+      if (isMenuVisible) {
+        header.classList.add(...scrolledClasses);
+        header.classList.remove(...topClasses);
+        return;
+      }
 
       if (isScrolled) {
         header.classList.add(...scrolledClasses);
@@ -150,6 +213,38 @@
 
     update();
     window.addEventListener('scroll', update, { passive: true });
+
+    if (mobileMenuDetails) {
+      const summary = mobileMenuDetails.querySelector('summary');
+      if (summary) {
+        summary.addEventListener('click', (event) => {
+          if (!mobileMenuDetails.open) return;
+          if (mobileMenuDetails.hasAttribute('data-lusena-mobile-menu-closing')) return;
+          event.preventDefault();
+
+          mobileMenuDetails.setAttribute('data-lusena-mobile-menu-closing', 'true');
+          header.classList.remove('lusena-header--menu-open');
+          setPanelA11y();
+          update();
+
+          window.setTimeout(() => {
+            mobileMenuDetails.removeAttribute('open');
+            mobileMenuDetails.removeAttribute('data-lusena-mobile-menu-closing');
+            setPanelA11y();
+            update();
+          }, 280);
+        });
+      }
+
+      mobileMenuDetails.addEventListener('toggle', () => {
+        header.classList.toggle(
+          'lusena-header--menu-open',
+          mobileMenuDetails.open && !mobileMenuDetails.hasAttribute('data-lusena-mobile-menu-closing')
+        );
+        setPanelA11y();
+        update();
+      });
+    }
 
     if (window.Shopify?.designMode) {
       document.addEventListener('shopify:section:load', update);
