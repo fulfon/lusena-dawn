@@ -56,6 +56,11 @@ If the user says “not done yet”, continue iterating **without committing**.
 
 Default: prefer **one commit per task** that includes both code changes and the `docs/THEME_CHANGES.md` update, unless the user asks to split docs into a separate commit.
 
+**Important (avoid “extra commits”):**
+- If you notice a mistake in `docs/THEME_CHANGES.md` while the task is still in progress (paths, formatting, missing files), fix it **before** committing.
+- If you already committed but haven’t pushed yet, prefer `git commit --amend` (or an interactive rebase) to keep the task as a **single commit**, instead of adding follow-up “docs fix” commits.
+- Only create additional commits if the user explicitly asks for separate commits, or if history-rewriting is not acceptable (e.g., commits already pushed and you can’t/shouldn’t force-push).
+
 ### 5) Update the changelog (.md)
 
 Only do this if the user confirms they want it updated, and which file to update:
@@ -69,7 +74,16 @@ Only do this if the user confirms they want it updated, and which file to update
   - “what changed” (bullets)
   - key files touched (high-signal list)
 - Keep only the **latest 8** change entries detailed in `docs/THEME_CHANGES.md`.
-- If there are more than 8 entries, compress anything older than the newest 8 into an **Older commits (summary only)** list (hash + subject only, no details).
+- Keep **ALL older commit history** as a rolling summary list so it’s always possible to see everything that happened since the initial Dawn import:
+  - Format (one line per commit): `<dateTime> — <hash> — <subject>`
+  - Ordering: **descending by commit date/time** (newest first)
+  - Content: summary only (no extra bullets)
+  - Suggested source: `git log --date=iso-strict --pretty=format:"%ad — %h — %s"`
+
+**Note on “commit hash in the same commit”:**
+- If you require the changelog entry to contain the exact hash of the commit that also contains that entry, that’s not reliably achievable.
+- Preferred approach for accurate hashes is: commit the code, then add the changelog entry in a follow-up `docs:` commit.
+- If the user wants a single commit, write the newest entry without a hash (use `(current)` / `HEAD`) and rely on the next changelog update to record the hash once it’s in history.
 
 Template snippet to copy:
 

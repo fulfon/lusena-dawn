@@ -8,7 +8,15 @@
   endif
 -%}
 
-<section class="py-24 bg-surface-1 border-t border-brand-bg">
+<section
+  class="bg-surface-1 border-t border-brand-bg lusena-bestsellers"
+  style="
+    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
+    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
+  "
+>
   <div class="container">
     <div class="flex justify-between items-end mb-12">
       <div class="space-y-4">
@@ -69,11 +77,69 @@
   </div>
 </section>
 
+{% stylesheet %}
+  .lusena-bestsellers {
+    padding-top: var(--lusena-section-padding-top-mobile);
+    padding-bottom: var(--lusena-section-padding-bottom-mobile);
+  }
+
+  @media (min-width: 768px) {
+    .lusena-bestsellers {
+      padding-top: var(--lusena-section-padding-top-desktop);
+      padding-bottom: var(--lusena-section-padding-bottom-desktop);
+    }
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "LUSENA Bestsellers",
   "tag": "section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
     {
       "type": "text",
       "id": "heading",

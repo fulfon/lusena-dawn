@@ -1,6 +1,15 @@
 {%- assign known_icons = 'star,shield-check,truck,clock' | split: ',' -%}
 
-<section class="bg-surface-2 lusena-trust-bar" data-lusena-trust-bar>
+<section
+  class="bg-surface-2 lusena-trust-bar"
+  data-lusena-trust-bar
+  style="
+    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
+    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
+  "
+>
   <div class="container px-4 md:px-6">
     <div class="grid grid-cols-2 md:grid-cols-4 lusena-trust-bar__grid bg-surface-2">
       {%- for block in section.blocks -%}
@@ -28,7 +37,8 @@
 
 {% stylesheet %}
   .lusena-trust-bar {
-    padding-block: 32px;
+    padding-top: var(--lusena-section-padding-top-mobile);
+    padding-bottom: var(--lusena-section-padding-bottom-mobile);
   }
 
   .lusena-trust-bar__grid {
@@ -76,6 +86,11 @@
   }
 
   @media (min-width: 768px) {
+    .lusena-trust-bar {
+      padding-top: var(--lusena-section-padding-top-desktop);
+      padding-bottom: var(--lusena-section-padding-bottom-desktop);
+    }
+
     .lusena-trust-bar__grid {
       gap: 32px;
     }
@@ -86,7 +101,52 @@
 {
   "name": "LUSENA Trust Bar",
   "tag": "section",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    }
+  ],
   "blocks": [
     {
       "type": "item",

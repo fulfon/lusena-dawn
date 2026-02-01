@@ -11,14 +11,29 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - For each “bigger” change set, create a Git commit and add an entry here.
 - Entries should be **semi-detailed**: what changed, why, and where (key files/settings).
 - Always reference the commit (hash + message) so it’s easy to diff/revert.
-- Keep only the **latest 8** change entries detailed. Older entries should be compressed into a short summary list.
+- Keep only the **latest 8** change entries detailed.
+- Keep **ALL commit history** in a rolling summary list (dateTime + hash + subject), sorted descending by commit date/time.
 
 ---
 
-**Note (2026-01-30):** Git history in this repo was reset (new `Initial commit`). Entries under **Legacy commits** reference the pre-reset history and won’t match the current commit hashes.
+**Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
+### (current) — feat(lusena): per-section spacing + split page sections
 
+**Goal:** Make vertical spacing adjustable (mobile/desktop) between LUSENA sections, and split page-sized LUSENA sections into smaller, reorderable sections.
+
+**What changed**
+- Added per-section spacing settings (mobile + desktop) across LUSENA sections to control top/bottom padding.
+- Split monolithic page sections into multiple Shopify sections for Quality, About, and Returns pages to enable independent spacing and ordering.
+- Updated page templates to use the new split sections.
+
+**Key files**
+- `sections/lusena-*-*.liquid`
+- `sections/lusena-(bestsellers|bundles|comparison|faq|heritage|main-collection|main-product|problem-solution|science|testimonials|trust-bar).liquid`
+- `templates/page.nasza-jakosc.json`
+- `templates/page.o-nas.json`
+- `templates/page.zwroty.json`
 
 ### 7efa557 — feat(lusena): auto-hide header on scroll
 
@@ -101,51 +116,107 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Key files**
 - `sections/lusena-page-quality.liquid`
 
-### f208bdd — fix(lusena): align quality page benefit bullets
-
-**Goal:** Make the “Dlaczego 22 momme?” benefit markers match PDP styling and keep the marker aligned with its text (no stacked marker line breaks).
-
-**What changed**
-- Replaced the plain list marker with the same gold dot pattern used on PDP benefit lists.
-- Forced a single-row flex layout so the marker never wraps onto its own line.
-
-**Key files**
-- `sections/lusena-page-quality.liquid`
-
 ---
 
-## Older commits (summary only)
+## All commits (summary, dateTime-desc)
+- 2026-02-01T23:02:37+01:00 — (current) — feat(lusena): per-section spacing + split page sections
+- 2026-01-31T23:58:51+01:00 — f19d702 — Merge branch 'main' of https://github.com/fulfon/lusena-dawn
+- 2026-01-31T23:58:34+01:00 — 184fe6b — docs: update theme changelog
+- 2026-01-31T23:58:01+01:00 — 7efa557 — feat(lusena): auto-hide header on scroll
+- 2026-01-31T22:53:52Z — 5a1ac3c — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T22:53:33Z — 90374e6 — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T22:53:09Z — 70bedf7 — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T22:17:31Z — 3fe4d5e — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T22:17:07Z — ea6f51f — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T23:08:56+01:00 — 7b3b60a — Merge branch 'main' of https://github.com/fulfon/lusena-dawn
+- 2026-01-31T23:04:08+01:00 — 6499dff — docs: update theme changelog
+- 2026-01-31T23:03:09+01:00 — 27fcb56 — feat(lusena): independent mobile hero offsets
+- 2026-01-31T22:51:00+01:00 — 6339ab2 — docs: update theme changelog
+- 2026-01-31T22:50:10+01:00 — 6187b7d — feat(lusena): mobile hero button size controls
+- 2026-01-31T21:48:29Z — 56962b8 — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T21:29:54Z — 9a3bd86 — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T21:28:18Z — 1e2447a — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T21:28:07Z — ccbea04 — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T21:27:32Z — b1feff8 — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T21:27:22Z — e3bb38d — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T21:26:35Z — cc904c3 — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T21:26:22Z — f8c1a53 — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T21:25:54Z — 9f4023d — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T21:25:38Z — 0acd0a1 — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T21:07:58Z — d6eaeab — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T21:48:52+01:00 — 36ae2bd — Merge branch 'main' of https://github.com/fulfon/lusena-dawn
+- 2026-01-31T21:44:42+01:00 — 6b28e86 — docs: update changelog + fix utf-8
+- 2026-01-31T21:34:41+01:00 — cbb4d8a — fix(lusena): mobile hero max height + responsive text controls
+- 2026-01-31T20:17:40Z — 5e44bda — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T21:00:04+01:00 — 4a950cc — docs: update theme changelog
+- 2026-01-31T20:55:28+01:00 — abbe143 — chore: resolve homepage template merge conflict
+- 2026-01-31T20:48:14+01:00 — 179d0af — fix(lusena): hero overlay opacity + copy positioning
+- 2026-01-31T19:11:19Z — 77ada10 — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T20:05:29+01:00 — e26de8d — reduce readability from .9 to .89
+- 2026-01-31T19:56:33+01:00 — 3236ecf — docs: refine lusena-theme-changelog commit guidance
+- 2026-01-31T19:17:43+01:00 — f15ccab — docs: log quality benefit dot alignment
+- 2026-01-31T19:16:47+01:00 — 055293b — fix(lusena): center quality benefit dot on first line
+- 2026-01-31T19:07:38+01:00 — dbdbba5 — docs: add quality page bullet alignment entry
+- 2026-01-31T19:05:54+01:00 — f208bdd — fix(lusena): align quality page benefit bullets
+- 2026-01-31T18:55:13+01:00 — 6e793db — docs: log outside-tap mobile menu close
+- 2026-01-31T18:54:29+01:00 — c6e29b9 — fix(lusena): close mobile menu on outside tap
+- 2026-01-31T18:51:22+01:00 — 65418df — docs: log mobile menu padding tweak
+- 2026-01-31T18:50:55+01:00 — d5e5458 — fix(lusena): align mobile menu vertical padding
+- 2026-01-31T18:49:27+01:00 — 2b57e46 — docs: log opaque header change
+- 2026-01-31T18:48:32+01:00 — b441ec8 — fix(lusena): make header opaque at top
+- 2026-01-31T18:46:48+01:00 — 22e1ac1 — fix(lusena): remove homepage header spacer
+- 2026-01-31T18:42:52+01:00 — ea014bc — docs: log header scroll transition fix
+- 2026-01-31T18:42:12+01:00 — 1dc0edd — fix(lusena): disable header scroll transition
+- 2026-01-31T18:38:15+01:00 — db80086 — docs: update theme changelog
+- 2026-01-31T18:35:44+01:00 — e607662 — fix(lusena): mobile header menu expands with background
+- 2026-01-31T16:31:47+01:00 — 9eb49d5 — Merge branch 'main' of https://github.com/fulfon/lusena-dawn
+- 2026-01-31T15:30:29Z — 711edc8 — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T16:29:42+01:00 — baef5d6 — docs: add changelog entry for hero copy alignment
+- 2026-01-31T16:29:25+01:00 — 0997b8a — fix(lusena): align hero copy to top on mobile
+- 2026-01-31T15:39:26+01:00 — 9e47acb — docs: add changelog entry for removing skip links
+- 2026-01-31T15:39:15+01:00 — f58cf0c — chore(a11y): remove skip links
+- 2026-01-31T15:34:52+01:00 — c6f0953 — docs: add changelog entry for skip link focus
+- 2026-01-31T15:34:20+01:00 — 701b58d — fix(a11y): show skip link only on keyboard focus
+- 2026-01-31T15:13:25+01:00 — 3397cfd — chore: resolve merge conflicts
+- 2026-01-31T15:09:55+01:00 — c7626e4 — docs: add changelog entry for hero mobile/desktop images
+- 2026-01-31T15:09:34+01:00 — 6922ae6 — feat(lusena): separate hero images for mobile/desktop
+- 2026-01-31T15:04:47+01:00 — 7032270 — docs: add changelog entry for header menu cleanup
+- 2026-01-31T15:04:30+01:00 — 99d916b — fix(lusena): remove extra header menu links
+- 2026-01-31T14:58:34+01:00 — 290b629 — docs: add changelog entry for desktop-only header links
+- 2026-01-31T14:58:10+01:00 — 27317ae — fix(lusena): desktop-only header links + bold account icon
+- 2026-01-31T13:52:38Z — 626d6bf — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T14:39:57+01:00 — eaa726f — docs: add changelog entry for header fixes
+- 2026-01-31T14:39:28+01:00 — fcdcf27 — fix(lusena): header links on mobile + account icon + logo color
+- 2026-01-31T13:38:49Z — 6f098e9 — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T13:36:21Z — ee686d2 — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T13:35:36Z — e0bacf9 — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T13:34:01Z — 505a16f — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T14:20:43+01:00 — 2d40998 — Merge branch 'main' of https://github.com/fulfon/lusena-dawn
+- 2026-01-31T14:15:39+01:00 — e71c1f9 — docs: add changelog entry for PDP sticky ATC fix
+- 2026-01-31T14:13:33+01:00 — 0f38fbe — fix(lusena): keep PDP sticky ATC fixed
+- 2026-01-31T14:05:45+01:00 — 14408f2 — fix(lusena): header links defaults + bolder cart icon
+- 2026-01-31T14:02:14+01:00 — ea9152c — docs: add changelog entry for header logo + links
+- 2026-01-31T14:02:03+01:00 — 7b69635 — feat(lusena): logo upload + primary header links
+- 2026-01-31T13:51:28+01:00 — ce5aa0e — chore(lusena): remove redundant utility fallbacks
+- 2026-01-31T13:45:09+01:00 — 76b4d93 — docs: add changelog entry for cart drawer overlay
+- 2026-01-31T13:44:39+01:00 — 7079328 — fix(lusena): cart drawer overlay blur + upsell styling
+- 2026-01-31T12:08:38Z — 9cabf8b — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T13:02:45+01:00 — 854cdd5 — docs: add changelog entry for nasza-jakosc updates
+- 2026-01-31T13:02:23+01:00 — 3be1a33 — feat(lusena): nasza-jakosc certificate button + layout tweaks
+- 2026-01-31T11:55:13Z — 744d0d4 — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T11:46:04Z — b42c92f — Update from Shopify for theme lusena-dawn/main
+- 2026-01-31T10:57:27Z — 581de2d — Update from Shopify for theme lusena-dawn/main
+- 2026-01-30T22:38:02+01:00 — 9ad7892 — chore: update theme changelog skill
+- 2026-01-30T22:38:02+01:00 — 7209847 — docs: keep theme changelog to last 8 entries
+- 2026-01-30T22:34:15+01:00 — f906875 — fix(lusena): problem/solution typography + spacing
+- 2026-01-30T22:10:22+01:00 — e1d78e4 — docs: update theme changelog
+- 2026-01-30T22:09:58+01:00 — 90e00a8 — fix(lusena): trust bar matches draft layout
+- 2026-01-30T20:58:03Z — 1f6a5fb — Update from Shopify for theme lusena-dawn/main
+- 2026-01-30T21:44:13+01:00 — e47ec72 — fix(lusena): trust bar layout + remove border
+- 2026-01-30T20:41:45+01:00 — 922b24d — Initial commit
 
-- 22e1ac1 — fix(lusena): remove homepage header spacer
-
-- c6e29b9 — fix(lusena): close mobile menu on outside tap
-
-- b441ec8 — fix(lusena): make header opaque at top
-
-- d5e5458 — fix(lusena): align mobile menu vertical padding
-
-- 1dc0edd — fix(lusena): disable header scroll transition
-- e607662 — fix(lusena): mobile header menu expands with background
-
-- 0997b8a — fix(lusena): align hero copy to top on mobile
-- f58cf0c — chore(a11y): remove skip links
-- 6922ae6 — feat(lusena): separate hero images for mobile/desktop
-- 701b58d — fix(a11y): show skip link only on keyboard focus
-- 99d916b — fix(lusena): remove extra header menu links
-- 27317ae — fix(lusena): desktop-only header links + bold account icon
-- fcdcf27 — fix(lusena): header links on mobile + account icon + logo color
-- 0f38fbe — fix(lusena): keep PDP sticky ATC fixed
-- 7b69635 — feat(lusena): logo upload + primary header links
-- 7079328 — fix(lusena): cart drawer overlay blur + upsell styling
-- 3be1a33 — feat(lusena): nasza-jakosc certificate button + layout tweaks
-- f906875 — fix(lusena): problem/solution typography + spacing
-- 90e00a8 — fix(lusena): trust bar matches draft layout (icons + height)
-- e47ec72 — fix(lusena): trust bar layout + remove border
-- 922b24d — Initial commit
-
-- (current) `1f6a5fb` — Update from Shopify for theme lusena-dawn/main
-- (pre-reset / legacy) `2f6787f` — fix(lusena): match homepage to draft spacing + CTAs
-- (pre-reset / legacy) `d93971a` — feat(lusena): migrate draft-shop UI into Dawn
-- (pre-reset / legacy) `fcd1a02` — refactor(css,i18n): brandbook-aligned typography, animations & localization
-- (pre-reset / legacy) `1b99f37` — feat(lusena): brandbook-aligned UI + cart conversion layer
-
+## Legacy commits (pre-reset history, summary only)
+- unknown — 2f6787f — fix(lusena): match homepage to draft spacing + CTAs
+- unknown — d93971a — feat(lusena): migrate draft-shop UI into Dawn
+- unknown — fcd1a02 — refactor(css,i18n): brandbook-aligned typography, animations & localization
+- unknown — 1b99f37 — feat(lusena): brandbook-aligned UI + cart conversion layer

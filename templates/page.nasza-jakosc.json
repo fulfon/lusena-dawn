@@ -9,8 +9,16 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "lusena-page-quality",
+    "quality_hero": {
+      "type": "lusena-quality-hero",
+      "settings": {
+        "hero_kicker": "Nasza Jakość",
+        "hero_heading": "Nie wierz nam na słowo.\nSprawdź.",
+        "hero_body": "Jedwab LUSENA to 22 momme czystej perfekcji. Stworzony w Suzhou, kontrolowany w Polsce. Poczuj różnicę, której nie da się podrobić."
+      }
+    },
+    "quality_momme": {
+      "type": "lusena-quality-momme",
       "blocks": {
         "momme-0": {
           "type": "momme_benefit",
@@ -29,7 +37,36 @@
           "settings": {
             "text": "Lepszą termoregulację — chłodzi latem, grzeje zimą."
           }
-        },
+        }
+      },
+      "block_order": ["momme-0", "momme-1", "momme-2"],
+      "settings": {
+        "momme_image": "shopify://shop_images/STANDARD_19_MOMME.jpg",
+        "momme_image_placeholder": "Zdjęcie mikroskopowe: 19 vs 22 momme",
+        "momme_heading": "Dlaczego 22 momme?",
+        "momme_body": "<p>Standard rynkowy to 19 momme. Dla nas to za mało.</p><p>LUSENA używa wyłącznie jedwabiu o gramaturze <strong>22 momme</strong>. Jest to splot o 30% gęstszy, co przekłada się na:</p>"
+      }
+    },
+    "quality_fire": {
+      "type": "lusena-quality-fire-test",
+      "settings": {
+        "fire_heading": "Test Ognia (The Fire Test)",
+        "fire_video_placeholder": "Video Placeholder: Test spalania nitki jedwabiu",
+        "fire_body": "Prawdziwy jedwab po spaleniu pachnie jak pieczone włosy i zamienia się w sypki popiół. Poliester topi się w twardą kulkę. Nie mamy nic do ukrycia."
+      }
+    },
+    "quality_origin": {
+      "type": "lusena-quality-origin",
+      "settings": {
+        "origin_kicker": "Pochodzenie",
+        "origin_heading": "Suzhou: Stolica Jedwabiu od 1430 roku",
+        "origin_body": "<p>Nie kupujemy od anonimowych pośredników. Nasz jedwab pochodzi bezpośrednio z Shengze (prefektura Suzhou) — miejsca płacącego jedwabiem podatki cesarzowi od czasów dynastii Ming.</p><p>To tutaj tradycja spotyka się z nowoczesną technologią. Od kokonu jedwabnika morwowego klasy 6A do gotowej poszewki.</p>",
+        "origin_image_placeholder": "Zdjęcie: Mapa regionu Suzhou / Manufaktura"
+      }
+    },
+    "quality_qc": {
+      "type": "lusena-quality-qc",
+      "blocks": {
         "qc-0": {
           "type": "qc_step",
           "settings": {
@@ -58,31 +95,15 @@
           }
         }
       },
-      "block_order": [
-        "momme-0",
-        "momme-1",
-        "momme-2",
-        "qc-0",
-        "qc-1",
-        "qc-2"
-      ],
+      "block_order": ["qc-0", "qc-1", "qc-2"],
       "settings": {
-        "hero_kicker": "Nasza Jakość",
-        "hero_heading": "Nie wierz nam na słowo.\nSprawdź.",
-        "hero_body": "Jedwab LUSENA to 22 momme czystej perfekcji. Stworzony w Suzhou, kontrolowany w Polsce. Poczuj różnicę, której nie da się podrobić.",
-        "momme_image": "shopify://shop_images/STANDARD_19_MOMME.jpg",
-        "momme_image_placeholder": "Zdjęcie mikroskopowe: 19 vs 22 momme",
-        "momme_heading": "Dlaczego 22 momme?",
-        "momme_body": "<p>Standard rynkowy to 19 momme. Dla nas to za mało.</p><p>LUSENA używa wyłącznie jedwabiu o gramaturze <strong>22 momme</strong>. Jest to splot o 30% gęstszy, co przekłada się na:</p>",
-        "fire_heading": "Test Ognia (The Fire Test)",
-        "fire_video_placeholder": "Video Placeholder: Test spalania nitki jedwabiu",
-        "fire_body": "Prawdziwy jedwab po spaleniu pachnie jak pieczone włosy i zamienia się w sypki popiół. Poliester topi się w twardą kulkę. Nie mamy nic do ukrycia.",
-        "origin_kicker": "Pochodzenie",
-        "origin_heading": "Suzhou: Stolica Jedwabiu od 1430 roku",
-        "origin_body": "<p>Nie kupujemy od anonimowych pośredników. Nasz jedwab pochodzi bezpośrednio z Shengze (prefektura Suzhou) — miejsca płacącego jedwabiem podatki cesarzowi od czasów dynastii Ming.</p><p>To tutaj tradycja spotyka się z nowoczesną technologią. Od kokonu jedwabnika morwowego klasy 6A do gotowej poszewki.</p>",
-        "origin_image_placeholder": "Zdjęcie: Mapa regionu Suzhou / Manufaktura",
         "qc_heading": "Podwójna Kontrola Jakości",
-        "qc_highlight_badge": "Kluczowe",
+        "qc_highlight_badge": "Kluczowe"
+      }
+    },
+    "quality_cert": {
+      "type": "lusena-quality-certificates",
+      "settings": {
         "cert_heading": "Certyfikaty Bezpieczeństwa",
         "cert_body": "<p>Twoja skóra dotyka poduszki przez 8 godzin dziennie. Musisz mieć pewność, że jest wolna od chemii. Nasz jedwab posiada certyfikat <strong>OEKO-TEX® Standard 100</strong> (Klasa I — bezpieczne nawet dla niemowląt).</p>",
         "cert_button_label": "Pobierz Certyfikat (PDF)",
@@ -139,7 +160,12 @@
     }
   },
   "order": [
-    "main",
+    "quality_hero",
+    "quality_momme",
+    "quality_fire",
+    "quality_origin",
+    "quality_qc",
+    "quality_cert",
     "trust"
   ]
 }

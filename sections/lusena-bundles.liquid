@@ -1,4 +1,12 @@
-<section class="py-24 bg-surface-2">
+<section
+  class="bg-surface-2 lusena-bundles"
+  style="
+    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
+    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
+  "
+>
   <div class="container grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
     <div class="order-2 md:order-1 relative aspect-[4/3] bg-brand-bg p-8 flex items-center justify-center">
       {%- if section.settings.image != blank -%}
@@ -58,11 +66,69 @@
   </div>
 </section>
 
+{% stylesheet %}
+  .lusena-bundles {
+    padding-top: var(--lusena-section-padding-top-mobile);
+    padding-bottom: var(--lusena-section-padding-bottom-mobile);
+  }
+
+  @media (min-width: 768px) {
+    .lusena-bundles {
+      padding-top: var(--lusena-section-padding-top-desktop);
+      padding-bottom: var(--lusena-section-padding-bottom-desktop);
+    }
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "LUSENA Gift",
   "tag": "section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
     {
       "type": "text",
       "id": "kicker",

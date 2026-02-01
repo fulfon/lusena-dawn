@@ -1,0 +1,147 @@
+<section
+  class="bg-white lusena-quality-origin"
+  style="
+    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
+    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="container grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+    <div class="order-1 md:order-2 space-y-6">
+      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
+        {{ section.settings.origin_kicker | escape }}
+      </span>
+      <h2 class="lusena-quality-origin__heading text-3xl md:text-4xl font-serif text-primary">
+        {{ section.settings.origin_heading | escape }}
+      </h2>
+      <div class="space-y-4 text-secondary text-lg font-light leading-relaxed">
+        {{ section.settings.origin_body }}
+      </div>
+    </div>
+
+    <div class="order-2 md:order-1 bg-neutral-100 aspect-[4/5] flex items-center justify-center rounded-sm overflow-hidden">
+      {%- if section.settings.origin_image != blank -%}
+        {{
+          section.settings.origin_image
+          | image_url: width: 1400
+          | image_tag:
+            class: 'w-full h-full object-cover',
+            loading: 'lazy',
+            widths: '600, 900, 1200, 1400',
+            sizes: '(min-width: 768px) 45vw, 90vw'
+        }}
+      {%- else -%}
+        <span class="text-gray-400 font-light italic text-center px-6">
+          {{ section.settings.origin_image_placeholder | escape }}
+        </span>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .lusena-quality-origin {
+    padding-top: var(--lusena-section-padding-top-mobile);
+    padding-bottom: var(--lusena-section-padding-bottom-mobile);
+  }
+
+  @media (min-width: 768px) {
+    .lusena-quality-origin {
+      padding-top: var(--lusena-section-padding-top-desktop);
+      padding-bottom: var(--lusena-section-padding-bottom-desktop);
+    }
+
+    .lusena-quality-origin__heading {
+      white-space: nowrap;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "LUSENA Quality: Origin",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 300,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 300,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 300,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 300,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "text",
+      "id": "origin_kicker",
+      "label": "Origin kicker",
+      "default": "Pochodzenie"
+    },
+    {
+      "type": "text",
+      "id": "origin_heading",
+      "label": "Origin heading",
+      "default": "Suzhou: Stolica Jedwabiu od 1430 roku"
+    },
+    {
+      "type": "richtext",
+      "id": "origin_body",
+      "label": "Origin body",
+      "default": "<p>Nie kupujemy od anonimowych pośredników. Nasz jedwab pochodzi bezpośrednio z Shengze (prefektura Suzhou) — miejsca płacącego jedwabiem podatki cesarzowi od czasów dynastii Ming.</p><p>To tutaj tradycja spotyka się z nowoczesną technologią. Od kokonu jedwabnika morwowego klasy 6A do gotowej poszewki.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "origin_image",
+      "label": "Origin image"
+    },
+    {
+      "type": "text",
+      "id": "origin_image_placeholder",
+      "label": "Origin image placeholder",
+      "default": "Zdjęcie: Mapa regionu Suzhou / Manufaktura"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA Quality: Origin"
+    }
+  ]
+}
+{% endschema %}
+

@@ -1,0 +1,178 @@
+<section
+  class="bg-brand-bg text-center lusena-quality-qc"
+  style="
+    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
+    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="container max-w-4xl mx-auto space-y-12">
+    <h2 class="text-3xl md:text-4xl font-serif text-primary">
+      {{ section.settings.qc_heading | escape }}
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'qc_step' -%}
+          <div class="lusena-quality-qc__card p-8 bg-white/50 backdrop-blur-sm rounded-sm border border-white/40{% if block.settings.highlight %} shadow-sm relative overflow-hidden{% endif %}" {{ block.shopify_attributes }}>
+            {%- if block.settings.highlight -%}
+              <div class="absolute top-0 right-0 bg-accent-gold text-white text-[10px] px-2 py-1 uppercase tracking-wider">
+                {{ section.settings.qc_highlight_badge | escape }}
+              </div>
+            {%- endif -%}
+            <div class="text-4xl mb-4">{{ block.settings.icon }}</div>
+            <h3 class="font-serif text-xl mb-2">{{ block.settings.title | escape }}</h3>
+            <p class="text-secondary font-light text-sm">{{ block.settings.text | escape }}</p>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .lusena-quality-qc {
+    padding-top: var(--lusena-section-padding-top-mobile);
+    padding-bottom: var(--lusena-section-padding-bottom-mobile);
+  }
+
+  @media (min-width: 768px) {
+    .lusena-quality-qc {
+      padding-top: var(--lusena-section-padding-top-desktop);
+      padding-bottom: var(--lusena-section-padding-bottom-desktop);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "LUSENA Quality: QC",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 300,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 300,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 300,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 300,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "text",
+      "id": "qc_heading",
+      "label": "QC heading",
+      "default": "Podwójna Kontrola Jakości"
+    },
+    {
+      "type": "text",
+      "id": "qc_highlight_badge",
+      "label": "QC highlight badge",
+      "default": "Kluczowe"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "qc_step",
+      "name": "QC step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "🇨🇳"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Produkcja"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Precyzyjne szycie w specjalistycznej manufakturze w Suzhou."
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Highlight",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA Quality: QC",
+      "blocks": [
+        {
+          "type": "qc_step",
+          "settings": {
+            "icon": "🇨🇳",
+            "title": "Produkcja",
+            "text": "Precyzyjne szycie w specjalistycznej manufakturze w Suzhou.",
+            "highlight": false
+          }
+        },
+        {
+          "type": "qc_step",
+          "settings": {
+            "icon": "🇵🇱",
+            "title": "Kontrola w Polsce",
+            "text": "Każda sztuka jest ręcznie sprawdzana i prasowana w naszym magazynie pod Warszawą.",
+            "highlight": true
+          }
+        },
+        {
+          "type": "qc_step",
+          "settings": {
+            "icon": "📦",
+            "title": "Wysyłka 24h",
+            "text": "Estetyczne pakowanie \"prezentowe\" i natychmiastowa wysyłka do Ciebie.",
+            "highlight": false
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

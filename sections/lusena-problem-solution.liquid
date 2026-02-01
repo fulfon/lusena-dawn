@@ -1,4 +1,12 @@
-<section class="py-24 bg-brand-bg lusena-problem-solution">
+<section
+  class="bg-brand-bg lusena-problem-solution"
+  style="
+    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
+    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
+  "
+>
   <div class="container">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 lusena-problem-solution__grid">
       <div class="space-y-8">
@@ -60,6 +68,11 @@
 </section>
 
 {% stylesheet %}
+  .lusena-problem-solution {
+    padding-top: var(--lusena-section-padding-top-mobile);
+    padding-bottom: var(--lusena-section-padding-bottom-mobile);
+  }
+
   .lusena-problem-solution .lusena-problem-solution__grid {
     gap: 48px;
   }
@@ -75,6 +88,11 @@
   }
 
   @media (min-width: 768px) {
+    .lusena-problem-solution {
+      padding-top: var(--lusena-section-padding-top-desktop);
+      padding-bottom: var(--lusena-section-padding-bottom-desktop);
+    }
+
     .lusena-problem-solution .lusena-problem-solution__grid {
       gap: 96px;
     }
@@ -96,6 +114,50 @@
   "name": "LUSENA Problem/Solution",
   "tag": "section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
     {
       "type": "text",
       "id": "problem_label",
@@ -204,6 +266,10 @@
         }
       ],
       "settings": {
+        "padding_top": 96,
+        "padding_bottom": 96,
+        "padding_top_mobile": 96,
+        "padding_bottom_mobile": 96,
         "cta_link": "shopify://pages/nasza-jakosc"
       }
     }

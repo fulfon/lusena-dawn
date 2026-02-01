@@ -1,7 +1,15 @@
 {
   "sections": {
-    "main": {
-      "type": "lusena-page-about",
+    "about_hero": {
+      "type": "lusena-about-hero",
+      "settings": {}
+    },
+    "about_story": {
+      "type": "lusena-about-story",
+      "settings": {}
+    },
+    "about_values": {
+      "type": "lusena-about-values",
       "blocks": {
         "value-0": {
           "type": "value",
@@ -36,6 +44,5 @@
       "settings": {}
     }
   },
-  "order": ["main"]
+  "order": ["about_hero", "about_story", "about_values"]
 }
-

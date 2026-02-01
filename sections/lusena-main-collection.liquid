@@ -1,5 +1,14 @@
+<section
+  class="lusena-main-collection"
+  style="
+    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
+    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
+  "
+>
 {%- paginate collection.products by section.settings.products_per_page -%}
-  <div class="container py-12">
+  <div class="container">
     <div class="flex flex-col md:flex-row justify-between items-baseline mb-8">
       <div>
         <h1 class="text-3xl md:text-4xl font-serif text-primary">{{ collection.title | escape }}</h1>
@@ -40,6 +49,21 @@
     </div>
   </div>
 {%- endpaginate -%}
+</section>
+
+{% stylesheet %}
+  .lusena-main-collection {
+    padding-top: var(--lusena-section-padding-top-mobile);
+    padding-bottom: var(--lusena-section-padding-bottom-mobile);
+  }
+
+  @media (min-width: 768px) {
+    .lusena-main-collection {
+      padding-top: var(--lusena-section-padding-top-desktop);
+      padding-bottom: var(--lusena-section-padding-bottom-desktop);
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
@@ -47,6 +71,50 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
     {
       "type": "range",
       "id": "products_per_page",
@@ -76,4 +144,3 @@
   ]
 }
 {% endschema %}
-
