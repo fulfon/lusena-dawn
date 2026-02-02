@@ -46,6 +46,7 @@
 
     {%- if settings.animations_reveal_on_scroll -%}
       <script src="{{ 'animations.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'lusena-animations.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
 
     {{ content_for_header }}
@@ -387,12 +388,5 @@
       <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
-
-    {%- comment -%} LUSENA: GSAP Animation Library for premium scroll animations {%- endcomment -%}
-    {% comment %}theme-check-disable RemoteAsset{% endcomment %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-    {% comment %}theme-check-enable RemoteAsset{% endcomment %}
-    <script src="{{ 'lusena-animations.js' | asset_url }}" defer></script>
   </body>
 </html>

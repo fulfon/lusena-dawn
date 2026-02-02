@@ -588,8 +588,47 @@ details > * {
   --duration-extra-longer: 750ms;
   --duration-extended: 3s;
   --ease-out-slow: cubic-bezier(0, 0, 0.3, 1);
-  --animation-slide-in: slideIn var(--duration-extra-long) var(--ease-out-slow) forwards;
-  --animation-fade-in: fadeIn var(--duration-extra-long) var(--ease-out-slow);
+  --animation-slide-in: slideIn var(--duration-long) var(--ease-out-slow) forwards;
+  --animation-fade-in: fadeIn var(--duration-long) var(--ease-out-slow);
+
+  --lusena-motion-duration: 420ms;
+  --lusena-motion-ease: cubic-bezier(0.2, 0, 0, 1);
+  --lusena-motion-distance: 14px;
+}
+
+.lusena-motion .lusena-animate-fade-up,
+.lusena-motion .lusena-animate-scale-in,
+.lusena-motion [data-lusena-stagger] > *,
+.lusena-motion [data-lusena-stagger-rows] .lusena-comparison__item {
+  opacity: 0;
+  transform: translateY(var(--lusena-motion-distance));
+  transition: opacity var(--lusena-motion-duration) var(--lusena-motion-ease),
+    transform var(--lusena-motion-duration) var(--lusena-motion-ease);
+  transition-delay: var(--lusena-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.lusena-motion .lusena-animate-scale-in {
+  transform: scale(1.02);
+}
+
+.lusena-motion .lusena-animate-fade-up.is-visible,
+.lusena-motion .lusena-animate-scale-in.is-visible,
+.lusena-motion [data-lusena-stagger] > *.is-visible,
+.lusena-motion [data-lusena-stagger-rows] .lusena-comparison__item.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion) {
+  .lusena-motion .lusena-animate-fade-up,
+  .lusena-motion .lusena-animate-scale-in,
+  .lusena-motion [data-lusena-stagger] > *,
+  .lusena-motion [data-lusena-stagger-rows] .lusena-comparison__item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .underlined-link,
@@ -2313,7 +2352,8 @@ input[type='checkbox'] {
 
 /* section-header */
 .section-header.shopify-section-group-header-group {
-  z-index: 3;
+  position: relative;
+  z-index: 5000 !important;
 }
 
 .shopify-section-header-sticky {
@@ -2334,11 +2374,13 @@ input[type='checkbox'] {
 }
 
 .shopify-section-group-header-group {
-  z-index: 4;
+  position: relative;
+  z-index: 5000 !important;
 }
 
 .section-header ~ .shopify-section-group-header-group {
-  z-index: initial;
+  position: relative;
+  z-index: 5000 !important;
 }
 
 /* Main Header Layout */
@@ -3281,7 +3323,7 @@ details-disclosure > details {
   }
 
   .scroll-trigger.animate--slide-in {
-    transform: translateY(2rem);
+    transform: translateY(1.25rem);
   }
 
   .scroll-trigger:not(.scroll-trigger--offscreen).animate--fade-in {
@@ -3291,7 +3333,7 @@ details-disclosure > details {
 
   .scroll-trigger:not(.scroll-trigger--offscreen).animate--slide-in {
     animation: var(--animation-slide-in);
-    animation-delay: calc(var(--animation-order) * 75ms);
+    animation-delay: calc(var(--animation-order) * 45ms);
   }
 
   .scroll-trigger.scroll-trigger--design-mode.animate--fade-in,

@@ -28,7 +28,7 @@
     assign content_offset_y_desktop = section.settings.content_offset_y_desktop | default: content_offset_y
   -%}
 
-  <div class="absolute inset-0 h-full w-full z-0" data-lusena-hero-image>
+  <div class="absolute inset-0 h-full w-full z-0 pointer-events-none" data-lusena-hero-image>
     {%- if mobile_image != blank or desktop_image != blank -%}
       <picture>
         {%- if desktop_image != blank -%}
@@ -155,6 +155,51 @@
   .lusena-hero {
     height: 85vh;
     min-height: 600px;
+  }
+
+  @keyframes lusena-hero-image-settle {
+    from {
+      transform: scale(1.04);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes lusena-hero-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .lusena-hero [data-lusena-hero-image] img {
+    animation: lusena-hero-image-settle 900ms var(--ease-out-slow) both;
+    will-change: transform;
+  }
+
+  .lusena-hero [data-lusena-hero-text] .lusena-hero__text {
+    animation: lusena-hero-fade-up 650ms var(--ease-out-slow) both;
+    animation-delay: 120ms;
+    will-change: opacity, transform;
+  }
+
+  .lusena-hero [data-lusena-hero-text] .lusena-hero__buttons {
+    animation: lusena-hero-fade-up 650ms var(--ease-out-slow) both;
+    animation-delay: 220ms;
+    will-change: opacity, transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lusena-hero [data-lusena-hero-image] img,
+    .lusena-hero [data-lusena-hero-text] .lusena-hero__text,
+    .lusena-hero [data-lusena-hero-text] .lusena-hero__buttons {
+      animation: none;
+    }
   }
 
   @media (max-width: 767px) {

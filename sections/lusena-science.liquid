@@ -139,11 +139,21 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s ease;
+    transition: transform var(--duration-medium) var(--ease-out-slow);
   }
 
   .lusena-science__card:hover .lusena-science__img {
     transform: scale(1.03);
+  }
+
+  @media (prefers-reduced-motion) {
+    .lusena-science__img {
+      transition: none;
+    }
+
+    .lusena-science__card:hover .lusena-science__img {
+      transform: none;
+    }
   }
 
   .lusena-science__placeholder {

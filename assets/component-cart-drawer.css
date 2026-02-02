@@ -8,12 +8,17 @@
   display: flex;
   justify-content: flex-end;
   background-color: rgba(var(--color-foreground), 0.5);
+  opacity: 0;
+  pointer-events: none;
   visibility: hidden;
-  transition: visibility var(--duration-default) ease;
+  transition: opacity var(--duration-default) var(--ease-out-slow), visibility 0s linear var(--duration-default);
 }
 
 .drawer.active {
+  opacity: 1;
+  pointer-events: auto;
   visibility: visible;
+  transition: opacity var(--duration-default) var(--ease-out-slow), visibility 0s linear 0s;
 }
 
 .drawer__inner {
@@ -27,7 +32,8 @@
   display: flex;
   flex-direction: column;
   transform: translateX(100%);
-  transition: transform var(--duration-default) ease;
+  transition: transform var(--duration-medium) var(--ease-out-slow);
+  will-change: transform;
 }
 
 .drawer__inner-empty {
@@ -67,6 +73,13 @@ cart-drawer:not(.is-empty) .cart-drawer__collection {
 
 .drawer.active .drawer__inner {
   transform: translateX(0);
+}
+
+@media (prefers-reduced-motion) {
+  .drawer,
+  .drawer__inner {
+    transition: none;
+  }
 }
 
 .drawer__header {

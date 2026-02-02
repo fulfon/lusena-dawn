@@ -19,7 +19,26 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — feat(lusena): refine section spacing defaults
+### (current) — feat(lusena): motion layer + remove GSAP
+
+**Goal:** Replace external animation dependencies with a lightweight, accessible motion layer that supports a premium feel without sacrificing performance or stability.
+
+**What changed**
+- Removed the GSAP/ScrollTrigger dependency and replaced LUSENA reveals/staggers with a native `IntersectionObserver` motion layer.
+- Tuned Dawn scroll-reveal timings (less “floaty”) and reduced scroll zoom intensity.
+- Improved cart drawer overlay/slide transitions and added `prefers-reduced-motion` fallbacks.
+- Added a subtle hero intro (image settle + copy fade-up) with reduced-motion handling.
+
+**Key files**
+- `assets/lusena-animations.js`
+- `assets/base.css`
+- `layout/theme.liquid`
+- `assets/animations.js`
+- `assets/component-cart-drawer.css`
+- `sections/lusena-hero.liquid`
+- `sections/lusena-science.liquid`
+
+### b076f77 — feat(lusena): refine section spacing defaults
 
 **Goal:** Improve the global vertical rhythm (premium feel) and reduce “manual spacing” work in the theme editor, while keeping conversion-critical sections readable and scannable.
 
@@ -109,23 +128,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Key files**
 - `templates/index.json`
 
-### 179d0af — fix(lusena): hero overlay opacity + copy positioning
-
-**Goal:** Make the hero overlay reliably visible (not hidden by Dawn base CSS) and allow merchants to adjust overlay opacity (0-90%) and hero copy vertical position in the theme editor.
-
-**What changed**
-- Prevented the hero overlay from being hidden by `div:empty { display: none; }` by ensuring the overlay element isn't empty.
-- Added `overlay_opacity` setting (0-90%, default 50) and applied it via `rgb(0 0 0 / X%)`.
-- Added `content_position` (radio) and `content_offset_y` (range) to fine-tune hero copy placement.
-
-**Key files**
-- `sections/lusena-hero.liquid`
-- `templates/index.json`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-02T10:34:57+01:00 — (current) — feat(lusena): refine section spacing defaults
+- 2026-02-02T13:10:30+01:00 — (current) — feat(lusena): motion layer + remove GSAP
+- 2026-02-02T10:34:57+01:00 — b076f77 — feat(lusena): refine section spacing defaults
 - 2026-02-01T23:02:37+01:00 — e96c48a — feat(lusena): per-section spacing + split page sections
 - 2026-01-31T23:58:51+01:00 — f19d702 — Merge branch 'main' of https://github.com/fulfon/lusena-dawn
 - 2026-01-31T23:58:34+01:00 — 184fe6b — docs: update theme changelog
