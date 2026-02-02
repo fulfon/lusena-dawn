@@ -120,33 +120,33 @@
         "item-0": {
           "type": "item",
           "settings": {
-            "icon": "star",
-            "title": "4.9/5 Rating",
-            "subtitle": "Based on 127 reviews"
+            "icon": "layers",
+            "title": "22 momme",
+            "subtitle": "30% gęstszy splot"
           }
         },
         "item-1": {
           "type": "item",
           "settings": {
             "icon": "shield-check",
-            "title": "OEKO-TEX® Certified",
-            "subtitle": "Safe & Non-toxic 100"
+            "title": "OEKO-TEX® 100",
+            "subtitle": "bezpieczne dla skóry"
           }
         },
         "item-2": {
           "type": "item",
           "settings": {
             "icon": "truck",
-            "title": "Fast Shipping",
-            "subtitle": "Ships within 24h"
+            "title": "Wysyłka 24h",
+            "subtitle": "z magazynu w Polsce"
           }
         },
         "item-3": {
           "type": "item",
           "settings": {
             "icon": "clock",
-            "title": "60-Day Trial",
-            "subtitle": "Sleep on it risk-free"
+            "title": "60 dni testu",
+            "subtitle": "zwrot bez stresu"
           }
         }
       },

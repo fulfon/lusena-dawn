@@ -19,7 +19,23 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — feat(lusena): motion layer + remove GSAP
+### (current) — fix(lusena): trust bar launch-safe proof points
+
+**Goal:** Make the trust bar launch-ready without reviews while keeping proof-first reassurance and clean mobile readability.
+
+**What changed**
+- Removed ratings/reviews from trust bar defaults (avoid “0 reviews” / placeholder numbers at launch).
+- Replaced the first item with a concrete material proof point (“22 momme / 30% gęstszy splot”) and added a dedicated `layers` icon.
+- Improved mobile layout/spacing (semantic list markup, consistent title/subtitle stacking, increased grid gap).
+- Aligned scroll-reveal behavior with Dawn (`scroll-trigger` on items + `data-cascade` on the container, gated by `settings.animations_reveal_on_scroll`).
+
+**Key files**
+- `sections/lusena-trust-bar.liquid`
+- `snippets/lusena-icon.liquid`
+- `templates/index.json`
+- `templates/page.nasza-jakosc.json`
+
+### 0a6644e — feat(lusena): motion layer + remove GSAP
 
 **Goal:** Replace external animation dependencies with a lightweight, accessible motion layer that supports a premium feel without sacrificing performance or stability.
 
@@ -118,20 +134,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `sections/lusena-hero.liquid`
 - `templates/index.json`
 
-### abbe143 — chore: resolve homepage template merge conflict
-
-**Goal:** Restore a valid `templates/index.json` after a merge introduced conflict markers.
-
-**What changed**
-- Resolved merge conflict markers in the homepage template and kept the latest hero images plus LUSENA hero settings.
-
-**Key files**
-- `templates/index.json`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-02T13:10:30+01:00 — (current) — feat(lusena): motion layer + remove GSAP
+- 2026-02-02T16:10:59+01:00 — (current) — fix(lusena): trust bar launch-safe proof points
+- 2026-02-02T13:12:18+01:00 — 0a6644e — feat(lusena): motion layer + remove GSAP
 - 2026-02-02T10:34:57+01:00 — b076f77 — feat(lusena): refine section spacing defaults
 - 2026-02-01T23:02:37+01:00 — e96c48a — feat(lusena): per-section spacing + split page sections
 - 2026-01-31T23:58:51+01:00 — f19d702 — Merge branch 'main' of https://github.com/fulfon/lusena-dawn

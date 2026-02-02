@@ -1,4 +1,4 @@
-{%- assign known_icons = 'star,shield-check,truck,clock' | split: ',' -%}
+{%- assign known_icons = 'layers,shield-check,truck,clock,star,sparkles' | split: ',' -%}
 
 <section
   class="bg-surface-2 lusena-trust-bar"
@@ -11,9 +11,18 @@
   "
 >
   <div class="container px-4 md:px-6">
-    <div class="grid grid-cols-2 md:grid-cols-4 lusena-trust-bar__grid bg-surface-2">
+    <ul
+      class="grid grid-cols-2 md:grid-cols-4 lusena-trust-bar__grid bg-surface-2"
+      role="list"
+      {% if settings.animations_reveal_on_scroll %}
+        data-cascade
+      {% endif %}
+    >
       {%- for block in section.blocks -%}
-        <div class="lusena-trust-bar__item" {{ block.shopify_attributes }}>
+        <li
+          class="lusena-trust-bar__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {{ block.shopify_attributes }}
+        >
           {%- if block.settings.icon != blank -%}
             <div class="lusena-trust-bar__icon text-accent-cta">
               {%- if known_icons contains block.settings.icon -%}
@@ -25,13 +34,15 @@
               {%- endif -%}
             </div>
           {%- endif -%}
-          <div class="flex flex-col">
+          <p class="lusena-trust-bar__text">
             <span class="lusena-trust-bar__title font-medium text-primary">{{ block.settings.title | escape }}</span>
-            <span class="lusena-trust-bar__subtitle text-secondary">{{ block.settings.subtitle | escape }}</span>
-          </div>
-        </div>
+            {%- if block.settings.subtitle != blank -%}
+              <span class="lusena-trust-bar__subtitle text-secondary">{{ block.settings.subtitle | escape }}</span>
+            {%- endif -%}
+          </p>
+        </li>
       {%- endfor -%}
-    </div>
+    </ul>
   </div>
 </section>
 
@@ -42,7 +53,10 @@
   }
 
   .lusena-trust-bar__grid {
-    gap: 24px;
+    gap: 32px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
   .lusena-trust-bar__item {
@@ -54,6 +68,7 @@
   }
 
   .lusena-trust-bar__icon {
+    flex: 0 0 auto;
     padding: 8px;
     background: #fff;
     border-radius: 9999px;
@@ -65,13 +80,22 @@
     height: 20px;
   }
 
+  .lusena-trust-bar__text {
+    margin: 0;
+    min-width: 0;
+    text-wrap: balance;
+  }
+
   .lusena-trust-bar__title {
+    display: block;
     font-size: 14px;
     line-height: 20px;
     letter-spacing: normal;
   }
 
   .lusena-trust-bar__subtitle {
+    display: block;
+    margin-top: 2px;
     font-size: 12px;
     line-height: 16px;
     letter-spacing: normal;
@@ -156,19 +180,19 @@
           "type": "text",
           "id": "icon",
           "label": "Icon name or emoji",
-          "default": "star"
+          "default": "layers"
         },
         {
           "type": "text",
           "id": "title",
           "label": "Title",
-          "default": "4.9/5 Rating"
+          "default": "22 momme"
         },
         {
           "type": "text",
           "id": "subtitle",
           "label": "Subtitle",
-          "default": "Based on 127 reviews"
+          "default": "30% gęstszy splot"
         }
       ]
     }
@@ -180,33 +204,33 @@
         {
           "type": "item",
           "settings": {
-            "icon": "star",
-            "title": "4.9/5 Rating",
-            "subtitle": "Based on 127 reviews"
+            "icon": "layers",
+            "title": "22 momme",
+            "subtitle": "30% gęstszy splot"
           }
         },
         {
           "type": "item",
           "settings": {
             "icon": "shield-check",
-            "title": "OEKO-TEX® Certified",
-            "subtitle": "Safe & Non-toxic 100"
+            "title": "OEKO-TEX® 100",
+            "subtitle": "bezpieczne dla skóry"
           }
         },
         {
           "type": "item",
           "settings": {
             "icon": "truck",
-            "title": "Fast Shipping",
-            "subtitle": "Ships within 24h"
+            "title": "Wysyłka 24h",
+            "subtitle": "z magazynu w Polsce"
           }
         },
         {
           "type": "item",
           "settings": {
             "icon": "clock",
-            "title": "60-Day Trial",
-            "subtitle": "Sleep on it risk-free"
+            "title": "60 dni testu",
+            "subtitle": "zwrot bez stresu"
           }
         }
       ]
