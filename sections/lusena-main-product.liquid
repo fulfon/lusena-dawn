@@ -22,7 +22,7 @@
 
   <div class="container">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
-      <div class="md:col-span-7 space-y-4">
+      <div class="md:col-span-7 space-y-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <div class="aspect-square bg-surface-2 overflow-hidden rounded-sm relative">
           {%- if product.featured_media != blank -%}
             {{
@@ -68,7 +68,7 @@
       </div>
 
       <div class="md:col-span-5 space-y-8 sticky top-32 self-start">
-        <div class="space-y-4">
+        <div class="space-y-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
           {%- if section.settings.emotional_headline != blank -%}
             <span class="text-accent-gold font-serif italic text-lg">
               {{ section.settings.emotional_headline | escape }}
@@ -145,7 +145,7 @@
 
         <div class="h-px bg-gray-100"></div>
 
-        <div class="space-y-6" data-lusena-variant-selectors>
+        <div class="space-y-6{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-variant-selectors>
           {%- unless product.has_only_default_variant -%}
             {%- for option in product.options_with_values -%}
               {%- liquid
@@ -228,7 +228,7 @@
           {%- endunless -%}
         </div>
 
-        <div class="pt-4 space-y-4">
+        <div class="pt-4 space-y-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
           <product-form class="product-form" data-hide-errors="true">
             {%- form 'product',
               product,
@@ -268,7 +268,7 @@
           </div>
         </div>
 
-        <div class="p-4 bg-brand-bg/50 border border-brand-bg rounded-sm flex flex-col gap-2 text-sm">
+        <div class="p-4 bg-brand-bg/50 border border-brand-bg rounded-sm flex flex-col gap-2 text-sm{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
           <div class="flex items-center gap-2 text-primary font-medium">
             {% render 'lusena-icon', name: 'shield-check', class: 'w-4 h-4 text-accent-cta', stroke_width: 1.5 %}
             <span>{{ section.settings.guarantee_heading | escape }}</span>
@@ -276,7 +276,7 @@
           <p class="text-secondary text-xs pl-6">{{ section.settings.guarantee_body | escape }}</p>
         </div>
 
-        <div class="w-full">
+        <div class="w-full{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
           {%- for block in section.blocks -%}
             {%- if block.type == 'accordion' -%}
               <details class="border-b border-secondary/20" {{ block.shopify_attributes }}>
@@ -308,13 +308,15 @@
     {%- if has_cross_sell -%}
       <div class="container">
         <div class="border-t border-brand-bg pt-12 md:pt-24">
-          <div class="text-center mb-12">
+          <div class="text-center mb-12{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
             <h2 class="text-2xl md:text-3xl font-serif text-primary">{{ section.settings.cross_sell_heading | escape }}</h2>
           </div>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
             {%- for block in section.blocks -%}
               {%- if block.type == 'cross_sell' and block.settings.product != blank -%}
-                {% render 'lusena-product-card', product: block.settings.product, show_secondary_image: true %}
+                <div {% if settings.animations_reveal_on_scroll %}class="scroll-trigger animate--slide-in" data-cascade{% endif %}>
+                  {% render 'lusena-product-card', product: block.settings.product, show_secondary_image: true %}
+                </div>
               {%- endif -%}
             {%- endfor -%}
           </div>
@@ -333,7 +335,7 @@
   {%- if reviews_count > 0 -%}
     <div class="mt-24 border-t border-brand-bg pt-24 bg-surface-1 w-full">
       <div class="container pb-24">
-        <div class="flex items-center justify-between mb-12">
+        <div class="flex items-center justify-between mb-12{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
           <h2 class="text-2xl md:text-3xl font-serif text-primary">{{ section.settings.pdp_reviews_heading | escape }}</h2>
           {%- if section.settings.pdp_reviews_button_label != blank and section.settings.pdp_reviews_button_link != blank -%}
             <a
@@ -348,7 +350,13 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           {%- for block in section.blocks -%}
             {%- if block.type == 'pdp_review' -%}
-              <div class="bg-white p-8 space-y-4" {{ block.shopify_attributes }}>
+              <div
+                class="bg-white p-8 space-y-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                {% if settings.animations_reveal_on_scroll %}
+                  data-cascade
+                {% endif %}
+                {{ block.shopify_attributes }}
+              >
                 <div class="flex gap-1 text-accent-gold" aria-hidden="true">
                   {%- for i in (1..5) -%}
                     {% render 'lusena-icon', name: 'star', class: 'w-4 h-4 fill-current', stroke_width: 1.5 %}

@@ -118,7 +118,7 @@ Choose **one** approved premium pair:
 
 ---
 
-## 5) Motion & GSAP Rules (required)
+## 5) Motion rules (required)
 
 **Motion style:** gentle, premium, slow; never bouncy; never “playful”.
 
@@ -319,7 +319,7 @@ Design must follow this order. You may refine layout but not remove key decision
    * Sticky ATC bar
 4. **Motion spec**:
 
-   * List of GSAP-triggered interactions
+   * List of scroll-reveal + micro-interactions
    * Timing + easing
    * Reduced-motion behavior
 5. **Redline notes** (handoff):

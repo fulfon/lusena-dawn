@@ -9,7 +9,7 @@
   "
 >
   <div class="container max-w-3xl">
-    <div class="text-center mb-16">
+    <div class="text-center mb-16{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       <h2 class="text-3xl md:text-4xl font-serif text-primary mb-4">{{ section.settings.heading | escape }}</h2>
       {%- if section.settings.subheading != blank -%}
         <p class="text-secondary">{{ section.settings.subheading | escape }}</p>
@@ -18,7 +18,13 @@
 
     <div class="w-full">
       {%- for block in section.blocks -%}
-        <details class="lusena-faq__item border-b border-secondary/20" {{ block.shopify_attributes }}>
+        <details
+          class="lusena-faq__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+          {% endif %}
+          {{ block.shopify_attributes }}
+        >
           <summary class="flex items-center justify-between py-4 font-medium transition-all hover:text-accent-cta cursor-pointer">
             {{ block.settings.question | escape }}
             {% render 'lusena-icon', name: 'chevron-down', class: 'h-4 w-4 shrink-0 transition-transform duration-200 lusena-faq__chevron', stroke_width: 1.5 %}

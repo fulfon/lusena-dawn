@@ -2,6 +2,7 @@ const SCROLL_ANIMATION_TRIGGER_CLASSNAME = 'scroll-trigger';
 const SCROLL_ANIMATION_OFFSCREEN_CLASSNAME = 'scroll-trigger--offscreen';
 const SCROLL_ZOOM_IN_TRIGGER_CLASSNAME = 'animate--zoom-in';
 const SCROLL_ANIMATION_CANCEL_CLASSNAME = 'scroll-trigger--cancel';
+const SCROLL_ANIMATION_DESIGN_MODE_CLASSNAME = 'scroll-trigger--design-mode';
 
 // Scroll in animation logic
 function onIntersection(elements, observer) {
@@ -22,15 +23,27 @@ function onIntersection(elements, observer) {
 }
 
 function initializeScrollAnimationTrigger(rootEl = document, isDesignModeEvent = false) {
-  const animationTriggerElements = Array.from(rootEl.getElementsByClassName(SCROLL_ANIMATION_TRIGGER_CLASSNAME));
+  const resolvedRoot =
+    rootEl && typeof rootEl.getElementsByClassName === 'function' ? rootEl : document;
+
+  const animationTriggerElements = Array.from(resolvedRoot.getElementsByClassName(SCROLL_ANIMATION_TRIGGER_CLASSNAME));
   if (animationTriggerElements.length === 0) return;
 
   if (isDesignModeEvent) {
     animationTriggerElements.forEach((element) => {
-      element.classList.add('scroll-trigger--design-mode');
+      element.classList.add(SCROLL_ANIMATION_DESIGN_MODE_CLASSNAME);
     });
     return;
   }
+
+  animationTriggerElements.forEach((element) => {
+    if (element.classList.contains(SCROLL_ANIMATION_CANCEL_CLASSNAME)) return;
+
+    const rect = element.getBoundingClientRect();
+    const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+
+    element.classList.toggle(SCROLL_ANIMATION_OFFSCREEN_CLASSNAME, !isInViewport);
+  });
 
   const observer = new IntersectionObserver(onIntersection, {
     rootMargin: '0px 0px -20px 0px',
@@ -91,10 +104,18 @@ function percentageSeen(element) {
   return Math.round(percentage);
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  initializeScrollAnimationTrigger();
-  initializeScrollZoomAnimationTrigger();
-});
+(() => {
+  const init = () => {
+    initializeScrollAnimationTrigger();
+    initializeScrollZoomAnimationTrigger();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
+})();
 
 if (Shopify.designMode) {
   document.addEventListener('shopify:section:load', (event) => initializeScrollAnimationTrigger(event.target, true));

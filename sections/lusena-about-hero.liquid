@@ -8,7 +8,7 @@
   "
 >
   <div class="container max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-    <div class="space-y-8">
+    <div class="space-y-8{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
       <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
         {{ section.settings.hero_kicker | escape }}
       </span>
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="relative h-[600px] w-full bg-neutral-100 rounded-sm overflow-hidden">
+    <div class="relative h-[600px] w-full bg-neutral-100 rounded-sm overflow-hidden{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
       {%- if section.settings.hero_image != blank -%}
         {{
           section.settings.hero_image

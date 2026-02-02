@@ -9,7 +9,7 @@
 >
   <div class="container">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 lusena-problem-solution__grid">
-      <div class="space-y-8">
+      <div class="space-y-8{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <span class="text-secondary text-xs md:text-sm tracking-widest uppercase font-semibold lusena-problem-solution__kicker">
           {{ section.settings.problem_label | escape }}
         </span>
@@ -31,7 +31,7 @@
         </div>
       </div>
 
-      <div class="space-y-8">
+      <div class="space-y-8{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <span class="text-accent-gold text-xs md:text-sm tracking-widest uppercase font-semibold lusena-problem-solution__kicker">
           {{ section.settings.solution_label | escape }}
         </span>
@@ -55,7 +55,7 @@
     </div>
 
     {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
-      <div class="mt-16 text-center">
+      <div class="mt-16 text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <a
           href="{{ section.settings.cta_link }}"
           class="inline-flex items-center text-accent-cta font-medium border-b border-accent-cta/30 pb-1 hover:border-accent-cta transition-all"

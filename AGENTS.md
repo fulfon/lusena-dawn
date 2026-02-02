@@ -10,6 +10,18 @@ This repository is based on the official Shopify **Dawn** theme (v15.4.1) and is
 
 🚨 MANDATORY: YOU MUST CALL "learn_shopify_api" ONCE WHEN WORKING WITH LIQUID THEMES.
 
+## Animations (consistency)
+
+Our baseline scroll-reveal system is Dawn's `scroll-trigger` classes gated by the theme setting `settings.animations_reveal_on_scroll`.
+
+- Shopify admin toggle: Online Store → Themes → Customize → Theme settings → Animations → "Reveal sections on scroll"
+- When creating a new section/block/snippet: add `scroll-trigger animate--slide-in` (or `animate--fade-in`) conditionally:
+
+  `{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}`
+
+- For repeated items (cards, tiles, FAQ rows): add `data-cascade` on the container when the setting is enabled, and put the `scroll-trigger` class on each item (gives a subtle stagger).
+- If an element needs `transform` for layout/offset/hover, put the scroll-trigger on a wrapper instead (to avoid the animation transform overriding positioning).
+
 ## Theme check warnings (known baseline)
 
 The following `shopify theme check` warnings have been present since the beginning of the theme and should not be treated as issues:

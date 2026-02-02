@@ -8,22 +8,24 @@
   "
 >
   <div class="container max-w-4xl mx-auto space-y-12">
-    <h2 class="text-3xl md:text-4xl font-serif text-primary">
+    <h2 class="text-3xl md:text-4xl font-serif text-primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.qc_heading | escape }}
     </h2>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {%- for block in section.blocks -%}
         {%- if block.type == 'qc_step' -%}
-          <div class="lusena-quality-qc__card p-8 bg-white/50 backdrop-blur-sm rounded-sm border border-white/40{% if block.settings.highlight %} shadow-sm relative overflow-hidden{% endif %}" {{ block.shopify_attributes }}>
-            {%- if block.settings.highlight -%}
-              <div class="absolute top-0 right-0 bg-accent-gold text-white text-[10px] px-2 py-1 uppercase tracking-wider">
-                {{ section.settings.qc_highlight_badge | escape }}
-              </div>
-            {%- endif -%}
-            <div class="text-4xl mb-4">{{ block.settings.icon }}</div>
-            <h3 class="font-serif text-xl mb-2">{{ block.settings.title | escape }}</h3>
-            <p class="text-secondary font-light text-sm">{{ block.settings.text | escape }}</p>
+          <div {% if settings.animations_reveal_on_scroll %}class="scroll-trigger animate--slide-in" data-cascade{% endif %}>
+            <div class="lusena-quality-qc__card p-8 bg-white/50 backdrop-blur-sm rounded-sm border border-white/40{% if block.settings.highlight %} shadow-sm relative overflow-hidden{% endif %}" {{ block.shopify_attributes }}>
+              {%- if block.settings.highlight -%}
+                <div class="absolute top-0 right-0 bg-accent-gold text-white text-[10px] px-2 py-1 uppercase tracking-wider">
+                  {{ section.settings.qc_highlight_badge | escape }}
+                </div>
+              {%- endif -%}
+              <div class="text-4xl mb-4">{{ block.settings.icon }}</div>
+              <h3 class="font-serif text-xl mb-2">{{ block.settings.title | escape }}</h3>
+              <p class="text-secondary font-light text-sm">{{ block.settings.text | escape }}</p>
+            </div>
           </div>
         {%- endif -%}
       {%- endfor -%}

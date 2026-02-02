@@ -182,13 +182,13 @@
     will-change: transform;
   }
 
-  .lusena-hero [data-lusena-hero-text] .lusena-hero__text {
+  .lusena-hero [data-lusena-hero-text] .lusena-hero__text-wrap {
     animation: lusena-hero-fade-up 650ms var(--ease-out-slow) both;
     animation-delay: 120ms;
     will-change: opacity, transform;
   }
 
-  .lusena-hero [data-lusena-hero-text] .lusena-hero__buttons {
+  .lusena-hero [data-lusena-hero-text] .lusena-hero__buttons-wrap {
     animation: lusena-hero-fade-up 650ms var(--ease-out-slow) both;
     animation-delay: 220ms;
     will-change: opacity, transform;
@@ -196,8 +196,8 @@
 
   @media (prefers-reduced-motion: reduce) {
     .lusena-hero [data-lusena-hero-image] img,
-    .lusena-hero [data-lusena-hero-text] .lusena-hero__text,
-    .lusena-hero [data-lusena-hero-text] .lusena-hero__buttons {
+    .lusena-hero [data-lusena-hero-text] .lusena-hero__text-wrap,
+    .lusena-hero [data-lusena-hero-text] .lusena-hero__buttons-wrap {
       animation: none;
     }
   }

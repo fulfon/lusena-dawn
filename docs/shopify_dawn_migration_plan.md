@@ -22,7 +22,7 @@
 - Layout: `lusena-shop/src/components/layout/Header.tsx`, `lusena-shop/src/components/layout/Footer.tsx`
 - Commerce: `lusena-shop/src/components/cart/CartDrawer.tsx`, `lusena-shop/src/components/product/ProductCard.tsx`
 - Content blocks: `lusena-shop/src/components/ui/TrustStrip.tsx`, `lusena-shop/src/components/ui/ReviewCard.tsx`, `lusena-shop/src/components/ui/Accordion.tsx`
-- Motion: GSAP patterns via `lusena-shop/src/lib/gsap.ts` (hero intro + scroll reveals)
+- Motion: subtle, conversion-friendly reveals (no GSAP; use IntersectionObserver-based scroll triggers)
 
 **Mock data + logic**
 - Product catalog: `lusena-shop/src/lib/products.ts` (handles: `silk-pillowcase`, `silk-sleep-mask`, `silk-scrunchie`, `heatless-curler`, `silk-bonnet`)
@@ -41,7 +41,7 @@ The theme already contains a 1:1 UI implementation of the draft pages using OS 2
 - Header/Footer groups: `sections/header-group.json`, `sections/footer-group.json` using `sections/lusena-header.liquid` + `sections/lusena-footer.liquid`
 - Styling: Tailwind-compiled CSS imported as `assets/lusena-shop.css`
 - Cart drawer + upsell: `snippets/cart-drawer.liquid` (metafields + theme settings; see §7)
-- Motion: GSAP-powered reveal animations in `assets/lusena-animations.js`
+- Motion: reveal animations via `assets/animations.js` (Dawn scroll triggers) and `assets/lusena-animations.js` (LUSENA motion layer). No GSAP.
 
 What remains for “fully production Shopify” is primarily **Admin data setup**, **structured content migration (metafields/metaobjects)**, and **QA + launch hardening**.
 
@@ -145,7 +145,7 @@ Recreate the draft UI/UX inside Dawn using **Liquid + JSON templates + sections/
 
 ### 3.4 Assets
 - `assets/lusena-shop.css` (Tailwind build output imported from the draft)
-- `assets/lusena-animations.js` (GSAP scroll + hero intro)
+- `assets/lusena-animations.js` (LUSENA motion layer; no GSAP)
 
 ---
 

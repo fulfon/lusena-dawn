@@ -9,7 +9,7 @@
 >
   <div class="container">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-      <div>
+      <div{% if settings.animations_reveal_on_scroll %} class="scroll-trigger animate--slide-in"{% endif %} {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
         <h2 class="text-3xl md:text-4xl font-serif text-primary mb-6">
           {{ section.settings.cert_heading | escape }}
         </h2>
@@ -50,7 +50,7 @@
         {%- endif -%}
       </div>
 
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-2 gap-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
         <div class="bg-neutral-50 aspect-square flex items-center justify-center border border-neutral-100">
           {%- if section.settings.cert_logo_1 != blank -%}
             {{ section.settings.cert_logo_1 | image_url: width: 400 | image_tag: loading: 'lazy' }}

@@ -7,7 +7,7 @@
     --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
   "
 >
-  <div class="container max-w-4xl mx-auto space-y-6">
+  <div class="container max-w-4xl mx-auto space-y-6{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
     <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
       {{ section.settings.hero_kicker | escape }}
     </span>

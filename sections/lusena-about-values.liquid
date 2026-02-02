@@ -8,7 +8,7 @@
   "
 >
   <div class="container">
-    <div class="text-center mb-16">
+    <div class="text-center mb-16{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
         {{ section.settings.values_kicker | escape }}
       </span>
@@ -20,11 +20,13 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
       {%- for block in section.blocks -%}
         {%- if block.type == 'value' -%}
-          <div class="p-8 bg-neutral-50 rounded-sm hover:-translate-y-1 transition-transform duration-300" {{ block.shopify_attributes }}>
-            <h3 class="font-serif text-xl mb-4 text-primary">{{ block.settings.title | escape }}</h3>
-            <p class="text-secondary font-light text-sm leading-relaxed">
-              {{ block.settings.text | escape }}
-            </p>
+          <div {% if settings.animations_reveal_on_scroll %}class="scroll-trigger animate--slide-in" data-cascade{% endif %}>
+            <div class="p-8 bg-neutral-50 rounded-sm hover:-translate-y-1 transition-transform duration-300" {{ block.shopify_attributes }}>
+              <h3 class="font-serif text-xl mb-4 text-primary">{{ block.settings.title | escape }}</h3>
+              <p class="text-secondary font-light text-sm leading-relaxed">
+                {{ block.settings.text | escape }}
+              </p>
+            </div>
           </div>
         {%- endif -%}
       {%- endfor -%}

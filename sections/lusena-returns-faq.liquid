@@ -8,14 +8,14 @@
   "
 >
   <div class="container max-w-3xl mx-auto">
-    <h2 class="text-3xl md:text-4xl font-serif text-primary text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-serif text-primary text-center mb-12{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.faq_heading | escape }}
     </h2>
 
-    <div class="w-full bg-white px-8 py-4 rounded-sm shadow-sm">
+    <div class="w-full bg-white px-8 py-4 rounded-sm shadow-sm{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {%- for block in section.blocks -%}
         {%- if block.type == 'faq' -%}
-          <details class="border-b border-secondary/20" {{ block.shopify_attributes }}>
+          <details class="border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %} {{ block.shopify_attributes }}>
             <summary class="flex items-center justify-between py-4 font-medium transition-all hover:text-accent-cta cursor-pointer">
               {{ block.settings.question | escape }}
               {% render 'lusena-icon', name: 'chevron-down', class: 'h-4 w-4 shrink-0 transition-transform duration-200 lusena-returns-faq__chevron', stroke_width: 1.5 %}
@@ -30,7 +30,7 @@
       {%- endfor -%}
     </div>
 
-    <div class="text-center mt-12">
+    <div class="text-center mt-12{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       <p class="text-secondary mb-4">{{ section.settings.contact_prompt | escape }}</p>
       {%- if section.settings.contact_button_label != blank and section.settings.contact_button_link != blank -%}
         <a

@@ -8,7 +8,7 @@
   "
 >
   <div class="container grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-    <div class="bg-neutral-100 aspect-square flex items-center justify-center rounded-sm overflow-hidden">
+    <div class="bg-neutral-100 aspect-square flex items-center justify-center rounded-sm overflow-hidden{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
       {%- if section.settings.momme_image != blank -%}
         {{
           section.settings.momme_image
@@ -26,7 +26,7 @@
       {%- endif -%}
     </div>
 
-    <div class="space-y-6">
+    <div class="space-y-6{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
       <h2 class="text-3xl md:text-4xl font-serif text-primary">
         {{ section.settings.momme_heading | escape }}
       </h2>

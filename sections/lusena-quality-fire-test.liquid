@@ -8,11 +8,11 @@
   "
 >
   <div class="container text-center">
-    <h2 class="text-3xl md:text-4xl font-serif text-primary mb-12">
+    <h2 class="text-3xl md:text-4xl font-serif text-primary mb-12{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.fire_heading | escape }}
     </h2>
 
-    <div class="max-w-4xl mx-auto bg-black/5 aspect-video flex items-center justify-center rounded-sm border border-secondary/10 overflow-hidden">
+    <div class="max-w-4xl mx-auto bg-black/5 aspect-video flex items-center justify-center rounded-sm border border-secondary/10 overflow-hidden{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {%- if section.settings.fire_video != blank -%}
         {{
           section.settings.fire_video
@@ -28,7 +28,7 @@
       {%- endif -%}
     </div>
 
-    <p class="mt-8 text-secondary font-light max-w-2xl mx-auto">
+    <p class="mt-8 text-secondary font-light max-w-2xl mx-auto{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.fire_body | escape }}
     </p>
   </div>

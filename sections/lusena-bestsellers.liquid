@@ -18,7 +18,7 @@
   "
 >
   <div class="container">
-    <div class="flex justify-between items-end mb-12">
+    <div class="flex justify-between items-end mb-12{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       <div class="space-y-4">
         <h2 class="text-3xl md:text-4xl font-serif text-primary">{{ section.settings.heading | escape }}</h2>
         {%- if section.settings.subheading != blank -%}
@@ -49,11 +49,18 @@
               assign badge = 'New'
             endif
           -%}
-          {% render 'lusena-product-card', product: product, badge: badge, show_secondary_image: true %}
+          <div
+            {% if settings.animations_reveal_on_scroll %}
+              class="scroll-trigger animate--slide-in"
+              data-cascade
+            {% endif %}
+          >
+            {% render 'lusena-product-card', product: product, badge: badge, show_secondary_image: true %}
+          </div>
         {%- endfor -%}
       {%- else -%}
         {%- for i in (1..3) -%}
-          <div class="group cursor-pointer">
+          <div class="group cursor-pointer{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
             <div class="relative aspect-[4/5] bg-surface-2 overflow-hidden mb-4"></div>
             <div class="space-y-1 text-center md:text-left">
               <div class="h-4 bg-surface-2 w-3/4"></div>
@@ -65,7 +72,7 @@
     </div>
 
     {%- if section.settings.view_all_mobile_label != blank -%}
-      <div class="mt-12 text-center md:hidden">
+      <div class="mt-12 text-center md:hidden{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <a
           href="{{ view_all_url }}"
           class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-12 px-8 py-3 border border-primary bg-transparent text-primary hover:bg-surface-2 w-full"

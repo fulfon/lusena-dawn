@@ -8,7 +8,7 @@
   "
 >
   <div class="container grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-    <div class="order-1 md:order-2 space-y-6">
+    <div class="order-1 md:order-2 space-y-6{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
       <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
         {{ section.settings.origin_kicker | escape }}
       </span>
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="order-2 md:order-1 bg-neutral-100 aspect-[4/5] flex items-center justify-center rounded-sm overflow-hidden">
+    <div class="order-2 md:order-1 bg-neutral-100 aspect-[4/5] flex items-center justify-center rounded-sm overflow-hidden{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
       {%- if section.settings.origin_image != blank -%}
         {{
           section.settings.origin_image

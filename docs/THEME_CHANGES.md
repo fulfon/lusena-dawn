@@ -19,7 +19,30 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — fix(lusena): trust bar launch-safe proof points
+### (current) — fix(lusena): make scroll-reveal consistent across pages
+
+**Goal:** Ensure “Reveal sections on scroll” works across all LUSENA custom pages/sections, while keeping the hero/header stack clickable and merchant-adjustable.
+
+**What changed**
+- Standardized LUSENA sections on Dawn’s scroll-reveal system (`scroll-trigger` + `animate--slide-in` / `animate--fade-in`), gated by `settings.animations_reveal_on_scroll`.
+- Added `data-cascade` to repeated-item containers (cards/rows) so reveals get Dawn’s subtle stagger.
+- Hardened `assets/animations.js` initialization so offscreen elements don’t “pre-animate” and section reloads in theme editor behave correctly.
+- Fixed hero motion/controls interaction by animating wrapper elements (so merchant-controlled transforms and mobile button sizing remain independent).
+- Updated developer docs (AGENTS + UI/UX + migration notes) to reflect the current motion approach (no GSAP).
+
+**Key files**
+- `assets/animations.js`
+- `sections/lusena-hero.liquid`
+- `sections/lusena-main-product.liquid`
+- `sections/lusena-main-collection.liquid`
+- `sections/lusena-about-*.liquid`
+- `sections/lusena-quality-*.liquid`
+- `sections/lusena-returns-*.liquid`
+- `AGENTS.md`
+- `docs/UI_UX_Instructions.md`
+- `docs/shopify_dawn_migration_plan.md`
+
+### 6f5f6de — fix(lusena): trust bar launch-safe proof points
 
 **Goal:** Make the trust bar launch-ready without reviews while keeping proof-first reassurance and clean mobile readability.
 
@@ -122,22 +145,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `sections/lusena-hero.liquid`
 - `templates/index.json`
 
-### cbb4d8a — fix(lusena): mobile hero max height + responsive text controls
-
-**Goal:** Let merchants precisely position hero copy separately on mobile vs desktop, and control the mobile hero image height (cropped from the bottom).
-
-**What changed**
-- Added mobile/desktop-specific hero text vertical position + fine-tune Y offset controls.
-- Added `mobile_max_height_px` to cap hero height on mobile and anchor the hero image crop from the bottom.
-
-**Key files**
-- `sections/lusena-hero.liquid`
-- `templates/index.json`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-02T16:10:59+01:00 — (current) — fix(lusena): trust bar launch-safe proof points
+- 2026-02-02T16:19:43+01:00 — (current) — fix(lusena): make scroll-reveal consistent across pages
+- 2026-02-02T16:10:59+01:00 — 6f5f6de — fix(lusena): trust bar launch-safe proof points
 - 2026-02-02T13:12:18+01:00 — 0a6644e — feat(lusena): motion layer + remove GSAP
 - 2026-02-02T10:34:57+01:00 — b076f77 — feat(lusena): refine section spacing defaults
 - 2026-02-01T23:02:37+01:00 — e96c48a — feat(lusena): per-section spacing + split page sections

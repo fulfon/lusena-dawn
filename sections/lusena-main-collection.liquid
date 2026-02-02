@@ -9,7 +9,7 @@
 >
 {%- paginate collection.products by section.settings.products_per_page -%}
   <div class="container">
-    <div class="flex flex-col md:flex-row justify-between items-baseline mb-8">
+    <div class="flex flex-col md:flex-row justify-between items-baseline mb-8{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       <div>
         <h1 class="text-3xl md:text-4xl font-serif text-primary">{{ collection.title | escape }}</h1>
         {%- if collection.description != blank -%}
@@ -31,11 +31,18 @@
 
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-12 md:gap-8">
       {%- for product in collection.products -%}
-        {% render 'lusena-product-card', product: product, show_secondary_image: section.settings.show_secondary_image %}
+        <div
+          {% if settings.animations_reveal_on_scroll %}
+            class="scroll-trigger animate--slide-in"
+            data-cascade
+          {% endif %}
+        >
+          {% render 'lusena-product-card', product: product, show_secondary_image: section.settings.show_secondary_image %}
+        </div>
       {%- endfor -%}
     </div>
 
-    <div class="mt-16 text-center">
+    <div class="mt-16 text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {%- if paginate.next -%}
         <a
           href="{{ paginate.next.url }}"

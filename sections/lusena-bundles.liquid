@@ -8,7 +8,7 @@
   "
 >
   <div class="container grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-    <div class="order-2 md:order-1 relative aspect-[4/3] bg-brand-bg p-8 flex items-center justify-center">
+    <div class="order-2 md:order-1 relative aspect-[4/3] bg-brand-bg p-8 flex items-center justify-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {%- if section.settings.image != blank -%}
         {{
           section.settings.image
@@ -26,7 +26,7 @@
       {%- endif -%}
     </div>
 
-    <div class="order-1 md:order-2 space-y-6">
+    <div class="order-1 md:order-2 space-y-6{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {%- if section.settings.kicker != blank -%}
         <span class="text-accent-cta text-sm tracking-widest uppercase font-semibold">
           {{ section.settings.kicker | escape }}
