@@ -23,7 +23,7 @@
   <div class="container">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
       <div class="md:col-span-7 space-y-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-        <div class="aspect-square bg-surface-2 overflow-hidden rounded-sm relative">
+        <div class="aspect-square bg-surface-2 overflow-hidden rounded-sm relative" data-lusena-main-media>
           {%- if product.featured_media != blank -%}
             {{
               product.featured_media.preview_image
@@ -46,7 +46,7 @@
         </div>
 
         <div class="grid grid-cols-2 gap-4">
-          <div class="aspect-square bg-surface-2 overflow-hidden rounded-sm">
+          <div class="aspect-square bg-surface-2 overflow-hidden rounded-sm" data-lusena-secondary-media>
             {%- if product.media.size > 1 -%}
               {{
                 product.media[1].preview_image
@@ -152,8 +152,11 @@
                 assign option_index = forloop.index0
                 assign selected_value = current_variant.options[option_index]
                 assign option_name_downcase = option.name | downcase
+                assign swatch_count = option.values | map: 'swatch' | compact | size
                 assign is_color = false
-                if option_name_downcase contains 'color' or option_name_downcase contains 'kolor'
+                if swatch_count > 0
+                  assign is_color = true
+                elsif option_name_downcase contains 'color' or option_name_downcase contains 'colour' or option_name_downcase contains 'kolor'
                   assign is_color = true
                 endif
               -%}
@@ -166,54 +169,82 @@
 
                 <div class="flex flex-wrap gap-3">
                   {%- for value in option.values -%}
-                    {%- assign is_selected = false -%}
-                    {%- if value == selected_value -%}
-                      {%- assign is_selected = true -%}
-                    {%- endif -%}
+                    {%- liquid
+                      assign is_selected = value.selected
+                      assign option_disabled = true
+                      if value.available
+                        assign option_disabled = false
+                      endif
+                    -%}
 
                     {%- if is_color -%}
                       {%- liquid
-                        assign bg_class = 'bg-gray-200'
-                        case value
-                          when 'Beige'
-                            assign bg_class = 'bg-[#E8E0D5]'
-                          when 'Midnight Blue'
-                            assign bg_class = 'bg-[#1B243B]'
-                          when 'Pearl White'
-                            assign bg_class = 'bg-[#FDFCF8]'
-                          when 'Pink'
-                            assign bg_class = 'bg-[#F3E5DC]'
-                          when 'Silver'
-                            assign bg_class = 'bg-[#D6D6D6]'
-                        endcase
+                        assign swatch_value = null
+                        assign swatch_focal_point = null
+
+                        if value.swatch.image
+                          assign image_url = value.swatch.image | image_url: width: 100
+                          assign swatch_value = 'url(' | append: image_url | append: ')'
+                          assign swatch_focal_point = value.swatch.image.presentation.focal_point
+                        elsif value.swatch.color
+                          assign swatch_value = 'rgb(' | append: value.swatch.color.rgb | append: ')'
+                        endif
+
+                        assign bg_class = ''
+                        if swatch_value == null
+                          assign bg_class = 'bg-gray-200'
+                          assign value_downcase = value | downcase
+                          case value_downcase
+                            when 'beige'
+                              assign bg_class = 'bg-[#E8E0D5]'
+                            when 'midnight blue'
+                              assign bg_class = 'bg-[#1B243B]'
+                            when 'pearl white'
+                              assign bg_class = 'bg-[#FDFCF8]'
+                            when 'pink'
+                              assign bg_class = 'bg-[#F3E5DC]'
+                            when 'silver'
+                              assign bg_class = 'bg-[#D6D6D6]'
+                          endcase
+                        endif
                       -%}
 
-                      <label class="transition-all duration-200 relative flex items-center justify-center">
+                      <label class="transition-all duration-200 relative flex items-center justify-center{% if option_disabled %} opacity-40 cursor-not-allowed{% endif %}">
                         <input
-                          class="sr-only"
+                          class="lusena-option__input visually-hidden"
                           type="radio"
                           name="option-{{ section.id }}-{{ option_index }}"
                           value="{{ value | escape }}"
                           {% if is_selected %}checked{% endif %}
+                          {% if option_disabled %}disabled{% endif %}
                         >
                         <span
-                          class="w-10 h-10 rounded-full border border-gray-200 hover:brightness-95 shadow-sm {{ bg_class }}{% if is_selected %} ring-1 ring-offset-2 ring-primary border-primary{% endif %}"
+                          class="lusena-option__swatch w-10 h-10 rounded-full border border-gray-200 hover:brightness-95 shadow-sm {{ bg_class }}"
                           data-lusena-value
                           data-lusena-option-value="{{ value | escape }}"
                           title="{{ value | escape }}"
+                          {% if swatch_value %}
+                            style="
+                              background: {{ swatch_value }};
+                              background-size: cover;
+                              {% if swatch_focal_point %}background-position: {{ swatch_focal_point }};{% endif %}
+                            "
+                          {% endif %}
                         ></span>
+                        <span class="visually-hidden">{{ value | escape }}</span>
                       </label>
                     {%- else -%}
-                      <label class="transition-all duration-200 relative flex items-center justify-center">
+                      <label class="transition-all duration-200 relative flex items-center justify-center{% if option_disabled %} opacity-40 cursor-not-allowed{% endif %}">
                         <input
-                          class="sr-only"
+                          class="lusena-option__input visually-hidden"
                           type="radio"
                           name="option-{{ section.id }}-{{ option_index }}"
                           value="{{ value | escape }}"
                           {% if is_selected %}checked{% endif %}
+                          {% if option_disabled %}disabled{% endif %}
                         >
                         <span
-                          class="px-6 py-2 border text-sm min-w-[4rem]{% if is_selected %} border-primary bg-primary text-white{% else %} border-secondary/30 text-primary hover:border-primary{% endif %}"
+                          class="lusena-option__pill px-6 py-2 border text-sm min-w-[4rem] border-secondary/30 text-primary hover:border-primary"
                           data-lusena-value
                           data-lusena-option-value="{{ value | escape }}"
                         >
@@ -409,6 +440,30 @@
     }
   }
 
+  .lusena-pdp .lusena-option__input:checked + .lusena-option__pill {
+    border-color: var(--primary);
+    background-color: var(--primary);
+    color: #fff;
+  }
+
+  .lusena-pdp .lusena-option__input:checked + .lusena-option__swatch {
+    border-color: var(--primary);
+    outline: 1px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  .lusena-pdp [data-lusena-main-media] img,
+  .lusena-pdp [data-lusena-secondary-media] img {
+    transition: opacity 200ms ease-in-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lusena-pdp [data-lusena-main-media] img,
+    .lusena-pdp [data-lusena-secondary-media] img {
+      transition: none;
+    }
+  }
+
   .lusena-pdp details[open] .lusena-pdp__chevron {
     transform: rotate(180deg);
   }
@@ -440,6 +495,92 @@
     } catch (e) {
       return;
     }
+
+    const mainMediaImg = root.querySelector('[data-lusena-main-media] img');
+    const secondaryMediaImg = root.querySelector('[data-lusena-secondary-media] img');
+    const mainMediaSizes = mainMediaImg?.getAttribute('sizes') || '';
+    const secondaryMediaSizes = secondaryMediaImg?.getAttribute('sizes') || '';
+
+    const normalizeImageUrl = (src) => {
+      if (!src) return null;
+      if (src.startsWith('//')) return `https:${src}`;
+      return src;
+    };
+
+    const urlWithWidth = (src, width) => {
+      const normalized = normalizeImageUrl(src);
+      if (!normalized) return null;
+      try {
+        const u = new URL(normalized);
+        u.searchParams.set('width', String(width));
+        return u.toString();
+      } catch (e) {
+        return normalized;
+      }
+    };
+
+    const setResponsiveImage = ({ img, src, widths, sizes, alt }) => {
+      if (!img || !src) return;
+      const normalized = normalizeImageUrl(src);
+      if (!normalized) return;
+
+      const maxWidth = widths[widths.length - 1];
+      const srcWithWidth = urlWithWidth(normalized, maxWidth);
+      const srcset = widths
+        .map((w) => {
+          const u = urlWithWidth(normalized, w);
+          return u ? `${u} ${w}w` : null;
+        })
+        .filter(Boolean)
+        .join(', ');
+
+      if (srcWithWidth) img.src = srcWithWidth;
+      if (srcset) img.setAttribute('srcset', srcset);
+      if (sizes) img.setAttribute('sizes', sizes);
+      if (typeof alt === 'string') img.alt = alt;
+    };
+
+    const findMediaById = (mediaId) => {
+      if (!mediaId) return null;
+      const idString = String(mediaId);
+      return product?.media?.find((m) => String(m?.id) === idString) || null;
+    };
+
+    const updateMediaForVariant = (variant) => {
+      if (!variant) return;
+      if (!mainMediaImg) return;
+
+      const featuredMedia = variant.featured_media ? findMediaById(variant.featured_media.id) || variant.featured_media : null;
+      const featuredPreviewSrc = featuredMedia?.preview_image?.src || variant?.featured_image?.src;
+      const featuredAlt = featuredMedia?.alt || featuredMedia?.preview_image?.alt || variant?.featured_image?.alt || '';
+
+      if (featuredPreviewSrc) {
+        setResponsiveImage({
+          img: mainMediaImg,
+          src: featuredPreviewSrc,
+          widths: [600, 800, 1200, 1600],
+          sizes: mainMediaSizes,
+          alt: featuredAlt,
+        });
+      }
+
+      if (!secondaryMediaImg) return;
+      const featuredId = featuredMedia?.id ? String(featuredMedia.id) : null;
+      const secondaryCandidate =
+        product?.media?.find((m) => m?.preview_image?.src && (!featuredId || String(m.id) !== featuredId)) || null;
+      const secondarySrc = secondaryCandidate?.preview_image?.src;
+      const secondaryAlt = secondaryCandidate?.alt || secondaryCandidate?.preview_image?.alt || '';
+
+      if (secondarySrc) {
+        setResponsiveImage({
+          img: secondaryMediaImg,
+          src: secondarySrc,
+          widths: [400, 600, 900, 1200],
+          sizes: secondaryMediaSizes,
+          alt: secondaryAlt,
+        });
+      }
+    };
 
     const moneyFormat = (cents) => {
       if (window?.Shopify?.formatMoney) {
@@ -508,6 +649,8 @@
       }
       if (atcButton) atcButton.disabled = !available;
       if (stickyAtcButton) stickyAtcButton.disabled = !available;
+
+      updateMediaForVariant(variant);
     };
 
     root.addEventListener('change', (e) => {

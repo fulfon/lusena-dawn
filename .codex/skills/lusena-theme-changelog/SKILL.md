@@ -35,6 +35,13 @@ Avoid committing tiny iteration steps (e.g. “try 1”, “adjust 2px”, “ma
 - Run `shopify theme check` and ensure only the known baseline warnings remain.
 - If you changed theme settings (schema/data), ensure schema constraints are respected (ranges, steps, defaults).
 
+### 2.5) Prevent stale `(current)` entries
+
+Before editing `docs/THEME_CHANGES.md`, ensure the existing newest detailed entry isn’t incorrectly marked as `(current)` when it already has a real commit:
+
+- If the top detailed entry is `### (current) — ...` but `git log -1` shows a different subject, replace that entry’s `(current)` with the actual hash from `git log --oneline` (and do the same in the **All commits** summary list).
+- Then add your new newest entry as `(current)` (only when the user wants a single commit).
+
 ### 3) Confirm “definition of done” (ASK THE USER)
 
 When you believe the task is complete, ask the user explicitly:

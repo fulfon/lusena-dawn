@@ -19,7 +19,19 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — fix(lusena): sync page offset to header height
+### (current) — feat(lusena): PDP swatches + variant media switching
+
+**Goal:** Match the LUSENA draft PDP option UI (color circles + text pills) and allow per-color imagery by switching the gallery on variant change.
+
+**What changed**
+- Rendered Color/Kolor/Colour options as circular swatches (using Shopify swatch data when available, with a small name-to-color fallback).
+- Rendered other options as pill buttons, with the selected state styled via `:checked` so it updates instantly.
+- Added variant media switching: main media updates to the selected variant’s image (and the secondary tile picks the next best media), with `prefers-reduced-motion` handling.
+
+**Key files**
+- `sections/lusena-main-product.liquid`
+
+### dc1ed64 — fix(lusena): sync page offset to header height
 
 **Goal:** Remove the tiny desktop gap between the fixed LUSENA header and the first section (most visible on white first sections like `/o-nas`), without affecting mobile or breaking existing layouts.
 
@@ -134,22 +146,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `sections/lusena-header.liquid`
 - `sections/header-group.json`
 
-### 27fcb56 — feat(lusena): independent mobile hero offsets
-
-**Goal:** Let merchants position hero text and CTA buttons independently on mobile, including a viewport-relative (vh) fine-tune.
-
-**What changed**
-- Split hero text and buttons into separate wrappers so GSAP animations don’t override positioning transforms.
-- Added mobile-only fine-tune offsets (px + vh) for text and buttons so each can be adjusted independently.
-
-**Key files**
-- `sections/lusena-hero.liquid`
-- `templates/index.json`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-02T16:37:30+01:00 — (current) — fix(lusena): sync page offset to header height
+- 2026-02-02T19:08:42+01:00 — (current) — feat(lusena): PDP swatches + variant media switching
+- 2026-02-02T16:37:30+01:00 — dc1ed64 — fix(lusena): sync page offset to header height
 - 2026-02-02T16:19:43+01:00 — a3fd8e3 — fix(lusena): make scroll-reveal consistent across pages
 - 2026-02-02T16:10:59+01:00 — 6f5f6de — fix(lusena): trust bar launch-safe proof points
 - 2026-02-02T13:12:18+01:00 — 0a6644e — feat(lusena): motion layer + remove GSAP
