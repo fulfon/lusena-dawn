@@ -10,6 +10,12 @@ This repository is based on the official Shopify **Dawn** theme (v15.4.1) and is
 
 🚨 MANDATORY: YOU MUST CALL "learn_shopify_api" ONCE WHEN WORKING WITH LIQUID THEMES.
 
+## Visual verification (Playwright)
+
+- When you’re not sure about a UI/layout issue, verify it using the Playwright MCP (don’t guess).
+- Before running Playwright, check if the local Shopify dev server is running at `http://127.0.0.1:9292/`.
+  - If it’s not running, start it from the project directory with `shopify theme dev` (it should start on `http://127.0.0.1:9292/`).
+
 ## Animations (consistency)
 
 Our baseline scroll-reveal system is Dawn's `scroll-trigger` classes gated by the theme setting `settings.animations_reveal_on_scroll`.
