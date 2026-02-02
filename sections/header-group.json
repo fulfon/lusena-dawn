@@ -15,6 +15,7 @@
       "type": "lusena-header",
       "settings": {
         "logo_image": "shopify://shop_images/logoFinal.svg",
+        "logo_svg_inline": "",
         "logo_width": 116,
         "logo_color": "#111111",
         "logo_text_fallback": "LUSENA",
@@ -25,8 +26,8 @@
         "enable_search": true,
         "enable_account": true,
         "enable_cart": true,
-        "auto_hide_on_scroll_mobile": false,
-        "auto_hide_on_scroll_desktop": false
+        "auto_hide_on_scroll_mobile": true,
+        "auto_hide_on_scroll_desktop": true
       }
     }
   },
