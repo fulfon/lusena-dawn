@@ -19,7 +19,20 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — fix(lusena): make scroll-reveal consistent across pages
+### (current) — fix(lusena): sync page offset to header height
+
+**Goal:** Remove the tiny desktop gap between the fixed LUSENA header and the first section (most visible on white first sections like `/o-nas`), without affecting mobile or breaking existing layouts.
+
+**What changed**
+- Replaced hardcoded non-home `<main>` top padding with a CSS variable-driven offset (`--lusena-header-height`) so content starts exactly under the header.
+- Added a small header-height sync in `lusena-header` that measures only the “header bar” (excluding the expanding mobile menu panel) and writes `--lusena-header-height` (and `--header-height` for Dawn compatibility).
+- Updates on resize (and via `ResizeObserver` when available) to stay correct if the header height changes.
+
+**Key files**
+- `layout/theme.liquid`
+- `sections/lusena-header.liquid`
+
+### a3fd8e3 — fix(lusena): make scroll-reveal consistent across pages
 
 **Goal:** Ensure “Reveal sections on scroll” works across all LUSENA custom pages/sections, while keeping the hero/header stack clickable and merchant-adjustable.
 
@@ -133,22 +146,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `sections/lusena-hero.liquid`
 - `templates/index.json`
 
-### 6187b7d — feat(lusena): mobile hero button size controls
-
-**Goal:** Give merchants finer control over the hero button sizing on mobile.
-
-**What changed**
-- Added mobile-only controls for hero button height and button text size.
-- Applied sizing via CSS variables, keeping desktop button sizing unchanged.
-
-**Key files**
-- `sections/lusena-hero.liquid`
-- `templates/index.json`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-02T16:19:43+01:00 — (current) — fix(lusena): make scroll-reveal consistent across pages
+- 2026-02-02T16:37:30+01:00 — (current) — fix(lusena): sync page offset to header height
+- 2026-02-02T16:19:43+01:00 — a3fd8e3 — fix(lusena): make scroll-reveal consistent across pages
 - 2026-02-02T16:10:59+01:00 — 6f5f6de — fix(lusena): trust bar launch-safe proof points
 - 2026-02-02T13:12:18+01:00 — 0a6644e — feat(lusena): motion layer + remove GSAP
 - 2026-02-02T10:34:57+01:00 — b076f77 — feat(lusena): refine section spacing defaults

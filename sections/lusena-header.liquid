@@ -108,7 +108,7 @@
     assign primary_urls = sklep_url | append: '||' | append: about_url | append: '||' | append: silk_url | split: '||'
   -%}
 
-  <div class="container flex items-center justify-between">
+  <div class="container flex items-center justify-between" data-lusena-header-bar>
     <details class="lg:hidden relative" data-lusena-mobile-menu-details>
       <summary class="list-none p-2 cursor-pointer" aria-label="Menu" aria-controls="lusena-mobile-menu-panel">
         {% render 'lusena-icon', name: 'menu', class: 'w-6 h-6 text-primary', stroke_width: 1.5 %}
@@ -209,6 +209,33 @@
     if (!header) return;
     if (header.hasAttribute('data-lusena-autohide-init')) return;
     header.setAttribute('data-lusena-autohide-init', 'true');
+
+    const headerBar = header.querySelector('[data-lusena-header-bar]');
+    const readPx = (value) => {
+      const parsed = Number.parseFloat(value);
+      return Number.isFinite(parsed) ? parsed : 0;
+    };
+
+    const syncHeaderHeightCssVar = () => {
+      const headerStyles = getComputedStyle(header);
+      const paddingTop = readPx(headerStyles.paddingTop);
+      const paddingBottom = readPx(headerStyles.paddingBottom);
+      const barRect = (headerBar || header).getBoundingClientRect();
+      const height = Math.ceil(barRect.height + paddingTop + paddingBottom);
+
+      document.documentElement.style.setProperty('--lusena-header-height', `${height}px`);
+      document.documentElement.style.setProperty('--header-height', `${height}px`);
+    };
+
+    syncHeaderHeightCssVar();
+
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(() => {
+        syncHeaderHeightCssVar();
+      });
+      ro.observe(headerBar || header);
+    }
+    window.addEventListener('resize', syncHeaderHeightCssVar, { passive: true });
 
     const autoHideOnScrollMobile = header.hasAttribute('data-lusena-auto-hide-on-scroll-mobile');
     const autoHideMobileMq = window.matchMedia('(max-width: 767px)');
@@ -339,7 +366,10 @@
     );
 
     if (window.Shopify?.designMode) {
-      document.addEventListener('shopify:section:load', update);
+      document.addEventListener('shopify:section:load', () => {
+        syncHeaderHeightCssVar();
+        update();
+      });
     }
   })();
 {% endjavascript %}

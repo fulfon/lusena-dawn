@@ -319,9 +319,15 @@
 
     {% sections 'header-group' %}
 
+    {%- assign lusena_main_style = '' -%}
+    {%- unless request.page_type == 'index' -%}
+      {%- assign lusena_main_style = 'padding-top: var(--lusena-header-height, 76px);' -%}
+    {%- endunless -%}
+
     <main
       id="MainContent"
-      class="content-for-layout focus-none flex-grow{% unless request.page_type == 'index' %} pt-[72px] lg:pt-[88px]{% endunless %}"
+      class="content-for-layout focus-none flex-grow"
+      {% if lusena_main_style != blank %}style="{{ lusena_main_style }}"{% endif %}
       role="main"
       tabindex="-1"
     >
