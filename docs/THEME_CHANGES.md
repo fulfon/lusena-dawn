@@ -19,7 +19,23 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — feat(lusena): per-section spacing + split page sections
+### (current) — feat(lusena): refine section spacing defaults
+
+**Goal:** Improve the global vertical rhythm (premium feel) and reduce “manual spacing” work in the theme editor, while keeping conversion-critical sections readable and scannable.
+
+**What changed**
+- Tuned global section gap (`spacing_sections`) to a consistent, 8px-based rhythm.
+- Adjusted default padding (desktop + mobile) across LUSENA sections to reduce overly-large whitespace while keeping a premium “breathing” layout.
+- Normalized Dawn template paddings (cart/search/blog/page/contact) to consistent 8px multiples.
+- Added a generated section inventory + purpose report for reference.
+
+**Key files**
+- `config/settings_data.json`
+- `sections/lusena-*.liquid`
+- `templates/(cart|search|blog|page|page.contact).json`
+- `docs/SECTIONS_AUDIT.md`
+
+### e96c48a — feat(lusena): per-section spacing + split page sections
 
 **Goal:** Make vertical spacing adjustable (mobile/desktop) between LUSENA sections, and split page-sized LUSENA sections into smaller, reorderable sections.
 
@@ -106,20 +122,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `sections/lusena-hero.liquid`
 - `templates/index.json`
 
-### 055293b — fix(lusena): center quality benefit dot on first line
-
-**Goal:** Fix the “Dlaczego 22 momme?” benefit marker alignment so the dot lines up with the first line of text (no “text under the marker” look).
-
-**What changed**
-- Made the gold dot use a line-height-aware `calc(...)` top offset instead of a fixed spacing utility.
-
-**Key files**
-- `sections/lusena-page-quality.liquid`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-01T23:02:37+01:00 — (current) — feat(lusena): per-section spacing + split page sections
+- 2026-02-02T10:34:57+01:00 — (current) — feat(lusena): refine section spacing defaults
+- 2026-02-01T23:02:37+01:00 — e96c48a — feat(lusena): per-section spacing + split page sections
 - 2026-01-31T23:58:51+01:00 — f19d702 — Merge branch 'main' of https://github.com/fulfon/lusena-dawn
 - 2026-01-31T23:58:34+01:00 — 184fe6b — docs: update theme changelog
 - 2026-01-31T23:58:01+01:00 — 7efa557 — feat(lusena): auto-hide header on scroll
