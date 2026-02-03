@@ -19,7 +19,21 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — feat(lusena): PDP swatches + variant media switching
+### (current) — feat(lusena): PDP gallery grouped by color-tagged media
+
+**Goal:** Enable a full per-color image gallery on PDP (3–4 images per color) with shared images (packaging/certificates) shown at the end, matching our LUSENA variant UX.
+
+**What changed**
+- Replaced the PDP media area with a main image stage + thumbnail strip.
+- Added media grouping via product media alt tags: `Opis | [color=Blue]` for color-specific images and `Opis | [shared]` for shared images, with tags never leaking into the rendered `alt`.
+- On color change: preserves the “same angle” index within color images (clamped), but jumps to the first color image if the customer was viewing shared media (so the change is always visible).
+- Added merchant-facing documentation for the tagging workflow.
+
+**Key files**
+- `sections/lusena-main-product.liquid`
+- `docs/PDP_VARIANT_GALLERY.md`
+
+### a171d76 — feat(lusena): PDP swatches + variant media switching
 
 **Goal:** Match the LUSENA draft PDP option UI (color circles + text pills) and allow per-color imagery by switching the gallery on variant change.
 
@@ -134,22 +148,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `templates/page.o-nas.json`
 - `templates/page.zwroty.json`
 
-### 7efa557 — feat(lusena): auto-hide header on scroll
-
-**Goal:** Let merchants optionally auto-hide the header on scroll down and reveal it on scroll up, with separate toggles for mobile and desktop.
-
-**What changed**
-- Added `auto_hide_on_scroll_mobile` and `auto_hide_on_scroll_desktop` toggles in the header section settings.
-- Implemented scroll-direction detection that hides the header on downward scroll and shows it on upward scroll (menu open keeps header visible).
-
-**Key files**
-- `sections/lusena-header.liquid`
-- `sections/header-group.json`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-02T19:08:42+01:00 — (current) — feat(lusena): PDP swatches + variant media switching
+- 2026-02-03T19:25:59+01:00 — (current) — feat(lusena): PDP gallery grouped by color-tagged media
+- 2026-02-02T19:08:42+01:00 — a171d76 — feat(lusena): PDP swatches + variant media switching
 - 2026-02-02T16:37:30+01:00 — dc1ed64 — fix(lusena): sync page offset to header height
 - 2026-02-02T16:19:43+01:00 — a3fd8e3 — fix(lusena): make scroll-reveal consistent across pages
 - 2026-02-02T16:10:59+01:00 — 6f5f6de — fix(lusena): trust bar launch-safe proof points

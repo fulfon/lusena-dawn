@@ -23,16 +23,24 @@
   <div class="container">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
       <div class="md:col-span-7 space-y-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-        <div class="aspect-square bg-surface-2 overflow-hidden rounded-sm relative" data-lusena-main-media>
-          {%- if product.featured_media != blank -%}
+        {%- liquid
+          assign initial_media = current_variant.featured_media | default: product.featured_media
+          assign initial_preview = initial_media.preview_image | default: initial_media
+          assign initial_alt_raw = initial_media.alt | default: initial_preview.alt | default: ''
+          assign initial_alt = initial_alt_raw | split: '|' | first | strip
+        -%}
+
+        <div class="aspect-square bg-surface-2 overflow-hidden rounded-sm relative" data-lusena-media-stage>
+          {%- if initial_preview != blank -%}
             {{
-              product.featured_media.preview_image
+              initial_preview
               | image_url: width: 1600
               | image_tag:
                 class: 'w-full h-full object-cover',
                 loading: 'eager',
                 widths: '600, 800, 1200, 1600',
-                sizes: '(min-width: 768px) 55vw, 100vw'
+                sizes: '(min-width: 768px) 55vw, 100vw',
+                alt: initial_alt
             }}
           {%- else -%}
             {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover' }}
@@ -45,25 +53,43 @@
           {%- endif -%}
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
-          <div class="aspect-square bg-surface-2 overflow-hidden rounded-sm" data-lusena-secondary-media>
-            {%- if product.media.size > 1 -%}
-              {{
-                product.media[1].preview_image
-                | image_url: width: 1200
-                | image_tag:
-                  class: 'w-full h-full object-cover hover:scale-105 transition-transform duration-500',
-                  loading: 'lazy',
-                  widths: '400, 600, 900, 1200',
-                  sizes: '(min-width: 768px) 25vw, 50vw'
-              }}
-            {%- else -%}
-              {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover' }}
+        <div
+          class="lusena-media-thumbs"
+          data-lusena-media-thumbs
+          data-lusena-video-placeholder="{{ section.settings.video_placeholder | escape }}"
+        >
+          {%- for media in product.media -%}
+            {%- liquid
+              assign media_preview = media.preview_image | default: media
+              assign media_alt_raw = media.alt | default: media_preview.alt | default: ''
+              assign media_alt = media_alt_raw | split: '|' | first | strip
+              assign thumb_label = media_alt
+              if thumb_label == blank
+                assign thumb_label = 'Zdjęcie ' | append: forloop.index
+              endif
+            -%}
+
+            {%- if media_preview != blank -%}
+              <button
+                type="button"
+                class="lusena-media-thumb"
+                data-lusena-thumb
+                data-media-id="{{ media.id }}"
+                aria-label="{{ thumb_label | escape }}"
+              >
+                {{
+                  media_preview
+                  | image_url: width: 300
+                  | image_tag:
+                    class: 'w-full h-full object-cover',
+                    loading: 'lazy',
+                    widths: '120, 180, 240, 300',
+                    sizes: '96px',
+                    alt: media_alt
+                }}
+              </button>
             {%- endif -%}
-          </div>
-          <div class="aspect-square bg-surface-2 overflow-hidden rounded-sm flex items-center justify-center text-secondary bg-brand-bg">
-            <span class="text-sm">{{ section.settings.video_placeholder | escape }}</span>
-          </div>
+          {%- endfor -%}
         </div>
       </div>
 
@@ -161,7 +187,12 @@
                 endif
               -%}
 
-              <fieldset class="space-y-3" data-lusena-option data-option-index="{{ option_index }}">
+              <fieldset
+                class="space-y-3"
+                data-lusena-option
+                data-option-index="{{ option_index }}"
+                {% if is_color %}data-lusena-option-type="color"{% endif %}
+              >
                 <legend class="text-sm font-medium text-secondary uppercase tracking-wider text-xs">
                   {{ option.name | escape }}:
                   <span class="text-primary font-semibold text-sm ml-1" data-lusena-selected>{{ selected_value | escape }}</span>
@@ -452,15 +483,60 @@
     outline-offset: 2px;
   }
 
-  .lusena-pdp [data-lusena-main-media] img,
-  .lusena-pdp [data-lusena-secondary-media] img {
+  .lusena-pdp [data-lusena-media-stage] img {
     transition: opacity 200ms ease-in-out;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .lusena-pdp [data-lusena-main-media] img,
-    .lusena-pdp [data-lusena-secondary-media] img {
+    .lusena-pdp [data-lusena-media-stage] img {
       transition: none;
+    }
+  }
+
+  .lusena-pdp .lusena-media-thumbs {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lusena-pdp .lusena-media-thumbs::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .lusena-pdp .lusena-media-thumbs::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 999px;
+  }
+
+  .lusena-pdp .lusena-media-thumb {
+    width: 96px;
+    flex: 0 0 auto;
+    aspect-ratio: 1 / 1;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+    overflow: hidden;
+    background: var(--surface-2);
+    scroll-snap-align: start;
+    transition: transform 200ms ease, border-color 200ms ease, outline-color 200ms ease;
+  }
+
+  .lusena-pdp .lusena-media-thumb:hover {
+    transform: translateY(-1px);
+    border-color: rgba(0, 0, 0, 0.25);
+  }
+
+  .lusena-pdp .lusena-media-thumb[aria-current='true'] {
+    border-color: var(--primary);
+    outline: 1px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  @media (min-width: 768px) {
+    .lusena-pdp .lusena-media-thumb {
+      width: 104px;
     }
   }
 
@@ -496,10 +572,18 @@
       return;
     }
 
-    const mainMediaImg = root.querySelector('[data-lusena-main-media] img');
-    const secondaryMediaImg = root.querySelector('[data-lusena-secondary-media] img');
-    const mainMediaSizes = mainMediaImg?.getAttribute('sizes') || '';
-    const secondaryMediaSizes = secondaryMediaImg?.getAttribute('sizes') || '';
+    const stageImg = root.querySelector('[data-lusena-media-stage] img');
+    const stageSizes = stageImg?.getAttribute('sizes') || '';
+    const thumbsWrap = root.querySelector('[data-lusena-media-thumbs]');
+    const thumbEls = thumbsWrap ? Array.from(thumbsWrap.querySelectorAll('[data-lusena-thumb]')) : [];
+    const thumbsById = new Map(
+      thumbEls
+        .map((el) => {
+          const id = el?.dataset?.mediaId;
+          return id ? [String(id), el] : null;
+        })
+        .filter(Boolean)
+    );
 
     const normalizeImageUrl = (src) => {
       if (!src) return null;
@@ -546,40 +630,162 @@
       return product?.media?.find((m) => String(m?.id) === idString) || null;
     };
 
-    const updateMediaForVariant = (variant) => {
-      if (!variant) return;
-      if (!mainMediaImg) return;
+    const normalizeKey = (value) => (typeof value === 'string' ? value.trim().toLowerCase() : '');
 
-      const featuredMedia = variant.featured_media ? findMediaById(variant.featured_media.id) || variant.featured_media : null;
-      const featuredPreviewSrc = featuredMedia?.preview_image?.src || variant?.featured_image?.src;
-      const featuredAlt = featuredMedia?.alt || featuredMedia?.preview_image?.alt || variant?.featured_image?.alt || '';
+    const parseAlt = (alt) => {
+      const raw = typeof alt === 'string' ? alt : '';
+      const parts = raw.split('|').map((p) => p.trim()).filter(Boolean);
+      const cleanAlt = parts.length ? parts[0] : '';
+      const tag = parts.length > 1 ? parts[parts.length - 1] : '';
 
-      if (featuredPreviewSrc) {
+      const shared = /^\[shared\]$/i.test(tag);
+      const colorMatch = tag.match(/^\[color=(.+)\]$/i);
+      const colorTag = colorMatch ? colorMatch[1].trim() : null;
+
+      return { cleanAlt, shared, colorTag };
+    };
+
+    const getMediaAltRaw = (media) => media?.alt || media?.preview_image?.alt || '';
+
+    const hasAnyTagging = () =>
+      Array.isArray(product?.media) &&
+      product.media.some((m) => {
+        const { shared, colorTag } = parseAlt(getMediaAltRaw(m));
+        return shared || !!colorTag;
+      });
+
+    const getColorOptionIndex = () => {
+      const fieldset = root.querySelector('[data-lusena-option-type="color"]');
+      if (!fieldset) return null;
+      const idx = Number(fieldset.dataset.optionIndex);
+      return Number.isFinite(idx) ? idx : null;
+    };
+
+    const getSelectedColorForVariant = (variant) => {
+      const colorIndex = getColorOptionIndex();
+      if (colorIndex === null) return null;
+      const options = variant?.options;
+      if (!Array.isArray(options)) return null;
+      return options[colorIndex] || null;
+    };
+
+    const getVisibleMediaForColor = (color) => {
+      const media = Array.isArray(product?.media) ? product.media : [];
+      if (!media.length) return { colorMedia: [], sharedMedia: [], visible: [], taggingEnabled: false };
+
+      const taggingEnabled = hasAnyTagging();
+      if (!taggingEnabled || !color) {
+        return { colorMedia: [], sharedMedia: [], visible: media, taggingEnabled };
+      }
+
+      const normalizedColor = normalizeKey(color);
+      const colorMedia = [];
+      const sharedMedia = [];
+
+      media.forEach((m) => {
+        const { shared, colorTag } = parseAlt(getMediaAltRaw(m));
+        const isSharedEffective = shared || (!colorTag && taggingEnabled);
+
+        if (colorTag && normalizeKey(colorTag) === normalizedColor) colorMedia.push(m);
+        else if (isSharedEffective) sharedMedia.push(m);
+      });
+
+      const visible = colorMedia.length ? [...colorMedia, ...sharedMedia] : media;
+      return { colorMedia, sharedMedia, visible, taggingEnabled };
+    };
+
+    const state = {
+      activeIndex: 0,
+      colorMediaLength: 0,
+    };
+
+    const setActiveThumb = (activeMediaId) => {
+      thumbEls.forEach((el) => el.removeAttribute('aria-current'));
+      if (!activeMediaId) return;
+      const el = thumbsById.get(String(activeMediaId));
+      if (el) el.setAttribute('aria-current', 'true');
+    };
+
+    const applyThumbOrderAndVisibility = (visibleMedia) => {
+      if (!thumbsWrap) return;
+      const visibleIds = new Set(visibleMedia.map((m) => String(m?.id)));
+
+      thumbEls.forEach((el) => {
+        const id = String(el?.dataset?.mediaId || '');
+        el.hidden = !visibleIds.has(id);
+      });
+
+      visibleMedia.forEach((m) => {
+        const el = thumbsById.get(String(m?.id));
+        if (el) thumbsWrap.appendChild(el);
+      });
+    };
+
+    const setStageByMedia = (media) => {
+      if (!stageImg || !media) return;
+      const src = media?.preview_image?.src || media?.src;
+      if (!src) return;
+
+      const { cleanAlt } = parseAlt(getMediaAltRaw(media));
+      stageImg.style.opacity = '0';
+      requestAnimationFrame(() => {
         setResponsiveImage({
-          img: mainMediaImg,
-          src: featuredPreviewSrc,
+          img: stageImg,
+          src,
           widths: [600, 800, 1200, 1600],
-          sizes: mainMediaSizes,
-          alt: featuredAlt,
+          sizes: stageSizes,
+          alt: cleanAlt,
         });
-      }
+        stageImg.style.opacity = '1';
+      });
+    };
 
-      if (!secondaryMediaImg) return;
+    const selectMediaIndex = (index, visibleMedia) => {
+      const safeIndex = Math.max(0, Math.min(index, visibleMedia.length - 1));
+      const media = visibleMedia[safeIndex];
+      state.activeIndex = safeIndex;
+      setStageByMedia(media);
+      setActiveThumb(media?.id);
+    };
+
+    const updateGalleryForVariant = (variant) => {
+      if (!variant) return;
+      const color = getSelectedColorForVariant(variant);
+      const { visible, colorMedia } = getVisibleMediaForColor(color);
+      if (!visible.length) return;
+
+      const featuredMediaId =
+        variant?.featured_media && typeof variant.featured_media === 'object' ? variant.featured_media.id : variant?.featured_media;
+      const featuredMedia = featuredMediaId ? findMediaById(featuredMediaId) || variant.featured_media : null;
       const featuredId = featuredMedia?.id ? String(featuredMedia.id) : null;
-      const secondaryCandidate =
-        product?.media?.find((m) => m?.preview_image?.src && (!featuredId || String(m.id) !== featuredId)) || null;
-      const secondarySrc = secondaryCandidate?.preview_image?.src;
-      const secondaryAlt = secondaryCandidate?.alt || secondaryCandidate?.preview_image?.alt || '';
 
-      if (secondarySrc) {
-        setResponsiveImage({
-          img: secondaryMediaImg,
-          src: secondarySrc,
-          widths: [400, 600, 900, 1200],
-          sizes: secondaryMediaSizes,
-          alt: secondaryAlt,
-        });
+      const previousColorLength = state.colorMediaLength;
+      const wasOnShared = previousColorLength > 0 && state.activeIndex >= previousColorLength;
+
+      state.colorMediaLength = colorMedia.length;
+
+      applyThumbOrderAndVisibility(visible);
+
+      if (wasOnShared && colorMedia.length) {
+        selectMediaIndex(0, visible);
+        return;
       }
+
+      if (state.activeIndex === 0 && featuredId) {
+        const featuredIndex = visible.findIndex((m) => String(m?.id) === featuredId);
+        if (featuredIndex >= 0) {
+          selectMediaIndex(featuredIndex, visible);
+          return;
+        }
+      }
+
+      if (colorMedia.length) {
+        const nextIndex = Math.min(state.activeIndex, colorMedia.length - 1);
+        selectMediaIndex(nextIndex, visible);
+        return;
+      }
+
+      selectMediaIndex(state.activeIndex, visible);
     };
 
     const moneyFormat = (cents) => {
@@ -650,7 +856,7 @@
       if (atcButton) atcButton.disabled = !available;
       if (stickyAtcButton) stickyAtcButton.disabled = !available;
 
-      updateMediaForVariant(variant);
+      updateGalleryForVariant(variant);
     };
 
     root.addEventListener('change', (e) => {
@@ -665,8 +871,33 @@
       updateUIForVariant(variant);
     });
 
+    if (thumbEls.length) {
+      thumbEls.forEach((el) => {
+        el.addEventListener('click', () => {
+          const id = el?.dataset?.mediaId ? String(el.dataset.mediaId) : null;
+          if (!id) return;
+
+          const colorIndex = getColorOptionIndex();
+          const variant =
+            findVariant(getSelectedOptions()) ||
+            product?.variants?.find((v) => String(v.id) === String(variantIdInput?.value || '')) ||
+            product?.variants?.[0];
+          const color = colorIndex !== null ? getSelectedColorForVariant(variant) : null;
+          const { visible } = getVisibleMediaForColor(color);
+
+          const idx = visible.findIndex((m) => String(m?.id) === id);
+          if (idx < 0) return;
+          selectMediaIndex(idx, visible);
+        });
+      });
+    }
+
     setSelectedLabel();
-    updateUIForVariant(findVariant(getSelectedOptions()) || product?.variants?.find((v) => v.id === variantIdInput?.value) || product?.variants?.[0]);
+    updateUIForVariant(
+      findVariant(getSelectedOptions()) ||
+        product?.variants?.find((v) => String(v.id) === String(variantIdInput?.value || '')) ||
+        product?.variants?.[0]
+    );
 
     const mainCta = root.querySelector('#main-cta');
     if (!stickyBar || !mainCta) return;
