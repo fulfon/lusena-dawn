@@ -19,7 +19,19 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — fix(lusena): correct PDP color gallery filtering
+### (current) — fix(lusena): preserve PDP image index on color switch
+
+**Goal:** Make color switching behave like a true “same angle, different color” comparison: keep the selected image index within color images, and jump to the first color image when the customer was viewing shared media.
+
+**What changed**
+- Tracked whether the currently selected image is color-specific vs shared, so switching colors always picks the equivalent image index for the newly selected color.
+- When a shared image is selected, switching color always jumps to the first color image (so the change is immediately visible).
+- Kept initialization aligned with the variant featured media to avoid unexpected first-load image jumps.
+
+**Key files**
+- `sections/lusena-main-product.liquid`
+
+### cdcee94 — fix(lusena): correct PDP color gallery filtering
 
 **Goal:** Fix edge cases where switching colors could show stale images from other variants or place shared images before color-specific ones.
 
@@ -127,26 +139,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `sections/lusena-hero.liquid`
 - `sections/lusena-science.liquid`
 
-### b076f77 — feat(lusena): refine section spacing defaults
-
-**Goal:** Improve the global vertical rhythm (premium feel) and reduce “manual spacing” work in the theme editor, while keeping conversion-critical sections readable and scannable.
-
-**What changed**
-- Tuned global section gap (`spacing_sections`) to a consistent, 8px-based rhythm.
-- Adjusted default padding (desktop + mobile) across LUSENA sections to reduce overly-large whitespace while keeping a premium “breathing” layout.
-- Normalized Dawn template paddings (cart/search/blog/page/contact) to consistent 8px multiples.
-- Added a generated section inventory + purpose report for reference.
-
-**Key files**
-- `config/settings_data.json`
-- `sections/lusena-*.liquid`
-- `templates/(cart|search|blog|page|page.contact).json`
-- `docs/SECTIONS_AUDIT.md`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-04T20:39:13+01:00 — (current) — fix(lusena): correct PDP color gallery filtering
+- 2026-02-04T20:48:18+01:00 — (current) — fix(lusena): preserve PDP image index on color switch
+- 2026-02-04T20:39:13+01:00 — cdcee94 — fix(lusena): correct PDP color gallery filtering
 - 2026-02-03T19:25:59+01:00 — 8a6d37a — feat(lusena): PDP gallery grouped by color-tagged media
 - 2026-02-02T19:08:42+01:00 — a171d76 — feat(lusena): PDP swatches + variant media switching
 - 2026-02-02T16:37:30+01:00 — dc1ed64 — fix(lusena): sync page offset to header height

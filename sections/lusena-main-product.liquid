@@ -697,6 +697,8 @@
     const state = {
       activeIndex: 0,
       colorMediaLength: 0,
+      activeKind: 'color',
+      initialized: false,
     };
 
     const setActiveThumb = (activeMediaId) => {
@@ -744,6 +746,15 @@
       const safeIndex = Math.max(0, Math.min(index, visibleMedia.length - 1));
       const media = visibleMedia[safeIndex];
       state.activeIndex = safeIndex;
+
+      if (!taggingEnabled) {
+        state.activeKind = 'color';
+      } else if (state.colorMediaLength > 0 && safeIndex < state.colorMediaLength) {
+        state.activeKind = 'color';
+      } else {
+        state.activeKind = 'shared';
+      }
+
       setStageByMedia(media);
       setActiveThumb(media?.id);
     };
@@ -754,29 +765,28 @@
       const { visible, colorMedia } = getVisibleMediaForColor(color);
       if (!visible.length) return;
 
-      const featuredMediaId =
-        variant?.featured_media && typeof variant.featured_media === 'object' ? variant.featured_media.id : variant?.featured_media;
-      const featuredMedia = featuredMediaId ? findMediaById(featuredMediaId) || variant.featured_media : null;
-      const featuredId = featuredMedia?.id ? String(featuredMedia.id) : null;
-
-      const previousColorLength = state.colorMediaLength;
-      const wasOnShared = previousColorLength > 0 && state.activeIndex >= previousColorLength;
+      const wasOnShared = state.initialized && taggingEnabled && state.activeKind === 'shared';
 
       state.colorMediaLength = colorMedia.length;
 
       applyThumbOrderAndVisibility(visible);
 
-      if (wasOnShared && colorMedia.length) {
-        selectMediaIndex(0, visible);
+      if (!state.initialized) {
+        state.initialized = true;
+
+        const featuredMediaId =
+          variant?.featured_media && typeof variant.featured_media === 'object' ? variant.featured_media.id : variant?.featured_media;
+        const initialFeaturedIndex = featuredMediaId
+          ? visible.findIndex((m) => String(m?.id) === String(featuredMediaId))
+          : -1;
+
+        selectMediaIndex(initialFeaturedIndex >= 0 ? initialFeaturedIndex : 0, visible);
         return;
       }
 
-      if (state.activeIndex === 0 && featuredId) {
-        const featuredIndex = visible.findIndex((m) => String(m?.id) === featuredId);
-        if (featuredIndex >= 0) {
-          selectMediaIndex(featuredIndex, visible);
-          return;
-        }
+      if (wasOnShared) {
+        selectMediaIndex(0, visible);
+        return;
       }
 
       if (colorMedia.length) {
@@ -785,7 +795,7 @@
         return;
       }
 
-      selectMediaIndex(state.activeIndex, visible);
+      selectMediaIndex(0, visible);
     };
 
     const moneyFormat = (cents) => {
