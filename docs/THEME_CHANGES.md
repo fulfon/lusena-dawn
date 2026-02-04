@@ -19,7 +19,18 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — feat(lusena): PDP gallery grouped by color-tagged media
+### (current) — fix(lusena): correct PDP color gallery filtering
+
+**Goal:** Fix edge cases where switching colors could show stale images from other variants or place shared images before color-specific ones.
+
+**What changed**
+- Hardened alt-tag parsing so `[color=…]` works reliably even with small formatting differences (e.g. extra spaces around `=`).
+- Updated fallback when a color has no assigned images: show only shared/untagged media (instead of leaking other colors).
+
+**Key files**
+- `sections/lusena-main-product.liquid`
+
+### 8a6d37a — feat(lusena): PDP gallery grouped by color-tagged media
 
 **Goal:** Enable a full per-color image gallery on PDP (3–4 images per color) with shared images (packaging/certificates) shown at the end, matching our LUSENA variant UX.
 
@@ -132,26 +143,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `templates/(cart|search|blog|page|page.contact).json`
 - `docs/SECTIONS_AUDIT.md`
 
-### e96c48a — feat(lusena): per-section spacing + split page sections
-
-**Goal:** Make vertical spacing adjustable (mobile/desktop) between LUSENA sections, and split page-sized LUSENA sections into smaller, reorderable sections.
-
-**What changed**
-- Added per-section spacing settings (mobile + desktop) across LUSENA sections to control top/bottom padding.
-- Split monolithic page sections into multiple Shopify sections for Quality, About, and Returns pages to enable independent spacing and ordering.
-- Updated page templates to use the new split sections.
-
-**Key files**
-- `sections/lusena-*-*.liquid`
-- `sections/lusena-(bestsellers|bundles|comparison|faq|heritage|main-collection|main-product|problem-solution|science|testimonials|trust-bar).liquid`
-- `templates/page.nasza-jakosc.json`
-- `templates/page.o-nas.json`
-- `templates/page.zwroty.json`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-03T19:25:59+01:00 — (current) — feat(lusena): PDP gallery grouped by color-tagged media
+- 2026-02-04T20:39:13+01:00 — (current) — fix(lusena): correct PDP color gallery filtering
+- 2026-02-03T19:25:59+01:00 — 8a6d37a — feat(lusena): PDP gallery grouped by color-tagged media
 - 2026-02-02T19:08:42+01:00 — a171d76 — feat(lusena): PDP swatches + variant media switching
 - 2026-02-02T16:37:30+01:00 — dc1ed64 — fix(lusena): sync page offset to header height
 - 2026-02-02T16:19:43+01:00 — a3fd8e3 — fix(lusena): make scroll-reveal consistent across pages

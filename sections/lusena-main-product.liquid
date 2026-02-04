@@ -635,11 +635,14 @@
     const parseAlt = (alt) => {
       const raw = typeof alt === 'string' ? alt : '';
       const parts = raw.split('|').map((p) => p.trim()).filter(Boolean);
-      const cleanAlt = parts.length ? parts[0] : '';
-      const tag = parts.length > 1 ? parts[parts.length - 1] : '';
 
-      const shared = /^\[shared\]$/i.test(tag);
-      const colorMatch = tag.match(/^\[color=(.+)\]$/i);
+      const cleanAltCandidate = parts.length ? parts[0] : '';
+      const cleanAltLooksLikeTag = /^\[(shared|color\s*=)/i.test(cleanAltCandidate);
+      const cleanAlt = parts.length > 1 ? cleanAltCandidate : cleanAltLooksLikeTag ? '' : cleanAltCandidate;
+
+      const tagText = parts.length > 1 ? parts[parts.length - 1] : raw;
+      const shared = /\[shared\]/i.test(tagText);
+      const colorMatch = tagText.match(/\[color\s*=\s*([^\]]+)\]/i);
       const colorTag = colorMatch ? colorMatch[1].trim() : null;
 
       return { cleanAlt, shared, colorTag };
@@ -648,11 +651,9 @@
     const getMediaAltRaw = (media) => media?.alt || media?.preview_image?.alt || '';
 
     const hasAnyTagging = () =>
-      Array.isArray(product?.media) &&
-      product.media.some((m) => {
-        const { shared, colorTag } = parseAlt(getMediaAltRaw(m));
-        return shared || !!colorTag;
-      });
+      Array.isArray(product?.media) && product.media.some((m) => /\[(shared|color\s*=)/i.test(getMediaAltRaw(m)));
+
+    const taggingEnabled = hasAnyTagging();
 
     const getColorOptionIndex = () => {
       const fieldset = root.querySelector('[data-lusena-option-type="color"]');
@@ -673,7 +674,6 @@
       const media = Array.isArray(product?.media) ? product.media : [];
       if (!media.length) return { colorMedia: [], sharedMedia: [], visible: [], taggingEnabled: false };
 
-      const taggingEnabled = hasAnyTagging();
       if (!taggingEnabled || !color) {
         return { colorMedia: [], sharedMedia: [], visible: media, taggingEnabled };
       }
@@ -690,7 +690,7 @@
         else if (isSharedEffective) sharedMedia.push(m);
       });
 
-      const visible = colorMedia.length ? [...colorMedia, ...sharedMedia] : media;
+      const visible = colorMedia.length ? [...colorMedia, ...sharedMedia] : sharedMedia.length ? sharedMedia : media;
       return { colorMedia, sharedMedia, visible, taggingEnabled };
     };
 
