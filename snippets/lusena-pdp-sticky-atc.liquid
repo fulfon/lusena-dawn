@@ -1,0 +1,27 @@
+{% doc %}
+  PDP mobile sticky add-to-cart bar.
+
+  @param {product} product
+  @param {variant} current_variant
+  @param {section} section
+  @param {string} product_form_id
+{% enddoc %}
+
+  <div
+    class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-secondary/10 p-4 transition-transform duration-300 transform md:hidden flex items-center justify-between gap-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] translate-y-full"
+    data-lusena-sticky-atc
+  >
+    <div class="flex flex-col">
+      <span class="text-sm font-medium text-primary truncate max-w-[150px]">{{ product.title | escape }}</span>
+      <span class="text-xs text-secondary" data-lusena-sticky-price>{{ current_variant.price | money_without_trailing_zeros }}</span>
+    </div>
+    <button
+      type="submit"
+      form="{{ product_form_id }}"
+      data-lusena-sticky-atc-button
+      class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-9 px-4 text-xs bg-accent-cta text-white hover:bg-[#0E5E5A]/90 hover:brightness-110 w-full max-w-[120px]"
+      {% unless current_variant.available %}disabled{% endunless %}
+    >
+      {{ section.settings.sticky_add_to_cart_label | escape }}
+    </button>
+  </div>

@@ -1,0 +1,90 @@
+{% doc %}
+  PDP styles for the LUSENA product section.
+{% enddoc %}
+
+{% stylesheet %}
+  .lusena-pdp {
+    padding-top: var(--lusena-section-padding-top-mobile);
+    padding-bottom: var(--lusena-section-padding-bottom-mobile);
+  }
+
+  @media (min-width: 768px) {
+    .lusena-pdp {
+      padding-top: var(--lusena-section-padding-top-desktop);
+      padding-bottom: var(--lusena-section-padding-bottom-desktop);
+    }
+  }
+
+  .lusena-pdp .lusena-option__input:checked + .lusena-option__pill {
+    border-color: var(--primary);
+    background-color: var(--primary);
+    color: #fff;
+  }
+
+  .lusena-pdp .lusena-option__input:checked + .lusena-option__swatch {
+    border-color: var(--primary);
+    outline: 1px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  .lusena-pdp [data-lusena-media-stage] img {
+    transition: opacity 200ms ease-in-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lusena-pdp [data-lusena-media-stage] img {
+      transition: none;
+    }
+  }
+
+  .lusena-pdp .lusena-media-thumbs {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .lusena-pdp .lusena-media-thumbs::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .lusena-pdp .lusena-media-thumbs::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 999px;
+  }
+
+  .lusena-pdp .lusena-media-thumb {
+    width: 96px;
+    flex: 0 0 auto;
+    aspect-ratio: 1 / 1;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+    overflow: hidden;
+    background: var(--surface-2);
+    scroll-snap-align: start;
+    transition: transform 200ms ease, border-color 200ms ease, outline-color 200ms ease;
+  }
+
+  .lusena-pdp .lusena-media-thumb:hover {
+    transform: translateY(-1px);
+    border-color: rgba(0, 0, 0, 0.25);
+  }
+
+  .lusena-pdp .lusena-media-thumb[aria-current='true'] {
+    border-color: var(--primary);
+    outline: 1px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  @media (min-width: 768px) {
+    .lusena-pdp .lusena-media-thumb {
+      width: 104px;
+    }
+  }
+
+  .lusena-pdp details[open] .lusena-pdp__chevron {
+    transform: rotate(180deg);
+  }
+{% endstylesheet %}

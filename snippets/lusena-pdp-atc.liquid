@@ -1,0 +1,48 @@
+{% doc %}
+  PDP add-to-cart form + stock messaging.
+
+  @param {product} product
+  @param {variant} current_variant
+  @param {section} section
+  @param {string} product_form_id
+{% enddoc %}
+
+        <div class="pt-4 space-y-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          <product-form class="product-form" data-hide-errors="true">
+            {%- form 'product',
+              product,
+              id: product_form_id,
+              class: 'form',
+              novalidate: 'novalidate',
+              data-type: 'add-to-cart-form'
+            -%}
+              <input type="hidden" name="id" value="{{ current_variant.id }}" data-lusena-variant-id>
+              <button
+                id="main-cta"
+                type="submit"
+                data-lusena-atc
+                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-14 px-10 text-base bg-accent-cta text-white hover:bg-[#0E5E5A]/90 hover:brightness-110 w-full text-lg h-14"
+                {% unless current_variant.available %}disabled{% endunless %}
+              >
+                <span data-lusena-add-to-cart-text>{{ section.settings.add_to_cart_label | escape }}</span>
+                <span class="sold-out-message hidden">{{ 'products.product.sold_out' | t }}</span>
+                {%- render 'loading-spinner' -%}
+              </button>
+            {%- endform -%}
+          </product-form>
+
+          <div class="flex items-center justify-center gap-2 text-xs text-secondary" data-lusena-stock>
+            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse" data-lusena-stock-dot></span>
+            <span
+              data-lusena-stock-text
+              data-in-stock="{{ section.settings.in_stock_label | escape }}"
+              data-out-of-stock="{{ section.settings.out_of_stock_label | escape }}"
+            >
+              {%- if current_variant.available -%}
+                {{ section.settings.in_stock_label | escape }}
+              {%- else -%}
+                {{ section.settings.out_of_stock_label | escape }}
+              {%- endif -%}
+            </span>
+          </div>
+        </div>

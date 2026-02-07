@@ -1,0 +1,128 @@
+{% doc %}
+  PDP variant picker (swatches and pills).
+
+  @param {product} product
+  @param {variant} current_variant
+  @param {section} section
+{% enddoc %}
+
+        <div class="h-px bg-gray-100"></div>
+
+        <div class="space-y-6{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-variant-selectors>
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              {%- liquid
+                assign option_index = forloop.index0
+                assign selected_value = current_variant.options[option_index]
+                assign option_name_downcase = option.name | downcase
+                assign swatch_count = option.values | map: 'swatch' | compact | size
+                assign is_color = false
+                if swatch_count > 0
+                  assign is_color = true
+                elsif option_name_downcase contains 'color' or option_name_downcase contains 'colour' or option_name_downcase contains 'kolor'
+                  assign is_color = true
+                endif
+              -%}
+
+              <fieldset
+                class="space-y-3"
+                data-lusena-option
+                data-option-index="{{ option_index }}"
+                {% if is_color %}data-lusena-option-type="color"{% endif %}
+              >
+                <legend class="text-sm font-medium text-secondary uppercase tracking-wider text-xs">
+                  {{ option.name | escape }}:
+                  <span class="text-primary font-semibold text-sm ml-1" data-lusena-selected>{{ selected_value | escape }}</span>
+                </legend>
+
+                <div class="flex flex-wrap gap-3">
+                  {%- for value in option.values -%}
+                    {%- liquid
+                      assign is_selected = value.selected
+                      assign option_disabled = true
+                      if value.available
+                        assign option_disabled = false
+                      endif
+                    -%}
+
+                    {%- if is_color -%}
+                      {%- liquid
+                        assign swatch_value = null
+                        assign swatch_focal_point = null
+
+                        if value.swatch.image
+                          assign image_url = value.swatch.image | image_url: width: 100
+                          assign swatch_value = 'url(' | append: image_url | append: ')'
+                          assign swatch_focal_point = value.swatch.image.presentation.focal_point
+                        elsif value.swatch.color
+                          assign swatch_value = 'rgb(' | append: value.swatch.color.rgb | append: ')'
+                        endif
+
+                        assign bg_class = ''
+                        if swatch_value == null
+                          assign bg_class = 'bg-gray-200'
+                          assign value_downcase = value | downcase
+                          case value_downcase
+                            when 'beige'
+                              assign bg_class = 'bg-[#E8E0D5]'
+                            when 'midnight blue'
+                              assign bg_class = 'bg-[#1B243B]'
+                            when 'pearl white'
+                              assign bg_class = 'bg-[#FDFCF8]'
+                            when 'pink'
+                              assign bg_class = 'bg-[#F3E5DC]'
+                            when 'silver'
+                              assign bg_class = 'bg-[#D6D6D6]'
+                          endcase
+                        endif
+                      -%}
+
+                      <label class="transition-all duration-200 relative flex items-center justify-center{% if option_disabled %} opacity-40 cursor-not-allowed{% endif %}">
+                        <input
+                          class="lusena-option__input visually-hidden"
+                          type="radio"
+                          name="option-{{ section.id }}-{{ option_index }}"
+                          value="{{ value | escape }}"
+                          {% if is_selected %}checked{% endif %}
+                          {% if option_disabled %}disabled{% endif %}
+                        >
+                        <span
+                          class="lusena-option__swatch w-10 h-10 rounded-full border border-gray-200 hover:brightness-95 shadow-sm {{ bg_class }}"
+                          data-lusena-value
+                          data-lusena-option-value="{{ value | escape }}"
+                          title="{{ value | escape }}"
+                          {% if swatch_value %}
+                            style="
+                              background: {{ swatch_value }};
+                              background-size: cover;
+                              {% if swatch_focal_point %}background-position: {{ swatch_focal_point }};{% endif %}
+                            "
+                          {% endif %}
+                        ></span>
+                        <span class="visually-hidden">{{ value | escape }}</span>
+                      </label>
+                    {%- else -%}
+                      <label class="transition-all duration-200 relative flex items-center justify-center{% if option_disabled %} opacity-40 cursor-not-allowed{% endif %}">
+                        <input
+                          class="lusena-option__input visually-hidden"
+                          type="radio"
+                          name="option-{{ section.id }}-{{ option_index }}"
+                          value="{{ value | escape }}"
+                          {% if is_selected %}checked{% endif %}
+                          {% if option_disabled %}disabled{% endif %}
+                        >
+                        <span
+                          class="lusena-option__pill px-6 py-2 border text-sm min-w-[4rem] border-secondary/30 text-primary hover:border-primary"
+                          data-lusena-value
+                          data-lusena-option-value="{{ value | escape }}"
+                        >
+                          {{ value | escape }}
+                        </span>
+                      </label>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </fieldset>
+            {%- endfor -%}
+          {%- endunless -%}
+        </div>

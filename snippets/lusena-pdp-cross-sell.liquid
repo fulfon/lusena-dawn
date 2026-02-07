@@ -1,0 +1,33 @@
+{% doc %}
+  PDP cross-sell grid (from section blocks).
+
+  @param {section} section
+{% enddoc %}
+
+  {%- if section.blocks.size > 0 -%}
+    {%- assign has_cross_sell = false -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'cross_sell' and block.settings.product != blank -%}
+        {%- assign has_cross_sell = true -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if has_cross_sell -%}
+      <div class="container">
+        <div class="border-t border-brand-bg pt-12 md:pt-24">
+          <div class="text-center mb-12{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+            <h2 class="text-2xl md:text-3xl font-serif text-primary">{{ section.settings.cross_sell_heading | escape }}</h2>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'cross_sell' and block.settings.product != blank -%}
+                <div {% if settings.animations_reveal_on_scroll %}class="scroll-trigger animate--slide-in" data-cascade{% endif %}>
+                  {% render 'lusena-product-card', product: block.settings.product, show_secondary_image: true %}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endif -%}

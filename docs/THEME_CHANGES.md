@@ -19,7 +19,30 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — fix(lusena): preserve PDP image index on color switch
+### (current) — refactor(lusena): split PDP into snippets
+
+**Goal:** Make the product page (PDP) section easier to maintain by extracting `lusena-main-product` into focused snippet components, without changing the storefront output/behavior.
+
+**What changed**
+- Extracted the major PDP parts (media, summary, variant picker, buybox, trust/guarantee, accordions, cross-sell, reviews, sticky ATC) into `snippets/lusena-pdp-*.liquid`.
+- Moved the section-scoped `{% stylesheet %}` and `{% javascript %}` blocks into dedicated snippets so behavior/styling can evolve independently.
+- Kept the existing section schema/settings IDs and all JS hooks (`data-lusena-*`, `#main-cta`) stable.
+
+**Key files**
+- `sections/lusena-main-product.liquid`
+- `snippets/lusena-pdp-accordions.liquid`
+- `snippets/lusena-pdp-atc.liquid`
+- `snippets/lusena-pdp-cross-sell.liquid`
+- `snippets/lusena-pdp-guarantee.liquid`
+- `snippets/lusena-pdp-media.liquid`
+- `snippets/lusena-pdp-reviews.liquid`
+- `snippets/lusena-pdp-scripts.liquid`
+- `snippets/lusena-pdp-sticky-atc.liquid`
+- `snippets/lusena-pdp-styles.liquid`
+- `snippets/lusena-pdp-summary.liquid`
+- `snippets/lusena-pdp-variant-picker.liquid`
+
+### 09ba94a — fix(lusena): preserve PDP image index on color switch
 
 **Goal:** Make color switching behave like a true “same angle, different color” comparison: keep the selected image index within color images, and jump to the first color image when the customer was viewing shared media.
 
@@ -120,29 +143,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `templates/index.json`
 - `templates/page.nasza-jakosc.json`
 
-### 0a6644e — feat(lusena): motion layer + remove GSAP
-
-**Goal:** Replace external animation dependencies with a lightweight, accessible motion layer that supports a premium feel without sacrificing performance or stability.
-
-**What changed**
-- Removed the GSAP/ScrollTrigger dependency and replaced LUSENA reveals/staggers with a native `IntersectionObserver` motion layer.
-- Tuned Dawn scroll-reveal timings (less “floaty”) and reduced scroll zoom intensity.
-- Improved cart drawer overlay/slide transitions and added `prefers-reduced-motion` fallbacks.
-- Added a subtle hero intro (image settle + copy fade-up) with reduced-motion handling.
-
-**Key files**
-- `assets/lusena-animations.js`
-- `assets/base.css`
-- `layout/theme.liquid`
-- `assets/animations.js`
-- `assets/component-cart-drawer.css`
-- `sections/lusena-hero.liquid`
-- `sections/lusena-science.liquid`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-04T20:48:18+01:00 — (current) — fix(lusena): preserve PDP image index on color switch
+- 2026-02-07T16:30:27+01:00 — (current) — refactor(lusena): split PDP into snippets
+- 2026-02-04T20:48:18+01:00 — 09ba94a — fix(lusena): preserve PDP image index on color switch
 - 2026-02-04T20:39:13+01:00 — cdcee94 — fix(lusena): correct PDP color gallery filtering
 - 2026-02-03T19:25:59+01:00 — 8a6d37a — feat(lusena): PDP gallery grouped by color-tagged media
 - 2026-02-02T19:08:42+01:00 — a171d76 — feat(lusena): PDP swatches + variant media switching

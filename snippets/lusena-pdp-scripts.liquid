@@ -1,0 +1,397 @@
+{% doc %}
+  PDP behavior (variant selection, price updates, gallery switching, sticky ATC).
+{% enddoc %}
+
+{% javascript %}
+  (() => {
+    const root = document.querySelector('[data-lusena-product-section]');
+    if (!root) return;
+
+    const productJsonEl = root.querySelector('[data-lusena-product-json]');
+    const variantIdInput = root.querySelector('[data-lusena-variant-id]');
+    const priceEl = root.querySelector('[data-lusena-price]');
+    const compareAtEl = root.querySelector('[data-lusena-compare-at]');
+    const pricePerNightEl = root.querySelector('[data-lusena-price-per-night]');
+    const stickyBar = root.querySelector('[data-lusena-sticky-atc]');
+    const stickyPrice = root.querySelector('[data-lusena-sticky-price]');
+    const stockText = root.querySelector('[data-lusena-stock-text]');
+    const stockDot = root.querySelector('[data-lusena-stock-dot]');
+    const atcButton = root.querySelector('[data-lusena-atc]');
+    const stickyAtcButton = root.querySelector('[data-lusena-sticky-atc-button]');
+
+    const pricePerNightPrefix = pricePerNightEl?.dataset?.prefix ?? '';
+    const pricePerNightSuffix = pricePerNightEl?.dataset?.suffix ?? '';
+
+    let product;
+    try {
+      product = JSON.parse(productJsonEl.textContent);
+    } catch (e) {
+      return;
+    }
+
+    const stageImg = root.querySelector('[data-lusena-media-stage] img');
+    const stageSizes = stageImg?.getAttribute('sizes') || '';
+    const thumbsWrap = root.querySelector('[data-lusena-media-thumbs]');
+    const thumbEls = thumbsWrap ? Array.from(thumbsWrap.querySelectorAll('[data-lusena-thumb]')) : [];
+    const thumbsById = new Map(
+      thumbEls
+        .map((el) => {
+          const id = el?.dataset?.mediaId;
+          return id ? [String(id), el] : null;
+        })
+        .filter(Boolean)
+    );
+
+    const normalizeImageUrl = (src) => {
+      if (!src) return null;
+      if (src.startsWith('//')) return `https:${src}`;
+      return src;
+    };
+
+    const urlWithWidth = (src, width) => {
+      const normalized = normalizeImageUrl(src);
+      if (!normalized) return null;
+      try {
+        const u = new URL(normalized);
+        u.searchParams.set('width', String(width));
+        return u.toString();
+      } catch (e) {
+        return normalized;
+      }
+    };
+
+    const setResponsiveImage = ({ img, src, widths, sizes, alt }) => {
+      if (!img || !src) return;
+      const normalized = normalizeImageUrl(src);
+      if (!normalized) return;
+
+      const maxWidth = widths[widths.length - 1];
+      const srcWithWidth = urlWithWidth(normalized, maxWidth);
+      const srcset = widths
+        .map((w) => {
+          const u = urlWithWidth(normalized, w);
+          return u ? `${u} ${w}w` : null;
+        })
+        .filter(Boolean)
+        .join(', ');
+
+      if (srcWithWidth) img.src = srcWithWidth;
+      if (srcset) img.setAttribute('srcset', srcset);
+      if (sizes) img.setAttribute('sizes', sizes);
+      if (typeof alt === 'string') img.alt = alt;
+    };
+
+    const findMediaById = (mediaId) => {
+      if (!mediaId) return null;
+      const idString = String(mediaId);
+      return product?.media?.find((m) => String(m?.id) === idString) || null;
+    };
+
+    const normalizeKey = (value) => (typeof value === 'string' ? value.trim().toLowerCase() : '');
+
+    const parseAlt = (alt) => {
+      const raw = typeof alt === 'string' ? alt : '';
+      const parts = raw.split('|').map((p) => p.trim()).filter(Boolean);
+
+      const cleanAltCandidate = parts.length ? parts[0] : '';
+      const cleanAltLooksLikeTag = /^\[(shared|color\s*=)/i.test(cleanAltCandidate);
+      const cleanAlt = parts.length > 1 ? cleanAltCandidate : cleanAltLooksLikeTag ? '' : cleanAltCandidate;
+
+      const tagText = parts.length > 1 ? parts[parts.length - 1] : raw;
+      const shared = /\[shared\]/i.test(tagText);
+      const colorMatch = tagText.match(/\[color\s*=\s*([^\]]+)\]/i);
+      const colorTag = colorMatch ? colorMatch[1].trim() : null;
+
+      return { cleanAlt, shared, colorTag };
+    };
+
+    const getMediaAltRaw = (media) => media?.alt || media?.preview_image?.alt || '';
+
+    const hasAnyTagging = () =>
+      Array.isArray(product?.media) && product.media.some((m) => /\[(shared|color\s*=)/i.test(getMediaAltRaw(m)));
+
+    const taggingEnabled = hasAnyTagging();
+
+    const getColorOptionIndex = () => {
+      const fieldset = root.querySelector('[data-lusena-option-type="color"]');
+      if (!fieldset) return null;
+      const idx = Number(fieldset.dataset.optionIndex);
+      return Number.isFinite(idx) ? idx : null;
+    };
+
+    const getSelectedColorForVariant = (variant) => {
+      const colorIndex = getColorOptionIndex();
+      if (colorIndex === null) return null;
+      const options = variant?.options;
+      if (!Array.isArray(options)) return null;
+      return options[colorIndex] || null;
+    };
+
+    const getVisibleMediaForColor = (color) => {
+      const media = Array.isArray(product?.media) ? product.media : [];
+      if (!media.length) return { colorMedia: [], sharedMedia: [], visible: [], taggingEnabled: false };
+
+      if (!taggingEnabled || !color) {
+        return { colorMedia: [], sharedMedia: [], visible: media, taggingEnabled };
+      }
+
+      const normalizedColor = normalizeKey(color);
+      const colorMedia = [];
+      const sharedMedia = [];
+
+      media.forEach((m) => {
+        const { shared, colorTag } = parseAlt(getMediaAltRaw(m));
+        const isSharedEffective = shared || (!colorTag && taggingEnabled);
+
+        if (colorTag && normalizeKey(colorTag) === normalizedColor) colorMedia.push(m);
+        else if (isSharedEffective) sharedMedia.push(m);
+      });
+
+      const visible = colorMedia.length ? [...colorMedia, ...sharedMedia] : sharedMedia.length ? sharedMedia : media;
+      return { colorMedia, sharedMedia, visible, taggingEnabled };
+    };
+
+    const state = {
+      activeIndex: 0,
+      colorMediaLength: 0,
+      activeKind: 'color',
+      initialized: false,
+    };
+
+    const setActiveThumb = (activeMediaId) => {
+      thumbEls.forEach((el) => el.removeAttribute('aria-current'));
+      if (!activeMediaId) return;
+      const el = thumbsById.get(String(activeMediaId));
+      if (el) el.setAttribute('aria-current', 'true');
+    };
+
+    const applyThumbOrderAndVisibility = (visibleMedia) => {
+      if (!thumbsWrap) return;
+      const visibleIds = new Set(visibleMedia.map((m) => String(m?.id)));
+
+      thumbEls.forEach((el) => {
+        const id = String(el?.dataset?.mediaId || '');
+        el.hidden = !visibleIds.has(id);
+      });
+
+      visibleMedia.forEach((m) => {
+        const el = thumbsById.get(String(m?.id));
+        if (el) thumbsWrap.appendChild(el);
+      });
+    };
+
+    const setStageByMedia = (media) => {
+      if (!stageImg || !media) return;
+      const src = media?.preview_image?.src || media?.src;
+      if (!src) return;
+
+      const { cleanAlt } = parseAlt(getMediaAltRaw(media));
+      stageImg.style.opacity = '0';
+      requestAnimationFrame(() => {
+        setResponsiveImage({
+          img: stageImg,
+          src,
+          widths: [600, 800, 1200, 1600],
+          sizes: stageSizes,
+          alt: cleanAlt,
+        });
+        stageImg.style.opacity = '1';
+      });
+    };
+
+    const selectMediaIndex = (index, visibleMedia) => {
+      const safeIndex = Math.max(0, Math.min(index, visibleMedia.length - 1));
+      const media = visibleMedia[safeIndex];
+      state.activeIndex = safeIndex;
+
+      if (!taggingEnabled) {
+        state.activeKind = 'color';
+      } else if (state.colorMediaLength > 0 && safeIndex < state.colorMediaLength) {
+        state.activeKind = 'color';
+      } else {
+        state.activeKind = 'shared';
+      }
+
+      setStageByMedia(media);
+      setActiveThumb(media?.id);
+    };
+
+    const updateGalleryForVariant = (variant) => {
+      if (!variant) return;
+      const color = getSelectedColorForVariant(variant);
+      const { visible, colorMedia } = getVisibleMediaForColor(color);
+      if (!visible.length) return;
+
+      const wasOnShared = state.initialized && taggingEnabled && state.activeKind === 'shared';
+
+      state.colorMediaLength = colorMedia.length;
+
+      applyThumbOrderAndVisibility(visible);
+
+      if (!state.initialized) {
+        state.initialized = true;
+
+        const featuredMediaId =
+          variant?.featured_media && typeof variant.featured_media === 'object' ? variant.featured_media.id : variant?.featured_media;
+        const initialFeaturedIndex = featuredMediaId
+          ? visible.findIndex((m) => String(m?.id) === String(featuredMediaId))
+          : -1;
+
+        selectMediaIndex(initialFeaturedIndex >= 0 ? initialFeaturedIndex : 0, visible);
+        return;
+      }
+
+      if (wasOnShared) {
+        selectMediaIndex(0, visible);
+        return;
+      }
+
+      if (colorMedia.length) {
+        const nextIndex = Math.min(state.activeIndex, colorMedia.length - 1);
+        selectMediaIndex(nextIndex, visible);
+        return;
+      }
+
+      selectMediaIndex(0, visible);
+    };
+
+    const moneyFormat = (cents) => {
+      if (window?.Shopify?.formatMoney) {
+        return window.Shopify.formatMoney(cents, window.Shopify.money_format);
+      }
+      return `${(cents / 100).toFixed(2)}`;
+    };
+
+    const getSelectedOptions = () => {
+      const optionFieldsets = root.querySelectorAll('[data-lusena-option]');
+      const values = [];
+      optionFieldsets.forEach((fieldset) => {
+        const input = fieldset.querySelector('input[type="radio"]:checked');
+        values.push(input ? input.value : null);
+      });
+      return values;
+    };
+
+    const findVariant = (options) =>
+      product?.variants?.find((v) => {
+        if (!v?.options) return false;
+        return v.options.every((opt, idx) => opt === options[idx]);
+      });
+
+    const setSelectedLabel = () => {
+      const optionFieldsets = root.querySelectorAll('[data-lusena-option]');
+      optionFieldsets.forEach((fieldset) => {
+        const selected = fieldset.querySelector('input[type="radio"]:checked')?.value;
+        const label = fieldset.querySelector('[data-lusena-selected]');
+        if (label && selected) label.textContent = selected;
+      });
+    };
+
+    const updateUIForVariant = (variant) => {
+      if (!variant) return;
+      if (variantIdInput) variantIdInput.value = variant.id;
+
+      if (priceEl) priceEl.textContent = moneyFormat(variant.price);
+      if (stickyPrice) stickyPrice.textContent = moneyFormat(variant.price);
+
+      const compareAt = variant.compare_at_price;
+      if (compareAtEl) {
+        if (compareAt && compareAt > variant.price) {
+          compareAtEl.textContent = moneyFormat(compareAt);
+          compareAtEl.classList.remove('hidden');
+        } else {
+          compareAtEl.textContent = '';
+          compareAtEl.classList.add('hidden');
+        }
+      }
+
+      if (pricePerNightEl) {
+        const perNightCents = Math.round(variant.price / 365);
+        pricePerNightEl.textContent = `${pricePerNightPrefix}${moneyFormat(perNightCents)}${pricePerNightSuffix}`;
+      }
+
+      const available = !!variant.available;
+      if (stockText) {
+        const inStock = stockText.dataset.inStock ?? '';
+        const outOfStock = stockText.dataset.outOfStock ?? '';
+        stockText.textContent = available ? inStock : outOfStock;
+      }
+      if (stockDot) {
+        stockDot.classList.toggle('bg-green-500', available);
+        stockDot.classList.toggle('bg-red-500', !available);
+      }
+      if (atcButton) atcButton.disabled = !available;
+      if (stickyAtcButton) stickyAtcButton.disabled = !available;
+
+      updateGalleryForVariant(variant);
+    };
+
+    root.addEventListener('change', (e) => {
+      const target = e.target;
+      if (!(target instanceof HTMLInputElement)) return;
+      if (target.type !== 'radio') return;
+
+      setSelectedLabel();
+
+      const options = getSelectedOptions();
+      const variant = findVariant(options);
+      updateUIForVariant(variant);
+    });
+
+    if (thumbEls.length) {
+      thumbEls.forEach((el) => {
+        el.addEventListener('click', () => {
+          const id = el?.dataset?.mediaId ? String(el.dataset.mediaId) : null;
+          if (!id) return;
+
+          const colorIndex = getColorOptionIndex();
+          const variant =
+            findVariant(getSelectedOptions()) ||
+            product?.variants?.find((v) => String(v.id) === String(variantIdInput?.value || '')) ||
+            product?.variants?.[0];
+          const color = colorIndex !== null ? getSelectedColorForVariant(variant) : null;
+          const { visible } = getVisibleMediaForColor(color);
+
+          const idx = visible.findIndex((m) => String(m?.id) === id);
+          if (idx < 0) return;
+          selectMediaIndex(idx, visible);
+        });
+      });
+    }
+
+    setSelectedLabel();
+    updateUIForVariant(
+      findVariant(getSelectedOptions()) ||
+        product?.variants?.find((v) => String(v.id) === String(variantIdInput?.value || '')) ||
+        product?.variants?.[0]
+    );
+
+    const mainCta = root.querySelector('#main-cta');
+    if (!stickyBar || !mainCta) return;
+
+    const show = () => stickyBar.classList.remove('translate-y-full');
+    const hide = () => stickyBar.classList.add('translate-y-full');
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) hide();
+            else show();
+          });
+        },
+        { rootMargin: '0px 0px -10% 0px' }
+      );
+      io.observe(mainCta);
+      return;
+    }
+
+    const onScroll = () => {
+      const rect = mainCta.getBoundingClientRect();
+      if (rect.bottom < 0) show();
+      else hide();
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+{% endjavascript %}

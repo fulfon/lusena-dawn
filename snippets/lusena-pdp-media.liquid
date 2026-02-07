@@ -1,0 +1,78 @@
+{% doc %}
+  PDP media stage + thumbnails.
+
+  @param {product} product
+  @param {variant} current_variant
+  @param {section} section
+{% enddoc %}
+
+      <div class="md:col-span-7 space-y-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        {%- liquid
+          assign initial_media = current_variant.featured_media | default: product.featured_media
+          assign initial_preview = initial_media.preview_image | default: initial_media
+          assign initial_alt_raw = initial_media.alt | default: initial_preview.alt | default: ''
+          assign initial_alt = initial_alt_raw | split: '|' | first | strip
+        -%}
+
+        <div class="aspect-square bg-surface-2 overflow-hidden rounded-sm relative" data-lusena-media-stage>
+          {%- if initial_preview != blank -%}
+            {{
+              initial_preview
+              | image_url: width: 1600
+              | image_tag:
+                class: 'w-full h-full object-cover',
+                loading: 'eager',
+                widths: '600, 800, 1200, 1600',
+                sizes: '(min-width: 768px) 55vw, 100vw',
+                alt: initial_alt
+            }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover' }}
+          {%- endif -%}
+
+          {%- if product.tags contains 'bestseller' -%}
+            <span class="absolute top-4 left-4 bg-white/90 px-3 py-1 text-xs uppercase tracking-wider font-medium backdrop-blur-sm">
+              Best Seller
+            </span>
+          {%- endif -%}
+        </div>
+
+        <div
+          class="lusena-media-thumbs"
+          data-lusena-media-thumbs
+          data-lusena-video-placeholder="{{ section.settings.video_placeholder | escape }}"
+        >
+          {%- for media in product.media -%}
+            {%- liquid
+              assign media_preview = media.preview_image | default: media
+              assign media_alt_raw = media.alt | default: media_preview.alt | default: ''
+              assign media_alt = media_alt_raw | split: '|' | first | strip
+              assign thumb_label = media_alt
+              if thumb_label == blank
+                assign thumb_label = 'ZdjÄ™cie ' | append: forloop.index
+              endif
+            -%}
+
+            {%- if media_preview != blank -%}
+              <button
+                type="button"
+                class="lusena-media-thumb"
+                data-lusena-thumb
+                data-media-id="{{ media.id }}"
+                aria-label="{{ thumb_label | escape }}"
+              >
+                {{
+                  media_preview
+                  | image_url: width: 300
+                  | image_tag:
+                    class: 'w-full h-full object-cover',
+                    loading: 'lazy',
+                    widths: '120, 180, 240, 300',
+                    sizes: '96px',
+                    alt: media_alt
+                }}
+              </button>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
