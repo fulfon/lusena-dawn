@@ -43,6 +43,26 @@
       display: none;
     }
 
+    .lusena-header__cart-count {
+      position: absolute;
+      top: -0.3rem;
+      right: -0.3rem;
+      width: 1.8rem;
+      height: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      border: 2px solid rgb(255 255 255);
+      background-color: rgb(14 94 90);
+      color: rgb(255 255 255);
+      font-size: 10px;
+      line-height: 1;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      text-indent: 0.04em;
+    }
+
     [data-lusena-mobile-menu-wrapper] {
       display: grid;
       grid-template-rows: 0fr;
@@ -171,8 +191,8 @@
         <a href="{{ routes.cart_url }}" id="cart-icon-bubble" class="relative flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Cart">
           {% render 'lusena-icon', name: 'shopping-bag', class: 'w-5 h-5 text-primary', stroke_width: 2 %}
           {%- if cart.item_count > 0 -%}
-            <span class="absolute -top-1 -right-1 bg-accent-cta text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full border border-white">
-              {{ cart.item_count }}
+            <span class="lusena-header__cart-count">
+              {{- cart.item_count -}}
             </span>
           {%- endif -%}
         </a>

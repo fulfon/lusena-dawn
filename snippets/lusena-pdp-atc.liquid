@@ -1,5 +1,5 @@
 {% doc %}
-  PDP add-to-cart form + stock messaging.
+  PDP add-to-cart actions + stock messaging.
 
   @param {product} product
   @param {variant} current_variant
@@ -7,7 +7,7 @@
   @param {string} product_form_id
 {% enddoc %}
 
-        <div class="pt-4 space-y-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <div class="space-y-2 md:space-y-3{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
           <product-form class="product-form" data-hide-errors="true">
             {%- form 'product',
               product,
@@ -21,18 +21,27 @@
                 id="main-cta"
                 type="submit"
                 data-lusena-atc
-                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-14 px-10 text-base bg-accent-cta text-white hover:bg-[#0E5E5A]/90 hover:brightness-110 w-full text-lg h-14"
+                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors rounded-brand focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 h-12 px-10 text-base bg-accent-cta text-white hover:bg-[#0E5E5A]/90 w-full"
                 {% unless current_variant.available %}disabled{% endunless %}
               >
                 <span data-lusena-add-to-cart-text>{{ section.settings.add_to_cart_label | escape }}</span>
                 <span class="sold-out-message hidden">{{ 'products.product.sold_out' | t }}</span>
                 {%- render 'loading-spinner' -%}
               </button>
+
+                <button
+                  type="button"
+                  data-lusena-buy-now
+                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors rounded-brand focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 h-12 px-10 text-sm border border-accent-cta bg-transparent text-accent-cta hover:bg-accent-cta/5 w-full mt-2"
+                {% unless current_variant.available %}disabled{% endunless %}
+              >
+                {{ section.settings.buy_now_label | escape }}
+              </button>
             {%- endform -%}
           </product-form>
 
           <div class="flex items-center justify-center gap-2 text-xs text-secondary" data-lusena-stock>
-            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse" data-lusena-stock-dot></span>
+            <span class="w-2 h-2 rounded-full lusena-pdp__stock-dot lusena-pdp__stock-dot--available" data-lusena-stock-dot></span>
             <span
               data-lusena-stock-text
               data-in-stock="{{ section.settings.in_stock_label | escape }}"

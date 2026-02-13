@@ -4,10 +4,17 @@
   @param {section} section
 {% enddoc %}
 
-        <div class="p-4 bg-brand-bg/50 border border-brand-bg rounded-sm flex flex-col gap-2 text-sm{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-          <div class="flex items-center gap-2 text-primary font-medium">
-            {% render 'lusena-icon', name: 'shield-check', class: 'w-4 h-4 text-accent-cta', stroke_width: 1.5 %}
-            <span>{{ section.settings.guarantee_heading | escape }}</span>
-          </div>
-          <p class="text-secondary text-xs pl-6">{{ section.settings.guarantee_body | escape }}</p>
+        <div class="flex items-center justify-center gap-2 px-3 py-2 bg-brand-bg/50 border border-brand-bg rounded-sm{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {% render 'lusena-icon', name: 'shield-check', class: 'w-4 h-4 text-accent-cta shrink-0', stroke_width: 1.5 %}
+          <p class="text-xs text-secondary leading-snug">
+            <span class="font-medium text-primary">{{ section.settings.guarantee_heading | escape }}</span>
+            &middot;
+            <a
+              href="#details"
+              data-lusena-open-returns
+              class="text-accent-cta hover:underline underline-offset-2"
+            >
+              {{ section.settings.guarantee_link_label | escape }}
+            </a>
+          </p>
         </div>

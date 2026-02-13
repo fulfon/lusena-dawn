@@ -7,7 +7,20 @@
         <div class="w-full{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
           {%- for block in section.blocks -%}
             {%- if block.type == 'accordion' -%}
-              <details class="border-b border-secondary/20" {{ block.shopify_attributes }}>
+              {%- liquid
+                assign heading_downcase = block.settings.heading | downcase
+                assign is_returns_accordion = false
+                if heading_downcase contains 'zwrot' or heading_downcase contains 'return'
+                  assign is_returns_accordion = true
+                endif
+              -%}
+              <details
+                class="border-b border-secondary/20"
+                {% if is_returns_accordion %}
+                  data-lusena-accordion-returns
+                {% endif %}
+                {{ block.shopify_attributes }}
+              >
                 <summary class="flex items-center justify-between py-4 font-medium transition-all hover:text-accent-cta cursor-pointer">
                   {{ block.settings.heading | escape }}
                   {% render 'lusena-icon', name: 'chevron-down', class: 'h-4 w-4 shrink-0 transition-transform duration-200 lusena-pdp__chevron', stroke_width: 1.5 %}

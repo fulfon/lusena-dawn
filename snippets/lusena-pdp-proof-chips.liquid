@@ -1,0 +1,31 @@
+{% doc %}
+  PDP proof chips list shown in the buy box.
+{% enddoc %}
+
+        <div
+          class="lusena-pdp-proof-chips"
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+          {% endif %}
+        >
+          <span class="lusena-pdp-proof-chip{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+            {% render 'lusena-icon', name: 'shield-check', class: 'w-4 h-4 text-accent-cta shrink-0', stroke_width: 1.5 %}
+            <span>OEKO-TEX® 100</span>
+          </span>
+          <span class="lusena-pdp-proof-chip{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+            {% render 'lusena-icon', name: 'layers', class: 'w-4 h-4 text-accent-cta shrink-0', stroke_width: 1.5 %}
+            <span>22 momme</span>
+          </span>
+          <span class="lusena-pdp-proof-chip{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+            {% render 'lusena-icon', name: 'truck', class: 'w-4 h-4 text-accent-cta shrink-0', stroke_width: 1.5 %}
+            <span>Wysyłka 24h z PL</span>
+          </span>
+          <span class="lusena-pdp-proof-chip{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+            {% render 'lusena-icon', name: 'clock', class: 'w-4 h-4 text-accent-cta shrink-0', stroke_width: 1.5 %}
+            <span>60 dni na zwrot</span>
+          </span>
+          <span class="lusena-pdp-proof-chip{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+            {% render 'lusena-icon', name: 'gift', class: 'w-4 h-4 text-accent-cta shrink-0', stroke_width: 1.5 %}
+            <span>Na prezent</span>
+          </span>
+        </div>

@@ -27,7 +27,7 @@
         >
           <summary class="flex items-center justify-between py-4 font-medium transition-all hover:text-accent-cta cursor-pointer">
             {{ block.settings.question | escape }}
-            {% render 'lusena-icon', name: 'chevron-down', class: 'h-4 w-4 shrink-0 transition-transform duration-200 lusena-faq__chevron', stroke_width: 1.5 %}
+            {% render 'lusena-icon', name: 'chevron-down', class: 'h-4 w-4 shrink-0 transition-transform duration-200 lusena-faq__chevron', stroke_width: 2 %}
           </summary>
           <div class="lusena-faq__content overflow-hidden text-sm">
             <div class="lusena-faq__content-inner pb-4 pt-0 text-secondary">
@@ -55,6 +55,14 @@
 
   .lusena-faq details[open] .lusena-faq__chevron {
     transform: rotate(180deg);
+  }
+
+  .lusena-faq__item summary {
+    font-family: 'Source Serif 4', serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+    letter-spacing: normal;
   }
 
   .lusena-faq__content {

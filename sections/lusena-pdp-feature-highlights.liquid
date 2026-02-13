@@ -1,0 +1,242 @@
+{%- liquid
+  assign has_feature_blocks = false
+  for block in section.blocks
+    if block.type == 'feature'
+      assign has_feature_blocks = true
+      break
+    endif
+  endfor
+-%}
+
+{%- if has_feature_blocks -%}
+  <section class="lusena-pdp-feature-highlights">
+    <div class="container">
+      <div class="lusena-pdp-feature-highlights__grid"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'feature' -%}
+            {%- liquid
+              assign feature_index = forloop.index
+              assign feature_icon = block.settings.icon | strip
+              assign feature_title = block.settings.title
+              assign feature_description = block.settings.description
+
+              assign icon_key = 'pdp_feature_' | append: feature_index | append: '_icon'
+              assign title_key = 'pdp_feature_' | append: feature_index | append: '_title'
+              assign description_key = 'pdp_feature_' | append: feature_index | append: '_description'
+
+              if product != blank
+                assign icon_metafield = product.metafields.lusena[icon_key]
+                if icon_metafield != blank
+                  if icon_metafield.value != blank
+                    assign feature_icon = icon_metafield.value | strip
+                  endif
+                endif
+
+                assign title_metafield = product.metafields.lusena[title_key]
+                if title_metafield != blank
+                  if title_metafield.value != blank
+                    assign feature_title = title_metafield.value
+                  endif
+                endif
+
+                assign description_metafield = product.metafields.lusena[description_key]
+                if description_metafield != blank
+                  if description_metafield.value != blank
+                    assign feature_description = description_metafield.value
+                  endif
+                endif
+              endif
+
+              if feature_icon == blank
+                assign feature_icon = 'sparkles'
+              endif
+            -%}
+
+            <div class="lusena-pdp-feature-highlights__card{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
+              <div class="lusena-pdp-feature-highlights__icon-wrap">
+                {% render 'lusena-icon', name: feature_icon, class: 'lusena-pdp-feature-highlights__icon-svg', stroke_width: 1.5 %}
+              </div>
+              <h3 class="lusena-pdp-feature-highlights__title">
+                {{ feature_title | escape }}
+              </h3>
+              <p class="lusena-pdp-feature-highlights__description">
+                {{ feature_description | escape | newline_to_br }}
+              </p>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+{%- endif -%}
+
+{% stylesheet %}
+  .lusena-pdp-feature-highlights {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .lusena-pdp-feature-highlights__grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 32px;
+  }
+
+  .lusena-pdp-feature-highlights__card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .lusena-pdp-feature-highlights__icon-wrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
+    background-color: rgb(240 238 235 / 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lusena-pdp-feature-highlights__icon-svg {
+    width: 20px;
+    height: 20px;
+    color: rgb(14 94 90 / 1);
+  }
+
+  .lusena-pdp-feature-highlights__title {
+    margin: 0;
+    font-family: 'Source Serif 4', serif;
+    font-size: 20px;
+    line-height: 28px;
+    color: rgb(17 17 17 / 1);
+  }
+
+  .lusena-pdp-feature-highlights__description {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.625;
+    color: rgb(74 74 74 / 1);
+  }
+
+  @media (min-width: 640px) {
+    .lusena-pdp-feature-highlights__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 768px) {
+    .lusena-pdp-feature-highlights {
+      padding-top: 96px;
+      padding-bottom: 96px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .lusena-pdp-feature-highlights__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 48px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "LUSENA PDP Features",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "sparkles",
+          "options": [
+            { "value": "sparkles", "label": "Sparkles" },
+            { "value": "wind", "label": "Wind" },
+            { "value": "shield-check", "label": "Shield Check" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "droplets", "label": "Droplets" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "map-pin", "label": "Map Pin" },
+            { "value": "layers", "label": "Layers" },
+            { "value": "package", "label": "Package" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Mniej zmarszczek, więcej blasku"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Jedwab nie wchłania wilgoci — Twój krem nocny zostaje na skórze, a nie na poduszce. Rano budzisz się z nawilżoną, wygładzoną cerą."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA PDP Features",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "sparkles",
+            "title": "Mniej zmarszczek, więcej blasku",
+            "description": "Jedwab nie wchłania wilgoci — Twój krem nocny zostaje na skórze, a nie na poduszce. Rano budzisz się z nawilżoną, wygładzoną cerą."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "wind",
+            "title": "22 momme — o 30% gęstszy niż standard",
+            "description": "Większość poszewek to 16–19 momme. Nasze 22 momme to optymalny balans — jedwab jest gęsty, trwały i przyjemnie chłodzący."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "shield-check",
+            "title": "OEKO-TEX® Standard 100",
+            "description": "Certyfikat potwierdza brak substancji szkodliwych. Bezpieczne dla skóry wrażliwej i alergików."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "gift",
+            "title": "Gotowe na prezent",
+            "description": "Każda poszewka pakowana w eleganckie pudełko. Idealny prezent — bez potrzeby dodatkowego pakowania."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "droplets",
+            "title": "Proste pranie w pralce",
+            "description": "Program delikatny, zimna woda, woreczek ochronny. Jedwab zachowuje właściwości przez setki prań."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "heart",
+            "title": "Włosy bez puszenia i łamania",
+            "description": "Gładka powierzchnia jedwabiu zmniejsza tarcie o 43% w porównaniu do bawełny. Mniej supłów, więcej blasku."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

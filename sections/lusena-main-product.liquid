@@ -21,26 +21,137 @@
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
   <div class="container">
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
+    {% render 'lusena-breadcrumbs', page_type: 'product', product: product, collection: collection %}
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16">
       {% render 'lusena-pdp-media', product: product, current_variant: current_variant, section: section %}
 
-      <div class="md:col-span-5 space-y-8 sticky top-32 self-start">
-        {% render 'lusena-pdp-summary', product: product, current_variant: current_variant, section: section, price_per_night_cents: price_per_night_cents %}
+      <div class="md:col-span-5 lusena-pdp-buy-box">
+        <div class="lusena-pdp-buy-box__summary">
+          {% render 'lusena-pdp-summary', product: product, current_variant: current_variant, section: section, price_per_night_cents: price_per_night_cents %}
+        </div>
 
-        {% render 'lusena-pdp-variant-picker', product: product, current_variant: current_variant, section: section %}
+        <div class="lusena-pdp-buy-box__proof">
+          {% render 'lusena-pdp-proof-chips', section: section %}
+        </div>
 
-        {% render 'lusena-pdp-atc', product: product, current_variant: current_variant, section: section, product_form_id: product_form_id %}
+        <div class="lusena-pdp-buy-box__desktop-divider"></div>
 
-        {% render 'lusena-pdp-guarantee', section: section %}
+        <div class="lusena-pdp-buy-box__variant">
+          {% render 'lusena-pdp-variant-picker', product: product, current_variant: current_variant, section: section %}
+        </div>
 
-        {% render 'lusena-pdp-accordions', section: section %}
+        <div class="lusena-pdp-buy-box__atc">
+          {% render 'lusena-pdp-atc', product: product, current_variant: current_variant, section: section, product_form_id: product_form_id %}
+        </div>
+
+        <div class="lusena-pdp-buy-box__guarantee">
+          {% render 'lusena-pdp-guarantee', section: section %}
+        </div>
+
+        <div class="lusena-pdp-buy-box__payment">
+          {% render 'lusena-pdp-payment', section: section %}
+        </div>
+
+        {%- liquid
+          assign benefit_1_text = blank
+          assign benefit_2_text = blank
+          assign benefit_3_text = blank
+
+          if product != blank
+            assign benefit_1_metafield = product.metafields.lusena.pdp_benefit_1
+            if benefit_1_metafield != blank
+              if benefit_1_metafield.value != blank
+                assign benefit_1_text = benefit_1_metafield.value
+              endif
+            endif
+
+            assign benefit_2_metafield = product.metafields.lusena.pdp_benefit_2
+            if benefit_2_metafield != blank
+              if benefit_2_metafield.value != blank
+                assign benefit_2_text = benefit_2_metafield.value
+              endif
+            endif
+
+            assign benefit_3_metafield = product.metafields.lusena.pdp_benefit_3
+            if benefit_3_metafield != blank
+              if benefit_3_metafield.value != blank
+                assign benefit_3_text = benefit_3_metafield.value
+              endif
+            endif
+          endif
+
+          assign fallback_benefit_1 = blank
+          assign fallback_benefit_2 = blank
+          assign fallback_benefit_3 = blank
+
+          for block in section.blocks
+            if block.type == 'benefit'
+              if fallback_benefit_1 == blank
+                assign fallback_benefit_1 = block.settings.text
+              else
+                if fallback_benefit_2 == blank
+                  assign fallback_benefit_2 = block.settings.text
+                else
+                  if fallback_benefit_3 == blank
+                    assign fallback_benefit_3 = block.settings.text
+                  endif
+                endif
+              endif
+            endif
+          endfor
+
+          if benefit_1_text == blank
+            assign benefit_1_text = fallback_benefit_1
+          endif
+          if benefit_2_text == blank
+            assign benefit_2_text = fallback_benefit_2
+          endif
+          if benefit_3_text == blank
+            assign benefit_3_text = fallback_benefit_3
+          endif
+
+          assign has_benefit_text = false
+          if benefit_1_text != blank
+            assign has_benefit_text = true
+          else
+            if benefit_2_text != blank
+              assign has_benefit_text = true
+            else
+              if benefit_3_text != blank
+                assign has_benefit_text = true
+              endif
+            endif
+          endif
+        -%}
+
+        {%- if has_benefit_text -%}
+          <div class="lusena-pdp-buy-box__benefits-mobile">
+            <ul class="lusena-pdp-buy-box__benefits-list"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
+              <li class="flex items-start gap-3 text-sm text-secondary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent-gold shrink-0"></span>
+                {{ benefit_1_text | escape }}
+              </li>
+              <li class="flex items-start gap-3 text-sm text-secondary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent-gold shrink-0"></span>
+                {{ benefit_2_text | escape }}
+              </li>
+              <li class="flex items-start gap-3 text-sm text-secondary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent-gold shrink-0"></span>
+                {{ benefit_3_text | escape }}
+              </li>
+            </ul>
+          </div>
+        {%- endif -%}
+
+        <div class="lusena-pdp-buy-box__details" data-lusena-buybox-panels>
+          {% render 'lusena-pdp-buybox-panels', product: product %}
+        </div>
       </div>
     </div>
   </div>
 
   {% render 'lusena-pdp-cross-sell', section: section %}
-
-  {% render 'lusena-pdp-reviews', section: section %}
 
   {% render 'lusena-pdp-sticky-atc', product: product, current_variant: current_variant, section: section, product_form_id: product_form_id %}
 </section>
@@ -103,84 +214,121 @@
       "type": "text",
       "id": "emotional_headline",
       "label": "Emotional headline",
-      "default": "Wake up without creases."
-    },
-    {
-      "type": "text",
-      "id": "reviews_label",
-      "label": "Reviews label",
-      "default": "127 Reviews"
-    },
-    {
-      "type": "url",
-      "id": "reviews_link",
-      "label": "Reviews link"
+      "default": "G\u0142adsza sk\u00f3ra i l\u015bni\u0105ce w\u0142osy \u2014 od pierwszej nocy."
     },
     {
       "type": "text",
       "id": "trust_shipping",
       "label": "Trust: shipping",
-      "default": "Free Shipping"
+      "default": "Darmowa dostawa"
     },
     {
       "type": "text",
       "id": "trust_oeko",
       "label": "Trust: OEKO-TEX",
-      "default": "OEKO-TEXÂ®"
+      "default": "OEKO-TEX\u00ae"
     },
     {
       "type": "text",
       "id": "tagline",
       "label": "Tagline",
-      "default": "The ultimate anti-aging tool for your skin and hair."
+      "default": "100% jedwab morwowy Grade 6A z Suzhou, 22 momme, certyfikat OEKO-TEX\u00ae Standard 100. Jedwab redukuje tarcie o 43% vs bawe\u0142na \u2014 Twoja sk\u00f3ra i w\u0142osy poczuj\u0105 r\u00f3\u017cnic\u0119."
+    },
+    {
+      "type": "text",
+      "id": "delivery_qualifies_label",
+      "label": "Delivery: qualifies line",
+      "default": "To zam\u00f3wienie kwalifikuje si\u0119 do darmowej dostawy"
+    },
+    {
+      "type": "text",
+      "id": "delivery_free_fallback_label",
+      "label": "Delivery: fallback line",
+      "default": "Darmowa dostawa InPost od 199 z\u0142"
+    },
+    {
+      "type": "text",
+      "id": "delivery_eta_label",
+      "label": "Delivery: ETA",
+      "default": "Dostawa: 1\u20132 dni robocze"
+    },
+    {
+      "type": "text",
+      "id": "delivery_returns_link_label",
+      "label": "Delivery: returns link",
+      "default": "60 dni na zwrot"
     },
     {
       "type": "text",
       "id": "price_per_night_prefix",
       "label": "Price-per-night prefix",
-      "default": "Only "
+      "default": "Tylko "
     },
     {
       "type": "text",
       "id": "price_per_night_suffix",
       "label": "Price-per-night suffix",
-      "default": " / night (based on 1 year use)"
+      "default": " / noc (przy rocznym u\u017cytkowaniu)"
+    },
+    {
+      "type": "text",
+      "id": "select_color_label",
+      "label": "Color selector label",
+      "default": "Wybierz kolor"
     },
     {
       "type": "text",
       "id": "add_to_cart_label",
       "label": "Add to cart label",
-      "default": "Add to Cart - Ships Today"
+      "default": "Dodaj do koszyka \u2013 wysy\u0142ka dzi\u015b"
+    },
+    {
+      "type": "text",
+      "id": "buy_now_label",
+      "label": "Buy now label",
+      "default": "Kup teraz"
     },
     {
       "type": "text",
       "id": "sticky_add_to_cart_label",
       "label": "Sticky add to cart label",
-      "default": "Add to Cart"
+      "default": "Dodaj do koszyka"
     },
     {
       "type": "text",
       "id": "in_stock_label",
       "label": "In-stock label",
-      "default": "In stock, ready to ship."
+      "default": "Na stanie, gotowe do wysy\u0142ki"
     },
     {
       "type": "text",
       "id": "out_of_stock_label",
       "label": "Out-of-stock label",
-      "default": "Out of stock."
+      "default": "Chwilowo niedost\u0119pne"
     },
     {
       "type": "text",
       "id": "guarantee_heading",
       "label": "Guarantee heading",
-      "default": "60-Day Sleep Guarantee"
+      "default": "60 dni gwarancji spokojnego snu"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_link_label",
+      "label": "Guarantee link label",
+      "default": "Jak to dzia\u0142a?"
     },
     {
       "type": "text",
       "id": "guarantee_body",
       "label": "Guarantee body",
-      "default": "Try it for 60 nights. If you don't feel the difference, return it for a full refund. No questions asked."
+      "default": "Przetestuj przez 60 nocy. Je\u015bli nie poczujesz r\u00f3\u017cnicy \u2014 zwr\u00f3\u0107, nawet u\u017cywan\u0105. Pe\u0142ny zwrot bez pyta\u0144."
+    },
+    {
+      "type": "text",
+      "id": "secure_payment_label",
+      "label": "Secure payment label",
+      "default": "Bezpieczna p\u0142atno\u015b\u0107"
     },
     {
       "type": "text",
@@ -192,24 +340,7 @@
       "type": "text",
       "id": "cross_sell_heading",
       "label": "Cross-sell heading",
-      "default": "Pairs Well With"
-    },
-    {
-      "type": "text",
-      "id": "pdp_reviews_heading",
-      "label": "PDP reviews heading",
-      "default": "Verified Reviews"
-    },
-    {
-      "type": "text",
-      "id": "pdp_reviews_button_label",
-      "label": "PDP reviews button label",
-      "default": "Write a Review"
-    },
-    {
-      "type": "url",
-      "id": "pdp_reviews_button_link",
-      "label": "PDP reviews button link"
+      "default": "Pasuje do"
     }
   ],
   "blocks": [
@@ -226,24 +357,6 @@
       ]
     },
     {
-      "type": "accordion",
-      "name": "Accordion",
-      "settings": [
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "Heading",
-          "default": "Product Details"
-        },
-        {
-          "type": "richtext",
-          "id": "content",
-          "label": "Content",
-          "default": "<ul><li>100% Mulberry Silk (22 momme)</li><li>Grade 6A fibers</li><li>OEKO-TEXÂ® Standard 100 Certified</li><li>Hidden zipper closure</li></ul>"
-        }
-      ]
-    },
-    {
       "type": "cross_sell",
       "name": "Cross-sell product",
       "settings": [
@@ -251,24 +364,6 @@
           "type": "product",
           "id": "product",
           "label": "Product"
-        }
-      ]
-    },
-    {
-      "type": "pdp_review",
-      "name": "PDP review",
-      "settings": [
-        {
-          "type": "text",
-          "id": "author",
-          "label": "Author",
-          "default": "Karolina P."
-        },
-        {
-          "type": "text",
-          "id": "quote",
-          "label": "Quote",
-          "default": "I have acne prone skin and this pillowcase has been a game changer. Less breakouts and my hair is smoother."
         }
       ]
     }
@@ -288,35 +383,6 @@
           "type": "benefit",
           "settings": {
             "text": "Prevents hair breakage and frizz"
-          }
-        },
-        { "type": "accordion" },
-        {
-          "type": "accordion",
-          "settings": {
-            "heading": "Care Guide",
-            "content": "<p>Machine wash cold on delicate cycle. Use silk-safe detergent. Line dry out of direct sunlight. Do not bleach.</p>"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "heading": "Shipping & Returns",
-            "content": "<p>Ships within 24 hours. Free delivery via InPost. Returns accepted within 60 days even if used.</p>"
-          }
-        },
-        {
-          "type": "pdp_review",
-          "settings": {
-            "author": "Karolina P.",
-            "quote": "I have acne prone skin and this pillowcase has been a game changer. Less breakouts and my hair is smoother."
-          }
-        },
-        {
-          "type": "pdp_review",
-          "settings": {
-            "author": "Ewa M.",
-            "quote": "The cooling effect is real. I sleep so much better and wake up without a puffy face."
           }
         }
       ]

@@ -1,0 +1,4 @@
+interface:
+  display_name: "LUSENA Draftshop Parity"
+  short_description: "Copy draftshop fragments into theme"
+  default_prompt: "Copy a fragment from lusena-shop (draft shop) into this Shopify theme with 1:1 look and behavior parity. Ask required decisions first, write a plan to /docs as .md, then implement in Liquid/CSS/JS, validate with Shopify Dev MCP (learn_shopify_api + validate_theme), and ask the user to confirm visual parity (use Playwright only if requested or needed to debug)."

@@ -6,88 +6,180 @@
         "benefit-0": {
           "type": "benefit",
           "settings": {
-            "text": "Reduces sleep wrinkles and morning creases"
+            "text": "43% mniej tarcia vs bawe\u0142na \u2014 mniej zagniece\u0144 rano (test EN 12947)"
           }
         },
         "benefit-1": {
           "type": "benefit",
           "settings": {
-            "text": "Keeps skin hydrated (doesn't absorb cream)"
+            "text": "Nie wch\u0142ania krem\u00f3w i serum \u2014 piel\u0119gnacja zostaje na sk\u00f3rze, nie na poszewce"
           }
         },
         "benefit-2": {
           "type": "benefit",
           "settings": {
-            "text": "Prevents hair breakage and frizz"
-          }
-        },
-        "accordion-0": {
-          "type": "accordion",
-          "settings": {
-            "heading": "Product Details",
-            "content": "<ul><li>100% Mulberry Silk (22 momme)</li><li>Grade 6A fibers</li><li>OEKO-TEX® Standard 100 Certified</li><li>Hidden zipper closure</li></ul>"
-          }
-        },
-        "accordion-1": {
-          "type": "accordion",
-          "settings": {
-            "heading": "Care Guide",
-            "content": "<p>Machine wash cold on delicate cycle. Use silk-safe detergent. Line dry out of direct sunlight. Do not bleach.</p>"
-          }
-        },
-        "accordion-2": {
-          "type": "accordion",
-          "settings": {
-            "heading": "Shipping & Returns",
-            "content": "<p>Ships within 24 hours. Free delivery via InPost. Returns accepted within 60 days even if used.</p>"
-          }
-        },
-        "pdp-review-0": {
-          "type": "pdp_review",
-          "settings": {
-            "author": "Karolina P.",
-            "quote": "I have acne prone skin and this pillowcase has been a game changer. Less breakouts and my hair is smoother."
-          }
-        },
-        "pdp-review-1": {
-          "type": "pdp_review",
-          "settings": {
-            "author": "Ewa M.",
-            "quote": "The cooling effect is real. I sleep so much better and wake up without a puffy face."
+            "text": "G\u0142adka powierzchnia chroni w\u0142osy przed puszeniem i \u0142amaniem si\u0119"
           }
         }
       },
       "block_order": [
         "benefit-0",
         "benefit-1",
-        "benefit-2",
-        "accordion-0",
-        "accordion-1",
-        "accordion-2",
-        "pdp-review-0",
-        "pdp-review-1"
+        "benefit-2"
       ],
       "settings": {
-        "emotional_headline": "Wake up without creases.",
-        "reviews_label": "127 Reviews",
-        "trust_shipping": "Free Shipping",
-        "trust_oeko": "OEKO-TEX®",
-        "tagline": "The ultimate anti-aging tool for your skin and hair.",
-        "price_per_night_prefix": "Only ",
-        "price_per_night_suffix": " / night (based on 1 year use)",
-        "add_to_cart_label": "Add to Cart - Ships Today",
-        "sticky_add_to_cart_label": "Add to Cart",
-        "in_stock_label": "In stock, ready to ship.",
-        "out_of_stock_label": "Out of stock.",
-        "guarantee_heading": "60-Day Sleep Guarantee",
-        "guarantee_body": "Try it for 60 nights. If you don't feel the difference, return it for a full refund. No questions asked.",
+        "emotional_headline": "G\u0142adsza sk\u00f3ra i l\u015bni\u0105ce w\u0142osy \u2014 od pierwszej nocy.",
+        "trust_shipping": "Darmowa dostawa",
+        "trust_oeko": "OEKO-TEX\u00ae",
+        "tagline": "100% jedwab morwowy Grade 6A z Suzhou, 22 momme, certyfikat OEKO-TEX\u00ae Standard 100. Jedwab redukuje tarcie o 43% vs bawe\u0142na \u2014 Twoja sk\u00f3ra i w\u0142osy poczuj\u0105 r\u00f3\u017cnic\u0119.",
+        "delivery_qualifies_label": "To zam\u00f3wienie kwalifikuje si\u0119 do darmowej dostawy",
+        "delivery_free_fallback_label": "Darmowa dostawa InPost od 199 z\u0142",
+        "delivery_eta_label": "Dostawa: 1\u20132 dni robocze",
+        "delivery_returns_link_label": "60 dni na zwrot",
+        "price_per_night_prefix": "Tylko ",
+        "price_per_night_suffix": " / noc (przy rocznym u\u017cytkowaniu)",
+        "select_color_label": "Wybierz kolor",
+        "add_to_cart_label": "Dodaj do koszyka \u2013 wysy\u0142ka dzi\u015b",
+        "buy_now_label": "Kup teraz",
+        "sticky_add_to_cart_label": "Dodaj do koszyka",
+        "in_stock_label": "Na stanie, gotowe do wysy\u0142ki",
+        "out_of_stock_label": "Chwilowo niedost\u0119pne",
+        "guarantee_heading": "60 dni gwarancji spokojnego snu",
+        "guarantee_link_label": "Jak to dzia\u0142a?",
+        "guarantee_body": "Przetestuj przez 60 nocy. Je\u015bli nie poczujesz r\u00f3\u017cnicy \u2014 zwr\u00f3\u0107, nawet u\u017cywan\u0105. Pe\u0142ny zwrot bez pyta\u0144.",
+        "secure_payment_label": "Bezpieczna p\u0142atno\u015b\u0107",
         "video_placeholder": "Video Preview",
-        "cross_sell_heading": "Pairs Well With",
-        "pdp_reviews_heading": "Verified Reviews",
-        "pdp_reviews_button_label": "Write a Review"
+        "cross_sell_heading": "Pasuje do"
       }
+    },
+    "pdp_feature_highlights": {
+      "type": "lusena-pdp-feature-highlights",
+      "blocks": {
+        "feature-0": {
+          "type": "feature",
+          "settings": {
+            "icon": "sparkles",
+            "title": "Mniej zmarszczek, więcej blasku",
+            "description": "Jedwab nie wchłania wilgoci — Twój krem nocny zostaje na skórze, a nie na poduszce. Rano budzisz się z nawilżoną, wygładzoną cerą."
+          }
+        },
+        "feature-1": {
+          "type": "feature",
+          "settings": {
+            "icon": "wind",
+            "title": "22 momme — o 30% gęstszy niż standard",
+            "description": "Większość poszewek to 16–19 momme. Nasze 22 momme to optymalny balans — jedwab jest gęsty, trwały i przyjemnie chłodzący."
+          }
+        },
+        "feature-2": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield-check",
+            "title": "OEKO-TEX® Standard 100",
+            "description": "Certyfikat potwierdza brak substancji szkodliwych. Bezpieczne dla skóry wrażliwej i alergików."
+          }
+        },
+        "feature-3": {
+          "type": "feature",
+          "settings": {
+            "icon": "gift",
+            "title": "Gotowe na prezent",
+            "description": "Każda poszewka pakowana w eleganckie pudełko. Idealny prezent — bez potrzeby dodatkowego pakowania."
+          }
+        },
+        "feature-4": {
+          "type": "feature",
+          "settings": {
+            "icon": "droplets",
+            "title": "Proste pranie w pralce",
+            "description": "Program delikatny, zimna woda, woreczek ochronny. Jedwab zachowuje właściwości przez setki prań."
+          }
+        },
+        "feature-5": {
+          "type": "feature",
+          "settings": {
+            "icon": "heart",
+            "title": "Włosy bez puszenia i łamania",
+            "description": "Gładka powierzchnia jedwabiu zmniejsza tarcie o 43% w porównaniu do bawełny. Mniej supłów, więcej blasku."
+          }
+        }
+      },
+      "block_order": [
+        "feature-0",
+        "feature-1",
+        "feature-2",
+        "feature-3",
+        "feature-4",
+        "feature-5"
+      ],
+      "settings": {}
+    },
+    "pdp_quality_evidence": {
+      "type": "lusena-pdp-quality-evidence",
+      "blocks": {
+        "evidence-0": {
+          "type": "evidence",
+          "settings": {
+            "icon": "shield-check",
+            "title": "OEKO-TEX® Standard 100",
+            "summary": "Niezależny certyfikat potwierdzający brak substancji szkodliwych. Bezpieczny dla skóry wrażliwej, alergików i dzieci.",
+            "detail": "Każda partia jedwabiu jest testowana przez akredytowane laboratorium. Numer certyfikatu znajdziesz na karcie dołączonej do produktu. Możesz go zweryfikować na oeko-tex.com/check.",
+            "cta_label": "Sprawdź certyfikat →",
+            "cta_link": "shopify://pages/nasza-jakosc",
+            "use_certificate_link": true
+          }
+        },
+        "evidence-1": {
+          "type": "evidence",
+          "settings": {
+            "icon": "map-pin",
+            "title": "Jedwab z Suzhou — 600 lat tradycji",
+            "summary": "Nasz jedwab pochodzi z regionu Shengze w Suzhou — światowej stolicy jedwabiu od ponad 600 lat.",
+            "detail": "Lokalni producenci specjalizują się w jedwabiu Grade 6A o najdłuższych włóknach. To gładszy, trwalszy i bardziej lśniący materiał niż jedwab z innych regionów. Współpracujemy bezpośrednio z certyfikowanymi manufakturami.",
+            "cta_label": "Więcej o pochodzeniu →",
+            "cta_link": "shopify://pages/o-nas",
+            "use_certificate_link": false
+          }
+        },
+        "evidence-2": {
+          "type": "evidence",
+          "settings": {
+            "icon": "layers",
+            "title": "22 momme — optymalny standard",
+            "summary": "Momme to jednostka gęstości jedwabiu. 22 momme to o 30% więcej niż branżowy standard 16–19 momme.",
+            "detail": "Wyższe momme oznacza grubszy, bardziej trwały jedwab, który lepiej oddycha i zachowuje właściwości termoregulacyjne. 22 momme to optymalny balans między luksusowym dotykiem a wytrzymałością — bez nadmiernej wagi.",
+            "cta_label": "Porównaj momme →",
+            "cta_link": "shopify://pages/nasza-jakosc",
+            "use_certificate_link": false
+          }
+        },
+        "evidence-3": {
+          "type": "evidence",
+          "settings": {
+            "icon": "package",
+            "title": "Kontrola jakości w Polsce + wysyłka 24h",
+            "summary": "Każdy produkt przechodzi kontrolę jakości w naszym magazynie w Polsce. Wysyłamy w ciągu 24 godzin roboczych.",
+            "detail": "Sprawdzamy szwy, zamek, kolor i gramaturę. Produkty niespełniające standardów nie trafiają do sprzedaży. Dzięki lokalnej logistyce dostarczamy w 1–2 dni robocze via InPost lub kurier.",
+            "cta_label": "Więcej o nas →",
+            "cta_link": "shopify://pages/nasza-jakosc",
+            "use_certificate_link": false
+          }
+        }
+      },
+      "block_order": [
+        "evidence-0",
+        "evidence-1",
+        "evidence-2",
+        "evidence-3"
+      ],
+      "settings": {
+        "heading": "Dlaczego LUSENA?"
+      }
+    },
+    "pdp_details_questions": {
+      "type": "lusena-pdp-details",
+      "settings": {}
     }
   },
-  "order": ["main"]
+  "order": ["main", "pdp_feature_highlights", "pdp_quality_evidence", "pdp_details_questions"]
 }
-

@@ -57,7 +57,7 @@
       {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
         <a
           href="{{ section.settings.button_link }}"
-          class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-14 px-10 text-base bg-accent-cta text-white hover:bg-[#0E5E5A]/90 hover:brightness-110"
+          class="inline-flex items-center justify-center whitespace-nowrap text-base font-medium transition-colors rounded-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cta focus-visible:ring-offset-2 disabled:pointer-events-none disabled:bg-neutral-400 disabled:text-surface-1/70 h-12 px-10 bg-accent-cta text-surface-1 hover:bg-accent-cta/90"
         >
           {{ section.settings.button_label | escape }}
         </a>

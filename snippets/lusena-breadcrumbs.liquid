@@ -1,0 +1,56 @@
+{% doc %}
+  Renders LUSENA breadcrumbs in the draft-shop visual style.
+
+  @param {string} page_type - Supported values: "product" or "collection"
+  @param {product} [product] - Product object for product page breadcrumbs
+  @param {collection} [collection] - Current collection context
+{% enddoc %}
+
+{%- liquid
+  assign home_label = 'Strona g&#322;&#243;wna'
+  assign home_url = routes.root_url
+-%}
+
+<nav aria-label="Breadcrumb" class="py-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <ol class="flex items-center gap-1.5 text-xs text-neutral-700">
+    <li class="flex items-center gap-1.5">
+      <a href="{{ home_url }}" class="hover:text-primary transition-colors duration-150">{{ home_label }}</a>
+      {% render 'lusena-icon', name: 'chevron-right', class: 'w-3 h-3 text-neutral-400' %}
+    </li>
+
+    {%- if page_type == 'product' -%}
+      {%- liquid
+        assign product_category_url = ''
+
+        if collection != blank
+          if collection.url != blank
+            assign product_category_url = collection.url
+          endif
+        endif
+
+        if product_category_url == blank
+          assign jedwab_collection = collections['jedwab']
+
+          if jedwab_collection != blank
+            assign product_category_url = jedwab_collection.url
+          else
+            assign product_category_url = '/collections/all'
+          endif
+        endif
+      -%}
+
+      <li class="flex items-center gap-1.5">
+        <a href="{{ product_category_url }}" class="hover:text-primary transition-colors duration-150">Jedwab</a>
+        {% render 'lusena-icon', name: 'chevron-right', class: 'w-3 h-3 text-neutral-400' %}
+      </li>
+
+      <li class="text-primary font-semibold truncate max-w-[200px]">
+        {{ product.title | escape }}
+      </li>
+    {%- elsif page_type == 'collection' -%}
+      <li class="text-primary font-semibold truncate max-w-[200px]">
+        Jedwab
+      </li>
+    {%- endif -%}
+  </ol>
+</nav>

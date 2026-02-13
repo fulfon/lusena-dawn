@@ -1,0 +1,246 @@
+{% doc %}
+  Buy-box PDP panels that must match the draft shop accordion UI.
+
+  @param {product} product
+{% enddoc %}
+
+{%- liquid
+  assign specs_heading = 'Materiały i specyfikacja'
+  assign care_heading = 'Pielęgnacja'
+
+  if product != blank
+    assign specs_heading_mf = product.metafields.lusena.pdp_specs_heading
+    if specs_heading_mf != blank and specs_heading_mf.value != blank
+      assign specs_heading = specs_heading_mf.value
+    endif
+
+    assign care_heading_mf = product.metafields.lusena.pdp_care_heading
+    if care_heading_mf != blank and care_heading_mf.value != blank
+      assign care_heading = care_heading_mf.value
+    endif
+  endif
+
+  assign label_material = 'Materiał'
+  assign label_dimensions = 'Wymiary'
+  assign label_closure = 'Zamknięcie'
+  assign label_weight = 'Waga'
+  assign label_certification = 'Certyfikat'
+
+  if product != blank
+    assign mf_label_material = product.metafields.lusena.pdp_specs_label_material
+    if mf_label_material != blank and mf_label_material.value != blank
+      assign label_material = mf_label_material.value
+    endif
+
+    assign mf_label_dimensions = product.metafields.lusena.pdp_specs_label_dimensions
+    if mf_label_dimensions != blank and mf_label_dimensions.value != blank
+      assign label_dimensions = mf_label_dimensions.value
+    endif
+
+    assign mf_label_closure = product.metafields.lusena.pdp_specs_label_closure
+    if mf_label_closure != blank and mf_label_closure.value != blank
+      assign label_closure = mf_label_closure.value
+    endif
+
+    assign mf_label_weight = product.metafields.lusena.pdp_specs_label_weight
+    if mf_label_weight != blank and mf_label_weight.value != blank
+      assign label_weight = mf_label_weight.value
+    endif
+
+    assign mf_label_certification = product.metafields.lusena.pdp_specs_label_certification
+    if mf_label_certification != blank and mf_label_certification.value != blank
+      assign label_certification = mf_label_certification.value
+    endif
+  endif
+
+  assign value_material = blank
+  assign value_weave = blank
+  assign value_momme = blank
+  assign value_grade = blank
+  assign value_dimensions = blank
+  assign value_closure = blank
+  assign value_weight = blank
+  assign value_certification = blank
+
+  assign care_steps = blank
+  assign fallback_care_steps = 'Prać w pralce: program delikatny, maks. 30°C|Używać detergentu do jedwabiu lub delikatnych tkanin|Suszyć na płasko — nie używać suszarki bębnowej|Nie wybielać, nie prać z chlorem|Prasować na najniższej temperaturze z lewej strony' | split: '|'
+
+  if product != blank
+    assign mf_value_material = product.metafields.lusena.pdp_specs_material
+    if mf_value_material != blank and mf_value_material.value != blank
+      assign value_material = mf_value_material.value
+    endif
+
+    assign mf_value_weave = product.metafields.lusena.pdp_specs_weave
+    if mf_value_weave != blank and mf_value_weave.value != blank
+      assign value_weave = mf_value_weave.value
+    endif
+
+    assign mf_value_momme = product.metafields.lusena.pdp_specs_momme
+    if mf_value_momme != blank and mf_value_momme.value != blank
+      assign value_momme = mf_value_momme.value
+    endif
+
+    assign mf_value_grade = product.metafields.lusena.pdp_specs_grade
+    if mf_value_grade != blank and mf_value_grade.value != blank
+      assign value_grade = mf_value_grade.value
+    endif
+
+    assign mf_value_dimensions = product.metafields.lusena.pdp_specs_dimensions
+    if mf_value_dimensions != blank and mf_value_dimensions.value != blank
+      assign value_dimensions = mf_value_dimensions.value
+    endif
+
+    assign mf_value_closure = product.metafields.lusena.pdp_specs_closure
+    if mf_value_closure != blank and mf_value_closure.value != blank
+      assign value_closure = mf_value_closure.value
+    endif
+
+    assign mf_value_weight = product.metafields.lusena.pdp_specs_weight
+    if mf_value_weight != blank and mf_value_weight.value != blank
+      assign value_weight = mf_value_weight.value
+    endif
+
+    assign mf_value_certification = product.metafields.lusena.pdp_specs_certification
+    if mf_value_certification != blank and mf_value_certification.value != blank
+      assign value_certification = mf_value_certification.value
+    endif
+
+    assign mf_care_steps = product.metafields.lusena.pdp_care_steps
+    if mf_care_steps != blank and mf_care_steps.value != blank
+      assign care_steps = mf_care_steps.value
+    endif
+  endif
+  if care_steps == blank
+    assign care_steps = fallback_care_steps
+  endif
+
+  assign def_weave = 'Sposób przeplatania nitek jedwabiu. Charmeuse to splot satynowy — gładki po jednej stronie, matowy po drugiej.'
+  assign def_density = 'Momme (mm) to miara gęstości jedwabiu. Im wyższa wartość, tym grubszy i trwalszy materiał. Standard branżowy to 16–19 mm.'
+  assign def_grade = 'Grade 6A to najwyższa jakość jedwabiu morwowego — najdłuższe, najbardziej jednolite włókna, bez zanieczyszczeń.'
+-%}
+
+<div class="w-full lusena-pdp-accordion" data-lusena-accordion-root data-lusena-accordion-single data-lusena-accordion-collapsible{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
+  <div class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-accordion-item data-lusena-accordion-value="specs">
+    <div class="flex">
+      <button
+        type="button"
+        class="lusena-pdp-accordion__trigger flex flex-1 items-center justify-between py-4 min-h-[44px] font-medium transition-all hover:text-accent-cta text-left"
+        data-lusena-accordion-trigger
+        data-state="closed"
+        aria-expanded="false"
+      >
+        {{ specs_heading | escape }}
+        {% render 'lusena-icon', name: 'chevron-down', class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200', stroke_width: 2 %}
+      </button>
+    </div>
+    <div class="lusena-pdp-accordion__content overflow-hidden text-sm" data-lusena-accordion-content data-state="closed">
+      <div class="lusena-pdp-accordion__body pb-4 pt-0 text-secondary">
+        <table class="w-full text-sm" data-lusena-specs-table>
+          <tbody>
+            <tr class="lusena-pdp-specs-row--alt">
+              <td class="py-2 px-3 text-secondary font-medium w-1/3">{{ label_material | escape }}</td>
+              <td class="py-2 px-3 text-primary">{{ value_material | escape }}</td>
+            </tr>
+            <tr class="">
+              <td class="py-2 px-3 text-secondary font-medium w-1/3">
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-1 hover:text-primary transition-colors text-left"
+                  data-lusena-spec-def-toggle
+                  data-spec-key="weave"
+                  aria-expanded="false"
+                >
+                  Splot
+                  <span class="text-accent-cta text-[10px] leading-none">?</span>
+                </button>
+              </td>
+              <td class="py-2 px-3 text-primary">{{ value_weave | escape }}</td>
+            </tr>
+            <tr class="lusena-pdp-specs-row--definition" data-lusena-spec-def-row data-spec-key="weave" hidden>
+              <td colspan="2" class="px-3 py-2 text-xs text-secondary leading-relaxed">{{ def_weave }}</td>
+            </tr>
+            <tr class="lusena-pdp-specs-row--alt">
+              <td class="py-2 px-3 text-secondary font-medium w-1/3">
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-1 hover:text-primary transition-colors text-left"
+                  data-lusena-spec-def-toggle
+                  data-spec-key="density"
+                  aria-expanded="false"
+                >
+                  Gęstość
+                  <span class="text-accent-cta text-[10px] leading-none">?</span>
+                </button>
+              </td>
+              <td class="py-2 px-3 text-primary">{{ value_momme | escape }}</td>
+            </tr>
+            <tr class="lusena-pdp-specs-row--definition" data-lusena-spec-def-row data-spec-key="density" hidden>
+              <td colspan="2" class="px-3 py-2 text-xs text-secondary leading-relaxed">{{ def_density }}</td>
+            </tr>
+            <tr class="">
+              <td class="py-2 px-3 text-secondary font-medium w-1/3">
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-1 hover:text-primary transition-colors text-left"
+                  data-lusena-spec-def-toggle
+                  data-spec-key="grade"
+                  aria-expanded="false"
+                >
+                  Klasa
+                  <span class="text-accent-cta text-[10px] leading-none">?</span>
+                </button>
+              </td>
+              <td class="py-2 px-3 text-primary">{{ value_grade | escape }}</td>
+            </tr>
+            <tr class="lusena-pdp-specs-row--definition" data-lusena-spec-def-row data-spec-key="grade" hidden>
+              <td colspan="2" class="px-3 py-2 text-xs text-secondary leading-relaxed">{{ def_grade }}</td>
+            </tr>
+            <tr class="lusena-pdp-specs-row--alt">
+              <td class="py-2 px-3 text-secondary font-medium w-1/3">{{ label_dimensions | escape }}</td>
+              <td class="py-2 px-3 text-primary">{{ value_dimensions | escape }}</td>
+            </tr>
+            <tr class="">
+              <td class="py-2 px-3 text-secondary font-medium w-1/3">{{ label_closure | escape }}</td>
+              <td class="py-2 px-3 text-primary">{{ value_closure | escape }}</td>
+            </tr>
+            <tr class="lusena-pdp-specs-row--alt">
+              <td class="py-2 px-3 text-secondary font-medium w-1/3">{{ label_weight | escape }}</td>
+              <td class="py-2 px-3 text-primary">{{ value_weight | escape }}</td>
+            </tr>
+            <tr class="">
+              <td class="py-2 px-3 text-secondary font-medium w-1/3">{{ label_certification | escape }}</td>
+              <td class="py-2 px-3 text-primary">{{ value_certification | escape }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-accordion-item data-lusena-accordion-value="care">
+    <div class="flex">
+      <button
+        type="button"
+        class="lusena-pdp-accordion__trigger flex flex-1 items-center justify-between py-4 min-h-[44px] font-medium transition-all hover:text-accent-cta text-left"
+        data-lusena-accordion-trigger
+        data-state="closed"
+        aria-expanded="false"
+      >
+        {{ care_heading | escape }}
+        {% render 'lusena-icon', name: 'chevron-down', class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200', stroke_width: 2 %}
+      </button>
+    </div>
+    <div class="lusena-pdp-accordion__content overflow-hidden text-sm" data-lusena-accordion-content data-state="closed">
+      <div class="lusena-pdp-accordion__body pb-4 pt-0 text-secondary">
+        <ul class="list-disc pl-4 space-y-1 text-secondary/80">
+          {%- if care_steps != blank -%}
+            {%- for step in care_steps -%}
+              <li>{{ step | escape }}</li>
+            {%- endfor -%}
+          {%- endif -%}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

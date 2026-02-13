@@ -14,13 +14,24 @@
     const pricePerNightEl = root.querySelector('[data-lusena-price-per-night]');
     const stickyBar = root.querySelector('[data-lusena-sticky-atc]');
     const stickyPrice = root.querySelector('[data-lusena-sticky-price]');
+    const stickyPricePerNight = root.querySelector('[data-lusena-sticky-price-per-night]');
+    const stickyVariant = root.querySelector('[data-lusena-sticky-variant]');
+    const stickyImage = root.querySelector('[data-lusena-sticky-image]');
     const stockText = root.querySelector('[data-lusena-stock-text]');
     const stockDot = root.querySelector('[data-lusena-stock-dot]');
     const atcButton = root.querySelector('[data-lusena-atc]');
+    const buyNowButton = root.querySelector('[data-lusena-buy-now]');
     const stickyAtcButton = root.querySelector('[data-lusena-sticky-atc-button]');
+    const returnsLinks = Array.from(root.querySelectorAll('[data-lusena-open-returns]'));
+    const accordionRoots = Array.from(document.querySelectorAll('[data-lusena-accordion-root]'));
+    const specDefinitionToggles = Array.from(document.querySelectorAll('[data-lusena-spec-def-toggle]'));
+
+    const accordionContentObservers = new WeakMap();
 
     const pricePerNightPrefix = pricePerNightEl?.dataset?.prefix ?? '';
     const pricePerNightSuffix = pricePerNightEl?.dataset?.suffix ?? '';
+    const stickyPricePerNightPrefix = stickyPricePerNight?.dataset?.prefix ?? pricePerNightPrefix;
+    const stickyPricePerNightSuffix = stickyPricePerNight?.dataset?.suffix ?? pricePerNightSuffix;
 
     let product;
     try {
@@ -29,12 +40,41 @@
       return;
     }
 
+    const galleryRoot = root.querySelector('[data-lusena-gallery]');
+    const stage = root.querySelector('[data-lusena-media-stage]');
     const stageImg = root.querySelector('[data-lusena-media-stage] img');
+    const stageProof = root.querySelector('[data-lusena-stage-proof]');
+    const stageBadge = root.querySelector('[data-lusena-stage-bestseller]');
     const stageSizes = stageImg?.getAttribute('sizes') || '';
-    const thumbsWrap = root.querySelector('[data-lusena-media-thumbs]');
-    const thumbEls = thumbsWrap ? Array.from(thumbsWrap.querySelectorAll('[data-lusena-thumb]')) : [];
+    const proofId = galleryRoot?.dataset?.lusenaProofId ? String(galleryRoot.dataset.lusenaProofId) : null;
+    const isBestseller = !!stageBadge || root.querySelectorAll('[data-lusena-mobile-bestseller]').length > 0;
+
+    const desktopThumbsWrap = root.querySelector('[data-lusena-media-thumbs-desktop]');
+    const thumbEls = desktopThumbsWrap ? Array.from(desktopThumbsWrap.querySelectorAll('[data-lusena-thumb]')) : [];
     const thumbsById = new Map(
       thumbEls
+        .map((el) => {
+          const id = el?.dataset?.mediaId;
+          return id ? [String(id), el] : null;
+        })
+        .filter(Boolean)
+    );
+
+    const mobileTrack = root.querySelector('[data-lusena-mobile-track]');
+    const mobileSlideEls = mobileTrack ? Array.from(mobileTrack.querySelectorAll('[data-lusena-mobile-slide]')) : [];
+    const slidesById = new Map(
+      mobileSlideEls
+        .map((el) => {
+          const id = el?.dataset?.mediaId;
+          return id ? [String(id), el] : null;
+        })
+        .filter(Boolean)
+    );
+
+    const mobileDotsWrap = root.querySelector('[data-lusena-mobile-dots]');
+    const mobileDotEls = mobileDotsWrap ? Array.from(mobileDotsWrap.querySelectorAll('[data-lusena-mobile-dot]')) : [];
+    const dotsById = new Map(
+      mobileDotEls
         .map((el) => {
           const id = el?.dataset?.mediaId;
           return id ? [String(id), el] : null;
@@ -127,6 +167,30 @@
       return options[colorIndex] || null;
     };
 
+    const getStickyVariantLabel = (variant) => {
+      const selectedColor = getSelectedColorForVariant(variant);
+      if (selectedColor) return selectedColor;
+      if (Array.isArray(variant?.options) && variant.options.length) return variant.options[0] || variant?.title || '';
+      return variant?.title || '';
+    };
+
+    const getVariantImageSrc = (variant) => {
+      if (!variant) return null;
+
+      if (variant?.featured_image && typeof variant.featured_image === 'object' && variant.featured_image.src) {
+        return variant.featured_image.src;
+      }
+
+      const featuredMediaId =
+        variant?.featured_media && typeof variant.featured_media === 'object' ? variant.featured_media.id : variant?.featured_media;
+      if (featuredMediaId) {
+        const featuredMedia = findMediaById(featuredMediaId);
+        if (featuredMedia) return featuredMedia?.preview_image?.src || featuredMedia?.src || null;
+      }
+
+      return product?.featured_image?.src || product?.featured_media?.preview_image?.src || null;
+    };
+
     const getVisibleMediaForColor = (color) => {
       const media = Array.isArray(product?.media) ? product.media : [];
       if (!media.length) return { colorMedia: [], sharedMedia: [], visible: [], taggingEnabled: false };
@@ -156,28 +220,105 @@
       colorMediaLength: 0,
       activeKind: 'color',
       initialized: false,
+      visibleItems: [],
     };
 
-    const setActiveThumb = (activeMediaId) => {
+    const buildVisibleItems = (visibleMedia) => {
+      const items = visibleMedia.map((media) => ({
+        id: String(media?.id),
+        type: 'media',
+        media,
+      }));
+
+      if (proofId) {
+        items.push({
+          id: proofId,
+          type: 'proof',
+        });
+      }
+
+      return items;
+    };
+
+    const setActiveThumb = (activeItemId) => {
       thumbEls.forEach((el) => el.removeAttribute('aria-current'));
-      if (!activeMediaId) return;
-      const el = thumbsById.get(String(activeMediaId));
+      if (!activeItemId) return;
+      const el = thumbsById.get(String(activeItemId));
       if (el) el.setAttribute('aria-current', 'true');
     };
 
-    const applyThumbOrderAndVisibility = (visibleMedia) => {
-      if (!thumbsWrap) return;
-      const visibleIds = new Set(visibleMedia.map((m) => String(m?.id)));
+    const setActiveDot = (activeItemId) => {
+      mobileDotEls.forEach((el) => el.removeAttribute('aria-current'));
+      if (!activeItemId) return;
+      const el = dotsById.get(String(activeItemId));
+      if (el && !el.hidden) el.setAttribute('aria-current', 'true');
+    };
+
+    const setDesktopBestseller = (isVisible) => {
+      if (!stageBadge) return;
+      stageBadge.hidden = !isVisible;
+    };
+
+    const setMobileBestseller = (visibleItems) => {
+      root.querySelectorAll('[data-lusena-mobile-bestseller]').forEach((badge) => {
+        badge.hidden = true;
+      });
+
+      if (!isBestseller || !visibleItems.length) return;
+      const firstSlide = slidesById.get(visibleItems[0].id);
+      const firstBadge = firstSlide?.querySelector('[data-lusena-mobile-bestseller]');
+      if (firstBadge) firstBadge.hidden = false;
+    };
+
+    const applyDesktopThumbOrderAndVisibility = (visibleItems) => {
+      if (!desktopThumbsWrap) return;
+      const visibleIds = new Set(visibleItems.map((item) => item.id));
 
       thumbEls.forEach((el) => {
         const id = String(el?.dataset?.mediaId || '');
         el.hidden = !visibleIds.has(id);
       });
 
-      visibleMedia.forEach((m) => {
-        const el = thumbsById.get(String(m?.id));
-        if (el) thumbsWrap.appendChild(el);
+      visibleItems.forEach((item) => {
+        const el = thumbsById.get(item.id);
+        if (el) desktopThumbsWrap.appendChild(el);
       });
+    };
+
+    const applyMobileOrderAndVisibility = (visibleItems) => {
+      if (!mobileTrack) return;
+      const visibleIds = new Set(visibleItems.map((item) => item.id));
+
+      mobileSlideEls.forEach((slide) => {
+        const id = String(slide?.dataset?.mediaId || '');
+        slide.hidden = !visibleIds.has(id);
+      });
+
+      visibleItems.forEach((item) => {
+        const slide = slidesById.get(item.id);
+        if (slide) mobileTrack.appendChild(slide);
+      });
+
+      mobileDotEls.forEach((dot) => {
+        const id = String(dot?.dataset?.mediaId || '');
+        dot.hidden = !visibleIds.has(id);
+      });
+
+      visibleItems.forEach((item) => {
+        const dot = dotsById.get(item.id);
+        if (dot && mobileDotsWrap) mobileDotsWrap.appendChild(dot);
+      });
+
+      if (mobileDotsWrap) {
+        mobileDotsWrap.hidden = visibleItems.length <= 1;
+      }
+    };
+
+    const applyGalleryOrderAndVisibility = (visibleItems) => {
+      applyDesktopThumbOrderAndVisibility(visibleItems);
+      applyMobileOrderAndVisibility(visibleItems);
+      setMobileBestseller(visibleItems);
+      state.visibleItems = visibleItems;
     };
 
     const setStageByMedia = (media) => {
@@ -199,12 +340,36 @@
       });
     };
 
-    const selectMediaIndex = (index, visibleMedia) => {
-      const safeIndex = Math.max(0, Math.min(index, visibleMedia.length - 1));
-      const media = visibleMedia[safeIndex];
+    const setStageByItem = (item) => {
+      if (!stage || !item) return;
+
+      if (item.type === 'proof') {
+        stage.dataset.stageType = 'proof';
+        if (stageProof) stageProof.hidden = false;
+        return;
+      }
+
+      stage.dataset.stageType = 'image';
+      if (stageProof) stageProof.hidden = true;
+      setStageByMedia(item.media);
+    };
+
+    const scrollMobileToItem = (itemId, behavior = 'smooth') => {
+      if (!mobileTrack || !itemId) return;
+      const slide = slidesById.get(String(itemId));
+      if (!slide || slide.hidden) return;
+      mobileTrack.scrollTo({ left: slide.offsetLeft, behavior });
+    };
+
+    const selectMediaIndex = (index, visibleItems, options = {}) => {
+      if (!visibleItems.length) return;
+      const safeIndex = Math.max(0, Math.min(index, visibleItems.length - 1));
+      const item = visibleItems[safeIndex];
       state.activeIndex = safeIndex;
 
-      if (!taggingEnabled) {
+      if (item.type === 'proof') {
+        state.activeKind = 'proof';
+      } else if (!taggingEnabled) {
         state.activeKind = 'color';
       } else if (state.colorMediaLength > 0 && safeIndex < state.colorMediaLength) {
         state.activeKind = 'color';
@@ -212,21 +377,28 @@
         state.activeKind = 'shared';
       }
 
-      setStageByMedia(media);
-      setActiveThumb(media?.id);
+      setStageByItem(item);
+      setActiveThumb(item.id);
+      setActiveDot(item.id);
+      setDesktopBestseller(isBestseller && safeIndex === 0);
+
+      if (options.scrollMobile !== false) {
+        scrollMobileToItem(item.id, options.instant ? 'auto' : 'smooth');
+      }
     };
 
     const updateGalleryForVariant = (variant) => {
       if (!variant) return;
       const color = getSelectedColorForVariant(variant);
       const { visible, colorMedia } = getVisibleMediaForColor(color);
-      if (!visible.length) return;
+      const visibleItems = buildVisibleItems(visible);
+      if (!visibleItems.length) return;
 
       const wasOnShared = state.initialized && taggingEnabled && state.activeKind === 'shared';
+      const wasOnProof = state.initialized && state.activeKind === 'proof';
 
       state.colorMediaLength = colorMedia.length;
-
-      applyThumbOrderAndVisibility(visible);
+      applyGalleryOrderAndVisibility(visibleItems);
 
       if (!state.initialized) {
         state.initialized = true;
@@ -234,32 +406,52 @@
         const featuredMediaId =
           variant?.featured_media && typeof variant.featured_media === 'object' ? variant.featured_media.id : variant?.featured_media;
         const initialFeaturedIndex = featuredMediaId
-          ? visible.findIndex((m) => String(m?.id) === String(featuredMediaId))
+          ? visibleItems.findIndex((item) => item.type === 'media' && String(item?.media?.id) === String(featuredMediaId))
           : -1;
 
-        selectMediaIndex(initialFeaturedIndex >= 0 ? initialFeaturedIndex : 0, visible);
+        selectMediaIndex(initialFeaturedIndex >= 0 ? initialFeaturedIndex : 0, visibleItems, {
+          scrollMobile: false,
+          instant: true,
+        });
         return;
       }
 
+      if (wasOnProof && proofId) {
+        const proofIndex = visibleItems.findIndex((item) => item.type === 'proof');
+        if (proofIndex >= 0) {
+          selectMediaIndex(proofIndex, visibleItems, { scrollMobile: false, instant: true });
+          return;
+        }
+      }
+
       if (wasOnShared) {
-        selectMediaIndex(0, visible);
+        selectMediaIndex(0, visibleItems, { scrollMobile: false, instant: true });
         return;
       }
 
       if (colorMedia.length) {
         const nextIndex = Math.min(state.activeIndex, colorMedia.length - 1);
-        selectMediaIndex(nextIndex, visible);
+        selectMediaIndex(nextIndex, visibleItems, { scrollMobile: false, instant: true });
         return;
       }
 
-      selectMediaIndex(0, visible);
+      selectMediaIndex(0, visibleItems, { scrollMobile: false, instant: true });
     };
 
-    const moneyFormat = (cents) => {
-      if (window?.Shopify?.formatMoney) {
-        return window.Shopify.formatMoney(cents, window.Shopify.money_format);
+    const formatCurrency = (cents, { minimumFractionDigits = 0, maximumFractionDigits = 2 } = {}) => {
+      try {
+        return new Intl.NumberFormat('pl-PL', {
+          style: 'currency',
+          currency: 'PLN',
+          minimumFractionDigits,
+          maximumFractionDigits,
+        })
+          .format(cents / 100)
+          .replace(/\u00a0/g, ' ');
+      } catch (error) {
+        const value = (cents / 100).toFixed(Math.max(minimumFractionDigits, 2)).replace('.', ',');
+        return `${value} zł`;
       }
-      return `${(cents / 100).toFixed(2)}`;
     };
 
     const getSelectedOptions = () => {
@@ -291,13 +483,34 @@
       if (!variant) return;
       if (variantIdInput) variantIdInput.value = variant.id;
 
-      if (priceEl) priceEl.textContent = moneyFormat(variant.price);
-      if (stickyPrice) stickyPrice.textContent = moneyFormat(variant.price);
+      if (priceEl) priceEl.textContent = formatCurrency(variant.price, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+      if (stickyPrice) stickyPrice.textContent = formatCurrency(variant.price, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+
+      const perNightCents = Math.round(variant.price / 365);
+      if (stickyPricePerNight) {
+        stickyPricePerNight.textContent = `${stickyPricePerNightPrefix}${formatCurrency(perNightCents, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}${stickyPricePerNightSuffix}`;
+      }
+
+      const stickyVariantLabel = getStickyVariantLabel(variant);
+      if (stickyVariant) stickyVariant.textContent = stickyVariantLabel;
+
+      if (stickyImage) {
+        const stickyImageSrc = getVariantImageSrc(variant);
+        const normalizedStickyImageSrc = normalizeImageUrl(stickyImageSrc);
+        if (normalizedStickyImageSrc) {
+          stickyImage.src = urlWithWidth(normalizedStickyImageSrc, 88) || normalizedStickyImageSrc;
+        }
+        if (stickyVariantLabel) stickyImage.alt = stickyVariantLabel;
+        else if (product?.title) stickyImage.alt = product.title;
+      }
 
       const compareAt = variant.compare_at_price;
       if (compareAtEl) {
         if (compareAt && compareAt > variant.price) {
-          compareAtEl.textContent = moneyFormat(compareAt);
+          compareAtEl.textContent = formatCurrency(compareAt, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
           compareAtEl.classList.remove('hidden');
         } else {
           compareAtEl.textContent = '';
@@ -306,8 +519,7 @@
       }
 
       if (pricePerNightEl) {
-        const perNightCents = Math.round(variant.price / 365);
-        pricePerNightEl.textContent = `${pricePerNightPrefix}${moneyFormat(perNightCents)}${pricePerNightSuffix}`;
+        pricePerNightEl.textContent = `${pricePerNightPrefix}${formatCurrency(perNightCents, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}${pricePerNightSuffix}`;
       }
 
       const available = !!variant.available;
@@ -317,10 +529,14 @@
         stockText.textContent = available ? inStock : outOfStock;
       }
       if (stockDot) {
-        stockDot.classList.toggle('bg-green-500', available);
-        stockDot.classList.toggle('bg-red-500', !available);
+        stockDot.classList.toggle('lusena-pdp__stock-dot--available', available);
+        stockDot.classList.toggle('lusena-pdp__stock-dot--unavailable', !available);
       }
       if (atcButton) atcButton.disabled = !available;
+      if (buyNowButton) {
+        buyNowButton.disabled = !available;
+        if (available) buyNowButton.removeAttribute('aria-disabled');
+      }
       if (stickyAtcButton) stickyAtcButton.disabled = !available;
 
       updateGalleryForVariant(variant);
@@ -338,25 +554,305 @@
       updateUIForVariant(variant);
     });
 
+    if (buyNowButton && atcButton) {
+      buyNowButton.addEventListener('click', async () => {
+        if (atcButton.disabled) return;
+
+        const variantId = variantIdInput?.value;
+        if (!variantId || typeof fetchConfig !== 'function' || !window.routes?.cart_add_url || !window.routes?.checkout_url) {
+          atcButton.click();
+          return;
+        }
+
+        buyNowButton.setAttribute('aria-disabled', 'true');
+        buyNowButton.disabled = true;
+
+        try {
+          const formData = new FormData();
+          formData.append('id', variantId);
+          formData.append('quantity', '1');
+
+          const config = fetchConfig('javascript');
+          config.headers['X-Requested-With'] = 'XMLHttpRequest';
+          delete config.headers['Content-Type'];
+          config.body = formData;
+
+          const response = await fetch(window.routes.cart_add_url, config);
+          const data = await response.json();
+
+          if (!response.ok || data?.status) {
+            atcButton.click();
+            return;
+          }
+
+          window.location.href = window.routes.checkout_url;
+        } catch (error) {
+          atcButton.click();
+        } finally {
+          buyNowButton.removeAttribute('aria-disabled');
+          buyNowButton.disabled = atcButton.disabled;
+        }
+      });
+    }
+
+    const getAccordionItemParts = (item) => {
+      if (!(item instanceof HTMLElement)) return { trigger: null, content: null };
+      return {
+        trigger: item.querySelector('[data-lusena-accordion-trigger]'),
+        content: item.querySelector('[data-lusena-accordion-content]'),
+      };
+    };
+
+    const updateAccordionContentHeight = (content) => {
+      if (!(content instanceof HTMLElement)) return;
+      const inner = content.firstElementChild instanceof HTMLElement ? content.firstElementChild : content;
+      const measured = inner.scrollHeight;
+      content.style.setProperty('--radix-accordion-content-height', `${Math.max(0, measured)}px`);
+    };
+
+    const ensureAccordionReady = (content) => {
+      if (!(content instanceof HTMLElement)) return;
+      if (content.hasAttribute('data-lusena-accordion-ready')) return;
+      requestAnimationFrame(() => {
+        content.setAttribute('data-lusena-accordion-ready', '');
+      });
+    };
+
+    const observeAccordionContent = (content) => {
+      if (!(content instanceof HTMLElement)) return;
+      if (accordionContentObservers.has(content)) return;
+      const inner = content.firstElementChild instanceof HTMLElement ? content.firstElementChild : content;
+
+      if (typeof ResizeObserver === 'function' && inner) {
+        const observer = new ResizeObserver(() => updateAccordionContentHeight(content));
+        observer.observe(inner);
+        accordionContentObservers.set(content, observer);
+      }
+
+      updateAccordionContentHeight(content);
+      ensureAccordionReady(content);
+    };
+
+    const setAccordionContentState = (content, isOpen) => {
+      if (!(content instanceof HTMLElement)) return;
+      updateAccordionContentHeight(content);
+      content.dataset.state = isOpen ? 'open' : 'closed';
+    };
+
+    const setAccordionItemState = (item, isOpen) => {
+      if (!(item instanceof HTMLElement)) return;
+
+      const { trigger, content } = getAccordionItemParts(item);
+      const state = isOpen ? 'open' : 'closed';
+
+      item.dataset.state = state;
+
+      if (trigger instanceof HTMLElement) {
+        trigger.dataset.state = state;
+        trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      }
+
+      if (content instanceof HTMLElement) {
+        setAccordionContentState(content, isOpen);
+      }
+    };
+
+    const closeSiblingAccordionItems = (accordionRoot, currentItem) => {
+      if (!(accordionRoot instanceof HTMLElement)) return;
+      const items = Array.from(accordionRoot.querySelectorAll('[data-lusena-accordion-item]'));
+      items.forEach((item) => {
+        if (!(item instanceof HTMLElement) || item === currentItem) return;
+        setAccordionItemState(item, false);
+      });
+    };
+
+    const initializeAccordionRoot = (accordionRoot) => {
+      if (!(accordionRoot instanceof HTMLElement)) return;
+
+      const isSingle = accordionRoot.hasAttribute('data-lusena-accordion-single');
+      const isCollapsible = accordionRoot.hasAttribute('data-lusena-accordion-collapsible');
+      const items = Array.from(accordionRoot.querySelectorAll('[data-lusena-accordion-item]'));
+
+      items.forEach((item) => {
+        if (!(item instanceof HTMLElement)) return;
+        setAccordionItemState(item, false);
+
+        const { trigger } = getAccordionItemParts(item);
+        if (!(trigger instanceof HTMLButtonElement)) return;
+
+        const { content } = getAccordionItemParts(item);
+        if (content instanceof HTMLElement) {
+          observeAccordionContent(content);
+        }
+
+        trigger.addEventListener('click', () => {
+          const currentlyOpen = item.dataset.state === 'open';
+
+          if (currentlyOpen && isCollapsible) {
+            setAccordionItemState(item, false);
+            return;
+          }
+
+          if (isSingle) {
+            closeSiblingAccordionItems(accordionRoot, item);
+          }
+
+          setAccordionItemState(item, true);
+        });
+      });
+    };
+
+    if (accordionRoots.length) {
+      accordionRoots.forEach((accordionRoot) => {
+        initializeAccordionRoot(accordionRoot);
+      });
+    }
+
+    if (specDefinitionToggles.length) {
+      specDefinitionToggles.forEach((toggleButton) => {
+        if (!(toggleButton instanceof HTMLButtonElement)) return;
+
+        toggleButton.addEventListener('click', () => {
+          const specsTable = toggleButton.closest('[data-lusena-specs-table]');
+          const key = toggleButton.dataset.specKey;
+          if (!(specsTable instanceof HTMLElement) || !key) return;
+
+          const definitionRow = specsTable.querySelector(
+            `[data-lusena-spec-def-row][data-spec-key="${key}"]`
+          );
+          if (!(definitionRow instanceof HTMLElement)) return;
+
+          const isOpen = !definitionRow.hidden;
+
+          const rows = Array.from(specsTable.querySelectorAll('[data-lusena-spec-def-row]'));
+          const buttons = Array.from(specsTable.querySelectorAll('[data-lusena-spec-def-toggle]'));
+
+          rows.forEach((row) => {
+            if (row instanceof HTMLElement) row.hidden = true;
+          });
+
+          buttons.forEach((button) => {
+            if (button instanceof HTMLElement) {
+              button.setAttribute('aria-expanded', 'false');
+            }
+          });
+
+          if (!isOpen) {
+            definitionRow.hidden = false;
+            toggleButton.setAttribute('aria-expanded', 'true');
+          }
+
+          const content = specsTable.closest('[data-lusena-accordion-content]');
+          if (content instanceof HTMLElement) {
+            updateAccordionContentHeight(content);
+          }
+        });
+      });
+    }
+
+    const openReturnsAccordion = () => {
+      const detailsSection = document.getElementById('details');
+      const returnsAccordion =
+        detailsSection?.querySelector('[data-lusena-accordion-returns]') ||
+        root.querySelector('[data-lusena-accordion-returns]') ||
+        document.querySelector('[data-lusena-accordion-returns]');
+
+      if (returnsAccordion instanceof HTMLElement) {
+        if (returnsAccordion instanceof HTMLDetailsElement) {
+          returnsAccordion.open = true;
+        } else {
+          const returnsRoot = returnsAccordion.closest('[data-lusena-accordion-root]');
+          if (returnsRoot instanceof HTMLElement && returnsRoot.hasAttribute('data-lusena-accordion-single')) {
+            closeSiblingAccordionItems(returnsRoot, returnsAccordion);
+          }
+          setAccordionItemState(returnsAccordion, true);
+        }
+      }
+
+      if (detailsSection) {
+        detailsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    if (returnsLinks.length) {
+      returnsLinks.forEach((link) => {
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          openReturnsAccordion();
+        });
+      });
+    }
+
     if (thumbEls.length) {
       thumbEls.forEach((el) => {
         el.addEventListener('click', () => {
           const id = el?.dataset?.mediaId ? String(el.dataset.mediaId) : null;
           if (!id) return;
-
-          const colorIndex = getColorOptionIndex();
-          const variant =
-            findVariant(getSelectedOptions()) ||
-            product?.variants?.find((v) => String(v.id) === String(variantIdInput?.value || '')) ||
-            product?.variants?.[0];
-          const color = colorIndex !== null ? getSelectedColorForVariant(variant) : null;
-          const { visible } = getVisibleMediaForColor(color);
-
-          const idx = visible.findIndex((m) => String(m?.id) === id);
+          const idx = state.visibleItems.findIndex((item) => item.id === id);
           if (idx < 0) return;
-          selectMediaIndex(idx, visible);
+          selectMediaIndex(idx, state.visibleItems, { instant: true });
         });
       });
+    }
+
+    if (mobileDotEls.length) {
+      mobileDotEls.forEach((dot) => {
+        dot.addEventListener('click', () => {
+          const id = dot?.dataset?.mediaId ? String(dot.dataset.mediaId) : null;
+          if (!id) return;
+          const idx = state.visibleItems.findIndex((item) => item.id === id);
+          if (idx < 0) return;
+          selectMediaIndex(idx, state.visibleItems);
+        });
+      });
+    }
+
+    if (mobileSlideEls.length) {
+      mobileSlideEls.forEach((slide) => {
+        slide.addEventListener('click', (event) => {
+          if (event.target instanceof HTMLElement && event.target.closest('a')) return;
+          const id = slide?.dataset?.mediaId ? String(slide.dataset.mediaId) : null;
+          if (!id) return;
+          const idx = state.visibleItems.findIndex((item) => item.id === id);
+          if (idx < 0) return;
+          selectMediaIndex(idx, state.visibleItems, { instant: true });
+        });
+      });
+    }
+
+    if (mobileTrack) {
+      let scrollFrame = null;
+      mobileTrack.addEventListener(
+        'scroll',
+        () => {
+          if (scrollFrame) return;
+          scrollFrame = window.requestAnimationFrame(() => {
+            scrollFrame = null;
+            if (!state.visibleItems.length) return;
+            const visibleSlides = state.visibleItems
+              .map((item) => slidesById.get(item.id))
+              .filter((slide) => slide && !slide.hidden);
+            if (!visibleSlides.length) return;
+
+            let closestIndex = 0;
+            let closestDistance = Number.POSITIVE_INFINITY;
+            const scrollLeft = mobileTrack.scrollLeft;
+
+            visibleSlides.forEach((slide, index) => {
+              const distance = Math.abs(slide.offsetLeft - scrollLeft);
+              if (distance < closestDistance) {
+                closestDistance = distance;
+                closestIndex = index;
+              }
+            });
+
+            if (closestIndex !== state.activeIndex) {
+              selectMediaIndex(closestIndex, state.visibleItems, { scrollMobile: false, instant: true });
+            }
+          });
+        },
+        { passive: true }
+      );
     }
 
     setSelectedLabel();
@@ -371,25 +867,39 @@
 
     const show = () => stickyBar.classList.remove('translate-y-full');
     const hide = () => stickyBar.classList.add('translate-y-full');
+    const hasPassedMainCta = () => {
+      const rect = mainCta.getBoundingClientRect();
+      return rect.bottom <= 0;
+    };
+    const syncStickyVisibility = () => {
+      if (hasPassedMainCta()) show();
+      else hide();
+    };
+
+    hide();
 
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) hide();
-            else show();
+            if (entry.isIntersecting) {
+              hide();
+              return;
+            }
+
+            if (entry.boundingClientRect.bottom <= 0) show();
+            else hide();
           });
         },
-        { rootMargin: '0px 0px -10% 0px' }
+        { threshold: 0 }
       );
       io.observe(mainCta);
+      syncStickyVisibility();
       return;
     }
 
     const onScroll = () => {
-      const rect = mainCta.getBoundingClientRect();
-      if (rect.bottom < 0) show();
-      else hide();
+      syncStickyVisibility();
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });

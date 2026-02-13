@@ -1,0 +1,17 @@
+{% doc %}
+  PDP payment reassurance row shown under guarantee.
+
+  @param {section} section
+{% enddoc %}
+
+        <div class="flex items-center gap-2{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {% render 'lusena-icon', name: 'lock', class: 'w-4 h-4 text-secondary/40 shrink-0', stroke_width: 1.5 %}
+          <div class="lusena-pdp-payment-methods"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
+            <span class="lusena-pdp-payment-method{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">Visa</span>
+            <span class="lusena-pdp-payment-method{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">Mastercard</span>
+            <span class="lusena-pdp-payment-method{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">BLIK</span>
+            <span class="lusena-pdp-payment-method{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">PayPo</span>
+            <span class="lusena-pdp-payment-method{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">Przelewy24</span>
+            <span class="lusena-pdp-payment-secure">{{ section.settings.secure_payment_label | escape }}</span>
+          </div>
+        </div>

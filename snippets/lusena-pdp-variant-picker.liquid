@@ -6,8 +6,6 @@
   @param {section} section
 {% enddoc %}
 
-        <div class="h-px bg-gray-100"></div>
-
         <div class="space-y-6{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-variant-selectors>
           {%- unless product.has_only_default_variant -%}
             {%- for option in product.options_with_values -%}
@@ -31,7 +29,11 @@
                 {% if is_color %}data-lusena-option-type="color"{% endif %}
               >
                 <legend class="text-sm font-medium text-secondary uppercase tracking-wider text-xs">
-                  {{ option.name | escape }}:
+                  {%- if is_color and section.settings.select_color_label != blank -%}
+                    {{ section.settings.select_color_label | escape }}:
+                  {%- else -%}
+                    {{ option.name | escape }}:
+                  {%- endif -%}
                   <span class="text-primary font-semibold text-sm ml-1" data-lusena-selected>{{ selected_value | escape }}</span>
                 </legend>
 
@@ -87,7 +89,7 @@
                           {% if option_disabled %}disabled{% endif %}
                         >
                         <span
-                          class="lusena-option__swatch w-10 h-10 rounded-full border border-gray-200 hover:brightness-95 shadow-sm {{ bg_class }}"
+                          class="lusena-option__swatch w-11 h-11 rounded-full border border-secondary/20 hover:brightness-95 shadow-sm {{ bg_class }}"
                           data-lusena-value
                           data-lusena-option-value="{{ value | escape }}"
                           title="{{ value | escape }}"
@@ -112,7 +114,7 @@
                           {% if option_disabled %}disabled{% endif %}
                         >
                         <span
-                          class="lusena-option__pill px-6 py-2 border text-sm min-w-[4rem] border-secondary/30 text-primary hover:border-primary"
+                          class="lusena-option__pill px-6 py-2 border text-sm min-w-[6.4rem] border-secondary/30 text-primary hover:border-accent-cta"
                           data-lusena-value
                           data-lusena-option-value="{{ value | escape }}"
                         >

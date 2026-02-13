@@ -6,6 +6,8 @@
   .lusena-pdp {
     padding-top: var(--lusena-section-padding-top-mobile);
     padding-bottom: var(--lusena-section-padding-bottom-mobile);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   @media (min-width: 768px) {
@@ -15,72 +17,563 @@
     }
   }
 
+  .lusena-pdp .lusena-pdp-buy-box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__summary {
+    order: 1;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__variant {
+    order: 4;
+    margin-top: 1.6rem;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__atc {
+    order: 5;
+    margin-top: 2rem;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__guarantee {
+    order: 6;
+    margin-top: 1.2rem;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__payment {
+    order: 7;
+    margin-top: 1.2rem;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__proof {
+    order: 8;
+    margin-top: 1.6rem;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__desktop-divider {
+    display: none;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__benefits-mobile {
+    order: 9;
+    margin-top: 2.4rem;
+    border-top: 1px solid rgba(74, 74, 74, 0.1);
+    padding-top: 2rem;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__benefits-list > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1rem;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__details {
+    order: 10;
+    margin-top: 3.2rem;
+  }
+
+  .lusena-pdp-details__heading {
+    font-family: 'Source Serif 4', serif;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 400;
+    letter-spacing: normal;
+  }
+
+  .lusena-pdp-accordion,
+  .lusena-pdp-details__heading {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+  }
+
+  .lusena-pdp-accordion__trigger {
+    font-family: 'Source Serif 4', serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    letter-spacing: normal;
+  }
+
+  .lusena-pdp-accordion__trigger[data-state='open'] .lusena-pdp-accordion__chevron {
+    transform: rotate(180deg);
+  }
+
+  .lusena-pdp-accordion__content {
+    overflow: hidden;
+    will-change: height;
+    height: 0;
+  }
+
+  .lusena-pdp-accordion__content[data-state='open'] {
+    height: var(--radix-accordion-content-height);
+  }
+
+  .lusena-pdp-accordion__content[data-lusena-accordion-ready][data-state='open'] {
+    animation: accordion-down 0.2s ease-out;
+  }
+
+  .lusena-pdp-accordion__content[data-lusena-accordion-ready][data-state='closed'] {
+    animation: accordion-up 0.2s ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lusena-pdp-accordion__content[data-lusena-accordion-ready][data-state='open'],
+    .lusena-pdp-accordion__content[data-lusena-accordion-ready][data-state='closed'] {
+      animation: none;
+    }
+  }
+
+  .lusena-pdp-accordion__body {
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    letter-spacing: normal;
+    color: rgba(74, 74, 74, 1);
+  }
+
+  .lusena-pdp-accordion__body p {
+    margin: 0;
+  }
+
+  .lusena-pdp-accordion__body p + p {
+    margin-top: 0.8rem;
+  }
+
+  .lusena-pdp-accordion__body table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .lusena-pdp-accordion__body td {
+    vertical-align: top;
+  }
+
+  .lusena-pdp-accordion__body [data-lusena-specs-table] .lusena-pdp-specs-row--alt {
+    background: rgba(240, 238, 235, 0.5);
+  }
+
+  .lusena-pdp-accordion__body [data-lusena-specs-table] .lusena-pdp-specs-row--definition {
+    background: rgba(247, 245, 242, 0.6);
+  }
+
+  .lusena-pdp .lusena-pdp-summary__eyebrow {
+    display: block;
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+  }
+
+  .lusena-pdp .lusena-pdp-summary__title {
+    margin-top: 0.4rem;
+    font-size: 2.4rem;
+    line-height: 3.2rem;
+  }
+
+  .lusena-pdp .lusena-pdp-summary__tagline {
+    padding-top: 0.4rem;
+  }
+
+  .lusena-pdp .lusena-pdp-summary__price {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .lusena-pdp .lusena-pdp-summary__delivery {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .lusena-pdp .lusena-pdp-summary__delivery-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.8rem;
+    width: 100%;
+    max-width: 100%;
+    text-align: left;
+    color: rgba(74, 74, 74, 1);
+  }
+
+  .lusena-pdp .lusena-pdp-summary__delivery-icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    flex-shrink: 0;
+  }
+
+  .lusena-pdp .lusena-pdp-summary__delivery-copy,
+  .lusena-pdp .lusena-pdp-summary__delivery-text {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+  }
+
+  .lusena-pdp .lusena-pdp-proof-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .lusena-pdp .lusena-pdp-proof-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 1px solid rgba(74, 74, 74, 0.15);
+    border-radius: 9999px;
+    padding: 0.6rem 1.2rem;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    color: rgba(74, 74, 74, 1);
+    transition: border-color 150ms ease, color 150ms ease;
+    cursor: default;
+  }
+
+  .lusena-pdp .lusena-pdp-proof-chip:hover {
+    border-color: rgba(14, 94, 90, 0.3);
+    color: rgb(17 17 17);
+  }
+
+  .lusena-pdp .lusena-pdp-payment-methods {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .lusena-pdp .lusena-pdp-payment-method {
+    font-size: 10px;
+    line-height: 14px;
+    color: rgba(74, 74, 74, 0.5);
+    border: 1px solid rgba(74, 74, 74, 0.1);
+    border-radius: 6px;
+    padding: 0.2rem 0.6rem;
+  }
+
+  .lusena-pdp .lusena-pdp-payment-secure {
+    font-size: 10px;
+    line-height: 14px;
+    color: rgba(74, 74, 74, 0.4);
+    margin-left: 0.4rem;
+  }
+
+  .lusena-pdp .lusena-pdp__stock-dot--available {
+    background-color: #2f7d4e;
+  }
+
+  .lusena-pdp .lusena-pdp__stock-dot--unavailable {
+    background-color: #b91c1c;
+  }
+
+  @media (min-width: 768px) {
+    .lusena-pdp .lusena-pdp-buy-box {
+      position: sticky;
+      top: 12.8rem;
+      align-self: flex-start;
+    }
+
+    .lusena-pdp .lusena-pdp-buy-box__proof {
+      order: 4;
+      margin-top: 2rem;
+    }
+
+    .lusena-pdp .lusena-pdp-buy-box__desktop-divider {
+      display: block;
+      order: 5;
+      height: 1px;
+      background: rgba(74, 74, 74, 0.1);
+      margin-top: 2rem;
+    }
+
+    .lusena-pdp .lusena-pdp-buy-box__variant {
+      order: 6;
+      margin-top: 2rem;
+    }
+
+    .lusena-pdp .lusena-pdp-buy-box__atc {
+      order: 7;
+      margin-top: 2rem;
+    }
+
+    .lusena-pdp .lusena-pdp-buy-box__guarantee {
+      order: 8;
+      margin-top: 1.6rem;
+    }
+
+    .lusena-pdp .lusena-pdp-buy-box__payment {
+      order: 9;
+      margin-top: 1.6rem;
+    }
+
+    .lusena-pdp .lusena-pdp-buy-box__benefits-mobile {
+      display: none;
+    }
+
+    .lusena-pdp .lusena-pdp-buy-box__details {
+      margin-top: 2.4rem;
+    }
+
+    .lusena-pdp-details__heading {
+      font-size: 28px;
+      line-height: 36px;
+    }
+
+    .lusena-pdp .lusena-pdp-summary__eyebrow {
+      font-size: 1.8rem;
+      line-height: 2.8rem;
+    }
+
+    .lusena-pdp .lusena-pdp-summary__title {
+      margin-top: 0.8rem;
+      font-size: 4rem;
+      line-height: 4.8rem;
+    }
+  }
+
   .lusena-pdp .lusena-option__input:checked + .lusena-option__pill {
-    border-color: var(--primary);
-    background-color: var(--primary);
-    color: #fff;
+    border-width: 2px;
+    border-color: var(--accent-cta, #0e5e5a);
+    background-color: rgb(240 238 235);
+    color: rgb(17 17 17);
   }
 
   .lusena-pdp .lusena-option__input:checked + .lusena-option__swatch {
-    border-color: var(--primary);
-    outline: 1px solid var(--primary);
-    outline-offset: 2px;
+    border-color: var(--accent-cta, #0e5e5a);
+    box-shadow:
+      0 0 0 2px #fff,
+      0 0 0 4px var(--accent-cta, #0e5e5a);
+  }
+
+  .lusena-pdp .lusena-gallery__desktop {
+    display: none;
+  }
+
+  .lusena-pdp .lusena-gallery__mobile {
+    display: block;
+  }
+
+  @media screen and (min-width: 750px) {
+    .lusena-pdp .lusena-gallery__desktop {
+      display: block;
+    }
+
+    .lusena-pdp .lusena-gallery__mobile {
+      display: none;
+    }
+  }
+
+  .lusena-pdp .lusena-gallery__desktop-grid {
+    display: flex;
+    gap: 12px;
+  }
+
+  .lusena-pdp .lusena-media-thumbs-desktop {
+    width: 72px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .lusena-pdp .lusena-media-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border: 2px solid transparent;
+    border-radius: 2px;
+    overflow: hidden;
+    background: rgb(240 238 235);
+    transition: border-color 150ms ease;
+  }
+
+  .lusena-pdp .lusena-media-thumb:hover {
+    border-color: rgba(74, 74, 74, 0.3);
+  }
+
+  .lusena-pdp .lusena-media-thumb[aria-current='true'] {
+    border-color: var(--accent-cta, #0e5e5a);
+  }
+
+  .lusena-pdp .lusena-media-thumb--proof {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lusena-pdp .lusena-media-thumb__proof-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-cta, #0e5e5a);
+    background: rgb(247 245 242);
+  }
+
+  .lusena-pdp .lusena-media-stage {
+    flex: 1;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    position: relative;
+    background: rgb(240 238 235);
   }
 
   .lusena-pdp [data-lusena-media-stage] img {
-    transition: opacity 200ms ease-in-out;
+    transition: opacity 200ms ease-in-out, transform 500ms ease;
+    transform-origin: center;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .lusena-pdp [data-lusena-media-stage]:hover img {
+      transform: scale(1.05);
+    }
+  }
+
+  .lusena-pdp .lusena-proof-tile {
+    width: 100%;
+    height: 100%;
+    padding: 2.4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    text-align: center;
+    background: rgb(247 245 242);
+  }
+
+  .lusena-pdp .lusena-proof-tile__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 999px;
+    color: var(--accent-cta, #0e5e5a);
+    background: rgb(255 255 255 / 0.75);
+  }
+
+  .lusena-pdp .lusena-proof-tile__title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 2.2rem;
+    line-height: 1.2;
+    color: rgb(17 17 17);
+  }
+
+  .lusena-pdp .lusena-proof-tile__body {
+    font-size: 1.2rem;
+    line-height: 1.5;
+    color: rgba(74, 74, 74, 0.9);
+    max-width: 30ch;
+  }
+
+  .lusena-pdp .lusena-proof-tile__cta {
+    font-size: 1.2rem;
+    color: var(--accent-cta, #0e5e5a);
+    text-decoration: underline;
+    text-underline-offset: 0.25rem;
+  }
+
+  .lusena-pdp .lusena-proof-tile__cta:hover {
+    opacity: 0.8;
+  }
+
+  .lusena-pdp .lusena-media-stage[data-stage-type='proof'] img {
+    display: none;
+  }
+
+  .lusena-pdp [data-lusena-stage-proof] {
+    display: none;
+    position: absolute;
+    inset: 0;
+  }
+
+  .lusena-pdp .lusena-media-stage[data-stage-type='proof'] [data-lusena-stage-proof] {
+    display: flex;
+  }
+
+  .lusena-pdp .lusena-gallery__mobile-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 8px;
+    margin-left: -1.6rem;
+    margin-right: -1.6rem;
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .lusena-pdp .lusena-gallery__mobile-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .lusena-pdp .lusena-gallery__mobile-slide {
+    scroll-snap-align: center;
+    flex: 0 0 auto;
+    width: 85vw;
+    max-width: 400px;
+    height: min(60vh, 85vw);
+    aspect-ratio: 4 / 5;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    background: rgb(240 238 235);
+  }
+
+  .lusena-pdp .lusena-gallery__mobile-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .lusena-pdp .lusena-gallery__mobile-slide--proof {
+    background: rgb(247 245 242);
+  }
+
+  .lusena-pdp .lusena-gallery__mobile-dots {
+    margin-top: 1.2rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+
+  .lusena-pdp .lusena-gallery__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    background: rgba(74, 74, 74, 0.25);
+    transition: background-color 200ms ease;
+  }
+
+  .lusena-pdp .lusena-gallery__dot[aria-current='true'] {
+    background: rgb(17 17 17);
+  }
+
+  .lusena-pdp .lusena-gallery__mobile-dots[hidden] {
+    display: none;
+  }
+
+  .lusena-pdp .lusena-media-thumb[hidden],
+  .lusena-pdp .lusena-gallery__mobile-slide[hidden],
+  .lusena-pdp .lusena-gallery__dot[hidden] {
+    display: none !important;
   }
 
   @media (prefers-reduced-motion: reduce) {
     .lusena-pdp [data-lusena-media-stage] img {
       transition: none;
     }
-  }
-
-  .lusena-pdp .lusena-media-thumbs {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding-bottom: 4px;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .lusena-pdp .lusena-media-thumbs::-webkit-scrollbar {
-    height: 6px;
-  }
-
-  .lusena-pdp .lusena-media-thumbs::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.15);
-    border-radius: 999px;
-  }
-
-  .lusena-pdp .lusena-media-thumb {
-    width: 96px;
-    flex: 0 0 auto;
-    aspect-ratio: 1 / 1;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 2px;
-    overflow: hidden;
-    background: var(--surface-2);
-    scroll-snap-align: start;
-    transition: transform 200ms ease, border-color 200ms ease, outline-color 200ms ease;
-  }
-
-  .lusena-pdp .lusena-media-thumb:hover {
-    transform: translateY(-1px);
-    border-color: rgba(0, 0, 0, 0.25);
-  }
-
-  .lusena-pdp .lusena-media-thumb[aria-current='true'] {
-    border-color: var(--primary);
-    outline: 1px solid var(--primary);
-    outline-offset: 2px;
-  }
-
-  @media (min-width: 768px) {
+    .lusena-pdp .lusena-gallery__dot,
     .lusena-pdp .lusena-media-thumb {
-      width: 104px;
+      transition: none;
+    }
+
+    .lusena-pdp [data-lusena-media-stage]:hover img {
+      transform: none;
     }
   }
 

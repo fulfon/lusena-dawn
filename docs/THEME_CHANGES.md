@@ -19,7 +19,35 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — refactor(lusena): split PDP into snippets
+### (current) — feat(lusena): complete PDP + cart parity rollout
+
+**Goal:** Deliver draft-shop parity for PDP and cart UX in the active LUSENA Dawn flow, including buy-box composition, value-proof sections, breadcrumbs, and cart drawer interactions.
+
+**What changed**
+- Reworked the main PDP composition to match draft hierarchy: breadcrumbs, proof chips, buy-now action, guarantee/returns links, payment row, and buy-box detail panels; removed the previous standalone reviews fragment.
+- Added and wired three new PDP follow-up sections in `templates/product.json`: feature highlights, quality evidence stack, and details/FAQ.
+- Expanded PDP behavior scripts for returns deep-link opening, accordion sizing/state handling, spec-definition toggles, buy-now checkout redirect, sticky ATC synchronization, and tagged gallery/proof-tile flow.
+- Rebuilt the cart drawer to parity: refined empty/non-empty states, single-card upsell with metafield-driven selection, session-backed "Dodano do koszyka" feedback, free-shipping progress bar, and explicit continue-shopping control.
+- Standardized button radius parity (`6px`) and added targeted utility/class backfills plus icon extensions required by the new fragments.
+- Added reusable implementation artifacts for future parity work (plan template + PDP plan docs, local `theme-dev` launcher script, and the draftshop parity skill files).
+
+**Key files**
+- `sections/lusena-main-product.liquid`
+- `templates/product.json`
+- `sections/lusena-pdp-feature-highlights.liquid`
+- `sections/lusena-pdp-quality-evidence.liquid`
+- `sections/lusena-pdp-details.liquid`
+- `snippets/lusena-pdp-scripts.liquid`
+- `snippets/lusena-pdp-styles.liquid`
+- `snippets/cart-drawer.liquid`
+- `snippets/lusena-breadcrumbs.liquid`
+- `snippets/lusena-pdp-buybox-panels.liquid`
+- `snippets/lusena-missing-utilities.liquid`
+- `config/settings_data.json`
+- `docs/PDP_BuyBox_Parity_Plan.md`
+- `.codex/skills/lusena-draftshop-fragment-parity/SKILL.md`
+
+### 3a51798 — refactor(lusena): split PDP into snippets
 
 **Goal:** Make the product page (PDP) section easier to maintain by extracting `lusena-main-product` into focused snippet components, without changing the storefront output/behavior.
 
@@ -127,26 +155,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `docs/UI_UX_Instructions.md`
 - `docs/shopify_dawn_migration_plan.md`
 
-### 6f5f6de — fix(lusena): trust bar launch-safe proof points
-
-**Goal:** Make the trust bar launch-ready without reviews while keeping proof-first reassurance and clean mobile readability.
-
-**What changed**
-- Removed ratings/reviews from trust bar defaults (avoid “0 reviews” / placeholder numbers at launch).
-- Replaced the first item with a concrete material proof point (“22 momme / 30% gęstszy splot”) and added a dedicated `layers` icon.
-- Improved mobile layout/spacing (semantic list markup, consistent title/subtitle stacking, increased grid gap).
-- Aligned scroll-reveal behavior with Dawn (`scroll-trigger` on items + `data-cascade` on the container, gated by `settings.animations_reveal_on_scroll`).
-
-**Key files**
-- `sections/lusena-trust-bar.liquid`
-- `snippets/lusena-icon.liquid`
-- `templates/index.json`
-- `templates/page.nasza-jakosc.json`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-07T16:30:27+01:00 — (current) — refactor(lusena): split PDP into snippets
+- 2026-02-13T18:32:56+01:00 — (current) — feat(lusena): complete PDP + cart parity rollout
+- 2026-02-07T16:30:27+01:00 — 3a51798 — refactor(lusena): split PDP into snippets
 - 2026-02-04T20:48:18+01:00 — 09ba94a — fix(lusena): preserve PDP image index on color switch
 - 2026-02-04T20:39:13+01:00 — cdcee94 — fix(lusena): correct PDP color gallery filtering
 - 2026-02-03T19:25:59+01:00 — 8a6d37a — feat(lusena): PDP gallery grouped by color-tagged media
