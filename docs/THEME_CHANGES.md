@@ -19,7 +19,21 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — fix(ci): stabilize Lighthouse target and skip remote theme pull
+### (current) — fix(ci): resolve LHCI product handle dynamically
+
+**Goal:** Eliminate recurring Lighthouse 404 failures on product URLs by resolving a valid published product handle at runtime in CI.
+
+**What changed**
+- Added a `Resolve published product handle` step in the CI workflow that calls Shopify Admin API and extracts the first `active + published` product handle.
+- Added explicit fail-fast behavior with clear error output when no published product exists or API auth fails, instead of letting Lighthouse fail later with opaque audit noise.
+- Updated `shopify/lighthouse-ci-action@v1` input to use the resolved handle output from the resolver step.
+- Kept the existing LHCI thresholds and collection audit configuration unchanged.
+
+**Key files**
+- `.github/workflows/ci.yml`
+- `docs/THEME_CHANGES.md`
+
+### 1ad8a9e — fix(ci): stabilize Lighthouse target and skip remote theme pull
 
 **Goal:** Make CI Lighthouse runs deterministic by avoiding fallback `gift-card` 404s and preventing stale remote theme template data from being pulled into the check.
 
@@ -132,23 +146,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Key files**
 - `sections/lusena-main-product.liquid`
 
-### dc1ed64 — fix(lusena): sync page offset to header height
-
-**Goal:** Remove the tiny desktop gap between the fixed LUSENA header and the first section (most visible on white first sections like `/o-nas`), without affecting mobile or breaking existing layouts.
-
-**What changed**
-- Replaced hardcoded non-home `<main>` top padding with a CSS variable-driven offset (`--lusena-header-height`) so content starts exactly under the header.
-- Added a small header-height sync in `lusena-header` that measures only the “header bar” (excluding the expanding mobile menu panel) and writes `--lusena-header-height` (and `--header-height` for Dawn compatibility).
-- Updates on resize (and via `ResizeObserver` when available) to stay correct if the header height changes.
-
-**Key files**
-- `layout/theme.liquid`
-- `sections/lusena-header.liquid`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-13T18:50:36+01:00 — (current) — fix(ci): stabilize Lighthouse target and skip remote theme pull
+- 2026-02-13T19:00:05+01:00 — (current) — fix(ci): resolve LHCI product handle dynamically
+- 2026-02-13T18:50:36+01:00 — 1ad8a9e — fix(ci): stabilize Lighthouse target and skip remote theme pull
 - 2026-02-13T18:33:58+01:00 — 1ccc2b8 — feat(lusena): complete PDP + cart parity rollout
 - 2026-02-07T16:30:27+01:00 — 3a51798 — refactor(lusena): split PDP into snippets
 - 2026-02-04T20:48:18+01:00 — 09ba94a — fix(lusena): preserve PDP image index on color switch
