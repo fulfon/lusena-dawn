@@ -19,7 +19,20 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — feat(lusena): complete PDP + cart parity rollout
+### (current) — fix(ci): stabilize Lighthouse target and skip remote theme pull
+
+**Goal:** Make CI Lighthouse runs deterministic by avoiding fallback `gift-card` 404s and preventing stale remote theme template data from being pulled into the check.
+
+**What changed**
+- Added explicit `product_handle` to the Lighthouse GitHub Action, with repo variable support and fallback to `silk-pillowcase`.
+- Removed `pull_theme` from the Lighthouse action configuration to avoid importing remote/stale template data during CI.
+- Kept the existing accessibility threshold and collection target unchanged.
+
+**Key files**
+- `.github/workflows/ci.yml`
+- `docs/THEME_CHANGES.md`
+
+### 1ccc2b8 — feat(lusena): complete PDP + cart parity rollout
 
 **Goal:** Deliver draft-shop parity for PDP and cart UX in the active LUSENA Dawn flow, including buy-box composition, value-proof sections, breadcrumbs, and cart drawer interactions.
 
@@ -132,33 +145,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `layout/theme.liquid`
 - `sections/lusena-header.liquid`
 
-### a3fd8e3 — fix(lusena): make scroll-reveal consistent across pages
-
-**Goal:** Ensure “Reveal sections on scroll” works across all LUSENA custom pages/sections, while keeping the hero/header stack clickable and merchant-adjustable.
-
-**What changed**
-- Standardized LUSENA sections on Dawn’s scroll-reveal system (`scroll-trigger` + `animate--slide-in` / `animate--fade-in`), gated by `settings.animations_reveal_on_scroll`.
-- Added `data-cascade` to repeated-item containers (cards/rows) so reveals get Dawn’s subtle stagger.
-- Hardened `assets/animations.js` initialization so offscreen elements don’t “pre-animate” and section reloads in theme editor behave correctly.
-- Fixed hero motion/controls interaction by animating wrapper elements (so merchant-controlled transforms and mobile button sizing remain independent).
-- Updated developer docs (AGENTS + UI/UX + migration notes) to reflect the current motion approach (no GSAP).
-
-**Key files**
-- `assets/animations.js`
-- `sections/lusena-hero.liquid`
-- `sections/lusena-main-product.liquid`
-- `sections/lusena-main-collection.liquid`
-- `sections/lusena-about-*.liquid`
-- `sections/lusena-quality-*.liquid`
-- `sections/lusena-returns-*.liquid`
-- `AGENTS.md`
-- `docs/UI_UX_Instructions.md`
-- `docs/shopify_dawn_migration_plan.md`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-13T18:32:56+01:00 — (current) — feat(lusena): complete PDP + cart parity rollout
+- 2026-02-13T18:50:36+01:00 — (current) — fix(ci): stabilize Lighthouse target and skip remote theme pull
+- 2026-02-13T18:33:58+01:00 — 1ccc2b8 — feat(lusena): complete PDP + cart parity rollout
 - 2026-02-07T16:30:27+01:00 — 3a51798 — refactor(lusena): split PDP into snippets
 - 2026-02-04T20:48:18+01:00 — 09ba94a — fix(lusena): preserve PDP image index on color switch
 - 2026-02-04T20:39:13+01:00 — cdcee94 — fix(lusena): correct PDP color gallery filtering
