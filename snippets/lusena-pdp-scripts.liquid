@@ -42,6 +42,7 @@
 
     const galleryRoot = root.querySelector('[data-lusena-gallery]');
     const stage = root.querySelector('[data-lusena-media-stage]');
+    const stageContent = root.querySelector('[data-lusena-stage-content]');
     const stageAction = root.querySelector('[data-lusena-stage-action]');
     const stageImg = root.querySelector('[data-lusena-media-stage] img');
     const stageProof = root.querySelector('[data-lusena-stage-proof]');
@@ -97,6 +98,11 @@
         })
         .filter(Boolean)
     );
+
+    const STAGE_CROSSFADE_MS = 300;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let stageFadeTimer = null;
+    let mobileFadeTimer = null;
 
     const normalizeImageUrl = (src) => {
       if (!src) return null;
@@ -237,6 +243,7 @@
       activeKind: 'color',
       initialized: false,
       visibleItems: [],
+      visibleItemsKey: '',
     };
 
     const LIGHTBOX_HASH = '#lightbox';
@@ -277,6 +284,45 @@
       }
 
       return items;
+    };
+
+    const clearStageFadeTimer = () => {
+      if (stageFadeTimer) {
+        window.clearTimeout(stageFadeTimer);
+        stageFadeTimer = null;
+      }
+    };
+
+    const clearMobileFadeTimer = () => {
+      if (mobileFadeTimer) {
+        window.clearTimeout(mobileFadeTimer);
+        mobileFadeTimer = null;
+      }
+    };
+
+    const buildVisibleItemsKey = (visibleItems) => visibleItems.map((item) => item.id).join('|');
+
+    const setMobileTrackFade = (isVisible) => {
+      if (!mobileTrack) return;
+      mobileTrack.dataset.fadeState = isVisible ? 'in' : 'out';
+    };
+
+    const syncMobileSlideLoading = (visibleItems) => {
+      visibleItems.forEach((item, index) => {
+        const slide = slidesById.get(item.id);
+        if (!slide || slide.hidden) return;
+        const slideImage = slide.querySelector('img');
+        if (!(slideImage instanceof HTMLImageElement)) return;
+
+        if (item.type === 'media' && index === 0) {
+          slideImage.loading = 'eager';
+          slideImage.setAttribute('fetchpriority', 'high');
+          return;
+        }
+
+        slideImage.loading = 'lazy';
+        slideImage.removeAttribute('fetchpriority');
+      });
     };
 
     const setActiveThumb = (activeItemId) => {
@@ -348,6 +394,8 @@
         if (dot && mobileDotsWrap) mobileDotsWrap.appendChild(dot);
       });
 
+      syncMobileSlideLoading(visibleItems);
+
       if (mobileDotsWrap) {
         mobileDotsWrap.hidden = visibleItems.length <= 1;
       }
@@ -366,16 +414,14 @@
       if (!src) return;
 
       const { cleanAlt } = parseAlt(getMediaAltRaw(media));
-      stageImg.style.opacity = '0';
-      requestAnimationFrame(() => {
-        setResponsiveImage({
-          img: stageImg,
-          src,
-          widths: [600, 800, 1200, 1600],
-          sizes: stageSizes,
-          alt: cleanAlt,
-        });
-        stageImg.style.opacity = '1';
+      stageImg.loading = 'eager';
+      stageImg.setAttribute('fetchpriority', 'high');
+      setResponsiveImage({
+        img: stageImg,
+        src,
+        widths: [600, 800, 1200, 1600],
+        sizes: stageSizes,
+        alt: cleanAlt,
       });
     };
 
@@ -409,6 +455,25 @@
       setStageByMedia(item.media);
     };
 
+    const transitionStageToItem = (item, options = {}) => {
+      if (!stage || !item) return;
+      const useCrossfade = options.crossfade === true && !prefersReducedMotion && !!stageContent;
+
+      clearStageFadeTimer();
+      if (!useCrossfade) {
+        stage.dataset.stageFade = 'in';
+        setStageByItem(item);
+        return;
+      }
+
+      stage.dataset.stageFade = 'out';
+      stageFadeTimer = window.setTimeout(() => {
+        setStageByItem(item);
+        stage.dataset.stageFade = 'in';
+        stageFadeTimer = null;
+      }, STAGE_CROSSFADE_MS);
+    };
+
     const scrollMobileToItem = (itemId, behavior = 'smooth') => {
       if (!mobileTrack || !itemId) return;
       const slide = slidesById.get(String(itemId));
@@ -432,7 +497,7 @@
         state.activeKind = 'shared';
       }
 
-      setStageByItem(item);
+      transitionStageToItem(item, { crossfade: options.crossfade === true });
       setActiveThumb(item.id);
       setActiveDot(item.id);
       setDesktopBestseller(isBestseller && safeIndex === 0);
@@ -990,23 +1055,81 @@
       const { visible, colorMedia } = getVisibleMediaForColor(color);
       const visibleItems = buildVisibleItems(visible);
       if (!visibleItems.length) {
+        clearStageFadeTimer();
+        clearMobileFadeTimer();
+        setMobileTrackFade(true);
         if (lightboxState.open) closeLightbox();
         return;
       }
+      clearMobileFadeTimer();
 
+      const nextVisibleItemsKey = buildVisibleItemsKey(visibleItems);
+      const itemsChanged =
+        state.initialized && state.visibleItemsKey !== '' && state.visibleItemsKey !== nextVisibleItemsKey;
+      const variantCrossfade = itemsChanged && state.initialized;
       const wasOnShared = state.initialized && taggingEnabled && state.activeKind === 'shared';
       const wasOnProof = state.initialized && state.activeKind === 'proof';
+      const currentActiveItem = state.visibleItems[state.activeIndex];
+      const currentActiveMediaId = currentActiveItem?.type === 'media' ? String(currentActiveItem.id) : null;
+      const currentActiveIsShared =
+        currentActiveItem?.type === 'media' &&
+        taggingEnabled &&
+        (() => {
+          const activeAlt = getMediaAltRaw(currentActiveItem.media);
+          const { shared, colorTag } = parseAlt(activeAlt);
+          return shared || !colorTag;
+        })();
 
       state.colorMediaLength = colorMedia.length;
-      applyGalleryOrderAndVisibility(visibleItems);
 
-      const selectAndRefresh = (indexToSelect) => {
-        selectMediaIndex(indexToSelect, visibleItems, { scrollMobile: false, instant: true });
+      const selectAndRefresh = (indexToSelect, selectOptions = {}) => {
+        selectMediaIndex(indexToSelect, visibleItems, {
+          scrollMobile: false,
+          instant: true,
+          crossfade: selectOptions.crossfade === true,
+        });
         refreshLightboxSlides();
+      };
+
+      const getVariantTargetIndex = () => {
+        if (wasOnProof && proofId) {
+          const proofIndex = visibleItems.findIndex((item) => item.type === 'proof');
+          if (proofIndex >= 0) return proofIndex;
+        }
+
+        if (wasOnShared || currentActiveIsShared) {
+          if (colorMedia.length) return 0;
+          if (currentActiveMediaId) {
+            const sameSharedMediaIndex = visibleItems.findIndex(
+              (item) => item.type === 'media' && item.id === currentActiveMediaId
+            );
+            if (sameSharedMediaIndex >= 0) return sameSharedMediaIndex;
+          }
+          return 0;
+        }
+
+        if (colorMedia.length) {
+          return Math.min(state.activeIndex, colorMedia.length - 1);
+        }
+
+        return 0;
+      };
+
+      const selectForVariantChange = (indexToSelect) =>
+        selectAndRefresh(indexToSelect, { crossfade: variantCrossfade });
+
+      const syncMobileViewportToIndex = (indexToSelect, behavior = 'auto') => {
+        if (!mobileTrack) return;
+        const safeIndex = Math.max(0, Math.min(indexToSelect, visibleItems.length - 1));
+        const targetItem = visibleItems[safeIndex];
+        if (!targetItem) return;
+        scrollMobileToItem(targetItem.id, behavior);
       };
 
       if (!state.initialized) {
         state.initialized = true;
+        applyGalleryOrderAndVisibility(visibleItems);
+        state.visibleItemsKey = nextVisibleItemsKey;
 
         const featuredMediaId =
           variant?.featured_media && typeof variant.featured_media === 'object' ? variant.featured_media.id : variant?.featured_media;
@@ -1015,29 +1138,35 @@
           : -1;
 
         selectAndRefresh(initialFeaturedIndex >= 0 ? initialFeaturedIndex : 0);
+        setMobileTrackFade(true);
         return;
       }
 
-      if (wasOnProof && proofId) {
-        const proofIndex = visibleItems.findIndex((item) => item.type === 'proof');
-        if (proofIndex >= 0) {
-          selectAndRefresh(proofIndex);
-          return;
-        }
-      }
+      const targetIndex = getVariantTargetIndex();
+      const isMobileViewport = !!mobileTrack && window.matchMedia('(max-width: 749px)').matches;
+      const shouldSequenceMobileSwap =
+        variantCrossfade && !prefersReducedMotion && isMobileViewport;
 
-      if (wasOnShared) {
-        selectAndRefresh(0);
+      if (shouldSequenceMobileSwap) {
+        setMobileTrackFade(false);
+        mobileFadeTimer = window.setTimeout(() => {
+          applyGalleryOrderAndVisibility(visibleItems);
+          state.visibleItemsKey = nextVisibleItemsKey;
+          selectForVariantChange(targetIndex);
+          syncMobileViewportToIndex(targetIndex, 'auto');
+          setMobileTrackFade(true);
+          mobileFadeTimer = null;
+        }, STAGE_CROSSFADE_MS);
         return;
       }
 
-      if (colorMedia.length) {
-        const nextIndex = Math.min(state.activeIndex, colorMedia.length - 1);
-        selectAndRefresh(nextIndex);
-        return;
+      setMobileTrackFade(true);
+      applyGalleryOrderAndVisibility(visibleItems);
+      state.visibleItemsKey = nextVisibleItemsKey;
+      selectForVariantChange(targetIndex);
+      if (isMobileViewport && itemsChanged) {
+        syncMobileViewportToIndex(targetIndex, 'auto');
       }
-
-      selectAndRefresh(0);
     };
 
     const formatCurrency = (cents, { minimumFractionDigits = 0, maximumFractionDigits = 2 } = {}) => {
@@ -1423,7 +1552,8 @@
           if (!id) return;
           const idx = state.visibleItems.findIndex((item) => item.id === id);
           if (idx < 0) return;
-          selectMediaIndex(idx, state.visibleItems, { instant: true });
+          if (idx === state.activeIndex) return;
+          selectMediaIndex(idx, state.visibleItems, { instant: true, crossfade: true });
         });
       });
     }

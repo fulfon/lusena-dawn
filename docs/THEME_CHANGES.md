@@ -19,7 +19,25 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — feat(lusena): finalize returns page and PDP parity updates
+### (current) — fix(lusena): stabilize PDP gallery crossfade and mobile variant sync
+
+**Goal:** Finalize PDP gallery variant-switch parity for crossfade + lazy loading and fix the mobile mismatch where indicator dots/index moved but the visible slide stayed on the previous shared image.
+
+**What changed**
+- Added explicit desktop stage crossfade sequencing (`fade out -> swap -> fade in`) for thumbnail changes and variant-driven gallery switches.
+- Added mobile variant-switch sequencing so track opacity transition happens before content swap, then fades back in.
+- Restored index-selection behavior expected from the previous flow while clarifying shared-media handling for color switches.
+- Fixed mobile viewport synchronization by scrolling the mobile track to the resolved target index after variant-change selection, so visible slide and dots stay aligned.
+- Implemented lazy-loading parity updates: desktop stage eager/high priority, desktop thumbs lazy, mobile first visible media eager/high priority, remaining visible media lazy (including runtime re-sync after filtered gallery updates).
+- Added implementation contract for this fragment migration.
+
+**Key files**
+- `snippets/lusena-pdp-media.liquid`
+- `snippets/lusena-pdp-scripts.liquid`
+- `snippets/lusena-pdp-styles.liquid`
+- `docs/PDP_Gallery_Crossfade_Lazy_Parity_Plan.md`
+
+### 4b9caa2 — feat(lusena): finalize returns page and PDP parity updates
 
 **Goal:** Finish draft-shop parity for the `/zwroty` page and key PDP fragments (payment strip, sticky ATC, and gallery zoom/lightbox) in the live LUSENA Dawn flow.
 
@@ -157,24 +175,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Key files**
 - `sections/lusena-main-product.liquid`
 
-### 8a6d37a — feat(lusena): PDP gallery grouped by color-tagged media
-
-**Goal:** Enable a full per-color image gallery on PDP (3–4 images per color) with shared images (packaging/certificates) shown at the end, matching our LUSENA variant UX.
-
-**What changed**
-- Replaced the PDP media area with a main image stage + thumbnail strip.
-- Added media grouping via product media alt tags: `Opis | [color=Blue]` for color-specific images and `Opis | [shared]` for shared images, with tags never leaking into the rendered `alt`.
-- On color change: preserves the “same angle” index within color images (clamped), but jumps to the first color image if the customer was viewing shared media (so the change is always visible).
-- Added merchant-facing documentation for the tagging workflow.
-
-**Key files**
-- `sections/lusena-main-product.liquid`
-- `docs/PDP_VARIANT_GALLERY.md`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-16T16:37:56+01:00 — (current) — feat(lusena): finalize returns page and PDP parity updates
+- 2026-02-16T20:06:42+01:00 — (current) — fix(lusena): stabilize PDP gallery crossfade and mobile variant sync
+- 2026-02-16T16:37:56+01:00 — 4b9caa2 — feat(lusena): finalize returns page and PDP parity updates
 - 2026-02-13T19:00:05+01:00 — 7eb6712 — fix(ci): resolve LHCI product handle dynamically
 - 2026-02-13T18:50:36+01:00 — 1ad8a9e — fix(ci): stabilize Lighthouse target and skip remote theme pull
 - 2026-02-13T18:33:58+01:00 — 1ccc2b8 — feat(lusena): complete PDP + cart parity rollout

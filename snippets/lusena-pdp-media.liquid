@@ -97,6 +97,7 @@
               class="lusena-media-stage bg-surface-2 overflow-hidden rounded-sm relative"
               data-lusena-media-stage
               data-stage-type="image"
+              data-stage-fade="in"
               data-lusena-stage-action
               data-lusena-stage-zoomable="{{ initial_is_zoomable }}"
               aria-label="Powieksz zdjecie produktu"
@@ -105,38 +106,41 @@
                 tabindex="0"
               {% endif %}
             >
-              {%- if initial_preview != blank -%}
-                {{
-                  initial_preview
-                  | image_url: width: 1600
-                  | image_tag:
-                    class: 'w-full h-full object-cover',
-                    loading: 'eager',
-                    widths: '600, 800, 1200, 1600',
-                    sizes: '(min-width: 750px) 55vw, 100vw',
-                    alt: initial_alt
-                }}
-              {%- else -%}
-                {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover' }}
-              {%- endif -%}
+              <div class="lusena-media-stage__content" data-lusena-stage-content>
+                {%- if initial_preview != blank -%}
+                  {{
+                    initial_preview
+                    | image_url: width: 1600
+                    | image_tag:
+                      class: 'w-full h-full object-cover',
+                      loading: 'eager',
+                      fetchpriority: 'high',
+                      widths: '600, 800, 1200, 1600',
+                      sizes: '(min-width: 750px) 55vw, 100vw',
+                      alt: initial_alt
+                  }}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover' }}
+                {%- endif -%}
 
-              {%- if certificate_url != blank -%}
-                <div class="lusena-proof-tile" data-lusena-stage-proof>
-                  <span class="lusena-proof-tile__icon">
-                    {% render 'lusena-icon', name: 'shield-check', class: 'w-10 h-10', stroke_width: 1.6 %}
-                  </span>
-                  <p class="lusena-proof-tile__title">Certyfikat OEKO-TEX</p>
-                  <p class="lusena-proof-tile__body">Niezalezny certyfikat bezpieczenstwa tekstyliow.</p>
-                  <a
-                    href="{{ certificate_url }}"
-                    target="_blank"
-                    rel="noopener"
-                    class="lusena-proof-tile__cta"
-                  >
-                    Sprawdz certyfikat ->
-                  </a>
-                </div>
-              {%- endif -%}
+                {%- if certificate_url != blank -%}
+                  <div class="lusena-proof-tile" data-lusena-stage-proof>
+                    <span class="lusena-proof-tile__icon">
+                      {% render 'lusena-icon', name: 'shield-check', class: 'w-10 h-10', stroke_width: 1.6 %}
+                    </span>
+                    <p class="lusena-proof-tile__title">Certyfikat OEKO-TEX</p>
+                    <p class="lusena-proof-tile__body">Niezalezny certyfikat bezpieczenstwa tekstyliow.</p>
+                    <a
+                      href="{{ certificate_url }}"
+                      target="_blank"
+                      rel="noopener"
+                      class="lusena-proof-tile__cta"
+                    >
+                      Sprawdz certyfikat ->
+                    </a>
+                  </div>
+                {%- endif -%}
+              </div>
 
               {%- if is_bestseller -%}
                 <span class="absolute top-4 left-4 bg-white/90 px-3 py-1 text-xs uppercase tracking-wider font-medium backdrop-blur-sm" data-lusena-stage-bestseller hidden>
@@ -175,16 +179,30 @@
                   {% endif %}
                   aria-label="{{ slide_label | escape }}"
                 >
-                  {{
-                    media_preview
-                    | image_url: width: 900
-                    | image_tag:
-                      class: 'w-full h-full object-cover',
-                      loading: 'lazy',
-                      widths: '320, 480, 640, 900',
-                      sizes: '85vw',
-                      alt: media_alt
-                  }}
+                  {%- if forloop.first -%}
+                    {{
+                      media_preview
+                      | image_url: width: 900
+                      | image_tag:
+                        class: 'w-full h-full object-cover',
+                        loading: 'eager',
+                        fetchpriority: 'high',
+                        widths: '320, 480, 640, 900',
+                        sizes: '85vw',
+                        alt: media_alt
+                    }}
+                  {%- else -%}
+                    {{
+                      media_preview
+                      | image_url: width: 900
+                      | image_tag:
+                        class: 'w-full h-full object-cover',
+                        loading: 'lazy',
+                        widths: '320, 480, 640, 900',
+                        sizes: '85vw',
+                        alt: media_alt
+                    }}
+                  {%- endif -%}
                   {%- if media.media_type == 'image' -%}
                     <span class="lusena-gallery__mobile-zoom" aria-hidden="true">
                       {% render 'lusena-icon', name: 'search', class: 'w-3.5 h-3.5', stroke_width: 1.8 %}
