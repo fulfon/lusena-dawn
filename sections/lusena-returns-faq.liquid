@@ -7,25 +7,52 @@
     --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
   "
 >
-  <div class="container max-w-3xl mx-auto">
-    <h2 class="text-3xl md:text-4xl font-serif text-primary text-center mb-12{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      {{ section.settings.faq_heading | escape }}
-    </h2>
+  <div class="container lusena-returns-faq__container mx-auto">
+    <div class="text-center mb-12 space-y-3">
+      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        {{ section.settings.faq_kicker | escape }}
+      </span>
+      <h2 class="text-3xl md:text-5xl font-serif text-primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        {{ section.settings.faq_heading | escape }}
+      </h2>
+    </div>
 
-    <div class="w-full bg-white px-8 py-4 rounded-sm shadow-sm{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <div
+      class="w-full px-8 py-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+      data-lusena-returns-faq
+      data-lusena-accordion-root
+      data-lusena-accordion-single
+      data-lusena-accordion-collapsible
+      {% if settings.animations_reveal_on_scroll %}
+        data-cascade
+      {% endif %}
+    >
       {%- for block in section.blocks -%}
         {%- if block.type == 'faq' -%}
-          <details class="border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %} {{ block.shopify_attributes }}>
-            <summary class="flex items-center justify-between py-4 font-medium transition-all hover:text-accent-cta cursor-pointer">
-              {{ block.settings.question | escape }}
-              {% render 'lusena-icon', name: 'chevron-down', class: 'h-4 w-4 shrink-0 transition-transform duration-200 lusena-returns-faq__chevron', stroke_width: 1.5 %}
-            </summary>
-            <div class="overflow-hidden text-sm">
-              <div class="pb-4 pt-0 text-secondary">
+          <div
+            class="lusena-returns-faq__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            data-lusena-accordion-item
+            data-lusena-accordion-value="faq-{{ block.id }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="flex">
+              <button
+                type="button"
+                class="lusena-returns-faq__summary"
+                data-lusena-accordion-trigger
+                data-state="closed"
+                aria-expanded="false"
+              >
+                {{ block.settings.question | escape }}
+                {% render 'lusena-icon', name: 'chevron-down', class: 'h-4 w-4 shrink-0 transition-transform duration-200 lusena-returns-faq__chevron', stroke_width: 1.5 %}
+              </button>
+            </div>
+            <div class="lusena-returns-faq__content overflow-hidden text-sm" data-lusena-accordion-content data-state="closed">
+              <div class="lusena-returns-faq__answer">
                 {{ block.settings.answer }}
               </div>
             </div>
-          </details>
+          </div>
         {%- endif -%}
       {%- endfor -%}
     </div>
@@ -35,7 +62,7 @@
       {%- if section.settings.contact_button_label != blank and section.settings.contact_button_link != blank -%}
         <a
           href="{{ section.settings.contact_button_link }}"
-          class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-12 px-8 py-3 border border-primary bg-transparent text-primary hover:bg-surface-2"
+          class="lusena-returns-faq__contact-button"
         >
           {{ section.settings.contact_button_label | escape }}
         </a>
@@ -50,6 +77,107 @@
     padding-bottom: var(--lusena-section-padding-bottom-mobile);
   }
 
+  .lusena-returns-faq__container {
+    max-width: 76.8rem !important;
+  }
+
+  .lusena-returns-faq__item {
+    border-bottom: 1px solid rgb(74 74 74 / 0.2);
+  }
+
+  .lusena-returns-faq__summary {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 44px;
+    padding-top: 1.6rem;
+    padding-bottom: 1.6rem;
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    font-weight: 500;
+    transition: all 150ms ease;
+    cursor: pointer;
+    text-align: left;
+    border: 0;
+    background: transparent;
+  }
+
+  .lusena-returns-faq__summary:hover {
+    color: rgb(14 94 90);
+  }
+
+  .lusena-returns-faq__answer {
+    padding-top: 0;
+    padding-bottom: 1.6rem;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    color: rgb(74 74 74);
+  }
+
+  .lusena-returns-faq__content {
+    overflow: hidden;
+    will-change: height;
+    height: 0;
+  }
+
+  .lusena-returns-faq__content[data-state='open'] {
+    height: var(--radix-accordion-content-height);
+  }
+
+  .lusena-returns-faq__content[data-lusena-accordion-ready][data-state='open'] {
+    animation: lusena-returns-accordion-down 0.2s ease-out;
+  }
+
+  .lusena-returns-faq__content[data-lusena-accordion-ready][data-state='closed'] {
+    animation: lusena-returns-accordion-up 0.2s ease-out;
+  }
+
+  @keyframes lusena-returns-accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes lusena-returns-accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  .lusena-returns-faq__contact-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 4.8rem;
+    padding: 1.2rem 3.2rem;
+    border: 1px solid rgb(14 94 90);
+    border-radius: 0.6rem;
+    background: transparent;
+    color: rgb(14 94 90);
+    font-size: 1.4rem;
+    line-height: 2rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+  }
+
+  .lusena-returns-faq__contact-button:hover {
+    background: rgb(14 94 90 / 0.05);
+  }
+
+  .lusena-returns-faq__contact-button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgb(14 94 90 / 0.25);
+  }
+
   @media (min-width: 768px) {
     .lusena-returns-faq {
       padding-top: var(--lusena-section-padding-top-desktop);
@@ -57,10 +185,133 @@
     }
   }
 
-  .lusena-returns-faq details[open] .lusena-returns-faq__chevron {
+  .lusena-returns-faq__summary[data-state='open'] .lusena-returns-faq__chevron {
     transform: rotate(180deg);
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lusena-returns-faq__content[data-lusena-accordion-ready][data-state='open'],
+    .lusena-returns-faq__content[data-lusena-accordion-ready][data-state='closed'] {
+      animation: none;
+    }
+  }
 {% endstylesheet %}
+
+{% javascript %}
+  (() => {
+    document.querySelectorAll('[data-lusena-returns-faq]').forEach((root) => {
+      if (!(root instanceof HTMLElement)) return;
+      if (root.dataset.lusenaFaqInit === 'true') return;
+
+      root.dataset.lusenaFaqInit = 'true';
+
+      const accordionContentObservers = new WeakMap();
+
+      const getAccordionItemParts = (item) => {
+        if (!(item instanceof HTMLElement)) return { trigger: null, content: null };
+        return {
+          trigger: item.querySelector('[data-lusena-accordion-trigger]'),
+          content: item.querySelector('[data-lusena-accordion-content]'),
+        };
+      };
+
+      const updateAccordionContentHeight = (content) => {
+        if (!(content instanceof HTMLElement)) return;
+        const inner = content.firstElementChild instanceof HTMLElement ? content.firstElementChild : content;
+        const measured = inner.scrollHeight;
+        content.style.setProperty('--radix-accordion-content-height', `${Math.max(0, measured)}px`);
+      };
+
+      const ensureAccordionReady = (content) => {
+        if (!(content instanceof HTMLElement)) return;
+        if (content.hasAttribute('data-lusena-accordion-ready')) return;
+        requestAnimationFrame(() => {
+          content.setAttribute('data-lusena-accordion-ready', '');
+        });
+      };
+
+      const observeAccordionContent = (content) => {
+        if (!(content instanceof HTMLElement)) return;
+        if (accordionContentObservers.has(content)) return;
+
+        const inner = content.firstElementChild instanceof HTMLElement ? content.firstElementChild : content;
+
+        if (typeof ResizeObserver === 'function' && inner) {
+          const observer = new ResizeObserver(() => updateAccordionContentHeight(content));
+          observer.observe(inner);
+          accordionContentObservers.set(content, observer);
+        }
+
+        updateAccordionContentHeight(content);
+        ensureAccordionReady(content);
+      };
+
+      const setAccordionContentState = (content, isOpen) => {
+        if (!(content instanceof HTMLElement)) return;
+        updateAccordionContentHeight(content);
+        content.dataset.state = isOpen ? 'open' : 'closed';
+      };
+
+      const setAccordionItemState = (item, isOpen) => {
+        if (!(item instanceof HTMLElement)) return;
+
+        const { trigger, content } = getAccordionItemParts(item);
+        const state = isOpen ? 'open' : 'closed';
+
+        item.dataset.state = state;
+
+        if (trigger instanceof HTMLElement) {
+          trigger.dataset.state = state;
+          trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        }
+
+        if (content instanceof HTMLElement) {
+          setAccordionContentState(content, isOpen);
+        }
+      };
+
+      const closeSiblingAccordionItems = (currentItem) => {
+        const items = Array.from(root.querySelectorAll('[data-lusena-accordion-item]'));
+        items.forEach((item) => {
+          if (!(item instanceof HTMLElement) || item === currentItem) return;
+          setAccordionItemState(item, false);
+        });
+      };
+
+      const isSingle = root.hasAttribute('data-lusena-accordion-single');
+      const isCollapsible = root.hasAttribute('data-lusena-accordion-collapsible');
+      const items = Array.from(root.querySelectorAll('[data-lusena-accordion-item]'));
+
+      items.forEach((item) => {
+        if (!(item instanceof HTMLElement)) return;
+
+        setAccordionItemState(item, false);
+
+        const { trigger, content } = getAccordionItemParts(item);
+        if (content instanceof HTMLElement) {
+          observeAccordionContent(content);
+        }
+
+        if (!(trigger instanceof HTMLButtonElement)) return;
+
+        trigger.addEventListener('click', () => {
+          const currentlyOpen = item.dataset.state === 'open';
+
+          if (currentlyOpen && isCollapsible) {
+            setAccordionItemState(item, false);
+            return;
+          }
+
+          if (isSingle) {
+            closeSiblingAccordionItems(item);
+          }
+
+          setAccordionItemState(item, true);
+        });
+      });
+    });
+  })();
+{% endjavascript %}
 
 {% schema %}
 {
@@ -79,7 +330,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 128
     },
     {
       "type": "range",
@@ -89,7 +340,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 128
     },
     {
       "type": "range",
@@ -99,7 +350,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 96
     },
     {
       "type": "range",
@@ -109,13 +360,19 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 96
+    },
+    {
+      "type": "text",
+      "id": "faq_kicker",
+      "label": "FAQ kicker",
+      "default": "FAQ"
     },
     {
       "type": "text",
       "id": "faq_heading",
       "label": "FAQ heading",
-      "default": "Pytania i Odpowiedzi"
+      "default": "Pytania i odpowiedzi"
     },
     {
       "type": "text",
@@ -170,21 +427,28 @@
           "type": "faq",
           "settings": {
             "question": "Czy muszę mieć oryginalne pudełko?",
-            "answer": "<p>Nie, nie wymagamy oryginalnego pudełka \"prezentowego\", choć ułatwia ono bezpieczny transport. Ważne, aby produkt był zabezpieczony podczas transportu.</p>"
+            "answer": "<p>Nie, nie wymagamy oryginalnego pudełka prezentowego, choć ułatwia ono bezpieczny transport. Ważne, aby produkt był zabezpieczony podczas transportu.</p>"
           }
         },
         {
           "type": "faq",
           "settings": {
             "question": "W jakim stanie musi być produkt?",
-            "answer": "<p>Akceptujemy produkty używane i prane. Gwarancja nie obejmuje jedynie uszkodzeń mechanicznych powstałych z winy użytkownika (np. rozdarcie, wypalenie, zafarbowanie w praniu z innymi rzeczami).</p>"
+            "answer": "<p>Akceptujemy produkty używane i prane. Gwarancja nie obejmuje jedynie uszkodzeń mechanicznych powstałych z winy użytkownika.</p>"
           }
         },
         {
           "type": "faq",
           "settings": {
             "question": "Ile czasu mam na decyzję?",
-            "answer": "<p>Masz 60 dni kalendarzowych od momentu odebrania paczki. To około 480 godzin snu na podjęcie decyzji!</p>"
+            "answer": "<p>Masz 60 dni kalendarzowych od momentu odebrania paczki. To około 480 godzin snu na podjęcie decyzji.</p>"
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Jak wygląda proces po wysłaniu maila?",
+            "answer": "<p>Odpowiadamy w ciągu 24 godzin z instrukcją zwrotu. Po odebraniu paczki weryfikujemy produkt i przelewamy środki w ciągu 3-5 dni roboczych.</p>"
           }
         }
       ]

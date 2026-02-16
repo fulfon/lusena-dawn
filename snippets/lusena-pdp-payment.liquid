@@ -4,14 +4,118 @@
   @param {section} section
 {% enddoc %}
 
-        <div class="flex items-center gap-2{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-          {% render 'lusena-icon', name: 'lock', class: 'w-4 h-4 text-secondary/40 shrink-0', stroke_width: 1.5 %}
-          <div class="lusena-pdp-payment-methods"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
-            <span class="lusena-pdp-payment-method{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">Visa</span>
-            <span class="lusena-pdp-payment-method{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">Mastercard</span>
-            <span class="lusena-pdp-payment-method{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">BLIK</span>
-            <span class="lusena-pdp-payment-method{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">PayPo</span>
-            <span class="lusena-pdp-payment-method{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">Przelewy24</span>
-            <span class="lusena-pdp-payment-secure">{{ section.settings.secure_payment_label | escape }}</span>
-          </div>
-        </div>
+{%- liquid
+  assign payment_methods = 'Visa|BLIK|PayPo|Przelewy24' | split: '|'
+-%}
+
+<div class="lusena-pdp-payment">
+  <div class="lusena-pdp-payment__desktop{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    {% render 'lusena-icon', name: 'lock', class: 'w-3.5 h-3.5 text-secondary/60 shrink-0', stroke_width: 1.5 %}
+    <div class="lusena-pdp-payment-methods lusena-pdp-payment-methods--desktop"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
+      {%- for method in payment_methods -%}
+        {%- assign payment_asset = blank -%}
+        {%- assign icon_width = blank -%}
+        {%- assign icon_height = blank -%}
+        {%- if method == 'Visa' -%}
+          {%- assign payment_asset = 'lusena-payment-visa.svg' -%}
+          {%- assign icon_width = 68 -%}
+          {%- assign icon_height = 23 -%}
+        {%- else -%}
+          {%- if method == 'BLIK' -%}
+            {%- assign payment_asset = 'lusena-payment-blik.svg' -%}
+            {%- assign icon_width = 106 -%}
+            {%- assign icon_height = 50 -%}
+          {%- else -%}
+            {%- if method == 'PayPo' -%}
+              {%- assign payment_asset = 'lusena-payment-paypo.svg' -%}
+              {%- assign icon_width = 107 -%}
+              {%- assign icon_height = 32 -%}
+            {%- else -%}
+              {%- if method == 'Przelewy24' -%}
+                {%- assign payment_asset = 'lusena-payment-przelewy24.svg' -%}
+                {%- assign icon_width = 96 -%}
+                {%- assign icon_height = 34 -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endif -%}
+        <span class="lusena-pdp-payment-badge{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {%- if payment_asset != blank -%}
+            {%- assign icon_class = 'lusena-pdp-payment-icon' -%}
+            {%- if method == 'Visa' -%}
+              {%- assign icon_class = icon_class | append: ' lusena-pdp-payment-icon--visa-desktop' -%}
+            {%- else -%}
+              {%- assign icon_class = icon_class | append: ' lusena-pdp-payment-icon--desktop' -%}
+            {%- endif -%}
+            <img
+              src="{{ payment_asset | asset_url }}"
+              alt="{{ method | escape }}"
+              class="{{ icon_class }}"
+              width="{{ icon_width }}"
+              height="{{ icon_height }}"
+              loading="lazy"
+            >
+          {%- else -%}
+            <span class="text-xs text-secondary/50">{{ method }}</span>
+          {%- endif -%}
+        </span>
+      {%- endfor -%}
+    </div>
+    <span class="lusena-pdp-payment-secure">{{ section.settings.secure_payment_label | escape }}</span>
+  </div>
+
+  <div class="lusena-pdp-payment__mobile{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <div class="lusena-pdp-payment__mobile-row"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
+      {% render 'lusena-icon', name: 'lock', class: 'w-3 h-3 text-secondary/60 shrink-0', stroke_width: 1.5 %}
+      {%- for method in payment_methods -%}
+        {%- assign payment_asset = blank -%}
+        {%- assign icon_width = blank -%}
+        {%- assign icon_height = blank -%}
+        {%- if method == 'Visa' -%}
+          {%- assign payment_asset = 'lusena-payment-visa.svg' -%}
+          {%- assign icon_width = 68 -%}
+          {%- assign icon_height = 23 -%}
+        {%- else -%}
+          {%- if method == 'BLIK' -%}
+            {%- assign payment_asset = 'lusena-payment-blik.svg' -%}
+            {%- assign icon_width = 106 -%}
+            {%- assign icon_height = 50 -%}
+          {%- else -%}
+            {%- if method == 'PayPo' -%}
+              {%- assign payment_asset = 'lusena-payment-paypo.svg' -%}
+              {%- assign icon_width = 107 -%}
+              {%- assign icon_height = 32 -%}
+            {%- else -%}
+              {%- if method == 'Przelewy24' -%}
+                {%- assign payment_asset = 'lusena-payment-przelewy24.svg' -%}
+                {%- assign icon_width = 96 -%}
+                {%- assign icon_height = 34 -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endif -%}
+        <span class="lusena-pdp-payment-badge lusena-pdp-payment-badge--mobile{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {%- if payment_asset != blank -%}
+            {%- assign icon_class = 'lusena-pdp-payment-icon' -%}
+            {%- if method == 'Visa' -%}
+              {%- assign icon_class = icon_class | append: ' lusena-pdp-payment-icon--visa-mobile' -%}
+            {%- else -%}
+              {%- assign icon_class = icon_class | append: ' lusena-pdp-payment-icon--mobile' -%}
+            {%- endif -%}
+            <img
+              src="{{ payment_asset | asset_url }}"
+              alt="{{ method | escape }}"
+              class="{{ icon_class }}"
+              width="{{ icon_width }}"
+              height="{{ icon_height }}"
+              loading="lazy"
+            >
+          {%- else -%}
+            <span class="text-[10px] text-secondary/50">{{ method }}</span>
+          {%- endif -%}
+        </span>
+      {%- endfor -%}
+      <span class="lusena-pdp-payment-secure lusena-pdp-payment-secure--mobile">{{ section.settings.secure_payment_label | escape }}</span>
+    </div>
+  </div>
+</div>

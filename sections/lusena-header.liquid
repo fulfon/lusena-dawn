@@ -1,5 +1,5 @@
 <header
-  class="fixed top-0 left-0 right-0 z-50 bg-brand-bg/95 backdrop-blur-sm shadow-sm py-4"
+  class="fixed top-0 left-0 right-0 z-50 bg-brand-bg/95 backdrop-blur-sm py-4"
   data-lusena-header{% if section.settings.auto_hide_on_scroll_mobile %} data-lusena-auto-hide-on-scroll-mobile{% endif %}{% if section.settings.auto_hide_on_scroll_desktop %} data-lusena-auto-hide-on-scroll-desktop{% endif %}
 >
   {% stylesheet %}
@@ -266,7 +266,7 @@
 
     let lastScrollY = window.scrollY;
 
-    const scrolledClasses = ['bg-brand-bg/95', 'backdrop-blur-sm', 'shadow-sm', 'py-4'];
+    const scrolledClasses = ['bg-brand-bg/95', 'backdrop-blur-sm', 'py-4'];
     const topClasses = ['bg-transparent', 'py-6'];
 
     const mobileMenuDetails = header.querySelector('[data-lusena-mobile-menu-details]');

@@ -9,6 +9,11 @@ description: End-to-end workflow for copying any UI/UX fragment from the LUSENA 
 
 Copy a UI/UX fragment from `lusena-shop/` (draft) into the Shopify theme with the same look and behavior, using a plan-first workflow with explicit decisions, theme validation, and clear parity gates. This workflow is universal for fragment migrations, not tied to any specific surface.
 
+Draft source location for this repo:
+
+- Primary: `./lusena-shop` (inside the theme repository root).
+- If not found, then check sibling repositories/legacy paths.
+
 ## Workflow
 
 ### 0. Mandatory setup (Liquid themes)

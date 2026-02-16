@@ -13,15 +13,15 @@
     const compareAtEl = root.querySelector('[data-lusena-compare-at]');
     const pricePerNightEl = root.querySelector('[data-lusena-price-per-night]');
     const stickyBar = root.querySelector('[data-lusena-sticky-atc]');
-    const stickyPrice = root.querySelector('[data-lusena-sticky-price]');
-    const stickyPricePerNight = root.querySelector('[data-lusena-sticky-price-per-night]');
-    const stickyVariant = root.querySelector('[data-lusena-sticky-variant]');
-    const stickyImage = root.querySelector('[data-lusena-sticky-image]');
+    const stickyPrices = Array.from(root.querySelectorAll('[data-lusena-sticky-price]'));
+    const stickyPricePerNights = Array.from(root.querySelectorAll('[data-lusena-sticky-price-per-night]'));
+    const stickyVariants = Array.from(root.querySelectorAll('[data-lusena-sticky-variant]'));
+    const stickyImages = Array.from(root.querySelectorAll('[data-lusena-sticky-image]'));
     const stockText = root.querySelector('[data-lusena-stock-text]');
     const stockDot = root.querySelector('[data-lusena-stock-dot]');
     const atcButton = root.querySelector('[data-lusena-atc]');
     const buyNowButton = root.querySelector('[data-lusena-buy-now]');
-    const stickyAtcButton = root.querySelector('[data-lusena-sticky-atc-button]');
+    const stickyAtcButtons = Array.from(root.querySelectorAll('[data-lusena-sticky-atc-button]'));
     const returnsLinks = Array.from(root.querySelectorAll('[data-lusena-open-returns]'));
     const accordionRoots = Array.from(document.querySelectorAll('[data-lusena-accordion-root]'));
     const specDefinitionToggles = Array.from(document.querySelectorAll('[data-lusena-spec-def-toggle]'));
@@ -30,8 +30,8 @@
 
     const pricePerNightPrefix = pricePerNightEl?.dataset?.prefix ?? '';
     const pricePerNightSuffix = pricePerNightEl?.dataset?.suffix ?? '';
-    const stickyPricePerNightPrefix = stickyPricePerNight?.dataset?.prefix ?? pricePerNightPrefix;
-    const stickyPricePerNightSuffix = stickyPricePerNight?.dataset?.suffix ?? pricePerNightSuffix;
+    const stickyPricePerNightPrefix = stickyPricePerNights[0]?.dataset?.prefix ?? pricePerNightPrefix;
+    const stickyPricePerNightSuffix = stickyPricePerNights[0]?.dataset?.suffix ?? pricePerNightSuffix;
 
     let product;
     try {
@@ -42,12 +42,28 @@
 
     const galleryRoot = root.querySelector('[data-lusena-gallery]');
     const stage = root.querySelector('[data-lusena-media-stage]');
+    const stageAction = root.querySelector('[data-lusena-stage-action]');
     const stageImg = root.querySelector('[data-lusena-media-stage] img');
     const stageProof = root.querySelector('[data-lusena-stage-proof]');
     const stageBadge = root.querySelector('[data-lusena-stage-bestseller]');
     const stageSizes = stageImg?.getAttribute('sizes') || '';
     const proofId = galleryRoot?.dataset?.lusenaProofId ? String(galleryRoot.dataset.lusenaProofId) : null;
     const isBestseller = !!stageBadge || root.querySelectorAll('[data-lusena-mobile-bestseller]').length > 0;
+    const lightboxRoot = root.querySelector('[data-lusena-lightbox]');
+    const lightboxViewport = root.querySelector('[data-lusena-lightbox-viewport]');
+    const lightboxCounter = root.querySelector('[data-lusena-lightbox-counter]');
+    const lightboxCloseButton = root.querySelector('[data-lusena-lightbox-close]');
+    const lightboxPrevButton = root.querySelector('[data-lusena-lightbox-prev]');
+    const lightboxNextButton = root.querySelector('[data-lusena-lightbox-next]');
+    const lightboxImageWrap = root.querySelector('[data-lusena-lightbox-image-wrap]');
+    const lightboxImage = root.querySelector('[data-lusena-lightbox-image]');
+    const lightboxFallback = root.querySelector('[data-lusena-lightbox-fallback]');
+    const lightboxHintDesktop = root.querySelector('[data-lusena-lightbox-hint-desktop]');
+    const lightboxHintMobile = root.querySelector('[data-lusena-lightbox-hint-mobile]');
+
+    if (lightboxRoot && lightboxRoot.parentElement !== document.body) {
+      document.body.appendChild(lightboxRoot);
+    }
 
     const desktopThumbsWrap = root.querySelector('[data-lusena-media-thumbs-desktop]');
     const thumbEls = desktopThumbsWrap ? Array.from(desktopThumbsWrap.querySelectorAll('[data-lusena-thumb]')) : [];
@@ -223,6 +239,29 @@
       visibleItems: [],
     };
 
+    const LIGHTBOX_HASH = '#lightbox';
+    const LIGHTBOX_DESKTOP_MAX_ZOOM = 1.5;
+    const LIGHTBOX_MOBILE_MAX_ZOOM = 2.5;
+    const LIGHTBOX_MIN_ZOOM = 1;
+
+    const lightboxState = {
+      open: false,
+      slides: [],
+      index: 0,
+      openedAt: 0,
+      zoom: 1,
+      translate: { x: 0, y: 0 },
+      imageLoaded: false,
+      imageError: false,
+      pinch: null,
+      pan: null,
+      lastTapAt: 0,
+      touchStart: null,
+      scrollY: 0,
+    };
+
+    const isMediaZoomable = (media) => media?.media_type === 'image';
+
     const buildVisibleItems = (visibleMedia) => {
       const items = visibleMedia.map((media) => ({
         id: String(media?.id),
@@ -343,14 +382,30 @@
     const setStageByItem = (item) => {
       if (!stage || !item) return;
 
+      const setStageActionState = (isZoomable) => {
+        if (!stageAction) return;
+        stageAction.dataset.lusenaStageZoomable = isZoomable ? 'true' : 'false';
+        if (isZoomable) {
+          stageAction.setAttribute('role', 'button');
+          stageAction.setAttribute('tabindex', '0');
+          stageAction.setAttribute('aria-label', 'Powieksz zdjecie produktu');
+        } else {
+          stageAction.removeAttribute('role');
+          stageAction.removeAttribute('tabindex');
+          stageAction.removeAttribute('aria-label');
+        }
+      };
+
       if (item.type === 'proof') {
         stage.dataset.stageType = 'proof';
         if (stageProof) stageProof.hidden = false;
+        setStageActionState(false);
         return;
       }
 
       stage.dataset.stageType = 'image';
       if (stageProof) stageProof.hidden = true;
+      setStageActionState(isMediaZoomable(item.media));
       setStageByMedia(item.media);
     };
 
@@ -387,18 +442,568 @@
       }
     };
 
+    const isTouchDevice = () => window.matchMedia('(pointer: coarse)').matches;
+
+    const getLightboxMaxZoom = () => (isTouchDevice() ? LIGHTBOX_MOBILE_MAX_ZOOM : LIGHTBOX_DESKTOP_MAX_ZOOM);
+
+    const getLightboxSlides = () =>
+      state.visibleItems
+        .filter((item) => item.type === 'media' && isMediaZoomable(item.media))
+        .map((item) => {
+          const media = item.media;
+          const src = media?.src || media?.preview_image?.src;
+          const { cleanAlt } = parseAlt(getMediaAltRaw(media));
+          const width = Number(media?.preview_image?.width || media?.width || 0);
+          const height = Number(media?.preview_image?.height || media?.height || 0);
+          return {
+            id: item.id,
+            src: normalizeImageUrl(src),
+            alt: cleanAlt || product?.title || '',
+            width,
+            height,
+          };
+        })
+        .filter((slide) => !!slide.src);
+
+    const updateLightboxHintText = () => {
+      const isZoomed = lightboxState.zoom > 1;
+      if (lightboxHintDesktop) {
+        lightboxHintDesktop.textContent = isZoomed ? 'Kliknij aby oddalic' : 'Kliknij aby powiekszyc';
+      }
+      if (lightboxHintMobile) {
+        lightboxHintMobile.textContent = isZoomed
+          ? 'Dotknij dwukrotnie aby oddalic'
+          : 'Dotknij dwukrotnie lub rozsun palce';
+      }
+    };
+
+    const getLightboxMaxTranslate = (zoomValue) => {
+      if (!lightboxViewport || zoomValue <= 1) return { x: 0, y: 0 };
+      const baseRect = getLightboxInteractionRect();
+      if (!baseRect) return { x: 0, y: 0 };
+      return {
+        x: Math.max(0, (zoomValue * baseRect.width - lightboxViewport.clientWidth) / (2 * zoomValue)),
+        y: Math.max(0, (zoomValue * baseRect.height - lightboxViewport.clientHeight) / (2 * zoomValue)),
+      };
+    };
+
+    const clampLightboxTranslate = (tx, ty, zoomValue) => {
+      const max = getLightboxMaxTranslate(zoomValue);
+      return {
+        x: Math.max(-max.x, Math.min(max.x, tx)),
+        y: Math.max(-max.y, Math.min(max.y, ty)),
+      };
+    };
+
+    const applyLightboxTransform = () => {
+      if (!lightboxImage) return;
+      lightboxImage.style.transform = `scale(${lightboxState.zoom}) translate(${lightboxState.translate.x}px, ${lightboxState.translate.y}px)`;
+      lightboxImage.classList.toggle('is-zoomed', lightboxState.zoom > 1);
+      if (lightboxRoot) lightboxRoot.classList.toggle('is-zoomed', lightboxState.zoom > 1);
+      updateLightboxHintText();
+    };
+
+    const resetLightboxZoom = () => {
+      lightboxState.zoom = LIGHTBOX_MIN_ZOOM;
+      lightboxState.translate = { x: 0, y: 0 };
+      applyLightboxTransform();
+    };
+
+    const syncLightboxNav = () => {
+      if (!lightboxPrevButton || !lightboxNextButton) return;
+      lightboxPrevButton.disabled = lightboxState.index <= 0;
+      lightboxNextButton.disabled = lightboxState.index >= lightboxState.slides.length - 1;
+    };
+
+    const setLightboxCounter = () => {
+      if (!lightboxCounter) return;
+      if (lightboxState.slides.length > 1) {
+        lightboxCounter.textContent = `${lightboxState.index + 1} / ${lightboxState.slides.length}`;
+      } else {
+        lightboxCounter.textContent = '';
+      }
+    };
+
+    const renderLightboxError = (message) => {
+      if (!lightboxImageWrap) return;
+      lightboxState.imageError = true;
+      lightboxState.imageLoaded = false;
+      lightboxImageWrap.classList.add('is-error');
+      lightboxImageWrap.classList.remove('is-loaded');
+      if (lightboxFallback) {
+        lightboxFallback.textContent = message;
+        lightboxFallback.hidden = false;
+      }
+    };
+
+    const renderLightboxSlide = ({ resetZoom = false } = {}) => {
+      if (!lightboxImageWrap || !lightboxImage) return;
+      const slide = lightboxState.slides[lightboxState.index];
+      lightboxState.imageLoaded = false;
+      lightboxState.imageError = false;
+      lightboxImageWrap.classList.remove('is-loaded', 'is-error');
+      if (lightboxFallback) lightboxFallback.hidden = true;
+
+      if (resetZoom) resetLightboxZoom();
+      setLightboxCounter();
+      syncLightboxNav();
+
+      if (!slide?.src) {
+        renderLightboxError('Brak zdjecia');
+        return;
+      }
+
+      if (Number.isFinite(slide.width) && Number.isFinite(slide.height) && slide.width > 0 && slide.height > 0) {
+        lightboxImage.setAttribute('width', String(slide.width));
+        lightboxImage.setAttribute('height', String(slide.height));
+      }
+
+      lightboxImage.src = slide.src;
+      lightboxImage.alt = slide.alt || '';
+    };
+
+    const lockBodyForLightbox = () => {
+      lightboxState.scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${lightboxState.scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+    };
+
+    const unlockBodyForLightbox = () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+      window.scrollTo(0, lightboxState.scrollY || 0);
+    };
+
+    const closeLightbox = (fromPopstate = false) => {
+      if (!lightboxState.open || !lightboxRoot) return;
+      lightboxState.open = false;
+      lightboxState.openedAt = 0;
+      lightboxRoot.classList.remove('is-visible', 'is-zoomed', 'is-over-image');
+      window.setTimeout(() => {
+        if (!lightboxState.open) lightboxRoot.hidden = true;
+      }, 200);
+
+      unlockBodyForLightbox();
+
+      if (!fromPopstate && location.hash === LIGHTBOX_HASH) {
+        history.replaceState(null, '', `${location.pathname}${location.search}`);
+      }
+    };
+
+    const navigateLightbox = (direction) => {
+      if (!lightboxState.open) return;
+      const nextIndex = lightboxState.index + direction;
+      if (nextIndex < 0 || nextIndex >= lightboxState.slides.length) return;
+      lightboxState.index = nextIndex;
+      renderLightboxSlide({ resetZoom: true });
+    };
+
+    const openLightboxByItemId = (itemId) => {
+      if (!lightboxRoot || !itemId) return;
+      const slides = getLightboxSlides();
+      if (!slides.length) return;
+
+      const nextIndex = slides.findIndex((slide) => slide.id === String(itemId));
+      if (nextIndex < 0) return;
+
+      lightboxState.slides = slides;
+      lightboxState.index = nextIndex;
+      lightboxState.open = true;
+      lightboxState.openedAt = Date.now();
+      lightboxRoot.hidden = false;
+      setLightboxHoverState(false);
+      lockBodyForLightbox();
+      renderLightboxSlide({ resetZoom: true });
+      requestAnimationFrame(() => {
+        lightboxRoot.classList.add('is-visible');
+      });
+
+      if (location.hash !== LIGHTBOX_HASH) {
+        history.pushState(null, '', `${location.pathname}${location.search}${LIGHTBOX_HASH}`);
+      }
+
+      window.setTimeout(() => {
+        lightboxCloseButton?.focus();
+      }, 80);
+    };
+
+    const refreshLightboxSlides = () => {
+      if (!lightboxState.open) return;
+      const activeSlideId = lightboxState.slides[lightboxState.index]?.id || null;
+      const refreshedSlides = getLightboxSlides();
+      if (!refreshedSlides.length) {
+        closeLightbox();
+        return;
+      }
+
+      lightboxState.slides = refreshedSlides;
+      const remappedIndex = activeSlideId ? refreshedSlides.findIndex((slide) => slide.id === activeSlideId) : -1;
+      if (remappedIndex >= 0) {
+        lightboxState.index = remappedIndex;
+      } else if (lightboxState.index > refreshedSlides.length - 1) {
+        lightboxState.index = refreshedSlides.length - 1;
+      }
+      renderLightboxSlide({ resetZoom: true });
+    };
+
+    const getTouchDistance = (touches) => {
+      if (!touches || touches.length < 2) return 0;
+      const dx = touches[0].clientX - touches[1].clientX;
+      const dy = touches[0].clientY - touches[1].clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    };
+
+    const setLightboxHoverState = (isOverImage) => {
+      if (!lightboxRoot) return;
+      lightboxRoot.classList.toggle('is-over-image', !!isOverImage);
+    };
+
+    const getLightboxInteractionRect = () => {
+      if (!lightboxImage || !lightboxViewport || !lightboxState.imageLoaded || lightboxState.imageError) return null;
+
+      const viewportRect = lightboxViewport.getBoundingClientRect();
+      if (viewportRect.width <= 0 || viewportRect.height <= 0) return null;
+
+      const intrinsicWidth = Number(lightboxImage.naturalWidth || lightboxImage.getAttribute('width') || 0);
+      const intrinsicHeight = Number(lightboxImage.naturalHeight || lightboxImage.getAttribute('height') || 0);
+
+      const maxRenderWidth = Math.min(viewportRect.width, window.innerWidth * 0.9);
+      const maxRenderHeight = Math.min(viewportRect.height, window.innerHeight * 0.85);
+
+      let renderWidth = maxRenderWidth;
+      let renderHeight = maxRenderHeight;
+
+      if (intrinsicWidth > 0 && intrinsicHeight > 0) {
+        const scale = Math.min(maxRenderWidth / intrinsicWidth, maxRenderHeight / intrinsicHeight, 1);
+        renderWidth = intrinsicWidth * scale;
+        renderHeight = intrinsicHeight * scale;
+      }
+
+      const left = viewportRect.left + (viewportRect.width - renderWidth) / 2;
+      const top = viewportRect.top + (viewportRect.height - renderHeight) / 2;
+      return {
+        left,
+        top,
+        right: left + renderWidth,
+        bottom: top + renderHeight,
+        width: renderWidth,
+        height: renderHeight,
+      };
+    };
+
+    const isPointInsideLightboxImage = (clientX, clientY) => {
+      const rect = getLightboxInteractionRect();
+      if (!rect) return false;
+      const edgeTolerance = 2;
+      return (
+        clientX >= rect.left - edgeTolerance &&
+        clientX <= rect.right + edgeTolerance &&
+        clientY >= rect.top - edgeTolerance &&
+        clientY <= rect.bottom + edgeTolerance
+      );
+    };
+
+    const handleDesktopLightboxImageClick = (event) => {
+      if (!lightboxState.open) return;
+      if (Date.now() - lightboxState.openedAt < 220) return;
+
+      if (lightboxState.zoom > 1) {
+        resetLightboxZoom();
+        return;
+      }
+
+      const zoomLevel = getLightboxMaxZoom();
+      const rect = getLightboxInteractionRect();
+      if (!rect || rect.width <= 0 || rect.height <= 0) return;
+      const clickX = (event.clientX - rect.left) / rect.width;
+      const clickY = (event.clientY - rect.top) / rect.height;
+      const max = getLightboxMaxTranslate(zoomLevel);
+      lightboxState.zoom = zoomLevel;
+      lightboxState.translate = clampLightboxTranslate((0.5 - clickX) * 2 * max.x, (0.5 - clickY) * 2 * max.y, zoomLevel);
+      applyLightboxTransform();
+    };
+
+    if (lightboxRoot) {
+      lightboxRoot.addEventListener('click', (event) => {
+        if (!lightboxState.open) return;
+        const onTouchDevice = isTouchDevice();
+
+        const target =
+          event.target instanceof Element
+            ? event.target
+            : event.target && event.target.parentElement instanceof Element
+              ? event.target.parentElement
+              : null;
+        if (!target) {
+          closeLightbox();
+          return;
+        }
+
+        if (target.closest('[data-lusena-lightbox-close], [data-lusena-lightbox-prev], [data-lusena-lightbox-next]')) {
+          return;
+        }
+
+        if (target.closest('.lusena-lightbox__top, .lusena-lightbox__bottom')) {
+          closeLightbox();
+          return;
+        }
+
+        const clickedInsideImage = isPointInsideLightboxImage(event.clientX, event.clientY);
+
+        if (onTouchDevice) {
+          if (lightboxState.zoom <= 1 && !clickedInsideImage) {
+            closeLightbox();
+          }
+          return;
+        }
+
+        if (clickedInsideImage) {
+          handleDesktopLightboxImageClick(event);
+          return;
+        }
+
+        closeLightbox();
+      });
+    }
+
+    const handleLightboxPopState = () => {
+      if (lightboxState.open) closeLightbox(true);
+    };
+
+    const handleLightboxKeydown = (event) => {
+      if (!lightboxState.open) return;
+
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeLightbox();
+        return;
+      }
+
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        navigateLightbox(-1);
+        return;
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        navigateLightbox(1);
+        return;
+      }
+
+      if (event.key === 'Tab' && lightboxRoot) {
+        const focusable = Array.from(
+          lightboxRoot.querySelectorAll('button:not([disabled]):not([hidden]), [tabindex]:not([tabindex="-1"])')
+        );
+        if (!focusable.length) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    if (lightboxImage) {
+      lightboxImage.addEventListener('load', () => {
+        if (!lightboxState.open || !lightboxImageWrap) return;
+        lightboxState.imageLoaded = true;
+        lightboxState.imageError = false;
+        lightboxImageWrap.classList.add('is-loaded');
+        lightboxImageWrap.classList.remove('is-error');
+      });
+
+      lightboxImage.addEventListener('error', () => {
+        if (!lightboxState.open) return;
+        renderLightboxError('Nie udalo sie zaladowac zdjecia');
+      });
+    }
+
+    if (lightboxViewport) {
+      lightboxViewport.addEventListener('mousemove', (event) => {
+        if (!lightboxState.open || isTouchDevice()) return;
+        const insideImage = isPointInsideLightboxImage(event.clientX, event.clientY);
+        setLightboxHoverState(insideImage);
+        if (lightboxState.zoom <= 1 || !insideImage) return;
+        const rect = getLightboxInteractionRect();
+        if (!rect || rect.width <= 0 || rect.height <= 0) return;
+        const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+        const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+        const max = getLightboxMaxTranslate(lightboxState.zoom);
+        lightboxState.translate = {
+          x: (0.5 - x) * 2 * max.x,
+          y: (0.5 - y) * 2 * max.y,
+        };
+        applyLightboxTransform();
+      });
+
+      lightboxViewport.addEventListener('mouseleave', () => {
+        setLightboxHoverState(false);
+      });
+
+      lightboxViewport.addEventListener(
+        'touchstart',
+        (event) => {
+          if (!lightboxState.open) return;
+          if (event.touches.length === 2) {
+            lightboxState.pinch = {
+              startDist: getTouchDistance(event.touches),
+              startZoom: lightboxState.zoom,
+            };
+            return;
+          }
+
+          if (event.touches.length === 1) {
+            const touch = event.touches[0];
+            const now = Date.now();
+            lightboxState.touchStart = { x: touch.clientX, y: touch.clientY, time: now };
+            if (lightboxState.zoom > 1) {
+              lightboxState.pan = {
+                startX: touch.clientX,
+                startY: touch.clientY,
+                startTx: lightboxState.translate.x,
+                startTy: lightboxState.translate.y,
+              };
+            }
+          }
+        },
+        { passive: true }
+      );
+
+      lightboxViewport.addEventListener(
+        'touchmove',
+        (event) => {
+          if (!lightboxState.open) return;
+          if (event.touches.length === 2 && lightboxState.pinch) {
+            const nextDistance = getTouchDistance(event.touches);
+            const scaled = Math.min(
+              Math.max((nextDistance / lightboxState.pinch.startDist) * lightboxState.pinch.startZoom, LIGHTBOX_MIN_ZOOM),
+              LIGHTBOX_MOBILE_MAX_ZOOM
+            );
+            lightboxState.zoom = scaled;
+            const midX = (event.touches[0].clientX + event.touches[1].clientX) / 2;
+            const midY = (event.touches[0].clientY + event.touches[1].clientY) / 2;
+            const rect = getLightboxInteractionRect() || lightboxViewport.getBoundingClientRect();
+            const relX = (midX - rect.left) / rect.width;
+            const relY = (midY - rect.top) / rect.height;
+            const max = getLightboxMaxTranslate(scaled);
+            lightboxState.translate = clampLightboxTranslate((0.5 - relX) * 2 * max.x, (0.5 - relY) * 2 * max.y, scaled);
+            applyLightboxTransform();
+            return;
+          }
+
+          if (event.touches.length === 1 && lightboxState.zoom > 1 && lightboxState.pan) {
+            const touch = event.touches[0];
+            const dx = (touch.clientX - lightboxState.pan.startX) / lightboxState.zoom;
+            const dy = (touch.clientY - lightboxState.pan.startY) / lightboxState.zoom;
+            lightboxState.translate = clampLightboxTranslate(
+              lightboxState.pan.startTx + dx,
+              lightboxState.pan.startTy + dy,
+              lightboxState.zoom
+            );
+            applyLightboxTransform();
+          }
+        },
+        { passive: true }
+      );
+
+      lightboxViewport.addEventListener(
+        'touchend',
+        (event) => {
+          if (!lightboxState.open) return;
+
+          if (lightboxState.pinch && event.touches.length < 2) {
+            lightboxState.pinch = null;
+            if (lightboxState.zoom < 1.1) resetLightboxZoom();
+          }
+
+          if (event.touches.length === 0 && lightboxState.touchStart) {
+            const start = lightboxState.touchStart;
+            const changedTouch = event.changedTouches[0];
+            const now = Date.now();
+            const dx = changedTouch.clientX - start.x;
+            const dy = changedTouch.clientY - start.y;
+            const moved = Math.abs(dx) > 15 || Math.abs(dy) > 15;
+            const elapsed = now - start.time;
+
+            if (!moved && elapsed < 300) {
+              const sinceLastTap = now - lightboxState.lastTapAt;
+              if (sinceLastTap < 350) {
+                if (lightboxState.zoom > 1) {
+                  resetLightboxZoom();
+                } else {
+                  const zoomLevel = LIGHTBOX_MOBILE_MAX_ZOOM;
+                  const rect = getLightboxInteractionRect() || lightboxViewport.getBoundingClientRect();
+                  const relX = (changedTouch.clientX - rect.left) / rect.width;
+                  const relY = (changedTouch.clientY - rect.top) / rect.height;
+                  const max = getLightboxMaxTranslate(zoomLevel);
+                  lightboxState.zoom = zoomLevel;
+                  lightboxState.translate = clampLightboxTranslate(
+                    (0.5 - relX) * 2 * max.x,
+                    (0.5 - relY) * 2 * max.y,
+                    zoomLevel
+                  );
+                  applyLightboxTransform();
+                }
+                lightboxState.lastTapAt = 0;
+              } else {
+                lightboxState.lastTapAt = now;
+              }
+            }
+
+            if (
+              lightboxState.zoom <= 1 &&
+              Math.abs(dx) > 60 &&
+              Math.abs(dx) > Math.abs(dy) &&
+              elapsed < 400
+            ) {
+              navigateLightbox(dx < 0 ? 1 : -1);
+            }
+          }
+
+          lightboxState.touchStart = null;
+          lightboxState.pan = null;
+        },
+        { passive: true }
+      );
+    }
+
+    lightboxCloseButton?.addEventListener('click', () => closeLightbox());
+    lightboxPrevButton?.addEventListener('click', () => navigateLightbox(-1));
+    lightboxNextButton?.addEventListener('click', () => navigateLightbox(1));
+    window.addEventListener('popstate', handleLightboxPopState);
+    window.addEventListener('keydown', handleLightboxKeydown);
+
     const updateGalleryForVariant = (variant) => {
       if (!variant) return;
       const color = getSelectedColorForVariant(variant);
       const { visible, colorMedia } = getVisibleMediaForColor(color);
       const visibleItems = buildVisibleItems(visible);
-      if (!visibleItems.length) return;
+      if (!visibleItems.length) {
+        if (lightboxState.open) closeLightbox();
+        return;
+      }
 
       const wasOnShared = state.initialized && taggingEnabled && state.activeKind === 'shared';
       const wasOnProof = state.initialized && state.activeKind === 'proof';
 
       state.colorMediaLength = colorMedia.length;
       applyGalleryOrderAndVisibility(visibleItems);
+
+      const selectAndRefresh = (indexToSelect) => {
+        selectMediaIndex(indexToSelect, visibleItems, { scrollMobile: false, instant: true });
+        refreshLightboxSlides();
+      };
 
       if (!state.initialized) {
         state.initialized = true;
@@ -409,33 +1014,30 @@
           ? visibleItems.findIndex((item) => item.type === 'media' && String(item?.media?.id) === String(featuredMediaId))
           : -1;
 
-        selectMediaIndex(initialFeaturedIndex >= 0 ? initialFeaturedIndex : 0, visibleItems, {
-          scrollMobile: false,
-          instant: true,
-        });
+        selectAndRefresh(initialFeaturedIndex >= 0 ? initialFeaturedIndex : 0);
         return;
       }
 
       if (wasOnProof && proofId) {
         const proofIndex = visibleItems.findIndex((item) => item.type === 'proof');
         if (proofIndex >= 0) {
-          selectMediaIndex(proofIndex, visibleItems, { scrollMobile: false, instant: true });
+          selectAndRefresh(proofIndex);
           return;
         }
       }
 
       if (wasOnShared) {
-        selectMediaIndex(0, visibleItems, { scrollMobile: false, instant: true });
+        selectAndRefresh(0);
         return;
       }
 
       if (colorMedia.length) {
         const nextIndex = Math.min(state.activeIndex, colorMedia.length - 1);
-        selectMediaIndex(nextIndex, visibleItems, { scrollMobile: false, instant: true });
+        selectAndRefresh(nextIndex);
         return;
       }
 
-      selectMediaIndex(0, visibleItems, { scrollMobile: false, instant: true });
+      selectAndRefresh(0);
     };
 
     const formatCurrency = (cents, { minimumFractionDigits = 0, maximumFractionDigits = 2 } = {}) => {
@@ -484,27 +1086,34 @@
       if (variantIdInput) variantIdInput.value = variant.id;
 
       if (priceEl) priceEl.textContent = formatCurrency(variant.price, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
-      if (stickyPrice) stickyPrice.textContent = formatCurrency(variant.price, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+      stickyPrices.forEach((stickyPrice) => {
+        stickyPrice.textContent = formatCurrency(variant.price, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+      });
 
       const perNightCents = Math.round(variant.price / 365);
-      if (stickyPricePerNight) {
+      stickyPricePerNights.forEach((stickyPricePerNight) => {
         stickyPricePerNight.textContent = `${stickyPricePerNightPrefix}${formatCurrency(perNightCents, {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         })}${stickyPricePerNightSuffix}`;
-      }
+      });
 
       const stickyVariantLabel = getStickyVariantLabel(variant);
-      if (stickyVariant) stickyVariant.textContent = stickyVariantLabel;
+      stickyVariants.forEach((stickyVariant) => {
+        stickyVariant.textContent = stickyVariantLabel;
+      });
 
-      if (stickyImage) {
-        const stickyImageSrc = getVariantImageSrc(variant);
-        const normalizedStickyImageSrc = normalizeImageUrl(stickyImageSrc);
-        if (normalizedStickyImageSrc) {
-          stickyImage.src = urlWithWidth(normalizedStickyImageSrc, 88) || normalizedStickyImageSrc;
-        }
-        if (stickyVariantLabel) stickyImage.alt = stickyVariantLabel;
-        else if (product?.title) stickyImage.alt = product.title;
+      const stickyImageSrc = getVariantImageSrc(variant);
+      const normalizedStickyImageSrc = normalizeImageUrl(stickyImageSrc);
+      if (stickyImages.length) {
+        stickyImages.forEach((stickyImage) => {
+          if (normalizedStickyImageSrc) {
+            stickyImage.src = urlWithWidth(normalizedStickyImageSrc, 88) || normalizedStickyImageSrc;
+          }
+
+          if (stickyVariantLabel) stickyImage.alt = stickyVariantLabel;
+          else if (product?.title) stickyImage.alt = product.title;
+        });
       }
 
       const compareAt = variant.compare_at_price;
@@ -537,7 +1146,9 @@
         buyNowButton.disabled = !available;
         if (available) buyNowButton.removeAttribute('aria-disabled');
       }
-      if (stickyAtcButton) stickyAtcButton.disabled = !available;
+      stickyAtcButtons.forEach((stickyAtcButton) => {
+        stickyAtcButton.disabled = !available;
+      });
 
       updateGalleryForVariant(variant);
     };
@@ -783,6 +1394,28 @@
       });
     }
 
+    const openLightboxFromActiveStage = () => {
+      if (!state.visibleItems.length) return;
+      const activeItem = state.visibleItems[state.activeIndex];
+      if (!activeItem || activeItem.type !== 'media' || !isMediaZoomable(activeItem.media)) return;
+      openLightboxByItemId(activeItem.id);
+    };
+
+    if (stageAction) {
+      stageAction.addEventListener('click', (event) => {
+        if (event.target instanceof HTMLElement && event.target.closest('a')) return;
+        if (stageAction.dataset.lusenaStageZoomable !== 'true') return;
+        openLightboxFromActiveStage();
+      });
+
+      stageAction.addEventListener('keydown', (event) => {
+        if (stageAction.dataset.lusenaStageZoomable !== 'true') return;
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        openLightboxFromActiveStage();
+      });
+    }
+
     if (thumbEls.length) {
       thumbEls.forEach((el) => {
         el.addEventListener('click', () => {
@@ -816,6 +1449,9 @@
           const idx = state.visibleItems.findIndex((item) => item.id === id);
           if (idx < 0) return;
           selectMediaIndex(idx, state.visibleItems, { instant: true });
+          if (slide.hasAttribute('data-lusena-mobile-zoomable')) {
+            openLightboxByItemId(id);
+          }
         });
       });
     }

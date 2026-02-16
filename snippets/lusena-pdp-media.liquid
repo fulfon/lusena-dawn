@@ -11,6 +11,10 @@
         assign initial_alt_raw = initial_media.alt | default: initial_preview.alt | default: ''
         assign initial_alt = initial_alt_raw | split: '|' | first | strip
         assign proof_media_id = 'lusena-proof-certificate'
+        assign initial_is_zoomable = false
+        if initial_media.media_type == 'image'
+          assign initial_is_zoomable = true
+        endif
 
         assign is_bestseller = false
         if product.metafields.lusena.badge_bestseller != blank
@@ -89,7 +93,18 @@
               {%- endif -%}
             </div>
 
-            <div class="lusena-media-stage bg-surface-2 overflow-hidden rounded-sm relative" data-lusena-media-stage data-stage-type="image">
+            <div
+              class="lusena-media-stage bg-surface-2 overflow-hidden rounded-sm relative"
+              data-lusena-media-stage
+              data-stage-type="image"
+              data-lusena-stage-action
+              data-lusena-stage-zoomable="{{ initial_is_zoomable }}"
+              aria-label="Powieksz zdjecie produktu"
+              {% if initial_is_zoomable %}
+                role="button"
+                tabindex="0"
+              {% endif %}
+            >
               {%- if initial_preview != blank -%}
                 {{
                   initial_preview
@@ -128,6 +143,10 @@
                   Best Seller
                 </span>
               {%- endif -%}
+
+              <span class="lusena-media-stage__zoom" data-lusena-stage-zoom aria-hidden="true">
+                {% render 'lusena-icon', name: 'search', class: 'w-4 h-4', stroke_width: 1.8 %}
+              </span>
             </div>
           </div>
         </div>
@@ -150,6 +169,10 @@
                   class="lusena-gallery__mobile-slide bg-surface-2 overflow-hidden rounded-sm relative"
                   data-lusena-mobile-slide
                   data-media-id="{{ media.id }}"
+                  data-media-type="{{ media.media_type }}"
+                  {% if media.media_type == 'image' %}
+                    data-lusena-mobile-zoomable
+                  {% endif %}
                   aria-label="{{ slide_label | escape }}"
                 >
                   {{
@@ -162,6 +185,11 @@
                       sizes: '85vw',
                       alt: media_alt
                   }}
+                  {%- if media.media_type == 'image' -%}
+                    <span class="lusena-gallery__mobile-zoom" aria-hidden="true">
+                      {% render 'lusena-icon', name: 'search', class: 'w-3.5 h-3.5', stroke_width: 1.8 %}
+                    </span>
+                  {%- endif -%}
                   {%- if is_bestseller and forloop.first -%}
                     <span class="absolute top-3 left-3 bg-white/90 px-2.5 py-1 text-xs uppercase tracking-wider font-medium backdrop-blur-sm" data-lusena-mobile-bestseller hidden>
                       Best Seller
@@ -176,6 +204,7 @@
                 class="lusena-gallery__mobile-slide lusena-gallery__mobile-slide--proof"
                 data-lusena-mobile-slide
                 data-media-id="{{ proof_media_id }}"
+                data-media-type="proof"
                 aria-label="Certyfikat"
               >
                 <div class="lusena-proof-tile">
@@ -221,6 +250,59 @@
                 aria-label="Przejdz do slajdu certyfikatu"
               ></button>
             {%- endif -%}
+          </div>
+        </div>
+
+        <div class="lusena-lightbox" data-lusena-lightbox hidden>
+          <div class="lusena-lightbox__top">
+            <span class="lusena-lightbox__counter" data-lusena-lightbox-counter></span>
+            <button type="button" class="lusena-lightbox__close" data-lusena-lightbox-close aria-label="Zamknij podglad">
+              {% render 'lusena-icon', name: 'x', class: 'w-6 h-6', stroke_width: 1.8 %}
+            </button>
+          </div>
+
+          <div class="lusena-lightbox__viewport" data-lusena-lightbox-viewport>
+            <button
+              type="button"
+              class="lusena-lightbox__nav lusena-lightbox__nav--prev"
+              data-lusena-lightbox-prev
+              aria-label="Poprzednie zdjecie"
+            >
+              {% render 'lusena-icon', name: 'chevron-right', class: 'w-6 h-6', stroke_width: 1.8 %}
+            </button>
+
+            <div class="lusena-lightbox__image-wrap" data-lusena-lightbox-image-wrap>
+              <div class="lusena-lightbox__loader" data-lusena-lightbox-loader></div>
+              <img
+                class="lusena-lightbox__image"
+                data-lusena-lightbox-image
+                alt=""
+                draggable="false"
+                width="1200"
+                height="1200"
+              >
+              <div class="lusena-lightbox__fallback" data-lusena-lightbox-fallback hidden>
+                Nie udalo sie zaladowac zdjecia
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="lusena-lightbox__nav lusena-lightbox__nav--next"
+              data-lusena-lightbox-next
+              aria-label="Nastepne zdjecie"
+            >
+              {% render 'lusena-icon', name: 'chevron-right', class: 'w-6 h-6', stroke_width: 1.8 %}
+            </button>
+          </div>
+
+          <div class="lusena-lightbox__bottom">
+            <span class="lusena-lightbox__hint lusena-lightbox__hint--desktop" data-lusena-lightbox-hint-desktop>
+              Kliknij aby powiekszyc
+            </span>
+            <span class="lusena-lightbox__hint lusena-lightbox__hint--mobile" data-lusena-lightbox-hint-mobile>
+              Dotknij dwukrotnie lub rozsun palce
+            </span>
           </div>
         </div>
       </div>

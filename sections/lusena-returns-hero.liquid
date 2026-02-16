@@ -1,5 +1,5 @@
 <section
-  class="bg-brand-bg text-center lusena-returns-hero"
+  class="bg-brand-bg text-center overflow-hidden lusena-returns-hero"
   style="
     --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
     --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
@@ -7,21 +7,39 @@
     --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
   "
 >
-  <div class="container max-w-4xl mx-auto space-y-6{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
+  <div class="lusena-returns-hero__shield" aria-hidden="true">
+    {% render 'lusena-icon', name: 'shield-check', class: 'lusena-returns-hero__shield-icon', stroke_width: 0.5 %}
+  </div>
+
+  <div class="container lusena-returns-hero__container relative mx-auto space-y-6">
+    <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.hero_kicker | escape }}
     </span>
-    <h1 class="text-4xl md:text-6xl font-serif text-primary">
+    <h1 class="lusena-returns-hero__title font-serif text-primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.hero_heading_line_1 | escape }}<br>
       <span class="italic">{{ section.settings.hero_heading_line_2 | escape }}</span>
     </h1>
-    <p class="text-lg md:text-xl font-light text-secondary leading-relaxed max-w-2xl mx-auto">
+    <p class="text-lg md:text-xl font-light text-secondary leading-relaxed max-w-2xl mx-auto{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.hero_body | escape }}
     </p>
 
-    <div class="pt-8">
-      <div class="inline-block p-4 border border-accent-gold/30 rounded-full bg-white/50 backdrop-blur-md">
-        <span class="text-accent-gold font-medium">{{ section.settings.hero_badge | escape }}</span>
+    {%- if section.blocks.size > 0 -%}
+      <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6 pt-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'proof' and block.settings.text != blank -%}
+            <span class="inline-flex items-center gap-2 text-sm text-primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
+              {% render 'lusena-icon', name: 'check', class: 'w-4 h-4 text-accent-cta', stroke_width: 2 %}
+              {{ block.settings.text | escape }}
+            </span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="pt-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="inline-flex items-center gap-2 px-6 py-3 border border-accent-gold/30 rounded-full bg-white/50 lusena-returns-hero__badge">
+        {% render 'lusena-icon', name: 'rotate-ccw', class: 'w-4 h-4 text-accent-gold', stroke_width: 1.5 %}
+        <span class="text-accent-gold font-medium text-sm">{{ section.settings.hero_badge | escape }}</span>
       </div>
     </div>
   </div>
@@ -29,14 +47,49 @@
 
 {% stylesheet %}
   .lusena-returns-hero {
+    position: relative;
     padding-top: var(--lusena-section-padding-top-mobile);
     padding-bottom: var(--lusena-section-padding-bottom-mobile);
+  }
+
+  .lusena-returns-hero__shield {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.03;
+    pointer-events: none;
+  }
+
+  .lusena-returns-hero__shield-icon {
+    width: 44.8rem;
+    height: 44.8rem;
+  }
+
+  .lusena-returns-hero__container {
+    max-width: 89.6rem !important;
+  }
+
+  .lusena-returns-hero__badge {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  .lusena-returns-hero__title {
+    font-size: 3.6rem;
+    line-height: 1.05;
   }
 
   @media (min-width: 768px) {
     .lusena-returns-hero {
       padding-top: var(--lusena-section-padding-top-desktop);
       padding-bottom: var(--lusena-section-padding-bottom-desktop);
+    }
+
+    .lusena-returns-hero__title {
+      font-size: 6rem;
+      line-height: 1;
     }
   }
 {% endstylesheet %}
@@ -58,7 +111,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 96
+      "default": 128
     },
     {
       "type": "range",
@@ -68,7 +121,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 96
+      "default": 128
     },
     {
       "type": "range",
@@ -78,7 +131,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 64
+      "default": 96
     },
     {
       "type": "range",
@@ -88,7 +141,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 64
+      "default": 96
     },
     {
       "type": "text",
@@ -109,21 +162,55 @@
       "default": "Przespanych Nocy"
     },
     {
-      "type": "text",
+      "type": "textarea",
       "id": "hero_body",
       "label": "Hero body",
-      "default": "Jesteśmy tak pewni jakości LUSENA, że dajemy Ci 60 nocy na testy. Śpij na niej, pierz ją, używaj. Jeśli nie poczujesz różnicy — oddamy Ci pieniądze."
+      "default": "Jesteśmy tak pewni jakości LUSENA, że dajemy Ci 60 nocy na testy. Śpij na niej, pierz ją, używaj. Jeśli nie poczujesz różnicy - oddamy Ci pieniądze."
     },
     {
       "type": "text",
       "id": "hero_badge",
       "label": "Hero badge",
-      "default": "✨ Zwrot nawet używanego produktu"
+      "default": "Zwrot nawet używanego produktu"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "proof",
+      "name": "Proof chip",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "60 dni na test"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "LUSENA Returns: Hero"
+      "name": "LUSENA Returns: Hero",
+      "blocks": [
+        {
+          "type": "proof",
+          "settings": {
+            "text": "60 dni na test"
+          }
+        },
+        {
+          "type": "proof",
+          "settings": {
+            "text": "Zwrot używanego produktu"
+          }
+        },
+        {
+          "type": "proof",
+          "settings": {
+            "text": "Pełny zwrot środków"
+          }
+        }
+      ]
     }
   ]
 }

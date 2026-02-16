@@ -231,27 +231,107 @@
     color: rgb(17 17 17);
   }
 
+  .lusena-pdp .lusena-pdp-payment {
+    width: 100%;
+  }
+
+  .lusena-pdp .lusena-pdp-payment__desktop {
+    display: none;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .lusena-pdp .lusena-pdp-payment__mobile {
+    display: block;
+  }
+
+  .lusena-pdp .lusena-pdp-payment__mobile-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 0.4rem;
+  }
+
   .lusena-pdp .lusena-pdp-payment-methods {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
     gap: 0.6rem;
   }
 
-  .lusena-pdp .lusena-pdp-payment-method {
-    font-size: 10px;
-    line-height: 14px;
-    color: rgba(74, 74, 74, 0.5);
+  .lusena-pdp .lusena-pdp-payment-methods--desktop {
+    flex-wrap: nowrap;
+  }
+
+  .lusena-pdp .lusena-pdp-payment-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border: 1px solid rgba(74, 74, 74, 0.1);
-    border-radius: 6px;
+    border-radius: 0.2rem;
     padding: 0.2rem 0.6rem;
   }
 
+  .lusena-pdp .lusena-pdp-payment-badge--mobile {
+    flex-shrink: 1;
+    min-width: 0;
+    padding: 0.2rem 0.2rem;
+  }
+
+  .lusena-pdp .lusena-pdp-payment-icon {
+    width: auto;
+    object-fit: contain;
+  }
+
+  .lusena-pdp .lusena-pdp-payment-icon--visa-desktop {
+    height: 18px;
+  }
+
+  .lusena-pdp .lusena-pdp-payment-icon--desktop {
+    height: 20px;
+  }
+
+  .lusena-pdp .lusena-pdp-payment-icon--visa-mobile {
+    height: 12px;
+  }
+
+  .lusena-pdp .lusena-pdp-payment-icon--mobile {
+    height: 14px;
+  }
+
   .lusena-pdp .lusena-pdp-payment-secure {
-    font-size: 10px;
+    font-size: 11px;
     line-height: 14px;
-    color: rgba(74, 74, 74, 0.4);
-    margin-left: 0.4rem;
+    color: rgba(74, 74, 74, 0.6);
+    white-space: nowrap;
+  }
+
+  .lusena-pdp .lusena-pdp-payment-secure--mobile {
+    flex-shrink: 0;
+    font-size: 9px;
+    line-height: 12px;
+  }
+
+  @media (min-width: 375px) {
+    .lusena-pdp .lusena-pdp-payment__mobile-row {
+      gap: 0.6rem;
+    }
+
+    .lusena-pdp .lusena-pdp-payment-badge--mobile {
+      padding: 0.2rem 0.4rem;
+    }
+
+    .lusena-pdp .lusena-pdp-payment-icon--visa-mobile {
+      height: 14px;
+    }
+
+    .lusena-pdp .lusena-pdp-payment-icon--mobile {
+      height: 16px;
+    }
+
+    .lusena-pdp .lusena-pdp-payment-secure--mobile {
+      font-size: 10px;
+      line-height: 14px;
+    }
   }
 
   .lusena-pdp .lusena-pdp__stock-dot--available {
@@ -263,6 +343,14 @@
   }
 
   @media (min-width: 768px) {
+    .lusena-pdp .lusena-pdp-payment__desktop {
+      display: flex;
+    }
+
+    .lusena-pdp .lusena-pdp-payment__mobile {
+      display: none;
+    }
+
     .lusena-pdp .lusena-pdp-buy-box {
       position: sticky;
       top: 12.8rem;
@@ -416,6 +504,44 @@
     background: rgb(240 238 235);
   }
 
+  .lusena-pdp [data-lusena-stage-action][data-lusena-stage-zoomable='true'] {
+    cursor: zoom-in;
+  }
+
+  .lusena-pdp [data-lusena-stage-action][data-lusena-stage-zoomable='true']:focus-visible {
+    outline: 2px solid var(--accent-cta, #0e5e5a);
+    outline-offset: 2px;
+  }
+
+  .lusena-pdp .lusena-media-stage__zoom {
+    position: absolute;
+    right: 1.2rem;
+    bottom: 1.2rem;
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(17 17 17);
+    background: rgb(255 255 255 / 0.8);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 150ms ease;
+  }
+
+  .lusena-pdp [data-lusena-stage-action][data-lusena-stage-zoomable='true']:hover .lusena-media-stage__zoom,
+  .lusena-pdp [data-lusena-stage-action][data-lusena-stage-zoomable='true']:focus-visible .lusena-media-stage__zoom {
+    opacity: 1;
+  }
+
+  .lusena-pdp [data-lusena-stage-action][data-lusena-stage-zoomable='false'] .lusena-media-stage__zoom,
+  .lusena-pdp .lusena-media-stage[data-stage-type='proof'] .lusena-media-stage__zoom {
+    display: none;
+  }
+
   .lusena-pdp [data-lusena-media-stage] img {
     transition: opacity 200ms ease-in-out, transform 500ms ease;
     transform-origin: center;
@@ -526,6 +652,27 @@
     object-fit: cover;
   }
 
+  .lusena-pdp .lusena-gallery__mobile-slide[data-lusena-mobile-zoomable] {
+    cursor: zoom-in;
+  }
+
+  .lusena-pdp .lusena-gallery__mobile-zoom {
+    position: absolute;
+    right: 0.8rem;
+    bottom: 0.8rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(17 17 17);
+    background: rgb(255 255 255 / 0.7);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    pointer-events: none;
+  }
+
   .lusena-pdp .lusena-gallery__mobile-slide--proof {
     background: rgb(247 245 242);
   }
@@ -563,6 +710,214 @@
     display: none !important;
   }
 
+  .lusena-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 6001;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.92);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease;
+  }
+
+  .lusena-lightbox.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lusena-lightbox[hidden] {
+    display: none;
+  }
+
+  .lusena-lightbox__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: max(0.75rem, env(safe-area-inset-top)) 1.6rem 1.2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .lusena-lightbox__counter {
+    font-size: 1.4rem;
+    line-height: 2rem;
+    color: rgb(255 255 255 / 0.7);
+    font-variant-numeric: tabular-nums;
+    user-select: none;
+  }
+
+  .lusena-lightbox__close {
+    width: 4.4rem;
+    height: 4.4rem;
+    border: 0;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(255 255 255 / 0.8);
+    transition: color 150ms ease, background-color 150ms ease;
+  }
+
+  .lusena-lightbox__close:hover {
+    color: rgb(255 255 255);
+    background: rgb(255 255 255 / 0.1);
+  }
+
+  .lusena-lightbox__viewport {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+    touch-action: none;
+    cursor: default;
+  }
+
+  .lusena-lightbox__image-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lusena-lightbox__loader {
+    width: 19.2rem;
+    height: 19.2rem;
+    border-radius: 0.8rem;
+    background: rgb(255 255 255 / 0.05);
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .lusena-lightbox__image-wrap.is-loaded .lusena-lightbox__loader,
+  .lusena-lightbox__image-wrap.is-error .lusena-lightbox__loader {
+    display: none;
+  }
+
+  .lusena-lightbox__image {
+    display: block;
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    transition: transform 200ms ease-out, opacity 200ms ease-out;
+    transform-origin: center;
+    opacity: 0;
+    touch-action: none;
+    pointer-events: none;
+  }
+
+  .lusena-lightbox__image-wrap.is-loaded .lusena-lightbox__image {
+    opacity: 1;
+  }
+
+  .lusena-lightbox__image-wrap.is-error .lusena-lightbox__image {
+    display: none;
+  }
+
+  .lusena-lightbox__fallback {
+    background: rgb(240 238 235);
+    border-radius: 0.2rem;
+    padding: 4.8rem;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    color: rgb(74 74 74);
+  }
+
+  .lusena-lightbox__image-wrap.is-error .lusena-lightbox__fallback {
+    display: block !important;
+  }
+
+  .lusena-lightbox__nav {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 4.4rem;
+    height: 4.4rem;
+    border: 0;
+    border-radius: 9999px;
+    align-items: center;
+    justify-content: center;
+    color: rgb(255 255 255 / 0.6);
+    transition: color 150ms ease, background-color 150ms ease;
+  }
+
+  .lusena-lightbox__nav:hover {
+    color: rgb(255 255 255);
+    background: rgb(255 255 255 / 0.1);
+  }
+
+  .lusena-lightbox__nav[disabled] {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .lusena-lightbox__nav--prev {
+    left: 1.2rem;
+  }
+
+  .lusena-lightbox__nav--prev svg {
+    transform: rotate(180deg);
+  }
+
+  .lusena-lightbox__nav--next {
+    right: 1.2rem;
+  }
+
+  .lusena-lightbox__bottom {
+    padding: 0.8rem 1.6rem max(1rem, env(safe-area-inset-bottom));
+    text-align: center;
+    min-height: 3.6rem;
+  }
+
+  .lusena-lightbox__hint {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    color: rgb(255 255 255 / 0.4);
+    user-select: none;
+  }
+
+  .lusena-lightbox__hint--desktop {
+    display: none;
+  }
+
+  .lusena-lightbox__hint--mobile {
+    display: inline;
+  }
+
+  @media screen and (min-width: 750px) {
+    .lusena-lightbox.is-over-image .lusena-lightbox__viewport {
+      cursor: zoom-in;
+    }
+
+    .lusena-lightbox.is-over-image.is-zoomed .lusena-lightbox__viewport {
+      cursor: zoom-out;
+    }
+
+    .lusena-lightbox__nav {
+      display: inline-flex;
+    }
+
+    .lusena-lightbox.is-zoomed .lusena-lightbox__nav {
+      display: none;
+    }
+
+    .lusena-lightbox__hint--desktop {
+      display: inline;
+    }
+
+    .lusena-lightbox__hint--mobile {
+      display: none;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .lusena-pdp [data-lusena-media-stage] img {
       transition: none;
@@ -574,6 +929,11 @@
 
     .lusena-pdp [data-lusena-media-stage]:hover img {
       transform: none;
+    }
+
+    .lusena-lightbox,
+    .lusena-lightbox__image {
+      transition: none;
     }
   }
 

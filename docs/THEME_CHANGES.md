@@ -19,7 +19,44 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — fix(ci): resolve LHCI product handle dynamically
+### (current) — feat(lusena): finalize returns page and PDP parity updates
+
+**Goal:** Finish draft-shop parity for the `/zwroty` page and key PDP fragments (payment strip, sticky ATC, and gallery zoom/lightbox) in the live LUSENA Dawn flow.
+
+**What changed**
+- Reworked `/zwroty` page sections (`hero`, `steps`, `faq`) to match draft parity in structure, typography, spacing defaults, iconography, and interactions.
+- Added two new `/zwroty` sections: editorial comparison ("why 60 days") and final CTA, then wired them into `templates/page.zwroty.json` order/content.
+- Replaced PDP text payment chips with SVG payment logos (Visa, BLIK, PayPo, Przelewy24) and responsive desktop/mobile layouts while keeping secure-payment copy configurable.
+- Added PDP gallery zoom/lightbox support: desktop click-zoom with pointer pan, keyboard/backdrop controls, and mobile pinch/double-tap/pan/swipe behavior with safe-area-compatible viewport handling.
+- Rebuilt sticky ATC into dedicated mobile + desktop variants and updated PDP scripts to synchronize all sticky instances for variant price/per-night/label/image/availability updates.
+- Added parity implementation plans for `/zwroty` and PDP fragments in `docs/`, and updated the draftshop parity skill with the primary local draft source path.
+
+**Key files**
+- `templates/page.zwroty.json`
+- `sections/lusena-returns-hero.liquid`
+- `sections/lusena-returns-steps.liquid`
+- `sections/lusena-returns-editorial.liquid`
+- `sections/lusena-returns-faq.liquid`
+- `sections/lusena-returns-final-cta.liquid`
+- `snippets/lusena-pdp-payment.liquid`
+- `snippets/lusena-pdp-media.liquid`
+- `snippets/lusena-pdp-scripts.liquid`
+- `snippets/lusena-pdp-sticky-atc.liquid`
+- `snippets/lusena-pdp-styles.liquid`
+- `assets/lusena-payment-visa.svg`
+- `assets/lusena-payment-blik.svg`
+- `assets/lusena-payment-paypo.svg`
+- `assets/lusena-payment-przelewy24.svg`
+- `layout/theme.liquid`
+- `layout/password.liquid`
+- `docs/Page_Zwroty_Parity_Plan.md`
+- `docs/Page_Zwroty_Final_CTA_Parity_Plan.md`
+- `docs/PDP_Sticky_ATC_Desktop_Mobile_Parity_Plan.md`
+- `docs/PDP_Payment_Icons_Strip_Parity_Plan.md`
+- `docs/PDP_Gallery_Zoom_Lightbox_Parity_Plan.md`
+- `.codex/skills/lusena-draftshop-fragment-parity/SKILL.md`
+
+### 7eb6712 — fix(ci): resolve LHCI product handle dynamically
 
 **Goal:** Eliminate recurring Lighthouse 404 failures on product URLs by resolving a valid published product handle at runtime in CI.
 
@@ -134,22 +171,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `sections/lusena-main-product.liquid`
 - `docs/PDP_VARIANT_GALLERY.md`
 
-### a171d76 — feat(lusena): PDP swatches + variant media switching
-
-**Goal:** Match the LUSENA draft PDP option UI (color circles + text pills) and allow per-color imagery by switching the gallery on variant change.
-
-**What changed**
-- Rendered Color/Kolor/Colour options as circular swatches (using Shopify swatch data when available, with a small name-to-color fallback).
-- Rendered other options as pill buttons, with the selected state styled via `:checked` so it updates instantly.
-- Added variant media switching: main media updates to the selected variant’s image (and the secondary tile picks the next best media), with `prefers-reduced-motion` handling.
-
-**Key files**
-- `sections/lusena-main-product.liquid`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-13T19:00:05+01:00 — (current) — fix(ci): resolve LHCI product handle dynamically
+- 2026-02-16T16:37:56+01:00 — (current) — feat(lusena): finalize returns page and PDP parity updates
+- 2026-02-13T19:00:05+01:00 — 7eb6712 — fix(ci): resolve LHCI product handle dynamically
 - 2026-02-13T18:50:36+01:00 — 1ad8a9e — fix(ci): stabilize Lighthouse target and skip remote theme pull
 - 2026-02-13T18:33:58+01:00 — 1ccc2b8 — feat(lusena): complete PDP + cart parity rollout
 - 2026-02-07T16:30:27+01:00 — 3a51798 — refactor(lusena): split PDP into snippets

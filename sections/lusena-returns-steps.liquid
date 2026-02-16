@@ -7,22 +7,51 @@
     --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
   "
 >
-  <div class="container max-w-5xl mx-auto">
-    <h2 class="text-3xl md:text-4xl font-serif text-primary text-center mb-16{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      {{ section.settings.steps_heading | escape }}
-    </h2>
+  <div class="container lusena-returns-steps__container mx-auto">
+    <div class="text-center mb-16 space-y-3">
+      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        {{ section.settings.steps_kicker | escape }}
+      </span>
+      <h2 class="text-3xl md:text-5xl font-serif text-primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        {{ section.settings.steps_heading | escape }}
+      </h2>
+    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
-      <div class="hidden md:block absolute top-12 left-[16%] right-[16%] h-[1px] bg-secondary/20 z-0"></div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
+      <div class="lusena-returns-steps__connector" aria-hidden="true"><span></span></div>
 
       {%- for block in section.blocks -%}
         {%- if block.type == 'step' -%}
-          <div class="relative z-10 text-center space-y-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %} {{ block.shopify_attributes }}>
-            <div class="w-24 h-24 mx-auto bg-white border border-secondary/20 rounded-full flex items-center justify-center text-3xl shadow-sm">
-              {{ block.settings.icon }}
+          {%- liquid
+            assign icon_name = block.settings.icon | strip | downcase
+            case icon_name
+              when '🛒'
+                assign icon_name = 'shopping-bag'
+              when 'shopping-bag', 'shopping bag', 'shoppingbag'
+                assign icon_name = 'shopping-bag'
+              when '📧'
+                assign icon_name = 'mail'
+              when 'mail', 'email', 'envelope'
+                assign icon_name = 'mail'
+              when '💰'
+                assign icon_name = 'banknote'
+              when 'banknote', 'money'
+                assign icon_name = 'banknote'
+              else
+                assign icon_name = 'shopping-bag'
+            endcase
+          -%}
+          <div class="lusena-returns-steps__card-wrap{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
+            <div class="relative z-10 bg-surface-2 lusena-returns-steps__card p-8 text-center space-y-4">
+              <span class="text-accent-gold text-xs tracking-widest uppercase font-semibold">
+                {{ section.settings.step_label_prefix | escape }} {{ forloop.index }}
+              </span>
+              <div class="w-16 h-16 mx-auto bg-white rounded-full flex items-center justify-center text-accent-cta shadow-sm">
+                {% render 'lusena-icon', name: icon_name, class: 'lusena-returns-steps__step-icon', stroke_width: 1.5 %}
+              </div>
+              <h3 class="font-serif text-xl text-primary">{{ block.settings.title | escape }}</h3>
+              <p class="text-secondary text-sm leading-relaxed">{{ block.settings.text | escape }}</p>
             </div>
-            <h3 class="font-serif text-xl">{{ block.settings.title | escape }}</h3>
-            <p class="text-secondary font-light text-sm px-4">{{ block.settings.text | escape }}</p>
           </div>
         {%- endif -%}
       {%- endfor -%}
@@ -36,10 +65,60 @@
     padding-bottom: var(--lusena-section-padding-bottom-mobile);
   }
 
+  .lusena-returns-steps__container {
+    max-width: 102.4rem !important;
+  }
+
+  .lusena-returns-steps__card-wrap {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+  }
+
+  .lusena-returns-steps__card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 0.8rem;
+    transition: transform 0.3s;
+    will-change: transform;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .lusena-returns-steps__card:hover {
+      transform: translateY(-0.4rem);
+    }
+  }
+
+  .lusena-returns-steps__connector {
+    display: none;
+    position: absolute;
+    top: 4rem;
+    left: 20%;
+    right: 20%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .lusena-returns-steps__connector span {
+    display: block;
+    height: 0;
+    border-top: 1px dashed rgb(74 74 74 / 0.2);
+  }
+
+  .lusena-returns-steps__step-icon {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+
   @media (min-width: 768px) {
     .lusena-returns-steps {
       padding-top: var(--lusena-section-padding-top-desktop);
       padding-bottom: var(--lusena-section-padding-bottom-desktop);
+    }
+
+    .lusena-returns-steps__connector {
+      display: block;
     }
   }
 {% endstylesheet %}
@@ -61,7 +140,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 128
     },
     {
       "type": "range",
@@ -71,7 +150,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 128
     },
     {
       "type": "range",
@@ -81,7 +160,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 96
     },
     {
       "type": "range",
@@ -91,13 +170,25 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 96
+    },
+    {
+      "type": "text",
+      "id": "steps_kicker",
+      "label": "Section kicker",
+      "default": "Prosty Proces"
     },
     {
       "type": "text",
       "id": "steps_heading",
-      "label": "Steps heading",
+      "label": "Section heading",
       "default": "Jak to działa?"
+    },
+    {
+      "type": "text",
+      "id": "step_label_prefix",
+      "label": "Step label prefix",
+      "default": "Krok"
     }
   ],
   "blocks": [
@@ -108,20 +199,20 @@
         {
           "type": "text",
           "id": "icon",
-          "label": "Icon (emoji)",
-          "default": "🛒"
+          "label": "Icon name",
+          "default": "shopping-bag"
         },
         {
           "type": "text",
           "id": "title",
           "label": "Title",
-          "default": "Kupujesz i Testujesz"
+          "default": "Kupujesz i testujesz"
         },
         {
-          "type": "text",
+          "type": "textarea",
           "id": "text",
           "label": "Text",
-          "default": "Masz pełne 60 dni od momentu otrzymania paczki. Nie musisz trzymać folii ani metek."
+          "default": "Masz pełne 60 dni od momentu otrzymania paczki. Nie musisz trzymać folii ani metek - po prostu śpij i oceniaj."
         }
       ]
     }
@@ -133,25 +224,25 @@
         {
           "type": "step",
           "settings": {
-            "icon": "🛒",
-            "title": "Kupujesz i Testujesz",
-            "text": "Masz pełne 60 dni od momentu otrzymania paczki. Nie musisz trzymać folii ani metek."
+            "icon": "shopping-bag",
+            "title": "Kupujesz i testujesz",
+            "text": "Masz pełne 60 dni od momentu otrzymania paczki. Nie musisz trzymać folii ani metek - po prostu śpij i oceniaj."
           }
         },
         {
           "type": "step",
           "settings": {
-            "icon": "📧",
+            "icon": "mail",
             "title": "Piszesz do nas",
-            "text": "Wystarczy krótki mail na czesc@lusena.pl. Wyślemy Ci instrukcję zwrotu."
+            "text": "Wystarczy krótki mail na czesc@lusena.pl. Odezwiemy się w ciągu 24h i wyślemy instrukcję zwrotu."
           }
         },
         {
           "type": "step",
           "settings": {
-            "icon": "💰",
-            "title": "Szybki Zwrot",
-            "text": "Środki wrócą na Twoje konto w ciągu 3-5 dni roboczych od odebrania przez nas przesyłki."
+            "icon": "banknote",
+            "title": "Szybki zwrot środków",
+            "text": "Pieniądze wrócą na Twoje konto w ciągu 3-5 dni roboczych od odebrania przez nas przesyłki."
           }
         }
       ]
