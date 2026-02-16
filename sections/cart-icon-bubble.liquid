@@ -1,5 +1,5 @@
 {% render 'lusena-icon', name: 'shopping-bag', class: 'w-5 h-5 text-primary', stroke_width: 1.5 %}
-<span class="sr-only">{{ 'templates.cart.cart' | t }}</span>
+<span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
 {%- if cart.item_count > 0 -%}
   <span class="lusena-header__cart-count">
     {{- cart.item_count -}}
