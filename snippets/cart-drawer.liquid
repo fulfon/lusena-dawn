@@ -179,6 +179,11 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  /* Fix: w-14 missing from compiled Tailwind — causes upsell image blowup on iOS Safari */
+  [data-cart-upsell-zone] .w-14 {
+    width: 5.6rem;
+  }
 </style>
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
