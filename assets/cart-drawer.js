@@ -2,8 +2,13 @@ class CartDrawer extends HTMLElement {
   constructor() {
     super();
 
+    this.shouldRestoreFocus = true;
+    this.historyStateKey = 'lusenaCartDrawerOpen';
+    this.historyEntryActive = false;
+    this.isClosingFromHistory = false;
     this.addEventListener('keyup', (evt) => evt.code === 'Escape' && this.close());
     this.querySelector('#CartDrawer-Overlay').addEventListener('click', this.close.bind(this));
+    window.addEventListener('popstate', this.handlePopState.bind(this));
     this.setHeaderCartIconAccessibility();
   }
 
@@ -15,17 +20,20 @@ class CartDrawer extends HTMLElement {
     cartLink.setAttribute('aria-haspopup', 'dialog');
     cartLink.addEventListener('click', (event) => {
       event.preventDefault();
-      this.open(cartLink);
+      this.open(cartLink, event.detail === 0);
     });
     cartLink.addEventListener('keydown', (event) => {
       if (event.code.toUpperCase() === 'SPACE') {
         event.preventDefault();
-        this.open(cartLink);
+        this.open(cartLink, true);
       }
     });
   }
 
-  open(triggeredBy) {
+  open(triggeredBy, shouldRestoreFocus = true) {
+    const wasOpen = this.classList.contains('active');
+
+    this.shouldRestoreFocus = shouldRestoreFocus;
     if (triggeredBy) this.setActiveElement(triggeredBy);
     const cartDrawerNote = this.querySelector('[id^="Details-"] summary');
     if (cartDrawerNote && !cartDrawerNote.hasAttribute('role')) this.setSummaryAccessibility(cartDrawerNote);
@@ -47,12 +55,25 @@ class CartDrawer extends HTMLElement {
     );
 
     document.body.classList.add('overflow-hidden');
+    if (!wasOpen) this.pushHistoryEntry();
   }
 
   close() {
     this.classList.remove('active');
-    removeTrapFocus(this.activeElement);
+    if (this.shouldRestoreFocus && this.activeElement) {
+      removeTrapFocus(this.activeElement);
+    } else {
+      removeTrapFocus();
+      this.activeElement?.blur();
+    }
+    this.shouldRestoreFocus = true;
     document.body.classList.remove('overflow-hidden');
+
+    if (this.historyEntryActive && !this.isClosingFromHistory) {
+      history.back();
+      return;
+    }
+    this.historyEntryActive = false;
   }
 
   setSummaryAccessibility(cartDrawerNote) {
@@ -111,6 +132,28 @@ class CartDrawer extends HTMLElement {
 
   setActiveElement(element) {
     this.activeElement = element;
+  }
+
+  pushHistoryEntry() {
+    const state = history.state || {};
+    if (state[this.historyStateKey]) {
+      this.historyEntryActive = true;
+      return;
+    }
+
+    history.pushState({ ...state, [this.historyStateKey]: true }, '', window.location.href);
+    this.historyEntryActive = true;
+  }
+
+  handlePopState() {
+    if (!this.classList.contains('active')) {
+      this.historyEntryActive = false;
+      return;
+    }
+
+    this.isClosingFromHistory = true;
+    this.close();
+    this.isClosingFromHistory = false;
   }
 }
 

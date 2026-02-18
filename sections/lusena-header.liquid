@@ -43,6 +43,17 @@
       display: none;
     }
 
+    .lusena-header__icon-action {
+      border-radius: 9999px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+      .lusena-header__icon-action:hover {
+        background-color: transparent !important;
+      }
+    }
+
     .lusena-header__cart-count {
       position: absolute;
       top: -0.3rem;
@@ -176,19 +187,19 @@
 
     <div class="flex items-center gap-2 md:gap-4">
       {%- if section.settings.enable_search -%}
-        <a href="{{ routes.search_url }}" class="lusena-header__desktop-only h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Search">
+        <a href="{{ routes.search_url }}" class="lusena-header__desktop-only lusena-header__icon-action h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Search">
           {% render 'lusena-icon', name: 'search', class: 'w-5 h-5 text-primary', stroke_width: 1.5 %}
         </a>
       {%- endif -%}
 
       {%- if section.settings.enable_account and shop.customer_accounts_enabled -%}
-        <a href="{{ routes.account_url }}" class="lusena-header__desktop-only h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Account">
+        <a href="{{ routes.account_url }}" class="lusena-header__desktop-only lusena-header__icon-action h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Account">
           {% render 'lusena-icon', name: 'user', class: 'w-5 h-5 text-primary', stroke_width: 2 %}
         </a>
       {%- endif -%}
 
       {%- if section.settings.enable_cart -%}
-        <a href="{{ routes.cart_url }}" id="cart-icon-bubble" class="relative flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Cart">
+        <a href="{{ routes.cart_url }}" id="cart-icon-bubble" class="lusena-header__icon-action relative flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Cart">
           {% render 'lusena-icon', name: 'shopping-bag', class: 'w-5 h-5 text-primary', stroke_width: 2 %}
           {%- if cart.item_count > 0 -%}
             <span class="lusena-header__cart-count">
@@ -261,6 +272,7 @@
     const autoHideMobileMq = window.matchMedia('(max-width: 767px)');
     const autoHideOnScrollDesktop = header.hasAttribute('data-lusena-auto-hide-on-scroll-desktop');
     const autoHideDesktopMq = window.matchMedia('(min-width: 1024px)');
+    const touchOnlyMq = window.matchMedia('(hover: none) and (pointer: coarse)');
     const autoHideDeltaThresholdPx = 8;
     const autoHideTopThresholdPx = 24;
 
@@ -295,6 +307,13 @@
         mobileMenuDetails.open && !mobileMenuDetails.hasAttribute('data-lusena-mobile-menu-closing');
       mobileMenuPanel.inert = !shouldBeAccessible;
       mobileMenuPanel.setAttribute('aria-hidden', shouldBeAccessible ? 'false' : 'true');
+    };
+
+    const resetTouchIconFocus = () => {
+      if (!touchOnlyMq.matches) return;
+      header.querySelectorAll('.lusena-header__icon-action').forEach((element) => {
+        element.blur();
+      });
     };
 
     const update = () => {
@@ -336,8 +355,16 @@
     };
 
     update();
+    resetTouchIconFocus();
     window.addEventListener('scroll', update, { passive: true });
     header.addEventListener('focusin', update);
+    window.addEventListener('pageshow', (event) => {
+      const navigationEntry = performance.getEntriesByType('navigation')[0];
+      const isHistoryNavigation = event.persisted || navigationEntry?.type === 'back_forward';
+      if (isHistoryNavigation) {
+        resetTouchIconFocus();
+      }
+    });
 
     if (autoHideMobileMq.addEventListener) {
       autoHideMobileMq.addEventListener('change', () => {

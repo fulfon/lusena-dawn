@@ -19,7 +19,43 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — fix(lusena): stabilize PDP gallery crossfade and mobile variant sync
+### (current) — fix(lusena): improve touch cart drawer close and history behavior
+
+**Goal:** Make cart interactions feel native on touch devices and avoid stale focus/open states when customers navigate to and from cart-related views.
+
+**What changed**
+- Added history-state management to the cart drawer so opening the drawer creates a back-stack entry and browser back closes the drawer instead of unexpectedly changing pages.
+- Updated drawer focus handling for pointer/touch activations so close actions don’t force focus restoration in cases where it causes sticky focus states.
+- Added touch-focused icon behavior for the LUSENA header and drawer icon buttons: no tap highlight, no hover background on coarse pointers, and blur/reset on history `pageshow`.
+- Made cart drawer product image/title links close the drawer when they target the current product page (same-path navigation), avoiding redundant same-page reloads.
+
+**Key files**
+- `assets/cart-drawer.js`
+- `sections/lusena-header.liquid`
+- `snippets/cart-drawer.liquid`
+- `docs/THEME_CHANGES.md`
+
+### 170a28b — upsell css fix
+
+**Goal:** Prevent iOS Safari cart upsell thumbnails from rendering at an oversized width when a missing utility class causes style fallback.
+
+**What changed**
+- Added an explicit width backfill for `.w-14` inside the cart upsell zone to keep upsell product image sizing stable.
+
+**Key files**
+- `snippets/cart-drawer.liquid`
+
+### 573f97a — fix(lusena): hide cart label in cart icon bubble rerenders
+
+**Goal:** Keep the cart icon label accessible to screen readers while ensuring it stays visually hidden across cart bubble rerenders.
+
+**What changed**
+- Replaced `sr-only` with Dawn’s `visually-hidden` class in the cart icon bubble snippet used for dynamic rerenders.
+
+**Key files**
+- `sections/cart-icon-bubble.liquid`
+
+### 186361d — fix(lusena): stabilize PDP gallery crossfade and mobile variant sync
 
 **Goal:** Finalize PDP gallery variant-switch parity for crossfade + lazy loading and fix the mobile mismatch where indicator dots/index moved but the visible slide stayed on the previous shared image.
 
@@ -129,65 +165,23 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `docs/PDP_BuyBox_Parity_Plan.md`
 - `.codex/skills/lusena-draftshop-fragment-parity/SKILL.md`
 
-### 3a51798 — refactor(lusena): split PDP into snippets
-
-**Goal:** Make the product page (PDP) section easier to maintain by extracting `lusena-main-product` into focused snippet components, without changing the storefront output/behavior.
-
-**What changed**
-- Extracted the major PDP parts (media, summary, variant picker, buybox, trust/guarantee, accordions, cross-sell, reviews, sticky ATC) into `snippets/lusena-pdp-*.liquid`.
-- Moved the section-scoped `{% stylesheet %}` and `{% javascript %}` blocks into dedicated snippets so behavior/styling can evolve independently.
-- Kept the existing section schema/settings IDs and all JS hooks (`data-lusena-*`, `#main-cta`) stable.
-
-**Key files**
-- `sections/lusena-main-product.liquid`
-- `snippets/lusena-pdp-accordions.liquid`
-- `snippets/lusena-pdp-atc.liquid`
-- `snippets/lusena-pdp-cross-sell.liquid`
-- `snippets/lusena-pdp-guarantee.liquid`
-- `snippets/lusena-pdp-media.liquid`
-- `snippets/lusena-pdp-reviews.liquid`
-- `snippets/lusena-pdp-scripts.liquid`
-- `snippets/lusena-pdp-sticky-atc.liquid`
-- `snippets/lusena-pdp-styles.liquid`
-- `snippets/lusena-pdp-summary.liquid`
-- `snippets/lusena-pdp-variant-picker.liquid`
-
-### 09ba94a — fix(lusena): preserve PDP image index on color switch
-
-**Goal:** Make color switching behave like a true “same angle, different color” comparison: keep the selected image index within color images, and jump to the first color image when the customer was viewing shared media.
-
-**What changed**
-- Tracked whether the currently selected image is color-specific vs shared, so switching colors always picks the equivalent image index for the newly selected color.
-- When a shared image is selected, switching color always jumps to the first color image (so the change is immediately visible).
-- Kept initialization aligned with the variant featured media to avoid unexpected first-load image jumps.
-
-**Key files**
-- `sections/lusena-main-product.liquid`
-
-### cdcee94 — fix(lusena): correct PDP color gallery filtering
-
-**Goal:** Fix edge cases where switching colors could show stale images from other variants or place shared images before color-specific ones.
-
-**What changed**
-- Hardened alt-tag parsing so `[color=…]` works reliably even with small formatting differences (e.g. extra spaces around `=`).
-- Updated fallback when a color has no assigned images: show only shared/untagged media (instead of leaking other colors).
-
-**Key files**
-- `sections/lusena-main-product.liquid`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-16T20:06:42+01:00 — (current) — fix(lusena): stabilize PDP gallery crossfade and mobile variant sync
-- 2026-02-16T16:37:56+01:00 — 4b9caa2 — feat(lusena): finalize returns page and PDP parity updates
-- 2026-02-13T19:00:05+01:00 — 7eb6712 — fix(ci): resolve LHCI product handle dynamically
-- 2026-02-13T18:50:36+01:00 — 1ad8a9e — fix(ci): stabilize Lighthouse target and skip remote theme pull
+- 2026-02-18T20:28:57+01:00 — (current) — fix(lusena): improve touch cart drawer close and history behavior
+- 2026-02-17T20:47:16+01:00 — 170a28b — upsell css fix
+- 2026-02-16T20:21:46+01:00 — 573f97a — fix(lusena): hide cart label in cart icon bubble rerenders
+- 2026-02-16T20:07:33+01:00 — 186361d — fix(lusena): stabilize PDP gallery crossfade and mobile variant sync
+- 2026-02-16T16:38:50+01:00 — 4b9caa2 — feat(lusena): finalize returns page and PDP parity updates
+- 2026-02-13T19:00:49+01:00 — 7eb6712 — fix(ci): resolve LHCI product handle dynamically
+- 2026-02-13T18:51:05+01:00 — 1ad8a9e — fix(ci): stabilize Lighthouse target and skip remote theme pull
 - 2026-02-13T18:33:58+01:00 — 1ccc2b8 — feat(lusena): complete PDP + cart parity rollout
 - 2026-02-07T16:30:27+01:00 — 3a51798 — refactor(lusena): split PDP into snippets
 - 2026-02-04T20:48:18+01:00 — 09ba94a — fix(lusena): preserve PDP image index on color switch
 - 2026-02-04T20:39:13+01:00 — cdcee94 — fix(lusena): correct PDP color gallery filtering
 - 2026-02-03T19:25:59+01:00 — 8a6d37a — feat(lusena): PDP gallery grouped by color-tagged media
 - 2026-02-02T19:08:42+01:00 — a171d76 — feat(lusena): PDP swatches + variant media switching
+- 2026-02-02T16:41:07+01:00 — bb4cfc3 — docs: add Playwright verification workflow
 - 2026-02-02T16:37:30+01:00 — dc1ed64 — fix(lusena): sync page offset to header height
 - 2026-02-02T16:19:43+01:00 — a3fd8e3 — fix(lusena): make scroll-reveal consistent across pages
 - 2026-02-02T16:10:59+01:00 — 6f5f6de — fix(lusena): trust bar launch-safe proof points
