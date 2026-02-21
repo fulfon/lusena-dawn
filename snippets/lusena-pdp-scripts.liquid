@@ -109,7 +109,6 @@
     };
     const addToCartLoadingMinMs = parseDelayMs(addToCartFormEl?.dataset?.loadingMinMs);
     const addToCartLoadingHoldMs = parseDelayMs(addToCartFormEl?.dataset?.loadingHoldMs);
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let stageFadeTimer = null;
     let mobileFadeTimer = null;
     let stickyLoadingTimer = null;
