@@ -37,9 +37,9 @@
         "benefit-2"
       ],
       "settings": {
-        "padding_top": 56,
-        "padding_bottom": 56,
-        "padding_top_mobile": 40,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
         "padding_bottom_mobile": 40,
         "emotional_headline": "Gładsza skóra i lśniące włosy — od pierwszej nocy.",
         "trust_shipping": "Darmowa dostawa",
@@ -53,8 +53,11 @@
         "price_per_night_suffix": "/ noc (przy rocznym użytkowaniu)",
         "select_color_label": "Wybierz kolor",
         "add_to_cart_label": "Dodaj do koszyka – wysyłka dziś",
+        "add_to_cart_loading_label": "Dodaję...",
         "buy_now_label": "Kup teraz",
+        "buy_now_loading_label": "Przekierowuję...",
         "sticky_add_to_cart_label": "Dodaj do koszyka",
+        "sticky_add_to_cart_loading_label": "Dodaję...",
         "in_stock_label": "Na stanie, gotowe do wysyłki",
         "out_of_stock_label": "Chwilowo niedostępne",
         "guarantee_heading": "60 dni gwarancji spokojnego snu",
@@ -125,7 +128,12 @@
         "feature-4",
         "feature-5"
       ],
-      "settings": {}
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
     },
     "pdp_quality_evidence": {
       "type": "lusena-pdp-quality-evidence",
@@ -186,12 +194,21 @@
         "evidence-3"
       ],
       "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
         "heading": "Dlaczego LUSENA?"
       }
     },
     "pdp_details_questions": {
       "type": "lusena-pdp-details",
-      "settings": {}
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
+      }
     }
   },
   "order": [
