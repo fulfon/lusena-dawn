@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -6,19 +15,19 @@
         "benefit-0": {
           "type": "benefit",
           "settings": {
-            "text": "43% mniej tarcia vs bawe\u0142na \u2014 mniej zagniece\u0144 rano (test EN 12947)"
+            "text": "43% mniej tarcia vs bawełna — mniej zagnieceń rano (test EN 12947)"
           }
         },
         "benefit-1": {
           "type": "benefit",
           "settings": {
-            "text": "Nie wch\u0142ania krem\u00f3w i serum \u2014 piel\u0119gnacja zostaje na sk\u00f3rze, nie na poszewce"
+            "text": "Nie wchłania kremów i serum — pielęgnacja zostaje na skórze, nie na poszewce"
           }
         },
         "benefit-2": {
           "type": "benefit",
           "settings": {
-            "text": "G\u0142adka powierzchnia chroni w\u0142osy przed puszeniem i \u0142amaniem si\u0119"
+            "text": "Gładka powierzchnia chroni włosy przed puszeniem i łamaniem się"
           }
         }
       },
@@ -28,26 +37,30 @@
         "benefit-2"
       ],
       "settings": {
-        "emotional_headline": "G\u0142adsza sk\u00f3ra i l\u015bni\u0105ce w\u0142osy \u2014 od pierwszej nocy.",
+        "padding_top": 56,
+        "padding_bottom": 56,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "emotional_headline": "Gładsza skóra i lśniące włosy — od pierwszej nocy.",
         "trust_shipping": "Darmowa dostawa",
-        "trust_oeko": "OEKO-TEX\u00ae",
-        "tagline": "100% jedwab morwowy Grade 6A z Suzhou, 22 momme, certyfikat OEKO-TEX\u00ae Standard 100. Jedwab redukuje tarcie o 43% vs bawe\u0142na \u2014 Twoja sk\u00f3ra i w\u0142osy poczuj\u0105 r\u00f3\u017cnic\u0119.",
-        "delivery_qualifies_label": "To zam\u00f3wienie kwalifikuje si\u0119 do darmowej dostawy",
-        "delivery_free_fallback_label": "Darmowa dostawa InPost od 199 z\u0142",
-        "delivery_eta_label": "Dostawa: 1\u20132 dni robocze",
+        "trust_oeko": "OEKO-TEX®",
+        "tagline": "100% jedwab morwowy Grade 6A z Suzhou, 22 momme, certyfikat OEKO-TEX® Standard 100. Jedwab redukuje tarcie o 43% vs bawełna — Twoja skóra i włosy poczują różnicę.",
+        "delivery_qualifies_label": "To zamówienie kwalifikuje się do darmowej dostawy",
+        "delivery_free_fallback_label": "Darmowa dostawa InPost od 199 zł",
+        "delivery_eta_label": "Dostawa: 1–2 dni robocze",
         "delivery_returns_link_label": "60 dni na zwrot",
-        "price_per_night_prefix": "Tylko ",
-        "price_per_night_suffix": " / noc (przy rocznym u\u017cytkowaniu)",
+        "price_per_night_prefix": "Tylko",
+        "price_per_night_suffix": "/ noc (przy rocznym użytkowaniu)",
         "select_color_label": "Wybierz kolor",
-        "add_to_cart_label": "Dodaj do koszyka \u2013 wysy\u0142ka dzi\u015b",
+        "add_to_cart_label": "Dodaj do koszyka – wysyłka dziś",
         "buy_now_label": "Kup teraz",
         "sticky_add_to_cart_label": "Dodaj do koszyka",
-        "in_stock_label": "Na stanie, gotowe do wysy\u0142ki",
-        "out_of_stock_label": "Chwilowo niedost\u0119pne",
+        "in_stock_label": "Na stanie, gotowe do wysyłki",
+        "out_of_stock_label": "Chwilowo niedostępne",
         "guarantee_heading": "60 dni gwarancji spokojnego snu",
-        "guarantee_link_label": "Jak to dzia\u0142a?",
-        "guarantee_body": "Przetestuj przez 60 nocy. Je\u015bli nie poczujesz r\u00f3\u017cnicy \u2014 zwr\u00f3\u0107, nawet u\u017cywan\u0105. Pe\u0142ny zwrot bez pyta\u0144.",
-        "secure_payment_label": "Bezpieczna p\u0142atno\u015b\u0107",
+        "guarantee_link_label": "Jak to działa?",
+        "guarantee_body": "Przetestuj przez 60 nocy. Jeśli nie poczujesz różnicy — zwróć, nawet używaną. Pełny zwrot bez pytań.",
+        "secure_payment_label": "Bezpieczna płatność",
         "video_placeholder": "Video Preview",
         "cross_sell_heading": "Pasuje do"
       }
@@ -181,5 +194,10 @@
       "settings": {}
     }
   },
-  "order": ["main", "pdp_feature_highlights", "pdp_quality_evidence", "pdp_details_questions"]
+  "order": [
+    "main",
+    "pdp_feature_highlights",
+    "pdp_quality_evidence",
+    "pdp_details_questions"
+  ]
 }
