@@ -1,6 +1,6 @@
-# LUSENA Theme Brandbook — UI/UX & Implementation Guide
+# LUSENA Theme Brandbook â€” UI/UX & Implementation Guide
 
-> **Generated:** 2026-02-20 · **Theme base:** Dawn v15.4.1 · **Brand:** LUSENA (PL-first, premium silk)
+> **Generated:** 2026-02-20 Â· **Theme base:** Dawn v15.4.1 Â· **Brand:** LUSENA (PL-first, premium silk)
 
 ---
 
@@ -24,8 +24,8 @@
 
 ### Source of truth chain
 
-1. **Brand rules:** `docs/LUSENA_BrandBook_v1.md` — colors, tone, photography, personality.
-2. **Theme implementation guide:** **This document** — how brand rules are realized in code.
+1. **Brand rules:** `docs/LUSENA_BrandBook_v1.md` â€” colors, tone, photography, personality.
+2. **Theme implementation guide:** **This document** â€” how brand rules are realized in code.
 3. **Code:** The `lusena-*` prefixed files in `sections/`, `snippets/`, and `assets/`.
 
 ### Validated surfaces vs. repo leftovers
@@ -50,30 +50,30 @@ Patterns from **other** templates/sections (Dawn defaults, `lusena-page-returns`
 
 ```
 lusena-dawn/
-├── assets/          # Global CSS (base.css, lusena-shop.css), JS (global.js, cart-drawer.js, etc.)
-├── config/          # settings_schema.json (theme editor schema), settings_data.json (current values)
-├── layout/          # theme.liquid (main layout), password.liquid
-├── locales/         # en.default.json, en.default.schema.json, pl.json, etc.
-├── sections/        # lusena-*.liquid (custom), Dawn defaults (main-product, etc.)
-├── snippets/        # lusena-*.liquid (custom), Dawn defaults (meta-tags, etc.)
-├── templates/       # .json files mapping URLs to section compositions
-└── docs/            # LUSENA_BrandBook_v1.md, THEME_CHANGES.md, this file
+â”śâ”€â”€ assets/          # Global CSS (base.css, lusena-shop.css), JS (global.js, cart-drawer.js, etc.)
+â”śâ”€â”€ config/          # settings_schema.json (theme editor schema), settings_data.json (current values)
+â”śâ”€â”€ layout/          # theme.liquid (main layout), password.liquid
+â”śâ”€â”€ locales/         # en.default.json, en.default.schema.json, pl.json, etc.
+â”śâ”€â”€ sections/        # lusena-*.liquid (custom), Dawn defaults (main-product, etc.)
+â”śâ”€â”€ snippets/        # lusena-*.liquid (custom), Dawn defaults (meta-tags, etc.)
+â”śâ”€â”€ templates/       # .json files mapping URLs to section compositions
+â””â”€â”€ docs/            # LUSENA_BrandBook_v1.md, THEME_CHANGES.md, this file
 ```
 
 ### 2.2 How the rendering pipeline works
 
 ```
-layout/theme.liquid                      ← HTML shell, <head>, global CSS/JS
-  ├── sections/header-group.json         ← header section group
-  │     └── sections/lusena-header.liquid
-  ├── {{ content_for_layout }}           ← page content injected here
-  │     └── templates/{name}.json        ← maps URL to ordered section list
-  │           └── sections/lusena-{X}.liquid
-  │                 ├── snippets/lusena-{Y}.liquid   ← reusable fragments
-  │                 └── {% stylesheet %} / {% javascript %}  ← scoped CSS/JS
-  ├── sections/footer-group.json
-  │     └── sections/lusena-footer.liquid
-  └── snippets/cart-drawer.liquid        ← rendered globally when cart_type == 'drawer'
+layout/theme.liquid                      â† HTML shell, <head>, global CSS/JS
+  â”śâ”€â”€ sections/header-group.json         â† header section group
+  â”‚     â””â”€â”€ sections/lusena-header.liquid
+  â”śâ”€â”€ {{ content_for_layout }}           â† page content injected here
+  â”‚     â””â”€â”€ templates/{name}.json        â† maps URL to ordered section list
+  â”‚           â””â”€â”€ sections/lusena-{X}.liquid
+  â”‚                 â”śâ”€â”€ snippets/lusena-{Y}.liquid   â† reusable fragments
+  â”‚                 â””â”€â”€ {% stylesheet %} / {% javascript %}  â† scoped CSS/JS
+  â”śâ”€â”€ sections/footer-group.json
+  â”‚     â””â”€â”€ sections/lusena-footer.liquid
+  â””â”€â”€ snippets/cart-drawer.liquid        â† rendered globally when cart_type == 'drawer'
 ```
 
 ### 2.3 Naming convention
@@ -104,7 +104,7 @@ Defined in `layout/theme.liquid`:
 | `assets/pubsub.js` | PubSub event system for cart updates |
 | `assets/lusena-animations.js` | LUSENA scroll-reveal IntersectionObserver (when animations enabled) |
 | `assets/animations.js` | Dawn scroll-trigger animations (when animations enabled) |
-| Google Fonts | Inter (body), Source Serif 4 (headings) — loaded via `<link>` |
+| Google Fonts | Inter (body), Source Serif 4 (headings) â€” loaded via `<link>` |
 
 ### 2.5 Key global settings
 
@@ -120,8 +120,8 @@ From `config/settings_data.json`:
 | `type_header_font` | `source_serif_4_n4` | Heading font family |
 | `type_body_font` | `inter_n4` | Body font family |
 | `heading_scale` / `body_scale` | `100` / `100` | 1:1 scale (no multiplier) |
-| `lusena_free_shipping_threshold` | `"269"` (zł) | Free shipping progress bar target |
-| `lusena_primary_add_to_cart_label` | `"Dodaj do koszyka – wysyłka w 24 h"` | Primary ATC button text |
+| `lusena_free_shipping_threshold` | `"269"` (zĹ‚) | Free shipping progress bar target |
+| `lusena_primary_add_to_cart_label` | `"Dodaj do koszyka â€“ wysyĹ‚ka w 24 h"` | Primary ATC button text |
 
 ---
 
@@ -136,7 +136,7 @@ Defined in `assets/lusena-shop.css` `:root`:
 ```css
 --brand-bg:   #F7F5F2;   /* porcelain warm off-white */
 --primary:    #111111;   /* near-black text */
---accent-cta: #0E5E5A;   /* deep teal — CTA & accents */
+--accent-cta: #0E5E5A;   /* deep teal â€” CTA & accents */
 ```
 
 #### 3.1.2 Semantic Tailwind classes
@@ -177,10 +177,10 @@ Defined in `assets/lusena-shop.css` `:root`:
 
 #### 3.1.5 Usage rules
 
-- **CTA color is always `#0E5E5A`** — never change it between pages (brandbook rule).
-- **Max 1–2 color accents per screen** — teal for CTA, optional gold for badges.
+- **CTA color is always `#0E5E5A`** â€” never change it between pages (brandbook rule).
+- **Max 1â€“2 color accents per screen** â€” teal for CTA, optional gold for badges.
 - **Backgrounds alternate** between `bg-brand-bg` / `bg-white` / `bg-surface-1` / `bg-surface-2` to visually separate section bands.
-- **Status colors** — green `#2F7D4E` for success/in-stock, red `#B91C1C` for error/out-of-stock.
+- **Status colors** â€” green `#2F7D4E` for success/in-stock, red `#B91C1C` for error/out-of-stock.
 - **Contrast:** All key text/bg pairs meet WCAG AA (4.5:1 minimum). White on `#0E5E5A` passes AA for CTA text.
 
 ---
@@ -202,8 +202,8 @@ The theme uses **two overlapping systems**: Dawn's heading scale (via `--font-he
 
 | Class | Size | Line-height | Used where |
 |---|---|---|---|
-| `.text-[8px]` | 8px | — | Minor decorative UI |
-| `.text-[10px]` | 10px | — | Cart count badge |
+| `.text-[8px]` | 8px | â€” | Minor decorative UI |
+| `.text-[10px]` | 10px | â€” | Cart count badge |
 | `.text-[11px]` | 11px | 1.5 | Payment secure label |
 | `.text-xs` | 12px | 16px | Proof chips, badges, captions |
 | `.text-sm` | 14px | 20px | Trust bar, accordion body, prices |
@@ -220,9 +220,9 @@ The theme uses **two overlapping systems**: Dawn's heading scale (via `--font-he
 **Dawn heading scale** (from `assets/base.css`):
 
 ```css
-h1, .h1 { font-size: calc(var(--font-heading-scale) * 3rem); }   /* 30px → 40px @750px */
-h2, .h2 { font-size: calc(var(--font-heading-scale) * 2rem); }   /* 20px → 28px @750px */
-h3, .h3 { font-size: calc(var(--font-heading-scale) * 1.7rem); }  /* 17px → 20px @750px */
+h1, .h1 { font-size: calc(var(--font-heading-scale) * 3rem); }   /* 30px â†’ 40px @750px */
+h2, .h2 { font-size: calc(var(--font-heading-scale) * 2rem); }   /* 20px â†’ 28px @750px */
+h3, .h3 { font-size: calc(var(--font-heading-scale) * 1.7rem); }  /* 17px â†’ 20px @750px */
 ```
 
 > **Recommendation for new LUSENA sections:** Use the Tailwind utility classes (`.text-*`) rather than Dawn's heading scale. All five validated surfaces use Tailwind classes exclusively.
@@ -241,11 +241,11 @@ h3, .h3 { font-size: calc(var(--font-heading-scale) * 1.7rem); }  /* 17px → 20
 
 | Token | Value | Use case |
 |---|---|---|
-| `.tracking-tight` | −0.025em | Large hero headlines |
+| `.tracking-tight` | â’0.025em | Large hero headlines |
 | `.tracking-normal` | 0 | Body text (default) |
 | `.tracking-wider` | 0.05em | Kicker labels, uppercase captions |
 | `.tracking-widest` | 0.1em | Small uppercase labels |
-| `.uppercase` | — | Kickers, option labels, badge text |
+| `.uppercase` | â€” | Kickers, option labels, badge text |
 
 #### 3.2.5 Line-height
 
@@ -256,7 +256,7 @@ h3, .h3 { font-size: calc(var(--font-heading-scale) * 1.7rem); }  /* 17px → 20
 | default | 1.5 |
 | `.leading-relaxed` | 1.625 |
 
-**Brandbook rule:** Minimum 1.4× line-height for text blocks > 3 lines.
+**Brandbook rule:** Minimum 1.4Ă— line-height for text blocks > 3 lines.
 
 ---
 
@@ -267,7 +267,7 @@ h3, .h3 { font-size: calc(var(--font-heading-scale) * 1.7rem); }  /* 17px → 20
 Based on a 4px (0.4rem) increment Tailwind grid:
 
 ```
-4 → 6 → 8 → 12 → 16 → 20 → 24 → 32 → 48 → 64 → 96 → 128 px
+4 â†’ 6 â†’ 8 â†’ 12 â†’ 16 â†’ 20 â†’ 24 â†’ 32 â†’ 48 â†’ 64 â†’ 96 â†’ 128 px
 ```
 
 Common gap classes: `.gap-1` (4px), `.gap-2` (8px), `.gap-3` (12px), `.gap-4` (16px), `.gap-6` (24px), `.gap-8` (32px), `.gap-12` (48px).
@@ -285,62 +285,56 @@ Defined in `assets/lusena-shop.css`:
 
 Container `max-width: 1440px` at the `2xl` breakpoint.
 
-Dawn's `.page-width` (from `assets/base.css`): `max-width: var(--page-width)` (1300px), padding `0 1.5rem` → `0 5rem` at 750px.
+Dawn's `.page-width` (from `assets/base.css`): `max-width: var(--page-width)` (1300px), padding `0 1.5rem` â†’ `0 5rem` at 750px.
 
 > **Validated pattern:** LUSENA sections use `.container`, not `.page-width`. Use `.container` for new work.
 
-#### 3.3.3 Section padding convention
+#### 3.3.3 Section spacing convention
 
-Every standard LUSENA section exposes 4 schema range settings and applies them via CSS variables:
+LUSENA section spacing is centralized in:
 
-**Schema (in `{% schema %}`):**
-```json
-{
-  "type": "range", "id": "padding_top",          "label": "Padding top (desktop)",
-  "min": 0, "max": 240, "step": 4, "unit": "px", "default": 56
-},
-{
-  "type": "range", "id": "padding_bottom",       "label": "Padding bottom (desktop)",
-  "min": 0, "max": 240, "step": 4, "unit": "px", "default": 56
-},
-{
-  "type": "range", "id": "padding_top_mobile",   "label": "Padding top (mobile)",
-  "min": 0, "max": 240, "step": 4, "unit": "px", "default": 40
-},
-{
-  "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom (mobile)",
-  "min": 0, "max": 240, "step": 4, "unit": "px", "default": 40
-}
-```
+- `snippets/lusena-spacing-system.liquid` (tokens, tier classes, intra-section gap utilities)
+- `snippets/lusena-section-gap-detector.liquid` (same-background adjacency detection)
 
-**Inline style on `<section>`:**
+Every migrated `lusena-*` section root should use one spacing tier class:
+
+- `lusena-spacing--compact` (48px desktop / 32px mobile)
+- `lusena-spacing--standard` (64px desktop / 40px mobile)
+- `lusena-spacing--hero` (96px desktop / 64px mobile)
+- `lusena-spacing--full-bleed` (0 / 0)
+
+Per-section spacing sliders remain available only as optional overrides:
+
+- `padding_top`
+- `padding_bottom`
+- `padding_top_mobile`
+- `padding_bottom_mobile`
+
+All four slider defaults should be `0` (`0 = use global tier spacing`).
+
+Canonical override pattern:
+
 ```liquid
-style="
-  --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-  --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-  --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-  --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-"
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
+
+<section class="bg-brand-bg lusena-{name} lusena-spacing--standard" {% if override_style != blank %}style="{{ override_style }}"{% endif %}>
 ```
 
-**CSS consumption (in `{% stylesheet %}`):**
-```css
-.lusena-SECTION-NAME {
-  padding-top: var(--lusena-section-padding-top-mobile);
-  padding-bottom: var(--lusena-section-padding-bottom-mobile);
-}
-@media (min-width: 768px) {
-  .lusena-SECTION-NAME {
-    padding-top: var(--lusena-section-padding-top-desktop);
-    padding-bottom: var(--lusena-section-padding-bottom-desktop);
-  }
-}
-```
-
-**Default values:**
-- Standard sections: desktop 56px, mobile 40px
-- Hero / landing sections: desktop 96px, mobile 64px
-- PDP below-fold: hardcoded 96px desktop / 64px mobile (no schema settings)
+Do not reintroduce per-section `padding-top` / `padding-bottom` CSS rules in section `{% stylesheet %}` blocks.
 
 #### 3.3.4 Content width narrowing
 
@@ -368,7 +362,7 @@ The theme has **two coexisting breakpoint systems**:
 | **Dawn** | `749px` (max), `750px`, `990px` (min-width) | `assets/base.css`, Dawn sections |
 | **LUSENA (Tailwind)** | `640px` (sm), `768px` (md), `1024px` (lg), `1280px` (xl), `1440px` (2xl) | `assets/lusena-shop.css`, all `lusena-*` sections |
 
-> **For new sections:** Use the Tailwind breakpoints (`md:`, `lg:`, `xl:`). The `768px` breakpoint is the primary mobile→desktop switch in LUSENA sections.
+> **For new sections:** Use the Tailwind breakpoints (`md:`, `lg:`, `xl:`). The `768px` breakpoint is the primary mobileâ†’desktop switch in LUSENA sections.
 
 #### 3.4.2 Common grid patterns (validated)
 
@@ -392,10 +386,10 @@ The theme has **two coexisting breakpoint systems**:
 
 | Token / value | Purpose | Files |
 |---|---|---|
-| `rounded-brand` (0.6rem / 6px) | **Brand standard** — buttons, inputs, cart items | `snippets/lusena-missing-utilities.liquid` |
-| `rounded-sm` (0.2rem / 2px) | Subtle rounding — payment badges, media thumbnails | `assets/lusena-shop.css` |
-| `rounded-full` (9999px) | Circles — icon buttons, color swatches, dots, cart badge | `assets/lusena-shop.css` |
-| `0` | Sharp — media containers, product cards | `config/settings_data.json` |
+| `rounded-brand` (0.6rem / 6px) | **Brand standard** â€” buttons, inputs, cart items | `snippets/lusena-missing-utilities.liquid` |
+| `rounded-sm` (0.2rem / 2px) | Subtle rounding â€” payment badges, media thumbnails | `assets/lusena-shop.css` |
+| `rounded-full` (9999px) | Circles â€” icon buttons, color swatches, dots, cart badge | `assets/lusena-shop.css` |
+| `0` | Sharp â€” media containers, product cards | `config/settings_data.json` |
 
 > **Theme setting:** `buttons_radius: 6`, `variant_pills_radius: 8`, `inputs_radius: 6`, `card_corner_radius: 0`, `media_radius: 0`.
 
@@ -420,7 +414,7 @@ The theme has **two coexisting breakpoint systems**:
 | Focus ring | `0 0 0 2px rgb(14 94 90), 0 0 0 4px rgb(255 255 255)` | `:focus-visible` on buttons/links |
 | Sticky ATC top | `0 -4px 6px -1px rgba(0,0,0,.05)` | Top shadow on sticky bar |
 
-> **Brandbook alignment:** "Shadows sparingly." The theme respects this — most `shadow_opacity` settings are `0` in `config/settings_data.json`.
+> **Brandbook alignment:** "Shadows sparingly." The theme respects this â€” most `shadow_opacity` settings are `0` in `config/settings_data.json`.
 
 ---
 
@@ -451,8 +445,8 @@ LUSENA custom (also in `assets/base.css` `:root`):
 
 **LUSENA system** (`assets/lusena-animations.js`, `assets/base.css`):
 - Classes: `.lusena-animate-fade-up`, `.lusena-animate-scale-in`
-- Start state: `opacity: 0; transform: translateY(14px)` — transitions to `opacity: 1; transform: none`
-- Stagger: `[data-lusena-stagger]` on container — children get `--lusena-delay` (70ms per child)
+- Start state: `opacity: 0; transform: translateY(14px)` â€” transitions to `opacity: 1; transform: none`
+- Stagger: `[data-lusena-stagger]` on container â€” children get `--lusena-delay` (70ms per child)
 - IntersectionObserver threshold: `rootMargin: 0px 0px -12% 0px`
 
 **Dawn system** (`assets/animations.js`, `assets/base.css`):
@@ -460,7 +454,7 @@ LUSENA custom (also in `assets/base.css` `:root`):
 - Gated by `settings.animations_reveal_on_scroll`
 - Stagger: `data-cascade` on container
 
-Both systems coexist. LUSENA sections use both — typically Dawn's `scroll-trigger` for block-level reveals and LUSENA's custom system for finer effects.
+Both systems coexist. LUSENA sections use both â€” typically Dawn's `scroll-trigger` for block-level reveals and LUSENA's custom system for finer effects.
 
 **Gating pattern (required in all sections):**
 ```liquid
@@ -481,23 +475,23 @@ Both systems coexist. LUSENA sections use both — typically Dawn's `scroll-trig
 | Image hover scale | transform | 300ms | ease-in-out |
 | Proof chip hover | border-color, color | 150ms | ease |
 | Gallery dots | background-color | 200ms | ease |
-| Hero image entry | scale 1.04→1 | 900ms | ease-out-slow |
+| Hero image entry | scale 1.04â†’1 | 900ms | ease-out-slow |
 | Hero text entry | translateY + opacity | 650ms | ease-out-slow (120ms/220ms delay) |
 
 **Brandbook alignment:**
-- UI hover/focus: 150–200ms ✓
-- Modals/hero: 250–400ms ✓
-- Easing: calm ease-in-out, no springy/bouncy ✓
-- `prefers-reduced-motion`: All animations respect it ✓
+- UI hover/focus: 150â€“200ms âś“
+- Modals/hero: 250â€“400ms âś“
+- Easing: calm ease-in-out, no springy/bouncy âś“
+- `prefers-reduced-motion`: All animations respect it âś“
 
 #### 3.6.4 Hover states (validated)
 
 | Element | Hover effect |
 |---|---|
-| `.lusena-btn--primary` | `background: rgb(14 94 90 / 0.9)` — slight fade (≈10% lighten) |
-| `.lusena-btn--outline` | `background: rgb(14 94 90 / 0.05)` — teal tint 5% |
-| `.lusena-btn--ghost` | `background: rgb(240 238 235)` — surface-2 fill |
-| Icon buttons | Ghost: `bg: #F0EEEB`; Overlay: `opacity → 1`; Subtle: `bg: 10% gray` |
+| `.lusena-btn--primary` | `background: rgb(14 94 90 / 0.9)` â€” slight fade (â‰10% lighten) |
+| `.lusena-btn--outline` | `background: rgb(14 94 90 / 0.05)` â€” teal tint 5% |
+| `.lusena-btn--ghost` | `background: rgb(240 238 235)` â€” surface-2 fill |
+| Icon buttons | Ghost: `bg: #F0EEEB`; Overlay: `opacity â†’ 1`; Subtle: `bg: 10% gray` |
 | Product card image | `transform: scale(1.05)` (with pointer:fine media query) |
 | Links | `text-decoration: underline` on `.hover\:underline` |
 | FAQ summary | `color: var(--accent-cta)` |
@@ -505,8 +499,8 @@ Both systems coexist. LUSENA sections use both — typically Dawn's `scroll-trig
 #### 3.6.5 Reduced motion
 
 All LUSENA code includes `@media (prefers-reduced-motion: reduce)` blocks:
-- CSS transitions → `0.15s` or `none`
-- CSS animations → `none` or reduced to simple opacity fade
+- CSS transitions â†’ `0.15s` or `none`
+- CSS animations â†’ `none` or reduced to simple opacity fade
 - JS (`lusena-animations.js`): Early return, no IntersectionObserver setup
 - Hero: Image starts at final state (no scale), text visible immediately
 
@@ -516,7 +510,7 @@ All LUSENA code includes `@media (prefers-reduced-motion: reduce)` blocks:
 
 ### 4.1 Buttons & Links
 
-**File:** `snippets/lusena-button-system.liquid` (global — loaded on every page via `layout/theme.liquid`)
+**File:** `snippets/lusena-button-system.liquid` (global â€” loaded on every page via `layout/theme.liquid`)
 
 #### Button variants
 
@@ -536,9 +530,9 @@ All LUSENA code includes `@media (prefers-reduced-motion: reduce)` blocks:
 | XS | `.lusena-btn--size-xs` | 3.2rem | 1.4rem | 1.2rem |
 | SM | `.lusena-btn--size-sm` | 4.4rem | 1.6rem | 1.2rem |
 | Default | `.lusena-btn--size-default` | 4.8rem | 3.2rem | 1.4rem |
-| PDP | `.lusena-btn--size-pdp` | 4.8rem | 4rem | — |
+| PDP | `.lusena-btn--size-pdp` | 4.8rem | 4rem | â€” |
 | LG | `.lusena-btn--size-lg` | 5.6rem | 4rem | 1.6rem |
-| Icon | `.lusena-btn--size-icon` | 4.4rem square | 0 | — |
+| Icon | `.lusena-btn--size-icon` | 4.4rem square | 0 | â€” |
 
 #### Button states
 
@@ -555,14 +549,14 @@ All LUSENA code includes `@media (prefers-reduced-motion: reduce)` blocks:
 | Subtle | `.lusena-icon-button--subtle` | Cart drawer close, quantity controls |
 | Sizes | `--md` (4.4rem / 44px min), `--sm` (3.6rem / 36px min) | |
 
-**Full-width modifier:** `.lusena-btn--full-width` → `width: 100%`.
+**Full-width modifier:** `.lusena-btn--full-width` â†’ `width: 100%`.
 
 #### Usage rules
 
 - **Max 2 CTAs per section:** 1 primary + 1 secondary (brandbook rule).
 - **CTA stacking:** On mobile, full-width stacked. Never 3+ side-by-side.
 - **Loading state:** Must be implemented on all form-submit buttons (min 500ms visible duration).
-- **Touch targets:** All buttons meet 44×44px minimum.
+- **Touch targets:** All buttons meet 44Ă—44px minimum.
 
 ---
 
@@ -571,24 +565,24 @@ All LUSENA code includes `@media (prefers-reduced-motion: reduce)` blocks:
 #### Variant picker (`snippets/lusena-pdp-variant-picker.liquid`)
 
 **Color swatches:**
-- `.lusena-option__swatch` — 4.4rem circle, `rounded-full`, background from swatch color.
+- `.lusena-option__swatch` â€” 4.4rem circle, `rounded-full`, background from swatch color.
 - Selected: Double-ring via `box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--accent-cta)`.
 - Unavailable: `opacity-40`, `cursor-not-allowed`, input `disabled`.
 
 **Size/option pills:**
-- `.lusena-option__pill` — Rectangle, `px-6 py-2`, `border border-secondary/30`, `min-w-[6.4rem]`.
+- `.lusena-option__pill` â€” Rectangle, `px-6 py-2`, `border border-secondary/30`, `min-w-[6.4rem]`.
 - Selected: Highlighted border. Hover: `border-accent-cta`.
 
 **Accessibility:**
 - `<fieldset>` + `<legend>` grouping per option.
-- Hidden `<input type="radio">` (`.visually-hidden`) → native keyboard/screen reader support.
+- Hidden `<input type="radio">` (`.visually-hidden`) â†’ native keyboard/screen reader support.
 - `.visually-hidden` text label on each swatch.
 
 #### Quantity stepper (in `snippets/cart-drawer.liquid`)
 
 ```html
 <div class="flex items-center border border-secondary/20 rounded-brand">
-  <button class="lusena-icon-button lusena-icon-button--subtle lusena-icon-button--sm">−</button>
+  <button class="lusena-icon-button lusena-icon-button--subtle lusena-icon-button--sm">â’</button>
   <span data-cart-qty>1</span>
   <button class="lusena-icon-button lusena-icon-button--subtle lusena-icon-button--sm">+</button>
 </div>
@@ -611,9 +605,9 @@ Minimal style: `bg-transparent border-b border-gray-700` with `focus:outline-non
 ```html
 <a class="lusena-product-card block cursor-pointer">
   <div class="relative aspect-[4/5] bg-surface-2 overflow-hidden mb-4">
-    <span class="absolute top-2 left-2 z-10 … uppercase">Badge</span>
-    <img class="lusena-product-card__image--primary …" loading="lazy"/>
-    <img class="lusena-product-card__image--secondary opacity-0 …"/>
+    <span class="absolute top-2 left-2 z-10 â€¦ uppercase">Badge</span>
+    <img class="lusena-product-card__image--primary â€¦" loading="lazy"/>
+    <img class="lusena-product-card__image--secondary opacity-0 â€¦"/>
   </div>
   <div class="space-y-1 text-center md:text-left">
     <h3 class="text-sm font-medium text-primary">Title</h3>
@@ -637,7 +631,7 @@ Minimal style: `bg-transparent border-b border-gray-700` with `focus:outline-non
 No standalone content-card snippet exists. Sections like `lusena-testimonials`, `lusena-about-values` render cards inline with consistent patterns:
 - `bg-neutral-50` or `bg-white` card background
 - `p-6` to `p-8` padding
-- Consistent text hierarchy: small kicker → heading → body
+- Consistent text hierarchy: small kicker â†’ heading â†’ body
 
 ---
 
@@ -655,7 +649,7 @@ No standalone content-card snippet exists. Sections like `lusena-testimonials`, 
 
 **Key behaviors:**
 - **Auto-hide on scroll (mobile):** Scrolling down > 8px delta hides header (`translateY(-110%)`); scrolling up shows it. Controlled by `data-lusena-auto-hide-on-scroll-mobile`.
-- **Mobile menu:** Native `<details>/<summary>` with animated CSS grid expansion (`0fr → 1fr`, 260ms). Panel has `inert` attribute toggled for accessibility.
+- **Mobile menu:** Native `<details>/<summary>` with animated CSS grid expansion (`0fr â†’ 1fr`, 260ms). Panel has `inert` attribute toggled for accessibility.
 - **Cart count badge:** Absolute-positioned teal circle with white text, 2px white border ring.
 - **CSS variable sync:** `--lusena-header-height` and `--header-height` set via ResizeObserver on `:root`.
 
@@ -669,7 +663,7 @@ No standalone content-card snippet exists. Sections like `lusena-testimonials`, 
 ```html
 <nav aria-label="Breadcrumb" class="py-4">
   <ol class="flex items-center gap-1.5 text-xs text-neutral-700">
-    <li><a href="/">Strona główna</a> <chevron-right/></li>
+    <li><a href="/">Strona gĹ‚Ăłwna</a> <chevron-right/></li>
     <li><a href="/collections/jedwab">Collection</a> <chevron-right/></li>
     <li class="text-primary font-semibold truncate max-w-[200px]">Product Title</li>
   </ol>
@@ -698,29 +692,29 @@ Copyright bar: `border-t border-gray-800`, centered, `text-xs text-gray-500`.
 #### Above-fold layout
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│  Breadcrumbs (full width)                                │
-├──────────────────────┬──────────────────────────────────┤
-│  Media Gallery       │  Buybox                          │
-│  (7 cols)            │  (5 cols)                        │
-│  ┌──────┬──────────┐ │  ┌─ Summary (title, price)      │
-│  │ Thumb│ Main     │ │  ├─ Proof Chips (5 badges)      │
-│  │ strip│ stage    │ │  ├─ Variant Picker               │
-│  │      │          │ │  ├─ ATC Button + Buy Now        │
-│  │      │ (zoom)   │ │  ├─ Guarantee Box               │
-│  │      │          │ │  ├─ Payment Badges               │
-│  └──────┴──────────┘ │  ├─ Buybox Accordion (Specs/Care)│
-│                      │  └─ Cross-sell                   │
-└──────────────────────┴──────────────────────────────────┘
+â”Śâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚  Breadcrumbs (full width)                                â”‚
+â”śâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚  Media Gallery       â”‚  Buybox                          â”‚
+â”‚  (7 cols)            â”‚  (5 cols)                        â”‚
+â”‚  â”Śâ”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚  â”Śâ”€ Summary (title, price)      â”‚
+â”‚  â”‚ Thumbâ”‚ Main     â”‚ â”‚  â”śâ”€ Proof Chips (5 badges)      â”‚
+â”‚  â”‚ stripâ”‚ stage    â”‚ â”‚  â”śâ”€ Variant Picker               â”‚
+â”‚  â”‚      â”‚          â”‚ â”‚  â”śâ”€ ATC Button + Buy Now        â”‚
+â”‚  â”‚      â”‚ (zoom)   â”‚ â”‚  â”śâ”€ Guarantee Box               â”‚
+â”‚  â”‚      â”‚          â”‚ â”‚  â”śâ”€ Payment Badges               â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚  â”śâ”€ Buybox Accordion (Specs/Care)â”‚
+â”‚                      â”‚  â””â”€ Cross-sell                   â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 ```
 
-Mobile: Stacked vertically — horizontal scroll gallery with dots, then buybox.
+Mobile: Stacked vertically â€” horizontal scroll gallery with dots, then buybox.
 
 #### Below-fold sections
 
 | Section | File | Content |
 |---|---|---|
-| Feature Highlights | `sections/lusena-pdp-feature-highlights.liquid` | 3–6 icon cards (responsive 1→2→3 col grid) |
+| Feature Highlights | `sections/lusena-pdp-feature-highlights.liquid` | 3â€“6 icon cards (responsive 1â†’2â†’3 col grid) |
 | Quality Evidence | `sections/lusena-pdp-quality-evidence.liquid` | Expandable accordion cards with icon, title, detail |
 | Details & Questions | `sections/lusena-pdp-details.liquid` | FAQ-style accordion, centered narrow width |
 
@@ -739,7 +733,7 @@ Mobile: Stacked vertically — horizontal scroll gallery with dots, then buybox.
 | `lusena-pdp-cross-sell` | Recommended product cards grid |
 | `lusena-pdp-sticky-atc` | Fixed bottom bar on scroll (product title + price + ATC button) |
 | `lusena-pdp-styles` | All PDP CSS (inline `{% stylesheet %}`) |
-| `lusena-pdp-scripts` | All PDP JS (inline `{% javascript %}` — ~1835 lines) |
+| `lusena-pdp-scripts` | All PDP JS (inline `{% javascript %}` â€” ~1835 lines) |
 
 #### Sticky ATC bar (`snippets/lusena-pdp-sticky-atc.liquid`)
 
@@ -763,11 +757,11 @@ The product card component (`snippets/lusena-product-card.liquid`) is validated.
 
 | Zone | Content |
 |---|---|
-| **Header** | "Twój koszyk" (serif heading) + close button |
-| **Empty state** | Shopping bag icon, "Twój koszyk jest pusty", browse CTA, close button |
+| **Header** | "TwĂłj koszyk" (serif heading) + close button |
+| **Empty state** | Shopping bag icon, "TwĂłj koszyk jest pusty", browse CTA, close button |
 | **Line items** | Scrollable area with product thumbnails, titles, variant options, quantity steppers, remove buttons |
 | **Upsell zone** | "Pasuje do" label, product card with "Dodaj" outline button, success toast |
-| **Footer** | Subtotal, free shipping progress bar (teal fill → green when qualified), checkout CTA (primary, full-width, LG), 60-day return trust line, "Kontynuuj zakupy" link |
+| **Footer** | Subtotal, free shipping progress bar (teal fill â†’ green when qualified), checkout CTA (primary, full-width, LG), 60-day return trust line, "Kontynuuj zakupy" link |
 
 #### Shipping progress bar
 
@@ -777,9 +771,9 @@ The product card component (`snippets/lusena-product-card.liquid`) is validated.
 </div>
 ```
 
-- Fill color: Teal → green (`rgb(47 125 78)`) via `--qualified` modifier when threshold met.
+- Fill color: Teal â†’ green (`rgb(47 125 78)`) via `--qualified` modifier when threshold met.
 - Width transition: 500ms.
-- Threshold: configurable via `lusena_free_shipping_threshold` setting (default: 269 zł).
+- Threshold: configurable via `lusena_free_shipping_threshold` setting (default: 269 zĹ‚).
 
 #### JS behavior
 
@@ -808,8 +802,8 @@ The product card component (`snippets/lusena-product-card.liquid`) is validated.
 | **Buybox accordion** | `snippets/lusena-pdp-buybox-panels.liquid` | `data-lusena-accordion-*` attributes + JS | PDP |
 
 **FAQ accordion:**
-- Native `<details>` elements — accessible by default (keyboard + screen reader).
-- JS adds animated height transitions: `height: 0` → `scrollHeight` on open, reverse on close.
+- Native `<details>` elements â€” accessible by default (keyboard + screen reader).
+- JS adds animated height transitions: `height: 0` â†’ `scrollHeight` on open, reverse on close.
 - Chevron rotation: `transform: rotate(180deg)` on `details[open]`.
 - Only one item open at a time (accordion mode).
 - 200ms ease-out.
@@ -827,7 +821,7 @@ See section 4.7. Slide-in from right, 280ms cubic-bezier easing, backdrop overla
 
 #### Mobile menu drawer
 
-See section 4.4. CSS grid `0fr → 1fr` expansion, `inert` toggling.
+See section 4.4. CSS grid `0fr â†’ 1fr` expansion, `inert` toggling.
 
 #### PDP lightbox (in `snippets/lusena-pdp-media.liquid`)
 
@@ -845,7 +839,7 @@ See section 4.4. CSS grid `0fr → 1fr` expansion, `inert` toggling.
 | Context | `loading` | `fetchpriority` | `widths` |
 |---|---|---|---|
 | Hero image | `eager` | `high` | Up to `3000` |
-| Everything else | `lazy` | — | Varies (see below) |
+| Everything else | `lazy` | â€” | Varies (see below) |
 
 #### Responsive image pattern
 
@@ -890,10 +884,10 @@ Uses `<picture>` with `<source>` for desktop/mobile breakpoints, allowing differ
 
 | Context | Max size |
 |---|---|
-| Hero (desktop) | 250–300 KB (WebP/AVIF) |
-| Hero (mobile) | 150–200 KB |
-| PLP card | 120–160 KB |
-| PDP gallery (first 2–3 frames) | 180–220 KB each |
+| Hero (desktop) | 250â€“300 KB (WebP/AVIF) |
+| Hero (mobile) | 150â€“200 KB |
+| PLP card | 120â€“160 KB |
+| PDP gallery (first 2â€“3 frames) | 180â€“220 KB each |
 
 ---
 
@@ -904,7 +898,7 @@ Uses `<picture>` with `<source>` for desktop/mobile breakpoints, allowing differ
 | Pattern | Section | Layout |
 |---|---|---|
 | **Full-bleed hero** | `lusena-hero` | Viewport-height, overlay text on image, animated entry |
-| **Centered text column** | `lusena-heritage`, `lusena-quality-hero` | Narrow `max-w-2xl`–`max-w-4xl`, centered, serif heading + body text |
+| **Centered text column** | `lusena-heritage`, `lusena-quality-hero` | Narrow `max-w-2xl`â€“`max-w-4xl`, centered, serif heading + body text |
 | **2-column image + text** | `lusena-bundles`, `lusena-quality-momme`, `lusena-about-hero` | `grid-cols-2` on desktop, stacked on mobile, image side configurable |
 | **Problem/solution split** | `lusena-problem-solution` | 2-column with distinct block types per column |
 | **Card grid** | `lusena-testimonials` (3-col), `lusena-about-values` (4-col) | Block-based cards with consistent spacing |
@@ -914,23 +908,23 @@ Uses `<picture>` with `<source>` for desktop/mobile breakpoints, allowing differ
 #### Common content hierarchy within sections
 
 ```
-┌─ Kicker (small uppercase .tracking-wider .text-secondary, optional)
-├─ Heading (.font-serif, size varies by section importance)
-├─ Subheading or body (.text-secondary, 1–3 sentences)
-└─ CTA (lusena-btn, optional)
+â”Śâ”€ Kicker (small uppercase .tracking-wider .text-secondary, optional)
+â”śâ”€ Heading (.font-serif, size varies by section importance)
+â”śâ”€ Subheading or body (.text-secondary, 1â€“3 sentences)
+â””â”€ CTA (lusena-btn, optional)
 ```
 
 #### Background alternation pattern (homepage example)
 
 ```
-Hero         → image background (dark overlay)
-Trust bar    → bg-brand-bg
-Problem/Sol  → bg-brand-bg
-Bestsellers  → bg-surface-1
-Heritage     → bg-brand-bg
-Testimonials → bg-surface-1
-Bundles      → bg-surface-2
-FAQ          → bg-surface-1
+Hero         â†’ image background (dark overlay)
+Trust bar    â†’ bg-brand-bg
+Problem/Sol  â†’ bg-brand-bg
+Bestsellers  â†’ bg-surface-1
+Heritage     â†’ bg-brand-bg
+Testimonials â†’ bg-surface-1
+Bundles      â†’ bg-surface-2
+FAQ          â†’ bg-surface-1
 ```
 
 This creates a subtle visual rhythm that separates sections without hard borders.
@@ -943,12 +937,12 @@ This creates a subtle visual rhythm that separates sections without hard borders
 
 | Surface | Order pattern |
 |---|---|
-| **Homepage** | Hero → Trust → Problem/Solution → Products → Story → Social proof → Gift/Bundle → FAQ |
-| **Quality page** | Hero → Detail evidence (multiple sections) → Trust bar |
-| **About page** | Hero → Story → Values |
-| **PDP** | Main (gallery + buybox) → Feature highlights → Quality evidence → Details/FAQ |
+| **Homepage** | Hero â†’ Trust â†’ Problem/Solution â†’ Products â†’ Story â†’ Social proof â†’ Gift/Bundle â†’ FAQ |
+| **Quality page** | Hero â†’ Detail evidence (multiple sections) â†’ Trust bar |
+| **About page** | Hero â†’ Story â†’ Values |
+| **PDP** | Main (gallery + buybox) â†’ Feature highlights â†’ Quality evidence â†’ Details/FAQ |
 
-**Common pattern:** Start with hero/hook → evidence/proof → social proof → CTA.
+**Common pattern:** Start with hero/hook â†’ evidence/proof â†’ social proof â†’ CTA.
 
 This matches the brandbook's message hierarchy:
 1. Short benefit + parameter
@@ -958,19 +952,23 @@ This matches the brandbook's message hierarchy:
 
 ### 5.2 Default spacing between sections
 
-- Sections handle their own top/bottom padding via the 4 CSS variables (section 3.3.3).
-- Dawn's `spacing_sections: 36px` applies to Dawn sections but LUSENA sections override with their own padding.
-- **Typical defaults:** 56px desktop / 40px mobile between content sections.
-- **Hero sections:** 96px desktop / 64px mobile.
-- Sections alternate backgrounds instead of using separators.
+- LUSENA uses a centralized spacing system from `snippets/lusena-spacing-system.liquid`.
+- Section root elements use one tier class: `lusena-spacing--compact`, `lusena-spacing--standard`, `lusena-spacing--hero`, or `lusena-spacing--full-bleed`.
+- Tier defaults:
+  - `compact`: 48px desktop / 32px mobile
+  - `standard`: 64px desktop / 40px mobile
+  - `hero`: 96px desktop / 64px mobile
+- Section-level spacing overrides remain available via 4 schema sliders, but all defaults are `0` (`0 = use global tier spacing`).
+- Adjacent same-background sections get extra top spacing automatically via `snippets/lusena-section-gap-detector.liquid` and `.lusena-section-gap-same`.
+- Dawn's `spacing_sections: 36px` still applies to Dawn sections, not migrated `lusena-*` sections.
 
 ### 5.3 Content density rules
 
-- **Max 70–80 characters per line** (desktop), **38–45** (mobile) — enforced by `max-w-*` constraints.
+- **Max 70â€“80 characters per line** (desktop), **38â€“45** (mobile) â€” enforced by `max-w-*` constraints.
 - **Max 2 CTAs per visible screen area.**
 - **Min 24px white space** between content blocks within a section.
 - **Product grids:** 2 columns mobile, 3 columns desktop (PDP cross-sell / bestsellers).
-- **Card grids:** 1→2→3 or 1→2→4 columns depending on card complexity.
+- **Card grids:** 1â†’2â†’3 or 1â†’2â†’4 columns depending on card complexity.
 
 ### 5.4 CTA placement conventions
 
@@ -990,47 +988,47 @@ From the brandbook: **Expert, calm, empathetic, precise.**
 
 | Rule | Example |
 |---|---|
-| Speak plainly about specifics | "22 momme, kontrola jakości każdej partii" not "Najwyższa jakość!" |
-| Max 18–22 words per sentence | Keep short for scanning |
-| Fewer adjectives, more proof | Pair claims with data: "precyzyjne szwy – odstęp ~3 mm" |
-| Calm, don't rush | "Wysyłamy w 24 h" not "Kup teraz, bo zniknie!" |
+| Speak plainly about specifics | "22 momme, kontrola jakoĹ›ci kaĹĽdej partii" not "NajwyĹĽsza jakoĹ›Ä‡!" |
+| Max 18â€“22 words per sentence | Keep short for scanning |
+| Fewer adjectives, more proof | Pair claims with data: "precyzyjne szwy â€“ odstÄ™p ~3 mm" |
+| Calm, don't rush | "WysyĹ‚amy w 24 h" not "Kup teraz, bo zniknie!" |
 | No exclamation marks in headings | Period or no punctuation |
 
 ### 6.2 CTA labels (validated examples)
 
 | Context | Current label (PL) | Principle |
 |---|---|---|
-| PDP primary | "Dodaj do koszyka – wysyłka w 24 h" | Benefit + operational promise |
-| PDP secondary | "Kup teraz i zapłać" | Direct action |
-| Cart checkout | "Przejdź do kasy" | Clear next step |
+| PDP primary | "Dodaj do koszyka â€“ wysyĹ‚ka w 24 h" | Benefit + operational promise |
+| PDP secondary | "Kup teraz i zapĹ‚aÄ‡" | Direct action |
+| Cart checkout | "PrzejdĹş do kasy" | Clear next step |
 | Cart upsell | "Dodaj" | Minimal, no pressure |
-| Empty cart | "Przeglądaj produkty" | Exploratory, not pushy |
+| Empty cart | "PrzeglÄ…daj produkty" | Exploratory, not pushy |
 | Empty cart dismiss | "Zamknij" | Simple action |
 
 ### 6.3 Microcopy patterns
 
 | Context | Pattern |
 |---|---|
-| Stock available | "W magazynie – gotowe do wysyłki" |
-| Stock unavailable | "Chwilowo niedostępne" |
+| Stock available | "W magazynie â€“ gotowe do wysyĹ‚ki" |
+| Stock unavailable | "Chwilowo niedostÄ™pne" |
 | Guarantee | "60 Dni Gwarancji Przespanych Nocy" |
-| Shipping progress | "Darmowa dostawa za X zł" / "Darmowa dostawa! ✓" |
-| Cart upsell success | "✓ Dodano do koszyka" |
-| Proof chips | "OEKO-TEX® 100", "22 momme", "Wysyłka 24h z PL", "60 dni na zwrot", "Na prezent" |
+| Shipping progress | "Darmowa dostawa za X zĹ‚" / "Darmowa dostawa! âś“" |
+| Cart upsell success | "âś“ Dodano do koszyka" |
+| Proof chips | "OEKO-TEXÂ® 100", "22 momme", "WysyĹ‚ka 24h z PL", "60 dni na zwrot", "Na prezent" |
 
 ### 6.4 PL localization rules (from brandbook)
 
 | Rule | Format |
 |---|---|
-| Currency | "1 249,00 zł" (full) or "249 zł" (short) |
+| Currency | "1 249,00 zĹ‚" (full) or "249 zĹ‚" (short) |
 | Dates | DD.MM.RRRR |
 | Decimal separator | Comma ("22,0 momme") |
-| Numbers always in digits | "22 momme" not "dwadzieścia dwa" |
-| Forbidden anglicisms | "premium look" → "eleganckie wykończenie" |
+| Numbers always in digits | "22 momme" not "dwadzieĹ›cia dwa" |
+| Forbidden anglicisms | "premium look" â†’ "eleganckie wykoĹ„czenie" |
 
 ### 6.5 Hardcoded text (by design)
 
-> LUSENA targets the Polish market only. All sections use hardcoded Polish text directly in Liquid files rather than `{{ 'key' | t }}` translation filters. **This is intentional** — there is no multi-language requirement. New sections should follow the same pattern: write Polish copy directly in the template.
+> LUSENA targets the Polish market only. All sections use hardcoded Polish text directly in Liquid files rather than `{{ 'key' | t }}` translation filters. **This is intentional** â€” there is no multi-language requirement. New sections should follow the same pattern: write Polish copy directly in the template.
 
 ---
 
@@ -1040,42 +1038,47 @@ From the brandbook: **Expert, calm, empathetic, precise.**
 
 - [ ] **Name files** with `lusena-` prefix: `sections/lusena-{name}.liquid`, `snippets/lusena-{name}.liquid`.
 - [ ] **Use `.container`** (not `.page-width`) for horizontal content constraint.
-- [ ] **Use Tailwind breakpoints** (`md:`, `lg:`, `xl:`) for responsive — not Dawn's 750/990px.
-- [ ] **Use semantic color classes** (`.text-primary`, `.bg-accent-cta`) — not hardcoded hex in HTML.
-- [ ] **Use `.lusena-btn--{variant}`** for all buttons — never create ad-hoc button styles.
-- [ ] **Use `{% render 'lusena-icon', name: '…' %}`** for all icons — never paste raw SVG.
-- [ ] **Include 4 padding schema settings** (top/bottom × desktop/mobile) in every section.
+- [ ] **Use Tailwind breakpoints** (`md:`, `lg:`, `xl:`) for responsive â€” not Dawn's 750/990px.
+- [ ] **Use semantic color classes** (`.text-primary`, `.bg-accent-cta`) â€” not hardcoded hex in HTML.
+- [ ] **Use `.lusena-btn--{variant}`** for all buttons â€” never create ad-hoc button styles.
+- [ ] **Use `{% render 'lusena-icon', name: 'â€¦' %}`** for all icons â€” never paste raw SVG.
+- [ ] **Use a spacing tier class** on the section root (`lusena-spacing--compact|standard|hero|full-bleed`).
+- [ ] **Keep spacing overrides optional** with 4 sliders defaulted to `0` (`0 = use global tier spacing`).
+- [ ] **Use `lusena-gap-*` utility classes** for kicker/heading/body/intro vertical spacing.
 - [ ] **Gate animations** with `{% if settings.animations_reveal_on_scroll %}`.
 - [ ] **Respect `prefers-reduced-motion`** in all custom CSS/JS.
 - [ ] **Use `font-serif`** (Source Serif 4) for headings, `font-sans` (Inter) for body/UI.
 - [ ] **Use `rounded-brand`** (6px) for buttons and inputs, `rounded-full` for circles.
-- [ ] **Keep touch targets ≥ 44×44px** on all interactive elements.
-- [ ] **Use `data-lusena-*`** namespace for JS hooks — never couple JS to CSS classes.
-- [ ] **Write CSS in `{% stylesheet %}`** tag (inline) — not in separate `.css` asset files.
-- [ ] **Write JS in `{% javascript %}`** tag or via `<script>` + asset_url — not inline `<script>` in HTML.
+- [ ] **Keep touch targets â‰Ą 44Ă—44px** on all interactive elements.
+- [ ] **Use `data-lusena-*`** namespace for JS hooks â€” never couple JS to CSS classes.
+- [ ] **Write CSS in `{% stylesheet %}`** tag (inline) â€” not in separate `.css` asset files.
+- [ ] **Write JS in `{% javascript %}`** tag or via `<script>` + asset_url â€” not inline `<script>` in HTML.
 - [ ] **Alternate section backgrounds** (brand-bg / white / surface-1 / surface-2) for visual rhythm.
 - [ ] **Add `loading="lazy"`** to all images except hero (which gets `loading="eager"` + `fetchpriority="high"`).
 - [ ] **Use `{{ block.shopify_attributes }}`** on all block-rendered elements for theme editor highlighting.
-- [ ] **Use Tailwind breakpoints** (`md: 768px`, `lg: 1024px`) — not Dawn's 750/990px — for all responsive switches in new sections.
-- [ ] **Hardcode Polish text** directly in templates — no `{{ 'key' | t }}` needed (PL-only market).
+- [ ] **Use Tailwind breakpoints** (`md: 768px`, `lg: 1024px`) â€” not Dawn's 750/990px â€” for all responsive switches in new sections.
+- [ ] **Hardcode Polish text** directly in templates â€” no `{{ 'key' | t }}` needed (PL-only market).
 
 ### Don't
 
-- [ ] Don't hardcode hex colors in HTML `style` attributes — use CSS variables or Tailwind classes.
+- [ ] Don't hardcode hex colors in HTML `style` attributes â€” use CSS variables or Tailwind classes.
 - [ ] Don't introduce new font sizes outside the existing scale (section 3.2.2).
 - [ ] Don't add more than 2 font weights to any single block.
-- [ ] Don't use Dawn's `.button` class — use `.lusena-btn--{variant}` instead.
-- [ ] Don't use `.page-width` — use `.container` for LUSENA sections.
-- [ ] Don't create icon fonts or reference icons by URL — use the `lusena-icon` snippet.
-- [ ] Don't add shadows beyond `shadow-sm` unless specifically needed — the brandbook says "shadows sparingly."
-- [ ] Don't use springy/bouncy/flashy animations — keep motion calm (ease, ease-out, ease-in-out).
+- [ ] Don't use Dawn's `.button` class â€” use `.lusena-btn--{variant}` instead.
+- [ ] Don't use `.page-width` â€” use `.container` for LUSENA sections.
+- [ ] Don't create icon fonts or reference icons by URL â€” use the `lusena-icon` snippet.
+- [ ] Don't add shadows beyond `shadow-sm` unless specifically needed â€” the brandbook says "shadows sparingly."
+- [ ] Don't use springy/bouncy/flashy animations â€” keep motion calm (ease, ease-out, ease-in-out).
 - [ ] Don't exceed 80 characters per line width (use `max-w-*` to constrain).
 - [ ] Don't place 3+ CTAs side-by-side.
 - [ ] Don't mix 3+ image aspect ratios in a single view.
-- [ ] Don't use `all-caps` for anything longer than 2–3 words.
+- [ ] Don't use `all-caps` for anything longer than 2â€“3 words.
 - [ ] Don't skip `aria-label` on icon-only buttons.
-- [ ] Don't use color schemes 3 or 4 (dark backgrounds) in LUSENA sections — no dark mode by brand decision.
-- [ ] Don't use Dawn breakpoints (750/990px) in new LUSENA sections — use Tailwind (768/1024px) unless syncing with Dawn layout classes.
+- [ ] Don't use color schemes 3 or 4 (dark backgrounds) in LUSENA sections â€” no dark mode by brand decision.
+- [ ] Don't use Dawn breakpoints (750/990px) in new LUSENA sections â€” use Tailwind (768/1024px) unless syncing with Dawn layout classes.
+- [ ] Don't add per-section `padding-top`/`padding-bottom` rules in section `{% stylesheet %}` blocks.
+- [ ] Don't set non-zero defaults for spacing override sliders unless a section must intentionally diverge.
+- [ ] Don't use ad-hoc spacing like `mb-16`, `mt-12`, `space-y-8` for heading-stack spacing; use `lusena-gap-*`.
 
 ---
 
@@ -1096,8 +1099,8 @@ templates/page.kontakt.json
     "contact_hero": {
       "type": "lusena-contact-hero",
       "settings": {
-        "heading": "Skontaktuj się z nami",
-        "subheading": "Odpowiadamy w ciągu 24 godzin."
+        "heading": "Skontaktuj siÄ™ z nami",
+        "subheading": "Odpowiadamy w ciÄ…gu 24 godzin."
       }
     },
     "contact_form": {
@@ -1121,9 +1124,9 @@ sections/lusena-contact-form.liquid
 ```
 
 **Step 3:** In Shopify admin, assign the template to the page:
-- Online Store → Pages → Kontakt → Template: `page.kontakt`
+- Online Store â†’ Pages â†’ Kontakt â†’ Template: `page.kontakt`
 
-**Step 4:** Reuse existing sections when possible — `lusena-trust-bar`, `lusena-faq` can be added to any page template.
+**Step 4:** Reuse existing sections when possible â€” `lusena-trust-bar`, `lusena-faq` can be added to any page template.
 
 ---
 
@@ -1134,70 +1137,58 @@ sections/lusena-contact-form.liquid
 **Step 2:** Follow this canonical structure:
 
 ```liquid
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
+
 <section
-  class="bg-brand-bg lusena-{name}"
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  class="bg-brand-bg lusena-{name} lusena-spacing--standard"
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
   <div class="container max-w-4xl mx-auto">
-    {% comment %} Optional kicker {% endcomment %}
     {% if section.settings.kicker != blank %}
-      <p class="text-xs uppercase tracking-widest text-secondary mb-4">
+      <p class="text-xs uppercase tracking-widest text-secondary lusena-gap-kicker">
         {{ section.settings.kicker }}
       </p>
     {% endif %}
 
-    {% comment %} Heading {% endcomment %}
-    <h2 class="text-3xl md:text-4xl font-serif text-primary mb-4
-      {%- if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif -%}
-    ">
+    <h2 class="text-3xl md:text-4xl font-serif text-primary lusena-gap-heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.heading }}
     </h2>
 
-    {% comment %} Body {% endcomment %}
     {% if section.settings.body != blank %}
-      <div class="text-secondary max-w-2xl
-        {%- if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif -%}
-      ">
+      <div class="text-secondary max-w-2xl lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         {{ section.settings.body }}
       </div>
     {% endif %}
 
-    {% comment %} Blocks (if applicable) {% endcomment %}
     {% for block in section.blocks %}
-      <div {{ block.shopify_attributes }}
-        class="{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-      >
+      <div {{ block.shopify_attributes }} class="{% if settings.animations_reveal_on_scroll %}scroll-trigger animate--slide-in{% endif %}">
         {{ block.settings.text }}
       </div>
     {% endfor %}
 
-    {% comment %} CTA {% endcomment %}
     {% if section.settings.button_label != blank %}
-      <a href="{{ section.settings.button_link }}"
-         class="lusena-btn lusena-btn--primary lusena-btn--size-default mt-8">
+      <a href="{{ section.settings.button_link }}" class="lusena-btn lusena-btn--primary lusena-btn--size-default">
         {{ section.settings.button_label }}
       </a>
     {% endif %}
   </div>
 </section>
-
-{% stylesheet %}
-  .lusena-{name} {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
-  }
-  @media (min-width: 768px) {
-    .lusena-{name} {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
-  }
-{% endstylesheet %}
 
 {% schema %}
 {
@@ -1231,47 +1222,47 @@ sections/lusena-contact-form.liquid
     },
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
       "id": "padding_top",
-      "label": "Padding top (desktop)",
+      "label": "Padding top override – desktop",
       "min": 0,
-      "max": 240,
+      "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
       "id": "padding_bottom",
-      "label": "Padding bottom (desktop)",
+      "label": "Padding bottom override – desktop",
       "min": 0,
-      "max": 240,
+      "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
       "id": "padding_top_mobile",
-      "label": "Padding top (mobile)",
+      "label": "Padding top override – mobile",
       "min": 0,
-      "max": 240,
+      "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "range",
       "id": "padding_bottom_mobile",
-      "label": "Padding bottom (mobile)",
+      "label": "Padding bottom override – mobile",
       "min": 0,
-      "max": 240,
+      "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     }
   ],
   "presets": [
@@ -1288,17 +1279,17 @@ sections/lusena-contact-form.liquid
 **Checklist for new sections:**
 - [ ] `lusena-` prefix in filename
 - [ ] `.container` for width constraint
-- [ ] 4 padding CSS variables + schema ranges
+- [ ] Root tier class: `lusena-spacing--compact|standard|hero|full-bleed`
+- [ ] Schema overrides with `0` defaults
+- [ ] Use `lusena-gap-*` classes for kicker/heading/body/intro spacing
 - [ ] `bg-{brand-bg|surface-1|surface-2|white}` on the `<section>` tag
 - [ ] Animations gated by `settings.animations_reveal_on_scroll`
 - [ ] `{{ block.shopify_attributes }}` on block elements
-- [ ] CSS in `{% stylesheet %}` (not external file)
 - [ ] Images with `loading="lazy"`, responsive `widths` and `sizes`
-- [ ] Touch targets ≥ 44px on interactive elements
+- [ ] Touch targets >= 44px on interactive elements
 - [ ] Semantic HTML tags (`<section>`, `<nav>`, `<h2>`)
 
 ---
-
 ### 8.3 How to Add a New Component Variant
 
 #### Adding a new button variant
@@ -1324,7 +1315,7 @@ sections/lusena-contact-form.liquid
 **File to edit:** `snippets/lusena-icon.liquid`
 
 1. Add a new `{% when '{icon-name}' %}` case in the icon case/when block.
-2. Use a 24×24 viewBox SVG, `fill="none"`, `stroke="currentColor"`, consistent stroke width (1.5px default).
+2. Use a 24Ă—24 viewBox SVG, `fill="none"`, `stroke="currentColor"`, consistent stroke width (1.5px default).
 3. The icon inherits color from parent via `currentColor`.
 
 #### Adding a new utility class
@@ -1342,22 +1333,22 @@ Add the class in the `{% stylesheet %}` block, following Tailwind naming convent
 - [ ] Hero images use `loading="eager"` + `fetchpriority="high"`.
 - [ ] All other images use `loading="lazy"`.
 - [ ] Images include `widths` and `sizes` attributes for responsive srcset.
-- [ ] Image weight budgets: hero ≤300KB, cards ≤160KB, gallery ≤220KB each.
+- [ ] Image weight budgets: hero â‰¤300KB, cards â‰¤160KB, gallery â‰¤220KB each.
 - [ ] CSS is scoped via `{% stylesheet %}` (deferred loading, deduped by Shopify).
-- [ ] No render-blocking JS — use `{% javascript %}` tag or `defer`/`async` on script tags.
+- [ ] No render-blocking JS â€” use `{% javascript %}` tag or `defer`/`async` on script tags.
 - [ ] No unused CSS/JS left in the page (check for leftover Dawn component files).
-- [ ] Video embeds are deferred (click-to-play) — never autoplay with sound.
+- [ ] Video embeds are deferred (click-to-play) â€” never autoplay with sound.
 
 ### 9.2 Accessibility checklist
 
 - [ ] All interactive elements have `:focus-visible` styles (teal ring: `0 0 0 2px rgb(14 94 90), 0 0 0 4px rgb(255 255 255)`).
-- [ ] Touch targets ≥ 44×44px on mobile.
+- [ ] Touch targets â‰Ą 44Ă—44px on mobile.
 - [ ] 8px minimum gap between touch targets.
 - [ ] Text contrast meets WCAG AA (4.5:1 for body, 3:1 for large text/UI).
 - [ ] Icon-only buttons have `aria-label`.
 - [ ] Drawers/modals use `role="dialog"`, `aria-modal="true"`, `tabindex="-1"`.
 - [ ] Accordions use `aria-expanded` on trigger buttons.
-- [ ] `prefers-reduced-motion` respected — all animations/transitions have reduced-motion fallbacks.
+- [ ] `prefers-reduced-motion` respected â€” all animations/transitions have reduced-motion fallbacks.
 - [ ] Breadcrumbs wrapped in `<nav aria-label="Breadcrumb">`.
 - [ ] Interactive areas that toggle visibility use `aria-hidden` and/or `inert`.
 - [ ] Form fields grouped with `<fieldset>` and `<legend>`.
@@ -1373,7 +1364,7 @@ Add the class in the `{% stylesheet %}` block, following Tailwind naming convent
 
 ### 9.4 Testing checklist
 
-- [ ] Run `shopify theme check` — ignore warnings listed in the known baseline (AGENTS.md).
+- [ ] Run `shopify theme check` â€” ignore warnings listed in the known baseline (AGENTS.md).
 - [ ] Quick Lighthouse pass: Performance > 80, Accessibility > 90 on key pages.
 - [ ] Responsive spot-checks at 375px (mobile), 768px (tablet), 1280px (desktop), 1440px+ (wide).
 - [ ] Test with cart drawer: add item, remove item, quantity change, upsell.
@@ -1478,38 +1469,38 @@ MOTION
   UI           150ms ease
   LUSENA       420ms cubic-bezier(0.2, 0, 0, 1) / 14px
   Dawn scroll  500ms ease-out-slow
-  Hero entry   650–900ms ease-out-slow
+  Hero entry   650â€“900ms ease-out-slow
 ```
 
 ### 10.3 Brand vs. Implementation Gap Analysis
 
-#### Matches (brand → code alignment)
+#### Matches (brand â†’ code alignment)
 
 | Brandbook rule | Implementation status |
 |---|---|
-| Colors: porcelain bg, teal CTA, gold accent | ✅ Exact match |
-| Fonts: Source Serif 4 + Inter | ✅ Exact match |
-| CTA radius 6–8px | ✅ Buttons 6px, pills 8px |
-| CTA height 44–48px | ✅ Default 48px, SM 44px |
-| Focus: 2px outline | ✅ `box-shadow: 0 0 0 2px teal, 0 0 0 4px white` |
-| Tap targets: min 44×44px | ✅ All buttons/icon-buttons meet this |
-| Max 2 CTAs per screen | ✅ Primary + secondary on PDP |
-| Calm motion, no bounce | ✅ Ease/ease-out curves only |
-| Reduced motion support | ✅ All CSS + JS respect it |
-| Image ratios (4:5 PLP, 1:1 PDP) | ✅ Product card uses `aspect-[4/5]` |
-| Icon style: outline, 1.5px stroke, 24px | ✅ Consistent in `lusena-icon.liquid` |
-| "Imperfect Silk" photography | ⚠️ Not technically enforced — content/art direction matter |
+| Colors: porcelain bg, teal CTA, gold accent | âś… Exact match |
+| Fonts: Source Serif 4 + Inter | âś… Exact match |
+| CTA radius 6â€“8px | âś… Buttons 6px, pills 8px |
+| CTA height 44â€“48px | âś… Default 48px, SM 44px |
+| Focus: 2px outline | âś… `box-shadow: 0 0 0 2px teal, 0 0 0 4px white` |
+| Tap targets: min 44Ă—44px | âś… All buttons/icon-buttons meet this |
+| Max 2 CTAs per screen | âś… Primary + secondary on PDP |
+| Calm motion, no bounce | âś… Ease/ease-out curves only |
+| Reduced motion support | âś… All CSS + JS respect it |
+| Image ratios (4:5 PLP, 1:1 PDP) | âś… Product card uses `aspect-[4/5]` |
+| Icon style: outline, 1.5px stroke, 24px | âś… Consistent in `lusena-icon.liquid` |
+| "Imperfect Silk" photography | âš ď¸Ź Not technically enforced â€” content/art direction matter |
 
 #### Mismatches / gaps
 
 | Brandbook prescription | Current state | Risk |
 |---|---|---|
-| ~~i18n: `{{ 'key' | t }}` for all text~~ | All sections use hardcoded Polish strings | ✅ By design — PL-only market, no multi-language planned |
-| Neutral scale N0–N900 (10 steps) | Only N400, N700 used as utility classes | Low — enough for current UI |
-| Warning color `#B7791F` | Not used anywhere | Low — no warning states in validated surfaces |
-| Overlay/scrim tokens `--scrim-60`, `--scrim-80` | Hero uses `rgba(0 0 0 / X%)`, lightbox uses `rgba(0,0,0,0.92)` | Low — works but doesn't use named tokens |
-| Page margins: desktop 96px, tablet 64px, mobile 20–24px | Container padding: 96px (xl), 64px (lg), 32px (md), 20px (mobile) | ✅ Close match |
-| Column grid: 12/8/4 col with gutters | Sections use ad-hoc Tailwind grids, not formal 12-col | Low — visual outcome is correct |
+| ~~i18n: `{{ 'key' | t }}` for all text~~ | All sections use hardcoded Polish strings | âś… By design â€” PL-only market, no multi-language planned |
+| Neutral scale N0â€“N900 (10 steps) | Only N400, N700 used as utility classes | Low â€” enough for current UI |
+| Warning color `#B7791F` | Not used anywhere | Low â€” no warning states in validated surfaces |
+| Overlay/scrim tokens `--scrim-60`, `--scrim-80` | Hero uses `rgba(0 0 0 / X%)`, lightbox uses `rgba(0,0,0,0.92)` | Low â€” works but doesn't use named tokens |
+| Page margins: desktop 96px, tablet 64px, mobile 20â€“24px | Container padding: 96px (xl), 64px (lg), 32px (md), 20px (mobile) | âś… Close match |
+| Column grid: 12/8/4 col with gutters | Sections use ad-hoc Tailwind grids, not formal 12-col | Low â€” visual outcome is correct |
 
 #### Ambiguities (brandbook doesn't specify, theme made a choice)
 
@@ -1518,7 +1509,7 @@ MOTION
 | Sticky ATC bar behavior | Shows on scroll past main ATC, hides when main ATC visible. Max-width 1280px. |
 | Quality evidence section layout | Expandable accordion cards rather than static content |
 | Cross-sell placement | Below buybox panels, horizontal card grid |
-| Shipping progress bar visual | Teal→green fill on 0.6rem track (white bg) |
+| Shipping progress bar visual | Tealâ†’green fill on 0.6rem track (white bg) |
 | Mobile gallery navigation | Horizontal scroll with dot indicators, no arrows |
 | Cart drawer width | `max-w-md` (448px) |
 | Auto-hiding header behavior | Mobile scroll-down hides; 8px delta threshold |
@@ -1530,11 +1521,11 @@ Items from the original open-questions list, resolved as of 2026-02-21:
 | # | Topic | Decision | Rationale |
 |---|---|---|---|
 | 1 | Translation / i18n | **Not needed** | PL-only market. Hardcoded Polish text is intentional. No multi-language planned. |
-| 2 | Collection page | **Already LUSENA-ized** | `templates/collection.json` maps to `lusena-main-collection.liquid` (breadcrumbs, product grid via `lusena-product-card`, pagination). Filter/sort button is non-functional — to be removed/hidden (no sort/filter needed now). |
+| 2 | Collection page | **Already LUSENA-ized** | `templates/collection.json` maps to `lusena-main-collection.liquid` (breadcrumbs, product grid via `lusena-product-card`, pagination). Filter/sort button is non-functional â€” to be removed/hidden (no sort/filter needed now). |
 | 3 | Breakpoints | **Tailwind for new code** | See section 10.5 for full analysis. 44 Tailwind vs 4 Dawn usages in `lusena-*` files. 768px is the primary flip. Keep the 4 Dawn sync-points as-is. |
 | 4 | Dawn default sections | **Backlog** | Many inactive Dawn sections remain; not blocking. Can be cleaned up later. |
 | 5 | `--content-grid` | **Ignore** | Referenced in AGENTS.md examples but never implemented. Not relevant. |
-| 6 | Orphan snippets | **Backlog** | `lusena-pdp-accordions.liquid` — verify and clean up later. |
+| 6 | Orphan snippets | **Backlog** | `lusena-pdp-accordions.liquid` â€” verify and clean up later. |
 | 7 | Blog/article templates | **Backlog** | Dawn defaults in use. Adapt when blog content is prioritized. |
 | 8 | Search page | **Backlog** | Dawn default. Adapt when needed. |
 | 9 | Font loading | **Self-hosted variable fonts** | Completed. See section 10.6. Inter + Source Serif 4 variable `.woff2` files in `assets/`, Google Fonts `<link>` removed. GDPR-clean, all weights preserved. |
@@ -1552,9 +1543,9 @@ Analysis of all `lusena-*` files:
 | **Dawn** | 750 / 990 px | **4** |
 
 The 4 Dawn-breakpoint usages are intentional sync points:
-- `lusena-pdp-styles.liquid` (2×): Gallery show/hide and lightbox cursor must match Dawn's 750px media gallery flip.
-- `lusena-comparison.liquid` (1×): Table padding aligning with `.page-width`.
-- `lusena-science.liquid` (1×): 2-column layout matching Dawn layout.
+- `lusena-pdp-styles.liquid` (2Ă—): Gallery show/hide and lightbox cursor must match Dawn's 750px media gallery flip.
+- `lusena-comparison.liquid` (1Ă—): Table padding aligning with `.page-width`.
+- `lusena-science.liquid` (1Ă—): 2-column layout matching Dawn layout.
 
 **Rule for new sections:**
 
@@ -1562,35 +1553,35 @@ The 4 Dawn-breakpoint usages are intentional sync points:
 |---|---|---|
 | _(none)_ | < 640px | Mobile-first base styles |
 | `sm` | `min-width: 640px` | Rare, small-tablet tweaks |
-| **`md`** | **`min-width: 768px`** | **Primary mobile → desktop flip** (most common) |
+| **`md`** | **`min-width: 768px`** | **Primary mobile â†’ desktop flip** (most common) |
 | `lg` | `min-width: 1024px` | Large desktop refinements |
 | `xl` | `min-width: 1280px` | Extra-wide tweaks (rare) |
 | `2xl` | `min-width: 1440px` | Container cap |
 
 **Exception:** When directly overriding Dawn layout classes (`.page-width`, gallery, Dawn grid utilities), match Dawn's 750/990px to stay in sync. Never mix breakpoints within the same element's responsive chain.
 
-Dawn's `base.css` uses 750/990 exclusively (25 and 15 occurrences respectively). This is fine — LUSENA sections don't inherit Dawn's responsive grid classes; they use `.container` and Tailwind grids.
+Dawn's `base.css` uses 750/990 exclusively (25 and 15 occurrences respectively). This is fine â€” LUSENA sections don't inherit Dawn's responsive grid classes; they use `.container` and Tailwind grids.
 
-### 10.6 Font Loading (resolved — self-hosted)
+### 10.6 Font Loading (resolved â€” self-hosted)
 
 **Decision: Self-host both variable fonts from Shopify CDN. Google Fonts removed.**
 
-Completed 2026-02-21. Fonts are now served from `assets/` via Shopify's CDN — zero external requests, GDPR-clean.
+Completed 2026-02-21. Fonts are now served from `assets/` via Shopify's CDN â€” zero external requests, GDPR-clean.
 
 #### Font files in `assets/`
 
 | File | Font | Style | Weights | Size |
 |---|---|---|---|---|
-| `InterVariable.woff2` | Inter | Normal | 100–900 | ~344 KB |
-| `SourceSerif4Variable-Roman.woff2` | Source Serif 4 | Normal | 200–900 | ~419 KB |
-| `SourceSerif4Variable-Italic.woff2` | Source Serif 4 | Italic | 200–900 | ~339 KB |
+| `InterVariable.woff2` | Inter | Normal | 100â€“900 | ~344 KB |
+| `SourceSerif4Variable-Roman.woff2` | Source Serif 4 | Normal | 200â€“900 | ~419 KB |
+| `SourceSerif4Variable-Italic.woff2` | Source Serif 4 | Italic | 200â€“900 | ~339 KB |
 
 #### What was changed
 
 **`layout/theme.liquid`:**
 1. **Removed** the Google Fonts `<link>` block (preconnect + stylesheet, 9 lines).
-2. **Added** 3 `@font-face` declarations inside the existing `{% style %}` block, using `{{ '…' | asset_url }}` for Shopify CDN delivery.
-3. **Kept** the Shopify `font_face` filter lines — they still generate `@font-face` for Inter 400/700 and Source Serif 4 400 from `fonts.shopifycdn.com`. The self-hosted variable fonts take priority via CSS cascade (they appear later and cover a wider weight range).
+2. **Added** 3 `@font-face` declarations inside the existing `{% style %}` block, using `{{ 'â€¦' | asset_url }}` for Shopify CDN delivery.
+3. **Kept** the Shopify `font_face` filter lines â€” they still generate `@font-face` for Inter 400/700 and Source Serif 4 400 from `fonts.shopifycdn.com`. The self-hosted variable fonts take priority via CSS cascade (they appear later and cover a wider weight range).
 
 #### Unicode range
 
@@ -1598,31 +1589,31 @@ All three `@font-face` rules use:
 ```
 unicode-range: U+0000-024F, U+0259, U+1E00-1EFF, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 ```
-This covers Latin, Latin Extended-A (Polish characters: ą, ć, ę, ł, ń, ó, ś, ź, ż), Latin Extended-B, and common symbols/currency.
+This covers Latin, Latin Extended-A (Polish characters: Ä…, Ä‡, Ä™, Ĺ‚, Ĺ„, Ăł, Ĺ›, Ĺş, ĹĽ), Latin Extended-B, and common symbols/currency.
 
 #### Weight coverage (before vs. after)
 
 | Weight | Before (Google) | After (self-hosted) | Used in theme? |
 |---|---|---|---|
-| Inter 300 | ✅ | ✅ | Yes — `font-light` |
-| Inter 400 | ✅ | ✅ | Yes — default body |
-| Inter 500 | ✅ | ✅ | Yes — `font-medium` (most used) |
-| Inter 600 | ✅ | ✅ | Yes — `font-semibold` |
-| Inter 700 | ✅ | ✅ | Yes — bold |
-| Source Serif 4 (all weights) | ✅ | ✅ | Yes — headings, logo |
-| Source Serif 4 italic | ✅ | ✅ | Yes — hero, PDP eyebrow |
+| Inter 300 | âś… | âś… | Yes â€” `font-light` |
+| Inter 400 | âś… | âś… | Yes â€” default body |
+| Inter 500 | âś… | âś… | Yes â€” `font-medium` (most used) |
+| Inter 600 | âś… | âś… | Yes â€” `font-semibold` |
+| Inter 700 | âś… | âś… | Yes â€” bold |
+| Source Serif 4 (all weights) | âś… | âś… | Yes â€” headings, logo |
+| Source Serif 4 italic | âś… | âś… | Yes â€” hero, PDP eyebrow |
 
 **Zero visual regression. All weights preserved.**
 
 #### Verification (2026-02-21)
 
 Self-hosted fonts verified via `sections/lusena-font-debug.liquid` debug panel:
-- ✅ All Inter weights (300/400/500/600/700) render correctly with visible weight differentiation
-- ✅ Source Serif 4 normal + italic render at all weights
-- ✅ Polish characters (ąćęłńóśźż) display correctly
-- ✅ `document.fonts` API confirms all font faces loaded from Shopify CDN
-- ✅ Zero requests to `fonts.googleapis.com` or `fonts.gstatic.com`
-- ✅ Debug section removed after successful verification
+- âś… All Inter weights (300/400/500/600/700) render correctly with visible weight differentiation
+- âś… Source Serif 4 normal + italic render at all weights
+- âś… Polish characters (Ä…Ä‡Ä™Ĺ‚Ĺ„ĂłĹ›ĹşĹĽ) display correctly
+- âś… `document.fonts` API confirms all font faces loaded from Shopify CDN
+- âś… Zero requests to `fonts.googleapis.com` or `fonts.gstatic.com`
+- âś… Debug section removed after successful verification
 
 #### Caveat (unchanged)
 
@@ -1642,4 +1633,4 @@ Low-priority items to address when relevant:
 
 ---
 
-*Last updated: 2026-02-21 (font self-hosting migration completed). Maintain this document alongside code changes. See `docs/THEME_CHANGES.md` for commit-linked changelog.*
+*Last updated: 2026-02-21 (spacing standardization + font self-hosting migration completed). Maintain this document alongside code changes. See `docs/THEME_CHANGES.md` for commit-linked changelog.*

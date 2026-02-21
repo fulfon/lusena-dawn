@@ -1,0 +1,92 @@
+{% doc %}
+  Detects adjacent sections with the same computed background color and applies
+  a same-background spacing class to the later section.
+{% enddoc %}
+
+{% javascript %}
+  (() => {
+    const GAP_SAME_CLASS = 'lusena-section-gap-same';
+    const GAP_DIFFERENT_CLASS = 'lusena-section-gap-different';
+
+    const normalizeColor = (value) => {
+      if (typeof value !== 'string') return null;
+
+      const raw = value.trim().toLowerCase();
+      if (!raw || raw === 'transparent' || raw === 'rgba(0, 0, 0, 0)' || raw === 'rgba(0,0,0,0)') {
+        return null;
+      }
+
+      const match = raw.match(/rgba?\(([^)]+)\)/);
+      if (!match) return raw;
+
+      const parts = match[1].split(',').map((part) => part.trim());
+      if (parts.length < 3) return raw;
+
+      if (parts.length === 4) {
+        const alpha = Number.parseFloat(parts[3]);
+        if (Number.isFinite(alpha) && alpha === 0) return null;
+      }
+
+      return `${parts[0]},${parts[1]},${parts[2]}`;
+    };
+
+    const getSectionSurface = (sectionWrapper) => {
+      if (!(sectionWrapper instanceof HTMLElement)) return null;
+
+      const firstElement = sectionWrapper.firstElementChild;
+      if (firstElement instanceof HTMLElement) return firstElement;
+
+      return null;
+    };
+
+    const detectSectionGaps = () => {
+      const main = document.getElementById('MainContent');
+      if (!(main instanceof HTMLElement)) return;
+
+      const wrappers = Array.from(main.querySelectorAll(':scope > .shopify-section'));
+      if (wrappers.length < 2) return;
+
+      const surfaces = wrappers.map(getSectionSurface);
+
+      surfaces.forEach((surface) => {
+        if (!(surface instanceof HTMLElement)) return;
+        surface.classList.remove(GAP_SAME_CLASS, GAP_DIFFERENT_CLASS);
+      });
+
+      for (let index = 1; index < surfaces.length; index += 1) {
+        const current = surfaces[index];
+        if (!(current instanceof HTMLElement)) continue;
+
+        const previous = surfaces[index - 1];
+        if (!(previous instanceof HTMLElement)) {
+          current.classList.add(GAP_DIFFERENT_CLASS);
+          continue;
+        }
+
+        const previousBg = normalizeColor(window.getComputedStyle(previous).backgroundColor);
+        const currentBg = normalizeColor(window.getComputedStyle(current).backgroundColor);
+
+        if (previousBg && currentBg && previousBg === currentBg) {
+          current.classList.add(GAP_SAME_CLASS);
+        } else {
+          current.classList.add(GAP_DIFFERENT_CLASS);
+        }
+      }
+    };
+
+    const runDetection = () => {
+      window.requestAnimationFrame(() => {
+        detectSectionGaps();
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', runDetection, { once: true });
+    } else {
+      runDetection();
+    }
+
+    document.addEventListener('shopify:section:load', runDetection);
+    document.addEventListener('shopify:section:reorder', runDetection);
+  })();
+{% endjavascript %}

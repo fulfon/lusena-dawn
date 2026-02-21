@@ -19,7 +19,55 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — feat(lusena): optimize accordion UX and sync theme docs
+### (current) — feat(lusena): standardize global section spacing system
+
+**Goal:** Centralize vertical spacing across LUSENA sections with a tier/token system, reduce per-section padding drift, and make same-background section transitions more consistent.
+
+**What changed**
+- Added a global spacing foundation snippet with spacing tokens, section tier classes (`compact`, `standard`, `hero`, `full-bleed`), same-bg gap behavior, and semantic intra-section gap utilities (`lusena-gap-*`).
+- Added section adjacency detection script that compares computed background colors of neighboring section surfaces and applies `lusena-section-gap-same` / `lusena-section-gap-different`.
+- Wired both snippets globally in `layout/theme.liquid`.
+- Migrated LUSENA section roots from section-local padding CSS to tier classes with optional schema overrides (`0 = use global default`) and aligned override variable naming.
+- Updated brandbook and implementation docs to reflect the new spacing system and marked the spacing standardization plan as implemented.
+
+**Key files**
+- `layout/theme.liquid`
+- `snippets/lusena-spacing-system.liquid`
+- `snippets/lusena-section-gap-detector.liquid`
+- `sections/lusena-trust-bar.liquid`
+- `sections/lusena-problem-solution.liquid`
+- `sections/lusena-bestsellers.liquid`
+- `sections/lusena-heritage.liquid`
+- `sections/lusena-testimonials.liquid`
+- `sections/lusena-bundles.liquid`
+- `sections/lusena-faq.liquid`
+- `sections/lusena-main-product.liquid`
+- `sections/lusena-main-collection.liquid`
+- `sections/lusena-pdp-feature-highlights.liquid`
+- `sections/lusena-pdp-quality-evidence.liquid`
+- `sections/lusena-pdp-details.liquid`
+- `sections/lusena-about-hero.liquid`
+- `sections/lusena-about-story.liquid`
+- `sections/lusena-about-values.liquid`
+- `sections/lusena-quality-hero.liquid`
+- `sections/lusena-quality-momme.liquid`
+- `sections/lusena-quality-fire-test.liquid`
+- `sections/lusena-quality-origin.liquid`
+- `sections/lusena-quality-qc.liquid`
+- `sections/lusena-quality-certificates.liquid`
+- `sections/lusena-returns-hero.liquid`
+- `sections/lusena-returns-steps.liquid`
+- `sections/lusena-returns-editorial.liquid`
+- `sections/lusena-returns-faq.liquid`
+- `sections/lusena-returns-final-cta.liquid`
+- `sections/lusena-science.liquid`
+- `sections/lusena-comparison.liquid`
+- `docs/theme-brandbook-uiux.md`
+- `docs/SPACING_STANDARDIZATION_PLAN.md`
+- `AGENTS.md`
+- `copilot-instructions.md`
+
+### a2551d3 — feat(lusena): optimize accordion UX and sync theme docs
 
 **Goal:** Improve touch/animation behavior consistency for FAQ-style accordions and apply draft-parity polish updates across key LUSENA surfaces, while aligning repo guidance/skills docs with the current theme architecture.
 
@@ -167,24 +215,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `docs/PDP_Gallery_Zoom_Lightbox_Parity_Plan.md`
 - `.codex/skills/lusena-draftshop-fragment-parity/SKILL.md`
 
-### 7eb6712 — fix(ci): resolve LHCI product handle dynamically
-
-**Goal:** Eliminate recurring Lighthouse 404 failures on product URLs by resolving a valid published product handle at runtime in CI.
-
-**What changed**
-- Added a `Resolve published product handle` step in the CI workflow that calls Shopify Admin API and extracts the first `active + published` product handle.
-- Added explicit fail-fast behavior with clear error output when no published product exists or API auth fails, instead of letting Lighthouse fail later with opaque audit noise.
-- Updated `shopify/lighthouse-ci-action@v1` input to use the resolved handle output from the resolver step.
-- Kept the existing LHCI thresholds and collection audit configuration unchanged.
-
-**Key files**
-- `.github/workflows/ci.yml`
-- `docs/THEME_CHANGES.md`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-21T15:17:18+01:00 — (current) — feat(lusena): optimize accordion UX and sync theme docs
+- 2026-02-21T18:02:39+01:00 — (current) — feat(lusena): standardize global section spacing system
+- 2026-02-21T15:17:18+01:00 — a2551d3 — feat(lusena): optimize accordion UX and sync theme docs
 - 2026-02-21T11:32:06+01:00 — 924911d — feat(lusena): unify button system and loading parity across PDP and cart
 - 2026-02-18T20:28:57+01:00 — 86ba8b3 — fix(lusena): improve touch cart drawer close and history behavior
 - 2026-02-17T20:47:16+01:00 — 170a28b — upsell css fix

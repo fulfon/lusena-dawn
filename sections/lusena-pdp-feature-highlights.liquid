@@ -9,17 +9,30 @@
 -%}
 
 {%- if has_feature_blocks -%}
-  <section
-    class="lusena-pdp-feature-highlights"
-    style="
-      --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-      --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-      --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-      --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-    "
-  >
+  {%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
+<section
+    class="lusena-pdp-feature-highlights lusena-spacing--standard"
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
+>
     <div class="container">
-      <div class="lusena-pdp-feature-highlights__grid"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
+      <div class="lusena-pdp-feature-highlights__grid"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}
+>
         {%- for block in section.blocks -%}
           {%- if block.type == 'feature' -%}
             {%- liquid
@@ -79,10 +92,6 @@
 {%- endif -%}
 
 {% stylesheet %}
-  .lusena-pdp-feature-highlights {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
-  }
 
   .lusena-pdp-feature-highlights__grid {
     display: grid;
@@ -133,13 +142,6 @@
     }
   }
 
-  @media (min-width: 768px) {
-    .lusena-pdp-feature-highlights {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
-  }
-
   @media (min-width: 1024px) {
     .lusena-pdp-feature-highlights__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -157,7 +159,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -167,7 +169,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -177,7 +179,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -187,7 +189,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "range",
@@ -197,7 +199,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     }
   ],
   "blocks": [
@@ -226,13 +228,13 @@
           "type": "text",
           "id": "title",
           "label": "Title",
-          "default": "Mniej zmarszczek, więcej blasku"
+          "default": "Mniej zmarszczek, wiÄ™cej blasku"
         },
         {
           "type": "textarea",
           "id": "description",
           "label": "Description",
-          "default": "Jedwab nie wchłania wilgoci — Twój krem nocny zostaje na skórze, a nie na poduszce. Rano budzisz się z nawilżoną, wygładzoną cerą."
+          "default": "Jedwab nie wchĹ‚ania wilgoci â€” TwĂłj krem nocny zostaje na skĂłrze, a nie na poduszce. Rano budzisz siÄ™ z nawilĹĽonÄ…, wygĹ‚adzonÄ… cerÄ…."
         }
       ]
     }
@@ -245,24 +247,24 @@
           "type": "feature",
           "settings": {
             "icon": "sparkles",
-            "title": "Mniej zmarszczek, więcej blasku",
-            "description": "Jedwab nie wchłania wilgoci — Twój krem nocny zostaje na skórze, a nie na poduszce. Rano budzisz się z nawilżoną, wygładzoną cerą."
+            "title": "Mniej zmarszczek, wiÄ™cej blasku",
+            "description": "Jedwab nie wchĹ‚ania wilgoci â€” TwĂłj krem nocny zostaje na skĂłrze, a nie na poduszce. Rano budzisz siÄ™ z nawilĹĽonÄ…, wygĹ‚adzonÄ… cerÄ…."
           }
         },
         {
           "type": "feature",
           "settings": {
             "icon": "wind",
-            "title": "22 momme — o 30% gęstszy niż standard",
-            "description": "Większość poszewek to 16–19 momme. Nasze 22 momme to optymalny balans — jedwab jest gęsty, trwały i przyjemnie chłodzący."
+            "title": "22 momme â€” o 30% gÄ™stszy niĹĽ standard",
+            "description": "WiÄ™kszoĹ›Ä‡ poszewek to 16â€“19 momme. Nasze 22 momme to optymalny balans â€” jedwab jest gÄ™sty, trwaĹ‚y i przyjemnie chĹ‚odzÄ…cy."
           }
         },
         {
           "type": "feature",
           "settings": {
             "icon": "shield-check",
-            "title": "OEKO-TEX® Standard 100",
-            "description": "Certyfikat potwierdza brak substancji szkodliwych. Bezpieczne dla skóry wrażliwej i alergików."
+            "title": "OEKO-TEXÂ® Standard 100",
+            "description": "Certyfikat potwierdza brak substancji szkodliwych. Bezpieczne dla skĂłry wraĹĽliwej i alergikĂłw."
           }
         },
         {
@@ -270,7 +272,7 @@
           "settings": {
             "icon": "gift",
             "title": "Gotowe na prezent",
-            "description": "Każda poszewka pakowana w eleganckie pudełko. Idealny prezent — bez potrzeby dodatkowego pakowania."
+            "description": "KaĹĽda poszewka pakowana w eleganckie pudeĹ‚ko. Idealny prezent â€” bez potrzeby dodatkowego pakowania."
           }
         },
         {
@@ -278,15 +280,15 @@
           "settings": {
             "icon": "droplets",
             "title": "Proste pranie w pralce",
-            "description": "Program delikatny, zimna woda, woreczek ochronny. Jedwab zachowuje właściwości przez setki prań."
+            "description": "Program delikatny, zimna woda, woreczek ochronny. Jedwab zachowuje wĹ‚aĹ›ciwoĹ›ci przez setki praĹ„."
           }
         },
         {
           "type": "feature",
           "settings": {
             "icon": "heart",
-            "title": "Włosy bez puszenia i łamania",
-            "description": "Gładka powierzchnia jedwabiu zmniejsza tarcie o 43% w porównaniu do bawełny. Mniej supłów, więcej blasku."
+            "title": "WĹ‚osy bez puszenia i Ĺ‚amania",
+            "description": "GĹ‚adka powierzchnia jedwabiu zmniejsza tarcie o 43% w porĂłwnaniu do baweĹ‚ny. Mniej supĹ‚Ăłw, wiÄ™cej blasku."
           }
         }
       ]

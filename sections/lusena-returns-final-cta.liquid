@@ -1,21 +1,33 @@
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
-  class="bg-accent-cta text-center lusena-returns-final-cta"
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  class="bg-accent-cta text-center lusena-returns-final-cta lusena-spacing--hero"
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
-  <div class="container max-w-3xl mx-auto space-y-6">
-    <div class="lusena-returns-final-cta__icon-wrap mx-auto{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <div class="container max-w-3xl mx-auto">
+    <div class="lusena-returns-final-cta__icon-wrap mx-auto lusena-gap-kicker{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {% render 'lusena-icon', name: 'clock', class: 'w-6 h-6 text-white', stroke_width: 1.5 %}
     </div>
-    <h2 class="lusena-returns-final-cta__heading text-3xl md:text-5xl font-serif text-white{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <h2 class="lusena-returns-final-cta__heading text-3xl md:text-5xl font-serif text-white lusena-gap-heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.heading_line_1 | escape }}
       <span class="italic">{{ section.settings.heading_line_2 | escape }}</span>
     </h2>
-    <p class="lusena-returns-final-cta__body leading-relaxed max-w-xl mx-auto{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <p class="lusena-returns-final-cta__body leading-relaxed max-w-xl mx-auto lusena-gap-body{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.body | escape }}
     </p>
     <div class="lusena-returns-final-cta__actions{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
@@ -41,10 +53,6 @@
 </section>
 
 {% stylesheet %}
-  .lusena-returns-final-cta {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
-  }
 
   .lusena-returns-final-cta::selection,
   .lusena-returns-final-cta *::selection {
@@ -90,13 +98,6 @@
       flex-direction: row;
     }
   }
-
-  @media (min-width: 768px) {
-    .lusena-returns-final-cta {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
-  }
 {% endstylesheet %}
 
 {% schema %}
@@ -106,7 +107,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -116,7 +117,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 128
+      "default": 0
     },
     {
       "type": "range",
@@ -126,7 +127,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 128
+      "default": 0
     },
     {
       "type": "range",
@@ -136,7 +137,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 96
+      "default": 0
     },
     {
       "type": "range",
@@ -146,13 +147,13 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 96
+      "default": 0
     },
     {
       "type": "text",
       "id": "heading_line_1",
       "label": "Heading line 1",
-      "default": "Wypróbuj Przez"
+      "default": "WyprĂłbuj Przez"
     },
     {
       "type": "text",
@@ -164,7 +165,7 @@
       "type": "textarea",
       "id": "body",
       "label": "Body",
-      "default": "Dołącz do tysięcy kobiet, które obudziły się piękniejsze. Bez ryzyka, bez zobowiązań — jedynie piękniejsze poranki."
+      "default": "DoĹ‚Ä…cz do tysiÄ™cy kobiet, ktĂłre obudziĹ‚y siÄ™ piÄ™kniejsze. Bez ryzyka, bez zobowiÄ…zaĹ„ â€” jedynie piÄ™kniejsze poranki."
     },
     {
       "type": "text",

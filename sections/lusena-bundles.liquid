@@ -1,11 +1,23 @@
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
-  class="bg-surface-2 lusena-bundles"
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  class="bg-surface-2 lusena-bundles lusena-spacing--standard"
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
   <div class="container grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
     <div class="order-2 md:order-1 relative aspect-[4/3] bg-brand-bg p-8 flex items-center justify-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
@@ -26,19 +38,19 @@
       {%- endif -%}
     </div>
 
-    <div class="order-1 md:order-2 space-y-6{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <div class="order-1 md:order-2{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {%- if section.settings.kicker != blank -%}
-        <span class="text-accent-cta text-sm tracking-widest uppercase font-semibold">
+        <span class="text-accent-cta text-sm tracking-widest uppercase font-semibold lusena-gap-kicker">
           {{ section.settings.kicker | escape }}
         </span>
       {%- endif -%}
 
-      <h2 class="text-3xl md:text-4xl font-serif text-primary">
+      <h2 class="text-3xl md:text-4xl font-serif text-primary lusena-gap-heading">
         {{ section.settings.heading | newline_to_br }}
       </h2>
 
       {%- if section.settings.body != blank -%}
-        <p class="text-lg text-secondary leading-relaxed">
+        <p class="text-lg text-secondary leading-relaxed lusena-gap-body">
           {{ section.settings.body | escape }}
         </p>
       {%- endif -%}
@@ -66,18 +78,7 @@
   </div>
 </section>
 
-{% stylesheet %}
-  .lusena-bundles {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
-  }
-
-  @media (min-width: 768px) {
-    .lusena-bundles {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
-  }
+{% stylesheet %}
 {% endstylesheet %}
 
 {% schema %}
@@ -87,7 +88,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -97,7 +98,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -107,7 +108,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -117,7 +118,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "range",
@@ -127,7 +128,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "text",

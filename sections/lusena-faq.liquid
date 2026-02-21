@@ -1,16 +1,28 @@
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
-  class="bg-surface-1 lusena-faq"
+  class="bg-surface-1 lusena-faq lusena-spacing--standard"
   data-lusena-faq
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
   <div class="container max-w-3xl">
-    <div class="text-center mb-16{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <h2 class="text-3xl md:text-4xl font-serif text-primary mb-4">{{ section.settings.heading | escape }}</h2>
+    <div class="text-center lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <h2 class="text-3xl md:text-4xl font-serif text-primary lusena-gap-heading">{{ section.settings.heading | escape }}</h2>
       {%- if section.settings.subheading != blank -%}
         <p class="text-secondary">{{ section.settings.subheading | escape }}</p>
       {%- endif -%}
@@ -41,17 +53,6 @@
 </section>
 
 {% stylesheet %}
-  .lusena-faq {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
-  }
-
-  @media (min-width: 768px) {
-    .lusena-faq {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
-  }
 
   .lusena-faq__item[data-state='open'] .lusena-faq__chevron {
     transform: rotate(180deg);
@@ -262,7 +263,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -272,7 +273,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -282,7 +283,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -292,7 +293,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "range",
@@ -302,7 +303,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "text",
@@ -352,7 +353,7 @@
           "type": "item",
           "settings": {
             "question": "How do I wash it?",
-            "answer": "<p>LUSENA silk is machine washable on a delicate/silk cycle (30°C) using pH-neutral detergent. You can also hand wash. Air dry out of direct sunlight.</p>"
+            "answer": "<p>LUSENA silk is machine washable on a delicate/silk cycle (30Â°C) using pH-neutral detergent. You can also hand wash. Air dry out of direct sunlight.</p>"
           }
         },
         {

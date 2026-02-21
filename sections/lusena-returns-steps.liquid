@@ -1,15 +1,27 @@
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
-  class="bg-white lusena-returns-steps"
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  class="bg-white lusena-returns-steps lusena-spacing--hero"
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
   <div class="container lusena-returns-steps__container mx-auto">
-    <div class="text-center mb-16 space-y-3">
-      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <div class="text-center lusena-gap-section-intro">
+      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold lusena-gap-kicker{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         {{ section.settings.steps_kicker | escape }}
       </span>
       <h2 class="text-3xl md:text-5xl font-serif text-primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
@@ -17,7 +29,8 @@
       </h2>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
+>
       <div class="lusena-returns-steps__connector" aria-hidden="true"><span></span></div>
 
       {%- for block in section.blocks -%}
@@ -25,15 +38,15 @@
           {%- liquid
             assign icon_name = block.settings.icon | strip | downcase
             case icon_name
-              when '🛒'
+              when 'đź›’'
                 assign icon_name = 'shopping-bag'
               when 'shopping-bag', 'shopping bag', 'shoppingbag'
                 assign icon_name = 'shopping-bag'
-              when '📧'
+              when 'đź“§'
                 assign icon_name = 'mail'
               when 'mail', 'email', 'envelope'
                 assign icon_name = 'mail'
-              when '💰'
+              when 'đź’°'
                 assign icon_name = 'banknote'
               when 'banknote', 'money'
                 assign icon_name = 'banknote'
@@ -60,10 +73,6 @@
 </section>
 
 {% stylesheet %}
-  .lusena-returns-steps {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
-  }
 
   .lusena-returns-steps__container {
     max-width: 102.4rem !important;
@@ -112,10 +121,6 @@
   }
 
   @media (min-width: 768px) {
-    .lusena-returns-steps {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
 
     .lusena-returns-steps__connector {
       display: block;
@@ -130,7 +135,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -140,7 +145,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 128
+      "default": 0
     },
     {
       "type": "range",
@@ -150,7 +155,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 128
+      "default": 0
     },
     {
       "type": "range",
@@ -160,7 +165,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 96
+      "default": 0
     },
     {
       "type": "range",
@@ -170,7 +175,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 96
+      "default": 0
     },
     {
       "type": "text",
@@ -182,7 +187,7 @@
       "type": "text",
       "id": "steps_heading",
       "label": "Section heading",
-      "default": "Jak to działa?"
+      "default": "Jak to dziaĹ‚a?"
     },
     {
       "type": "text",
@@ -212,7 +217,7 @@
           "type": "textarea",
           "id": "text",
           "label": "Text",
-          "default": "Masz pełne 60 dni od momentu otrzymania paczki. Nie musisz trzymać folii ani metek - po prostu śpij i oceniaj."
+          "default": "Masz peĹ‚ne 60 dni od momentu otrzymania paczki. Nie musisz trzymaÄ‡ folii ani metek - po prostu Ĺ›pij i oceniaj."
         }
       ]
     }
@@ -226,7 +231,7 @@
           "settings": {
             "icon": "shopping-bag",
             "title": "Kupujesz i testujesz",
-            "text": "Masz pełne 60 dni od momentu otrzymania paczki. Nie musisz trzymać folii ani metek - po prostu śpij i oceniaj."
+            "text": "Masz peĹ‚ne 60 dni od momentu otrzymania paczki. Nie musisz trzymaÄ‡ folii ani metek - po prostu Ĺ›pij i oceniaj."
           }
         },
         {
@@ -234,15 +239,15 @@
           "settings": {
             "icon": "mail",
             "title": "Piszesz do nas",
-            "text": "Wystarczy krótki mail na czesc@lusena.pl. Odezwiemy się w ciągu 24h i wyślemy instrukcję zwrotu."
+            "text": "Wystarczy krĂłtki mail na czesc@lusena.pl. Odezwiemy siÄ™ w ciÄ…gu 24h i wyĹ›lemy instrukcjÄ™ zwrotu."
           }
         },
         {
           "type": "step",
           "settings": {
             "icon": "banknote",
-            "title": "Szybki zwrot środków",
-            "text": "Pieniądze wrócą na Twoje konto w ciągu 3-5 dni roboczych od odebrania przez nas przesyłki."
+            "title": "Szybki zwrot Ĺ›rodkĂłw",
+            "text": "PieniÄ…dze wrĂłcÄ… na Twoje konto w ciÄ…gu 3-5 dni roboczych od odebrania przez nas przesyĹ‚ki."
           }
         }
       ]

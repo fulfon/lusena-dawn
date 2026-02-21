@@ -1,14 +1,26 @@
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
-  class="bg-brand-bg lusena-quality-fire-test"
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  class="bg-brand-bg lusena-quality-fire-test lusena-spacing--standard"
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
   <div class="container text-center">
-    <h2 class="text-3xl md:text-4xl font-serif text-primary mb-12{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <h2 class="text-3xl md:text-4xl font-serif text-primary lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.fire_heading | escape }}
     </h2>
 
@@ -28,24 +40,13 @@
       {%- endif -%}
     </div>
 
-    <p class="mt-8 text-secondary font-light max-w-2xl mx-auto{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <p class="lusena-gap-body text-secondary font-light max-w-2xl mx-auto{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.fire_body | escape }}
     </p>
   </div>
 </section>
 
 {% stylesheet %}
-  .lusena-quality-fire-test {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
-  }
-
-  @media (min-width: 768px) {
-    .lusena-quality-fire-test {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
-  }
 {% endstylesheet %}
 
 {% schema %}
@@ -55,7 +56,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -65,7 +66,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -75,7 +76,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -85,7 +86,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "range",
@@ -95,7 +96,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "text",
@@ -118,7 +119,7 @@
       "type": "text",
       "id": "fire_body",
       "label": "Fire body",
-      "default": "Prawdziwy jedwab po spaleniu pachnie jak pieczone włosy i zamienia się w sypki popiół. Poliester topi się w twardą kulkę. Nie mamy nic do ukrycia."
+      "default": "Prawdziwy jedwab po spaleniu pachnie jak pieczone wĹ‚osy i zamienia siÄ™ w sypki popiĂłĹ‚. Poliester topi siÄ™ w twardÄ… kulkÄ™. Nie mamy nic do ukrycia."
     }
   ],
   "presets": [

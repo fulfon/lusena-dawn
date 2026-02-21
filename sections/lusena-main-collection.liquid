@@ -1,11 +1,23 @@
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
-  class="lusena-main-collection"
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  class="lusena-main-collection lusena-spacing--compact"
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
   {%- paginate collection.products by section.settings.products_per_page -%}
     <div class="container">
@@ -36,7 +48,7 @@
               class="scroll-trigger animate--slide-in"
               data-cascade
             {% endif %}
-          >
+>
             {% render 'lusena-product-card',
               product: product,
               show_secondary_image: section.settings.show_secondary_image
@@ -61,18 +73,7 @@
   {%- endpaginate -%}
 </section>
 
-{% stylesheet %}
-  .lusena-main-collection {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
-  }
-
-  @media (min-width: 768px) {
-    .lusena-main-collection {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
-  }
+{% stylesheet %}
 {% endstylesheet %}
 
 {% schema %}
@@ -83,7 +84,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -93,7 +94,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 48
+      "default": 0
     },
     {
       "type": "range",
@@ -103,7 +104,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 48
+      "default": 0
     },
     {
       "type": "range",
@@ -113,7 +114,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 32
+      "default": 0
     },
     {
       "type": "range",
@@ -123,7 +124,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 32
+      "default": 0
     },
     {
       "type": "range",

@@ -1,14 +1,26 @@
 {%- assign known_icons = 'layers,shield-check,truck,clock,star,sparkles' | split: ',' -%}
 
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
-  class="bg-surface-2 lusena-trust-bar"
+  class="bg-surface-2 lusena-trust-bar lusena-spacing--compact"
   data-lusena-trust-bar
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
   <div class="container px-4 md:px-6">
     <ul
@@ -17,7 +29,7 @@
       {% if settings.animations_reveal_on_scroll %}
         data-cascade
       {% endif %}
-    >
+>
       {%- for block in section.blocks -%}
         <li
           class="lusena-trust-bar__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
@@ -46,11 +58,7 @@
   </div>
 </section>
 
-{% stylesheet %}
-  .lusena-trust-bar {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
-  }
+{% stylesheet %}
 
   .lusena-trust-bar__grid {
     gap: 32px;
@@ -109,11 +117,7 @@
     }
   }
 
-  @media (min-width: 768px) {
-    .lusena-trust-bar {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
+  @media (min-width: 768px) {
 
     .lusena-trust-bar__grid {
       gap: 32px;
@@ -128,7 +132,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -138,7 +142,7 @@
       "max": 200,
       "step": 4,
       "unit": "px",
-      "default": 32
+      "default": 0
     },
     {
       "type": "range",
@@ -148,7 +152,7 @@
       "max": 200,
       "step": 4,
       "unit": "px",
-      "default": 32
+      "default": 0
     },
     {
       "type": "range",
@@ -158,7 +162,7 @@
       "max": 200,
       "step": 4,
       "unit": "px",
-      "default": 24
+      "default": 0
     },
     {
       "type": "range",
@@ -168,7 +172,7 @@
       "max": 200,
       "step": 4,
       "unit": "px",
-      "default": 24
+      "default": 0
     }
   ],
   "blocks": [
@@ -192,7 +196,7 @@
           "type": "text",
           "id": "subtitle",
           "label": "Subtitle",
-          "default": "30% gęstszy splot"
+          "default": "30% gÄ™stszy splot"
         }
       ]
     }
@@ -206,22 +210,22 @@
           "settings": {
             "icon": "layers",
             "title": "22 momme",
-            "subtitle": "30% gęstszy splot"
+            "subtitle": "30% gÄ™stszy splot"
           }
         },
         {
           "type": "item",
           "settings": {
             "icon": "shield-check",
-            "title": "OEKO-TEX® 100",
-            "subtitle": "bezpieczne dla skóry"
+            "title": "OEKO-TEXÂ® 100",
+            "subtitle": "bezpieczne dla skĂłry"
           }
         },
         {
           "type": "item",
           "settings": {
             "icon": "truck",
-            "title": "Wysyłka 24h",
+            "title": "WysyĹ‚ka 24h",
             "subtitle": "z magazynu w Polsce"
           }
         },

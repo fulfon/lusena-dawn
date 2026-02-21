@@ -8,19 +8,31 @@
   endif
 -%}
 
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
-  class="bg-surface-1 border-t border-brand-bg lusena-bestsellers"
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  class="bg-surface-1 border-t border-brand-bg lusena-bestsellers lusena-spacing--standard"
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
   <div class="container">
-    <div class="flex justify-between items-end mb-12{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <div class="space-y-4">
-        <h2 class="text-3xl md:text-4xl font-serif text-primary">{{ section.settings.heading | escape }}</h2>
+    <div class="flex justify-between items-end lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div>
+        <h2 class="text-3xl md:text-4xl font-serif text-primary lusena-gap-heading">{{ section.settings.heading | escape }}</h2>
         {%- if section.settings.subheading != blank -%}
           <p class="text-secondary">{{ section.settings.subheading | escape }}</p>
         {%- endif -%}
@@ -36,7 +48,7 @@
       {%- endif -%}
     </div>
 
-    <div class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 md:gap-8">
+    <div class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 md:gap-8{% if section.settings.view_all_mobile_label != blank %} lusena-gap-body{% endif %}">
       {%- if collection != blank -%}
         {%- for product in collection.products limit: limit -%}
           {%- liquid
@@ -54,13 +66,14 @@
               class="scroll-trigger animate--slide-in"
               data-cascade
             {% endif %}
-          >
+>
             {% render 'lusena-product-card', product: product, badge: badge, show_secondary_image: true %}
           </div>
         {%- endfor -%}
       {%- else -%}
         {%- for i in (1..3) -%}
-          <div class="group cursor-pointer{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
+          <div class="group cursor-pointer{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
+>
             <div class="relative aspect-[4/5] bg-surface-2 overflow-hidden mb-4"></div>
             <div class="space-y-1 text-center md:text-left">
               <div class="h-4 bg-surface-2 w-3/4"></div>
@@ -72,7 +85,7 @@
     </div>
 
     {%- if section.settings.view_all_mobile_label != blank -%}
-      <div class="mt-12 text-center md:hidden{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="text-center md:hidden{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <a
           href="{{ view_all_url }}"
           class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors rounded-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cta focus-visible:ring-offset-2 disabled:pointer-events-none disabled:bg-neutral-400 disabled:text-surface-1/70 h-12 px-8 py-3 border border-accent-cta bg-transparent text-accent-cta hover:bg-accent-cta/5 w-full"
@@ -84,18 +97,7 @@
   </div>
 </section>
 
-{% stylesheet %}
-  .lusena-bestsellers {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
-  }
-
-  @media (min-width: 768px) {
-    .lusena-bestsellers {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
-  }
+{% stylesheet %}
 {% endstylesheet %}
 
 {% schema %}
@@ -105,7 +107,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -115,7 +117,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -125,7 +127,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -135,7 +137,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "range",
@@ -145,7 +147,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "text",

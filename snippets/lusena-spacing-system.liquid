@@ -1,0 +1,108 @@
+{% doc %}
+  Global spacing tokens and utilities for LUSENA sections.
+
+  Provides:
+  - tier spacing classes (`lusena-spacing--*`)
+  - same-background section gap behavior
+  - semantic intra-section gap classes (`lusena-gap-*`)
+{% enddoc %}
+
+{% stylesheet %}
+  :root {
+    --lusena-space-xs: 8px;
+    --lusena-space-sm: 12px;
+    --lusena-space-md: 20px;
+    --lusena-space-lg: 32px;
+    --lusena-space-xl: 40px;
+    --lusena-space-2xl: 64px;
+    --lusena-space-3xl: 80px;
+
+    --lusena-section-gap: 0px;
+    --lusena-section-gap-same: 24px;
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --lusena-space-sm: 16px;
+      --lusena-space-md: 24px;
+      --lusena-space-lg: 48px;
+      --lusena-space-xl: 64px;
+      --lusena-space-2xl: 96px;
+      --lusena-space-3xl: 128px;
+
+      --lusena-section-gap-same: 32px;
+    }
+  }
+
+  .lusena-spacing--full-bleed {
+    --lusena-tier-pt: 0px;
+    --lusena-tier-pb: 0px;
+  }
+
+  .lusena-spacing--compact {
+    --lusena-tier-pt: var(--lusena-space-lg);
+    --lusena-tier-pb: var(--lusena-space-lg);
+  }
+
+  .lusena-spacing--standard {
+    --lusena-tier-pt: var(--lusena-space-xl);
+    --lusena-tier-pb: var(--lusena-space-xl);
+  }
+
+  .lusena-spacing--hero {
+    --lusena-tier-pt: var(--lusena-space-2xl);
+    --lusena-tier-pb: var(--lusena-space-2xl);
+  }
+
+  .lusena-spacing--full-bleed,
+  .lusena-spacing--compact,
+  .lusena-spacing--standard,
+  .lusena-spacing--hero {
+    padding-top: var(--lusena-section-padding-top-mobile, var(--lusena-tier-pt));
+    padding-bottom: var(--lusena-section-padding-bottom-mobile, var(--lusena-tier-pb));
+  }
+
+  @media (min-width: 768px) {
+    .lusena-spacing--full-bleed,
+    .lusena-spacing--compact,
+    .lusena-spacing--standard,
+    .lusena-spacing--hero {
+      padding-top: var(--lusena-section-padding-top-desktop, var(--lusena-tier-pt));
+      padding-bottom: var(--lusena-section-padding-bottom-desktop, var(--lusena-tier-pb));
+    }
+  }
+
+  .lusena-section-gap-same.lusena-section-gap-same {
+    padding-top: calc(var(--lusena-section-gap-same) + var(--lusena-section-padding-top-mobile, var(--lusena-tier-pt)));
+  }
+
+  .lusena-section-gap-different {
+    padding-top: var(--lusena-section-padding-top-mobile, var(--lusena-tier-pt));
+  }
+
+  @media (min-width: 768px) {
+    .lusena-section-gap-same.lusena-section-gap-same {
+      padding-top: calc(var(--lusena-section-gap-same) + var(--lusena-section-padding-top-desktop, var(--lusena-tier-pt)));
+    }
+
+    .lusena-section-gap-different {
+      padding-top: var(--lusena-section-padding-top-desktop, var(--lusena-tier-pt));
+    }
+  }
+
+  .lusena-gap-kicker {
+    margin-bottom: var(--lusena-space-xs);
+  }
+
+  .lusena-gap-heading {
+    margin-bottom: var(--lusena-space-sm);
+  }
+
+  .lusena-gap-body {
+    margin-bottom: var(--lusena-space-md);
+  }
+
+  .lusena-gap-section-intro {
+    margin-bottom: var(--lusena-space-lg);
+  }
+{% endstylesheet %}

@@ -1,14 +1,26 @@
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
-  class="bg-brand-bg lusena-about-story"
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  class="bg-brand-bg lusena-about-story lusena-spacing--standard"
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
-  <div class="container max-w-4xl mx-auto text-center space-y-12{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    <h2 class="text-3xl md:text-4xl font-serif text-primary">
+  <div class="container max-w-4xl mx-auto text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <h2 class="text-3xl md:text-4xl font-serif text-primary lusena-gap-section-intro">
       {{ section.settings.story_heading | escape }}
     </h2>
     <div class="text-secondary font-light text-lg leading-relaxed max-w-3xl mx-auto space-y-6">
@@ -18,17 +30,6 @@
 </section>
 
 {% stylesheet %}
-  .lusena-about-story {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
-  }
-
-  @media (min-width: 768px) {
-    .lusena-about-story {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
-  }
 {% endstylesheet %}
 
 {% schema %}
@@ -38,7 +39,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -48,7 +49,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -58,7 +59,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -68,7 +69,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "range",
@@ -78,7 +79,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "text",
@@ -90,7 +91,7 @@
       "type": "richtext",
       "id": "story_body",
       "label": "Story body",
-      "default": "<p>Historia jedwabiu zaczyna się w Chinach 5000 lat temu. Nasza historia zaczyna się w momencie, gdy zrozumieliśmy, że europejski rynek \"jedwabiu\" jest pełen kompromisów. Zbyt cienki materiał, zawyżone ceny, anonimowe pochodzenie.</p><p>Udaliśmy się do źródła. Do Suzhou. Aby dostarczyć luksus bez pośredników. Jesteśmy polską marką z globalną jakością.</p>"
+      "default": "<p>Historia jedwabiu zaczyna siÄ™ w Chinach 5000 lat temu. Nasza historia zaczyna siÄ™ w momencie, gdy zrozumieliĹ›my, ĹĽe europejski rynek \"jedwabiu\" jest peĹ‚en kompromisĂłw. Zbyt cienki materiaĹ‚, zawyĹĽone ceny, anonimowe pochodzenie.</p><p>UdaliĹ›my siÄ™ do ĹşrĂłdĹ‚a. Do Suzhou. Aby dostarczyÄ‡ luksus bez poĹ›rednikĂłw. JesteĹ›my polskÄ… markÄ… z globalnÄ… jakoĹ›ciÄ….</p>"
     }
   ],
   "presets": [

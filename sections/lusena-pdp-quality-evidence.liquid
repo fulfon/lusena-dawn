@@ -9,22 +9,35 @@
 -%}
 
 {%- if has_evidence_blocks -%}
-  <section
-    class="lusena-pdp-quality-evidence"
+  {%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
+<section
+    class="lusena-pdp-quality-evidence lusena-spacing--standard"
     data-lusena-quality-evidence
-    style="
-      --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-      --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-      --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-      --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-    "
-  >
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
+>
     <div class="container">
-      <h2 class="lusena-pdp-quality-evidence__heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <h2 class="lusena-pdp-quality-evidence__heading lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         {{ section.settings.heading | escape }}
       </h2>
 
-      <div class="lusena-pdp-quality-evidence__stack"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
+      <div class="lusena-pdp-quality-evidence__stack"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}
+>
         {%- for block in section.blocks -%}
           {%- if block.type == 'evidence' -%}
             {%- liquid
@@ -85,7 +98,7 @@
                         {% if cta_opens_new_tab %}
                           target="_blank" rel="noopener"
                         {% endif %}
-                      >
+>
                         {{ block.settings.cta_label | escape }}
                       </a>
                     {%- else -%}
@@ -106,13 +119,11 @@
 
 {% stylesheet %}
   .lusena-pdp-quality-evidence {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
     background-color: rgb(247 245 242 / 1);
   }
 
   .lusena-pdp-quality-evidence__heading {
-    margin: 0 0 48px;
+    margin: 0;
     font-family: 'Source Serif 4', serif;
     font-size: 24px;
     line-height: 32px;
@@ -246,10 +257,6 @@
   }
 
   @media (min-width: 768px) {
-    .lusena-pdp-quality-evidence {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
 
     .lusena-pdp-quality-evidence__heading {
       font-size: 28px;
@@ -358,7 +365,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -368,7 +375,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -378,7 +385,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -388,7 +395,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "range",
@@ -398,7 +405,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "text",
@@ -431,25 +438,25 @@
           "type": "text",
           "id": "title",
           "label": "Title",
-          "default": "OEKO-TEX® Standard 100"
+          "default": "OEKO-TEXÂ® Standard 100"
         },
         {
           "type": "textarea",
           "id": "summary",
           "label": "Summary",
-          "default": "Niezależny certyfikat potwierdzający brak substancji szkodliwych. Bezpieczny dla skóry wrażliwej, alergików i dzieci."
+          "default": "NiezaleĹĽny certyfikat potwierdzajÄ…cy brak substancji szkodliwych. Bezpieczny dla skĂłry wraĹĽliwej, alergikĂłw i dzieci."
         },
         {
           "type": "textarea",
           "id": "detail",
           "label": "Expanded detail",
-          "default": "Każda partia jedwabiu jest testowana przez akredytowane laboratorium. Numer certyfikatu znajdziesz na karcie dołączonej do produktu. Możesz go zweryfikować na oeko-tex.com/check."
+          "default": "KaĹĽda partia jedwabiu jest testowana przez akredytowane laboratorium. Numer certyfikatu znajdziesz na karcie doĹ‚Ä…czonej do produktu. MoĹĽesz go zweryfikowaÄ‡ na oeko-tex.com/check."
         },
         {
           "type": "text",
           "id": "cta_label",
           "label": "CTA label",
-          "default": "Sprawdź certyfikat →"
+          "default": "SprawdĹş certyfikat â†’"
         },
         {
           "type": "url",
@@ -476,10 +483,10 @@
           "type": "evidence",
           "settings": {
             "icon": "shield-check",
-            "title": "OEKO-TEX® Standard 100",
-            "summary": "Niezależny certyfikat potwierdzający brak substancji szkodliwych. Bezpieczny dla skóry wrażliwej, alergików i dzieci.",
-            "detail": "Każda partia jedwabiu jest testowana przez akredytowane laboratorium. Numer certyfikatu znajdziesz na karcie dołączonej do produktu. Możesz go zweryfikować na oeko-tex.com/check.",
-            "cta_label": "Sprawdź certyfikat →",
+            "title": "OEKO-TEXÂ® Standard 100",
+            "summary": "NiezaleĹĽny certyfikat potwierdzajÄ…cy brak substancji szkodliwych. Bezpieczny dla skĂłry wraĹĽliwej, alergikĂłw i dzieci.",
+            "detail": "KaĹĽda partia jedwabiu jest testowana przez akredytowane laboratorium. Numer certyfikatu znajdziesz na karcie doĹ‚Ä…czonej do produktu. MoĹĽesz go zweryfikowaÄ‡ na oeko-tex.com/check.",
+            "cta_label": "SprawdĹş certyfikat â†’",
             "cta_link": "/pages/nasza-jakosc",
             "use_certificate_link": true
           }
@@ -488,10 +495,10 @@
           "type": "evidence",
           "settings": {
             "icon": "map-pin",
-            "title": "Jedwab z Suzhou — 600 lat tradycji",
-            "summary": "Nasz jedwab pochodzi z regionu Shengze w Suzhou — światowej stolicy jedwabiu od ponad 600 lat.",
-            "detail": "Lokalni producenci specjalizują się w jedwabiu Grade 6A o najdłuższych włóknach. To gładszy, trwalszy i bardziej lśniący materiał niż jedwab z innych regionów. Współpracujemy bezpośrednio z certyfikowanymi manufakturami.",
-            "cta_label": "Więcej o pochodzeniu →",
+            "title": "Jedwab z Suzhou â€” 600 lat tradycji",
+            "summary": "Nasz jedwab pochodzi z regionu Shengze w Suzhou â€” Ĺ›wiatowej stolicy jedwabiu od ponad 600 lat.",
+            "detail": "Lokalni producenci specjalizujÄ… siÄ™ w jedwabiu Grade 6A o najdĹ‚uĹĽszych wĹ‚Ăłknach. To gĹ‚adszy, trwalszy i bardziej lĹ›niÄ…cy materiaĹ‚ niĹĽ jedwab z innych regionĂłw. WspĂłĹ‚pracujemy bezpoĹ›rednio z certyfikowanymi manufakturami.",
+            "cta_label": "WiÄ™cej o pochodzeniu â†’",
             "cta_link": "/pages/o-nas"
           }
         },
@@ -499,10 +506,10 @@
           "type": "evidence",
           "settings": {
             "icon": "layers",
-            "title": "22 momme — optymalny standard",
-            "summary": "Momme to jednostka gęstości jedwabiu. 22 momme to o 30% więcej niż branżowy standard 16–19 momme.",
-            "detail": "Wyższe momme oznacza grubszy, bardziej trwały jedwab, który lepiej oddycha i zachowuje właściwości termoregulacyjne. 22 momme to optymalny balans między luksusowym dotykiem a wytrzymałością — bez nadmiernej wagi.",
-            "cta_label": "Porównaj momme →",
+            "title": "22 momme â€” optymalny standard",
+            "summary": "Momme to jednostka gÄ™stoĹ›ci jedwabiu. 22 momme to o 30% wiÄ™cej niĹĽ branĹĽowy standard 16â€“19 momme.",
+            "detail": "WyĹĽsze momme oznacza grubszy, bardziej trwaĹ‚y jedwab, ktĂłry lepiej oddycha i zachowuje wĹ‚aĹ›ciwoĹ›ci termoregulacyjne. 22 momme to optymalny balans miÄ™dzy luksusowym dotykiem a wytrzymaĹ‚oĹ›ciÄ… â€” bez nadmiernej wagi.",
+            "cta_label": "PorĂłwnaj momme â†’",
             "cta_link": "/pages/nasza-jakosc"
           }
         },
@@ -510,10 +517,10 @@
           "type": "evidence",
           "settings": {
             "icon": "package",
-            "title": "Kontrola jakości w Polsce + wysyłka 24h",
-            "summary": "Każdy produkt przechodzi kontrolę jakości w naszym magazynie w Polsce. Wysyłamy w ciągu 24 godzin roboczych.",
-            "detail": "Sprawdzamy szwy, zamek, kolor i gramaturę. Produkty niespełniające standardów nie trafiają do sprzedaży. Dzięki lokalnej logistyce dostarczamy w 1–2 dni robocze via InPost lub kurier.",
-            "cta_label": "Więcej o nas →",
+            "title": "Kontrola jakoĹ›ci w Polsce + wysyĹ‚ka 24h",
+            "summary": "KaĹĽdy produkt przechodzi kontrolÄ™ jakoĹ›ci w naszym magazynie w Polsce. WysyĹ‚amy w ciÄ…gu 24 godzin roboczych.",
+            "detail": "Sprawdzamy szwy, zamek, kolor i gramaturÄ™. Produkty niespeĹ‚niajÄ…ce standardĂłw nie trafiajÄ… do sprzedaĹĽy. DziÄ™ki lokalnej logistyce dostarczamy w 1â€“2 dni robocze via InPost lub kurier.",
+            "cta_label": "WiÄ™cej o nas â†’",
             "cta_link": "/pages/nasza-jakosc"
           }
         }

@@ -1,4 +1,4 @@
-﻿{%- liquid
+{%- liquid
   assign shipping_info = 'Wysyłamy z Polski w ciągu 24h. Dostawa InPost/kurier: 1–2 dni robocze. Darmowa dostawa od 199 zł.'
   assign returns_info = '60 dni na zwrot — nawet używanego produktu. Prosty formularz online, darmowy zwrot InPost.'
   assign guarantee_info = 'Przetestuj przez 60 nocy. Jeśli nie poczujesz różnicy, zwróć i otrzymaj pełny zwrot. Bez pytań.'
@@ -21,23 +21,36 @@
   endif
 -%}
 
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
   id="details"
-  class="lusena-pdp-details border-t border-brand-bg"
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  class="lusena-pdp-details border-t border-brand-bg lusena-spacing--standard"
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
   <div class="container">
-    <h2 class="lusena-pdp-details__heading text-primary text-center mb-8 md:mb-12{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <h2 class="lusena-pdp-details__heading text-primary text-center lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       Szczegóły i pytania
     </h2>
 
     <div class="max-w-3xl mx-auto">
-      <div class="w-full lusena-pdp-accordion" data-lusena-accordion-root data-lusena-accordion-single data-lusena-accordion-collapsible{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
+      <div class="w-full lusena-pdp-accordion" data-lusena-accordion-root data-lusena-accordion-single data-lusena-accordion-collapsible{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}
+>
         <div class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-accordion-item data-lusena-accordion-value="shipping">
           <div class="flex">
             <button
@@ -168,17 +181,6 @@
 </section>
 
 {% stylesheet %}
-  .lusena-pdp-details {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
-  }
-
-  @media (min-width: 768px) {
-    .lusena-pdp-details {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
-  }
 {% endstylesheet %}
 
 {% schema %}
@@ -189,7 +191,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -199,7 +201,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -209,7 +211,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -219,7 +221,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "range",
@@ -229,7 +231,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     }
   ],
   "presets": [

@@ -1,21 +1,33 @@
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
-  class="bg-brand-bg text-center overflow-hidden lusena-returns-hero"
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  class="bg-brand-bg text-center overflow-hidden lusena-returns-hero lusena-spacing--hero"
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
   <div class="lusena-returns-hero__shield" aria-hidden="true">
     {% render 'lusena-icon', name: 'shield-check', class: 'lusena-returns-hero__shield-icon', stroke_width: 0.5 %}
   </div>
 
-  <div class="container lusena-returns-hero__container relative mx-auto space-y-6">
-    <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <div class="container lusena-returns-hero__container relative mx-auto">
+    <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold lusena-gap-kicker{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.hero_kicker | escape }}
     </span>
-    <h1 class="lusena-returns-hero__title font-serif text-primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <h1 class="lusena-returns-hero__title font-serif text-primary lusena-gap-heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.hero_heading_line_1 | escape }}<br>
       <span class="italic">{{ section.settings.hero_heading_line_2 | escape }}</span>
     </h1>
@@ -24,7 +36,8 @@
     </p>
 
     {%- if section.blocks.size > 0 -%}
-      <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6 pt-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
+      <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6 pt-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
+>
         {%- for block in section.blocks -%}
           {%- if block.type == 'proof' and block.settings.text != blank -%}
             <span class="inline-flex items-center gap-2 text-sm text-primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
@@ -48,8 +61,6 @@
 {% stylesheet %}
   .lusena-returns-hero {
     position: relative;
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
   }
 
   .lusena-returns-hero__shield {
@@ -82,10 +93,6 @@
   }
 
   @media (min-width: 768px) {
-    .lusena-returns-hero {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
 
     .lusena-returns-hero__title {
       font-size: 6rem;
@@ -101,7 +108,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -111,7 +118,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 128
+      "default": 0
     },
     {
       "type": "range",
@@ -121,7 +128,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 128
+      "default": 0
     },
     {
       "type": "range",
@@ -131,7 +138,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 96
+      "default": 0
     },
     {
       "type": "range",
@@ -141,7 +148,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 96
+      "default": 0
     },
     {
       "type": "text",
@@ -165,13 +172,13 @@
       "type": "textarea",
       "id": "hero_body",
       "label": "Hero body",
-      "default": "Jesteśmy tak pewni jakości LUSENA, że dajemy Ci 60 nocy na testy. Śpij na niej, pierz ją, używaj. Jeśli nie poczujesz różnicy - oddamy Ci pieniądze."
+      "default": "JesteĹ›my tak pewni jakoĹ›ci LUSENA, ĹĽe dajemy Ci 60 nocy na testy. Ĺšpij na niej, pierz jÄ…, uĹĽywaj. JeĹ›li nie poczujesz rĂłĹĽnicy - oddamy Ci pieniÄ…dze."
     },
     {
       "type": "text",
       "id": "hero_badge",
       "label": "Hero badge",
-      "default": "Zwrot nawet używanego produktu"
+      "default": "Zwrot nawet uĹĽywanego produktu"
     }
   ],
   "blocks": [
@@ -201,13 +208,13 @@
         {
           "type": "proof",
           "settings": {
-            "text": "Zwrot używanego produktu"
+            "text": "Zwrot uĹĽywanego produktu"
           }
         },
         {
           "type": "proof",
           "settings": {
-            "text": "Pełny zwrot środków"
+            "text": "PeĹ‚ny zwrot Ĺ›rodkĂłw"
           }
         }
       ]

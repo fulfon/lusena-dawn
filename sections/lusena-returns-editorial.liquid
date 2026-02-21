@@ -1,19 +1,31 @@
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
-  class="bg-brand-bg lusena-returns-editorial"
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  class="bg-brand-bg lusena-returns-editorial lusena-spacing--standard"
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
   <div class="container lusena-returns-editorial__container mx-auto">
     <div class="lusena-returns-editorial__grid">
-      <div class="space-y-6{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div{% if settings.animations_reveal_on_scroll %} class="scroll-trigger animate--slide-in"{% endif %}>
         <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
           {{ section.settings.kicker | escape }}
         </span>
-        <h2 class="text-3xl md:text-5xl font-serif text-primary leading-tight">
+        <h2 class="text-3xl md:text-5xl font-serif text-primary leading-tight lusena-gap-heading">
           {{ section.settings.heading_line_1 | escape }}
           <span class="italic">{{ section.settings.heading_line_2 | escape }}</span>
         </h2>
@@ -41,7 +53,8 @@
           </span>
         </div>
 
-        <div {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
+        <div {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
+>
           {%- for block in section.blocks -%}
             {%- if block.type == 'compare_row' -%}
               <div class="grid grid-cols-2 gap-4 mb-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
@@ -67,10 +80,6 @@
 </section>
 
 {% stylesheet %}
-  .lusena-returns-editorial {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
-  }
 
   .lusena-returns-editorial__container {
     max-width: 115.2rem !important;
@@ -92,13 +101,6 @@
     background-color: rgb(14 94 90 / 0.1);
   }
 
-  @media (min-width: 768px) {
-    .lusena-returns-editorial {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
-  }
-
   @media (min-width: 1024px) {
     .lusena-returns-editorial__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -114,7 +116,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -124,7 +126,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 128
+      "default": 0
     },
     {
       "type": "range",
@@ -134,7 +136,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 128
+      "default": 0
     },
     {
       "type": "range",
@@ -144,7 +146,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 96
+      "default": 0
     },
     {
       "type": "range",
@@ -154,7 +156,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 96
+      "default": 0
     },
     {
       "type": "text",
@@ -178,19 +180,19 @@
       "type": "richtext",
       "id": "body_paragraph_1",
       "label": "Body paragraph 1",
-      "default": "<p>Prawdziwe korzyści jedwabiu - mniej łamania włosów, gładsza skóra, lepszy sen - ujawniają się po tygodniach codziennego użytkowania.</p>"
+      "default": "<p>Prawdziwe korzyĹ›ci jedwabiu - mniej Ĺ‚amania wĹ‚osĂłw, gĹ‚adsza skĂłra, lepszy sen - ujawniajÄ… siÄ™ po tygodniach codziennego uĹĽytkowania.</p>"
     },
     {
       "type": "richtext",
       "id": "body_paragraph_2",
       "label": "Body paragraph 2",
-      "default": "<p>Dlatego dajemy Ci pełne dwa miesiące. A jeśli mimo wszystko nie pokochasz efektu, zwrot jest bezproblemowy.</p>"
+      "default": "<p>Dlatego dajemy Ci peĹ‚ne dwa miesiÄ…ce. A jeĹ›li mimo wszystko nie pokochasz efektu, zwrot jest bezproblemowy.</p>"
     },
     {
       "type": "text",
       "id": "link_label",
       "label": "Link label",
-      "default": "Dowiedz się więcej o naszej jakości"
+      "default": "Dowiedz siÄ™ wiÄ™cej o naszej jakoĹ›ci"
     },
     {
       "type": "url",
@@ -244,22 +246,22 @@
         {
           "type": "compare_row",
           "settings": {
-            "standard": "Produkt musi być nieużywany",
-            "lusena": "Zwrot nawet po użyciu"
+            "standard": "Produkt musi byÄ‡ nieuĹĽywany",
+            "lusena": "Zwrot nawet po uĹĽyciu"
           }
         },
         {
           "type": "compare_row",
           "settings": {
             "standard": "Skomplikowane formularze",
-            "lusena": "Jeden krótki e-mail"
+            "lusena": "Jeden krĂłtki e-mail"
           }
         },
         {
           "type": "compare_row",
           "settings": {
             "standard": "Zwrot po 14+ dniach",
-            "lusena": "Pieniądze w 3-5 dni"
+            "lusena": "PieniÄ…dze w 3-5 dni"
           }
         }
       ]

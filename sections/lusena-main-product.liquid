@@ -4,15 +4,27 @@
   assign price_per_night_cents = current_variant.price | divided_by: 365.0 | round
 -%}
 
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
-  class="lusena-pdp"
+  class="lusena-pdp lusena-spacing--compact"
   data-lusena-product-section
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
   <script type="application/json" data-lusena-product-json>
     {{ product | json }}
@@ -127,7 +139,8 @@
 
         {%- if has_benefit_text -%}
           <div class="lusena-pdp-buy-box__benefits-mobile">
-            <ul class="lusena-pdp-buy-box__benefits-list"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
+            <ul class="lusena-pdp-buy-box__benefits-list"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}
+>
               <li class="flex items-start gap-3 text-sm text-secondary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
                 <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent-gold shrink-0"></span>
                 {{ benefit_1_text | escape }}
@@ -168,7 +181,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -178,7 +191,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 48
+      "default": 0
     },
     {
       "type": "range",
@@ -188,7 +201,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 96
+      "default": 0
     },
     {
       "type": "range",
@@ -198,7 +211,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 32
+      "default": 0
     },
     {
       "type": "range",
@@ -208,7 +221,7 @@
       "max": 240,
       "step": 4,
       "unit": "px",
-      "default": 48
+      "default": 0
     },
     {
       "type": "text",

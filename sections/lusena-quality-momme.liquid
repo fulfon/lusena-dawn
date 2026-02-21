@@ -1,14 +1,27 @@
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
-  class="bg-white lusena-quality-momme"
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  class="bg-white lusena-quality-momme lusena-spacing--standard"
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
   <div class="container grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-    <div class="bg-neutral-100 aspect-square flex items-center justify-center rounded-sm overflow-hidden{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
+    <div class="bg-neutral-100 aspect-square flex items-center justify-center rounded-sm overflow-hidden{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
+>
       {%- if section.settings.momme_image != blank -%}
         {{
           section.settings.momme_image
@@ -26,8 +39,9 @@
       {%- endif -%}
     </div>
 
-    <div class="space-y-6{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
-      <h2 class="text-3xl md:text-4xl font-serif text-primary">
+    <div{% if settings.animations_reveal_on_scroll %} class="scroll-trigger animate--slide-in"{% endif %} {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
+>
+      <h2 class="text-3xl md:text-4xl font-serif text-primary lusena-gap-heading">
         {{ section.settings.momme_heading | escape }}
       </h2>
       <div class="space-y-4 text-secondary text-lg font-light leading-relaxed">
@@ -54,17 +68,6 @@
 </section>
 
 {% stylesheet %}
-  .lusena-quality-momme {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
-  }
-
-  @media (min-width: 768px) {
-    .lusena-quality-momme {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
-  }
 {% endstylesheet %}
 
 {% schema %}
@@ -74,7 +77,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -84,7 +87,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -94,7 +97,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -104,7 +107,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "range",
@@ -114,7 +117,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "image_picker",
@@ -125,7 +128,7 @@
       "type": "text",
       "id": "momme_image_placeholder",
       "label": "Momme image placeholder",
-      "default": "Zdjęcie mikroskopowe: 19 vs 22 momme"
+      "default": "ZdjÄ™cie mikroskopowe: 19 vs 22 momme"
     },
     {
       "type": "text",
@@ -137,7 +140,7 @@
       "type": "richtext",
       "id": "momme_body",
       "label": "Momme body",
-      "default": "<p>Standard rynkowy to 19 momme. Dla nas to za mało.</p><p>LUSENA używa wyłącznie jedwabiu o gramaturze <strong>22 momme</strong>. Jest to splot o 30% gęstszy, co przekłada się na:</p>"
+      "default": "<p>Standard rynkowy to 19 momme. Dla nas to za maĹ‚o.</p><p>LUSENA uĹĽywa wyĹ‚Ä…cznie jedwabiu o gramaturze <strong>22 momme</strong>. Jest to splot o 30% gÄ™stszy, co przekĹ‚ada siÄ™ na:</p>"
     }
   ],
   "blocks": [
@@ -149,7 +152,7 @@
           "type": "text",
           "id": "text",
           "label": "Text",
-          "default": "Wyższą trwałość — znosi pranie znacznie lepiej niż cieńsze odpowiedniki."
+          "default": "WyĹĽszÄ… trwaĹ‚oĹ›Ä‡ â€” znosi pranie znacznie lepiej niĹĽ cieĹ„sze odpowiedniki."
         }
       ]
     }
@@ -161,19 +164,19 @@
         {
           "type": "momme_benefit",
           "settings": {
-            "text": "Wyższą trwałość — znosi pranie znacznie lepiej niż cieńsze odpowiedniki."
+            "text": "WyĹĽszÄ… trwaĹ‚oĹ›Ä‡ â€” znosi pranie znacznie lepiej niĹĽ cieĹ„sze odpowiedniki."
           }
         },
         {
           "type": "momme_benefit",
           "settings": {
-            "text": "Gładszą fakturę — mniejsze tarcie dla Twojej skóry i włosów."
+            "text": "GĹ‚adszÄ… fakturÄ™ â€” mniejsze tarcie dla Twojej skĂłry i wĹ‚osĂłw."
           }
         },
         {
           "type": "momme_benefit",
           "settings": {
-            "text": "Lepszą termoregulację — chłodzi latem, grzeje zimą."
+            "text": "LepszÄ… termoregulacjÄ™ â€” chĹ‚odzi latem, grzeje zimÄ…."
           }
         }
       ]

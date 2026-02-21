@@ -1,18 +1,31 @@
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
-  class="bg-white lusena-quality-origin"
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  class="bg-white lusena-quality-origin lusena-spacing--standard"
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
   <div class="container grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-    <div class="order-1 md:order-2 space-y-6{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
-      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
+    <div class="order-1 md:order-2{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
+>
+      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold lusena-gap-kicker">
         {{ section.settings.origin_kicker | escape }}
       </span>
-      <h2 class="lusena-quality-origin__heading text-3xl md:text-4xl font-serif text-primary">
+      <h2 class="lusena-quality-origin__heading text-3xl md:text-4xl font-serif text-primary lusena-gap-heading">
         {{ section.settings.origin_heading | escape }}
       </h2>
       <div class="space-y-4 text-secondary text-lg font-light leading-relaxed">
@@ -20,7 +33,8 @@
       </div>
     </div>
 
-    <div class="order-2 md:order-1 bg-neutral-100 aspect-[4/5] flex items-center justify-center rounded-sm overflow-hidden{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
+    <div class="order-2 md:order-1 bg-neutral-100 aspect-[4/5] flex items-center justify-center rounded-sm overflow-hidden{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
+>
       {%- if section.settings.origin_image != blank -%}
         {{
           section.settings.origin_image
@@ -41,16 +55,8 @@
 </section>
 
 {% stylesheet %}
-  .lusena-quality-origin {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
-  }
 
   @media (min-width: 768px) {
-    .lusena-quality-origin {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
 
     .lusena-quality-origin__heading {
       white-space: nowrap;
@@ -65,7 +71,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -75,7 +81,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -85,7 +91,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 56
+      "default": 0
     },
     {
       "type": "range",
@@ -95,7 +101,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "range",
@@ -105,7 +111,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 40
+      "default": 0
     },
     {
       "type": "text",
@@ -123,7 +129,7 @@
       "type": "richtext",
       "id": "origin_body",
       "label": "Origin body",
-      "default": "<p>Nie kupujemy od anonimowych pośredników. Nasz jedwab pochodzi bezpośrednio z Shengze (prefektura Suzhou) — miejsca płacącego jedwabiem podatki cesarzowi od czasów dynastii Ming.</p><p>To tutaj tradycja spotyka się z nowoczesną technologią. Od kokonu jedwabnika morwowego klasy 6A do gotowej poszewki.</p>"
+      "default": "<p>Nie kupujemy od anonimowych poĹ›rednikĂłw. Nasz jedwab pochodzi bezpoĹ›rednio z Shengze (prefektura Suzhou) â€” miejsca pĹ‚acÄ…cego jedwabiem podatki cesarzowi od czasĂłw dynastii Ming.</p><p>To tutaj tradycja spotyka siÄ™ z nowoczesnÄ… technologiÄ…. Od kokonu jedwabnika morwowego klasy 6A do gotowej poszewki.</p>"
     },
     {
       "type": "image_picker",
@@ -134,7 +140,7 @@
       "type": "text",
       "id": "origin_image_placeholder",
       "label": "Origin image placeholder",
-      "default": "Zdjęcie: Mapa regionu Suzhou / Manufaktura"
+      "default": "ZdjÄ™cie: Mapa regionu Suzhou / Manufaktura"
     }
   ],
   "presets": [

@@ -1,17 +1,29 @@
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
-  class="bg-brand-bg lusena-quality-hero"
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  class="bg-brand-bg lusena-quality-hero lusena-spacing--hero"
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
-  <div class="container text-center max-w-4xl mx-auto space-y-6{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
+  <div class="container text-center max-w-4xl mx-auto{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold lusena-gap-kicker">
       {{ section.settings.hero_kicker | escape }}
     </span>
-    <h1 class="text-5xl md:text-7xl font-serif text-primary">
+    <h1 class="text-5xl md:text-7xl font-serif text-primary lusena-gap-heading">
       {{ section.settings.hero_heading | newline_to_br }}
     </h1>
     <p class="text-lg md:text-xl font-light text-secondary leading-relaxed max-w-2xl mx-auto">
@@ -20,18 +32,7 @@
   </div>
 </section>
 
-{% stylesheet %}
-  .lusena-quality-hero {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
-  }
-
-  @media (min-width: 768px) {
-    .lusena-quality-hero {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
-  }
+{% stylesheet %}
 {% endstylesheet %}
 
 {% schema %}
@@ -41,7 +42,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -51,7 +52,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 96
+      "default": 0
     },
     {
       "type": "range",
@@ -61,7 +62,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 96
+      "default": 0
     },
     {
       "type": "range",
@@ -71,7 +72,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 64
+      "default": 0
     },
     {
       "type": "range",
@@ -81,25 +82,25 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 64
+      "default": 0
     },
     {
       "type": "text",
       "id": "hero_kicker",
       "label": "Hero kicker",
-      "default": "Nasza Jakość"
+      "default": "Nasza JakoĹ›Ä‡"
     },
     {
       "type": "textarea",
       "id": "hero_heading",
       "label": "Hero heading",
-      "default": "Nie wierz nam na słowo.\nSprawdź."
+      "default": "Nie wierz nam na sĹ‚owo.\nSprawdĹş."
     },
     {
       "type": "text",
       "id": "hero_body",
       "label": "Hero body",
-      "default": "Jedwab LUSENA to 22 momme czystej perfekcji. Stworzony w Suzhou, kontrolowany w Polsce. Poczuj różnicę, której nie da się podrobić."
+      "default": "Jedwab LUSENA to 22 momme czystej perfekcji. Stworzony w Suzhou, kontrolowany w Polsce. Poczuj rĂłĹĽnicÄ™, ktĂłrej nie da siÄ™ podrobiÄ‡."
     }
   ],
   "presets": [

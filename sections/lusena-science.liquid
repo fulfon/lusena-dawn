@@ -1,12 +1,25 @@
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
-  class="lusena-science color-{{ section.settings.color_scheme }}"
-  style="
-    --padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --padding-top-desktop: {{ section.settings.padding_top }}px;
-    --padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  class="lusena-science color-{{ section.settings.color_scheme }} lusena-spacing--compact"
+ 
   data-lusena-science
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
   <div class="lusena-science__container page-width">
     <div class="lusena-science__layout">
@@ -61,16 +74,7 @@
 
 {% stylesheet %}
   .lusena-science {
-    padding-top: var(--padding-top-mobile);
-    padding-bottom: var(--padding-bottom-mobile);
     overflow: hidden;
-  }
-
-  @media (min-width: 768px) {
-    .lusena-science {
-      padding-top: var(--padding-top-desktop);
-      padding-bottom: var(--padding-bottom-desktop);
-    }
   }
 
   .lusena-science__layout {
@@ -282,7 +286,7 @@
       "step": 4,
       "unit": "px",
       "label": "t:sections.all.padding.padding_top",
-      "default": 48
+      "default": 0
     },
     {
       "type": "range",
@@ -292,7 +296,7 @@
       "step": 4,
       "unit": "px",
       "label": "Padding top (mobile)",
-      "default": 32
+      "default": 0
     },
     {
       "type": "range",
@@ -302,7 +306,7 @@
       "step": 4,
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
-      "default": 48
+      "default": 0
     },
     {
       "type": "range",
@@ -312,7 +316,7 @@
       "step": 4,
       "unit": "px",
       "label": "Padding bottom (mobile)",
-      "default": 32
+      "default": 0
     }
   ],
   "blocks": [

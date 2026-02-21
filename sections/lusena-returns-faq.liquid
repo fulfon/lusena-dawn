@@ -1,15 +1,27 @@
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <section
-  class="bg-brand-bg lusena-returns-faq"
-  style="
-    --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
-    --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  class="bg-brand-bg lusena-returns-faq lusena-spacing--standard"
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
   <div class="container lusena-returns-faq__container mx-auto">
-    <div class="text-center mb-12 space-y-3">
-      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <div class="text-center lusena-gap-section-intro">
+      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold lusena-gap-kicker{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         {{ section.settings.faq_kicker | escape }}
       </span>
       <h2 class="text-3xl md:text-5xl font-serif text-primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
@@ -26,7 +38,7 @@
       {% if settings.animations_reveal_on_scroll %}
         data-cascade
       {% endif %}
-    >
+>
       {%- for block in section.blocks -%}
         {%- if block.type == 'faq' -%}
           <div
@@ -72,10 +84,6 @@
 </section>
 
 {% stylesheet %}
-  .lusena-returns-faq {
-    padding-top: var(--lusena-section-padding-top-mobile);
-    padding-bottom: var(--lusena-section-padding-bottom-mobile);
-  }
 
   .lusena-returns-faq__container {
     max-width: 76.8rem !important;
@@ -178,13 +186,6 @@
   .lusena-returns-faq__contact-button:focus-visible {
     outline: none;
     box-shadow: 0 0 0 2px rgb(14 94 90 / 0.25);
-  }
-
-  @media (min-width: 768px) {
-    .lusena-returns-faq {
-      padding-top: var(--lusena-section-padding-top-desktop);
-      padding-bottom: var(--lusena-section-padding-bottom-desktop);
-    }
   }
 
   .lusena-returns-faq__summary[data-state='open'] .lusena-returns-faq__chevron {
@@ -336,7 +337,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Spacing"
+      "content": "Spacing overrides (0 = use global default)"
     },
     {
       "type": "range",
@@ -346,7 +347,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 128
+      "default": 0
     },
     {
       "type": "range",
@@ -356,7 +357,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 128
+      "default": 0
     },
     {
       "type": "range",
@@ -366,7 +367,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 96
+      "default": 0
     },
     {
       "type": "range",
@@ -376,7 +377,7 @@
       "max": 300,
       "step": 4,
       "unit": "px",
-      "default": 96
+      "default": 0
     },
     {
       "type": "text",
@@ -400,7 +401,7 @@
       "type": "text",
       "id": "contact_button_label",
       "label": "Contact button label",
-      "default": "Skontaktuj się z nami"
+      "default": "Skontaktuj siÄ™ z nami"
     },
     {
       "type": "url",
@@ -417,13 +418,13 @@
           "type": "text",
           "id": "question",
           "label": "Question",
-          "default": "Kto pokrywa koszt wysyłki zwrotnej?"
+          "default": "Kto pokrywa koszt wysyĹ‚ki zwrotnej?"
         },
         {
           "type": "richtext",
           "id": "answer",
           "label": "Answer",
-          "default": "<p>W przypadku gwarancji satysfakcji, koszt odesłania produktu leży po stronie klienta. My zwracamy 100% wartości zamówienia (produkt + pierwotna wysyłka).</p>"
+          "default": "<p>W przypadku gwarancji satysfakcji, koszt odesĹ‚ania produktu leĹĽy po stronie klienta. My zwracamy 100% wartoĹ›ci zamĂłwienia (produkt + pierwotna wysyĹ‚ka).</p>"
         }
       ]
     }
@@ -435,36 +436,36 @@
         {
           "type": "faq",
           "settings": {
-            "question": "Kto pokrywa koszt wysyłki zwrotnej?",
-            "answer": "<p>W przypadku gwarancji satysfakcji, koszt odesłania produktu leży po stronie klienta. My zwracamy 100% wartości zamówienia (produkt + pierwotna wysyłka).</p>"
+            "question": "Kto pokrywa koszt wysyĹ‚ki zwrotnej?",
+            "answer": "<p>W przypadku gwarancji satysfakcji, koszt odesĹ‚ania produktu leĹĽy po stronie klienta. My zwracamy 100% wartoĹ›ci zamĂłwienia (produkt + pierwotna wysyĹ‚ka).</p>"
           }
         },
         {
           "type": "faq",
           "settings": {
-            "question": "Czy muszę mieć oryginalne pudełko?",
-            "answer": "<p>Nie, nie wymagamy oryginalnego pudełka prezentowego, choć ułatwia ono bezpieczny transport. Ważne, aby produkt był zabezpieczony podczas transportu.</p>"
+            "question": "Czy muszÄ™ mieÄ‡ oryginalne pudeĹ‚ko?",
+            "answer": "<p>Nie, nie wymagamy oryginalnego pudeĹ‚ka prezentowego, choÄ‡ uĹ‚atwia ono bezpieczny transport. WaĹĽne, aby produkt byĹ‚ zabezpieczony podczas transportu.</p>"
           }
         },
         {
           "type": "faq",
           "settings": {
-            "question": "W jakim stanie musi być produkt?",
-            "answer": "<p>Akceptujemy produkty używane i prane. Gwarancja nie obejmuje jedynie uszkodzeń mechanicznych powstałych z winy użytkownika.</p>"
+            "question": "W jakim stanie musi byÄ‡ produkt?",
+            "answer": "<p>Akceptujemy produkty uĹĽywane i prane. Gwarancja nie obejmuje jedynie uszkodzeĹ„ mechanicznych powstaĹ‚ych z winy uĹĽytkownika.</p>"
           }
         },
         {
           "type": "faq",
           "settings": {
-            "question": "Ile czasu mam na decyzję?",
-            "answer": "<p>Masz 60 dni kalendarzowych od momentu odebrania paczki. To około 480 godzin snu na podjęcie decyzji.</p>"
+            "question": "Ile czasu mam na decyzjÄ™?",
+            "answer": "<p>Masz 60 dni kalendarzowych od momentu odebrania paczki. To okoĹ‚o 480 godzin snu na podjÄ™cie decyzji.</p>"
           }
         },
         {
           "type": "faq",
           "settings": {
-            "question": "Jak wygląda proces po wysłaniu maila?",
-            "answer": "<p>Odpowiadamy w ciągu 24 godzin z instrukcją zwrotu. Po odebraniu paczki weryfikujemy produkt i przelewamy środki w ciągu 3-5 dni roboczych.</p>"
+            "question": "Jak wyglÄ…da proces po wysĹ‚aniu maila?",
+            "answer": "<p>Odpowiadamy w ciÄ…gu 24 godzin z instrukcjÄ… zwrotu. Po odebraniu paczki weryfikujemy produkt i przelewamy Ĺ›rodki w ciÄ…gu 3-5 dni roboczych.</p>"
           }
         }
       ]

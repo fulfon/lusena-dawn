@@ -1,12 +1,25 @@
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
 <div
-  class="lusena-comparison color-{{ section.settings.color_scheme }}"
-  style="
-    --padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
-    --padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
-    --padding-top-desktop: {{ section.settings.padding_top }}px;
-    --padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
-  "
+  class="lusena-comparison color-{{ section.settings.color_scheme }} lusena-spacing--compact"
+ 
   data-lusena-comparison
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
 >
   <div class="lusena-comparison__container page-width">
     {%- if section.settings.heading != blank -%}
@@ -28,7 +41,7 @@
           {%- for block in section.blocks -%}
             {%- if block.type == 'comparison_row' -%}
               <li class="lusena-comparison__item lusena-comparison__item--negative" {{ block.shopify_attributes }}>
-                <span class="lusena-comparison__icon" aria-hidden="true">✕</span>
+                <span class="lusena-comparison__icon" aria-hidden="true">âś•</span>
                 <span class="lusena-comparison__text">{{ block.settings.cotton_text }}</span>
               </li>
             {%- endif -%}
@@ -44,7 +57,7 @@
           {%- for block in section.blocks -%}
             {%- if block.type == 'comparison_row' -%}
               <li class="lusena-comparison__item lusena-comparison__item--positive" {{ block.shopify_attributes }}>
-                <span class="lusena-comparison__icon" aria-hidden="true">✓</span>
+                <span class="lusena-comparison__icon" aria-hidden="true">âś“</span>
                 <span class="lusena-comparison__text">{{ block.settings.silk_text }}</span>
               </li>
             {%- endif -%}
@@ -67,17 +80,6 @@
 </div>
 
 {% stylesheet %}
-  .lusena-comparison {
-    padding-top: var(--padding-top-mobile);
-    padding-bottom: var(--padding-bottom-mobile);
-  }
-
-  @media (min-width: 768px) {
-    .lusena-comparison {
-      padding-top: var(--padding-top-desktop);
-      padding-bottom: var(--padding-bottom-desktop);
-    }
-  }
 
   .lusena-comparison__container {
     max-width: 1000px;
@@ -296,7 +298,7 @@
       "step": 4,
       "unit": "px",
       "label": "t:sections.all.padding.padding_top",
-      "default": 48
+      "default": 0
     },
     {
       "type": "range",
@@ -306,7 +308,7 @@
       "step": 4,
       "unit": "px",
       "label": "Padding top (mobile)",
-      "default": 32
+      "default": 0
     },
     {
       "type": "range",
@@ -316,7 +318,7 @@
       "step": 4,
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
-      "default": 48
+      "default": 0
     },
     {
       "type": "range",
@@ -326,7 +328,7 @@
       "step": 4,
       "unit": "px",
       "label": "Padding bottom (mobile)",
-      "default": 32
+      "default": 0
     }
   ],
   "blocks": [

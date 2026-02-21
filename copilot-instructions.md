@@ -2,13 +2,51 @@
 
 ## Project overview
 
-This repository is based on the official Shopify **Dawn** theme (v15.4.1) and is being adapted for the **LUSENA** brand (PL-first, premium feel, proof-first messaging).
+This repository is the **LUSENA** Shopify theme â€” a premium Polish silk e-commerce store built **on top of the Dawn theme** (v15.4.1). LUSENA is PL-first with premium feel and proof-first messaging.
 
-- Brandbook (source of truth): `docs/LUSENA_BrandBook_v1.md`
+### âš ď¸Ź LUSENA vs Dawn: dual-layer architecture
+
+The store runs **custom LUSENA sections/snippets** (`lusena-*` prefix) layered on top of Dawn's base. When the user asks about any UI element, **always check `lusena-*` files first** â€” they override Dawn's defaults for all customer-facing surfaces:
+
+- **Header:** `sections/lusena-header.liquid` (NOT Dawn's `sections/header.liquid` / `snippets/header-drawer.liquid`)
+- **Footer:** `sections/lusena-footer.liquid`
+- **Product page:** `sections/lusena-main-product.liquid` + `snippets/lusena-pdp-*.liquid`
+- **Collection page:** `sections/lusena-main-collection.liquid` + `snippets/lusena-product-card.liquid`
+- **Homepage sections:** `sections/lusena-hero.liquid`, `lusena-bestsellers.liquid`, `lusena-trust-bar.liquid`, etc.
+- **Shared components:** `snippets/lusena-button-system.liquid`, `snippets/lusena-icon.liquid`, `snippets/lusena-missing-utilities.liquid`
+- **Spacing system:** `snippets/lusena-spacing-system.liquid` (tier + token spacing) and `snippets/lusena-section-gap-detector.liquid` (same-bg section gap detection)
+- **Styles:** `assets/lusena-shop.css` (Tailwind-compiled) + `{% stylesheet %}` blocks in each section
+
+Dawn's original sections (`header.liquid`, `footer.liquid`, `main-product.liquid`, etc.) remain in the repo but are **not used** on the live storefront. They may still be referenced by inactive templates or the theme editor.
+
+**Rule of thumb:** If a `lusena-*` file exists for a component, edit that file. Only touch Dawn files when the feature genuinely relies on Dawn's implementation (e.g., cart drawer, base CSS variables, layout files).
+
+### Key references
+
+- **UI/UX brandbook (source of truth):** `docs/theme-brandbook-uiux.md` â€” contains all design tokens, component specs, spacing/typography/color systems, section inventory, breakpoint decisions, and implementation patterns for the LUSENA theme. **Read this before making any visual/UX change.**
+- Brandbook (legacy): `docs/LUSENA_BrandBook_v1.md`
 - Theme-side change log (commit-linked): `docs/THEME_CHANGES.md`
 - Recommended workflow: after each bigger change, create a Git commit and add a semi-detailed entry to the change log (see skill `lusena-theme-changelog`).
 
-🚨 MANDATORY: YOU MUST CALL "learn_shopify_api" ONCE WHEN WORKING WITH LIQUID THEMES.
+đźš¨ MANDATORY: YOU MUST CALL "learn_shopify_api" ONCE WHEN WORKING WITH LIQUID THEMES.
+
+## Visual verification (Playwright)
+
+- When youâ€™re not sure about a UI/layout issue, verify it using the Playwright MCP (donâ€™t guess).
+- Before running Playwright, check if the local Shopify dev server is running at `http://127.0.0.1:9292/`.
+  - If itâ€™s not running, start it from the project directory with `shopify theme dev` (it should start on `http://127.0.0.1:9292/`).
+
+## Animations (consistency)
+
+Our baseline scroll-reveal system is Dawn's `scroll-trigger` classes gated by the theme setting `settings.animations_reveal_on_scroll`.
+
+- Shopify admin toggle: Online Store â†’ Themes â†’ Customize â†’ Theme settings â†’ Animations â†’ "Reveal sections on scroll"
+- When creating a new section/block/snippet: add `scroll-trigger animate--slide-in` (or `animate--fade-in`) conditionally:
+
+  `{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}`
+
+- For repeated items (cards, tiles, FAQ rows): add `data-cascade` on the container when the setting is enabled, and put the `scroll-trigger` class on each item (gives a subtle stagger).
+- If an element needs `transform` for layout/offset/hover, put the scroll-trigger on a wrapper instead (to avoid the animation transform overriding positioning).
 
 ## Theme check warnings (known baseline)
 
@@ -30,14 +68,14 @@ The following `shopify theme check` warnings have been present since the beginni
 
 ```
 .
-├── assets          # Stores static assets (CSS, JS, images, fonts, etc.)
-├── blocks          # Reusable, nestable, customizable components
-├── config          # Global theme settings and customization options
-├── layout          # Top-level wrappers for pages (layout templates)
-├── locales         # Translation files for theme internationalization
-├── sections        # Modular full-width page components
-├── snippets        # Reusable Liquid code or HTML fragments
-└── templates       # Templates combining sections and blocks to define page structures
+â”śâ”€â”€ assets          # Stores static assets (CSS, JS, images, fonts, etc.)
+â”śâ”€â”€ blocks          # Reusable, nestable, customizable components
+â”śâ”€â”€ config          # Global theme settings and customization options
+â”śâ”€â”€ layout          # Top-level wrappers for pages (layout templates)
+â”śâ”€â”€ locales         # Translation files for theme internationalization
+â”śâ”€â”€ sections        # Modular full-width page components
+â”śâ”€â”€ snippets        # Reusable Liquid code or HTML fragments
+â””â”€â”€ templates       # Templates combining sections and blocks to define page structures
 ```
 
 #### `sections`
@@ -77,7 +115,7 @@ The following `shopify theme check` warnings have been present since the beginni
 
 #### `assets`
 
-- Contains static files like CSS, JavaScript, and images—including compiled and optimized assets—referenced in templates via the `asset_url` filter
+- Contains static files like CSS, JavaScript, and imagesâ€”including compiled and optimized assetsâ€”referenced in templates via the `asset_url` filter
 - Keep it here only `critical.css` and static files necessary for every page, otherwise prefer the usage of the `{% stylesheet %}` and `{% javascript %}` tags
 
 #### `locales`
@@ -200,7 +238,7 @@ If you need to create a mobile layout and you want the merchant to be able to se
 
 ### Liquid delimiters
 
-- **`{{ ... }}`**: Output – prints a value.
+- **`{{ ... }}`**: Output â€“ prints a value.
 - **`{{- ... -}}`**: Output, trims whitespace around the value.
 - **`{% ... %}`**: Logic/control tag (if, for, assign, etc.), does not print anything, no whitespace trim.
 - **`{%- ... -%}`**: Logic/control tag, trims whitespace around the tag.
@@ -209,8 +247,8 @@ If you need to create a mobile layout and you want the merchant to be able to se
 Adding a dash (`-`) after `{%`/`{{` or before `%}`/`}}` trims spaces or newlines next to the tag.
 
 **Examples:**
-- `{{- product.title -}}` → print value, remove surrounding spaces or lines.
-- `{%- if available -%}In stock{%- endif -%}` → logic, removes extra spaces/lines.
+- `{{- product.title -}}` â†’ print value, remove surrounding spaces or lines.
+- `{%- if available -%}In stock{%- endif -%}` â†’ logic, removes extra spaces/lines.
 
 ### Liquid operators
 
@@ -1077,7 +1115,7 @@ Syntax:
 
 **Content guidelines:**
 - Write clear, concise text.
-- **Use sentence case** for all user-facing text, including titles, headings, and button labels (capitalize only the first word and proper nouns; e.g., `Featured collection` → `Featured collection`, not `Featured Collection`).
+- **Use sentence case** for all user-facing text, including titles, headings, and button labels (capitalize only the first word and proper nouns; e.g., `Featured collection` â†’ `Featured collection`, not `Featured Collection`).
 - Be consistent with terminology.
 - Consider character limits for UI elements.
 
@@ -1095,14 +1133,14 @@ Auto-attached when working in `locales/` directory.
 
 ```
 locales/
-├── en.default.json          # English (required)
-├── en.default.schema.json   # English (required)
-├── es.json                  # Spanish
-├── est.schema.json          # Spanish
-├── fr.json                  # French
-├── frt.schema.json          # French
-└── pt-BR.json               # Portuguese
-└── pt-BR..schema.json       # Portuguese
+â”śâ”€â”€ en.default.json          # English (required)
+â”śâ”€â”€ en.default.schema.json   # English (required)
+â”śâ”€â”€ es.json                  # Spanish
+â”śâ”€â”€ est.schema.json          # Spanish
+â”śâ”€â”€ fr.json                  # French
+â”śâ”€â”€ frt.schema.json          # French
+â””â”€â”€ pt-BR.json               # Portuguese
+â””â”€â”€ pt-BR..schema.json       # Portuguese
 ```
 
 #### Locale files
@@ -1124,7 +1162,7 @@ Locale files are JSON files containing translations for all the text strings use
 
 #### Schema locale files
 
-Schema locale files, saved with a .schema.json extension, store translation strings specifically for theme editor setting schemas. They follow a structured organization—category, group, and description—to give context to each translation, enabling accurate localization of editor content. Schema locale files must use the IETF language tag format in their naming, such as en-GB.schema.json for British English or fr-CA.schema.json for Canadian French.
+Schema locale files, saved with a .schema.json extension, store translation strings specifically for theme editor setting schemas. They follow a structured organizationâ€”category, group, and descriptionâ€”to give context to each translation, enabling accurate localization of editor content. Schema locale files must use the IETF language tag format in their naming, such as en-GB.schema.json for British English or fr-CA.schema.json for Canadian French.
 
 **Example:**
 ```json
