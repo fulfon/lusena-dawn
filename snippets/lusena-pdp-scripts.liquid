@@ -26,8 +26,7 @@
     const returnsLinks = Array.from(root.querySelectorAll('[data-lusena-open-returns]'));
     const accordionRoots = Array.from(document.querySelectorAll('[data-lusena-accordion-root]'));
     const specDefinitionToggles = Array.from(document.querySelectorAll('[data-lusena-spec-def-toggle]'));
-
-    const accordionContentObservers = new WeakMap();
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
 
     const pricePerNightPrefix = pricePerNightEl?.dataset?.prefix ?? '';
     const pricePerNightSuffix = pricePerNightEl?.dataset?.suffix ?? '';
@@ -1504,40 +1503,43 @@
       };
     };
 
-    const updateAccordionContentHeight = (content) => {
-      if (!(content instanceof HTMLElement)) return;
-      const inner = content.firstElementChild instanceof HTMLElement ? content.firstElementChild : content;
-      const measured = inner.scrollHeight;
-      content.style.setProperty('--radix-accordion-content-height', `${Math.max(0, measured)}px`);
-    };
-
-    const ensureAccordionReady = (content) => {
-      if (!(content instanceof HTMLElement)) return;
-      if (content.hasAttribute('data-lusena-accordion-ready')) return;
-      requestAnimationFrame(() => {
-        content.setAttribute('data-lusena-accordion-ready', '');
-      });
-    };
-
-    const observeAccordionContent = (content) => {
-      if (!(content instanceof HTMLElement)) return;
-      if (accordionContentObservers.has(content)) return;
-      const inner = content.firstElementChild instanceof HTMLElement ? content.firstElementChild : content;
-
-      if (typeof ResizeObserver === 'function' && inner) {
-        const observer = new ResizeObserver(() => updateAccordionContentHeight(content));
-        observer.observe(inner);
-        accordionContentObservers.set(content, observer);
-      }
-
-      updateAccordionContentHeight(content);
-      ensureAccordionReady(content);
-    };
-
     const setAccordionContentState = (content, isOpen) => {
       if (!(content instanceof HTMLElement)) return;
-      updateAccordionContentHeight(content);
-      content.dataset.state = isOpen ? 'open' : 'closed';
+      const inner = content.firstElementChild instanceof HTMLElement ? content.firstElementChild : content;
+      if (typeof content._lusenaAccordionOnEnd === 'function') {
+        content.removeEventListener('transitionend', content._lusenaAccordionOnEnd);
+        content._lusenaAccordionOnEnd = null;
+      }
+
+      if (prefersReducedMotion) {
+        content.dataset.state = isOpen ? 'open' : 'closed';
+        content.style.height = isOpen ? 'auto' : '0px';
+        return;
+      }
+
+      if (isOpen) {
+        content.style.height = '0px';
+        content.dataset.state = 'open';
+        const h = inner.scrollHeight;
+        requestAnimationFrame(() => {
+          content.style.height = h + 'px';
+        });
+        const onEnd = (e) => {
+          if (e.target !== content || e.propertyName !== 'height') return;
+          content.removeEventListener('transitionend', onEnd);
+          content._lusenaAccordionOnEnd = null;
+          content.style.height = 'auto';
+        };
+        content._lusenaAccordionOnEnd = onEnd;
+        content.addEventListener('transitionend', onEnd);
+      } else {
+        const h = content.offsetHeight;
+        content.style.height = h + 'px';
+        content.dataset.state = 'closed';
+        requestAnimationFrame(() => {
+          content.style.height = '0px';
+        });
+      }
     };
 
     const setAccordionItemState = (item, isOpen) => {
@@ -1567,6 +1569,27 @@
       });
     };
 
+    const onFastTap = (el, callback) => {
+      let startX, startY, handled;
+      el.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        handled = false;
+      }, { passive: true });
+      el.addEventListener('touchend', (e) => {
+        const t = e.changedTouches[0];
+        if (Math.abs(t.clientX - startX) < 10 && Math.abs(t.clientY - startY) < 10) {
+          handled = true;
+          e.preventDefault();
+          callback(e);
+        }
+      }, { passive: false });
+      el.addEventListener('click', (e) => {
+        if (!handled) callback(e);
+        handled = false;
+      });
+    };
+
     const initializeAccordionRoot = (accordionRoot) => {
       if (!(accordionRoot instanceof HTMLElement)) return;
 
@@ -1581,12 +1604,7 @@
         const { trigger } = getAccordionItemParts(item);
         if (!(trigger instanceof HTMLButtonElement)) return;
 
-        const { content } = getAccordionItemParts(item);
-        if (content instanceof HTMLElement) {
-          observeAccordionContent(content);
-        }
-
-        trigger.addEventListener('click', () => {
+        onFastTap(trigger, () => {
           const currentlyOpen = item.dataset.state === 'open';
 
           if (currentlyOpen && isCollapsible) {
@@ -1643,10 +1661,6 @@
             toggleButton.setAttribute('aria-expanded', 'true');
           }
 
-          const content = specsTable.closest('[data-lusena-accordion-content]');
-          if (content instanceof HTMLElement) {
-            updateAccordionContentHeight(content);
-          }
         });
       });
     }

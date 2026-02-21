@@ -53,7 +53,7 @@
     }
   }
 
-  .lusena-faq details[open] .lusena-faq__chevron {
+  .lusena-faq__item[data-state='open'] .lusena-faq__chevron {
     transform: rotate(180deg);
   }
 
@@ -63,21 +63,44 @@
     line-height: 24px;
     font-weight: 500;
     letter-spacing: normal;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .lusena-faq__item {
+    contain: layout style;
   }
 
   .lusena-faq__content {
-    height: 0;
-    transition: height 0.2s ease-out;
     overflow: hidden;
+    height: 0;
+    transition: height 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
+    will-change: height;
   }
 
-  .lusena-faq details[open] .lusena-faq__content {
-    height: auto;
+  /* GPU-composited overlay: opacity+transform run at 120Hz on ProMotion */
+  @supports (touch-action: manipulation) {
+    .lusena-faq__content-inner {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    .lusena-faq__item[data-state='closed'] .lusena-faq__content-inner,
+    .lusena-faq__item[data-state='closing'] .lusena-faq__content-inner {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .lusena-faq__content {
       transition: none;
+      will-change: auto;
+    }
+    .lusena-faq__content-inner {
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
     }
   }
 {% endstylesheet %}
@@ -91,48 +114,50 @@
     const items = Array.from(root.querySelectorAll('details.lusena-faq__item'));
 
     const getContent = (details) => details.querySelector('.lusena-faq__content');
-
-    const setClosedState = (details) => {
-      const content = getContent(details);
-      if (!content) return;
-      content.style.height = '0px';
-    };
-
-    const setOpenState = (details) => {
-      const content = getContent(details);
-      if (!content) return;
-      content.style.height = 'auto';
+    const getInner = (content) => content.querySelector('.lusena-faq__content-inner') || content.firstElementChild;
+    const clearContentTransition = (content) => {
+      if (typeof content._lusenaFaqOnEnd === 'function') {
+        content.removeEventListener('transitionend', content._lusenaFaqOnEnd);
+        content._lusenaFaqOnEnd = null;
+      }
     };
 
     const closeItem = (details) => {
       const content = getContent(details);
       if (!content) return;
+      clearContentTransition(content);
 
       if (prefersReducedMotion) {
         details.open = false;
-        setClosedState(details);
+        details.dataset.state = 'closed';
+        content.style.height = '0px';
         return;
       }
 
-      const startHeight = content.getBoundingClientRect().height;
-      content.style.height = `${startHeight}px`;
-      // Force reflow so the browser picks up the start height before transitioning to 0.
-      void content.offsetHeight;
+      const h = content.offsetHeight;
+      content.style.height = h + 'px';
+      details.dataset.state = 'closing';
 
-      content.style.height = '0px';
+      requestAnimationFrame(() => {
+        content.style.height = '0px';
+      });
 
-      const onEnd = (event) => {
-        if (event.target !== content || event.propertyName !== 'height') return;
+      const onEnd = (e) => {
+        if (e.target !== content || e.propertyName !== 'height') return;
         content.removeEventListener('transitionend', onEnd);
+        content._lusenaFaqOnEnd = null;
+        details.dataset.state = 'closed';
         details.open = false;
+        content.style.height = '0px';
       };
-
+      content._lusenaFaqOnEnd = onEnd;
       content.addEventListener('transitionend', onEnd);
     };
 
     const openItem = (details) => {
       const content = getContent(details);
       if (!content) return;
+      clearContentTransition(content);
 
       // Accordion behavior: only one open at a time.
       items.forEach((other) => {
@@ -141,50 +166,91 @@
 
       if (prefersReducedMotion) {
         details.open = true;
-        setOpenState(details);
+        details.dataset.state = 'open';
+        content.style.height = 'auto';
         return;
       }
 
       details.open = true;
-
-      // Start from 0 for a smooth open animation.
       content.style.height = '0px';
-      void content.offsetHeight;
+      details.dataset.state = 'open';
 
-      const targetHeight = content.scrollHeight;
-      content.style.height = `${targetHeight}px`;
+      const inner = getInner(content);
+      const targetH = inner ? inner.scrollHeight : content.scrollHeight;
 
-      const onEnd = (event) => {
-        if (event.target !== content || event.propertyName !== 'height') return;
+      requestAnimationFrame(() => {
+        content.style.height = targetH + 'px';
+      });
+
+      const onEnd = (e) => {
+        if (e.target !== content || e.propertyName !== 'height') return;
         content.removeEventListener('transitionend', onEnd);
+        content._lusenaFaqOnEnd = null;
         content.style.height = 'auto';
       };
-
+      content._lusenaFaqOnEnd = onEnd;
       content.addEventListener('transitionend', onEnd);
     };
 
-    const syncInitialHeights = () => {
-      items.forEach((details) => {
-        if (details.open) setOpenState(details);
-        else setClosedState(details);
+    // Init: set all closed items to height 0, open items to auto
+    items.forEach((details) => {
+      const content = getContent(details);
+      if (!content) return;
+      if (details.open) {
+        details.dataset.state = 'open';
+        content.style.height = 'auto';
+      } else {
+        details.dataset.state = 'closed';
+        content.style.height = '0px';
+      }
+    });
+
+    const onFastTap = (el, callback) => {
+      let startX, startY, handled;
+      el.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        handled = false;
+      }, { passive: true });
+      el.addEventListener('touchend', (e) => {
+        const t = e.changedTouches[0];
+        if (Math.abs(t.clientX - startX) < 10 && Math.abs(t.clientY - startY) < 10) {
+          handled = true;
+          e.preventDefault();
+          callback(e);
+        }
+      }, { passive: false });
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!handled) callback(e);
+        handled = false;
       });
     };
-
-    syncInitialHeights();
 
     items.forEach((details) => {
       const summary = details.querySelector('summary');
       if (!summary) return;
 
-      summary.addEventListener('click', (event) => {
-        event.preventDefault();
+      onFastTap(summary, () => {
         if (details.open) closeItem(details);
         else openItem(details);
       });
     });
 
     if (window.Shopify?.designMode) {
-      document.addEventListener('shopify:section:load', syncInitialHeights);
+      document.addEventListener('shopify:section:load', () => {
+        items.forEach((details) => {
+          const content = getContent(details);
+          if (!content) return;
+          if (details.open) {
+            details.dataset.state = 'open';
+            content.style.height = 'auto';
+          } else {
+            details.dataset.state = 'closed';
+            content.style.height = '0px';
+          }
+        });
+      });
     }
   })();
 {% endjavascript %}

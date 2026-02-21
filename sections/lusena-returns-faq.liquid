@@ -102,6 +102,8 @@
     text-align: left;
     border: 0;
     background: transparent;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .lusena-returns-faq__summary:hover {
@@ -114,41 +116,41 @@
     font-size: 1.4rem;
     line-height: 2rem;
     color: rgb(74 74 74);
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* GPU-composited overlay: opacity+transform run at 120Hz on ProMotion */
+  @supports (touch-action: manipulation) {
+    .lusena-returns-faq__answer {
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    .lusena-returns-faq__content[data-state='closed'] .lusena-returns-faq__answer {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+
+  .lusena-returns-faq__item {
+    contain: layout style;
   }
 
   .lusena-returns-faq__content {
     overflow: hidden;
-    will-change: height;
     height: 0;
+    transition: height 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
+    will-change: height;
   }
 
-  .lusena-returns-faq__content[data-state='open'] {
-    height: var(--radix-accordion-content-height);
-  }
-
-  .lusena-returns-faq__content[data-lusena-accordion-ready][data-state='open'] {
-    animation: lusena-returns-accordion-down 0.2s ease-out;
-  }
-
-  .lusena-returns-faq__content[data-lusena-accordion-ready][data-state='closed'] {
-    animation: lusena-returns-accordion-up 0.2s ease-out;
-  }
-
-  @keyframes lusena-returns-accordion-down {
-    from {
-      height: 0;
+  @media (prefers-reduced-motion: reduce) {
+    .lusena-returns-faq__content {
+      transition: none;
+      will-change: auto;
     }
-    to {
-      height: var(--radix-accordion-content-height);
-    }
-  }
-
-  @keyframes lusena-returns-accordion-up {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-    to {
-      height: 0;
+    .lusena-returns-faq__answer {
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
     }
   }
 
@@ -188,13 +190,6 @@
   .lusena-returns-faq__summary[data-state='open'] .lusena-returns-faq__chevron {
     transform: rotate(180deg);
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    .lusena-returns-faq__content[data-lusena-accordion-ready][data-state='open'],
-    .lusena-returns-faq__content[data-lusena-accordion-ready][data-state='closed'] {
-      animation: none;
-    }
-  }
 {% endstylesheet %}
 
 {% javascript %}
@@ -204,8 +199,7 @@
       if (root.dataset.lusenaFaqInit === 'true') return;
 
       root.dataset.lusenaFaqInit = 'true';
-
-      const accordionContentObservers = new WeakMap();
+      const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
 
       const getAccordionItemParts = (item) => {
         if (!(item instanceof HTMLElement)) return { trigger: null, content: null };
@@ -214,42 +208,47 @@
           content: item.querySelector('[data-lusena-accordion-content]'),
         };
       };
-
-      const updateAccordionContentHeight = (content) => {
-        if (!(content instanceof HTMLElement)) return;
-        const inner = content.firstElementChild instanceof HTMLElement ? content.firstElementChild : content;
-        const measured = inner.scrollHeight;
-        content.style.setProperty('--radix-accordion-content-height', `${Math.max(0, measured)}px`);
-      };
-
-      const ensureAccordionReady = (content) => {
-        if (!(content instanceof HTMLElement)) return;
-        if (content.hasAttribute('data-lusena-accordion-ready')) return;
-        requestAnimationFrame(() => {
-          content.setAttribute('data-lusena-accordion-ready', '');
-        });
-      };
-
-      const observeAccordionContent = (content) => {
-        if (!(content instanceof HTMLElement)) return;
-        if (accordionContentObservers.has(content)) return;
-
-        const inner = content.firstElementChild instanceof HTMLElement ? content.firstElementChild : content;
-
-        if (typeof ResizeObserver === 'function' && inner) {
-          const observer = new ResizeObserver(() => updateAccordionContentHeight(content));
-          observer.observe(inner);
-          accordionContentObservers.set(content, observer);
+      const clearAccordionTransition = (content) => {
+        if (typeof content._lusenaAccordionOnEnd === 'function') {
+          content.removeEventListener('transitionend', content._lusenaAccordionOnEnd);
+          content._lusenaAccordionOnEnd = null;
         }
-
-        updateAccordionContentHeight(content);
-        ensureAccordionReady(content);
       };
 
       const setAccordionContentState = (content, isOpen) => {
         if (!(content instanceof HTMLElement)) return;
-        updateAccordionContentHeight(content);
-        content.dataset.state = isOpen ? 'open' : 'closed';
+        const inner = content.firstElementChild instanceof HTMLElement ? content.firstElementChild : content;
+        clearAccordionTransition(content);
+
+        if (prefersReducedMotion) {
+          content.dataset.state = isOpen ? 'open' : 'closed';
+          content.style.height = isOpen ? 'auto' : '0px';
+          return;
+        }
+
+        if (isOpen) {
+          content.style.height = '0px';
+          content.dataset.state = 'open';
+          const h = inner.scrollHeight;
+          requestAnimationFrame(() => {
+            content.style.height = h + 'px';
+          });
+          const onEnd = (e) => {
+            if (e.target !== content || e.propertyName !== 'height') return;
+            content.removeEventListener('transitionend', onEnd);
+            content._lusenaAccordionOnEnd = null;
+            content.style.height = 'auto';
+          };
+          content._lusenaAccordionOnEnd = onEnd;
+          content.addEventListener('transitionend', onEnd);
+        } else {
+          const h = content.offsetHeight;
+          content.style.height = h + 'px';
+          content.dataset.state = 'closed';
+          requestAnimationFrame(() => {
+            content.style.height = '0px';
+          });
+        }
       };
 
       const setAccordionItemState = (item, isOpen) => {
@@ -282,19 +281,36 @@
       const isCollapsible = root.hasAttribute('data-lusena-accordion-collapsible');
       const items = Array.from(root.querySelectorAll('[data-lusena-accordion-item]'));
 
+      const onFastTap = (el, callback) => {
+        let startX, startY, handled;
+        el.addEventListener('touchstart', (e) => {
+          startX = e.touches[0].clientX;
+          startY = e.touches[0].clientY;
+          handled = false;
+        }, { passive: true });
+        el.addEventListener('touchend', (e) => {
+          const t = e.changedTouches[0];
+          if (Math.abs(t.clientX - startX) < 10 && Math.abs(t.clientY - startY) < 10) {
+            handled = true;
+            e.preventDefault();
+            callback(e);
+          }
+        }, { passive: false });
+        el.addEventListener('click', (e) => {
+          if (!handled) callback(e);
+          handled = false;
+        });
+      };
+
       items.forEach((item) => {
         if (!(item instanceof HTMLElement)) return;
 
         setAccordionItemState(item, false);
 
-        const { trigger, content } = getAccordionItemParts(item);
-        if (content instanceof HTMLElement) {
-          observeAccordionContent(content);
-        }
-
+        const { trigger } = getAccordionItemParts(item);
         if (!(trigger instanceof HTMLButtonElement)) return;
 
-        trigger.addEventListener('click', () => {
+        onFastTap(trigger, () => {
           const currentlyOpen = item.dataset.state === 'open';
 
           if (currentlyOpen && isCollapsible) {

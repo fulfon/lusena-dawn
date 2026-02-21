@@ -194,6 +194,13 @@
   [data-cart-upsell-zone] .w-14 {
     width: 5.6rem;
   }
+
+  /* Match draft-shop "Kontynuuj zakupy" sizing (CVA default-size leaks h-12 py-3) */
+  [data-cart-continue].lusena-btn--text-secondary {
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+    min-height: 4.8rem;
+  }
 </style>
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
@@ -492,7 +499,8 @@
           <button
             type="button"
             onclick="this.closest('cart-drawer').close()"
-            class="lusena-btn lusena-btn--text-secondary lusena-btn--full-width text-xs pt-1"
+            class="lusena-btn lusena-btn--text-secondary lusena-btn--full-width text-xs"
+            data-cart-continue
           >
             Kontynuuj zakupy
           </button>

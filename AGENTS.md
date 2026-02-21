@@ -2,9 +2,28 @@
 
 ## Project overview
 
-This repository is based on the official Shopify **Dawn** theme (v15.4.1) and is being adapted for the **LUSENA** brand (PL-first, premium feel, proof-first messaging).
+This repository is the **LUSENA** Shopify theme — a premium Polish silk e-commerce store built **on top of the Dawn theme** (v15.4.1). LUSENA is PL-first with premium feel and proof-first messaging.
 
-- Brandbook (source of truth): `docs/LUSENA_BrandBook_v1.md`
+### ⚠️ LUSENA vs Dawn: dual-layer architecture
+
+The store runs **custom LUSENA sections/snippets** (`lusena-*` prefix) layered on top of Dawn's base. When the user asks about any UI element, **always check `lusena-*` files first** — they override Dawn's defaults for all customer-facing surfaces:
+
+- **Header:** `sections/lusena-header.liquid` (NOT Dawn's `sections/header.liquid` / `snippets/header-drawer.liquid`)
+- **Footer:** `sections/lusena-footer.liquid`
+- **Product page:** `sections/lusena-main-product.liquid` + `snippets/lusena-pdp-*.liquid`
+- **Collection page:** `sections/lusena-main-collection.liquid` + `snippets/lusena-product-card.liquid`
+- **Homepage sections:** `sections/lusena-hero.liquid`, `lusena-bestsellers.liquid`, `lusena-trust-bar.liquid`, etc.
+- **Shared components:** `snippets/lusena-button-system.liquid`, `snippets/lusena-icon.liquid`, `snippets/lusena-missing-utilities.liquid`
+- **Styles:** `assets/lusena-shop.css` (Tailwind-compiled) + `{% stylesheet %}` blocks in each section
+
+Dawn's original sections (`header.liquid`, `footer.liquid`, `main-product.liquid`, etc.) remain in the repo but are **not used** on the live storefront. They may still be referenced by inactive templates or the theme editor.
+
+**Rule of thumb:** If a `lusena-*` file exists for a component, edit that file. Only touch Dawn files when the feature genuinely relies on Dawn's implementation (e.g., cart drawer, base CSS variables, layout files).
+
+### Key references
+
+- **UI/UX brandbook (source of truth):** `docs/theme-brandbook-uiux.md` — contains all design tokens, component specs, spacing/typography/color systems, section inventory, breakpoint decisions, and implementation patterns for the LUSENA theme. **Read this before making any visual/UX change.**
+- Brandbook (legacy): `docs/LUSENA_BrandBook_v1.md`
 - Theme-side change log (commit-linked): `docs/THEME_CHANGES.md`
 - Recommended workflow: after each bigger change, create a Git commit and add a semi-detailed entry to the change log (see skill `lusena-theme-changelog`).
 

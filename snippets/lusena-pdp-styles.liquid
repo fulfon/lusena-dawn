@@ -93,37 +93,26 @@
     line-height: 24px;
     font-weight: 400;
     letter-spacing: normal;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .lusena-pdp-accordion__trigger[data-state='open'] .lusena-pdp-accordion__chevron {
     transform: rotate(180deg);
   }
 
+  .lusena-pdp-accordion__item {
+    contain: layout style;
+  }
+
   .lusena-pdp-accordion__content {
     overflow: hidden;
-    will-change: height;
     height: 0;
+    transition: height 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
+    will-change: height;
   }
 
-  .lusena-pdp-accordion__content[data-state='open'] {
-    height: var(--radix-accordion-content-height);
-  }
-
-  .lusena-pdp-accordion__content[data-lusena-accordion-ready][data-state='open'] {
-    animation: accordion-down 0.2s ease-out;
-  }
-
-  .lusena-pdp-accordion__content[data-lusena-accordion-ready][data-state='closed'] {
-    animation: accordion-up 0.2s ease-out;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .lusena-pdp-accordion__content[data-lusena-accordion-ready][data-state='open'],
-    .lusena-pdp-accordion__content[data-lusena-accordion-ready][data-state='closed'] {
-      animation: none;
-    }
-  }
-
+  /* GPU-composited overlay: opacity+transform run at 120Hz on ProMotion */
   .lusena-pdp-accordion__body {
     font-family: Inter, sans-serif;
     font-size: 14px;
@@ -131,6 +120,30 @@
     font-weight: 400;
     letter-spacing: normal;
     color: rgba(74, 74, 74, 1);
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @supports (touch-action: manipulation) {
+    .lusena-pdp-accordion__body {
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    .lusena-pdp-accordion__content[data-state='closed'] .lusena-pdp-accordion__body {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lusena-pdp-accordion__content {
+      transition: none;
+      will-change: auto;
+    }
+    .lusena-pdp-accordion__body {
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
   }
 
   .lusena-pdp-accordion__body p {

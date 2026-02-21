@@ -19,7 +19,34 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — feat(lusena): unify button system and loading parity across PDP and cart
+### (current) — feat(lusena): optimize accordion UX and sync theme docs
+
+**Goal:** Improve touch/animation behavior consistency for FAQ-style accordions and apply draft-parity polish updates across key LUSENA surfaces, while aligning repo guidance/skills docs with the current theme architecture.
+
+**What changed**
+- Reworked accordion runtime logic in LUSENA FAQ and PDP contexts to use explicit `data-state` ownership with height-transition cleanup guards, reducing rapid-tap race conditions and honoring reduced-motion behavior with deterministic open/close states.
+- Updated accordion/panel styling for smoother touch interaction (tap-highlight removal, tuned transition curves, `contain` usage) and synchronized chevron/opacity motion behavior.
+- Applied parity polish across customer-facing UI fragments: mobile header menu bottom border/padding correction, about-values hover card behavior scoping, breadcrumb overflow/truncation handling, and cart drawer "Kontynuuj zakupy" sizing normalization.
+- Simplified the BLIK payment SVG asset payload and removed obsolete `docs/UI_UX_Instructions.md` in favor of the newer brandbook-driven guidance.
+- Updated agent/assistant workflow docs and added the new `lusena-draftshop-fragment-parity` skill definitions for `.agent` and `.claude`.
+
+**Key files**
+- `sections/lusena-faq.liquid`
+- `sections/lusena-returns-faq.liquid`
+- `snippets/lusena-pdp-scripts.liquid`
+- `snippets/lusena-pdp-styles.liquid`
+- `sections/lusena-header.liquid`
+- `sections/lusena-about-values.liquid`
+- `snippets/cart-drawer.liquid`
+- `snippets/lusena-breadcrumbs.liquid`
+- `assets/lusena-payment-blik.svg`
+- `AGENTS.md`
+- `.agent/skills/lusena-theme-changelog/SKILL.md`
+- `.claude/skills/lusena-theme-changelog/SKILL.md`
+- `.agent/skills/lusena-draftshop-fragment-parity/SKILL.md`
+- `.claude/skills/lusena-draftshop-fragment-parity/SKILL.md`
+
+### 924911d — feat(lusena): unify button system and loading parity across PDP and cart
 
 **Goal:** Standardize button primitives and loading-state behavior across PDP, sticky ATC, cart drawer, and header controls, while tightening global typography delivery and PDP section spacing controls.
 
@@ -154,23 +181,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `.github/workflows/ci.yml`
 - `docs/THEME_CHANGES.md`
 
-### 1ad8a9e — fix(ci): stabilize Lighthouse target and skip remote theme pull
-
-**Goal:** Make CI Lighthouse runs deterministic by avoiding fallback `gift-card` 404s and preventing stale remote theme template data from being pulled into the check.
-
-**What changed**
-- Added explicit `product_handle` to the Lighthouse GitHub Action, with repo variable support and fallback to `silk-pillowcase`.
-- Removed `pull_theme` from the Lighthouse action configuration to avoid importing remote/stale template data during CI.
-- Kept the existing accessibility threshold and collection target unchanged.
-
-**Key files**
-- `.github/workflows/ci.yml`
-- `docs/THEME_CHANGES.md`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-21T11:31:12+01:00 — (current) — feat(lusena): unify button system and loading parity across PDP and cart
+- 2026-02-21T15:17:18+01:00 — (current) — feat(lusena): optimize accordion UX and sync theme docs
+- 2026-02-21T11:32:06+01:00 — 924911d — feat(lusena): unify button system and loading parity across PDP and cart
 - 2026-02-18T20:28:57+01:00 — 86ba8b3 — fix(lusena): improve touch cart drawer close and history behavior
 - 2026-02-17T20:47:16+01:00 — 170a28b — upsell css fix
 - 2026-02-16T20:21:46+01:00 — 573f97a — fix(lusena): hide cart label in cart icon bubble rerenders

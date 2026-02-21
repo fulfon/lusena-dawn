@@ -21,7 +21,7 @@
       {%- for block in section.blocks -%}
         {%- if block.type == 'value' -%}
           <div {% if settings.animations_reveal_on_scroll %}class="scroll-trigger animate--slide-in" data-cascade{% endif %}>
-            <div class="p-8 bg-neutral-50 rounded-sm hover:-translate-y-1 transition-transform duration-300" {{ block.shopify_attributes }}>
+            <div class="lusena-about-values__card h-full p-8 bg-neutral-50 rounded-sm" {{ block.shopify_attributes }}>
               <h3 class="font-serif text-xl mb-4 text-primary">{{ block.settings.title | escape }}</h3>
               <p class="text-secondary font-light text-sm leading-relaxed">
                 {{ block.settings.text | escape }}
@@ -44,6 +44,16 @@
     .lusena-about-values {
       padding-top: var(--lusena-section-padding-top-desktop);
       padding-bottom: var(--lusena-section-padding-bottom-desktop);
+    }
+  }
+
+  .lusena-about-values__card {
+    transition: transform 0.3s ease;
+  }
+
+  @media (hover: hover) {
+    .lusena-about-values__card:hover {
+      transform: translateY(-0.4rem);
     }
   }
 {% endstylesheet %}

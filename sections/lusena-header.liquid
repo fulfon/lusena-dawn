@@ -19,6 +19,7 @@
 
       [data-lusena-header].lusena-header--menu-open {
         transform: translateY(0);
+        padding-bottom: 0 !important;
       }
     }
 
@@ -84,6 +85,7 @@
     [data-lusena-mobile-menu-inner] {
       overflow: hidden;
       background-color: inherit;
+      border-bottom: 1px solid rgba(74, 74, 74, 0.12);
     }
 
     [data-lusena-header].lusena-header--menu-open [data-lusena-mobile-menu-wrapper] {
@@ -213,7 +215,7 @@
 
   <div class="lg:hidden" id="lusena-mobile-menu-panel" data-lusena-mobile-menu-wrapper aria-hidden="true">
     <div data-lusena-mobile-menu-inner>
-      <div class="container py-4" data-lusena-mobile-menu-content>
+      <div class="container pt-4 pb-4" data-lusena-mobile-menu-content>
         <nav class="flex flex-col gap-4">
           <a href="{{ sklep_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">SKLEP</a>
           <a href="{{ about_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors whitespace-nowrap">O NAS</a>
