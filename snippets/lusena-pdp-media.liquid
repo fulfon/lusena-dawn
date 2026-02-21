@@ -59,7 +59,7 @@
                 {%- if media_preview != blank -%}
                   <button
                     type="button"
-                    class="lusena-media-thumb"
+                    class="lusena-media-thumb focus-visible:outline-none"
                     data-lusena-thumb
                     data-media-id="{{ media.id }}"
                     aria-label="{{ thumb_label | escape }}"
@@ -81,7 +81,7 @@
               {%- if certificate_url != blank -%}
                 <button
                   type="button"
-                  class="lusena-media-thumb lusena-media-thumb--proof"
+                  class="lusena-media-thumb lusena-media-thumb--proof focus-visible:outline-none"
                   data-lusena-thumb
                   data-media-id="{{ proof_media_id }}"
                   aria-label="Certyfikat"
@@ -274,7 +274,7 @@
         <div class="lusena-lightbox" data-lusena-lightbox hidden>
           <div class="lusena-lightbox__top">
             <span class="lusena-lightbox__counter" data-lusena-lightbox-counter></span>
-            <button type="button" class="lusena-lightbox__close" data-lusena-lightbox-close aria-label="Zamknij podglad">
+            <button type="button" class="lusena-lightbox__close lusena-icon-button lusena-icon-button--overlay lusena-icon-button--md" data-lusena-lightbox-close aria-label="Zamknij podglad">
               {% render 'lusena-icon', name: 'x', class: 'w-6 h-6', stroke_width: 1.8 %}
             </button>
           </div>
@@ -282,7 +282,7 @@
           <div class="lusena-lightbox__viewport" data-lusena-lightbox-viewport>
             <button
               type="button"
-              class="lusena-lightbox__nav lusena-lightbox__nav--prev"
+              class="lusena-lightbox__nav lusena-lightbox__nav--prev lusena-icon-button lusena-icon-button--overlay lusena-icon-button--md"
               data-lusena-lightbox-prev
               aria-label="Poprzednie zdjecie"
             >
@@ -306,7 +306,7 @@
 
             <button
               type="button"
-              class="lusena-lightbox__nav lusena-lightbox__nav--next"
+              class="lusena-lightbox__nav lusena-lightbox__nav--next lusena-icon-button lusena-icon-button--overlay lusena-icon-button--md"
               data-lusena-lightbox-next
               aria-label="Nastepne zdjecie"
             >

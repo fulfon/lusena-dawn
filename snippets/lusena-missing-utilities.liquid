@@ -303,6 +303,20 @@
     color: rgb(255 255 255 / 0.7);
   }
 
+  .lusena-product-card__image--secondary {
+    opacity: 0;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .lusena-product-card:hover .lusena-product-card__image--primary {
+      opacity: 0;
+    }
+
+    .lusena-product-card:hover .lusena-product-card__image--secondary {
+      opacity: 1;
+    }
+  }
+
   .text-red-900\/40 {
     color: rgb(127 29 29 / 0.4);
   }

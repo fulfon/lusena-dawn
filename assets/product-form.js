@@ -21,11 +21,32 @@ if (!customElements.get('product-form')) {
         evt.preventDefault();
         if (this.submitButton.getAttribute('aria-disabled') === 'true') return;
 
+        const parseDelayMs = (value) => {
+          const parsed = Number.parseInt(value, 10);
+          if (!Number.isFinite(parsed) || parsed < 0) return 0;
+          return parsed;
+        };
+        const loadingStartedAt = window.performance?.now ? window.performance.now() : Date.now();
+        const loadingMinMs = parseDelayMs(this.form?.dataset?.loadingMinMs);
+        const loadingHoldMs = parseDelayMs(this.form?.dataset?.loadingHoldMs);
+
+        const spinner = this.querySelector('.loading__spinner');
+        const finalizeLoadingState = () => {
+          this.submitButton.classList.remove('loading');
+          this.submitButton.removeAttribute('aria-busy');
+          if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
+          if (!this.error) this.submitButton.removeAttribute('aria-disabled');
+          if (spinner) spinner.classList.add('hidden');
+
+          CartPerformance.measureFromEvent("add:user-action", evt);
+        };
+
         this.handleErrorMessage();
 
         this.submitButton.setAttribute('aria-disabled', true);
+        this.submitButton.setAttribute('aria-busy', true);
         this.submitButton.classList.add('loading');
-        this.querySelector('.loading__spinner').classList.remove('hidden');
+        if (spinner) spinner.classList.remove('hidden');
 
         const config = fetchConfig('javascript');
         config.headers['X-Requested-With'] = 'XMLHttpRequest';
@@ -100,12 +121,19 @@ if (!customElements.get('product-form')) {
             console.error(e);
           })
           .finally(() => {
-            this.submitButton.classList.remove('loading');
-            if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
-            if (!this.error) this.submitButton.removeAttribute('aria-disabled');
-            this.querySelector('.loading__spinner').classList.add('hidden');
+            const loadingEndedAt = window.performance?.now ? window.performance.now() : Date.now();
+            const elapsed = Math.max(0, loadingEndedAt - loadingStartedAt);
+            const remainingMinDelay = Math.max(0, loadingMinMs - elapsed);
+            const releaseDelay = remainingMinDelay + loadingHoldMs;
 
-            CartPerformance.measureFromEvent("add:user-action", evt);
+            if (releaseDelay > 0) {
+              window.setTimeout(() => {
+                finalizeLoadingState();
+              }, releaseDelay);
+              return;
+            }
+
+            finalizeLoadingState();
           });
       }
 

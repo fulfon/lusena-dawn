@@ -14,28 +14,39 @@
               id: product_form_id,
               class: 'form',
               novalidate: 'novalidate',
-              data-type: 'add-to-cart-form'
+              data-type: 'add-to-cart-form',
+              data-loading-min-ms: '500',
+              data-loading-hold-ms: '350'
             -%}
               <input type="hidden" name="id" value="{{ current_variant.id }}" data-lusena-variant-id>
               <button
                 id="main-cta"
                 type="submit"
                 data-lusena-atc
-                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors rounded-brand focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 h-12 px-10 text-base bg-accent-cta text-white hover:bg-[#0E5E5A]/90 w-full"
+                class="lusena-btn lusena-btn--primary lusena-btn--size-pdp lusena-btn--text-base lusena-btn--full-width"
                 {% unless current_variant.available %}disabled{% endunless %}
               >
-                <span data-lusena-add-to-cart-text>{{ section.settings.add_to_cart_label | escape }}</span>
+                <span class="lusena-btn__content" data-lusena-add-to-cart-text>{{ section.settings.add_to_cart_label | escape }}</span>
                 <span class="sold-out-message hidden">{{ 'products.product.sold_out' | t }}</span>
-                {%- render 'loading-spinner' -%}
+                <span
+                  class="loading__spinner hidden"
+                >
+                  <span class="lusena-btn__loading-text">{{ section.settings.add_to_cart_loading_label | escape }}</span>
+                </span>
               </button>
 
                 <button
                   type="button"
                   data-lusena-buy-now
-                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors rounded-brand focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 h-12 px-10 text-sm border border-accent-cta bg-transparent text-accent-cta hover:bg-accent-cta/5 w-full mt-2"
+                  class="lusena-btn lusena-btn--outline lusena-btn--size-pdp lusena-btn--text-sm lusena-btn--full-width mt-2"
                 {% unless current_variant.available %}disabled{% endunless %}
               >
-                {{ section.settings.buy_now_label | escape }}
+                <span class="lusena-btn__content">{{ section.settings.buy_now_label | escape }}</span>
+                <span
+                  class="loading__spinner hidden"
+                >
+                  <span class="lusena-btn__loading-text">{{ section.settings.buy_now_loading_label | escape }}</span>
+                </span>
               </button>
             {%- endform -%}
           </product-form>

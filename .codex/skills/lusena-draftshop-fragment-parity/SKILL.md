@@ -84,6 +84,29 @@ Before writing the plan, run a concrete capability audit:
 
 If this audit is incomplete, do not continue.
 
+### 2.6. State ownership and lifecycle audit (mandatory before plan)
+
+Before implementation, explicitly define runtime ownership to avoid behavior drift:
+
+1. State ownership map:
+- For each interactive state (`loading`, `disabled`, `active`, `open`), define one primary owner (CSS-only, Liquid-rendered attr, or JS runtime).
+- Avoid dual ownership for the same state across multiple classes/attributes unless documented as intentional.
+
+2. Event and listener lifecycle map:
+- List all events used by the fragment (`click`, `submit`, `cartUpdate`, `popstate`, etc.).
+- For each listener, define where it is attached and when it is detached or prevented from duplicate attachment.
+- Never re-attach the same listener on every rerender without an idempotency guard.
+
+3. History/navigation ownership:
+- If the fragment uses History API, document who pushes history and who is allowed to call `history.back()`.
+- Guard close handlers so history navigation can run at most once per owned history entry.
+
+4. Async timing contract:
+- If multiple controls reflect one async action, define one timing contract (start, minimum duration, hold, release).
+- Ensure all mirrored controls release from loading/disabled based on the same contract.
+
+If ownership/lifecycle is unclear, do not continue.
+
 ### 3. Ask decisions (before writing the plan)
 
 If anything is ambiguous, ask the user with explicit choices and tradeoffs. Common decision axes:
@@ -164,6 +187,21 @@ Theme consistency:
 - Icons: reuse `snippets/lusena-icon.liquid`; extend it if a new icon is needed.
 - Metafield resolution: prefer reusing existing logic patterns already present in the theme (e.g., certificate logic on the quality page).
 
+Implementation discipline:
+
+- Prefer one canonical runtime class per state (for example one loading class), and remove aliases unless required for compatibility.
+- Do not add non-essential `data-*` attributes "just in case". Every attribute added must have a consumer.
+- Do not hardcode visual tokens that already exist in source/theme tokens; map to explicit token values from the source-of-truth.
+- When adjusting a state color/spacing/animation, verify computed values against source before introducing overrides.
+- When patching event-driven bugs, fix listener lifecycle first (idempotency, duplicate handlers) before layering new conditionals.
+
+Recovery rule:
+
+- If two consecutive fixes for the same symptom conflict, stop and re-baseline:
+1. Re-read source implementation and compiled output.
+2. Rebuild the state ownership map.
+3. Replace incremental patches with one coherent fix.
+
 ### 6. Validate (always)
 
 Run Shopify Dev MCP `validate_theme` for all touched files. Fix until valid.
@@ -175,6 +213,24 @@ Then run a parity pre-check against the Parity Contract:
 - Check each required state from the state fixture matrix
 
 If something breaks or is ambiguous in UI, use Playwright to debug (only when needed or when the user asks).
+
+### 6.5. Regression pack (required for interactive fragments)
+
+After validation, run a focused interaction regression pack for touched surfaces:
+
+1. Open/close behavior:
+- Verify overlay/backdrop close, Escape close, and close button all produce the same end state.
+- Confirm close actions do not cause unintended navigation/history jumps.
+
+2. Loading/disabled parity:
+- Verify all controls that mirror the same action enter and exit loading together.
+- Verify post-action controls re-enable correctly after async completion.
+
+3. Re-open consistency:
+- Repeat the same flow twice to catch duplicated listeners and stale state.
+
+4. Cleanup check:
+- Remove dead classes, unused data hooks, and redundant selectors introduced during debugging.
 
 ### 7. Visual verification (User)
 

@@ -422,7 +422,19 @@
     color: rgb(17 17 17);
   }
 
+  .lusena-pdp .lusena-option__input:focus-visible + .lusena-option__pill {
+    outline: 2px solid rgb(14 94 90);
+    outline-offset: 2px;
+  }
+
   .lusena-pdp .lusena-option__input:checked + .lusena-option__swatch {
+    border-color: var(--accent-cta, #0e5e5a);
+    box-shadow:
+      0 0 0 2px #fff,
+      0 0 0 4px var(--accent-cta, #0e5e5a);
+  }
+
+  .lusena-pdp .lusena-option__input:focus-visible + .lusena-option__swatch {
     border-color: var(--accent-cta, #0e5e5a);
     box-shadow:
       0 0 0 2px #fff,
@@ -473,6 +485,13 @@
 
   .lusena-pdp .lusena-media-thumb:hover {
     border-color: rgba(74, 74, 74, 0.3);
+  }
+
+  .lusena-pdp .lusena-media-thumb:focus-visible {
+    border-color: var(--accent-cta, #0e5e5a);
+    box-shadow:
+      0 0 0 2px #fff,
+      0 0 0 4px var(--accent-cta, #0e5e5a);
   }
 
   .lusena-pdp .lusena-media-thumb[aria-current='true'] {

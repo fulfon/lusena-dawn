@@ -19,7 +19,37 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — fix(lusena): improve touch cart drawer close and history behavior
+### (current) — feat(lusena): unify button system and loading parity across PDP and cart
+
+**Goal:** Standardize button primitives and loading-state behavior across PDP, sticky ATC, cart drawer, and header controls, while tightening global typography delivery and PDP section spacing controls.
+
+**What changed**
+- Added a new shared snippet-level button system (`lusena-btn` and `lusena-icon-button`) with loading shimmer/dots, focus-visible treatment, reduced-motion handling, and standardized size/variant classes.
+- Replaced legacy per-component utility-heavy button markup in PDP ATC, sticky ATC, cart drawer CTAs, header icon controls, and quality certificates CTA with the shared button classes.
+- Added loading lifecycle timing controls (`data-loading-min-ms`, `data-loading-hold-ms`) and synchronized runtime behavior between `product-form`, sticky ATC mirrors, and buy-now flow; added explicit busy/disabled release logic.
+- Stabilized cart drawer history ownership (`pushedHistoryEntry`) to prevent redundant `history.back()` transitions after open/close cycles.
+- Self-hosted Inter + Source Serif 4 variable fonts from Shopify assets and removed Google Fonts remote loading in `layout/theme.liquid`.
+- Added merchant-configurable spacing settings to PDP detail/follow-up sections and added loading-label schema fields for main/sticky PDP actions.
+- Extended internal documentation with the parity plan + brandbook UI/UX implementation guide and refined the draftshop parity skill checklist.
+
+**Key files**
+- `snippets/lusena-button-system.liquid`
+- `snippets/lusena-pdp-atc.liquid`
+- `snippets/lusena-pdp-sticky-atc.liquid`
+- `snippets/lusena-pdp-scripts.liquid`
+- `snippets/cart-drawer.liquid`
+- `assets/product-form.js`
+- `assets/cart-drawer.js`
+- `layout/theme.liquid`
+- `sections/lusena-main-product.liquid`
+- `sections/lusena-pdp-details.liquid`
+- `sections/lusena-pdp-feature-highlights.liquid`
+- `sections/lusena-pdp-quality-evidence.liquid`
+- `docs/LUSENA_Button_System_Loading_Parity_Plan.md`
+- `docs/theme-brandbook-uiux.md`
+- `.codex/skills/lusena-draftshop-fragment-parity/SKILL.md`
+
+### 86ba8b3 — fix(lusena): improve touch cart drawer close and history behavior
 
 **Goal:** Make cart interactions feel native on touch devices and avoid stale focus/open states when customers navigate to and from cart-related views.
 
@@ -137,38 +167,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `.github/workflows/ci.yml`
 - `docs/THEME_CHANGES.md`
 
-### 1ccc2b8 — feat(lusena): complete PDP + cart parity rollout
-
-**Goal:** Deliver draft-shop parity for PDP and cart UX in the active LUSENA Dawn flow, including buy-box composition, value-proof sections, breadcrumbs, and cart drawer interactions.
-
-**What changed**
-- Reworked the main PDP composition to match draft hierarchy: breadcrumbs, proof chips, buy-now action, guarantee/returns links, payment row, and buy-box detail panels; removed the previous standalone reviews fragment.
-- Added and wired three new PDP follow-up sections in `templates/product.json`: feature highlights, quality evidence stack, and details/FAQ.
-- Expanded PDP behavior scripts for returns deep-link opening, accordion sizing/state handling, spec-definition toggles, buy-now checkout redirect, sticky ATC synchronization, and tagged gallery/proof-tile flow.
-- Rebuilt the cart drawer to parity: refined empty/non-empty states, single-card upsell with metafield-driven selection, session-backed "Dodano do koszyka" feedback, free-shipping progress bar, and explicit continue-shopping control.
-- Standardized button radius parity (`6px`) and added targeted utility/class backfills plus icon extensions required by the new fragments.
-- Added reusable implementation artifacts for future parity work (plan template + PDP plan docs, local `theme-dev` launcher script, and the draftshop parity skill files).
-
-**Key files**
-- `sections/lusena-main-product.liquid`
-- `templates/product.json`
-- `sections/lusena-pdp-feature-highlights.liquid`
-- `sections/lusena-pdp-quality-evidence.liquid`
-- `sections/lusena-pdp-details.liquid`
-- `snippets/lusena-pdp-scripts.liquid`
-- `snippets/lusena-pdp-styles.liquid`
-- `snippets/cart-drawer.liquid`
-- `snippets/lusena-breadcrumbs.liquid`
-- `snippets/lusena-pdp-buybox-panels.liquid`
-- `snippets/lusena-missing-utilities.liquid`
-- `config/settings_data.json`
-- `docs/PDP_BuyBox_Parity_Plan.md`
-- `.codex/skills/lusena-draftshop-fragment-parity/SKILL.md`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-18T20:28:57+01:00 — (current) — fix(lusena): improve touch cart drawer close and history behavior
+- 2026-02-21T11:31:12+01:00 — (current) — feat(lusena): unify button system and loading parity across PDP and cart
+- 2026-02-18T20:28:57+01:00 — 86ba8b3 — fix(lusena): improve touch cart drawer close and history behavior
 - 2026-02-17T20:47:16+01:00 — 170a28b — upsell css fix
 - 2026-02-16T20:21:46+01:00 — 573f97a — fix(lusena): hide cart label in cart icon bubble rerenders
 - 2026-02-16T20:07:33+01:00 — 186361d — fix(lusena): stabilize PDP gallery crossfade and mobile variant sync

@@ -33,9 +33,9 @@
   endif
 -%}
 
-{%- capture primary_image_class -%}w-full h-full object-cover transition-opacity duration-200{% if show_second %} group-hover:opacity-0{% endif %}{%- endcapture -%}
+{%- capture primary_image_class -%}w-full h-full object-cover transition-opacity duration-200 lusena-product-card__image lusena-product-card__image--primary{%- endcapture -%}
 
-<a href="{{ product.url }}" class="group block cursor-pointer {{ card_class }}">
+<a href="{{ product.url }}" class="lusena-product-card block cursor-pointer {{ card_class }}">
   <div class="relative aspect-[4/5] bg-surface-2 overflow-hidden mb-4">
     {%- if card_badge != blank -%}
       <span class="absolute top-2 left-2 z-10 bg-white/90 px-2 py-1 text-[10px] uppercase tracking-wider font-medium text-primary backdrop-blur-sm">
@@ -64,7 +64,7 @@
           secondary_image
           | image_url: width: 1200
           | image_tag:
-            class: 'absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-200 group-hover:opacity-100',
+            class: 'absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-200 lusena-product-card__image lusena-product-card__image--secondary',
             loading: 'lazy',
             widths: '360, 540, 720, 900, 1080, 1200',
             sizes: '(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw'

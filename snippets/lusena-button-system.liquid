@@ -1,0 +1,366 @@
+{% doc %}
+  Global LUSENA button and icon-button primitives used across theme surfaces.
+{% enddoc %}
+
+{% stylesheet %}
+  @keyframes lusena-btn-shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes lusena-dot-wave {
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .lusena-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    border: 1px solid transparent;
+    border-radius: 0.6rem;
+    background: transparent;
+    color: rgb(17 17 17);
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease, opacity 150ms ease;
+    -webkit-tap-highlight-color: transparent;
+    overflow: hidden;
+  }
+
+  .lusena-btn > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .lusena-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgb(14 94 90), 0 0 0 4px rgb(255 255 255);
+  }
+
+  .lusena-btn:disabled,
+  .lusena-btn[aria-disabled='true'] {
+    pointer-events: none;
+  }
+
+  .lusena-btn--primary {
+    background: rgb(14 94 90);
+    color: rgb(255 255 255);
+  }
+
+  .lusena-btn--primary:hover:not(:disabled):not([aria-disabled='true']) {
+    background: rgb(14 94 90 / 0.9);
+  }
+
+  .lusena-btn--primary:disabled,
+  .lusena-btn--primary[aria-disabled='true'] {
+    background: rgb(185 183 180);
+    color: rgb(255 255 255 / 0.7);
+  }
+
+  .lusena-btn--outline {
+    border-color: rgb(14 94 90);
+    background: transparent;
+    color: rgb(14 94 90);
+  }
+
+  .lusena-btn--outline:hover:not(:disabled):not([aria-disabled='true']) {
+    background: rgb(14 94 90 / 0.05);
+  }
+
+  .lusena-btn--outline:disabled,
+  .lusena-btn--outline[aria-disabled='true'] {
+    border-color: rgb(14 94 90 / 0.2);
+    background: rgb(240 238 235);
+    color: rgb(14 94 90 / 0.5);
+  }
+
+  .lusena-btn--ghost {
+    color: rgb(17 17 17);
+  }
+
+  .lusena-btn--ghost:hover:not(:disabled):not([aria-disabled='true']) {
+    background: rgb(240 238 235);
+  }
+
+  .lusena-btn--link {
+    border-color: transparent;
+    background: transparent;
+    color: rgb(17 17 17);
+    text-decoration: underline;
+    text-underline-offset: 0.4rem;
+  }
+
+  .lusena-btn--text {
+    border-color: transparent;
+    background: transparent;
+    color: rgb(14 94 90);
+    height: auto;
+    padding: 0;
+    font-weight: 400;
+  }
+
+  .lusena-btn--text:hover:not(:disabled):not([aria-disabled='true']) {
+    color: rgb(14 94 90 / 0.8);
+  }
+
+  .lusena-btn--text-secondary {
+    border-color: transparent;
+    background: transparent;
+    color: rgb(74 74 74);
+    height: auto;
+    padding: 0;
+    font-weight: 400;
+    text-decoration: underline;
+    text-underline-offset: 0.2rem;
+  }
+
+  .lusena-btn--text-secondary:hover:not(:disabled):not([aria-disabled='true']) {
+    color: rgb(17 17 17);
+  }
+
+  .lusena-btn--size-default {
+    height: 4.8rem;
+    padding: 0 3.2rem;
+    font-size: 1.4rem;
+    line-height: 2rem;
+  }
+
+  .lusena-btn--size-pdp {
+    height: 4.8rem;
+    padding: 0 4rem;
+  }
+
+  .lusena-btn--size-sm {
+    height: 4.4rem;
+    padding: 0 1.6rem;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+  }
+
+  .lusena-btn--size-lg {
+    height: 5.6rem;
+    padding: 0 4rem;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+  }
+
+  .lusena-btn--size-xs {
+    height: 3.2rem;
+    padding: 0 1.4rem;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+  }
+
+  .lusena-btn--size-icon {
+    width: 4.4rem;
+    height: 4.4rem;
+    padding: 0;
+  }
+
+  .lusena-btn--text-xs {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+  }
+
+  .lusena-btn--text-sm {
+    font-size: 1.4rem;
+    line-height: 2rem;
+  }
+
+  .lusena-btn--text-base {
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+  }
+
+  .lusena-btn--full-width {
+    width: 100%;
+  }
+
+  .lusena-btn__content {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: opacity 150ms ease;
+  }
+
+  .lusena-btn > .loading__spinner {
+    display: none;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+  }
+
+  .lusena-btn.loading > .loading__spinner {
+    position: absolute;
+    inset: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .lusena-btn.loading > .loading__spinner.hidden {
+    display: none;
+  }
+
+  .lusena-btn.loading .lusena-btn__content {
+    opacity: 0;
+  }
+
+  .lusena-btn.loading {
+    cursor: wait;
+  }
+
+  .lusena-btn.loading::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      105deg,
+      transparent 35%,
+      rgb(255 255 255 / 0.15) 47%,
+      rgb(255 255 255 / 0.22) 50%,
+      rgb(255 255 255 / 0.15) 53%,
+      transparent 65%
+    );
+    animation: lusena-btn-shimmer 0.9s ease-in-out infinite;
+  }
+
+  .lusena-btn--outline.loading {
+    background-color: #f0eeeb !important;
+    border-color: rgb(14 94 90 / 0.3) !important;
+    color: #0e5e5a !important;
+  }
+
+  .lusena-btn--outline.loading::after {
+    background: linear-gradient(
+      105deg,
+      transparent 32%,
+      rgb(14 94 90 / 0.06) 44%,
+      rgb(14 94 90 / 0.11) 50%,
+      rgb(14 94 90 / 0.06) 56%,
+      transparent 68%
+    );
+  }
+
+  .lusena-btn__loading-text {
+    font-weight: 500;
+  }
+
+  .lusena-btn__loading-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .lusena-btn__loading-dots > span {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background-color: currentColor;
+    animation: lusena-dot-wave 1.2s ease-in-out infinite;
+  }
+
+  .lusena-btn__loading-dots > span:nth-child(2) {
+    animation-delay: 200ms;
+  }
+
+  .lusena-btn__loading-dots > span:nth-child(3) {
+    animation-delay: 400ms;
+  }
+
+  .lusena-icon-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 9999px;
+    background: transparent;
+    color: rgb(74 74 74);
+    transition: color 150ms ease, background-color 150ms ease, opacity 150ms ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .lusena-icon-button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgb(14 94 90), 0 0 0 4px rgb(255 255 255);
+  }
+
+  .lusena-icon-button:disabled,
+  .lusena-icon-button[aria-disabled='true'] {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  .lusena-icon-button--ghost {
+    color: rgb(74 74 74);
+  }
+
+  .lusena-icon-button--ghost:hover:not(:disabled):not([aria-disabled='true']) {
+    color: rgb(17 17 17);
+    background: rgb(240 238 235);
+  }
+
+  .lusena-icon-button--overlay {
+    color: rgb(255 255 255 / 0.7);
+  }
+
+  .lusena-icon-button--overlay:hover:not(:disabled):not([aria-disabled='true']) {
+    color: rgb(255 255 255);
+    background: rgb(255 255 255 / 0.1);
+  }
+
+  .lusena-icon-button--subtle {
+    color: rgb(74 74 74);
+  }
+
+  .lusena-icon-button--subtle:hover:not(:disabled):not([aria-disabled='true']) {
+    color: rgb(17 17 17);
+    background: rgb(74 74 74 / 0.1);
+  }
+
+  .lusena-icon-button--md {
+    width: 4.4rem;
+    height: 4.4rem;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .lusena-icon-button--sm {
+    width: 3.6rem;
+    height: 3.6rem;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lusena-btn,
+    .lusena-btn__content,
+    .lusena-icon-button {
+      transition-duration: 0.15s !important;
+    }
+
+    .lusena-btn.loading::after,
+    .lusena-btn__loading-dots > span {
+      animation-duration: 0.15s !important;
+    }
+  }
+{% endstylesheet %}

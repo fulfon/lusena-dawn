@@ -5,6 +5,7 @@ class CartDrawer extends HTMLElement {
     this.shouldRestoreFocus = true;
     this.historyStateKey = 'lusenaCartDrawerOpen';
     this.historyEntryActive = false;
+    this.pushedHistoryEntry = false;
     this.isClosingFromHistory = false;
     this.addEventListener('keyup', (evt) => evt.code === 'Escape' && this.close());
     this.querySelector('#CartDrawer-Overlay').addEventListener('click', this.close.bind(this));
@@ -69,11 +70,14 @@ class CartDrawer extends HTMLElement {
     this.shouldRestoreFocus = true;
     document.body.classList.remove('overflow-hidden');
 
-    if (this.historyEntryActive && !this.isClosingFromHistory) {
+    if (this.historyEntryActive && this.pushedHistoryEntry && !this.isClosingFromHistory) {
+      this.historyEntryActive = false;
+      this.pushedHistoryEntry = false;
       history.back();
       return;
     }
     this.historyEntryActive = false;
+    this.pushedHistoryEntry = false;
   }
 
   setSummaryAccessibility(cartDrawerNote) {
@@ -105,7 +109,6 @@ class CartDrawer extends HTMLElement {
     });
 
     setTimeout(() => {
-      this.querySelector('#CartDrawer-Overlay').addEventListener('click', this.close.bind(this));
       this.open();
     });
   }
@@ -138,16 +141,19 @@ class CartDrawer extends HTMLElement {
     const state = history.state || {};
     if (state[this.historyStateKey]) {
       this.historyEntryActive = true;
+      this.pushedHistoryEntry = false;
       return;
     }
 
     history.pushState({ ...state, [this.historyStateKey]: true }, '', window.location.href);
     this.historyEntryActive = true;
+    this.pushedHistoryEntry = true;
   }
 
   handlePopState() {
     if (!this.classList.contains('active')) {
       this.historyEntryActive = false;
+      this.pushedHistoryEntry = false;
       return;
     }
 

@@ -21,6 +21,7 @@
     const stockDot = root.querySelector('[data-lusena-stock-dot]');
     const atcButton = root.querySelector('[data-lusena-atc]');
     const buyNowButton = root.querySelector('[data-lusena-buy-now]');
+    const addToCartFormEl = root.querySelector('product-form form[data-type="add-to-cart-form"]');
     const stickyAtcButtons = Array.from(root.querySelectorAll('[data-lusena-sticky-atc-button]'));
     const returnsLinks = Array.from(root.querySelectorAll('[data-lusena-open-returns]'));
     const accordionRoots = Array.from(document.querySelectorAll('[data-lusena-accordion-root]'));
@@ -100,9 +101,24 @@
     );
 
     const STAGE_CROSSFADE_MS = 300;
+    const BUY_NOW_LOADING_MIN_MS = 500;
+    const BUY_NOW_LOADING_HOLD_MS = 350;
+    const parseDelayMs = (value) => {
+      const parsed = Number.parseInt(value, 10);
+      if (!Number.isFinite(parsed) || parsed < 0) return 0;
+      return parsed;
+    };
+    const addToCartLoadingMinMs = parseDelayMs(addToCartFormEl?.dataset?.loadingMinMs);
+    const addToCartLoadingHoldMs = parseDelayMs(addToCartFormEl?.dataset?.loadingHoldMs);
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let stageFadeTimer = null;
     let mobileFadeTimer = null;
+    let stickyLoadingTimer = null;
+    let stickyLoadingStartedAt = null;
+    const wait = (ms) =>
+      new Promise((resolve) => {
+        window.setTimeout(resolve, ms);
+      });
 
     const normalizeImageUrl = (src) => {
       if (!src) return null;
@@ -1185,6 +1201,99 @@
       }
     };
 
+    const clearStickyLoadingTimer = () => {
+      if (!stickyLoadingTimer) return;
+      window.clearTimeout(stickyLoadingTimer);
+      stickyLoadingTimer = null;
+    };
+
+    const setButtonLoadingState = (button, isLoading, options = {}) => {
+      if (!(button instanceof HTMLElement)) return;
+      const disableControl = options.disableControl !== false;
+
+      const spinner = button.querySelector('.loading__spinner');
+      button.classList.toggle('loading', isLoading);
+
+      if (isLoading) {
+        button.setAttribute('aria-busy', 'true');
+        if (disableControl) {
+          button.setAttribute('aria-disabled', 'true');
+          if ('disabled' in button) button.disabled = true;
+        }
+        if (spinner instanceof HTMLElement) spinner.classList.remove('hidden');
+        return;
+      }
+
+      button.removeAttribute('aria-busy');
+      if (disableControl) {
+        button.removeAttribute('aria-disabled');
+      }
+      if (spinner instanceof HTMLElement) spinner.classList.add('hidden');
+    };
+
+    const syncStickyButtonsAvailability = () => {
+      if (!stickyAtcButtons.length) return;
+
+      const shouldDisable =
+        !atcButton ||
+        atcButton.disabled ||
+        atcButton.getAttribute('aria-disabled') === 'true';
+
+      stickyAtcButtons.forEach((stickyButton) => {
+        if (!(stickyButton instanceof HTMLButtonElement)) return;
+        if (stickyButton.classList.contains('loading')) return;
+        stickyButton.disabled = shouldDisable;
+        if (shouldDisable) stickyButton.setAttribute('aria-disabled', 'true');
+        else stickyButton.removeAttribute('aria-disabled');
+      });
+    };
+
+    const applyStickyLoadingState = (isLoading) => {
+      if (!stickyAtcButtons.length) return;
+
+      stickyAtcButtons.forEach((stickyButton) => {
+        if (!(stickyButton instanceof HTMLButtonElement)) return;
+        setButtonLoadingState(stickyButton, isLoading);
+      });
+
+      if (!isLoading) {
+        syncStickyButtonsAvailability();
+      }
+    };
+
+    const isStickyLoadingActive = () =>
+      stickyAtcButtons.some((stickyButton) => stickyButton instanceof HTMLElement && stickyButton.classList.contains('loading'));
+
+    const setStickyLoadingState = (isLoading, delayMs = 0) => {
+      clearStickyLoadingTimer();
+
+      if (!isLoading && delayMs > 0) {
+        stickyLoadingTimer = window.setTimeout(() => {
+          applyStickyLoadingState(false);
+        }, delayMs);
+        return;
+      }
+
+      applyStickyLoadingState(isLoading);
+    };
+
+    const setupStickyAvailabilityObserver = () => {
+      if (!(atcButton instanceof HTMLElement)) return;
+      if (typeof MutationObserver !== 'function') return;
+
+      const observer = new MutationObserver(() => {
+        if (isStickyLoadingActive()) return;
+        syncStickyButtonsAvailability();
+      });
+
+      observer.observe(atcButton, {
+        attributes: true,
+        attributeFilter: ['disabled', 'aria-disabled', 'class'],
+      });
+    };
+
+    setupStickyAvailabilityObserver();
+
     const getSelectedOptions = () => {
       const optionFieldsets = root.querySelectorAll('[data-lusena-option]');
       const values = [];
@@ -1272,12 +1381,12 @@
       }
       if (atcButton) atcButton.disabled = !available;
       if (buyNowButton) {
-        buyNowButton.disabled = !available;
-        if (available) buyNowButton.removeAttribute('aria-disabled');
+        if (!buyNowButton.classList.contains('loading')) {
+          buyNowButton.disabled = !available;
+          if (available) buyNowButton.removeAttribute('aria-disabled');
+        }
       }
-      stickyAtcButtons.forEach((stickyAtcButton) => {
-        stickyAtcButton.disabled = !available;
-      });
+      syncStickyButtonsAvailability();
 
       updateGalleryForVariant(variant);
     };
@@ -1294,23 +1403,63 @@
       updateUIForVariant(variant);
     });
 
+    if (addToCartFormEl) {
+      addToCartFormEl.addEventListener('submit', () => {
+        if (!atcButton || atcButton.disabled || atcButton.getAttribute('aria-disabled') === 'true') return;
+        stickyLoadingStartedAt = window.performance?.now ? window.performance.now() : Date.now();
+        setStickyLoadingState(true);
+      });
+    }
+
+    if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+      subscribe(PUB_SUB_EVENTS.cartUpdate, (event) => {
+        if (!event || event.source !== 'product-form') return;
+        if (!isStickyLoadingActive() && stickyLoadingStartedAt === null) return;
+
+        let releaseDelay = addToCartLoadingHoldMs;
+        if (stickyLoadingStartedAt !== null) {
+          const now = window.performance?.now ? window.performance.now() : Date.now();
+          const elapsed = Math.max(0, now - stickyLoadingStartedAt);
+          const remainingMinDelay = Math.max(0, addToCartLoadingMinMs - elapsed);
+          releaseDelay = remainingMinDelay + addToCartLoadingHoldMs;
+        }
+
+        stickyLoadingStartedAt = null;
+        setStickyLoadingState(false, releaseDelay);
+      });
+
+      subscribe(PUB_SUB_EVENTS.cartError, (event) => {
+        if (!event || event.source !== 'product-form') return;
+        if (!isStickyLoadingActive() && stickyLoadingStartedAt === null) return;
+        stickyLoadingStartedAt = null;
+        setStickyLoadingState(false);
+      });
+    }
+
     if (buyNowButton && atcButton) {
-      buyNowButton.addEventListener('click', async () => {
+      buyNowButton.addEventListener('click', async (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
         if (atcButton.disabled) return;
+        if (buyNowButton.classList.contains('loading')) return;
 
         const variantId = variantIdInput?.value;
-        if (!variantId || typeof fetchConfig !== 'function' || !window.routes?.cart_add_url || !window.routes?.checkout_url) {
-          atcButton.click();
+        const checkoutUrl = window.routes?.checkout_url || '/checkout';
+        if (!variantId || typeof fetchConfig !== 'function' || !window.routes?.cart_add_url) {
           return;
         }
 
-        buyNowButton.setAttribute('aria-disabled', 'true');
-        buyNowButton.disabled = true;
+        const buyNowLoadingStartedAt = window.performance?.now ? window.performance.now() : Date.now();
+        let redirectedToCheckout = false;
+        setButtonLoadingState(buyNowButton, true, { disableControl: false });
 
         try {
-          const formData = new FormData();
-          formData.append('id', variantId);
-          formData.append('quantity', '1');
+          const formData = addToCartFormEl ? new FormData(addToCartFormEl) : new FormData();
+          formData.set('id', variantId);
+          if (!formData.has('quantity')) {
+            formData.set('quantity', '1');
+          }
 
           const config = fetchConfig('javascript');
           config.headers['X-Requested-With'] = 'XMLHttpRequest';
@@ -1321,16 +1470,28 @@
           const data = await response.json();
 
           if (!response.ok || data?.status) {
-            atcButton.click();
             return;
           }
 
-          window.location.href = window.routes.checkout_url;
+          const buyNowLoadingEndedAt = window.performance?.now ? window.performance.now() : Date.now();
+          const elapsed = Math.max(0, buyNowLoadingEndedAt - buyNowLoadingStartedAt);
+          const remainingMinDelay = Math.max(0, BUY_NOW_LOADING_MIN_MS - elapsed);
+          const totalDelay = remainingMinDelay + BUY_NOW_LOADING_HOLD_MS;
+
+          if (totalDelay > 0) {
+            await wait(totalDelay);
+          }
+
+          redirectedToCheckout = true;
+          window.location.href = checkoutUrl;
         } catch (error) {
-          atcButton.click();
+          console.error(error);
         } finally {
+          if (redirectedToCheckout) return;
+          setButtonLoadingState(buyNowButton, false, { disableControl: false });
           buyNowButton.removeAttribute('aria-disabled');
           buyNowButton.disabled = atcButton.disabled;
+          if (buyNowButton.disabled) buyNowButton.setAttribute('aria-disabled', 'true');
         }
       });
     }

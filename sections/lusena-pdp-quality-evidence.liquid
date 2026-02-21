@@ -9,7 +9,16 @@
 -%}
 
 {%- if has_evidence_blocks -%}
-  <section class="lusena-pdp-quality-evidence" data-lusena-quality-evidence>
+  <section
+    class="lusena-pdp-quality-evidence"
+    data-lusena-quality-evidence
+    style="
+      --lusena-section-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+      --lusena-section-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+      --lusena-section-padding-top-desktop: {{ section.settings.padding_top }}px;
+      --lusena-section-padding-bottom-desktop: {{ section.settings.padding_bottom }}px;
+    "
+  >
     <div class="container">
       <h2 class="lusena-pdp-quality-evidence__heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         {{ section.settings.heading | escape }}
@@ -46,7 +55,7 @@
             <div class="lusena-pdp-quality-evidence__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-quality-evidence-item {{ block.shopify_attributes }}>
               <button
                 type="button"
-                class="lusena-pdp-quality-evidence__toggle"
+                class="lusena-pdp-quality-evidence__toggle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cta focus-visible:ring-offset-2"
                 data-lusena-quality-evidence-toggle
                 aria-expanded="false"
               >
@@ -97,8 +106,8 @@
 
 {% stylesheet %}
   .lusena-pdp-quality-evidence {
-    padding-top: 64px;
-    padding-bottom: 64px;
+    padding-top: var(--lusena-section-padding-top-mobile);
+    padding-bottom: var(--lusena-section-padding-bottom-mobile);
     background-color: rgb(247 245 242 / 1);
   }
 
@@ -222,6 +231,11 @@
     text-decoration: underline;
   }
 
+  .lusena-pdp-quality-evidence__cta:focus-visible {
+    outline: 2px solid rgb(14 94 90);
+    outline-offset: 2px;
+  }
+
   .lusena-pdp-quality-evidence__item.is-open .lusena-pdp-quality-evidence__chevron {
     transform: rotate(180deg);
   }
@@ -233,8 +247,8 @@
 
   @media (min-width: 768px) {
     .lusena-pdp-quality-evidence {
-      padding-top: 96px;
-      padding-bottom: 96px;
+      padding-top: var(--lusena-section-padding-top-desktop);
+      padding-bottom: var(--lusena-section-padding-bottom-desktop);
     }
 
     .lusena-pdp-quality-evidence__heading {
@@ -342,6 +356,50 @@
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
     {
       "type": "text",
       "id": "heading",

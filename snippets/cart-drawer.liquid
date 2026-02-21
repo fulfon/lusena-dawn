@@ -216,7 +216,7 @@
         <button
           type="button"
           onclick="this.closest('cart-drawer').close()"
-          class="lusena-cart-drawer__icon-button p-3 min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-secondary/10 rounded-full transition-colors"
+          class="lusena-cart-drawer__icon-button lusena-icon-button lusena-icon-button--subtle lusena-icon-button--md"
           aria-label="{{ 'accessibility.close' | t }}"
         >
           {% render 'lusena-icon', name: 'x', class: 'w-5 h-5 text-secondary', stroke_width: 1.5 %}
@@ -234,14 +234,14 @@
           </div>
           <a
             href="{{ routes.all_products_collection_url }}"
-            class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors rounded-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cta focus-visible:ring-offset-2 disabled:pointer-events-none disabled:bg-neutral-400 disabled:text-surface-1/70 bg-accent-cta text-surface-1 hover:bg-accent-cta/90 h-12 px-8 py-3 w-full max-w-[240px]"
+            class="lusena-btn lusena-btn--primary lusena-btn--size-default lusena-btn--full-width max-w-[240px]"
           >
             Przegl&#261;daj produkty
           </a>
           <button
             type="button"
             onclick="this.closest('cart-drawer').close()"
-            class="text-xs text-secondary underline underline-offset-2 hover:text-primary transition-colors"
+            class="lusena-btn lusena-btn--text-secondary text-xs"
           >
             Zamknij
           </button>
@@ -313,7 +313,7 @@
                     <button
                       type="button"
                       data-cart-delta="-1"
-                      class="p-1.5 min-w-[36px] min-h-[36px] flex items-center justify-center hover:bg-surface-2 transition-colors{% if item.quantity <= 1 %} text-secondary/30{% else %} text-primary{% endif %}"
+                      class="lusena-icon-button lusena-icon-button--subtle lusena-icon-button--sm"
                       {% if item.quantity <= 1 %}disabled{% endif %}
                       aria-label="Zmniejsz ilo&#347;&#263;"
                     >
@@ -323,7 +323,7 @@
                     <button
                       type="button"
                       data-cart-delta="1"
-                      class="p-1.5 min-w-[36px] min-h-[36px] flex items-center justify-center hover:bg-surface-2 transition-colors text-primary"
+                      class="lusena-icon-button lusena-icon-button--subtle lusena-icon-button--sm"
                       aria-label="Zwi&#281;ksz ilo&#347;&#263;"
                     >
                       {% render 'lusena-icon', name: 'plus', class: 'w-3.5 h-3.5', stroke_width: 2 %}
@@ -333,7 +333,7 @@
                   <button
                     type="button"
                     data-cart-remove
-                    class="text-xs text-secondary/60 hover:text-red-500 underline underline-offset-2 transition-colors"
+                    class="lusena-btn lusena-btn--text-secondary text-xs hover:text-red-500"
                   >
                     Usu&#324;
                   </button>
@@ -420,10 +420,16 @@
                     <input type="hidden" name="id" value="{{ upsell_variant_1.id }}">
                     <button
                       type="submit"
-                      class="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors rounded-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cta focus-visible:ring-offset-2 disabled:pointer-events-none disabled:bg-neutral-400 disabled:text-surface-1/70 border border-accent-cta bg-transparent text-accent-cta hover:bg-accent-cta/5 h-8 px-3.5 text-xs"
+                      class="lusena-btn lusena-btn--outline lusena-btn--size-xs"
                     >
-                      <span>Dodaj</span>
-                      {%- render 'loading-spinner' -%}
+                      <span class="lusena-btn__content">Dodaj</span>
+                      <span class="loading__spinner hidden">
+                        <span class="lusena-btn__loading-dots" aria-hidden="true">
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                        </span>
+                      </span>
                     </button>
                   {%- endform -%}
                 </product-form>
@@ -475,7 +481,7 @@
 
           <a
             href="{{ routes.checkout_url }}"
-            class="inline-flex items-center justify-center whitespace-nowrap text-base font-medium transition-colors rounded-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cta focus-visible:ring-offset-2 disabled:pointer-events-none disabled:bg-neutral-400 disabled:text-surface-1/70 bg-accent-cta text-surface-1 hover:bg-accent-cta/90 h-14 px-10 w-full"
+            class="lusena-btn lusena-btn--primary lusena-btn--size-lg lusena-btn--full-width"
           >
             Przejd&#378; do kasy
           </a>
@@ -486,7 +492,7 @@
           <button
             type="button"
             onclick="this.closest('cart-drawer').close()"
-            class="w-full text-center text-xs text-secondary underline underline-offset-2 hover:text-primary transition-colors pt-1"
+            class="lusena-btn lusena-btn--text-secondary lusena-btn--full-width text-xs pt-1"
           >
             Kontynuuj zakupy
           </button>

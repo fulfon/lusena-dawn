@@ -141,7 +141,7 @@
 
   <div class="container flex items-center justify-between" data-lusena-header-bar>
     <details class="lg:hidden relative" data-lusena-mobile-menu-details>
-      <summary class="list-none p-2 cursor-pointer" aria-label="Menu" aria-controls="lusena-mobile-menu-panel">
+      <summary class="lusena-icon-button lusena-icon-button--ghost lusena-icon-button--md list-none cursor-pointer" aria-label="Menu" aria-controls="lusena-mobile-menu-panel">
         {% render 'lusena-icon', name: 'menu', class: 'w-6 h-6 text-primary', stroke_width: 1.5 %}
       </summary>
     </details>
@@ -187,19 +187,19 @@
 
     <div class="flex items-center gap-2 md:gap-4">
       {%- if section.settings.enable_search -%}
-        <a href="{{ routes.search_url }}" class="lusena-header__desktop-only lusena-header__icon-action h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Search">
+        <a href="{{ routes.search_url }}" class="lusena-header__desktop-only lusena-header__icon-action lusena-icon-button lusena-icon-button--ghost lusena-icon-button--md text-primary" aria-label="Search">
           {% render 'lusena-icon', name: 'search', class: 'w-5 h-5 text-primary', stroke_width: 1.5 %}
         </a>
       {%- endif -%}
 
       {%- if section.settings.enable_account and shop.customer_accounts_enabled -%}
-        <a href="{{ routes.account_url }}" class="lusena-header__desktop-only lusena-header__icon-action h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Account">
+        <a href="{{ routes.account_url }}" class="lusena-header__desktop-only lusena-header__icon-action lusena-icon-button lusena-icon-button--ghost lusena-icon-button--md text-primary" aria-label="Account">
           {% render 'lusena-icon', name: 'user', class: 'w-5 h-5 text-primary', stroke_width: 2 %}
         </a>
       {%- endif -%}
 
       {%- if section.settings.enable_cart -%}
-        <a href="{{ routes.cart_url }}" id="cart-icon-bubble" class="lusena-header__icon-action relative flex h-11 w-11 items-center justify-center hover:bg-surface-2 text-primary transition-colors" aria-label="Cart">
+        <a href="{{ routes.cart_url }}" id="cart-icon-bubble" class="lusena-header__icon-action lusena-icon-button lusena-icon-button--ghost lusena-icon-button--md relative text-primary" aria-label="Cart">
           {% render 'lusena-icon', name: 'shopping-bag', class: 'w-5 h-5 text-primary', stroke_width: 2 %}
           {%- if cart.item_count > 0 -%}
             <span class="lusena-header__cart-count">

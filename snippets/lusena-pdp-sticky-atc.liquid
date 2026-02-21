@@ -42,6 +42,7 @@
   assign sticky_variant_label = current_variant.title
   assign sticky_color_option_index = blank
   assign sticky_trust_returns = section.settings.delivery_returns_link_label | default: '60 dni na zwrot'
+  assign sticky_loading_label = section.settings.sticky_add_to_cart_loading_label | default: section.settings.add_to_cart_loading_label | default: 'Dodaję...'
 
   for option in product.options_with_values
     assign option_name_downcase = option.name | downcase
@@ -109,13 +110,18 @@
       </div>
 
       <button
-        class="lusena-sticky-atc__button inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors rounded-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cta focus-visible:ring-offset-2 disabled:pointer-events-none disabled:bg-neutral-400 disabled:text-surface-1/70 bg-accent-cta text-surface-1 hover:bg-accent-cta/90 h-11 text-xs shrink-0 px-5"
+        class="lusena-sticky-atc__button lusena-btn lusena-btn--primary lusena-btn--size-sm text-xs px-5"
         data-lusena-sticky-atc-button
         type="submit"
         form="{{ product_form_id }}"
         {% unless current_variant.available %}disabled{% endunless %}
       >
-        {{ section.settings.sticky_add_to_cart_label | escape }}
+        <span class="lusena-btn__content">{{ section.settings.sticky_add_to_cart_label | escape }}</span>
+        <span
+          class="loading__spinner hidden"
+        >
+          <span class="lusena-btn__loading-text">{{ sticky_loading_label | escape }}</span>
+        </span>
       </button>
     </div>
   </div>
@@ -164,13 +170,18 @@
     </div>
 
     <button
-      class="lusena-sticky-atc__button lusena-sticky-atc__button--desktop inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors rounded-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cta focus-visible:ring-offset-2 disabled:pointer-events-none disabled:bg-neutral-400 disabled:text-surface-1/70 bg-accent-cta text-surface-1 hover:bg-accent-cta/90 h-11 text-xs shrink-0 px-8"
+      class="lusena-sticky-atc__button lusena-sticky-atc__button--desktop lusena-btn lusena-btn--primary lusena-btn--size-sm text-xs px-8"
       data-lusena-sticky-atc-button
       type="submit"
       form="{{ product_form_id }}"
       {% unless current_variant.available %}disabled{% endunless %}
     >
-      {{ section.settings.add_to_cart_label | default: section.settings.sticky_add_to_cart_label | escape }}
+      <span class="lusena-btn__content">{{ section.settings.add_to_cart_label | default: section.settings.sticky_add_to_cart_label | escape }}</span>
+      <span
+        class="loading__spinner hidden"
+      >
+        <span class="lusena-btn__loading-text">{{ sticky_loading_label | escape }}</span>
+      </span>
     </button>
   </div>
 </div>
