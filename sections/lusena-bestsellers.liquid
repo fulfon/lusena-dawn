@@ -50,7 +50,7 @@
       {%- endif -%}
     </div>
 
-    <div class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 md:gap-8{% if section.settings.view_all_mobile_label != blank %} lusena-gap-cta{% endif %}">
+    <div class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 md:gap-8">
       {%- if collection != blank -%}
         {%- for product in collection.products limit: limit -%}
           {%- liquid
@@ -91,7 +91,7 @@
     </div>
 
     {%- if section.settings.view_all_mobile_label != blank -%}
-      <div class="text-center md:hidden{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="text-center md:hidden lusena-gap-cta-top{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <a
           href="{{ view_all_url }}"
           class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors rounded-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cta focus-visible:ring-offset-2 disabled:pointer-events-none disabled:bg-neutral-400 disabled:text-surface-1/70 h-12 px-8 py-3 border border-accent-cta bg-transparent text-accent-cta hover:bg-accent-cta/5 w-full"

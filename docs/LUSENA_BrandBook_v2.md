@@ -25,16 +25,16 @@ Każda sekcja zawiera gotowe do wdrożenia reguły (miary, tolerancje, checklist
 ### 1.2 Pozycjonowanie
 
 **Jedno zdanie:**
-Jedyna poszewka, która pracuje na Twoją urodę przez 8 godzin snu – jedwab 22 momme z Suzhou, jednej z Czterech Wielkich Stolic Jedwabiu Chin.
+Jedyna kompletna nocna rutyna piękna z jedwabiu 22 momme – poszewki, ochrona włosów i akcesoria z Suzhou, Stolicy Jedwabiu od XV wieku.
 
 **Trzy zdania (Elevator Pitch):**
-Każda noc na bawełnie to 8 godzin tarcia, które odciska się na Twojej twarzy. LUSENA to jedwab 22 momme – o 30% gęstszy niż standard – który chroni Twoją skórę i włosy, gdy śpisz. Sprowadzamy go bezpośrednio z Shengze, gdzie jedwab tkają od czasów dynastii Ming, a każda sztuka przechodzi polską kontrolę jakości i dociera do Ciebie w 24h, gotowa do wręczenia.
+Każda noc na bawełnie to 8 godzin tarcia – dla Twojej skóry i włosów. LUSENA to kompletna nocna rutyna piękna z jedwabiu 22 momme: poszewka, która chroni skórę przed zagnieceniami, gumki i czepki, które chronią włosy przed plątaniem. Jedwab sprowadzamy bezpośrednio z Shengze, gdzie tkają od czasów dynastii Ming, a każda partia przechodzi polską kontrolę jakości i dociera do Ciebie w 24h.
 
 **Formuła pozycjonowania (wewnętrzna, nie do publikacji):**
 * **Dla:** kobiet 25-45, które inwestują w pielęgnację skóry i włosów
-* **LUSENA to:** nocna kuracja beauty w formie poszewki
-* **Która:** redukuje tarcie i zagniecenia skóry podczas 8h snu
-* **W przeciwieństwie do:** tanich "jedwabnych" poszewek z Allegro (satyna poliester) i drogich marek importowanych (Slip, Blissy)
+* **LUSENA to:** kompletna nocna rutyna piękna z jedwabiu – od poszewki chroniącej skórę po gumki i czepki chroniące włosy
+* **Która:** redukuje tarcie, zagniecenia skóry i chroni włosy przed plątaniem i puszeniem podczas 8h snu
+* **W przeciwieństwie do:** tanich „jedwabnych" i satynowych alternatyw z Allegro (poliester udający jedwab) oraz drogich marek importowanych bez lokalnego magazynu (Slip, Blissy)
 * **Ponieważ:** oferujemy potwierdzoną gęstość 22 momme z regionu o 600-letniej tradycji, certyfikat OEKO-TEX 100, magazyn w Polsce i 60-dniową gwarancję satysfakcji
 
 ---
@@ -62,6 +62,7 @@ Każda noc na bawełnie to 8 godzin tarcia, które odciska się na Twojej twarzy
 | **Efekty Beauty** | **„Obudź się bez odgnieceń. Gładkość zamiast tarcia.”** | Używaj języka korzyści (efekt rano w lustrze), ale zachowaj „pomaga/sprzyja” przy opisach medycznych. | „Leczy trądzik / Usuwa zmarszczki” (nielegalny claim medyczny). |
 | **Cena** | „Płacisz za czysty surowiec, nie za pośredników.” | Pokaż tabelę porównawczą (My vs Inni). Uzasadnij cenę gramaturą i brakiem marży importera tkanin. | „Taniej niż…” (wojna cenowa) lub przepraszanie za cenę. |
 | **Prezent** | „Gotowe do wręczenia. Pudełko, które robi wrażenie.” | Pokaż wideo z rozpakowywania (unboxing) z dźwiękiem szeleszczącej bibuły i klikiem magnesu. | „Najtańszy prezent premium” lub pokazywanie produktu w foliowym worku. |
+| **Tanie alternatywy (satyna/poliester)** | **„Satyna to nie jedwab – to marketingowa nazwa poliestru. Jedwab morwowy 22 momme to naturalne włókno białkowe, które oddycha i redukuje tarcie 3–4× skuteczniej. Sprawdź Testem Ognia."** | **Praktyka:** Na PDP sekcja „Jedwab vs Satyna" (3 punkty: materiał, oddychalność, tarcie). W reklamach: video Burn Test. Na stronie /nasza-jakosc: pełna tabela materiałowa. W CS: gotowy link do edukacji. Na karcie produktu: badge „100% jedwab morwowy – nie satyna". | **NIE używaj:** ❌ „Satyna jest zła/tania" (atakujesz wybór klienta). ❌ „Poliester jest szkodliwy" (brak dowodów). ❌ Porównywanie cen 1:1 (nie wygrasz ceną). **ZAWSZE:** Edukuj o różnicy materiału, nie krytykuj konkurencji. |
 
 ---
 
@@ -88,8 +89,27 @@ Każda noc na bawełnie to 8 godzin tarcia, które odciska się na Twojej twarzy
 ### 1.5 Architektura Marki
 
 * **Masterbrand:** **LUSENA** – nadrzędny znak, spójne reguły typografii, koloru, tonu.
-* **Linie produktowe (nazewnictwo opisowe, bez sub-brandów):** Sen (poszewki, maski), Włosy (curler, bonnet), Akcesoria (scrunchies).
-* **Zasada parasola:** zawsze „LUSENA + nazwa opisowa” (np. „LUSENA • Maska 3D z jedwabiu 22 momme”).
+* **Linie produktowe (nazewnictwo opisowe, bez sub-brandów):**
+  * **Sen** — poszewki 50×60, maska 3D
+  * **Włosy** — scrunchies, bonnet, curler
+
+
+  **Hierarchia strategiczna produktów (wewnętrzna, nie do publikacji):**
+
+  | Tier | Produkt | Rola strategiczna | Priorytet ekspozycji |
+  |------|---------|-------------------|---------------------|
+  | **1 – Filar** | Poszewka 50×60 | Kotwica premium (AOV, brand building, hero PDP) | Najwyższy |
+  | **1 – Filar** | Scrunchies | Akcelerator konwersji (entry point, repeat purchase, cross-sell, gratis progowy) | Najwyższy |
+  | **2 – Wzrost** | Bonnet | Spina narrację „hair care w nocy"; bundling z poszewką; buduje „nocny zestaw" | Średni-wysoki |
+  | **2 – Wzrost** | Hair Curler | Content hero (UGC, wirale, „przed/po"); nie jako jedyny filar sprzedaży | Średni |
+  | **3 – Uzupełnienie** | Maska 3D | Bundle addon / upsell; NIE samodzielny filar kampanii paid | Niski |
+
+  Zasady ekspozycji wg tiers:
+  * **Tier 1:** Obecność na homepage (hero, bestsellery); priorytet w kampaniach paid; PDP w pełnej konfiguracji; sortowanie domyślne PLP: pierwsze pozycje.
+  * **Tier 2:** Obecność w sekcji „Nocna rutyna" i bundlach; kampanie contentowe (UGC, tutoriale); PDP z pełną edukacją i zarządzaniem oczekiwaniami.
+  * **Tier 3:** Brak w toplevel nawigacji i homepage; widoczny tylko w zestawach, PDP upsell (checkbox) i na dedykowanej stronie kategorii.
+
+* **Zasada parasola:** zawsze „LUSENA + nazwa opisowa” (np. „LUSENA • Poszewka jedwabna 50×60 • 22 momme” lub „LUSENA • Jedwabna gumka do włosów”).
 * **Ko-presence/partnerstwa:** znak partnera ≤70% szerokości znaku LUSENA, odstęp ≥1× wysokość logo LUSENA; bez ingerencji w paletę i typografię LUSENA.
 
 ---
@@ -97,13 +117,13 @@ Każda noc na bawełnie to 8 godzin tarcia, które odciska się na Twojej twarzy
 ### 1.6 Boilerplate & Elevator Pitch
 
 * **Short (social bio, meta description) – 150-180 znaków:**
-  „Jedwab 22 momme z Suzhou, stolicy jedwabiu od XV wieku. Certyfikat OEKO-TEX. Magazyn w Polsce, wysyłka 24h. Obudź się piękniejsza."
+  „Nocna rutyna piękna z jedwabiu 22 momme – poszewki, gumki i ochrona włosów z Suzhou. OEKO-TEX. Magazyn w PL, wysyłka 24h. Obudź się piękniejsza."
 
 * **Medium (o nas, stopka) – 250-300 znaków:**
-  „LUSENA to jedwab 22 momme sprowadzany bezpośrednio z Shengze w prowincji Jiangsu – jednej z Czterech Wielkich Stolic Jedwabiu Chin. Certyfikat OEKO-TEX 100, polska kontrola jakości, wysyłka w 24h. Tworzymy produkty, które pracują na Twoją urodę, gdy śpisz."
+  „LUSENA to kompletna nocna rutyna piękna z jedwabiu 22 momme: poszewki, gumki do włosów, czepki i akcesoria. Jedwab sprowadzamy z Shengze w prowincji Jiangsu – jednej z Czterech Wielkich Stolic Jedwabiu Chin. Certyfikat OEKO-TEX 100, polska kontrola jakości, wysyłka w 24h."
 
 * **Long (PR, strona "O nas") – 450-550 znaków:**
-  „LUSENA powstała z przekonania, że codzienna pielęgnacja skóry i włosów nie kończy się wieczorem. Nasz jedwab 22 momme pochodzi z Shengze – miasteczka w prowincji Jiangsu, gdzie jedwab tkają od czasów dynastii Ming. Współpracujemy bezpośrednio z manufakturą, eliminując pośredników i kompromisy jakościowe. Każda partia posiada certyfikat OEKO-TEX Standard 100 i przechodzi kontrolę w Polsce przed wysyłką. Minimalistyczne wzornictwo, opakowania gotowe na prezent i 60-dniowa gwarancja satysfakcji – bo wierzymy w to, co robimy."
+  „LUSENA powstała z przekonania, że pielęgnacja skóry i włosów nie kończy się wieczorem – dlatego stworzyliśmy kompletną nocną rutynę piękna z jedwabiu 22 momme. Od poszewki, która chroni skórę przed zagnieceniami, po gumki i czepki, które chronią włosy przed plątaniem i puszeniem. Nasz jedwab pochodzi z Shengze w prowincji Jiangsu, gdzie tkają od czasów dynastii Ming. Współpracujemy bezpośrednio z manufakturą, eliminując pośredników. Każda partia posiada certyfikat OEKO-TEX Standard 100 i przechodzi kontrolę w Polsce. Minimalistyczne wzornictwo, opakowania gotowe na prezent i 60-dniowa gwarancja satysfakcji."
 
 ---
 
@@ -229,7 +249,7 @@ Każda noc na bawełnie to 8 godzin tarcia, które odciska się na Twojej twarzy
 **Charakter:** Ekspercki, spokojny, empatyczny, precyzyjny.
 **Cel:** Wyjaśniać bez żargonu, dawać pewność bez „marketingowych fajerwerków”.
 
-**5 zasad:**
+**6 zasad:**
 
 1. **Mów prosto o konkretach.** Zawsze podaj parametry (np. „22 momme”), unikaj ogólników.
 **2. Uderzaj w "Vanity" i rozwiązywanie problemów.** Klienci nie kupują "poszewki", kupują "lepszą twarz o poranku".
@@ -241,6 +261,12 @@ Każda noc na bawełnie to 8 godzin tarcia, które odciska się na Twojej twarzy
 3. **Szanuj czas.** Zwięzłe zdania (do 18–22 słów), jedna myśl na akapit, jasne nagłówki.
 4. **Uspokajaj, nie popędzaj.** Komunikaty o dostępności, dostawie i zwrotach mają redukować stres.
 5. **Mniej przymiotników, więcej dowodów.** Jeśli używasz przymiotników, zestaw je z danymi (np. „precyzyjne szwy – odstęp ściegu ~3 mm”).
+
+6. **Dopasuj obietnicę do kategorii produktu.** Nie każdy produkt jedwabny daje ten sam efekt. Różnicuj język:
+   * **Poszewka (skin care):** dozwolone obietnice estetyczne – „sprzyja redukcji zagnieceń", „pomaga zachować nawilżenie".
+   * **Scrunchie, Bonnet (hair protection):** obiecuj **ochronę**, nie **metamorfozę** – „ogranicza tarcie i plątanie", „chroni fryzurę na dłużej". Badania rynkowe potwierdzają, że użytkowniczki doceniają komfort i brak pogorszenia stanu włosów, ale rzadko widzą spektakularną zmianę – narracja musi być realistyczna.
+   * **Hair Curler (styling):** zarządzaj oczekiwaniami – „może pomóc uzyskać fale bez ciepła"; efekt zależy od typu włosów, wilgotności i czasu; dodawaj checklistę „dla kogo działa najlepiej".
+   * **Maska 3D (comfort):** komfort i ciemność, nie beauty miracle – „zero nacisku na rzęsy, jedwab oddycha lepiej niż syntetyki".
 
 ### Before → After (przykłady PL)
 
@@ -285,10 +311,10 @@ Każda noc na bawełnie to 8 godzin tarcia, które odciska się na Twojej twarzy
 **Propozycja wartości (Value Prop):**
 
 *Wersja krótka (do 15 słów):*
-„Obudź się piękniejsza. Jedwab 22 momme, który chroni Twoją skórę przez całą noc."
+„Obudź się piękniejsza. Jedwab 22 momme, który chroni Twoje włosy i skórę przez całą noc."
 
 *Wersja pełna (struktura Benefit → Proof → Differentiator):*
-„8 godzin snu to 8 godzin pielęgnacji albo 8 godzin tarcia – zależy, na czym śpisz. LUSENA to jedwab 22 momme z Suzhou, certyfikowany OEKO-TEX, który redukuje zagniecenia skóry i chroni Twoje włosy. Magazyn w Polsce, wysyłka w 24h, 60 dni na test."
+„8 godzin snu to 8 godzin pielęgnacji albo 8 godzin tarcia – zależy, na czym śpisz. LUSENA to kompletna nocna rutyna z jedwabiu 22 momme: poszewki chroniące skórę, gumki i czepki chroniące włosy. Certyfikat OEKO-TEX, magazyn w Polsce, wysyłka w 24h, 60 dni na test."
 
 **3–5 kluczowych komunikatów + wsparcie:**
 
@@ -320,6 +346,49 @@ Każda noc na bawełnie to 8 godzin tarcia, które odciska się na Twojej twarzy
 3. CTA z obietnicą operacyjną („Wysyłka dzisiaj”)
 4. Uspokojenie (dostawa/zwroty)
 5. Pielęgnacja w skrócie (ikony + 1-linijkowe wskazówki)
+
+### Zasady komunikacji produktowej (wg kategorii)
+
+Każda kategoria produktowa ma specyficzny kąt komunikacyjny i odpuszczalne obietnice. Te zasady uzupełniają ogólne reguły głosu z Sekcji 2.1 (zasada 6).
+
+**Poszewka 50×60 — „Kotwica Premium"**
+* Przekaz wiodący: „8 godzin snu = 8 godzin kuracji skóry. Redukcja zagnieceń i tarcia."
+* Dozwolone: „sprzyja redukcji zagnieceń", „może pomagać utrzymać nawilżenie skóry"
+* Zakazane: „leczy trądzik", „usuwa zmarszczki"
+* Cross-sell copy: „Uzupełnij nocną rutynę – dodaj jedwabną gumkę lub czepek"
+* Kotwica cenowa: „0,XX zł za noc kuracji (przy roku użytkowania)"
+
+**Scrunchie — „Akcelerator Konwersji"**
+* Przekaz wiodący: „Jedwab, który Twoje włosy poczują. Mniej łamania, mniej plątania."
+* Dozwolone: „ogranicza tarcie i łamanie włosów", „delikatniejsza niż bawełniane gumki"
+* Zakazane: „zapobiega wypadaniu włosów" (claim medyczny)
+* Komunikuj różnicę rozmiarów: Mini (3 cm) = cienkie/delikatne włosy; Standard (5 cm) = normalne/grube
+* Neutralizacja obiekcji cenowej: „Jedwab 22 momme wytrzymuje dłużej niż poliester – nie wymieniasz co miesiąc"
+* Cross-sell copy: „Kup 3, oszczędź 19%" (Scrunchie Trio); „Dodaj poszewkę i stwórz nocną rutynę"
+
+**Bonnet — „Narracja Hair Care"**
+* Przekaz wiodący: „Ochrona przed tarciem, plątaniem i puszeniem w nocy."
+* **KRYTYCZNA ZASADA:** komunikuj **ochronę i utrzymanie**, nie **metamorfozę**. Recenzje rynkowe (m.in. z portali beauty) pokazują, że użytkowniczki doceniają komfort i brak pogorszenia stanu włosów, ale rzadko widzą spektakularną zmianę. Obiecywanie cudów prowadzi do zwrotów i negatywnych opinii.
+* Dozwolone: „chroni włosy przed tarciem o poduszkę", „pomaga utrzymać fryzurę na dłużej", „jedwab oddycha – mniej pocenia się niż syntetyki"
+* Zakazane: „odmieni Twoje włosy w jedną noc", „gwarantujemy widoczne efekty"
+* Obowiązkowe w PDP: podkreślaj regulację obwodu; porównanie z tanimi „satynowymi" czepkami (materiał, oddychalność)
+* Cross-sell copy: „Stwórz Nocną Rutynę – dodaj poszewkę i scrunchie (oszczędzasz ~15%)"
+
+**Hair Curler — „Content Hero"**
+* Przekaz wiodący: „Loki bez ciepła. Jedwab zamiast grzałki."
+* **KRYTYCZNA ZASADA:** zarządzaj oczekiwaniami eksplicite. Efekt zależy od: typu włosów (grubość, długość), poziomu wilgotności, czasu zakręcania (min. 4–6h).
+* Dozwolone: „może pomóc uzyskać fale lub loki bez użycia ciepła"
+* Zakazane: „perfekcyjne loki za każdym razem", „działa na każdy typ włosów"
+* Obowiązkowe w PDP i contencie: checklistka „Dla kogo działa najlepiej" (długość min. do ramion, lekko wilgotne włosy, min. 4h) + „Typowe błędy" (za grube pasma, zbyt krótki czas, mokre włosy)
+* Cross-sell copy: „Dodaj scrunchie, żeby rano wpiąć gotowe loki"
+
+**Maska 3D — „Bundle Addon"**
+* Przekaz wiodący: „Ciemność, komfort, zero nacisku na rzęsy. Jedwab, który oddycha."
+* **ZASADA:** NIE promuj jako samodzielny produkt hero w kampaniach paid ani na homepage. Maska to uzupełnienie zestawu.
+* Dozwolone: „jedwab redukuje tarcie delikatnej skóry wokół oczu", „oddycha lepiej niż maski syntetyczne"
+* Zakazane: „najwygodniejsza maska na rynku" (zbyt duże ryzyko przy wrażliwości na fit)
+* Cross-sell: wyłącznie jako element zestawu „Beauty Sleep Set" (Faza 2)
+
 
 ---
 
@@ -485,6 +554,11 @@ LUSENA używa trzech poziomów tagline'ów, zależnie od kontekstu i celu komuni
 | „Z Chin?" | „Z Suzhou – stolicy jedwabiu od XV wieku. Sprawdź certyfikaty →" |
 | „A jeśli mi się nie spodoba?" | „60 dni testu. Zwróć nawet używany. Bez pytań." |
 | „Czy to nie tylko marketing?" | „22 momme to gramatura, którą zmierzysz. 127 opinii, które przeczytasz." |
+| „Satynowy czepek/gumka jest taki sam" | „Satyna = poliester (plastik). Jedwab morwowy = naturalne włókno białkowe. Tarcie jedwabiu jest 3–4× niższe. Sprawdź nasz Test Ognia →" |
+| „Wałek do loków nie działa" | „Efekt zależy od 3 rzeczy: typu włosów, wilgotności, czasu (min. 4h). Sprawdź checklistę 'Dla kogo działa najlepiej' →" |
+| „Gumka się rozciągnęła" | „Wymienimy – to gwarancja. Wskazówka na przyszłość: jedwabne scrunchie najlepiej na codzienne noszenie i noc, nie na intensywne treningi." |
+| „Tańsza maska 3D z pianki jest wygodniejsza" | „Pianka blokuje światło, ale nie oddycha i nie redukuje tarcia skóry wokół oczu. Jedwab 22 momme łączy kształt 3D z pielęgnacją. 60 dni na test." |
+| „Czepek się zsuwa / uciska" | „Wyreguluj gumkę – nasz bonnet ma regulację obwodu. Jeśli nie pasuje – 60-dniowa gwarancja, bez pytań." |
 
 ---
 
@@ -891,6 +965,82 @@ Poniżej Route A palety dla komunikacji i UI. Spełniają WCAG 2.2 AA. Tokeny w 
 * Każdy email ma 1 CTA (nie 3)
 * Subject lines testuj A/B przez pierwsze 2 tygodnie
 
+### Cart Abandonment Flow (odzyskiwanie porzuconych koszyków)
+
+Porzucone koszyki to największe „przeciekanie" przychodów w sklepie premium — przy produkcie za 249 zł wiele klientek potrzebuje czasu na decyzję. Ten flow odzyskuje 10–15% porzuconych koszyków.
+
+**Trigger:** Klientka dodała produkt do koszyka, podała email (checkout step 1 lub pop-up), ale nie sfinalizowała zakupu.
+
+| Email | Timing | Subject Line | Treść | Cel |
+|-------|--------|--------------|-------|-----|
+| **CA-1** | 1h po porzuceniu | „Twoja poszewka czeka w koszyku" | Zdjęcie produktu z koszyka + nazwa + cena. Tekst: „Twoje produkty są bezpieczne w koszyku. Dokończ zamówienie, kiedy będziesz gotowa." Pod CTA: mini trust bar (60 dni gwarancji · Wysyłka 24h · OEKO-TEX) | Delikatne przypomnienie; zero presji |
+| **CA-2** | 24h | „Masz pytania? Odpowiadamy na 3 najczęstsze" | Zdjęcie produktu + 3 mini-FAQ: (1) „Czy to na pewno jedwab?" → tak, OEKO-TEX (2) „A jeśli mi się nie spodoba?" → 60 dni zwrotu (3) „Dlaczego tyle kosztuje?" → 0,68 zł/noc. Pod FAQ: social proof „⭐ 4.X/5 z X opinii" + CTA | Eliminacja obiekcji; budowanie zaufania |
+| **CA-3** | 72h | „Ostatnie przypomnienie — Twój koszyk wygasa" | Zdjęcie produktu + „Nie chcemy, żebyś przegapiła." + **bonus wartościowy** (patrz reguły poniżej) + CTA „Dokończ zamówienie" | Ostatnia szansa; delikatna urgency + wartość dodana |
+
+**Zasady Cart Abandonment:**
+
+* **CA-1 = ZERO rabatu, zero presji.** Tylko przypomnienie + trust signals. Wiele osób po prostu zapomniało albo chciało wrócić później.
+* **CA-2 = Edukacja, nie sprzedaż.** FAQ adresuje obiekcje realne (z CS Playbook). Social proof wzmacnia decyzję.
+* **CA-3 = Bonus wartościowy, NIE rabat procentowy.** Reguły bonusu:
+
+| Typ klienta | Bonus w CA-3 | Dlaczego |
+|---|---|---|
+| **Nowy klient** (pierwszy zakup) | Darmowa wysyłka LUB scrunchie gratis do zamówienia | Obniża barierę wejścia bez dewaluacji ceny produktu |
+| **Powracający klient** | Brak bonusu; sam reminder + CTA | Powracający klienci nie potrzebują incentive — potrzebują przypomnienia |
+
+* **Nigdy nie dawaj rabatu % na poszewkę w cart recovery** — dewaluuje produkt premium i „uczy" klientki porzucać koszyk dla rabatu.
+* **Częstotliwość:** Max 1 sekwencja CA na 30 dni per klientka (jeśli porzuci ponownie w ciągu 30 dni → nie wysyłaj CA-flow od nowa).
+* **Priorytet:** CA flow ma priorytet nad Welcome Flow i Post-Purchase Flow. Jeśli klientka jest w środku Welcome Flow i porzuci koszyk → wstrzymaj Welcome, uruchom CA, po CA wznów Welcome.
+
+### Browse Abandonment (opcjonalny, Faza 2)
+
+**Trigger:** Klientka odwiedziła PDP (spędziła > 30 sek), ale nie dodała do koszyka. Wymaga email capture (newsletter / pop-up).
+
+| Email | Timing | Subject Line | Treść | Cel |
+|-------|--------|--------------|-------|-----|
+| **BA-1** | 24h | „Jeszcze zastanawiasz się nad [nazwa produktu]?" | Zdjęcie produktu + 1 key benefit + link do PDP + „Sprawdź opinie klientek →" | Delikatny retargeting; edukacja |
+| **BA-2** | 72h | „3 rzeczy, które warto wiedzieć o [kategoria]" | Edukacyjny content: np. „Czym różni się jedwab od satyny" lub „Jak wybrać poszewkę" + link do strony /nasza-jakosc | Budowanie eksperckości; soft sell |
+
+**Zasady:** Browse Abandonment tylko dla subskrybentów (masz ich email z pop-up / newsletter). Max 2 emaile. Brak rabatu. Brak urgency.
+
+### Post-Purchase Flow (po zakupie)
+
+Welcome Flow konwertuje leady w klientów. Post-Purchase Flow zamienia jednorazowych kupujących w lojalnych klientów i ambasadorów marki. To tu powstają opinie, UGC, repeat purchase i polecenia.
+
+**Trigger:** Klientka złożyła i opłaciła zamówienie.
+
+| Email | Timing | Subject Line | Treść | Cel |
+|-------|--------|--------------|-------|-----|
+| **PP-1** | Natychmiast po zamówieniu | „Twoje zamówienie jest u nas ✓" | Podziękowanie + potwierdzenie zamówienia + „Co dalej": timeline wysyłki + „Jak przygotować swoją nową poszewkę" (link do mini-artykułu / karty pielęgnacji online) | Ciepłe powitanie; budowanie anticipation |
+| **PP-2** | Po wysyłce (trigger: tracking) | „Twój jedwab jest w drodze 🚚" | Numer śledzenia + szacowany czas dostawy + „Co znajdziesz w pudełku LUSENA" (tease unboxing: pudełko magnetyczne, bibuła, karta Suzhou, Authenticity Card) | Budowanie ekscytacji; obniżenie „buyer anxiety" |
+| **PP-3** | 7 dni po dostawie | „Jak Ci się śpi? (naprawdę chcemy wiedzieć)" | Krótka ankieta (1–3 pytania: komfort, jakość, pierwsze wrażenia) + instrukcja pielęgnacji + „Jeśli cokolwiek nie tak — napisz, naprawimy to" + link do CS | Zbieranie feedbacku; proaktywna obsługa problemów ZANIM staną się zwrotami |
+| **PP-4** | 14 dni po dostawie | „Twoja opinia pomoże innym" | Prośba o review na stronie sklepu (bezpośredni link do formularza opinii) + „Dodaj zdjęcie i otrzymaj 10% na kolejne zamówienie" + proste instrukcje (3 kroki) | **KLUCZOWY — zbieranie opinii „Zweryfikowany zakup"** |
+| **PP-5** | 30 dni po dostawie | „Uzupełnij swoją nocną rutynę" | Cross-sell spersonalizowany na podstawie zakupionego produktu (patrz tabela cross-sell poniżej) + zdjęcie zestawu + CTA | Repeat purchase; podniesienie LTV |
+| **PP-6** | 45 dni po dostawie | „Połowa Twojej gwarancji za Tobą" | „Masz jeszcze 15 dni gwarancji. Czy wszystko w porządku?" + FAQ pielęgnacji + „Jeśli nie jesteś pewna — porozmawiajmy" | Paradoks: przypominanie o gwarancji ZMNIEJSZA zwroty (efekt lojalności + prokrastynacja) |
+| **PP-7** | 60 dni po dostawie | „60 nocy za Tobą. Dziękujemy." | „Twoja gwarancja właśnie dobiegła końca. Mamy nadzieję, że LUSENA stała się częścią Twojej rutyny." + NPS (1 pytanie: „Czy polecisz nas przyjaciółce?") + exclusive offer dla lojalnych (np. early access do nowego koloru) | Celebracja; NPS; budowanie lojalności |
+| **PP-8** | 90 dni po dostawie | Zależny od produktu (patrz tabela) | Repeat purchase / gifting suggestion (patrz tabela) | Reaktywacja; repeat purchase |
+| **PP-9** | 120+ dni bez aktywności | „Dawno Cię nie widzieliśmy" | „Co nowego w LUSENA" + nowe kolory/produkty + „Czy mogliśmy coś zrobić lepiej?" (link do ankiety) + mały bonus na powrót (np. darmowa wysyłka) | Win-back; feedback od churned klientów |
+
+**Tabela cross-sell (email PP-5, PP-8):**
+
+| Klientka kupiła | PP-5 (30 dni): proponuj | PP-8 (90 dni): proponuj |
+|---|---|---|
+| Poszewkę | „Uzupełnij nocną rutynę: bonnet + scrunchie (-15% w zestawie Nocna Rutyna)" | „Prezent dla kogoś bliskiego? Starter Kit gotowy do wręczenia" LUB „Nowy kolor limitowany — sprawdź" |
+| Scrunchie | „Twoja skóra też zasługuje na jedwab — poszewka 50×60 od 0,XX zł/noc" | „Czas na nowy kolor? Scrunchie Trio w nowej palecie" |
+| Bonnet | „Kompletna nocna rutyna: poszewka + scrunchie (-10% w zestawie Starter Kit)" | „Jak Twoje włosy? Dodaj poszewkę — razem chronią i skórę, i włosy" |
+| Bundle Nocna Rutyna | „Dziękujemy za pełny zestaw! Czy wiesz, że jedwab chroni też skórę wokół oczu? → maska 3D" | „Nowy kolor limitowany poszewki — chcesz pierwsza?" |
+| Curler | „Dodaj scrunchie, żeby rano wpiąć gotowe loki" | cross-sell na poszewkę: „Jedwab nie tylko dla loków — chroni też skórę" |
+
+**Zasady Post-Purchase Flow:**
+
+* **PP-3 (ankieta) jest krytyczny** — proaktywne wyłapanie problemów na Dzień 7 zapobiega zwrotom na Dzień 14–30. Jeśli klientka zgłosi problem → natychmiast eskaluj do CS (nie czekaj na zwrot).
+* **PP-4 (review request) jest najważniejszy dla biznesu** — to tu budujesz social proof. Timing Dzień 14 = klientka miała 2 tygodnie z produktem, wystarczająco by mieć opinię, ale nie tak długo by zapomniała ekscytację.
+* **Jeden CTA per email.** PP-3 = ankieta. PP-4 = review. PP-5 = cross-sell. Nie mieszaj celów.
+* **Jeśli klientka kupi ponownie** w trakcie sekwencji → zrestartuj PP-flow od PP-1 dla nowego zakupu.
+* **Jeśli klientka otworzy reklamację / zwrot** → natychmiast wstrzymaj PP-flow; przekieruj do CS.
+* **PP-9 (win-back) uruchamia się TYLKO jeśli** klientka nie kupiła nic przez 120+ dni I nie otworzyła maila od 60+ dni. Nie spamuj aktywnych subskrybentów.
+* **Ton wszystkich emaili:** ekspercki, spokojny, opiekuńczy; konsekwentnie z Sekcją 2.1. PP-3 i PP-6 mają być szczerze empatyczne — nie sprzedażowe.
+
 **Ads:**
 
 * **Static performance:** 1080 × 1350 (4:5); blok CTA w dolnych 20% kadru; badge maks. jeden.
@@ -915,7 +1065,7 @@ Poniżej Route A palety dla komunikacji i UI. Spełniają WCAG 2.2 AA. Tokeny w 
 * **Wszywka:** 12 × 35 mm, wewnątrz przy szwie; czytelność 6 pt min.
 * **Zewnętrzny znak:** niedozwolony (estetyka minimalistyczna).
 
-**Curler (taśma/rdzeń):**
+**Hair Curler (taśma/rdzeń):**
 
 * **Wszywka:** 15 × 45 mm na końcówce taśmy.
 * **Metka papierowa (jeśli dodawana):** 50 × 90 mm, sznurek bawełniany, druk 1/1.
@@ -1100,8 +1250,8 @@ Poniżej Route A palety dla komunikacji i UI. Spełniają WCAG 2.2 AA. Tokeny w 
 1. **Hero** (ratio 16:9 desk / 4:5 mob)
    * Overlay `--scrim-60`
    * Headline: „Urodę Tworzysz w Nocy" (Source Serif 4 italic)
-   * Subheadline: „Jedwab 22 momme, który chroni Twoją skórę, gdy śpisz"
-   * **1 CTA Primary:** „Zobacz poszewki" lub „Sprawdź kolekcję"
+   * Subheadline: „Jedwab 22 momme, który chroni Twoje włosy i skórę, gdy śpisz"
+   * **1 CTA Primary:** „Sprawdź kolekcję" lub „Poznaj nocną rutynę"
    * **Opcjonalnie:** Delikatna animacja „gentle float" produktu (reduce motion: static)
 
 2. **Social Proof Bar** (bezpośrednio pod hero, tło `--surface-2`)
@@ -1115,9 +1265,9 @@ Poniżej Route A palety dla komunikacji i UI. Spełniają WCAG 2.2 AA. Tokeny w 
    * CTA: „Dlaczego to ważne? →" (prowadzi do strony edukacyjnej lub rozwija akordeon)
 
 4. **PLP skrócone** (Bestsellery)
-   * 2-3 karty produktów z bestseller badge
+   * 3-4 karty produktów z bestseller badge; **obowiązkowa kolejność wyświetlania wg hierarchii Tier:** (1) Poszewka 50×60, (2) Scrunchie bestseller lub Scrunchie Trio, (3) Bundle „Nocna Rutyna" lub Bonnet, (4) opcjonalnie Curler
    * Stałe ratio 4:5, jednolite jasne tła
-   * Pod każdą kartą: cena + „0,XX zł/noc" jako kotwica
+   * Pod każdą kartą: cena + kotwica wartości (poszewka: „0,XX zł/noc"; scrunchie: „od XX zł/szt. w zestawie"; bundle: cena przekreślona + cena zestawu)
 
 5. **Sekcja Suzhou Heritage** (budowanie zaufania o pochodzeniu)
    * Tło: Subtelna mapa/grafika jedwabnego szlaku
@@ -1131,9 +1281,10 @@ Poniżej Route A palety dla komunikacji i UI. Spełniają WCAG 2.2 AA. Tokeny w 
    * Link: „Wszystkie opinie →"
 
 7. **Sekcja Bundle / Gift**
-   * Headline: „Gotowe do podarowania" lub „Zestawy premium"
-   * 1-2 karty zestawów z ceną przed i po rabacie
-   * Badge: „Oszczędzasz X zł"
+   * Headline: „Nocna Rutyna w zestawie" lub „Oszczędzaj w zestawie"
+   * 2-3 karty zestawów z Fazy 1 (patrz Sekcja 5.8.1): Nocna Rutyna, Starter Kit, Scrunchie Trio — z ceną przekreśloną + ceną zestawu
+   * Badge: „Oszczędzasz X zł" lub „Bestseller"
+   * Priorytet wyświetlania: Nocna Rutyna > Starter Kit > Scrunchie Trio
 
 8. **FAQ skrócone** (akordeony, 4-5 najczęstszych pytań)
    * Obowiązkowo: „Czy to prawdziwy jedwab?", „Dlaczego z Chin?", „Jak prać?", „Czy 60 dni gwarancji to serio?"
@@ -1200,7 +1351,7 @@ Poniżej Route A palety dla komunikacji i UI. Spełniają WCAG 2.2 AA. Tokeny w 
 │ ⭐ 4.9/5 (127 opinii) │ 🇵🇱 Magazyn Polska │ 🛡️ OEKO-TEX 100 │
 ├─────────────────────────────────────────────────────────────────┤
 │ [4] NAZWA PRODUKTU + KRÓTKA ZALETA │
-│ „Poszewka Jedwabna 50x70cm • 22 momme z Suzhou" │
+│ „Poszewka Jedwabna 50x60cm • 22 momme z Suzhou" │
 ├─────────────────────────────────────────────────────────────────┤
 │ [5] WARIANT SELECTOR (kolor, rozmiar) – 44x36px min. │
 ├─────────────────────────────────────────────────────────────────┤
@@ -1535,7 +1686,7 @@ Zestawy to najłatwiejszy sposób na zwiększenie średniej wartości zamówieni
 
 ### 5.8.1 Predefiniowane Zestawy
 
-**Strategia fazowa:** Na start oferuj maksymalnie 2 bundle'e. Rozbudowuj ofertę po zebraniu danych o zachowaniach klientów.
+**Strategia fazowa:** Na start oferuj maksymalnie 2-3 bundle'e. Rozbudowuj ofertę po zebraniu danych o zachowaniach klientów.
 
 ---
 
@@ -1543,8 +1694,9 @@ Zestawy to najłatwiejszy sposób na zwiększenie średniej wartości zamówieni
 
 | Nazwa zestawu | Składniki | Cena osobno | Cena zestawu | Oszczędność | Cel |
 |---------------|-----------|-------------|--------------|-------------|-----|
-| **Starter Kit** | Poszewka 50x70 + Scrunchie 5cm | 249 + 49 = 298 zł | 269 zł | 29 zł (10%) | Entry-level upsell, próg darmowej wysyłki |
-| **Beauty Sleep Set** | Poszewka 50x70 + Maska na oczy | 249 + 149 = 398 zł | 349 zł | 49 zł (12%) | Premium upsell, wyższe AOV |
+| **Starter Kit** | Poszewka 50×60 + Scrunchie | 249 + 49 = 298 zł | 269 zł | 29 zł (10%) | Entry-level upsell; przekracza próg darmowej wysyłki |
+| **Nocna Rutyna** | Poszewka 50×60 + Bonnet + Scrunchie | [suma cen – uzupełnij po ustaleniu ceny bonnet] | [cena zestawu – rabat ~15%] | ~15% | Hero bundle; spina narrację hair care + sleep care; najwyższy AOV |
+| **Scrunchie Trio** | 3× Scrunchie (różne kolory) | 3 × 49 = 147 zł | 119 zł | 28 zł (19%) | Fast-mover; repeat purchase; gifting |
 
 ---
 
@@ -1552,9 +1704,10 @@ Zestawy to najłatwiejszy sposób na zwiększenie średniej wartości zamówieni
 
 | Nazwa zestawu | Warunek wprowadzenia |
 |---------------|---------------------|
-| **Ultimate Silk Ritual** (3 produkty) | Jeśli Beauty Sleep Set ma CR >5% na PDP |
-| **Gift Set Premium** | Przed sezonem prezentowym (listopad) |
-| **Duo dla Pary** | Przed Walentynkami lub jeśli dane pokazują zakupy 2x poszewka |
+| **Beauty Sleep Set** | Poszewka 50×60 + Maska 3D | Gdy sprzedaż maski w bundlach Fazy 1 potwierdzi popyt (sell-through > 50% w ciągu 60 dni) |
+| **Ultimate Silk Ritual** | Poszewka 50×60 + Bonnet + Maska 3D + Scrunchie | Jeśli bundle Nocna Rutyna osiąga CR > 5% na PDP |
+| **Gift Set Premium** | Poszewka 50×60 + Bonnet + opakowanie prezentowe premium | Przed sezonem prezentowym (listopad); hero zestawu „gotowy do wręczenia" |
+| **Duo dla Pary** | 2× Poszewka 50×60 + 2× Scrunchie | Przed Walentynkami lub gdy dane pokazują zakupy 2× poszewka |
 
 ---
 
@@ -1708,7 +1861,328 @@ URL: `/zestawy` lub `/kolekcja-zestawy`
 
 ---
 
+# 7) Strategia Zatowarowania i Skalowania
 
+## 7.1 Wariant strategiczny: Wzrostowy (Growth)
+
+**Cel:** Szybko budować AOV i markę premium, z poszewką 50×60 jako kotwicą wartości (najwyższy udział budżetowy) i scrunchies jako akceleratorem konwersji (najwyższy udział sztukowy), opierając ekspansję na narracji „nocna pielęgnacja włosów i skóry".
+
+**Kontekst rynkowy PL (synteza raportu):**
+
+* Polski e-commerce dojrzały (~78% penetracja zakupów online) — wyzwaniem jest walka o uwagę i zaufanie, nie edukacja e-commerce.
+* Mobile-first (~82% zakupów ze smartfona) — wymóg: szybkie ładowanie, uproszczone UX, duże tap targety.
+* Automaty paczkowe (InPost) ≈ 83% preferowana metoda dostawy — integracja InPost jako domyślna opcja wysyłki.
+* Social media = discovery/UGC (~19% deklaruje zakupy w socialach) — social pracuje jako góra lejka; domykanie sprzedaży w sklepie Shopify.
+* Główne ryzyko strategiczne: tanie satynowe/poliestrowe substytuty z marketplace'ów udające jedwab — szczególnie przy czepkach, scrunchies i maskach.
+
+**Kluczowe założenie dotyczące scrunchies:**
+Scrunchie to na starcie **produkt derivatywny** — kupowany przy okazji poszewki, bonnetu lub jako element bundle'a, nie jako samodzielny generator trafficu. Dlatego wolumen scrunchies jest proporcjonalny do oczekiwanej sprzedaży produktów wyższych (poszewka, bonnet), nie do samodzielnego popytu. Samodzielna sprzedaż scrunchies rośnie dopiero z rozpoznawalnością marki (Faza 2+).
+
+---
+
+## 7.2 Alokacja pierwszego zamówienia
+
+**Budżet: $4 000–4 500 USD | MOQ-adjusted**
+
+| Produkt | Tier | Kolory | Sztuki | Koszt | ≈ % Budżetu | ≈ % Sztuk | Rola strategiczna |
+|---------|------|--------|--------|-------|-------------|-----------|-------------------|
+| Poszewka 50×60 | 1 – Filar | 3 (A, B, **C — limitka**) | 120 | $2 064 | 49% | 31% | Kotwica premium, AOV, brand building |
+| Scrunchie | 1 – Filar | 3 (A, B, C) | 150 | $435 | 10% | 38% | Entry point, cross-sell, repeat, gratis progowy |
+| Bonnet | 2 – Wzrost | 2 (A, B) | 60 | $1 044 | 25% | 15% | Narracja hair care, bundling z poszewką |
+| Hair Curler | 2 – Wzrost | 1 | 30 | $375 | 9% | 8% | Content hero, UGC |
+| Maska 3D | 3 – Uzupełnienie | 1 (A) | 30 | $306 | 7% | 8% | Bundle addon, upsell |
+| **RAZEM produkt** | | | **390** | **$4 224** | **100%** | **100%** | |
+| Bufor (przy budżecie $4 500) | | — | — | ~$276 | — | — | Szybki restock bestsellerów |
+
+**Dlaczego poszewka na ~49%:**
+Poszewka to jedyny produkt z jednocyfrowym kosztem-za-noc (kotwica cenowa „0,XX zł/noc"), najwyższym AOV i najwyższym potencjałem marżowym. 3. kolor pozycjonowany jako „limitka" tworzy efekt FOMO i testuje preferencje kolorystyczne bez ryzyka — bo nawet jeśli sprzeda się wolniej, 40 szt. w cenie premium to akceptowalne zamrożenie vs potencjał budowania marki.
+
+**Dlaczego scrunchie na ~10% (a nie więcej):**
+Scrunchie na starcie nowej marki jest produktem derivatywnym — sprzedaż zależy od trafficu generowanego przez poszewkę i bundlów. 150 szt. to zapas na ~3–4 miesiące przy realistycznym scenariuszu cross-sell + bundling + gratis. Zwiększenie ilości uzasadnione dopiero gdy marka zbuduje rozpoznawalność i scrunchie zacznie generować samodzielny popyt.
+
+---
+
+## 7.3 Strategia kolorystyczna
+
+**Zasada bazowa:** 2 kolory uniwersalne (A — baza ciemna, B — baza jasna) jako rdzeń we WSZYSTKICH liniach produktowych. Zapewnia to spójność wizualną w zestawach i na zdjęciach.
+
+### Faza 1 — Launch
+
+| Produkt | Kolory | Logika |
+|---------|--------|--------|
+| Poszewka 50×60 | A, B, **C (limitka)** | 2 bazy + 1 limitka; C = test preferencji kolorystycznych i narzędzie FOMO |
+| Scrunchie | A, B, C | 2 bazy spójne z poszewką + 1 akcent; 3 kolory = idealny Scrunchie Trio (po 1 z każdego) |
+| Bonnet | A, B | 2 bazy spójne z poszewką; ułatwia bundlowanie (klientka dobiera bonnet do poszewki w tym samym kolorze) |
+| Hair Curler | B | 1 kolor neutralny jasny; niski priorytet kolorystyczny |
+| Maska 3D | A | 1 kolor ciemny; najuniwersalniejszy dla maski do spania |
+
+**Uwaga:** Kolor C w poszewce i kolor C w scrunchie mogą, ale nie muszą być tożsame — do ustalenia na etapie doboru palety. Spójność koloru C między poszewką a scrunchie ułatwia fotografię zestawów i komunikację „matching set".
+
+### Strategia limitki (kolor C poszewki)
+
+* **Pozycjonowanie:** Badge „Edycja limitowana" na PDP i PLP; komunikat: „Dostępna do wyczerpania zapasów — nie planujemy dodruku"
+* **Ekspozycja:** Dedykowany mailing do bazy (LUSENA Circle): „Nowy kolor — tylko 40 sztuk"; rotacja w hero homepage (tydzień 3–4)
+* **Reguła Fazy 2:**
+  * Sell-through > 70% w 45 dni → promuj kolor C do oferty stałej; zamów 40 szt. z bufora
+  * Sell-through < 40% w 60 dni → nie restockuj; potraktuj jako lekcję i wybierz inny kolor na kolejną limitkę
+
+### Faza 2 — Scale (po 8–12 tygodniach danych sprzedażowych)
+
+| Produkt | Reguła rozszerzenia |
+|---------|---------------------|
+| Poszewka | Jeśli limitka (C) sell-through > 70% → promuj do stałej i dodaj nowy kolor D jako kolejną limitkę. Jeśli nie → wybierz inny kolor D, ponów test |
+| Scrunchie | Rotacja: wycofaj najsłabiej rotujący kolor i zastąp nowym; limit 3–4 aktywnych kolorów; decyzja na podstawie danych sell-through per kolor |
+| Bonnet | Dodaj kolor C (matching z poszewką), jeśli: repeat rate > 15% LUB bundle Nocna Rutyna sell-through > 60% |
+| Curler | Bez zmian kolorystycznych (Tier 2, niski priorytet) |
+| Maska 3D | Bez zmian (Tier 3) |
+
+**Zasada „sezonowej limitki":** Raz na kwartał możesz wprowadzić 1 kolor limitowany w poszewce (i opcjonalnie matching scrunchie) z komunikatem scarcity — buduje FOMO i daje content do emaili/social bez ryzyka zamrożenia kapitału.
+
+---
+
+## 7.4 Model popytu scrunchie (referencyjny)
+
+Poniższa tabela przedstawia szacunkowy popyt na scrunchie w pierwszych 90 dniach, zakładając sell-through poszewek/bonnetów zgodny z KPIs z 7.7. Służy do walidacji zamówionej ilości (150 szt.) i planowania reorderu.
+
+| Źródło sprzedaży scrunchie | Mechanizm | Szacunek 90 dni |
+|---|---|---|
+| Cross-sell na PDP poszewki/bonnetu | Checkbox „dodaj scrunchie" (~25–30% attach rate) | ~20–25 szt. |
+| Bundle Starter Kit | Poszewka + scrunchie (~15–20% klientów poszewki) | ~8–12 szt. |
+| Bundle Nocna Rutyna | Poszewka + bonnet + scrunchie | ~6–10 szt. |
+| Scrunchie Trio (standalone) | Prezent / impuls / repeat | ~15–25 szt. |
+| Gratis progowy | Darmowa scrunchie przy progu wysyłki | ~10–15 szt. |
+| Zakup standalone (single) | Minimalny na starcie nowej marki | ~5–10 szt. |
+| **RAZEM** | | **~65–100 szt.** |
+
+**Wniosek:** 150 szt. to zapas na ~3,5–5 miesięcy. Reorder potrzebny najwcześniej po ~10–12 tygodniach. Priorytet restocku: najpierw top-selling kolor (prawdopodobnie akcent C), potem bazy.
+
+---
+
+## 7.5 Reguły reorderingu
+
+| Wskaźnik | Trigger | Akcja |
+|----------|---------|-------|
+| Sell-through ≥ 60% w < 30 dni | Produkt „gorący" | Natychmiast zamów 1,5× initial qty tego SKU |
+| Sell-through ≥ 60% w 30–60 dni | Stabilny popyt | Zamów tę samą ilość |
+| Sell-through < 30% w 60 dni | Zamrożony kapitał | STOP reorder; uruchom bundlowanie lub rabat celowy |
+| Zwroty > 15% na SKU | Problem produktowy | Wstrzymaj sprzedaż SKU; analiza przyczyn (fit? oczekiwania? jakość?) |
+| Kolor sprzedaje < 20% średniej kategorii | Słaby wariant | Nie restockuj; rozważ przeniesienie do zestawów mieszanych lub wyprzedaż |
+| Limitka sell-through > 70% w 45 dni | Hit kolorystyczny | Promuj do koloru stałego; reorder 40 szt.; wprowadź nową limitkę |
+| Limitka sell-through < 40% w 60 dni | Chybiony kolor | Nie restockuj; wybierz inny kolor na kolejną limitkę |
+
+**Priorytet reorderu (kolejność wydania bufora):**
+Poszewka 50×60 (top kolor) > Scrunchie (top kolor) > Bonnet > Poszewka (remaining kolory) > Scrunchie (remaining) > Curler > Maska 3D
+
+**Lead time:** Uwzględnij 3–5 tygodni czas realizacji zamówienia u dostawcy. Trigger reorderu powinien uruchamiać się z wyprzedzeniem — monitoruj sell-through co tydzień, nie czekaj na stock-out.
+
+---
+
+## 7.6 Zasady bundlowania powiązane z zatowarowania
+
+**Reguła generalna:** Nigdy nie twórz bundli, na które nie masz stanu magazynowego. Bundle łączy produkt wysokomarżowy (poszewka) z produktem niskoprogowym (scrunchie), by:
+
+1. Podnieść AOV bez rabatowania filara
+2. Osiągnąć próg darmowej wysyłki (ustaw próg 20–40 zł powyżej ceny samej poszewki)
+3. Sprzedać produkty Tier 3 (maska) wyłącznie jako element zestawu, nie samodzielnie
+
+**Kluczowe zestawy Fazy 1 (patrz też Sekcja 5.8.1):**
+
+| Zestaw | Składniki | Logika strategiczna | Wpływ na stany |
+|--------|-----------|---------------------|----------------|
+| **Starter Kit** | Poszewka + Scrunchie | Najniższy próg upsell; przekracza darmową wysyłkę; wciąga w ekosystem | 1 poszewka + 1 scrunchie per zestaw |
+| **Nocna Rutyna** | Poszewka + Bonnet + Scrunchie | Hero bundle; spina narrację hair care + sleep care; najwyższy AOV | 1 poszewka + 1 bonnet + 1 scrunchie |
+| **Scrunchie Trio** | 3× Scrunchie (A + B + C) | Fast-mover; repeat purchase; gifting; po 1 szt. z każdego koloru | 3 scrunchie per zestaw |
+
+**Zasada „scrunchie jako gratis":** Przy zamówieniach powyżej ustalonego progu (np. poszewka + bonnet) dodaj scrunchie gratis. Koszt jednostkowy scrunchie ($2,90) jest na tyle niski, że gratis podnosi postrzeganą wartość przy minimalnym koszcie. Zarezerwuj ~10–15 szt. scrunchie na gratisy w pierwszych 90 dniach.
+
+**Zasada kolorystyki zestawów:** W bundlach (Starter Kit, Nocna Rutyna) domyślnie oferuj matching kolory (poszewka A + bonnet A + scrunchie A), z opcją customizacji. Na zdjęciach zestawów pokazuj wariant w kolorze B (jasny — lepiej wygląda na zdjęciach).
+
+---
+
+## 7.7 Reguły ekspozycji na Shopify (operacyjne)
+
+1. **Sortowanie PLP (domyślne):**
+   Poszewka 50×60 → Scrunchie Trio → Scrunchie (bestseller kolor) → Bonnet → Bundle Nocna Rutyna → Starter Kit → Curler → Maska 3D
+
+2. **Homepage hero — rotacja 2-tygodniowa:**
+
+   | Tydzień | Hero | Komunikat |
+   |---------|------|-----------|
+   | 1–2 | Poszewka 50×60 (kolor A lub B) | Kotwica premium; „Obudź się piękniejsza" |
+   | 3–4 | Poszewka 50×60 (kolor C — limitka) | Scarcity; „Edycja limitowana — tylko 40 sztuk" |
+   | 5–6 | Bundle Nocna Rutyna | Budowanie koszyka; „Kompletna nocna rutyna" |
+   | 7–8 | Scrunchie Trio | Entry point / gifting; „3 kolory, 1 zestaw" |
+   | Cykl powtarza się; dostosuj na podstawie danych CTR/CR | | |
+
+3. **PDP cross-sell (checkbox/rekomendacja):**
+   * Na PDP poszewki → „Dodaj scrunchie (-XX% w zestawie)" jako checkbox pod CTA
+   * Na PDP scrunchie → „Dokup poszewkę i stwórz nocną rutynę" jako banner
+   * Na PDP bonnetu → „Stwórz Nocną Rutynę — dodaj poszewkę i scrunchie" jako karuzela zestawów
+   * Na PDP curlera → „Dodaj scrunchie, żeby rano wpiąć gotowe loki" jako checkbox
+
+4. **Maska 3D — reguły widoczności:**
+   * NIE wyświetlaj na homepage ani w toplevel nawigacji
+   * Widoczna: w zestawach (Beauty Sleep Set — Faza 2), jako PDP upsell (checkbox), na dedykowanej stronie kategorii
+   * Jeśli sell-through > 50% w 60 dni (dzięki bundlom) → rozważ podniesienie do Tier 2 w Fazie 2
+
+5. **Limitka (kolor C poszewki) — reguły widoczności:**
+   * Badge „Edycja limitowana" na karcie PLP i PDP
+   * Licznik stock'u na PDP: „Zostało X sztuk" (widoczny gdy stan < 15 szt.)
+   * Dedykowany mailing do LUSENA Circle przy launchu koloru
+   * Po wyprzedaniu: „Wyprzedane — zapisz się, by nie przegapić następnej edycji" + email capture
+
+6. **Out-of-stock behavior:**
+   Ukryj „Dodaj do koszyka"; pokaż „Powiadom mnie o dostępności" + email capture (lead gen nawet przy braku towaru)
+
+7. **Próg darmowej wysyłki:**
+   Ustaw 20–40 zł powyżej ceny samej poszewki (np. jeśli poszewka = 249 zł, próg = 279 zł) — wymusza dokupienie scrunchie lub upgrade do bundle'a
+
+---
+
+## 7.8 Wskaźniki sukcesu (KPIs)
+
+| KPI | Cel — Faza 1 (0–90 dni) | Cel — Faza 2 (90–180 dni) |
+|-----|--------------------------|---------------------------|
+| AOV (śr. wartość zamówienia) | ≥ 220 zł | ≥ 280 zł |
+| Bundle attachment rate | ≥ 15% zamówień zawiera bundle lub cross-sell | ≥ 25% |
+| Sell-through poszewki / 60 dni | ≥ 50% stanu (≥ 60 szt. z 120) | ≥ 60% |
+| Sell-through scrunchie / 90 dni | ≥ 50% stanu (≥ 75 szt. z 150) | ≥ 65% |
+| Sell-through limitki (kolor C) / 45 dni | ≥ 50% (≥ 20 szt. z 40) | n/d (nowa limitka) |
+| Wskaźnik zwrotów (ogół) | < 8% | < 5% |
+| Wskaźnik zwrotów bonnet + maska | < 12% (wyższy próg — ryzyko fit) | < 8% |
+| Repeat purchase scrunchie / 90 dni | ≥ 10% klientów kupuje ponownie | ≥ 20% |
+| Email capture rate | ≥ 5% odwiedzających | ≥ 8% |
+| Koszt pozyskania klienta (CAC) | Monitoruj, nie ustalaj celu na start | CAC < 30% AOV |
+
+---
+
+## 7.9 Scenariusze ryzyka i reakcja
+
+| Ryzyko | Sygnał ostrzegawczy | Reakcja |
+|--------|---------------------|---------|
+| **Zamrożone stany masek/curlerów** | Sell-through < 20% po 60 dniach | Dodaj do bundli z rabatem 15–20%; uruchom kampanię contentową (UGC, tutoriale); NIE restockuj |
+| **Wysoki return rate bonnetów** | Zwroty > 15% | Analiza przyczyn (fit vs oczekiwania); dodaj do PDP precyzyjny sizing guide ze zdjęciami na różnych typach włosów; rozważ zmianę dostawcy gumki |
+| **Scrunchies rotują za wolno** | Sell-through < 30% w 90 dni | Wzmocnij cross-sell (obniż próg darmowej wysyłki, zwiększ widoczność checkbox na PDP); użyj jako gratis przy każdym zamówieniu; NIE obniżaj ceny |
+| **Poszewki sprzedają się TYLKO w bundlach** | > 60% sprzedaży poszewek w bundlach, < 40% standalone | Wzmocnij PDP poszewki (dodaj social proof, video, porównanie); testuj niższy próg darmowej wysyłki |
+| **Limitka (kolor C) nie sprzedaje się** | Sell-through < 40% w 60 dni | Nie restockuj; włącz do „Starter Kit" jako wariant; wybierz nowy kolor D na kolejną limitkę |
+| **Limitka wyprzedana w < 2 tygodnie** | Sell-through 100% w < 14 dni | Natychmiast zamów restock z bufora (40 szt.); rozważ podniesienie ceny na kolejną limitkę o 10–15%; komunikuj „sold out w 12 dni" jako social proof |
+| **Wojny cenowe z satynowymi substytutami** | Spadek konwersji na PDP bonnet/scrunchie | Wzmocnij edukację „jedwab vs satyna" (Burn Test, porównanie materiałowe); NIE obniżaj cen — buduj wartość |
+
+---
+
+## 7.10 Przejście Faza 1 → Faza 2
+
+**Warunki przejścia (spełnij MINIMUM 3 z 5):**
+
+- [ ] Sell-through Tier 1 (poszewka + scrunchie łącznie) > 50% w 60 dni
+- [ ] AOV ≥ 220 zł przez 30 kolejnych dni
+- [ ] Wskaźnik zwrotów < 10% ogółem
+- [ ] Pozytywne opinie ≥ 4,5/5 średnia z minimum 20 recenzji
+- [ ] CAC stabilny lub malejący przez 4 kolejne tygodnie
+
+**Akcje Fazy 2:**
+
+1. Reorder bestsellerów Tier 1 — poszewka: 1,5× initial qty top koloru; scrunchie: restock top koloru
+2. Wprowadzenie nowego koloru limitowanego poszewki (D) — 40 szt., ten sam mechanizm FOMO
+3. Rozszerzenie palety bonnetu o kolor C (matching z poszewką), jeśli spełnione warunki z tabeli 7.3
+4. Uruchomienie zestawów Fazy 2 (Beauty Sleep Set z maską, jeśli sell-through maski > 50% dzięki bundlom)
+5. Rozszerzenie kampanii paid na Tier 2 (bonnet hero, curler UGC)
+6. Scrunchie: jeśli pojawia się samodzielny popyt (> 20% sprzedaży scrunchie to standalone) → rozważ dodanie 4. koloru
+
+---
+
+## 7.11 Checklista — Strategia Zatowarowania
+
+### Przed zamówieniem
+- [ ] Kolory A, B, C ustalone i zatwierdzone (paleta spójna cross-product)
+- [ ] Zamówienie Fazy 1 złożone wg alokacji z tabeli 7.2 (390 szt., 5 kategorii)
+- [ ] Lead time dostawcy potwierdzony (3–5 tygodni)
+
+### Konfiguracja sklepu
+- [ ] Zestawy z tabeli 7.6 skonfigurowane w Shopify (Starter Kit, Nocna Rutyna, Scrunchie Trio)
+- [ ] Próg darmowej wysyłki ustawiony 20–40 zł ponad ceną poszewki
+- [ ] Sortowanie PLP zgodne z kolejnością z 7.7.1
+- [ ] Homepage hero skonfigurowane pod rotację 2-tygodniową (7.7.2)
+- [ ] Cross-sell checkboxy na PDP wdrożone wg regułek 7.7.3
+- [ ] Maska 3D ukryta z toplevel nawigacji i homepage (7.7.4)
+- [ ] Limitka (kolor C poszewki): badge „Edycja limitowana" + licznik stanu wdrożone (7.7.5)
+- [ ] „Powiadom o dostępności" włączone dla out-of-stock (7.7.6)
+
+### Monitoring (co tydzień)
+- [ ] Sell-through per SKU/kolor aktualizowany w arkuszu
+- [ ] Reorder triggery sprawdzane vs progi z tabeli 7.5
+- [ ] KPIs z tabeli 7.8 monitorowane w dashboardzie
+- [ ] Zwroty per kategoria śledzone (osobny próg dla bonnet + maska: < 12%)
+
+### Przejście do Fazy 2
+- [ ] Warunki z 7.10 zwalidowane (min. 3 z 5 spełnione)
+- [ ] Nowy kolor limitowany (D) wybrany na podstawie danych
+- [ ] Zestawy Fazy 2 przygotowane do uruchomienia
+
+## 7.12 Strategia Social Proof na Launch (problem „0 opinii")
+
+### Cel
+Zgromadzić minimum **15 opinii na PDP w dniu premiery** i **50 opinii „Zweryfikowany zakup" w ciągu 90 dni** — ponieważ brak social proof przy produkcie premium za 249 zł obniża konwersję o 50–80%.
+
+### 4 warstwy budowania social proof
+
+**Warstwa 1: Program Testowy LUSENA (pre-launch, 2–4 tyg. przed startem)**
+* Zrekrutuj 10–15 osób (mikro-influencerki 1–10k, znajome z nisz hair care / beauty / sleep)
+* Wyślij produkt jako prezent z kartą: „Testujemy jedwab przed premierą. Zależy nam na Twojej szczerej opinii."
+* Zbierz feedback formularzem (imię, zdjęcie opcjonalne, tekst opinii)
+* Opublikuj na PDP jako: **„Opinia z Programu Testowego LUSENA"** — osobna sekcja, poniżej przyszłych opinii zweryfikowanych
+* Brak zobowiązań do posta na Insta; jeśli opublikują same — bonus (mogą oznaczyć `#prezentodmarki`)
+
+**Warstwa 2: Pierwsi klienci z sieci (tydzień 1–2)**
+* Osobista sieć — osoby kupujące za pełną cenę (nie darmowo)
+* Review request email: Dzień 7 po dostawie
+* Badge na stronie: **„Zweryfikowany zakup ✓"**
+
+**Warstwa 3: Automatyzacja opinii (ongoing)**
+* Review request email w Post-Purchase Flow: Dzień 14 po dostawie (patrz Sekcja 4.4)
+* Incentive: 10% zniżka na kolejne zamówienie za recenzję ze zdjęciem
+* Widget opinii z filtrowaniem (po produkcie, po ocenie) i badge „Zweryfikowany zakup"
+* Nigdy nie usuwaj negatywnych opinii — odpowiadaj publicznie (ton z CS Playbook)
+
+**Warstwa 4: Micro-influencer gifting (miesiąc 1–3)**
+* Gift 5–10 mikro-influencerek; bez zapłaty, bez zobowiązania do posta
+* Jeśli opublikują → poproś o zgodę na repost i embed na stronie
+* Wyświetlaj w sekcji **„Widziane na Instagramie"** — OSOBNA od „Opinii klientów"
+
+### Reguły wyświetlania na PDP
+
+| Źródło opinii | Oznaczenie na stronie | Sekcja PDP | Priorytet |
+|---|---|---|---|
+| Zakup za pełną cenę | „Zweryfikowany zakup ✓" | **Opinie klientek** (primary) | Najwyższy — wyświetlaj na górze |
+| Zakup z incentive (10% za review) | „Zweryfikowany zakup ✓" | **Opinie klientek** | Wysoki — nie odróżniaj od powyższego |
+| Program Testowy (gift) | „Opinia z Programu Testowego" | **Opinie testerek / Nasze początki** | Średni — widoczna do momentu zgromadzenia ≥ 20 opinii zweryfikowanych, potem przesuń do dolnej sekcji |
+| Post influencerki z Instagrama | Embed posta z @username | **Widziane na Instagramie** / **Co mówią o nas** | Dodatkowy — zawsze osobna sekcja od opinii klientek |
+
+**Czego NIGDY nie rób:**
+* ❌ Nie fabricuj opinii (pisanie fałszywych recenzji = naruszenie Dyrektywy Omnibus)
+* ❌ Nie mieszaj opinii z giftu z opiniami „Zweryfikowany zakup" w jednej sekcji
+* ❌ Nie usuwaj negatywnych opinii selektywnie
+* ❌ Nie dyktuj treści opinii (ani testerkom, ani klientkom)
+
+### Compliance PL (skrót)
+
+* Opinie z giftu → oznaczaj „Opinia z Programu Testowego" na stronie; influencerka na Insta: `#prezentodmarki` / `#gifted`
+* Płatna współpraca → influencerka na Insta: `#reklama` / Paid Partnership; na Twojej stronie: sekcja „Widziane w mediach", NIE „Opinie klientek"
+* Podstawa: Rekomendacje Prezesa UOKiK dot. oznaczania treści reklamowych (2022) + Dyrektywa Omnibus (2023 implementacja PL)
+* Przy wątpliwościach: konsultacja z prawnikiem specjalizującym się w prawie reklamy
+
+### Timeline
+
+| Kiedy | Akcja | Cel |
+|---|---|---|
+| Launch −4 tyg. | Rekrutacja 10–15 testerek | Lista potwierdzona |
+| Launch −3 tyg. | Wysyłka produktów testowych | Produkty dostarczone |
+| Launch −1 tyg. | Zebranie feedbacku, publikacja na stronie | ≥ 10 opinii testowych gotowych na premierę |
+| Launch day | PDP z opiniami testowymi + badges + video założyciela | Social proof od Dnia 1 |
+| Launch +7 dni | Review request do pierwszych klientów | Pierwsze „Zweryfikowane zakupy" |
+| Launch +14 dni | Wysyłka produktów do mikro-influencerek (Warstwa 4) | UGC w ciągu 3–4 tygodni |
+| Launch +30 dni | ≥ 20 opinii zweryfikowanych | Przesunięcie opinii testowych do dolnej sekcji |
+| Launch +90 dni | ≥ 50 opinii zweryfikowanych | Pełna wiarygodność PDP |
 
 
 # Załącznik: CS Playbook – Odpowiedzi na trudne pytania
@@ -1845,6 +2319,88 @@ Czy mogę jeszcze jakoś pomóc?"
 
 ---
 
+### 11. „Czepek się zsuwa / jest za ciasny / za luźny"
+
+**Odpowiedź:**
+„Rozumiem – dopasowanie czepka jest kluczowe dla komfortu.
+
+Nasz czepek ma regulowaną gumkę, więc może Pani dopasować obwód. Oto szybkie wskazówki:
+• Jeśli się zsuwa – zaciągnij gumkę o jedno oczko. Na bardzo gładkich włosach pomaga noszenie na lekko spiętych włosach (luźny warkocz).
+• Jeśli uciska – poluzuj gumkę. Jedwab jest delikatniejszy niż syntetyki, więc czepek może być luźniejszy i nadal trzymać.
+
+Jeśli mimo regulacji czepek nie pasuje – obowiązuje 60-dniowa gwarancja zwrotu. Bez pytań. Czy mogę pomóc z dopasowaniem?"
+
+---
+
+### 12. „Po co płacić za jedwabny czepek/gumkę, skoro satynowy(-a) kosztuje 30 zł?"
+
+**Odpowiedź:**
+„To częsty dylemat – wizualnie wyglądają podobnie, rozumiem.
+
+Kluczowa różnica: 'satyna' to nazwa splotu, nie materiału. Czepki i gumki 'satynowe' za 20–40 zł to w zdecydowanej większości poliester – tworzywo sztuczne, które:
+• nie oddycha (pocenie się w nocy)
+• generuje elektryczność statyczną (puszenie włosów)
+• nie redukuje tarcia tak skutecznie jak naturalne włókno
+
+Jedwab morwowy LUSENA to białko naturalne – oddycha, reguluje temperaturę i ma 3–4× niższy współczynnik tarcia niż poliester.
+
+Prosty test: podpal nitkę z 'satynowego' produktu – stopi się jak plastik. Nitka jedwabiu spali się jak włos i zostawi popiół, który da się rozetrzeć.
+
+Mogę wysłać link do porównania na naszej stronie?"
+
+**UWAGA CS:** To najczęstsza obiekcja przy czepkach i scrunchies. Nigdy nie mów „satyna jest zła" – mów „satyna to inna kategoria materiału". Edukuj, nie atakuj.
+
+---
+
+### 13. „Wałek do loków nie działa na moje włosy / jest niewygodny do spania"
+
+**Odpowiedź:**
+„Rozumiem – efekt wałka zależy od kilku czynników i nie u każdej osoby działa identycznie.
+
+Najczęstsze przyczyny braku efektu:
+1. **Zbyt krótki czas** – dla wyraźnych loków potrzeba minimum 4–6 godzin (optymalnie cała noc)
+2. **Zbyt grube pasma** – spróbuj zakręcić cieńsze pasemka
+3. **Suche włosy** – wałek działa najlepiej na lekko wilgotnych (nie mokrych)
+4. **Niewłaściwa średnica** – grubszy wałek = luźne fale; cieńszy = wyraźne loki
+
+Natomiast wygoda do spania – to indywidualne. Niektórym klientkom pomaga zakładanie wałka 4–5h przed snem zamiast na całą noc.
+
+Czy mogę zapytać o Pani typ włosów (długość, grubość)? Podpowiem optymalną technikę. A jeśli mimo wszystko produkt nie spełnia oczekiwań – mamy 60 dni na zwrot."
+
+---
+
+### 14. „Gumka (scrunchie) się rozciągnęła / jest za luźna na moje włosy"
+
+**Odpowiedź:**
+„Przepraszam za ten problem – gumka nie powinna szybko tracić elastyczności.
+
+Proszę o zdjęcie – jeśli widać uszkodzenie lub nadmierne rozciągnięcie, wymienimy natychmiast lub zwrócimy pieniądze.
+
+Na przyszłość kilka wskazówek:
+• Cienkie lub krótkie włosy – nasz model Mini (3 cm) lepiej trzyma niż Standard (5 cm)
+• Jedwabne scrunchies najlepiej sprawdzają się do codziennego noszenia i na noc – do intensywnych treningów lepsze są sportowe gumki
+• Pranie w woreczku ochronnym wydłuża żywotność gumki wewnętrznej
+
+Czy wolałaby Pani wymianę na inny rozmiar czy zwrot?"
+
+---
+
+### 15. „Tańsze maski 3D z pianki/memory foam są wygodniejsze – po co przepłacać za jedwab?"
+
+**Odpowiedź:**
+„To ciekawe porównanie – maski piankowe i jedwabne mają różne mocne strony.
+
+Pianka 3D daje dobrą blokadę światła i kształt 'zero nacisku na rzęsy'. Natomiast:
+• syntetyczny materiał nie oddycha – może powodować pocenie się skóry wokół oczu
+• nie redukuje tarcia delikatnej skóry powiek (a jedwab tak)
+• oznaczenie 'ice silk' na tanich maskach to zazwyczaj 100% poliester, nie jedwab
+
+Nasza maska łączy oba atuty: konstrukcja 3D (brak nacisku na rzęsy) + jedwab 22 momme (oddychalność + pielęgnacja skóry).
+
+Jeśli chce Pani przetestować różnicę – mamy 60 dni na test i zwrot. Mogę też zaproponować maskę w zestawie z poszewką, wtedy oszczędza Pani na całym zestawie."
+
+---
+
 ## Zasady ogólne CS
 
 1. **Nigdy nie przepraszaj za cenę.** Uzasadniaj wartość.
@@ -1852,3 +2408,5 @@ Czy mogę jeszcze jakoś pomóc?"
 3. **Zawsze oferuj następny krok** (link, PDF, kontakt).
 4. **Zawsze potwierdzaj emocję klienta** („Rozumiem...", „To świetne pytanie...").
 5. **Jeśli nie znasz odpowiedzi:** „Sprawdzę to i odezwę się w ciągu [X] godzin." – i dotrzymaj słowa.
+6. **Nigdy nie atakuj tanich alternatyw.** Klientka mogła kupić satynowy czepek za 30 zł i być zadowolona. Edukuj o różnicy materiału, nie krytykuj jej dotychczasowych wyborów.
+7. **Przy produktach Tier 2–3 (bonnet, curler, maska) zawsze zarządzaj oczekiwaniami.** Obiecuj ochronę i komfort, nie metamorfozę. „Chroni włosy przed tarciem" > „Odmieni Twoje włosy".

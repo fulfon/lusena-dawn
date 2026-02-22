@@ -10,34 +10,38 @@
 
 {%- if has_evidence_blocks -%}
   {%- liquid
-  assign override_style = ''
-  if section.settings.padding_top > 0
-    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
-  endif
-  if section.settings.padding_bottom > 0
-    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
-  endif
-  if section.settings.padding_top_mobile > 0
-    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
-  endif
-  if section.settings.padding_bottom_mobile > 0
-    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
-  endif
--%}
-<section
-    class="lusena-pdp-quality-evidence lusena-spacing--spacious"
+    assign override_style = ''
+    if section.settings.padding_top > 0
+      assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+    endif
+    if section.settings.padding_bottom > 0
+      assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+    endif
+    if section.settings.padding_top_mobile > 0
+      assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+    endif
+    if section.settings.padding_bottom_mobile > 0
+      assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+    endif
+  -%}
+  <section
+    class="lusena-pdp-quality-evidence lusena-spacing--standard"
     data-lusena-quality-evidence
-  {% if override_style != blank %}
-    style="{{ override_style }}"
-  {% endif %}
->
+    {% if override_style != blank %}
+      style="{{ override_style }}"
+    {% endif %}
+  >
     <div class="container">
       <h2 class="lusena-pdp-quality-evidence__heading lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         {{ section.settings.heading | escape }}
       </h2>
 
-      <div class="lusena-pdp-quality-evidence__stack"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}
->
+      <div
+        class="lusena-pdp-quality-evidence__stack"
+        {% if settings.animations_reveal_on_scroll %}
+          data-cascade
+        {% endif %}
+      >
         {%- for block in section.blocks -%}
           {%- if block.type == 'evidence' -%}
             {%- liquid
@@ -65,7 +69,11 @@
               endif
             -%}
 
-            <div class="lusena-pdp-quality-evidence__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-quality-evidence-item {{ block.shopify_attributes }}>
+            <div
+              class="lusena-pdp-quality-evidence__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+              data-lusena-quality-evidence-item
+              {{ block.shopify_attributes }}
+            >
               <button
                 type="button"
                 class="lusena-pdp-quality-evidence__toggle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cta focus-visible:ring-offset-2"
@@ -73,13 +81,23 @@
                 aria-expanded="false"
               >
                 <span class="lusena-pdp-quality-evidence__toggle-icon-wrap">
-                  {% render 'lusena-icon', name: block.settings.icon, class: 'lusena-pdp-quality-evidence__toggle-icon', stroke_width: 1.5 %}
+                  {% render 'lusena-icon',
+                    name: block.settings.icon,
+                    class: 'lusena-pdp-quality-evidence__toggle-icon',
+                    stroke_width: 1.5
+                  %}
                 </span>
                 <span class="lusena-pdp-quality-evidence__toggle-copy">
                   <span class="lusena-pdp-quality-evidence__title">{{ block.settings.title | escape }}</span>
-                  <span class="lusena-pdp-quality-evidence__summary">{{ block.settings.summary | escape | newline_to_br }}</span>
+                  <span class="lusena-pdp-quality-evidence__summary">
+                    {{- block.settings.summary | escape | newline_to_br -}}
+                  </span>
                 </span>
-                {% render 'lusena-icon', name: 'chevron-down', class: 'lusena-pdp-quality-evidence__chevron', stroke_width: 1.5 %}
+                {% render 'lusena-icon',
+                  name: 'chevron-down',
+                  class: 'lusena-pdp-quality-evidence__chevron',
+                  stroke_width: 1.5
+                %}
               </button>
 
               <div class="lusena-pdp-quality-evidence__panel" data-lusena-quality-evidence-panel>
@@ -98,7 +116,7 @@
                         {% if cta_opens_new_tab %}
                           target="_blank" rel="noopener"
                         {% endif %}
->
+                      >
                         {{ block.settings.cta_label | escape }}
                       </a>
                     {%- else -%}
@@ -257,7 +275,6 @@
   }
 
   @media (min-width: 768px) {
-
     .lusena-pdp-quality-evidence__heading {
       font-size: 28px;
       line-height: 36px;

@@ -57,6 +57,28 @@
   }
 }
 
+/* ─── Neutralize Dawn's .section + .section margin ───
+ *
+ * Dawn's base.css (line ~149) adds margin-top between adjacent .section
+ * wrappers:
+ *
+ *   .section + .section { margin-top: var(--spacing-sections-desktop); }
+ *
+ * Shopify injects the "section" class when a section schema declares
+ * "class": "section". This margin stacks ON TOP of the LUSENA tier
+ * padding, inflating the gap by ~36px (the default spacing_sections
+ * setting). The LUSENA spacing system is designed to be the sole source
+ * of inter-section spacing, so we zero this margin whenever either the
+ * preceding or following section uses a LUSENA tier class.
+ *
+ * Affected sections: any lusena-* section whose schema has
+ * "class": "section" (currently 10 sections).
+ */
+.section:has(> [class*="lusena-spacing--"]) + .section,
+.section + .section:has(> [class*="lusena-spacing--"]) {
+  margin-top: 0;
+}
+
 /* ─── Tier spacing classes (section padding) ─── */
 
 .lusena-spacing--full-bleed {
@@ -202,6 +224,14 @@
 
 .lusena-gap-cta {
   margin-bottom: var(--lusena-space-cta);
+}
+
+/* margin-top variant — use on elements that come AFTER content (e.g. a CTA
+ * button below a grid) rather than on the content that precedes the CTA.
+ * Avoids phantom margin when the CTA is conditionally hidden on some
+ * breakpoints (see Rule 15). */
+.lusena-gap-cta-top {
+  margin-top: var(--lusena-space-cta);
 }
 
 .lusena-gap-section-intro {

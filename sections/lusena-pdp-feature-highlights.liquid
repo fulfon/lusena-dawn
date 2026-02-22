@@ -10,29 +10,33 @@
 
 {%- if has_feature_blocks -%}
   {%- liquid
-  assign override_style = ''
-  if section.settings.padding_top > 0
-    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
-  endif
-  if section.settings.padding_bottom > 0
-    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
-  endif
-  if section.settings.padding_top_mobile > 0
-    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
-  endif
-  if section.settings.padding_bottom_mobile > 0
-    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
-  endif
--%}
-<section
-    class="lusena-pdp-feature-highlights lusena-spacing--standard"
-  {% if override_style != blank %}
-    style="{{ override_style }}"
-  {% endif %}
->
+    assign override_style = ''
+    if section.settings.padding_top > 0
+      assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+    endif
+    if section.settings.padding_bottom > 0
+      assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+    endif
+    if section.settings.padding_top_mobile > 0
+      assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+    endif
+    if section.settings.padding_bottom_mobile > 0
+      assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+    endif
+  -%}
+  <section
+    class="lusena-pdp-feature-highlights lusena-spacing--standard border-t border-brand-bg"
+    {% if override_style != blank %}
+      style="{{ override_style }}"
+    {% endif %}
+  >
     <div class="container">
-      <div class="lusena-pdp-feature-highlights__grid"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}
->
+      <div
+        class="lusena-pdp-feature-highlights__grid"
+        {% if settings.animations_reveal_on_scroll %}
+          data-cascade
+        {% endif %}
+      >
         {%- for block in section.blocks -%}
           {%- if block.type == 'feature' -%}
             {%- liquid
@@ -73,9 +77,16 @@
               endif
             -%}
 
-            <div class="lusena-pdp-feature-highlights__card{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
+            <div
+              class="lusena-pdp-feature-highlights__card{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+              {{ block.shopify_attributes }}
+            >
               <div class="lusena-pdp-feature-highlights__icon-wrap">
-                {% render 'lusena-icon', name: feature_icon, class: 'lusena-pdp-feature-highlights__icon-svg', stroke_width: 1.5 %}
+                {% render 'lusena-icon',
+                  name: feature_icon,
+                  class: 'lusena-pdp-feature-highlights__icon-svg',
+                  stroke_width: 1.5
+                %}
               </div>
               <h3 class="lusena-pdp-feature-highlights__title">
                 {{ feature_title | escape }}
@@ -92,22 +103,23 @@
 {%- endif -%}
 
 {% stylesheet %}
-
   .lusena-pdp-feature-highlights__grid {
     display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: 32px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
   }
 
   .lusena-pdp-feature-highlights__card {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
+    align-items: center;
+    text-align: center;
   }
 
   .lusena-pdp-feature-highlights__icon-wrap {
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     border-radius: 9999px;
     background-color: rgb(240 238 235 / 1);
     display: inline-flex;
@@ -116,16 +128,16 @@
   }
 
   .lusena-pdp-feature-highlights__icon-svg {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     color: rgb(14 94 90 / 1);
   }
 
   .lusena-pdp-feature-highlights__title {
     margin: 0;
     font-family: 'Source Serif 4', serif;
-    font-size: 20px;
-    line-height: 28px;
+    font-size: 16px;
+    line-height: 24px;
     color: rgb(17 17 17 / 1);
   }
 
@@ -139,6 +151,18 @@
   @media (min-width: 640px) {
     .lusena-pdp-feature-highlights__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 32px;
+    }
+
+    .lusena-pdp-feature-highlights__card {
+      gap: 12px;
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .lusena-pdp-feature-highlights__title {
+      font-size: 20px;
+      line-height: 28px;
     }
   }
 

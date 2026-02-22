@@ -23,7 +23,7 @@
     <div class="container">
       {% render 'lusena-breadcrumbs', page_type: 'collection', collection: collection %}
 
-      <div class="flex flex-col md:flex-row justify-between items-baseline mb-6{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="flex flex-col md:flex-row justify-between items-baseline lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <div>
           <h1 class="text-3xl md:text-4xl font-serif text-primary">{{ collection.title | escape }}</h1>
           {%- if collection.description != blank -%}
@@ -57,7 +57,7 @@
         {%- endfor -%}
       </div>
 
-      <div class="mt-12 text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="lusena-gap-cta-top text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         {%- if paginate.next -%}
           <a
             href="{{ paginate.next.url }}"

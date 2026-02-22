@@ -123,7 +123,8 @@ Apply `margin-bottom` to a specific element. Use when content-flow on the parent
 | `lusena-gap-kicker` | 12px | 12px | **Deprecated for kicker+heading pairs** — use `lusena-content-flow--tight` wrapper instead. Only for rare standalone kicker use outside a heading group. Has `display: block` built in. |
 | `lusena-gap-heading` | 20px | 24px | Below a standalone heading when no content-flow parent is possible |
 | `lusena-gap-body` | 20px | 24px | Below body text |
-| `lusena-gap-cta` | 28px | 36px | Below content that precedes a CTA |
+| `lusena-gap-cta` | 28px | 36px | Below content that precedes a CTA (margin-bottom) |
+| `lusena-gap-cta-top` | 28px | 36px | Above a CTA that follows content (margin-top) — use when the CTA is conditionally hidden on some breakpoints (see Rule 15) |
 | `lusena-gap-section-intro` | 32px | 48px | Below a section intro, before the main content |
 | `lusena-gap-subsection` | 48px | 80px | Major content break within a section (e.g. cross-sell divider). Uses `margin-top`. |
 
@@ -224,7 +225,23 @@ For each section, answer:
     | Utility / thin | `compact` | `lusena-trust-bar`, `lusena-pdp-details` |
     | Edge-to-edge media | `full-bleed` | Full-bleed images, video, maps |
 
-14. **Audit same-bg pairs before shipping.** When creating or reordering sections on a page, check whether any adjacent pair shares the same `bg-*` class. If they do, calculate the total visual gap:
+15. **Never put spacing on the content element when the CTA is conditionally hidden.** If a CTA (button, link) is visible only on certain breakpoints (e.g. `md:hidden`), do **not** add `lusena-gap-cta` (margin-bottom) to the content element above it — that margin will persist even when the CTA is invisible, creating a phantom gap on breakpoints where the CTA is hidden. Instead, put `lusena-gap-cta-top` (margin-top) **on the CTA element itself**. Since the CTA is hidden, its margin disappears with it.
+
+    **Bad:** `<div class="grid lusena-gap-cta">` + `<div class="md:hidden">CTA</div>` → 36px phantom margin on desktop.
+
+    **Good:** `<div class="grid">` + `<div class="md:hidden lusena-gap-cta-top">CTA</div>` → margin only exists on mobile where button is visible.
+
+17. **Dawn's `.section + .section` margin is neutralized — but be aware it exists.** Dawn's [base.css](assets/base.css#L149-L157) adds `margin-top: var(--spacing-sections-desktop)` (default 36px) between adjacent `.section` wrappers. Shopify adds the `section` class to the wrapper `<div class="shopify-section section">` when a section schema declares `"class": "section"`. This margin **stacks on top of** LUSENA tier padding, inflating every section gap by ~36px.
+
+    The LUSENA spacing system neutralizes this with a `:has()` rule in `lusena-spacing.css` that zeros the Dawn margin whenever either adjacent section uses a `lusena-spacing--*` tier class. **You don't need to do anything in normal usage** — the fix is automatic.
+
+    **When to be aware:**
+    - If a section's schema does NOT include `"class": "section"`, Dawn's margin won't apply (no issue).
+    - If you're debugging a gap that's ~36px larger than expected, check whether the neutralization rule is being overridden or whether the section is missing a `lusena-spacing--*` class.
+    - If you're mixing LUSENA sections with vanilla Dawn sections on the same page, the margin is zeroed for any pair where at least one side uses LUSENA tiers. Pure Dawn↔Dawn pairs keep Dawn's original behavior.
+    - The neutralization rule uses CSS `:has()` — supported in all modern browsers but not IE11 (not a concern for Shopify stores).
+
+18. **Audit same-bg pairs before shipping.** When creating or reordering sections on a page, check whether any adjacent pair shares the same `bg-*` class. If they do, calculate the total visual gap:
 
     `total = section_A bottom padding + max(gap-same, section_B top padding)`
 

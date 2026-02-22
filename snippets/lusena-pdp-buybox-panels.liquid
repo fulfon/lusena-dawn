@@ -120,8 +120,20 @@
   assign def_grade = 'Grade 6A to najwyższa jakość jedwabiu morwowego — najdłuższe, najbardziej jednolite włókna, bez zanieczyszczeń.'
 -%}
 
-<div class="w-full lusena-pdp-accordion" data-lusena-accordion-root data-lusena-accordion-single data-lusena-accordion-collapsible{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
-  <div class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-accordion-item data-lusena-accordion-value="specs">
+<div
+  class="w-full lusena-pdp-accordion"
+  data-lusena-accordion-root
+  data-lusena-accordion-single
+  data-lusena-accordion-collapsible
+  {% if settings.animations_reveal_on_scroll %}
+    data-cascade
+  {% endif %}
+>
+  <div
+    class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+    data-lusena-accordion-item
+    data-lusena-accordion-value="specs"
+  >
     <div class="flex">
       <button
         type="button"
@@ -131,10 +143,18 @@
         aria-expanded="false"
       >
         {{ specs_heading | escape }}
-        {% render 'lusena-icon', name: 'chevron-down', class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200', stroke_width: 2 %}
+        {% render 'lusena-icon',
+          name: 'chevron-down',
+          class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200',
+          stroke_width: 2
+        %}
       </button>
     </div>
-    <div class="lusena-pdp-accordion__content overflow-hidden text-sm" data-lusena-accordion-content data-state="closed">
+    <div
+      class="lusena-pdp-accordion__content overflow-hidden text-sm"
+      data-lusena-accordion-content
+      data-state="closed"
+    >
       <div class="lusena-pdp-accordion__body text-secondary">
         <table class="w-full text-sm" data-lusena-specs-table>
           <tbody>
@@ -218,7 +238,11 @@
     </div>
   </div>
 
-  <div class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-accordion-item data-lusena-accordion-value="care">
+  <div
+    class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+    data-lusena-accordion-item
+    data-lusena-accordion-value="care"
+  >
     <div class="flex">
       <button
         type="button"
@@ -228,10 +252,18 @@
         aria-expanded="false"
       >
         {{ care_heading | escape }}
-        {% render 'lusena-icon', name: 'chevron-down', class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200', stroke_width: 2 %}
+        {% render 'lusena-icon',
+          name: 'chevron-down',
+          class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200',
+          stroke_width: 2
+        %}
       </button>
     </div>
-    <div class="lusena-pdp-accordion__content overflow-hidden text-sm" data-lusena-accordion-content data-state="closed">
+    <div
+      class="lusena-pdp-accordion__content overflow-hidden text-sm"
+      data-lusena-accordion-content
+      data-state="closed"
+    >
       <div class="lusena-pdp-accordion__body text-secondary">
         <ul class="list-disc pl-4 space-y-1 text-secondary/80">
           {%- if care_steps != blank -%}

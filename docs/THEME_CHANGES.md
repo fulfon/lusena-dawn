@@ -4,7 +4,7 @@
 
 This repository started from the official Shopify **Dawn** theme and is being adapted into a **LUSENA**-ready storefront (PL-first, premium feel, proof-first messaging, WCAG-minded UI).
 
-Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: `C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-dawn\docs\LUSENA_BrandBook_v1.md`).
+Source of truth for brand direction: `docs/LUSENA_BrandBook_v2.md` (local path: `C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-dawn\docs\LUSENA_BrandBook_v2.md`).
 
 ## How to use this file
 
@@ -19,7 +19,37 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — feat(lusena): standardize global section spacing system
+### (current) — feat(lusena): refine spacing system and refresh PDP + brandbook docs
+
+**Goal:** Remove residual section-gap drift from Dawn defaults, tighten LUSENA spacing utility usage, and align PDP + brand documentation updates in one cohesive pass.
+
+**What changed**
+- Added spacing-system hardening in `assets/lusena-spacing.css`: neutralized Dawn `.section + .section` margin for LUSENA tier sections and introduced `lusena-gap-cta-top` for conditionally visible CTA elements.
+- Updated section/snippet spacing usage to remove phantom gaps and keep CTA separation attached to visible elements (`lusena-bestsellers`, `lusena-main-collection`, `lusena-footer`, `lusena-returns-editorial`).
+- Polished PDP support sections: updated `lusena-pdp-feature-highlights` card/grid behavior and switched `lusena-pdp-quality-evidence` to standard tier spacing with cleaner heading/toggle structure.
+- Added first-item spacing fixes for FAQ and PDP accordion rows to remove extra top padding in stacked FAQ/accordion groups.
+- Normalized PDP snippet markup structure (`media`, `summary`, `ATC`, `buybox panels`, `variant picker`, `cross-sell`, `accordions`) for consistent animation hooks and cleaner maintainability.
+- Migrated brand docs from `docs/LUSENA_BrandBook_v1.md` to `docs/LUSENA_BrandBook_v2.md` and added a dedicated v1->v2 migration changelog document.
+- Updated `.claude` spacing skill guidance with the new CTA-top utility and Dawn margin-neutralization debugging notes.
+
+**Key files**
+- `assets/lusena-spacing.css`
+- `sections/lusena-bestsellers.liquid`
+- `sections/lusena-main-collection.liquid`
+- `sections/lusena-footer.liquid`
+- `sections/lusena-pdp-feature-highlights.liquid`
+- `sections/lusena-pdp-quality-evidence.liquid`
+- `sections/lusena-faq.liquid`
+- `sections/lusena-returns-faq.liquid`
+- `snippets/lusena-pdp-media.liquid`
+- `snippets/lusena-pdp-summary.liquid`
+- `snippets/lusena-pdp-atc.liquid`
+- `snippets/lusena-pdp-variant-picker.liquid`
+- `docs/LUSENA_BrandBook_v2.md`
+- `docs/lusena_brandbook_update_changelog_v1_to_v2.md`
+- `.claude/skills/lusena-spacing/SKILL.md`
+
+### 0a6c1ab — feat(lusena): standardize global section spacing system
 
 **Goal:** Centralize vertical spacing across LUSENA sections with a tier/token system, reduce per-section padding drift, and make same-background section transitions more consistent.
 
@@ -178,47 +208,15 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v1.md` (local path: 
 - `snippets/lusena-pdp-styles.liquid`
 - `docs/PDP_Gallery_Crossfade_Lazy_Parity_Plan.md`
 
-### 4b9caa2 — feat(lusena): finalize returns page and PDP parity updates
-
-**Goal:** Finish draft-shop parity for the `/zwroty` page and key PDP fragments (payment strip, sticky ATC, and gallery zoom/lightbox) in the live LUSENA Dawn flow.
-
-**What changed**
-- Reworked `/zwroty` page sections (`hero`, `steps`, `faq`) to match draft parity in structure, typography, spacing defaults, iconography, and interactions.
-- Added two new `/zwroty` sections: editorial comparison ("why 60 days") and final CTA, then wired them into `templates/page.zwroty.json` order/content.
-- Replaced PDP text payment chips with SVG payment logos (Visa, BLIK, PayPo, Przelewy24) and responsive desktop/mobile layouts while keeping secure-payment copy configurable.
-- Added PDP gallery zoom/lightbox support: desktop click-zoom with pointer pan, keyboard/backdrop controls, and mobile pinch/double-tap/pan/swipe behavior with safe-area-compatible viewport handling.
-- Rebuilt sticky ATC into dedicated mobile + desktop variants and updated PDP scripts to synchronize all sticky instances for variant price/per-night/label/image/availability updates.
-- Added parity implementation plans for `/zwroty` and PDP fragments in `docs/`, and updated the draftshop parity skill with the primary local draft source path.
-
-**Key files**
-- `templates/page.zwroty.json`
-- `sections/lusena-returns-hero.liquid`
-- `sections/lusena-returns-steps.liquid`
-- `sections/lusena-returns-editorial.liquid`
-- `sections/lusena-returns-faq.liquid`
-- `sections/lusena-returns-final-cta.liquid`
-- `snippets/lusena-pdp-payment.liquid`
-- `snippets/lusena-pdp-media.liquid`
-- `snippets/lusena-pdp-scripts.liquid`
-- `snippets/lusena-pdp-sticky-atc.liquid`
-- `snippets/lusena-pdp-styles.liquid`
-- `assets/lusena-payment-visa.svg`
-- `assets/lusena-payment-blik.svg`
-- `assets/lusena-payment-paypo.svg`
-- `assets/lusena-payment-przelewy24.svg`
-- `layout/theme.liquid`
-- `layout/password.liquid`
-- `docs/Page_Zwroty_Parity_Plan.md`
-- `docs/Page_Zwroty_Final_CTA_Parity_Plan.md`
-- `docs/PDP_Sticky_ATC_Desktop_Mobile_Parity_Plan.md`
-- `docs/PDP_Payment_Icons_Strip_Parity_Plan.md`
-- `docs/PDP_Gallery_Zoom_Lightbox_Parity_Plan.md`
-- `.codex/skills/lusena-draftshop-fragment-parity/SKILL.md`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-21T18:02:39+01:00 — (current) — feat(lusena): standardize global section spacing system
+- 2026-02-22T14:43:58+01:00 — (current) — feat(lusena): refine spacing system and refresh PDP + brandbook docs
+- 2026-02-22T12:11:24+01:00 — f178fd9 — fix(lusena): align PDP spacing with global gap tokens
+- 2026-02-22T11:20:24+01:00 — 0a6c1ab — feat(lusena): standardize global section spacing system
+- 2026-02-21T18:07:48+01:00 — 636e65e — Merge branch 'main' of https://github.com/fulfon/lusena-dawn
+- 2026-02-21T18:05:45+01:00 — 53339f1 — chore: remove CLAUDE.md and clean duplicate PDP motion flag
+- 2026-02-21T18:03:32+01:00 — 242c49d — feat(lusena): standardize global section spacing system
 - 2026-02-21T15:17:18+01:00 — a2551d3 — feat(lusena): optimize accordion UX and sync theme docs
 - 2026-02-21T11:32:06+01:00 — 924911d — feat(lusena): unify button system and loading parity across PDP and cart
 - 2026-02-18T20:28:57+01:00 — 86ba8b3 — fix(lusena): improve touch cart drawer close and history behavior
