@@ -10,7 +10,7 @@
 {%- liquid
   assign sticky_price_per_night_cents = current_variant.price | divided_by: 365.0 | round
   assign sticky_price_per_night_prefix = section.settings.price_per_night_prefix | default: 'Tylko '
-  assign sticky_price_per_night_suffix = section.settings.price_per_night_suffix | default: ' / noc'
+  assign sticky_price_per_night_suffix = section.settings.price_per_night_suffix | default: '/ noc'
 
   if sticky_price_per_night_suffix contains '('
     assign sticky_price_per_night_suffix = sticky_price_per_night_suffix | split: '(' | first

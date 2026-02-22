@@ -20,8 +20,8 @@
   {% endif %}
 >
   <div class="container lusena-returns-faq__container mx-auto">
-    <div class="text-center lusena-gap-section-intro">
-      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold lusena-gap-kicker{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <div class="text-center lusena-gap-section-intro lusena-content-flow--tight">
+      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         {{ section.settings.faq_kicker | escape }}
       </span>
       <h2 class="text-3xl md:text-5xl font-serif text-primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
@@ -30,7 +30,7 @@
     </div>
 
     <div
-      class="w-full px-8 py-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+      class="w-full px-8 lusena-gap-cta{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
       data-lusena-returns-faq
       data-lusena-accordion-root
       data-lusena-accordion-single
@@ -38,7 +38,7 @@
       {% if settings.animations_reveal_on_scroll %}
         data-cascade
       {% endif %}
->
+    >
       {%- for block in section.blocks -%}
         {%- if block.type == 'faq' -%}
           <div
@@ -56,10 +56,18 @@
                 aria-expanded="false"
               >
                 {{ block.settings.question | escape }}
-                {% render 'lusena-icon', name: 'chevron-down', class: 'h-4 w-4 shrink-0 transition-transform duration-200 lusena-returns-faq__chevron', stroke_width: 1.5 %}
+                {% render 'lusena-icon',
+                  name: 'chevron-down',
+                  class: 'h-4 w-4 shrink-0 transition-transform duration-200 lusena-returns-faq__chevron',
+                  stroke_width: 1.5
+                %}
               </button>
             </div>
-            <div class="lusena-returns-faq__content overflow-hidden text-sm" data-lusena-accordion-content data-state="closed">
+            <div
+              class="lusena-returns-faq__content overflow-hidden text-sm"
+              data-lusena-accordion-content
+              data-state="closed"
+            >
               <div class="lusena-returns-faq__answer">
                 {{ block.settings.answer }}
               </div>
@@ -69,8 +77,8 @@
       {%- endfor -%}
     </div>
 
-    <div class="text-center mt-12{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <p class="text-secondary mb-4">{{ section.settings.contact_prompt | escape }}</p>
+    <div class="text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <p class="text-secondary lusena-gap-heading">{{ section.settings.contact_prompt | escape }}</p>
       {%- if section.settings.contact_button_label != blank and section.settings.contact_button_link != blank -%}
         <a
           href="{{ section.settings.contact_button_link }}"
@@ -84,7 +92,6 @@
 </section>
 
 {% stylesheet %}
-
   .lusena-returns-faq__container {
     max-width: 76.8rem !important;
   }
@@ -284,19 +291,27 @@
 
       const onFastTap = (el, callback) => {
         let startX, startY, handled;
-        el.addEventListener('touchstart', (e) => {
-          startX = e.touches[0].clientX;
-          startY = e.touches[0].clientY;
-          handled = false;
-        }, { passive: true });
-        el.addEventListener('touchend', (e) => {
-          const t = e.changedTouches[0];
-          if (Math.abs(t.clientX - startX) < 10 && Math.abs(t.clientY - startY) < 10) {
-            handled = true;
-            e.preventDefault();
-            callback(e);
-          }
-        }, { passive: false });
+        el.addEventListener(
+          'touchstart',
+          (e) => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+            handled = false;
+          },
+          { passive: true }
+        );
+        el.addEventListener(
+          'touchend',
+          (e) => {
+            const t = e.changedTouches[0];
+            if (Math.abs(t.clientX - startX) < 10 && Math.abs(t.clientY - startY) < 10) {
+              handled = true;
+              e.preventDefault();
+              callback(e);
+            }
+          },
+          { passive: false }
+        );
         el.addEventListener('click', (e) => {
           if (!handled) callback(e);
           handled = false;

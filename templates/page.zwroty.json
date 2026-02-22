@@ -37,10 +37,10 @@
         "proof-2"
       ],
       "settings": {
-        "padding_top": 96,
-        "padding_bottom": 96,
-        "padding_top_mobile": 64,
-        "padding_bottom_mobile": 96,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
         "hero_kicker": "Zero Ryzyka",
         "hero_heading_line_1": "60 Dni Gwarancji",
         "hero_heading_line_2": "Przespanych Nocy",
@@ -82,10 +82,10 @@
         "step-2"
       ],
       "settings": {
-        "padding_top": 56,
-        "padding_bottom": 56,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
         "steps_kicker": "Prosty Proces",
         "steps_heading": "Jak to działa?",
         "step_label_prefix": "Krok"
@@ -121,27 +121,19 @@
             "standard": "Zwrot po 14+ dniach",
             "lusena": "Pieniądze w 3-5 dni"
           }
-        },
-        "compare_row_3jaGND": {
-          "type": "compare_row",
-          "settings": {
-            "standard": "14 dni na zwrot",
-            "lusena": "60 dni na zwrot"
-          }
         }
       },
       "block_order": [
         "row-0",
         "row-1",
         "row-2",
-        "row-3",
-        "compare_row_3jaGND"
+        "row-3"
       ],
       "settings": {
-        "padding_top": 56,
-        "padding_bottom": 56,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
         "kicker": "Nasza Filozofia",
         "heading_line_1": "Dlaczego 60 dni,",
         "heading_line_2": "a nie 14?",
@@ -200,10 +192,10 @@
         "faq-4"
       ],
       "settings": {
-        "padding_top": 56,
-        "padding_bottom": 56,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
         "faq_kicker": "FAQ",
         "faq_heading": "Pytania i odpowiedzi",
         "contact_prompt": "Masz inne pytanie?",
@@ -214,10 +206,10 @@
     "returns_final_cta": {
       "type": "lusena-returns-final-cta",
       "settings": {
-        "padding_top": 56,
-        "padding_bottom": 56,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
         "heading_line_1": "Wypróbuj Przez",
         "heading_line_2": "60 Nocy",
         "body": "Dołącz do tysięcy kobiet, które obudziły się piękniejsze. Bez ryzyka, bez zobowiązań — jedynie piękniejsze poranki.",

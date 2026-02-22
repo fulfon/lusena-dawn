@@ -3,7 +3,7 @@
 > **Purpose:** Centralize all vertical spacing across the LUSENA theme into a single, token-based system. Eliminate per-section hardcoded padding, ensure consistent gaps between sections and content elements, and add automatic same-background adjacency detection.
 >
 > **Created:** 2026-02-21
-> **Status:** Implemented (theme code + core docs updated on 2026-02-21)
+> **Status:** Phase 1 implemented (2026-02-21). Phase 2 — conversion-optimized tier reassignment + spacious tier — implemented (2026-02-21). Phase 3 — conversion-optimized token tuning, tier re-reassignments, internal spacing refinements — implemented (2026-02-22).
 
 ---
 
@@ -12,7 +12,7 @@
 1. [Problem Statement](#1-problem-statement)
 2. [Architecture Overview](#2-architecture-overview)
 3. [Spacing Token Scale](#3-spacing-token-scale)
-4. [Spacing Tier System (4 Tiers)](#4-spacing-tier-system-4-tiers)
+4. [Spacing Tier System (5 Tiers)](#4-spacing-tier-system-5-tiers)
 5. [Same-bg vs Different-bg Section Gap](#5-same-bg-vs-different-bg-section-gap)
 6. [Intra-Section Content Spacing Tokens](#6-intra-section-content-spacing-tokens)
 7. [Per-Section Schema Override (Option B)](#7-per-section-schema-override-option-b)
@@ -54,7 +54,8 @@
 
 | File | Purpose |
 |---|---|
-| `snippets/lusena-spacing-system.liquid` | Single source of truth for all spacing CSS custom properties, tier classes, and intra-section spacing utility classes. |
+| `assets/lusena-spacing.css` | **Single source of truth** for all spacing CSS custom properties, tier classes, intra-section spacing utility classes, and content-flow utilities. Loaded as a standalone `<link>` in `layout/theme.liquid` (not via `{% stylesheet %}` — avoids `compiled_assets/styles.css` ~73KB truncation). |
+| `snippets/lusena-spacing-system.liquid` | Doc-only stub (CSS moved to `assets/lusena-spacing.css`). Kept so existing `{% render %}` calls don't break. |
 | `snippets/lusena-section-gap-detector.liquid` | Small JS script that detects adjacent sections with the same background color and adds `lusena-section-gap-same` class. |
 
 ### Files to modify
@@ -86,24 +87,37 @@ All tokens follow the existing 4px grid from the brandbook. Values are mobile-fi
 Token Name              Mobile    Desktop    Purpose
 ──────────────────────  ────────  ─────────  ────────────────────────────────────
 --lusena-space-xs       8px       8px        Kicker → heading
---lusena-space-sm       12px      16px       Heading → subheading/body
+--lusena-space-sm       12px      16px       Heading → subheading/body (base)
+--lusena-space-heading  16px      20px       Heading → subheading/body (premium, used by lusena-gap-heading)
 --lusena-space-md       20px      24px       Body → CTA, general content gap
+--lusena-space-cta      28px      36px       Dedicated CTA isolation gap (lusena-gap-cta)
 --lusena-space-lg       32px      48px       Heading block → content grid
 --lusena-space-xl       40px      64px       Section internal padding (standard)
 --lusena-space-2xl      64px      96px       Section internal padding (hero)
---lusena-space-3xl      80px      128px      Section internal padding (landing — NOT USED, reserved)
+--lusena-space-3xl      80px      128px      Reserved (large content areas)
+
+--lusena-space-spacious  48px      80px       Spacious tier section padding
 
 --lusena-section-gap         0px       0px        Gap between different-bg sections
---lusena-section-gap-same    24px      32px       Gap between same-bg sections
+--lusena-section-gap-same    32px      40px       Gap between same-bg sections
 ```
+
+> **Phase 3 token additions (2026-02-22):**
+> - `--lusena-space-heading` (16px/20px): Dedicated heading gap, slightly larger than `--lusena-space-sm` (12px/16px) for premium breathing room between heading → subheading. Used by `.lusena-gap-heading`.
+> - `--lusena-space-cta` (28px/36px): Dedicated CTA isolation gap, larger than `--lusena-space-md` (20px/24px) for clear visual emphasis before call-to-action buttons. Used by `.lusena-gap-cta`.
+> - `--lusena-section-gap-same` increased from 24px/32px → 32px/40px for more premium separation between same-background adjacent sections.
 
 > **Note on dual-purpose tokens:** `--lusena-space-lg` (32/48px) is used by both the **compact** tier section padding and the **`lusena-gap-section-intro`** utility class. Changing this token's value affects both simultaneously. If these ever need to diverge, introduce a dedicated `--lusena-space-section-intro` token.
 
-> **Note on `--lusena-space-3xl`:** This token is defined but NOT assigned to any tier in the 4-tier system. It's reserved for future use or ad-hoc overrides. All returns-* sections that currently use 128/96 will be reassigned to the `hero` tier (96/64). The visual impact is a reduction from 128→96px desktop and 96→64px mobile on returns sections. If after visual review this feels too tight, the `--lusena-space-2xl` values can be increased, or a 5th tier can be introduced.
+> **Note on `--lusena-space-3xl`:** This token is defined but NOT directly assigned to any tier. The new `--lusena-space-spacious` token (48px mobile / 80px desktop) is used for the `spacious` tier. The `3xl` token remains available for ad-hoc overrides.
+
+> **Phase 2 note (2026-02-21):** Conversion-optimized tier reassignment added a 5th tier (`spacious`) and reassigned 8 sections to create visual rhythm across all pages. See Section 4 for updated assignments.
+>
+> **Phase 3 note (2026-02-22):** Conversion-optimization pass added `--lusena-space-heading` (16/20px), `--lusena-space-cta` (28/36px) tokens and `.lusena-gap-cta` utility class. Increased `--lusena-section-gap-same` from 24/32px to 32/40px. Re-reassigned 4 sections (bestsellers→spacious, bundles→spacious, returns-steps→spacious, returns-faq→compact). See Appendix for full change summary.
 
 ---
 
-## 4. Spacing Tier System (4 Tiers)
+## 4. Spacing Tier System (5 Tiers)
 
 Each section gets ONE tier class on its outermost element. The tier class applies `padding-top` and `padding-bottom` using the tokens from Section 3.
 
@@ -112,9 +126,10 @@ Each section gets ONE tier class on its outermost element. The tier class applie
 | Tier | CSS Class | Desktop Padding T/B | Mobile Padding T/B | When to use |
 |---|---|---|---|---|
 | **Full-bleed** | `lusena-spacing--full-bleed` | 0 / 0 | 0 / 0 | Viewport-height heroes with background images. Only `lusena-hero`. |
-| **Hero** | `lusena-spacing--hero` | 96px / 96px | 64px / 64px | Page intro sections, landing CTAs, any section needing generous breathing room. |
-| **Standard** | `lusena-spacing--standard` | 64px / 64px | 40px / 40px | Regular content sections — the vast majority. |
-| **Compact** | `lusena-spacing--compact` | 48px / 48px | 32px / 32px | Utility / transactional sections (trust bar, PDP main, collection grid). |
+| **Compact** | `lusena-spacing--compact` | 48px / 48px | 32px / 32px | Utility / transactional / wrap-up sections (trust bar, FAQ, PDP details, CTA banners). |
+| **Standard** | `lusena-spacing--standard` | 64px / 64px | 40px / 40px | Regular content sections — dense grids, mixed media, forms. |
+| **Spacious** | `lusena-spacing--spacious` | 80px / 80px | 48px / 48px | Editorial / storytelling sections needing premium breathing room (heritage, origin stories, quality evidence). |
+| **Hero** | `lusena-spacing--hero` | 96px / 96px | 64px / 64px | Page intro sections, landing CTAs, generous breathing room. |
 
 ### CSS implementation (conceptual)
 
@@ -134,6 +149,10 @@ Each section gets ONE tier class on its outermost element. The tier class applie
   padding-top: var(--lusena-space-xl);    /* 40px mobile, 64px desktop */
   padding-bottom: var(--lusena-space-xl);
 }
+.lusena-spacing--spacious {
+  padding-top: var(--lusena-space-spacious); /* 48px mobile, 80px desktop */
+  padding-bottom: var(--lusena-space-spacious);
+}
 .lusena-spacing--hero {
   padding-top: var(--lusena-space-2xl);   /* 64px mobile, 96px desktop */
   padding-bottom: var(--lusena-space-2xl);
@@ -147,34 +166,34 @@ Each section gets ONE tier class on its outermost element. The tier class applie
 | 1 | `lusena-hero` | N/A (viewport) | `full-bleed` *(conceptual only — file NOT modified, no class added)* | 0/0/0/0 | No change |
 | 2 | `lusena-trust-bar` | 32/32/24/24 | `compact` | 48/48/32/32 | +16dt, +16db, +8mt, +8mb |
 | 3 | `lusena-problem-solution` | 56/56/40/40 | `standard` | 64/64/40/40 | +8dt, +8db |
-| 4 | `lusena-bestsellers` | 56/56/40/40 | `standard` | 64/64/40/40 | +8dt, +8db |
-| 5 | `lusena-heritage` | 56/56/40/40 | `standard` | 64/64/40/40 | +8dt, +8db |
+| 4 | `lusena-bestsellers` | 56/56/40/40 | `spacious` *(Phase 3)* | 80/80/48/48 | +24dt, +24db, +8mt, +8mb |
+| 5 | `lusena-heritage` | 56/56/40/40 | `spacious` | 80/80/48/48 | +24dt, +24db, +8mt, +8mb |
 | 6 | `lusena-testimonials` | 56/56/40/40 | `standard` | 64/64/40/40 | +8dt, +8db |
-| 7 | `lusena-bundles` | 56/56/40/40 | `standard` | 64/64/40/40 | +8dt, +8db |
-| 8 | `lusena-faq` | 56/56/40/40 | `standard` | 64/64/40/40 | +8dt, +8db |
+| 7 | `lusena-bundles` | 56/56/40/40 | `spacious` *(Phase 3)* | 80/80/48/48 | +24dt, +24db, +8mt, +8mb |
+| 8 | `lusena-faq` | 56/56/40/40 | `compact` | 48/48/32/32 | -8dt, -8db, -8mt, -8mb |
 | 9 | `lusena-about-hero` | 96/96/64/64 | `hero` | 96/96/64/64 | No change |
-| 10 | `lusena-about-story` | 56/56/40/40 | `standard` | 64/64/40/40 | +8dt, +8db |
+| 10 | `lusena-about-story` | 56/56/40/40 | `spacious` | 80/80/48/48 | +24dt, +24db, +8mt, +8mb |
 | 11 | `lusena-about-values` | 56/56/40/40 | `standard` | 64/64/40/40 | +8dt, +8db |
 | 12 | `lusena-quality-hero` | 96/96/64/64 | `hero` | 96/96/64/64 | No change |
 | 13 | `lusena-quality-momme` | 56/56/40/40 | `standard` | 64/64/40/40 | +8dt, +8db |
 | 14 | `lusena-quality-fire-test` | 56/56/40/40 | `standard` | 64/64/40/40 | +8dt, +8db |
-| 15 | `lusena-quality-origin` | 56/56/40/40 | `standard` | 64/64/40/40 | +8dt, +8db |
+| 15 | `lusena-quality-origin` | 56/56/40/40 | `spacious` | 80/80/48/48 | +24dt, +24db, +8mt, +8mb |
 | 16 | `lusena-quality-qc` | 56/56/40/40 | `standard` | 64/64/40/40 | +8dt, +8db |
-| 17 | `lusena-quality-certificates` | 56/56/40/40 | `standard` | 64/64/40/40 | +8dt, +8db |
+| 17 | `lusena-quality-certificates` | 56/56/40/40 | `compact` | 48/48/32/32 | -8dt, -8db, -8mt, -8mb |
 | 18 | `lusena-main-product` | 48/96/32/48 | `compact` | 48/48/32/32 | 0dt, -48db, 0mt, -16mb |
 | 19 | `lusena-main-collection` | 48/48/32/32 | `compact` | 48/48/32/32 | No change |
 | 20 | `lusena-pdp-feature-highlights` | 56/56/40/40 | `standard` | 64/64/40/40 | +8dt, +8db |
-| 21 | `lusena-pdp-quality-evidence` | 56/56/40/40 | `standard` | 64/64/40/40 | +8dt, +8db |
-| 22 | `lusena-pdp-details` | 56/56/40/40 | `standard` | 64/64/40/40 | +8dt, +8db |
+| 21 | `lusena-pdp-quality-evidence` | 56/56/40/40 | `spacious` | 80/80/48/48 | +24dt, +24db, +8mt, +8mb |
+| 22 | `lusena-pdp-details` | 56/56/40/40 | `compact` | 48/48/32/32 | -8dt, -8db, -8mt, -8mb |
 | 23 | `lusena-returns-hero` | 128/128/96/96 | `hero` | 96/96/64/64 | -32dt, -32db, -32mt, -32mb |
-| 24 | `lusena-returns-steps` | 128/128/96/96 | `hero` ⚠️ | 96/96/64/64 | -32dt, -32db, -32mt, -32mb |
+| 24 | `lusena-returns-steps` | 128/128/96/96 | `spacious` *(Phase 3, was hero)* | 80/80/48/48 | -48dt, -48db, -48mt, -48mb |
 | 25 | `lusena-returns-editorial` | 128/128/96/96 | `standard` | 64/64/40/40 | -64dt, -64db, -56mt, -56mb |
-| 26 | `lusena-returns-faq` | 128/128/96/96 | `standard` | 64/64/40/40 | -64dt, -64db, -56mt, -56mb |
-| 27 | `lusena-returns-final-cta` | 128/128/96/96 | `hero` | 96/96/64/64 | -32dt, -32db, -32mt, -32mb |
+| 26 | `lusena-returns-faq` | 128/128/96/96 | `compact` *(Phase 3, was standard)* | 48/48/32/32 | -80dt, -80db, -64mt, -64mb |
+| 27 | `lusena-returns-final-cta` | 128/128/96/96 | `compact` | 48/48/32/32 | -80dt, -80db, -64mt, -64mb |
 | 28 | `lusena-science` | 48/48/32/32 | `compact` | 48/48/32/32 | No change |
 | 29 | `lusena-comparison` | 48/48/32/32 | `compact` | 48/48/32/32 | No change |
 
-> ⚠️ **`lusena-returns-steps`** is assigned to `hero` tier because it serves as a primary content section on the returns page and currently uses the spacious 128/128/96/96 values — `hero` (96/64) is the closest fit. After visual review, this could be changed to `standard` if it feels right.
+> ⚠️ **`lusena-returns-steps`** was reassigned from `hero` to `spacious` in Phase 3 — it's a content section, not a page intro. Spacious (48/80) provides premium editorial room without the excessive hero padding.
 >
 > ⚠️ **`lusena-main-product`** currently has an asymmetric padding (48/96/32/48). The `compact` tier will make it symmetric (48/48/32/32). The extra bottom padding was likely there to create distance from the next PDP section. After migration, the same-bg gap detector may add `--lusena-section-gap-same` (32px desktop) which partially compensates. **Visual review needed.**
 
@@ -272,15 +291,16 @@ When a section is reloaded in the theme editor (drag-and-drop, settings change),
 
 ## 6. Intra-Section Content Spacing Tokens
 
-These utility classes replace ad-hoc Tailwind margin classes inside sections. They are defined in `snippets/lusena-spacing-system.liquid`.
+These utility classes replace ad-hoc Tailwind margin classes inside sections. They are defined in `assets/lusena-spacing.css`.
 
 ### Utility classes
 
 | Class | CSS | Mobile | Desktop | Replaces |
 |---|---|---|---|---|
 | `.lusena-gap-kicker` | `margin-bottom: var(--lusena-space-xs)` | 8px | 8px | `mb-2`, `mb-3`, `space-y-3` (kicker element) |
-| `.lusena-gap-heading` | `margin-bottom: var(--lusena-space-sm)` | 12px | 16px | `mb-4`, `space-y-4` (heading element) |
+| `.lusena-gap-heading` | `margin-bottom: var(--lusena-space-heading)` | 16px | 20px | `mb-4`, `space-y-4` (heading element) |
 | `.lusena-gap-body` | `margin-bottom: var(--lusena-space-md)` | 20px | 24px | `mb-6`, `space-y-6`, `mt-8`, `pt-4` (body/CTA spacing) |
+| `.lusena-gap-cta` | `margin-bottom: var(--lusena-space-cta)` | 28px | 36px | `mt-12`, `mt-16` (CTA isolation — dedicated larger gap) |
 | `.lusena-gap-section-intro` | `margin-bottom: var(--lusena-space-lg)` | 32px | 48px | `mb-12`, `mb-16`, `margin: 0 0 48px` (heading block → content) |
 
 ### Migration mapping for each intra-section pattern
@@ -334,6 +354,20 @@ These utility classes replace ad-hoc Tailwind margin classes inside sections. Th
 
 Content grid `gap-*` values (e.g., `gap-8`, `gap-12`, `gap-x-4 gap-y-12`) are **horizontal + vertical layout concerns** specific to each section's content type. These are NOT part of the vertical spacing standardization. Leave them as-is.
 
+### Container-level content-flow utilities
+
+For uniform vertical rhythm between ALL direct children of a container (matching the draft-shop’s Tailwind `space-y-*` pattern), use content-flow classes on the parent. Defined in `assets/lusena-spacing.css`.
+
+| Class | CSS | Mobile | Desktop | Use case |
+|---|---|---|---|---|
+| `.lusena-content-flow` | `> :not(:first-child) { margin-top }` | 20px | 24px | Standard containers |
+| `.lusena-content-flow--tight` | `> :not(:first-child) { margin-top }` | 12px | 16px | Compact intros (kicker + heading) |
+| `.lusena-content-flow--relaxed` | `> :not(:first-child) { margin-top }` | 28px | 32px | Hero / editorial text columns |
+
+Use `> :not(:first-child)` selector (specificity 0-2-0) to override Tailwind Preflight and Dawn element resets.
+
+**When to use:** When all children need the same vertical rhythm. For mixed gaps (e.g., kicker=12px but heading=24px), use individual `lusena-gap-*` classes instead.
+
 ---
 
 ## 7. Per-Section Schema Override (Option B)
@@ -383,7 +417,7 @@ The 4 padding range sliders remain in each section's `{% schema %}` but their **
 >
 ```
 
-### Override CSS (in `lusena-spacing-system.liquid`)
+### Override CSS (in `assets/lusena-spacing.css`)
 
 The override mechanism uses CSS custom property fallback chains:
 
@@ -499,18 +533,21 @@ Key changes from current:
 
 These changes add the new system without affecting any existing section. The new CSS classes exist but nothing uses them yet.
 
-#### 8.1 Create `snippets/lusena-spacing-system.liquid`
+#### 8.1 Create `assets/lusena-spacing.css`
 
-Create this file with:
+Create this standalone CSS asset file containing (in this exact order):
 
-1. A `{% doc %}` tag explaining the snippet's purpose.
-2. A `{% stylesheet %}` block containing (in this exact order):
-   1. `:root` with all `--lusena-space-*` token definitions (mobile-first)
-   2. `@media (min-width: 768px)` override block for desktop token values
-   3. Tier classes (`.lusena-spacing--full-bleed`, `--compact`, `--standard`, `--hero`) that set `--lusena-tier-pt`/`--lusena-tier-pb` intermediate variables
-   4. Shared tier padding rule with CSS fallback chain (Section 7) + desktop `@media` override
-   5. Gap classes (`.lusena-section-gap-same.lusena-section-gap-same` with doubled selector for specificity, `.lusena-section-gap-different`) — MUST come after tier rules
-   6. Intra-section utility classes (`.lusena-gap-kicker`, `.lusena-gap-heading`, `.lusena-gap-body`, `.lusena-gap-section-intro`)
+1. `:root` with all `--lusena-space-*` token definitions (mobile-first)
+2. `@media (min-width: 768px)` override block for desktop token values
+3. Tier classes (`.lusena-spacing--full-bleed`, `--compact`, `--standard`, `--hero`, `--spacious`) that set `--lusena-tier-pt`/`--lusena-tier-pb` intermediate variables
+4. Shared tier padding rule with CSS fallback chain (Section 7) + desktop `@media` override
+5. Gap classes (`.lusena-section-gap-same.lusena-section-gap-same` with doubled selector for specificity, `.lusena-section-gap-different`) — MUST come after tier rules
+6. Intra-section utility classes (`.lusena-gap-kicker`, `.lusena-gap-heading`, `.lusena-gap-body`, `.lusena-gap-cta`, `.lusena-gap-section-intro`)
+7. Container-level content-flow utilities (`.lusena-content-flow`, `--tight`, `--relaxed`)
+
+A doc-only stub `snippets/lusena-spacing-system.liquid` is kept so existing `{% render %}` calls don't break.
+
+> **Why a standalone asset?** Shopify merges all `{% stylesheet %}` blocks into `compiled_assets/styles.css` which has a ~73KB size limit. As the theme grew, spacing rules at the end of that file were silently truncated. A standalone `.css` asset file has no such limit.
 
 #### 8.2 Create `snippets/lusena-section-gap-detector.liquid`
 
@@ -525,9 +562,10 @@ Create this file with:
 Add two render calls:
 
 ```liquid
+{{ 'lusena-spacing.css' | asset_url | stylesheet_tag }}    <!-- ADD THIS LINE -->
 {% render 'lusena-missing-utilities' %}
 {% render 'lusena-button-system' %}
-{% render 'lusena-spacing-system' %}    <!-- ADD THIS LINE -->
+{% render 'lusena-spacing-system' %}    <!-- keep: doc-only stub -->
 ```
 
 And before `</body>`:
@@ -539,7 +577,8 @@ And before `</body>`:
 ```
 
 **Exact insertion points:**
-- `{% render 'lusena-spacing-system' %}` → after line 302 (after `{% render 'lusena-button-system' %}`)
+- `{{ 'lusena-spacing.css' | asset_url | stylesheet_tag }}` → after `lusena-shop.css` link
+- `{% render 'lusena-spacing-system' %}` → after `{% render 'lusena-button-system' %}` (doc-only stub, no CSS output)
 - `{% render 'lusena-section-gap-detector' %}` → before `</body>` tag (approximately line 415-420, verify exact line)
 
 ---
@@ -822,9 +861,10 @@ Use this checklist to track progress. Mark each item when complete.
 
 ### Phase 1: Infrastructure (non-breaking)
 
-- [ ] Create `snippets/lusena-spacing-system.liquid` with all tokens, tier classes, gap classes, utility classes
+- [x] Create `assets/lusena-spacing.css` with all tokens, tier classes, gap classes, content-flow utilities
 - [ ] Create `snippets/lusena-section-gap-detector.liquid` with JS background detection
-- [ ] Add `{% render 'lusena-spacing-system' %}` to `layout/theme.liquid` after `{% render 'lusena-button-system' %}`
+- [x] Add `{{ 'lusena-spacing.css' | asset_url | stylesheet_tag }}` to `layout/theme.liquid` after `lusena-shop.css`
+- [x] Keep `{% render 'lusena-spacing-system' %}` as doc-only stub
 - [ ] Add `{% render 'lusena-section-gap-detector' %}` to `layout/theme.liquid` before `</body>`
 - [ ] Visual check: no changes should be visible (new classes exist but nothing uses them yet)
 
@@ -1026,8 +1066,9 @@ When creating a new LUSENA section after this system is in place:
 |---|---|
 | A full-viewport hero with background image | `lusena-spacing--full-bleed` |
 | A page intro, landing hero, or generous CTA section | `lusena-spacing--hero` |
+| An editorial / storytelling section needing premium whitespace | `lusena-spacing--spacious` |
 | A regular content section (most sections) | `lusena-spacing--standard` |
-| A utility bar, PDP main, collection grid, or compact row | `lusena-spacing--compact` |
+| A utility bar, PDP main, collection grid, wrap-up section, or compact CTA | `lusena-spacing--compact` |
 
 ### Intra-section spacing classes to use
 
@@ -1036,15 +1077,62 @@ When creating a new LUSENA section after this system is in place:
 | Kicker → Heading | `lusena-gap-kicker` on the kicker element |
 | Heading → Subheading/body | `lusena-gap-heading` on the heading element |
 | Body text → CTA / Content block → next block | `lusena-gap-body` on the element above |
+| Content → CTA button (with visual emphasis) | `lusena-gap-cta` on the element before the CTA |
 | Heading block (kicker+heading+subtext) → Content grid | `lusena-gap-section-intro` on the last element of the heading block |
+| Uniform rhythm on ALL children of a container | `lusena-content-flow`, `--tight`, or `--relaxed` on the parent |
 
 ### What NOT to do
 
 - ❌ Do NOT add per-section padding CSS in `{% stylesheet %}`.
-- ❌ Do NOT use `mb-12`, `mb-16`, `mt-8`, `space-y-8` for vertical content spacing — use `lusena-gap-*` classes.
+- ❌ Do NOT add spacing CSS to `{% stylesheet %}` blocks — use `assets/lusena-spacing.css` instead (avoids `compiled_assets` truncation).
+- ❌ Do NOT use `mb-12`, `mb-16`, `mt-8`, `space-y-8` for vertical content spacing — use `lusena-gap-*` or `lusena-content-flow` classes.
 - ❌ Do NOT set padding schema defaults to any value other than `0` (unless you have a specific reason to force an override).
 - ❌ Do NOT use `--padding-*-*` CSS variable names (legacy Pattern B) — always use `--lusena-section-padding-*-*`.
 
 ---
 
-*Implementation completed on 2026-02-21. Active spacing source of truth is now `docs/theme-brandbook-uiux.md` plus `snippets/lusena-spacing-system.liquid` and `snippets/lusena-section-gap-detector.liquid`. Keep this file as implementation history/reference.*
+*Phase 1 implementation completed on 2026-02-21. Phase 2 (conversion-optimized tier reassignment + spacious tier) completed on 2026-02-21. Phase 3 (conversion-optimized token tuning + tier re-reassignments + internal spacing refinements) completed on 2026-02-22. Phase 4 (CSS moved from `{% stylesheet %}` to standalone `assets/lusena-spacing.css` to fix `compiled_assets` truncation + content-flow utilities added) completed on 2026-02-21. Active spacing source of truth is now `docs/theme-brandbook-uiux.md` plus `assets/lusena-spacing.css` and `snippets/lusena-section-gap-detector.liquid`. Keep this file as implementation history/reference.*
+
+---
+
+## Appendix: Phase 3 Change Summary (2026-02-22)
+
+Phase 3 was a conversion-optimization pass on top of the already-implemented spacing system. Focus: maximize premium feel + conversion for a luxury silk e-commerce store.
+
+### Token changes
+
+| Token | Before | After | Rationale |
+|---|---|---|---|
+| `--lusena-space-heading` | *(new)* | 16px / 20px | Premium heading gap — larger than `--lusena-space-sm` (12/16px) |
+| `--lusena-space-cta` | *(new)* | 28px / 36px | CTA isolation gap — visual breathing room before action buttons |
+| `--lusena-section-gap-same` | 24px / 32px | 32px / 40px | More premium separation between same-bg sections |
+
+### Tier reassignments
+
+| Section | Phase 2 tier | Phase 3 tier | Rationale |
+|---|---|---|---|
+| `lusena-bestsellers` | `standard` | `spacious` | Product showcase is #1 conversion driver; needs premium breathing room |
+| `lusena-bundles` | `standard` | `spacious` | Key upsell/AOV section; premium feel raises perceived value |
+| `lusena-returns-steps` | `hero` | `spacious` | Not a hero section; hero was over-spaced for content display |
+| `lusena-returns-faq` | `standard` | `compact` | FAQ/wrap-up section; compact feel groups it with the page finale |
+
+### New utility class
+
+- `.lusena-gap-cta` → `margin-bottom: var(--lusena-space-cta)` (28px mobile / 36px desktop)
+
+### Section-specific internal spacing changes
+
+| Section | Change | Rationale |
+|---|---|---|
+| `lusena-problem-solution` | `space-y-8` → `space-y-6` on item lists | Tighter mobile scan density |
+| `lusena-testimonials` | Card padding `p-8` → `p-6 md:p-8` | Responsive — tighter mobile, premium desktop |
+| `lusena-faq` | Accordion `py-4` → `py-6`, content `pb-4` → CSS `2.4rem` | Premium touch targets, breathing room |
+| `lusena-pdp-details` | Accordion `.py-4` → CSS `2rem`, content → CSS `2.4rem` | Consistent with FAQ accordion feel |
+| `lusena-main-collection` | Header→grid `mb-8`→`mb-6`, pagination `mt-16`→`mt-12` | More products above fold |
+| `lusena-main-collection` | Grid gaps → responsive CSS (`row-gap: 4rem` mobile → `4.8rem` lg) | Tighter mobile, premium desktop |
+| `lusena-returns-faq` | Contact CTA `mt-12` → `mt-8` | Tighter for compact tier |
+| `lusena-footer` | `py-16` → responsive CSS (4.8/8rem top, 4/6.4rem bottom) | Asymmetric premium padding |
+
+### Utility additions
+
+- Added `md:p-8` to `snippets/lusena-missing-utilities.liquid` (responsive padding for testimonial cards)

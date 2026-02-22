@@ -14,8 +14,8 @@ The store runs **custom LUSENA sections/snippets** (`lusena-*` prefix) layered o
 - **Collection page:** `sections/lusena-main-collection.liquid` + `snippets/lusena-product-card.liquid`
 - **Homepage sections:** `sections/lusena-hero.liquid`, `lusena-bestsellers.liquid`, `lusena-trust-bar.liquid`, etc.
 - **Shared components:** `snippets/lusena-button-system.liquid`, `snippets/lusena-icon.liquid`, `snippets/lusena-missing-utilities.liquid`
-- **Spacing system:** `snippets/lusena-spacing-system.liquid` (tier + token spacing) and `snippets/lusena-section-gap-detector.liquid` (same-bg section gap detection)
-- **Styles:** `assets/lusena-shop.css` (Tailwind-compiled) + `{% stylesheet %}` blocks in each section
+- **Spacing system:** `assets/lusena-spacing.css` (tokens, tier classes, gap utilities, content-flow utilities) + `snippets/lusena-section-gap-detector.liquid` (same-bg section gap detection). The snippet `snippets/lusena-spacing-system.liquid` is a doc-only stub (CSS was moved to the asset file to avoid `compiled_assets/styles.css` truncation).
+- **Styles:** `assets/lusena-shop.css` (Tailwind-compiled) + `assets/lusena-spacing.css` (spacing system) + `{% stylesheet %}` blocks in each section
 
 Dawn's original sections (`header.liquid`, `footer.liquid`, `main-product.liquid`, etc.) remain in the repo but are **not used** on the live storefront. They may still be referenced by inactive templates or the theme editor.
 

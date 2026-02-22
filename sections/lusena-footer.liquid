@@ -1,4 +1,4 @@
-<footer class="bg-primary text-white py-16">
+<footer class="bg-primary text-white lusena-footer">
   <div class="container grid grid-cols-1 md:grid-cols-4 gap-12">
     <div class="space-y-4">
       <div class="text-2xl font-serif">{{ section.settings.brand_heading | escape }}</div>
@@ -55,10 +55,24 @@
     </div>
   </div>
 
-  <div class="container mt-16 pt-8 border-t border-gray-800 text-xs text-center text-gray-500">
-    © {{ 'now' | date: '%Y' }} {{ section.settings.brand_heading | escape }}. All rights reserved.
+  <div class="container mt-12 pt-8 border-t border-gray-800 text-xs text-center text-gray-500">
+    © {{ 'now' | date: '%Y' }}
+    {{ section.settings.brand_heading | escape }}. All rights reserved.
   </div>
 </footer>
+
+{% stylesheet %}
+  /* Responsive footer padding — generous top for premium separation, proportional bottom */
+  .lusena-footer {
+    padding: 4.8rem 0 4rem;
+  }
+
+  @media (min-width: 768px) {
+    .lusena-footer {
+      padding: 8rem 0 6.4rem;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

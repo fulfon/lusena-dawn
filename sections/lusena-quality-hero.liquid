@@ -14,25 +14,28 @@
   endif
 -%}
 <section
-  class="bg-brand-bg lusena-quality-hero lusena-spacing--hero"
+  class="bg-brand-bg lusena-quality-hero lusena-spacing--hero lusena-spacing--snug-top"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container text-center max-w-4xl mx-auto{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold lusena-gap-kicker">
-      {{ section.settings.hero_kicker | escape }}
-    </span>
-    <h1 class="text-5xl md:text-7xl font-serif text-primary lusena-gap-heading">
-      {{ section.settings.hero_heading | newline_to_br }}
-    </h1>
+  <div class="container text-center max-w-4xl mx-auto lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <div class="lusena-content-flow--tight">
+      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
+        {{ section.settings.hero_kicker | escape }}
+      </span>
+      <h1 class="text-5xl md:text-7xl font-serif text-primary">
+        {{ section.settings.hero_heading | newline_to_br }}
+      </h1>
+    </div>
     <p class="text-lg md:text-xl font-light text-secondary leading-relaxed max-w-2xl mx-auto">
       {{ section.settings.hero_body | escape }}
     </p>
   </div>
 </section>
 
-{% stylesheet %}
+{% stylesheet %}
+
 {% endstylesheet %}
 
 {% schema %}

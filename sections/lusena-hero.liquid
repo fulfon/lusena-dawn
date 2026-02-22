@@ -97,10 +97,10 @@
     endif
   -%}
 
-  <div class="max-w-xl pl-4 md:pl-0 lusena-hero__stack" data-lusena-hero-text>
+  <div class="max-w-xl pl-4 md:pl-0 lusena-hero__stack lusena-content-flow--tight" data-lusena-hero-text>
     {%- if has_text -%}
       <div class="lusena-hero__text-wrap">
-        <div class="space-y-6 md:space-y-8 lusena-hero__text">
+        <div class="lusena-content-flow--relaxed lusena-hero__text">
           {%- if heading_block != blank and heading_block.settings.heading != blank -%}
             <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif italic tracking-tight text-white drop-shadow-sm" {{ heading_block.shopify_attributes }}>
               {{ heading_block.settings.heading }}
@@ -118,7 +118,7 @@
 
     {%- if has_buttons -%}
       <div class="lusena-hero__buttons-wrap" {{ buttons_block.shopify_attributes }}>
-        <div class="pt-4 flex flex-col sm:flex-row gap-4 lusena-hero__buttons">
+        <div class="flex flex-col sm:flex-row gap-4 lusena-hero__buttons">
           {%- if buttons_block.settings.button_label_1 != blank -%}
             <a
               {% if buttons_block.settings.button_link_1 == blank %}

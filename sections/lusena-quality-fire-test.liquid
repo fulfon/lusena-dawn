@@ -24,7 +24,7 @@
       {{ section.settings.fire_heading | escape }}
     </h2>
 
-    <div class="max-w-4xl mx-auto bg-black/5 aspect-video flex items-center justify-center rounded-sm border border-secondary/10 overflow-hidden{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <div class="max-w-4xl mx-auto bg-black/5 aspect-video flex items-center justify-center rounded-sm border border-secondary/10 overflow-hidden lusena-gap-body{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {%- if section.settings.fire_video != blank -%}
         {{
           section.settings.fire_video
@@ -40,7 +40,7 @@
       {%- endif -%}
     </div>
 
-    <p class="lusena-gap-body text-secondary font-light max-w-2xl mx-auto{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <p class="text-secondary font-light max-w-2xl mx-auto{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.fire_body | escape }}
     </p>
   </div>

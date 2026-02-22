@@ -22,7 +22,7 @@
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container px-4 md:px-6">
+  <div class="container">
     <ul
       class="grid grid-cols-2 md:grid-cols-4 lusena-trust-bar__grid bg-surface-2"
       role="list"
@@ -58,7 +58,8 @@
   </div>
 </section>
 
-{% stylesheet %}
+{% stylesheet %}
+
 
   .lusena-trust-bar__grid {
     gap: 32px;
@@ -117,7 +118,8 @@
     }
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 768px) {
+
 
     .lusena-trust-bar__grid {
       gap: 32px;

@@ -14,21 +14,23 @@
   endif
 -%}
 <section
-  class="bg-white lusena-quality-origin lusena-spacing--standard"
+  class="bg-white lusena-quality-origin lusena-spacing--spacious"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
   <div class="container grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-    <div class="order-1 md:order-2{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
+    <div class="order-1 md:order-2 lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
 >
-      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold lusena-gap-kicker">
-        {{ section.settings.origin_kicker | escape }}
-      </span>
-      <h2 class="lusena-quality-origin__heading text-3xl md:text-4xl font-serif text-primary lusena-gap-heading">
-        {{ section.settings.origin_heading | escape }}
-      </h2>
-      <div class="space-y-4 text-secondary text-lg font-light leading-relaxed">
+      <div class="lusena-content-flow--tight">
+        <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
+          {{ section.settings.origin_kicker | escape }}
+        </span>
+        <h2 class="lusena-quality-origin__heading text-3xl md:text-4xl font-serif text-primary">
+          {{ section.settings.origin_heading | escape }}
+        </h2>
+      </div>
+      <div class="lusena-content-flow--tight text-secondary text-lg font-light leading-relaxed">
         {{ section.settings.origin_body }}
       </div>
     </div>

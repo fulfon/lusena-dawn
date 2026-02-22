@@ -21,8 +21,10 @@
   {% endif %}
 >
   <div class="container max-w-3xl">
-    <div class="text-center lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <h2 class="text-3xl md:text-4xl font-serif text-primary lusena-gap-heading">{{ section.settings.heading | escape }}</h2>
+    <div class="text-center lusena-gap-section-intro lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <h2 class="text-3xl md:text-4xl font-serif text-primary">
+        {{ section.settings.heading | escape }}
+      </h2>
       {%- if section.settings.subheading != blank -%}
         <p class="text-secondary">{{ section.settings.subheading | escape }}</p>
       {%- endif -%}
@@ -37,12 +39,16 @@
           {% endif %}
           {{ block.shopify_attributes }}
         >
-          <summary class="flex items-center justify-between py-4 font-medium transition-all hover:text-accent-cta cursor-pointer">
+          <summary class="flex items-center justify-between py-6 font-medium transition-all hover:text-accent-cta cursor-pointer">
             {{ block.settings.question | escape }}
-            {% render 'lusena-icon', name: 'chevron-down', class: 'h-4 w-4 shrink-0 transition-transform duration-200 lusena-faq__chevron', stroke_width: 2 %}
+            {% render 'lusena-icon',
+              name: 'chevron-down',
+              class: 'h-4 w-4 shrink-0 transition-transform duration-200 lusena-faq__chevron',
+              stroke_width: 2
+            %}
           </summary>
           <div class="lusena-faq__content overflow-hidden text-sm">
-            <div class="lusena-faq__content-inner pb-4 pt-0 text-secondary">
+            <div class="lusena-faq__content-inner pt-0 text-secondary">
               {{ block.settings.answer }}
             </div>
           </div>
@@ -53,7 +59,6 @@
 </section>
 
 {% stylesheet %}
-
   .lusena-faq__item[data-state='open'] .lusena-faq__chevron {
     transform: rotate(180deg);
   }
@@ -91,6 +96,11 @@
       opacity: 0;
       transform: translateY(-6px);
     }
+  }
+
+  /* Premium breathing room for FAQ answer content */
+  .lusena-faq__content-inner {
+    padding-bottom: 2.4rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -208,19 +218,27 @@
 
     const onFastTap = (el, callback) => {
       let startX, startY, handled;
-      el.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        handled = false;
-      }, { passive: true });
-      el.addEventListener('touchend', (e) => {
-        const t = e.changedTouches[0];
-        if (Math.abs(t.clientX - startX) < 10 && Math.abs(t.clientY - startY) < 10) {
-          handled = true;
-          e.preventDefault();
-          callback(e);
-        }
-      }, { passive: false });
+      el.addEventListener(
+        'touchstart',
+        (e) => {
+          startX = e.touches[0].clientX;
+          startY = e.touches[0].clientY;
+          handled = false;
+        },
+        { passive: true }
+      );
+      el.addEventListener(
+        'touchend',
+        (e) => {
+          const t = e.changedTouches[0];
+          if (Math.abs(t.clientX - startX) < 10 && Math.abs(t.clientY - startY) < 10) {
+            handled = true;
+            e.preventDefault();
+            callback(e);
+          }
+        },
+        { passive: false }
+      );
       el.addEventListener('click', (e) => {
         e.preventDefault();
         if (!handled) callback(e);

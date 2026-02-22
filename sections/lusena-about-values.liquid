@@ -20,8 +20,8 @@
   {% endif %}
 >
   <div class="container">
-    <div class="text-center lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold lusena-gap-kicker">
+    <div class="text-center lusena-gap-section-intro lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
         {{ section.settings.values_kicker | escape }}
       </span>
       <h2 class="text-3xl md:text-5xl font-serif text-primary">
@@ -34,8 +34,8 @@
         {%- if block.type == 'value' -%}
           <div {% if settings.animations_reveal_on_scroll %}class="scroll-trigger animate--slide-in" data-cascade{% endif %}
 >
-            <div class="lusena-about-values__card h-full p-8 bg-neutral-50 rounded-sm" {{ block.shopify_attributes }}>
-              <h3 class="font-serif text-xl mb-4 text-primary">{{ block.settings.title | escape }}</h3>
+            <div class="lusena-about-values__card lusena-content-flow--tight h-full p-8 bg-neutral-50 rounded-sm" {{ block.shopify_attributes }}>
+              <h3 class="font-serif text-xl text-primary">{{ block.settings.title | escape }}</h3>
               <p class="text-secondary font-light text-sm leading-relaxed">
                 {{ block.settings.text | escape }}
               </p>

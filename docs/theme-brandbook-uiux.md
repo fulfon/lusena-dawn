@@ -97,6 +97,7 @@ Defined in `layout/theme.liquid`:
 |---|---|
 | `assets/base.css` | Dawn's base styles, CSS custom properties, typography scale, page-width |
 | `assets/lusena-shop.css` | Tailwind-like utility classes (colors, spacing, responsive, typography) |
+| `assets/lusena-spacing.css` | Spacing system: tokens, tier classes, semantic gap utilities, content-flow utilities |
 | `snippets/lusena-missing-utilities.liquid` | Additional utility classes not in main CSS file |
 | `snippets/lusena-button-system.liquid` | Global button component styles |
 | `assets/global.js` | Dawn web components, scroll behavior, section rendering |
@@ -293,8 +294,10 @@ Dawn's `.page-width` (from `assets/base.css`): `max-width: var(--page-width)` (1
 
 LUSENA section spacing is centralized in:
 
-- `snippets/lusena-spacing-system.liquid` (tokens, tier classes, intra-section gap utilities)
+- `assets/lusena-spacing.css` (tokens, tier classes, intra-section gap utilities, content-flow utilities) — loaded as a standalone `<link>` in `layout/theme.liquid`
 - `snippets/lusena-section-gap-detector.liquid` (same-background adjacency detection)
+
+> **Architecture note:** Spacing CSS lives in a standalone asset file (not in `{% stylesheet %}`) to avoid Shopify's `compiled_assets/styles.css` ~73KB size-limit truncation. The snippet `snippets/lusena-spacing-system.liquid` is a doc-only stub kept for backward compatibility.
 
 Every migrated `lusena-*` section root should use one spacing tier class:
 
@@ -952,7 +955,7 @@ This matches the brandbook's message hierarchy:
 
 ### 5.2 Default spacing between sections
 
-- LUSENA uses a centralized spacing system from `snippets/lusena-spacing-system.liquid`.
+- LUSENA uses a centralized spacing system from `assets/lusena-spacing.css` (loaded as a standalone asset in `layout/theme.liquid`).
 - Section root elements use one tier class: `lusena-spacing--compact`, `lusena-spacing--standard`, `lusena-spacing--hero`, or `lusena-spacing--full-bleed`.
 - Tier defaults:
   - `compact`: 48px desktop / 32px mobile
@@ -970,7 +973,33 @@ This matches the brandbook's message hierarchy:
 - **Product grids:** 2 columns mobile, 3 columns desktop (PDP cross-sell / bestsellers).
 - **Card grids:** 1â†’2â†’3 or 1â†’2â†’4 columns depending on card complexity.
 
-### 5.4 CTA placement conventions
+### 5.4 Content-flow utilities (intra-container vertical rhythm)
+
+For uniform vertical spacing between ALL direct children of a container, use **content-flow** classes instead of individual `lusena-gap-*` classes:
+
+| Class | Mobile | Desktop | Use case |
+|---|---|---|---|
+| `.lusena-content-flow` | 20px | 24px | Standard containers (most sections) |
+| `.lusena-content-flow--tight` | 12px | 16px | Compact intros (kicker + heading groupings) |
+| `.lusena-content-flow--relaxed` | 28px | 32px | Hero sections, editorial text columns |
+
+These apply `margin-top` to every direct child except the first, matching the draft-shop's Tailwind `space-y-*` pattern. Use them on the parent container:
+
+```html
+<div class="container lusena-content-flow--relaxed">
+  <span>Kicker</span>   <!-- no margin -->
+  <h1>Heading</h1>      <!-- margin-top: 32px (desktop) -->
+  <p>Body</p>            <!-- margin-top: 32px (desktop) -->
+</div>
+```
+
+**When to use content-flow vs individual gap classes:**
+- Use **content-flow** when all children need the same vertical rhythm (hero text columns, editorial blocks)
+- Use **individual `lusena-gap-*`** when each gap needs a different size (kicker=12px, heading=24px, CTA=36px)
+
+Defined in `assets/lusena-spacing.css`.
+
+### 5.5 CTA placement conventions
 
 - **Hero:** Central, below headline and subheading.
 - **Content sections:** Below body text, either centered or left-aligned depending on layout.

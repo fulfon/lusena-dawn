@@ -14,21 +14,27 @@
   endif
 -%}
 <section
-  class="bg-brand-bg lusena-problem-solution lusena-spacing--standard"
+  class="bg-brand-bg lusena-problem-solution lusena-spacing--spacious"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
   <div class="container">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 lusena-problem-solution__grid{% if section.settings.cta_label != blank and section.settings.cta_link != blank %} lusena-gap-body{% endif %}">
-      <div{% if settings.animations_reveal_on_scroll %} class="scroll-trigger animate--slide-in"{% endif %}>
-        <span class="text-secondary text-xs md:text-sm tracking-widest uppercase font-semibold lusena-problem-solution__kicker lusena-gap-kicker">
-          {{ section.settings.problem_label | escape }}
-        </span>
-        <h3 class="text-2xl md:text-3xl font-serif text-primary leading-tight opacity-80 lusena-problem-solution__headline lusena-gap-heading">
-          {{ section.settings.problem_heading | newline_to_br }}
-        </h3>
-        <div class="space-y-8 pt-4">
+      <div
+        {% if settings.animations_reveal_on_scroll %}
+          class="scroll-trigger animate--slide-in"
+        {% endif %}
+      >
+        <div class="lusena-content-flow--tight lusena-gap-section-intro">
+          <span class="text-secondary text-xs md:text-sm tracking-widest uppercase font-semibold lusena-problem-solution__kicker">
+            {{ section.settings.problem_label | escape }}
+          </span>
+          <h3 class="text-2xl md:text-3xl font-serif text-primary leading-tight opacity-80 lusena-problem-solution__headline">
+            {{ section.settings.problem_heading | newline_to_br }}
+          </h3>
+        </div>
+        <div class="lusena-content-flow">
           {%- for block in section.blocks -%}
             {%- if block.type == 'problem_item' -%}
               <div class="flex gap-4" {{ block.shopify_attributes }}>
@@ -43,18 +49,28 @@
         </div>
       </div>
 
-      <div{% if settings.animations_reveal_on_scroll %} class="scroll-trigger animate--slide-in"{% endif %}>
-        <span class="text-accent-gold text-xs md:text-sm tracking-widest uppercase font-semibold lusena-problem-solution__kicker lusena-gap-kicker">
-          {{ section.settings.solution_label | escape }}
-        </span>
-        <h3 class="text-2xl md:text-3xl font-serif text-primary leading-tight lusena-problem-solution__headline lusena-gap-heading">
-          {{ section.settings.solution_heading | newline_to_br }}
-        </h3>
-        <div class="space-y-8 pt-4">
+      <div
+        {% if settings.animations_reveal_on_scroll %}
+          class="scroll-trigger animate--slide-in"
+        {% endif %}
+      >
+        <div class="lusena-content-flow--tight lusena-gap-section-intro">
+          <span class="text-accent-gold text-xs md:text-sm tracking-widest uppercase font-semibold lusena-problem-solution__kicker">
+            {{ section.settings.solution_label | escape }}
+          </span>
+          <h3 class="text-2xl md:text-3xl font-serif text-primary leading-tight lusena-problem-solution__headline">
+            {{ section.settings.solution_heading | newline_to_br }}
+          </h3>
+        </div>
+        <div class="lusena-content-flow">
           {%- for block in section.blocks -%}
             {%- if block.type == 'solution_item' -%}
               <div class="flex gap-4" {{ block.shopify_attributes }}>
-                {% render 'lusena-icon', name: 'check', class: 'w-5 h-5 text-green-900/40 mt-1 shrink-0', stroke_width: 1.5 %}
+                {% render 'lusena-icon',
+                  name: 'check',
+                  class: 'w-5 h-5 text-green-900/40 mt-1 shrink-0',
+                  stroke_width: 1.5
+                %}
                 <div>
                   <h4 class="font-medium text-lg text-primary mb-1">{{ block.settings.title | escape }}</h4>
                   <p class="text-secondary leading-relaxed font-light">{{ block.settings.text | escape }}</p>
@@ -80,11 +96,6 @@
 </section>
 
 {% stylesheet %}
-
-  .lusena-problem-solution .lusena-problem-solution__grid {
-    gap: 48px;
-  }
-
   .lusena-problem-solution .lusena-problem-solution__kicker {
     font-size: 12px;
     line-height: 16px;
@@ -96,11 +107,6 @@
   }
 
   @media (min-width: 768px) {
-
-    .lusena-problem-solution .lusena-problem-solution__grid {
-      gap: 96px;
-    }
-
     .lusena-problem-solution .lusena-problem-solution__kicker {
       font-size: 14px;
       line-height: 20px;

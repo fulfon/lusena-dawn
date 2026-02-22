@@ -62,21 +62,31 @@ Before writing the plan, run a concrete capability audit:
 - Color/background/border/radius/shadow
 - State classes (hover/disabled/active/loading)
 
-2. Check whether each required token already exists in theme CSS:
+2. **Spacing audit (mandatory — invoke `lusena-spacing` skill):**
+- Map every draft spacing value (padding, margin, gap) to a LUSENA spacing class (`lusena-spacing--*` tier, `lusena-content-flow*`, `lusena-gap-*`).
+- **Never carry over Tailwind spacing utilities** (`pt-4`, `mb-8`, `space-y-6`, `mt-12`, `py-4`, etc.) from the draft shop into Liquid. The draft shop uses Tailwind; the theme uses the LUSENA spacing system.
+- For section-level padding: pick the correct tier class (`full-bleed` / `compact` / `standard` / `spacious` / `hero`) based on the section's conversion role — see the tier cheat-sheet in the spacing skill.
+- For container-level vertical rhythm: use `lusena-content-flow`, `lusena-content-flow--tight`, or `lusena-content-flow--relaxed` on the parent.
+- For individual element gaps: use `lusena-gap-kicker`, `lusena-gap-heading`, `lusena-gap-body`, `lusena-gap-cta`, or `lusena-gap-section-intro`.
+- If no existing spacing class fits, **stop and ask the user** before creating a new one.
+- When adjacent sections share the same `bg-*` class, calculate the total visual gap (Rule 14 in spacing skill) and verify it falls within target ranges (desktop 100–140px, mobile 64–90px).
+
+3. Check whether each required token already exists in theme CSS:
 - `assets/lusena-shop.css`
+- `assets/lusena-spacing.css` (spacing system — source of truth for all vertical rhythm)
 - Existing section/snippet-level styles
 - `snippets/lusena-missing-utilities.liquid` (only if needed)
 
-3. Detect class conflicts from source composition:
+4. Detect class conflicts from source composition:
 - Resolve final class output as rendered by draft tooling (for example, merged utility output in React).
 - Do not copy conflicting classes into Liquid (for example two font-size utilities on one element).
 
-4. Decide implementation path for each missing capability:
+5. Decide implementation path for each missing capability:
 - Reuse existing theme primitive/class
 - Add scoped semantic CSS in the fragment
 - Add minimal utility backfill only when justified and reusable
 
-5. Record audit output in the plan:
+6. Record audit output in the plan:
 - `Exists`
 - `Missing`
 - `Conflict resolved`
@@ -178,6 +188,15 @@ Rules of thumb:
 - Never ship conflicting utilities on the same element.
 - When source uses merged utility composition, port the resolved final output (not raw conflicting class strings).
 - For inline numeric styles built from Liquid math, normalize to CSS-safe values (for example ensure decimal dot in `%` values).
+
+Spacing (mandatory — see `lusena-spacing` skill for full rules):
+
+- **All vertical spacing must use LUSENA spacing classes.** Never hardcode Tailwind spacing utilities (`pt-*`, `pb-*`, `mt-*`, `mb-*`, `space-y-*`, `py-*`, `px-*` for vertical rhythm, `gap-*` for vertical gaps) from the draft shop source.
+- Section padding → tier class on the `<section>` element.
+- Container internal rhythm → `lusena-content-flow*` class on the parent `<div>`.
+- Individual element gaps → `lusena-gap-*` class on the element.
+- Kicker+heading pairs → always wrap in `<div class="lusena-content-flow--tight lusena-gap-section-intro">`.
+- Same-bg adjacent sections → verify total gap falls within target ranges (desktop 100–140px, mobile 64–90px). Fix by adjusting tier, not by hardcoding pixels.
 
 Theme consistency:
 

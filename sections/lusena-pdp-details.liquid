@@ -38,7 +38,7 @@
 -%}
 <section
   id="details"
-  class="lusena-pdp-details border-t border-brand-bg lusena-spacing--standard"
+  class="lusena-pdp-details border-t border-brand-bg lusena-spacing--compact"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
@@ -49,9 +49,20 @@
     </h2>
 
     <div class="max-w-3xl mx-auto">
-      <div class="w-full lusena-pdp-accordion" data-lusena-accordion-root data-lusena-accordion-single data-lusena-accordion-collapsible{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}
->
-        <div class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-accordion-item data-lusena-accordion-value="shipping">
+      <div
+        class="w-full lusena-pdp-accordion"
+        data-lusena-accordion-root
+        data-lusena-accordion-single
+        data-lusena-accordion-collapsible
+        {% if settings.animations_reveal_on_scroll %}
+          data-cascade
+        {% endif %}
+      >
+        <div
+          class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          data-lusena-accordion-item
+          data-lusena-accordion-value="shipping"
+        >
           <div class="flex">
             <button
               type="button"
@@ -61,17 +72,30 @@
               aria-expanded="false"
             >
               Wysyłka i dostawa
-              {% render 'lusena-icon', name: 'chevron-down', class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200', stroke_width: 2 %}
+              {% render 'lusena-icon',
+                name: 'chevron-down',
+                class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200',
+                stroke_width: 2
+              %}
             </button>
           </div>
-          <div class="lusena-pdp-accordion__content overflow-hidden text-sm" data-lusena-accordion-content data-state="closed">
+          <div
+            class="lusena-pdp-accordion__content overflow-hidden text-sm"
+            data-lusena-accordion-content
+            data-state="closed"
+          >
             <div class="lusena-pdp-accordion__body pb-4 pt-0 text-secondary">
               <p>{{ shipping_info | escape }}</p>
             </div>
           </div>
         </div>
 
-        <div class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-accordion-item data-lusena-accordion-value="returns" data-lusena-accordion-returns>
+        <div
+          class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          data-lusena-accordion-item
+          data-lusena-accordion-value="returns"
+          data-lusena-accordion-returns
+        >
           <div class="flex">
             <button
               type="button"
@@ -81,10 +105,18 @@
               aria-expanded="false"
             >
               Zwroty i gwarancja 60 dni
-              {% render 'lusena-icon', name: 'chevron-down', class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200', stroke_width: 2 %}
+              {% render 'lusena-icon',
+                name: 'chevron-down',
+                class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200',
+                stroke_width: 2
+              %}
             </button>
           </div>
-          <div class="lusena-pdp-accordion__content overflow-hidden text-sm" data-lusena-accordion-content data-state="closed">
+          <div
+            class="lusena-pdp-accordion__content overflow-hidden text-sm"
+            data-lusena-accordion-content
+            data-state="closed"
+          >
             <div class="lusena-pdp-accordion__body pb-4 pt-0 text-secondary">
               <p>{{ returns_info | escape }}</p>
               <p>{{ guarantee_info | escape }}</p>
@@ -92,7 +124,11 @@
           </div>
         </div>
 
-        <div class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-accordion-item data-lusena-accordion-value="authenticity">
+        <div
+          class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          data-lusena-accordion-item
+          data-lusena-accordion-value="authenticity"
+        >
           <div class="flex">
             <button
               type="button"
@@ -102,17 +138,31 @@
               aria-expanded="false"
             >
               Czy to prawdziwy jedwab?
-              {% render 'lusena-icon', name: 'chevron-down', class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200', stroke_width: 2 %}
+              {% render 'lusena-icon',
+                name: 'chevron-down',
+                class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200',
+                stroke_width: 2
+              %}
             </button>
           </div>
-          <div class="lusena-pdp-accordion__content overflow-hidden text-sm" data-lusena-accordion-content data-state="closed">
+          <div
+            class="lusena-pdp-accordion__content overflow-hidden text-sm"
+            data-lusena-accordion-content
+            data-state="closed"
+          >
             <div class="lusena-pdp-accordion__body pb-4 pt-0 text-secondary">
-              <p>Tak, to 100% jedwab morwowy. Każda partia przechodzi kontrolę jakości i jest opisana pełną specyfikacją.</p>
+              <p>
+                Tak, to 100% jedwab morwowy. Każda partia przechodzi kontrolę jakości i jest opisana pełną specyfikacją.
+              </p>
             </div>
           </div>
         </div>
 
-        <div class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-accordion-item data-lusena-accordion-value="oeko">
+        <div
+          class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          data-lusena-accordion-item
+          data-lusena-accordion-value="oeko"
+        >
           <div class="flex">
             <button
               type="button"
@@ -122,17 +172,31 @@
               aria-expanded="false"
             >
               Jak zweryfikować certyfikat OEKO-TEX?
-              {% render 'lusena-icon', name: 'chevron-down', class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200', stroke_width: 2 %}
+              {% render 'lusena-icon',
+                name: 'chevron-down',
+                class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200',
+                stroke_width: 2
+              %}
             </button>
           </div>
-          <div class="lusena-pdp-accordion__content overflow-hidden text-sm" data-lusena-accordion-content data-state="closed">
+          <div
+            class="lusena-pdp-accordion__content overflow-hidden text-sm"
+            data-lusena-accordion-content
+            data-state="closed"
+          >
             <div class="lusena-pdp-accordion__body pb-4 pt-0 text-secondary">
-              <p>Numer certyfikatu znajdziesz na materiałach produktu. Możesz go sprawdzić w oficjalnej bazie OEKO-TEX.</p>
+              <p>
+                Numer certyfikatu znajdziesz na materiałach produktu. Możesz go sprawdzić w oficjalnej bazie OEKO-TEX.
+              </p>
             </div>
           </div>
         </div>
 
-        <div class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-accordion-item data-lusena-accordion-value="care-faq">
+        <div
+          class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          data-lusena-accordion-item
+          data-lusena-accordion-value="care-faq"
+        >
           <div class="flex">
             <button
               type="button"
@@ -142,10 +206,18 @@
               aria-expanded="false"
             >
               Jak prać jedwabną poszewkę?
-              {% render 'lusena-icon', name: 'chevron-down', class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200', stroke_width: 2 %}
+              {% render 'lusena-icon',
+                name: 'chevron-down',
+                class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200',
+                stroke_width: 2
+              %}
             </button>
           </div>
-          <div class="lusena-pdp-accordion__content overflow-hidden text-sm" data-lusena-accordion-content data-state="closed">
+          <div
+            class="lusena-pdp-accordion__content overflow-hidden text-sm"
+            data-lusena-accordion-content
+            data-state="closed"
+          >
             <div class="lusena-pdp-accordion__body pb-4 pt-0 text-secondary">
               <ul class="list-disc pl-4 space-y-1 text-secondary/80">
                 <li>Program delikatny, maksymalnie 30°C.</li>
@@ -156,7 +228,11 @@
           </div>
         </div>
 
-        <div class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-accordion-item data-lusena-accordion-value="origin">
+        <div
+          class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          data-lusena-accordion-item
+          data-lusena-accordion-value="origin"
+        >
           <div class="flex">
             <button
               type="button"
@@ -166,12 +242,23 @@
               aria-expanded="false"
             >
               Dlaczego jedwab z Suzhou?
-              {% render 'lusena-icon', name: 'chevron-down', class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200', stroke_width: 2 %}
+              {% render 'lusena-icon',
+                name: 'chevron-down',
+                class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200',
+                stroke_width: 2
+              %}
             </button>
           </div>
-          <div class="lusena-pdp-accordion__content overflow-hidden text-sm" data-lusena-accordion-content data-state="closed">
+          <div
+            class="lusena-pdp-accordion__content overflow-hidden text-sm"
+            data-lusena-accordion-content
+            data-state="closed"
+          >
             <div class="lusena-pdp-accordion__body pb-4 pt-0 text-secondary">
-              <p>Suzhou i region Shengze to historyczne centrum jedwabiu. Ten region jest znany z wysokiej jakości włókna i stabilnego standardu produkcji.</p>
+              <p>
+                Suzhou i region Shengze to historyczne centrum jedwabiu. Ten region jest znany z wysokiej jakości włókna
+                i stabilnego standardu produkcji.
+              </p>
             </div>
           </div>
         </div>
@@ -181,6 +268,15 @@
 </section>
 
 {% stylesheet %}
+  /* Increase accordion row padding for premium breathing room + better touch targets */
+  .lusena-pdp-details .lusena-pdp-accordion__trigger {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .lusena-pdp-details .lusena-pdp-accordion__body {
+    padding-bottom: 2.4rem;
+  }
 {% endstylesheet %}
 
 {% schema %}

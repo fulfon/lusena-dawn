@@ -21,11 +21,11 @@
 >
   <div class="container lusena-returns-editorial__container mx-auto">
     <div class="lusena-returns-editorial__grid">
-      <div{% if settings.animations_reveal_on_scroll %} class="scroll-trigger animate--slide-in"{% endif %}>
+      <div class="lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
           {{ section.settings.kicker | escape }}
         </span>
-        <h2 class="text-3xl md:text-5xl font-serif text-primary leading-tight lusena-gap-heading">
+        <h2 class="text-3xl md:text-5xl font-serif text-primary leading-tight">
           {{ section.settings.heading_line_1 | escape }}
           <span class="italic">{{ section.settings.heading_line_2 | escape }}</span>
         </h2>

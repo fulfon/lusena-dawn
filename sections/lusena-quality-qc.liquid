@@ -29,14 +29,14 @@
         {%- if block.type == 'qc_step' -%}
           <div {% if settings.animations_reveal_on_scroll %}class="scroll-trigger animate--slide-in" data-cascade{% endif %}
 >
-            <div class="lusena-quality-qc__card p-8 bg-white/50 backdrop-blur-sm rounded-sm border border-white/40{% if block.settings.highlight %} shadow-sm relative overflow-hidden{% endif %}" {{ block.shopify_attributes }}>
+            <div class="lusena-quality-qc__card lusena-content-flow--tight p-8 bg-white/50 backdrop-blur-sm rounded-sm border border-white/40{% if block.settings.highlight %} shadow-sm relative overflow-hidden{% endif %}" {{ block.shopify_attributes }}>
               {%- if block.settings.highlight -%}
                 <div class="absolute top-0 right-0 bg-accent-gold text-white text-[10px] px-2 py-1 uppercase tracking-wider">
                   {{ section.settings.qc_highlight_badge | escape }}
                 </div>
               {%- endif -%}
-              <div class="text-4xl mb-4">{{ block.settings.icon }}</div>
-              <h3 class="font-serif text-xl mb-2">{{ block.settings.title | escape }}</h3>
+              <div class="text-4xl">{{ block.settings.icon }}</div>
+              <h3 class="font-serif text-xl">{{ block.settings.title | escape }}</h3>
               <p class="text-secondary font-light text-sm">{{ block.settings.text | escape }}</p>
             </div>
           </div>

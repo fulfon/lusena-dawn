@@ -14,7 +14,7 @@
   endif
 -%}
 <section
-  class="bg-surface-2 lusena-bundles lusena-spacing--standard"
+  class="bg-surface-2 lusena-bundles lusena-spacing--spacious"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
@@ -39,15 +39,17 @@
     </div>
 
     <div class="order-1 md:order-2{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      {%- if section.settings.kicker != blank -%}
-        <span class="text-accent-cta text-sm tracking-widest uppercase font-semibold lusena-gap-kicker">
-          {{ section.settings.kicker | escape }}
-        </span>
-      {%- endif -%}
+      <div class="lusena-content-flow--tight lusena-gap-section-intro">
+        {%- if section.settings.kicker != blank -%}
+          <span class="text-accent-cta text-sm tracking-widest uppercase font-semibold">
+            {{ section.settings.kicker | escape }}
+          </span>
+        {%- endif -%}
 
-      <h2 class="text-3xl md:text-4xl font-serif text-primary lusena-gap-heading">
-        {{ section.settings.heading | newline_to_br }}
-      </h2>
+        <h2 class="text-3xl md:text-4xl font-serif text-primary">
+          {{ section.settings.heading | newline_to_br }}
+        </h2>
+      </div>
 
       {%- if section.settings.body != blank -%}
         <p class="text-lg text-secondary leading-relaxed lusena-gap-body">
@@ -56,7 +58,7 @@
       {%- endif -%}
 
       {%- if section.blocks.size > 0 -%}
-        <ul class="space-y-3 py-4">
+        <ul class="lusena-content-flow--tight lusena-gap-cta">
           {%- for block in section.blocks -%}
             <li class="flex items-center gap-3 text-secondary" {{ block.shopify_attributes }}>
               <span class="w-1.5 h-1.5 rounded-full bg-accent-gold"></span>
@@ -78,7 +80,7 @@
   </div>
 </section>
 
-{% stylesheet %}
+{% stylesheet %}
 {% endstylesheet %}
 
 {% schema %}

@@ -24,15 +24,17 @@
   endif
 -%}
 <section
-  class="bg-surface-1 border-t border-brand-bg lusena-bestsellers lusena-spacing--standard"
+  class="bg-surface-1 border-t border-brand-bg lusena-bestsellers lusena-spacing--spacious"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
   <div class="container">
     <div class="flex justify-between items-end lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <div>
-        <h2 class="text-3xl md:text-4xl font-serif text-primary lusena-gap-heading">{{ section.settings.heading | escape }}</h2>
+      <div class="lusena-content-flow--tight">
+        <h2 class="text-3xl md:text-4xl font-serif text-primary">
+          {{ section.settings.heading | escape }}
+        </h2>
         {%- if section.settings.subheading != blank -%}
           <p class="text-secondary">{{ section.settings.subheading | escape }}</p>
         {%- endif -%}
@@ -48,7 +50,7 @@
       {%- endif -%}
     </div>
 
-    <div class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 md:gap-8{% if section.settings.view_all_mobile_label != blank %} lusena-gap-body{% endif %}">
+    <div class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 md:gap-8{% if section.settings.view_all_mobile_label != blank %} lusena-gap-cta{% endif %}">
       {%- if collection != blank -%}
         {%- for product in collection.products limit: limit -%}
           {%- liquid
@@ -66,14 +68,18 @@
               class="scroll-trigger animate--slide-in"
               data-cascade
             {% endif %}
->
+          >
             {% render 'lusena-product-card', product: product, badge: badge, show_secondary_image: true %}
           </div>
         {%- endfor -%}
       {%- else -%}
         {%- for i in (1..3) -%}
-          <div class="group cursor-pointer{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
->
+          <div
+            class="group cursor-pointer{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+            {% endif %}
+          >
             <div class="relative aspect-[4/5] bg-surface-2 overflow-hidden mb-4"></div>
             <div class="space-y-1 text-center md:text-left">
               <div class="h-4 bg-surface-2 w-3/4"></div>
@@ -97,7 +103,7 @@
   </div>
 </section>
 
-{% stylesheet %}
+{% stylesheet %}
 {% endstylesheet %}
 
 {% schema %}

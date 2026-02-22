@@ -79,6 +79,24 @@ Audit rules:
 - Prefer semantic, scoped fragment CSS over global utility expansion.
 - Add utility backfills only when justified and reusable.
 
+### Spacing audit (mandatory — see `lusena-spacing` skill)
+
+Map every draft Tailwind spacing value to a LUSENA spacing class. **Never carry over Tailwind spacing utilities** (`pt-*`, `mb-*`, `space-y-*`, `py-*`, `gap-*`) into Liquid.
+
+| Draft spacing | Draft value | LUSENA class | Notes |
+|---|---|---|---|
+| Section padding | [e.g. `py-16` = 64px] | [e.g. `lusena-spacing--standard`] | [Tier chosen by section role — see cheat-sheet in spacing skill] |
+| Container vertical rhythm | [e.g. `space-y-6` = 24px] | [e.g. `lusena-content-flow`] | [Parent-level class] |
+| Kicker → heading gap | [e.g. `space-y-3` = 12px] | `lusena-content-flow--tight` + `lusena-gap-section-intro` | [Standard kicker+heading wrapper] |
+| Element gap (CTA isolation) | [e.g. `mt-8` = 32px] | [e.g. `lusena-gap-cta`] | [Individual element] |
+| [Add more rows as needed] | | | |
+
+Same-background check (if adjacent sections share `bg-*`):
+- Total gap = section A bottom padding + max(gap-same, section B top padding)
+- Desktop target: 100–140px
+- Mobile target: 64–90px
+- If over target: lower the tier, do not hardcode pixels.
+
 ## Parity contract table
 
 | Selector / element | Property | Draft value | Theme target value | State | Breakpoint | Tolerance |
@@ -113,6 +131,7 @@ Implementation rules:
 - Keep JS hooks stable (`data-*` selectors).
 - Preserve semantic HTML and accessibility behavior.
 - Normalize inline numeric styles from Liquid math to CSS-safe format.
+- **Spacing: use LUSENA spacing classes exclusively** — section tier for `<section>` padding, `lusena-content-flow*` for container rhythm, `lusena-gap-*` for individual elements. Never hardcode Tailwind spacing from draft source.
 
 ## Milestones / deliverables
 

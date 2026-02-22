@@ -14,7 +14,7 @@
   endif
 -%}
 <section
-  class="bg-brand-bg text-center overflow-hidden lusena-returns-hero lusena-spacing--hero"
+  class="bg-brand-bg text-center overflow-hidden lusena-returns-hero lusena-spacing--hero lusena-spacing--snug-top"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
@@ -23,11 +23,11 @@
     {% render 'lusena-icon', name: 'shield-check', class: 'lusena-returns-hero__shield-icon', stroke_width: 0.5 %}
   </div>
 
-  <div class="container lusena-returns-hero__container relative mx-auto">
-    <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold lusena-gap-kicker{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <div class="container lusena-returns-hero__container relative mx-auto lusena-content-flow">
+    <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.hero_kicker | escape }}
     </span>
-    <h1 class="lusena-returns-hero__title font-serif text-primary lusena-gap-heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <h1 class="lusena-returns-hero__title font-serif text-primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.hero_heading_line_1 | escape }}<br>
       <span class="italic">{{ section.settings.hero_heading_line_2 | escape }}</span>
     </h1>

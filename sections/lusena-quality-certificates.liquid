@@ -21,12 +21,12 @@
 >
   <div class="container">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-      <div{% if settings.animations_reveal_on_scroll %} class="scroll-trigger animate--slide-in"{% endif %} {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
+      <div class="lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
 >
-        <h2 class="text-3xl md:text-4xl font-serif text-primary lusena-gap-heading">
+        <h2 class="text-3xl md:text-4xl font-serif text-primary">
           {{ section.settings.cert_heading | escape }}
         </h2>
-        <div class="text-secondary font-light text-lg lusena-gap-body">
+        <div class="text-secondary font-light text-lg">
           {{ section.settings.cert_body }}
         </div>
 
@@ -84,7 +84,8 @@
   </div>
 </section>
 
-{% stylesheet %}
+{% stylesheet %}
+
 {% endstylesheet %}
 
 {% schema %}

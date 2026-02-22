@@ -14,16 +14,16 @@
   endif
 -%}
 <section
-  class="bg-brand-bg lusena-about-story lusena-spacing--standard"
+  class="bg-brand-bg lusena-about-story lusena-spacing--spacious"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container max-w-4xl mx-auto text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    <h2 class="text-3xl md:text-4xl font-serif text-primary lusena-gap-section-intro">
+  <div class="container max-w-4xl mx-auto text-center lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <h2 class="text-3xl md:text-4xl font-serif text-primary">
       {{ section.settings.story_heading | escape }}
     </h2>
-    <div class="text-secondary font-light text-lg leading-relaxed max-w-3xl mx-auto space-y-6">
+    <div class="text-secondary font-light text-lg leading-relaxed max-w-3xl mx-auto lusena-content-flow">
       {{ section.settings.story_body }}
     </div>
   </div>
