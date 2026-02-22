@@ -19,7 +19,26 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v2.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — feat(lusena): refine spacing system and refresh PDP + brandbook docs
+### (current) — feat(lusena): migrate homepage v2 copy and add newsletter capture
+
+**Goal:** Align homepage messaging to the v2 brandbook in Polish, redesign heritage proof into a 3-tile evidence layout, and add a native newsletter capture section while documenting deferred migration scope.
+
+**What changed**
+- Reworked homepage template content to Polish-first v2 copy across hero, trust bar, problem/solution, testimonials, bundles, FAQ, and CTAs; increased bestseller count and wired updated heritage block configuration.
+- Redesigned `lusena-heritage` from intro-body format into a centered heading + 3-tile evidence grid with image-or-icon fallback blocks, refreshed defaults/presets, and preserved scroll-trigger cascade behavior.
+- Added new `lusena-newsletter` section with Shopify customer form integration (`contact[tags]=newsletter`), success/error states, responsive input/button layout, spacing overrides, and homepage template placement after FAQ.
+- Added migration process documentation: a homepage v2 deferred backlog and a reusable `lusena-v2-page-migration` skill to standardize future page migrations and validation flow.
+- Updated `docs/theme-brandbook-uiux.md` to reflect the new homepage section inventory and ordering with newsletter included.
+
+**Key files**
+- `templates/index.json`
+- `sections/lusena-heritage.liquid`
+- `sections/lusena-newsletter.liquid`
+- `docs/theme-brandbook-uiux.md`
+- `docs/HOMEPAGE_V2_MIGRATION_BACKLOG.md`
+- `.claude/skills/lusena-v2-page-migration/SKILL.md`
+
+### 567ef16 — feat(lusena): refine spacing system and refresh PDP + brandbook docs
 
 **Goal:** Remove residual section-gap drift from Dawn defaults, tighten LUSENA spacing utility usage, and align PDP + brand documentation updates in one cohesive pass.
 
@@ -190,28 +209,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v2.md` (local path: 
 **Key files**
 - `sections/cart-icon-bubble.liquid`
 
-### 186361d — fix(lusena): stabilize PDP gallery crossfade and mobile variant sync
-
-**Goal:** Finalize PDP gallery variant-switch parity for crossfade + lazy loading and fix the mobile mismatch where indicator dots/index moved but the visible slide stayed on the previous shared image.
-
-**What changed**
-- Added explicit desktop stage crossfade sequencing (`fade out -> swap -> fade in`) for thumbnail changes and variant-driven gallery switches.
-- Added mobile variant-switch sequencing so track opacity transition happens before content swap, then fades back in.
-- Restored index-selection behavior expected from the previous flow while clarifying shared-media handling for color switches.
-- Fixed mobile viewport synchronization by scrolling the mobile track to the resolved target index after variant-change selection, so visible slide and dots stay aligned.
-- Implemented lazy-loading parity updates: desktop stage eager/high priority, desktop thumbs lazy, mobile first visible media eager/high priority, remaining visible media lazy (including runtime re-sync after filtered gallery updates).
-- Added implementation contract for this fragment migration.
-
-**Key files**
-- `snippets/lusena-pdp-media.liquid`
-- `snippets/lusena-pdp-scripts.liquid`
-- `snippets/lusena-pdp-styles.liquid`
-- `docs/PDP_Gallery_Crossfade_Lazy_Parity_Plan.md`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-22T14:43:58+01:00 — (current) — feat(lusena): refine spacing system and refresh PDP + brandbook docs
+- 2026-02-22T17:01:40+01:00 — (current) — feat(lusena): migrate homepage v2 copy and add newsletter capture
+- 2026-02-22T14:43:58+01:00 — 567ef16 — feat(lusena): refine spacing system and refresh PDP + brandbook docs
 - 2026-02-22T12:11:24+01:00 — f178fd9 — fix(lusena): align PDP spacing with global gap tokens
 - 2026-02-22T11:20:24+01:00 — 0a6c1ab — feat(lusena): standardize global section spacing system
 - 2026-02-21T18:07:48+01:00 — 636e65e — Merge branch 'main' of https://github.com/fulfon/lusena-dawn
