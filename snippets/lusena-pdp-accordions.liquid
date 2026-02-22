@@ -21,12 +21,12 @@
                 {% endif %}
                 {{ block.shopify_attributes }}
               >
-                <summary class="flex items-center justify-between py-4 font-medium transition-all hover:text-accent-cta cursor-pointer">
+                <summary class="lusena-pdp-accordion__trigger flex items-center justify-between font-medium transition-all hover:text-accent-cta cursor-pointer">
                   {{ block.settings.heading | escape }}
                   {% render 'lusena-icon', name: 'chevron-down', class: 'h-4 w-4 shrink-0 transition-transform duration-200 lusena-pdp__chevron', stroke_width: 1.5 %}
                 </summary>
                 <div class="overflow-hidden text-sm">
-                  <div class="pb-4 pt-0 text-secondary">
+                  <div class="lusena-pdp-accordion__body text-secondary">
                     {{ block.settings.content }}
                   </div>
                 </div>

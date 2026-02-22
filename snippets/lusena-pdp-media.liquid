@@ -36,7 +36,7 @@
       -%}
 
       <div
-        class="md:col-span-7 space-y-3 lusena-gallery{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+        class="md:col-span-7 lusena-content-flow--tight lusena-gallery{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
         data-lusena-gallery
         {% if certificate_url != blank %}
           data-lusena-proof-id="{{ proof_media_id }}"

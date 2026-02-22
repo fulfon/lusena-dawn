@@ -6,7 +6,7 @@
   @param {section} section
 {% enddoc %}
 
-        <div class="space-y-6{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-variant-selectors>
+        <div class="lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" data-lusena-variant-selectors>
           {%- unless product.has_only_default_variant -%}
             {%- for option in product.options_with_values -%}
               {%- liquid
@@ -23,7 +23,7 @@
               -%}
 
               <fieldset
-                class="space-y-3"
+                class="lusena-content-flow--tight"
                 data-lusena-option
                 data-option-index="{{ option_index }}"
                 {% if is_color %}data-lusena-option-type="color"{% endif %}

@@ -125,6 +125,7 @@ Apply `margin-bottom` to a specific element. Use when content-flow on the parent
 | `lusena-gap-body` | 20px | 24px | Below body text |
 | `lusena-gap-cta` | 28px | 36px | Below content that precedes a CTA |
 | `lusena-gap-section-intro` | 32px | 48px | Below a section intro, before the main content |
+| `lusena-gap-subsection` | 48px | 80px | Major content break within a section (e.g. cross-sell divider). Uses `margin-top`. |
 
 ---
 

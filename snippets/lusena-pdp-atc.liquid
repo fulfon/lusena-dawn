@@ -7,7 +7,7 @@
   @param {string} product_form_id
 {% enddoc %}
 
-        <div class="space-y-2 md:space-y-3{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <div class="lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
           <product-form class="product-form" data-hide-errors="true">
             {%- form 'product',
               product,

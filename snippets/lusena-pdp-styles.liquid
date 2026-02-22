@@ -95,6 +95,8 @@
     letter-spacing: normal;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    padding-top: 1.6rem;
+    padding-bottom: 1.6rem;
   }
 
   .lusena-pdp-accordion__trigger[data-state='open'] .lusena-pdp-accordion__chevron {
@@ -122,6 +124,8 @@
     color: rgba(74, 74, 74, 1);
     opacity: 1;
     transform: translateY(0);
+    padding-bottom: 1.6rem;
+    padding-top: 0;
   }
 
   @supports (touch-action: manipulation) {
@@ -191,7 +195,14 @@
     font-variant-numeric: tabular-nums;
   }
 
+  /* Summary price-wrap gap: replaces mt-3 md:mt-6 */
+  .lusena-pdp .lusena-pdp-buy-box__summary [data-lusena-price-wrap] {
+    margin-top: 1.2rem;
+  }
+
+  /* Summary delivery gap: replaces mt-4 md:mt-5 */
   .lusena-pdp .lusena-pdp-summary__delivery {
+    margin-top: 1.6rem;
     display: flex;
     justify-content: flex-start;
   }
@@ -425,6 +436,15 @@
       margin-top: 0.8rem;
       font-size: 4rem;
       line-height: 4.8rem;
+    }
+
+    /* Desktop summary spacing: price-wrap mt-6 → 2.4rem, delivery mt-5 → 2rem */
+    .lusena-pdp .lusena-pdp-buy-box__summary [data-lusena-price-wrap] {
+      margin-top: 2.4rem;
+    }
+
+    .lusena-pdp .lusena-pdp-summary__delivery {
+      margin-top: 2rem;
     }
   }
 

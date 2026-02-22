@@ -208,6 +208,12 @@
   margin-bottom: var(--lusena-space-lg);
 }
 
+/* Major content break within a section (e.g. cross-sell divider inside PDP).
+ * Uses spacious token: 48px mobile / 80px desktop. Applied as margin-top. */
+.lusena-gap-subsection {
+  margin-top: var(--lusena-space-spacious);
+}
+
 /* ─── Container-level content-flow utilities ───
  * Apply to a parent container to create uniform vertical rhythm
  * between ALL direct children. Matches draft-shop Tailwind space-y patterns.
