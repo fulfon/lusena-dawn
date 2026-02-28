@@ -12,9 +12,11 @@
     "quality_hero": {
       "type": "lusena-quality-hero",
       "settings": {
-        "hero_kicker": "Nasza Jakość",
+        "hero_kicker": "Nasza jakość",
         "hero_heading": "Nie wierz nam na słowo.\nSprawdź.",
-        "hero_body": "Jedwab LUSENA to 22 momme czystej perfekcji. Stworzony w Suzhou, kontrolowany w Polsce. Poczuj różnicę, której nie da się podrobić."
+        "hero_body": "Każda poszewka LUSENA przechodzi kontrolę jakości. Oto dowody.",
+        "hero_button_label": "Pobierz certyfikat OEKO-TEX (PDF)",
+        "hero_button_link": "#certificates"
       }
     },
     "quality_momme": {
@@ -50,9 +52,9 @@
     "quality_fire": {
       "type": "lusena-quality-fire-test",
       "settings": {
-        "fire_heading": "Test Ognia (The Fire Test)",
-        "fire_video_placeholder": "Video Placeholder: Test spalania nitki jedwabiu",
-        "fire_body": "Prawdziwy jedwab po spaleniu pachnie jak pieczone włosy i zamienia się w sypki popiół. Poliester topi się w twardą kulkę. Nie mamy nic do ukrycia."
+        "fire_heading": "Test Ognia",
+        "fire_video_placeholder": "Wideo: test spalania (jedwab vs poliester)",
+        "fire_body": "Jedwab pali się jak włos i zamienia w sypki popiół. Poliester topi się w twardą kulkę. Test Ognia pokazujemy w formie wideo na stronie (kontrolowane warunki)."
       }
     },
     "quality_origin": {
@@ -104,14 +106,165 @@
     "quality_cert": {
       "type": "lusena-quality-certificates",
       "settings": {
-        "cert_heading": "Certyfikaty Bezpieczeństwa",
-        "cert_body": "<p>Twoja skóra dotyka poduszki przez 8 godzin dziennie. Musisz mieć pewność, że jest wolna od chemii. Nasz jedwab posiada certyfikat <strong>OEKO-TEX® Standard 100</strong> (Klasa I — bezpieczne nawet dla niemowląt).</p>",
-        "cert_button_label": "Pobierz Certyfikat (PDF)",
+        "cert_heading": "Certyfikat OEKO-TEX® Standard 100",
+        "cert_body": "<p>Twoja skóra dotyka poduszki przez wiele godzin. Dlatego pokazujemy dowód: niezależny certyfikat <strong>OEKO-TEX® Standard 100</strong> (Klasa I — bezpieczne nawet dla niemowląt).</p>",
+        "oeko_number": "25.HCN.22386",
+        "oeko_verify_label": "Zweryfikuj certyfikat online",
+        "oeko_verify_url": "",
+        "cert_button_label": "Pobierz certyfikat (PDF)",
         "cert_button_link": "",
         "cert_logo_1": "shopify://shop_images/Generated_Image_January_31_2026_-_12_41PM.jpg",
-        "cert_logo_1_placeholder": "Logo OEKO-TEX",
+        "cert_logo_1_placeholder": "Logo OEKO-TEX®",
         "cert_logo_2": "shopify://shop_images/Generated_Image_January_31_2026_-_12_44PM.jpg",
         "cert_logo_2_placeholder": "Logo 6A Grade"
+      }
+    },
+    "quality_6a": {
+      "type": "lusena-quality-6a",
+      "blocks": {
+        "benefit-0": {
+          "type": "benefit",
+          "settings": {
+            "text": "Wyższa selekcja włókien i powtarzalna jakość partii."
+          }
+        },
+        "benefit-1": {
+          "type": "benefit",
+          "settings": {
+            "text": "Dłuższe, bardziej jednorodne włókna oraz stabilne wykończenie."
+          }
+        },
+        "benefit-2": {
+          "type": "benefit",
+          "settings": {
+            "text": "Gładkość i delikatny połysk, który czuć w dotyku."
+          }
+        }
+      },
+      "block_order": ["benefit-0", "benefit-1", "benefit-2"],
+      "settings": {
+        "kicker": "Klasa jedwabiu",
+        "heading": "Klasa 6A",
+        "body": "<p>Klasa 6A to najwyższa klasyfikacja jedwabiu morwowego. Oznacza dłuższe, bardziej jednorodne włókna oraz stabilną jakość partii.</p>",
+        "image_placeholder": "Infografika: skala klas jedwabiu (3A → 6A)"
+      }
+    },
+    "quality_comparison": {
+      "type": "lusena-quality-comparison-table",
+      "blocks": {
+        "row-0": {
+          "type": "row",
+          "settings": {
+            "metric": "Materiał",
+            "lusena_value": "100% jedwab morwowy",
+            "marketplace_value": "Satyna poliestrowa / mieszanka",
+            "premium_value": "100% jedwab morwowy"
+          }
+        },
+        "row-1": {
+          "type": "row",
+          "settings": {
+            "metric": "Gramatura",
+            "lusena_value": "22 momme",
+            "marketplace_value": "Brak danych / 16 momme",
+            "premium_value": "19–22 momme"
+          }
+        },
+        "row-2": {
+          "type": "row",
+          "settings": {
+            "metric": "Certyfikat",
+            "lusena_value": "OEKO-TEX Standard 100",
+            "marketplace_value": "Brak",
+            "premium_value": "Czasami"
+          }
+        },
+        "row-3": {
+          "type": "row",
+          "settings": {
+            "metric": "Wysyłka",
+            "lusena_value": "24h z Polski",
+            "marketplace_value": "14–30 dni",
+            "premium_value": "5–7 dni"
+          }
+        },
+        "row-4": {
+          "type": "row",
+          "settings": {
+            "metric": "Gwarancja",
+            "lusena_value": "60 dni testu",
+            "marketplace_value": "14 dni (prawo)",
+            "premium_value": "14–30 dni"
+          }
+        },
+        "row-5": {
+          "type": "row",
+          "settings": {
+            "metric": "Cena",
+            "lusena_value": "249 zł",
+            "marketplace_value": "49–79 zł",
+            "premium_value": "400–600 zł"
+          }
+        }
+      },
+      "block_order": ["row-0", "row-1", "row-2", "row-3", "row-4", "row-5"],
+      "settings": {
+        "heading": "Tabela porównawcza",
+        "subheading": "Nie prosimy o wiarę. Pokazujemy parametry.",
+        "metric_label": "Parametr",
+        "lusena_label": "LUSENA",
+        "marketplace_label": "Typowa oferta z marketplace",
+        "premium_label": "Marka premium importowana",
+        "footer_note": ""
+      }
+    },
+    "quality_faq": {
+      "type": "lusena-faq",
+      "blocks": {
+        "item-0": {
+          "type": "item",
+          "settings": {
+            "question": "Czy mogę sprawdzić certyfikat online?",
+            "answer": "<p>Tak. Podajemy numer certyfikatu OEKO-TEX Standard 100 i link do weryfikacji na stronie oeko-tex.com.</p>"
+          }
+        },
+        "item-1": {
+          "type": "item",
+          "settings": {
+            "question": "Skąd mam pewność, że to nie poliester?",
+            "answer": "<p>Najprostsze dowody to: certyfikat OEKO-TEX Standard 100 oraz Test Ognia pokazany w formie wideo na tej stronie (kontrolowane warunki).</p>"
+          }
+        },
+        "item-2": {
+          "type": "item",
+          "settings": {
+            "question": "Dlaczego jedwab jest z Suzhou?",
+            "answer": "<p>Suzhou to historyczne centrum jedwabiu morwowego. My kontrolujemy jakość w Polsce i wysyłamy z magazynu w 24h.</p>"
+          }
+        },
+        "item-3": {
+          "type": "item",
+          "settings": {
+            "question": "Jak wygląda zwrot?",
+            "answer": "<p>Masz 60 dni na test. Jeśli produkt nie spełni oczekiwań, możesz go zwrócić bez stresu.</p>"
+          }
+        }
+      },
+      "block_order": ["item-0", "item-1", "item-2", "item-3"],
+      "settings": {
+        "heading": "Najczęstsze pytania",
+        "subheading": ""
+      }
+    },
+    "quality_final_cta": {
+      "type": "lusena-quality-final-cta",
+      "settings": {
+        "heading": "Sprawdź kolekcję",
+        "body": "Poznaj produkty LUSENA i wybierz element nocnej rutyny.",
+        "cta_label": "Zobacz kolekcję",
+        "cta_link": "/collections/all",
+        "secondary_label": "",
+        "secondary_link": ""
       }
     },
     "trust": {
@@ -161,11 +314,15 @@
   },
   "order": [
     "quality_hero",
-    "quality_momme",
-    "quality_fire",
+    "trust",
     "quality_origin",
-    "quality_qc",
+    "quality_momme",
     "quality_cert",
-    "trust"
+    "quality_fire",
+    "quality_6a",
+    "quality_qc",
+    "quality_comparison",
+    "quality_faq",
+    "quality_final_cta"
   ]
 }

@@ -29,12 +29,16 @@
       </h2>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div class="lusena-about-values__grid">
       {%- for block in section.blocks -%}
         {%- if block.type == 'value' -%}
-          <div {% if settings.animations_reveal_on_scroll %}class="scroll-trigger animate--slide-in" data-cascade{% endif %}
->
+          <div class="lusena-about-values__grid-item" {% if settings.animations_reveal_on_scroll %}class="scroll-trigger animate--slide-in" data-cascade{% endif %}>
             <div class="lusena-about-values__card lusena-content-flow--tight h-full p-8 bg-neutral-50 rounded-sm" {{ block.shopify_attributes }}>
+              {%- if block.settings.icon != blank -%}
+                <div class="mb-4 text-accent-cta">
+                  {% render 'lusena-icon', name: block.settings.icon, class: 'w-8 h-8', stroke_width: 1.5 %}
+                </div>
+              {%- endif -%}
               <h3 class="font-serif text-xl text-primary">{{ block.settings.title | escape }}</h3>
               <p class="text-secondary font-light text-sm leading-relaxed">
                 {{ block.settings.text | escape }}
@@ -48,6 +52,28 @@
 </section>
 
 {% stylesheet %}
+  .lusena-about-values__grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem; /* 32px gap-8 */
+    justify-content: center;
+  }
+
+  .lusena-about-values__grid-item {
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .lusena-about-values__grid-item {
+      width: calc(50% - 1rem);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .lusena-about-values__grid-item {
+      width: calc(33.333% - 1.333rem);
+    }
+  }
 
   .lusena-about-values__card {
     transition: transform 0.3s ease;
@@ -113,13 +139,13 @@
       "type": "text",
       "id": "values_kicker",
       "label": "Values kicker",
-      "default": "WartoĹ›ci"
+      "default": "Wartości"
     },
     {
       "type": "text",
       "id": "values_heading",
       "label": "Values heading",
-      "default": "Czym siÄ™ kierujemy?"
+      "default": "Czym się kierujemy?"
     }
   ],
   "blocks": [
@@ -129,9 +155,15 @@
       "settings": [
         {
           "type": "text",
+          "id": "icon",
+          "label": "Icon name",
+          "info": "e.g. gem, handshake, leaf, hourglass, home-heart"
+        },
+        {
+          "type": "text",
           "id": "title",
           "label": "Title",
-          "default": "JakoĹ›Ä‡ bez kompromisĂłw"
+          "default": "Jakość bez kompromisów"
         },
         {
           "type": "text",
@@ -149,20 +181,23 @@
         {
           "type": "value",
           "settings": {
-            "title": "JakoĹ›Ä‡ bez kompromisĂłw",
+            "icon": "gem",
+            "title": "Jakość bez kompromisów",
             "text": "Zawsze 22 momme. Zawsze klasa 6A. Nigdy \"jedwab satynowy\" (poliester)."
           }
         },
         {
           "type": "value",
           "settings": {
-            "title": "SzczeroĹ›Ä‡",
-            "text": "Nie obiecujemy, ĹĽe jedwab cofnie zmarszczki o 10 lat. Obiecujemy, ĹĽe przestanie je utrwalaÄ‡ kaĹĽdej nocy."
+            "icon": "handshake",
+            "title": "Szczerość",
+            "text": "Nie obiecujemy, że jedwab cofnie zmarszczki o 10 lat. Obiecujemy, że przestanie je utrwalać każdej nocy."
           }
         },
         {
           "type": "value",
           "settings": {
+            "icon": "leaf",
             "title": "Prostota",
             "text": "Minimalistyczny design. Opakowania bez plastiku. Przejrzysta oferta."
           }
@@ -170,8 +205,9 @@
         {
           "type": "value",
           "settings": {
-            "title": "LokalnoĹ›Ä‡",
-            "text": "JesteĹ›my stÄ…d. Podatki pĹ‚acimy w Polsce. ObsĹ‚uga klienta mĂłwi po polsku."
+            "icon": "home-heart",
+            "title": "Lokalność",
+            "text": "Jesteśmy stąd. Podatki płacimy w Polsce. Obsługa klienta mówi po polsku."
           }
         }
       ]

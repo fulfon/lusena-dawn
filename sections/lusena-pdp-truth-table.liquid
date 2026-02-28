@@ -1,0 +1,461 @@
+{%- liquid
+  assign has_rows = false
+  for block in section.blocks
+    if block.type == 'row'
+      assign has_rows = true
+      break
+    endif
+  endfor
+-%}
+
+{%- if has_rows -%}
+  {%- liquid
+    assign override_style = ''
+    if section.settings.padding_top > 0
+      assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+    endif
+    if section.settings.padding_bottom > 0
+      assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+    endif
+    if section.settings.padding_top_mobile > 0
+      assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+    endif
+    if section.settings.padding_bottom_mobile > 0
+      assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+    endif
+  -%}
+
+  <section
+    class="lusena-pdp-truth-table lusena-spacing--standard bg-brand-bg"
+    {% if override_style != blank %}
+      style="{{ override_style }}"
+    {% endif %}
+  >
+    <div class="container">
+      <div class="lusena-pdp-truth-table__intro lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <h2 class="lusena-pdp-truth-table__heading">{{ section.settings.heading | escape }}</h2>
+        {%- if section.settings.subheading != blank -%}
+          <p class="lusena-pdp-truth-table__subheading">
+            {{ section.settings.subheading | escape }}
+          </p>
+        {%- endif -%}
+      </div>
+
+      <div class="lusena-pdp-truth-table__desktop-wrap{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <table class="lusena-pdp-truth-table__table" aria-label="{{ section.settings.heading | escape }}">
+          <thead>
+            <tr>
+              <th scope="col">{{ section.settings.metric_label | escape }}</th>
+              <th scope="col">{{ section.settings.lusena_label | escape }}</th>
+              <th scope="col">{{ section.settings.others_label | escape }}</th>
+            </tr>
+          </thead>
+          <tbody{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'row' -%}
+                <tr class="{% if settings.animations_reveal_on_scroll %}scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
+                  <th scope="row">
+                    {{ block.settings.metric | escape }}
+                  </th>
+                  <td>
+                    <span class="lusena-pdp-truth-table__value lusena-pdp-truth-table__value--lusena">
+                      {% render 'lusena-icon', name: 'check', class: 'lusena-pdp-truth-table__icon', stroke_width: 2 %}
+                      <span>{{ block.settings.lusena_value | escape }}</span>
+                    </span>
+                  </td>
+                  <td>
+                    <span class="lusena-pdp-truth-table__value lusena-pdp-truth-table__value--others">
+                      {% render 'lusena-icon', name: 'x', class: 'lusena-pdp-truth-table__icon', stroke_width: 2 %}
+                      <span>{{ block.settings.others_value | escape }}</span>
+                    </span>
+                  </td>
+                </tr>
+              {%- endif -%}
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="lusena-pdp-truth-table__mobile"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'row' -%}
+            <article class="lusena-pdp-truth-table__mobile-card{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
+              <h3 class="lusena-pdp-truth-table__mobile-metric">{{ block.settings.metric | escape }}</h3>
+              <div class="lusena-pdp-truth-table__mobile-line lusena-pdp-truth-table__mobile-line--lusena">
+                <span class="lusena-pdp-truth-table__mobile-label lusena-pdp-truth-table__mobile-label--lusena">{{ section.settings.lusena_label | escape }}</span>
+                <span class="lusena-pdp-truth-table__value lusena-pdp-truth-table__value--lusena">
+                  {% render 'lusena-icon', name: 'check', class: 'lusena-pdp-truth-table__icon', stroke_width: 2 %}
+                  <span>{{ block.settings.lusena_value | escape }}</span>
+                </span>
+              </div>
+              <div class="lusena-pdp-truth-table__mobile-line">
+                <span class="lusena-pdp-truth-table__mobile-label">{{ section.settings.others_label | escape }}</span>
+                <span class="lusena-pdp-truth-table__value lusena-pdp-truth-table__value--others">
+                  {% render 'lusena-icon', name: 'x', class: 'lusena-pdp-truth-table__icon', stroke_width: 2 %}
+                  <span>{{ block.settings.others_value | escape }}</span>
+                </span>
+              </div>
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.footer_note != blank -%}
+        <p class="lusena-pdp-truth-table__note{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {{ section.settings.footer_note | escape }}
+        </p>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% stylesheet %}
+  /* ── Intro ── */
+  .lusena-pdp-truth-table__intro {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .lusena-pdp-truth-table__heading {
+    margin: 0;
+    font-family: 'Source Serif 4', serif;
+    font-size: 24px;
+    line-height: 1.3;
+    color: var(--primary);
+  }
+
+  .lusena-pdp-truth-table__subheading {
+    margin: 10px 0 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-secondary, #4A4A4A);
+  }
+
+  /* ── Desktop table ── */
+  .lusena-pdp-truth-table__desktop-wrap {
+    display: none;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .lusena-pdp-truth-table__table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--surface-1, #FFFFFF);
+    border-radius: 4px;
+    box-shadow: 0 1px 4px 0 rgb(0 0 0 / 0.05);
+    overflow: hidden;
+  }
+
+  .lusena-pdp-truth-table__table th,
+  .lusena-pdp-truth-table__table td {
+    padding: 22px 24px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--surface-2, #F0EEEB);
+  }
+
+  .lusena-pdp-truth-table__table thead th {
+    font-size: 13px;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary, #4A4A4A);
+    font-weight: 600;
+    padding-top: 16px;
+    padding-bottom: 14px;
+    border-bottom-color: var(--surface-2, #F0EEEB);
+  }
+
+  .lusena-pdp-truth-table__table thead th:nth-child(2) {
+    color: var(--accent-cta);
+  }
+
+  /* Subtle LUSENA column highlight */
+  .lusena-pdp-truth-table__table tbody td:nth-child(2) {
+    background: color-mix(in srgb, var(--accent-cta) 2.5%, transparent);
+  }
+
+  .lusena-pdp-truth-table__table tbody tr:last-child th,
+  .lusena-pdp-truth-table__table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .lusena-pdp-truth-table__table tbody th {
+    width: 26%;
+    font-family: 'Source Serif 4', serif;
+    font-size: 17px;
+    line-height: 1.4;
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  /* ── Value display ── */
+  .lusena-pdp-truth-table__value {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .lusena-pdp-truth-table__value--lusena {
+    color: var(--primary);
+  }
+
+  .lusena-pdp-truth-table__value--others {
+    color: var(--text-secondary, #4A4A4A);
+  }
+
+  /* ── Icons ── */
+  .lusena-pdp-truth-table__icon {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .lusena-pdp-truth-table__value--lusena .lusena-pdp-truth-table__icon {
+    color: var(--accent-cta);
+  }
+
+  .lusena-pdp-truth-table__value--others .lusena-pdp-truth-table__icon {
+    color: var(--text-secondary, #4A4A4A);
+    opacity: 0.5;
+  }
+
+  /* ── Mobile cards ── */
+  .lusena-pdp-truth-table__mobile {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .lusena-pdp-truth-table__mobile-card {
+    background: var(--surface-2, #F0EEEB);
+    border-radius: 4px;
+    padding: 20px;
+  }
+
+  .lusena-pdp-truth-table__mobile-metric {
+    margin: 0 0 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid color-mix(in srgb, var(--text-secondary, #4A4A4A) 15%, transparent);
+    font-family: 'Source Serif 4', serif;
+    font-size: 17px;
+    line-height: 1.3;
+    color: var(--primary);
+  }
+
+  .lusena-pdp-truth-table__mobile-line--lusena {
+    background: color-mix(in srgb, var(--accent-cta) 4%, transparent);
+    border-radius: 3px;
+    padding: 12px;
+    margin: 0 -4px;
+  }
+
+  .lusena-pdp-truth-table__mobile-line + .lusena-pdp-truth-table__mobile-line {
+    margin-top: 12px;
+  }
+
+  .lusena-pdp-truth-table__mobile-label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 12px;
+    line-height: 1.3;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary, #4A4A4A);
+    font-weight: 600;
+  }
+
+  .lusena-pdp-truth-table__mobile-label--lusena {
+    color: var(--accent-cta);
+  }
+
+  .lusena-pdp-truth-table__note {
+    margin: 20px auto 0;
+    max-width: 640px;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-secondary, #4A4A4A);
+  }
+
+  @media (min-width: 768px) {
+    .lusena-pdp-truth-table__heading {
+      font-size: 28px;
+    }
+
+    .lusena-pdp-truth-table__mobile {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .lusena-pdp-truth-table__desktop-wrap {
+      display: block;
+    }
+
+    .lusena-pdp-truth-table__mobile {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "LUSENA PDP Truth Table",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Spacing overrides (0 = use global default)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Jedwab vs satyna"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Satyna to marketingowa nazwa poliestru. Porównaj fakty."
+    },
+    {
+      "type": "text",
+      "id": "metric_label",
+      "label": "Table heading: metric",
+      "default": "Porównanie"
+    },
+    {
+      "type": "text",
+      "id": "lusena_label",
+      "label": "Table heading: LUSENA",
+      "default": "LUSENA"
+    },
+    {
+      "type": "text",
+      "id": "others_label",
+      "label": "Table heading: others",
+      "default": "Inne opcje"
+    },
+    {
+      "type": "textarea",
+      "id": "footer_note",
+      "label": "Footer note"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Comparison row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "metric",
+          "label": "Metric",
+          "default": "Materiał"
+        },
+        {
+          "type": "textarea",
+          "id": "lusena_value",
+          "label": "LUSENA value",
+          "default": "100% jedwab morwowy 22 momme (klasa 6A), certyfikowany OEKO-TEX Standard 100."
+        },
+        {
+          "type": "textarea",
+          "id": "others_value",
+          "label": "Other value",
+          "default": "Najczęściej satyna poliestrowa lub mieszanki bez transparentnej specyfikacji."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA PDP Truth Table",
+      "settings": {
+        "heading": "Jedwab vs satyna",
+        "subheading": "Satyna to marketingowa nazwa poliestru. Porównaj fakty.",
+        "metric_label": "Cecha",
+        "lusena_label": "Jedwab LUSENA",
+        "others_label": "Satyna (Poliester)"
+      },
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "metric": "Materiał",
+            "lusena_value": "100% naturalny jedwab morwowy (włókno białkowe).",
+            "others_value": "Syntetyczny poliester (włókno sztuczne)."
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "metric": "Oddychalność",
+            "lusena_value": "Termoregulacyjny i przewiewny. Skóra oddycha przez całą noc.",
+            "others_value": "Zatrzymuje ciepło i wilgoć, co sprzyja poceniu się."
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "metric": "Wpływ na skórę i włosy",
+            "lusena_value": "Redukuje tarcie, chroni przed zagnieceniami i puszeniem.",
+            "others_value": "Może elektryzować włosy i podrażniać wrażliwą cerę."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

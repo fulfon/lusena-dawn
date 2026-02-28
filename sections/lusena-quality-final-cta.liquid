@@ -1,0 +1,162 @@
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+
+  assign primary_url = section.settings.cta_link
+  if section.settings.cta_collection != blank
+    assign primary_url = section.settings.cta_collection.url
+  endif
+-%}
+<section
+  class="bg-white border-t border-brand-bg lusena-quality-final-cta lusena-spacing--standard"
+  {% if override_style != blank %}
+    style="{{ override_style }}"
+  {% endif %}
+>
+  <div class="container">
+    <div class="text-center max-w-3xl mx-auto lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <h2 class="text-3xl md:text-4xl font-serif text-primary">
+        {{ section.settings.heading | escape }}
+      </h2>
+      {%- if section.settings.body != blank -%}
+        <p class="text-secondary font-light text-lg max-w-2xl mx-auto">
+          {{ section.settings.body | escape }}
+        </p>
+      {%- endif -%}
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+        {%- if primary_url != blank -%}
+          <a
+            href="{{ primary_url }}"
+            class="lusena-btn lusena-btn--primary lusena-btn--size-default min-w-[240px]"
+          >
+            {{ section.settings.cta_label | escape }}
+          </a>
+        {%- endif -%}
+
+        {%- assign secondary_label = section.settings.secondary_label | strip -%}
+        {%- if secondary_label != blank and section.settings.secondary_link != blank -%}
+          <a
+            href="{{ section.settings.secondary_link }}"
+            target="_blank"
+            rel="noopener"
+            class="text-sm font-medium text-accent-cta underline underline-offset-4 hover:no-underline"
+          >
+            {{ secondary_label | escape }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "LUSENA Quality: Final CTA",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Spacing overrides (0 = use global default)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Sprawdź sama"
+    },
+    {
+      "type": "text",
+      "id": "body",
+      "label": "Body",
+      "default": "Jeśli nadal masz wątpliwości — wybierz produkt i zobacz różnicę u siebie."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Primary button label",
+      "default": "Zobacz kolekcję"
+    },
+    {
+      "type": "collection",
+      "id": "cta_collection",
+      "label": "Primary collection (optional)"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Primary link (fallback)",
+      "default": "/collections/all"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary link label"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary link URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA Quality: Final CTA"
+    }
+  ]
+}
+{% endschema %}

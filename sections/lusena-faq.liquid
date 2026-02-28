@@ -39,7 +39,7 @@
           {% endif %}
           {{ block.shopify_attributes }}
         >
-          <summary class="flex items-center justify-between py-6 font-medium transition-all hover:text-accent-cta cursor-pointer">
+          <summary class="flex items-center justify-between font-medium transition-all hover:text-accent-cta cursor-pointer">
             {{ block.settings.question | escape }}
             {% render 'lusena-icon',
               name: 'chevron-down',
@@ -71,6 +71,8 @@
     letter-spacing: normal;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    padding-top: 1.6rem;
+    padding-bottom: 0.8rem;
   }
 
   .lusena-faq__item:first-child summary {
@@ -102,9 +104,8 @@
     }
   }
 
-  /* Premium breathing room for FAQ answer content */
   .lusena-faq__content-inner {
-    padding-bottom: 2.4rem;
+    padding-bottom: 1.6rem;
   }
 
   @media (prefers-reduced-motion: reduce) {

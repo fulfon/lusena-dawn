@@ -15,6 +15,7 @@
 -%}
 <section
   class="bg-white border-t border-brand-bg lusena-quality-certificates lusena-spacing--standard"
+  id="certificates"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
@@ -29,6 +30,27 @@
         <div class="text-secondary font-light text-lg">
           {{ section.settings.cert_body }}
         </div>
+
+        {%- assign oeko_number = section.settings.oeko_number | strip -%}
+        {%- if shop.metafields.lusena.oeko_tex_certificate_number != blank -%}
+          {%- assign oeko_number_value = shop.metafields.lusena.oeko_tex_certificate_number.value -%}
+          {%- if oeko_number_value != blank -%}
+            {%- assign oeko_number = oeko_number_value | strip -%}
+          {%- endif -%}
+        {%- endif -%}
+
+        {%- assign verify_label = section.settings.oeko_verify_label -%}
+        {%- if verify_label == blank -%}
+          {%- assign verify_label = 'Zweryfikuj certyfikat online' -%}
+        {%- endif -%}
+
+        {%- assign verify_url = section.settings.oeko_verify_url -%}
+        {%- if verify_url == blank -%}
+          {%- if oeko_number != blank -%}
+            {%- assign oeko_number_encoded = oeko_number | url_encode -%}
+            {%- assign verify_url = 'https://www.oeko-tex.com/en/detail/?number=' | append: oeko_number_encoded -%}
+          {%- endif -%}
+        {%- endif -%}
 
         {%- assign certificate_url = blank -%}
         {%- assign certificate_label = section.settings.cert_button_label -%}
@@ -51,15 +73,35 @@
           {%- endif -%}
         {%- endif -%}
 
-        {%- if certificate_url != blank -%}
-          <a
-            href="{{ certificate_url }}"
-            target="_blank"
-            rel="noopener"
-            class="lusena-btn lusena-btn--outline lusena-btn--size-default min-w-[200px]"
-          >
-            {{ certificate_label | escape }}
-          </a>
+        {%- if oeko_number != blank -%}
+          <p class="text-sm text-secondary">
+            Numer certyfikatu: <span class="font-medium text-primary">{{ oeko_number | escape }}</span>
+          </p>
+        {%- endif -%}
+
+        {%- if certificate_url != blank or verify_url != blank -%}
+          <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+            {%- if certificate_url != blank -%}
+              <a
+                href="{{ certificate_url }}"
+                target="_blank"
+                rel="noopener"
+                class="lusena-btn lusena-btn--outline lusena-btn--size-default min-w-[200px]"
+              >
+                {{ certificate_label | escape }}
+              </a>
+            {%- endif -%}
+            {%- if verify_url != blank -%}
+              <a
+                href="{{ verify_url }}"
+                target="_blank"
+                rel="noopener"
+                class="text-sm font-medium text-accent-cta underline underline-offset-4 hover:no-underline"
+              >
+                {{ verify_label | escape }}
+              </a>
+            {%- endif -%}
+          </div>
         {%- endif -%}
       </div>
 
@@ -148,6 +190,23 @@
       "id": "cert_body",
       "label": "Certificates body",
       "default": "<p>Twoja skĂłra dotyka poduszki przez 8 godzin dziennie. Musisz mieÄ‡ pewnoĹ›Ä‡, ĹĽe jest wolna od chemii. Nasz jedwab posiada certyfikat <strong>OEKO-TEXÂ® Standard 100</strong> (Klasa I â€” bezpieczne nawet dla niemowlÄ…t).</p>"
+    },
+    {
+      "type": "text",
+      "id": "oeko_number",
+      "label": "OEKO-TEX certificate number (fallback)"
+    },
+    {
+      "type": "text",
+      "id": "oeko_verify_label",
+      "label": "Verify link label",
+      "default": "Zweryfikuj certyfikat online"
+    },
+    {
+      "type": "url",
+      "id": "oeko_verify_url",
+      "label": "Verify link URL (optional override)",
+      "info": "Domyślnie budowane z numeru certyfikatu: https://www.oeko-tex.com/en/detail/?number={NUMER}. Preferowane źródło numeru: metafield sklepu `lusena.oeko_tex_certificate_number`."
     },
     {
       "type": "text",

@@ -1,5 +1,5 @@
 {%- liquid
-  assign shipping_info = 'Wysyłamy z Polski w ciągu 24h. Dostawa InPost/kurier: 1–2 dni robocze. Darmowa dostawa od 199 zł.'
+  assign shipping_info = 'Wysyłamy z naszego magazynu w Polsce. Zamówienia złożone do godziny 14:00 wysyłamy jeszcze tego samego dnia. Dostawa InPost/kurier zajmuje zazwyczaj 1–2 dni robocze. Darmowa dostawa od 199 zł.'
   assign returns_info = '60 dni na zwrot — nawet używanego produktu. Prosty formularz online, darmowy zwrot InPost.'
   assign guarantee_info = 'Przetestuj przez 60 nocy. Jeśli nie poczujesz różnicy, zwróć i otrzymaj pełny zwrot. Bez pytań.'
 
@@ -120,6 +120,9 @@
             <div class="lusena-pdp-accordion__body text-secondary">
               <p>{{ returns_info | escape }}</p>
               <p>{{ guarantee_info | escape }}</p>
+              <a href="/pages/zwroty" class="lusena-pdp-details__returns-link">
+                Szczegóły zwrotów i gwarancji →
+              </a>
             </div>
           </div>
         </div>
@@ -152,7 +155,41 @@
           >
             <div class="lusena-pdp-accordion__body text-secondary">
               <p>
-                Tak, to 100% jedwab morwowy. Każda partia przechodzi kontrolę jakości i jest opisana pełną specyfikacją.
+                Tak, używamy wyłącznie w 100% naturalnego jedwabiu morwowego, <strong class="font-medium text-primary">bez żadnych domieszek poliestru czy elastanu</strong>. Autentyczność potwierdzają niezależne badania oraz certyfikat OEKO-TEX Standard 100. Różnicę w jakości poczujesz od pierwszego dotyku.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          data-lusena-accordion-item
+          data-lusena-accordion-value="allergy"
+        >
+          <div class="flex">
+            <button
+              type="button"
+              class="lusena-pdp-accordion__trigger flex flex-1 items-center justify-between min-h-[44px] font-medium transition-all hover:text-accent-cta text-left"
+              data-lusena-accordion-trigger
+              data-state="closed"
+              aria-expanded="false"
+            >
+              Czy jedwab LUSENA jest odpowiedni dla alergików i cery trądzikowej?
+              {% render 'lusena-icon',
+                name: 'chevron-down',
+                class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200',
+                stroke_width: 2
+              %}
+            </button>
+          </div>
+          <div
+            class="lusena-pdp-accordion__content overflow-hidden text-sm"
+            data-lusena-accordion-content
+            data-state="closed"
+          >
+            <div class="lusena-pdp-accordion__body text-secondary">
+              <p>
+                Zdecydowanie tak. Jedwab morwowy jest naturalnie hipoalergiczny i nie gromadzi roztoczy ani kurzu. W przeciwieństwie do bawełny, <strong class="font-medium text-primary">nie wchłania wilgoci ani kosmetyków z Twojej twarzy</strong>, co zapobiega zapychaniu porów i aktywnie wspiera nocną pielęgnację oraz leczenie trądziku.
               </p>
             </div>
           </div>
@@ -205,7 +242,7 @@
               data-state="closed"
               aria-expanded="false"
             >
-              Jak prać jedwabną poszewkę?
+              Jak prać i pielęgnować jedwab?
               {% render 'lusena-icon',
                 name: 'chevron-down',
                 class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200',
@@ -220,9 +257,11 @@
           >
             <div class="lusena-pdp-accordion__body text-secondary">
               <ul class="list-disc pl-4 space-y-1 text-secondary/80">
-                <li>Program delikatny, maksymalnie 30°C.</li>
-                <li>Detergent do jedwabiu lub tkanin delikatnych.</li>
-                <li>Suszenie na płasko, bez suszarki bębnowej.</li>
+                <li>Prać w pralce: program delikatny, maks. 30°C</li>
+                <li>Używać detergentu do jedwabiu lub delikatnych tkanin</li>
+                <li>Suszyć na płasko — nie używać suszarki bębnowej</li>
+                <li>Nie wybielać, nie prać z chlorem</li>
+                <li>Prasować na najniższej temperaturze z lewej strony</li>
               </ul>
             </div>
           </div>
@@ -256,8 +295,117 @@
           >
             <div class="lusena-pdp-accordion__body text-secondary">
               <p>
-                Suzhou i region Shengze to historyczne centrum jedwabiu. Ten region jest znany z wysokiej jakości włókna
-                i stabilnego standardu produkcji.
+                Suzhou to historyczna stolica jedwabiu, której tradycje tkackie sięgają dynastii Ming. To stamtąd pochodzi najwyższej klasy jedwab morwowy, charakteryzujący się najdłuższymi i najbardziej wytrzymałymi włóknami na świecie.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          data-lusena-accordion-item
+          data-lusena-accordion-value="price"
+        >
+          <div class="flex">
+            <button
+              type="button"
+              class="lusena-pdp-accordion__trigger flex flex-1 items-center justify-between min-h-[44px] font-medium transition-all hover:text-accent-cta text-left"
+              data-lusena-accordion-trigger
+              data-state="closed"
+              aria-expanded="false"
+            >
+              Dlaczego prawdziwy jedwab tyle kosztuje?
+              {% render 'lusena-icon',
+                name: 'chevron-down',
+                class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200',
+                stroke_width: 2
+              %}
+            </button>
+          </div>
+          <div
+            class="lusena-pdp-accordion__content overflow-hidden text-sm"
+            data-lusena-accordion-content
+            data-state="closed"
+          >
+            <div class="lusena-pdp-accordion__body text-secondary space-y-3">
+              <p>
+                Produkcja jedwabiu to proces wymagający ogromnej precyzji i czasu. Do stworzenia jednej poszewki LUSENA potrzeba tysięcy kokonów jedwabnika morwowego.
+              </p>
+              <p>
+                Używamy wyłącznie jedwabiu o gęstości <strong class="font-medium text-primary">22 momme</strong> (idealny balans między miękkością a trwałością) oraz najwyższej <strong class="font-medium text-primary">klasy 6A</strong> (najdłuższe, nieskazitelne włókna). To inwestycja w produkt, który przy odpowiedniej pielęgnacji posłuży Ci przez lata.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          data-lusena-accordion-item
+          data-lusena-accordion-value="silk-vs-satin"
+        >
+          <div class="flex">
+            <button
+              type="button"
+              class="lusena-pdp-accordion__trigger flex flex-1 items-center justify-between min-h-[44px] font-medium transition-all hover:text-accent-cta text-left"
+              data-lusena-accordion-trigger
+              data-state="closed"
+              aria-expanded="false"
+            >
+              Czym różni się jedwab od satyny?
+              {% render 'lusena-icon',
+                name: 'chevron-down',
+                class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200',
+                stroke_width: 2
+              %}
+            </button>
+          </div>
+          <div
+            class="lusena-pdp-accordion__content overflow-hidden text-sm"
+            data-lusena-accordion-content
+            data-state="closed"
+          >
+            <div class="lusena-pdp-accordion__body text-secondary space-y-3">
+              <p>
+                <strong class="font-medium text-primary">Jedwab</strong> to naturalne włókno białkowe, które oddycha, termoreguluje i nie wchłania wilgoci z Twojej skóry ani kremów.
+              </p>
+              <p>
+                <strong class="font-medium text-primary">Satyna</strong> to jedynie rodzaj splotu, najczęściej wykonywany z taniego poliestru (plastiku). Poliester nie oddycha, powoduje pocenie się skóry i elektryzowanie włosów.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          data-lusena-accordion-item
+          data-lusena-accordion-value="effects"
+        >
+          <div class="flex">
+            <button
+              type="button"
+              class="lusena-pdp-accordion__trigger flex flex-1 items-center justify-between min-h-[44px] font-medium transition-all hover:text-accent-cta text-left"
+              data-lusena-accordion-trigger
+              data-state="closed"
+              aria-expanded="false"
+            >
+              Kiedy zauważę pierwsze efekty?
+              {% render 'lusena-icon',
+                name: 'chevron-down',
+                class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200',
+                stroke_width: 2
+              %}
+            </button>
+          </div>
+          <div
+            class="lusena-pdp-accordion__content overflow-hidden text-sm"
+            data-lusena-accordion-content
+            data-state="closed"
+          >
+            <div class="lusena-pdp-accordion__body text-secondary space-y-3">
+              <p>
+                Różnicę poczujesz już po pierwszej nocy. Włosy będą mniej splątane i pozbawione puszenia, a na twarzy nie pojawią się odgniecenia od poduszki (tzw. sleep wrinkles).
+              </p>
+              <p>
+                Długoterminowe efekty, takie jak lepsze nawilżenie skóry i poprawa kondycji włosów, zauważysz po około 2-4 tygodniach regularnego spania na jedwabiu.
               </p>
             </div>
           </div>
@@ -268,14 +416,18 @@
 </section>
 
 {% stylesheet %}
-  /* Increase accordion row padding for premium breathing room + better touch targets */
-  .lusena-pdp-details .lusena-pdp-accordion__trigger {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+  /* Use standard accordion spacing (defined in lusena-pdp-styles) */
+
+  .lusena-pdp-details .lusena-pdp-details__returns-link {
+    display: inline-block;
+    margin-top: 0.8rem;
+    color: rgb(14 94 90 / 1);
+    font-weight: 500;
+    text-decoration: none;
   }
 
-  .lusena-pdp-details .lusena-pdp-accordion__body {
-    padding-bottom: 2.4rem;
+  .lusena-pdp-details .lusena-pdp-details__returns-link:hover {
+    text-decoration: underline;
   }
 {% endstylesheet %}
 

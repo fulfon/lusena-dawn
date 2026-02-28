@@ -142,9 +142,9 @@
           "type": "evidence",
           "settings": {
             "icon": "shield-check",
-            "title": "OEKO-TEX® Standard 100",
-            "summary": "Niezależny certyfikat potwierdzający brak substancji szkodliwych. Bezpieczny dla skóry wrażliwej, alergików i dzieci.",
-            "detail": "Każda partia jedwabiu jest testowana przez akredytowane laboratorium. Numer certyfikatu znajdziesz na karcie dołączonej do produktu. Możesz go zweryfikować na oeko-tex.com/check.",
+            "title": "Certyfikat OEKO-TEX® — 100% bezpieczeństwa",
+            "summary": "Wolny od toksycznych barwników i chemikaliów. Idealny dla cery trądzikowej, wrażliwej i alergików.",
+            "detail": "Nasz jedwab jest certyfikowany i przebadany w niezależnych laboratoriach. Numer certyfikatu znajdziesz na karcie dołączonej do produktu — możesz go zweryfikować na oeko-tex.com/check.",
             "cta_label": "Sprawdź certyfikat →",
             "cta_link": "shopify://pages/nasza-jakosc",
             "use_certificate_link": true
@@ -154,9 +154,9 @@
           "type": "evidence",
           "settings": {
             "icon": "map-pin",
-            "title": "Jedwab z Suzhou — 600 lat tradycji",
-            "summary": "Nasz jedwab pochodzi z regionu Shengze w Suzhou — światowej stolicy jedwabiu od ponad 600 lat.",
-            "detail": "Lokalni producenci specjalizują się w jedwabiu Grade 6A o najdłuższych włóknach. To gładszy, trwalszy i bardziej lśniący materiał niż jedwab z innych regionów. Współpracujemy bezpośrednio z certyfikowanymi manufakturami.",
+            "title": "Jedwab Grade 6A z Suzhou (600 lat tradycji)",
+            "summary": "Używamy wyłącznie najwyższej klasy jedwabiu (Grade 6A) o najdłuższych włóknach. Gwarantuje to maksymalną gładkość i trwałość.",
+            "detail": "Nasz jedwab pochodzi z regionu Shengze w Suzhou — światowej stolicy jedwabiu od czasów dynastii Ming. Współpracujemy bezpośrednio z zaufaną manufakturą, omijając pośredników, by dostarczyć Ci jakość premium w uczciwej cenie.",
             "cta_label": "Więcej o pochodzeniu →",
             "cta_link": "shopify://pages/o-nas",
             "use_certificate_link": false
@@ -166,9 +166,9 @@
           "type": "evidence",
           "settings": {
             "icon": "layers",
-            "title": "22 momme — optymalny standard",
-            "summary": "Momme to jednostka gęstości jedwabiu. 22 momme to o 30% więcej niż branżowy standard 16–19 momme.",
-            "detail": "Wyższe momme oznacza grubszy, bardziej trwały jedwab, który lepiej oddycha i zachowuje właściwości termoregulacyjne. 22 momme to optymalny balans między luksusowym dotykiem a wytrzymałością — bez nadmiernej wagi.",
+            "title": "22 momme — o 30% grubszy i trwalszy",
+            "summary": "Większość marek używa cienkiego jedwabiu 16-19 momme. My postawiliśmy na 22 momme — idealny balans między luksusowym dotykiem a wieloletnią wytrzymałością.",
+            "detail": "Wyższe momme oznacza gęstszy splot, który lepiej znosi pranie, nie prześwituje i zachowuje swoje właściwości termoregulacyjne przez lata. To inwestycja, która się opłaca.",
             "cta_label": "Porównaj momme →",
             "cta_link": "shopify://pages/nasza-jakosc",
             "use_certificate_link": false
@@ -178,11 +178,11 @@
           "type": "evidence",
           "settings": {
             "icon": "package",
-            "title": "Kontrola jakości w Polsce + wysyłka 24h",
-            "summary": "Każdy produkt przechodzi kontrolę jakości w naszym magazynie w Polsce. Wysyłamy w ciągu 24 godzin roboczych.",
-            "detail": "Sprawdzamy szwy, zamek, kolor i gramaturę. Produkty niespełniające standardów nie trafiają do sprzedaży. Dzięki lokalnej logistyce dostarczamy w 1–2 dni robocze via InPost lub kurier.",
-            "cta_label": "Więcej o nas →",
-            "cta_link": "shopify://pages/nasza-jakosc",
+            "title": "Polska kontrola jakości i wysyłka w 24h",
+            "summary": "Nie uprawiamy dropshippingu. Każdy produkt jest ręcznie sprawdzany w naszym polskim magazynie przed wysyłką.",
+            "detail": "Weryfikujemy szwy, detale wykończenia, kolor i gramaturę. Produkty z najmniejszą skazą nie trafiają do sprzedaży. Zamówienia złożone do 14:00 wysyłamy tego samego dnia (InPost / Kurier).",
+            "cta_label": "",
+            "cta_link": "",
             "use_certificate_link": false
           }
         }
@@ -201,6 +201,47 @@
         "heading": "Dlaczego LUSENA?"
       }
     },
+    "pdp_truth_table": {
+      "type": "lusena-pdp-truth-table",
+      "blocks": {
+        "row_material": {
+          "type": "row",
+          "settings": {
+            "metric": "Materiał",
+            "lusena_value": "100% naturalny jedwab morwowy (włókno białkowe).",
+            "others_value": "Syntetyczny poliester (włókno sztuczne)."
+          }
+        },
+        "row_breathability": {
+          "type": "row",
+          "settings": {
+            "metric": "Oddychalność",
+            "lusena_value": "Termoregulacyjny i przewiewny. Skóra oddycha przez całą noc.",
+            "others_value": "Zatrzymuje ciepło i wilgoć, co sprzyja poceniu się."
+          }
+        },
+        "row_friction": {
+          "type": "row",
+          "settings": {
+            "metric": "Wpływ na skórę i włosy",
+            "lusena_value": "Redukuje tarcie, chroni przed zagnieceniami i puszeniem.",
+            "others_value": "Może elektryzować włosy i podrażniać wrażliwą cerę."
+          }
+        }
+      },
+      "block_order": [
+        "row_material",
+        "row_breathability",
+        "row_friction"
+      ],
+      "settings": {
+        "heading": "Jedwab vs satyna",
+        "subheading": "Satyna to marketingowa nazwa poliestru. Porównaj fakty.",
+        "metric_label": "Cecha",
+        "lusena_label": "Jedwab LUSENA",
+        "others_label": "Satyna (Poliester)"
+      }
+    },
     "pdp_details_questions": {
       "type": "lusena-pdp-details",
       "settings": {
@@ -215,6 +256,7 @@
     "main",
     "pdp_feature_highlights",
     "pdp_quality_evidence",
+    "pdp_truth_table",
     "pdp_details_questions"
   ]
 }

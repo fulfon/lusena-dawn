@@ -19,7 +19,29 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v2.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — feat(lusena): migrate homepage v2 copy and add newsletter capture
+### (current) — feat(lusena): migrate quality/about/returns pages and extend PDP v2 proof blocks
+
+**Goal:** Continue the v2 brandbook migration on high-impact content pages, add missing PDP proof modules, and codify migration workflows for repeatable implementation.
+
+**What changed**
+- Added new quality-page sections (`lusena-quality-6a`, `lusena-quality-comparison-table`, `lusena-quality-final-cta`) and rewired the quality page template to support a fuller proof-first narrative flow.
+- Expanded PDP v2 content architecture with a new `lusena-pdp-truth-table` section, a larger detail schema in `lusena-pdp-details`, and updated buybox/icon/utility snippets used by PDP evidence and panel rendering.
+- Refined About and Returns page composition by updating section templates and supporting sections (`lusena-about-story`, `lusena-about-values`, `lusena-page-returns`, `lusena-returns-faq`) for better v2 parity.
+- Updated brandbook implementation docs and added migration artifacts/skills (`docs/PDP_V2_MIGRATION_BACKLOG.md`, `lusena-spacing`, `lusena-v2-page-migration`) across `.agent` and `.codex`.
+
+**Key files**
+- `templates/page.nasza-jakosc.json`
+- `sections/lusena-quality-6a.liquid`
+- `sections/lusena-quality-comparison-table.liquid`
+- `sections/lusena-quality-final-cta.liquid`
+- `sections/lusena-pdp-truth-table.liquid`
+- `sections/lusena-pdp-details.liquid`
+- `templates/product.json`
+- `templates/page.o-nas.json`
+- `templates/page.zwroty.json`
+- `docs/PDP_V2_MIGRATION_BACKLOG.md`
+
+### 9def2eb — feat(lusena): migrate homepage v2 copy and add newsletter capture
 
 **Goal:** Align homepage messaging to the v2 brandbook in Polish, redesign heritage proof into a 3-tile evidence layout, and add a native newsletter capture section while documenting deferred migration scope.
 
@@ -199,20 +221,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v2.md` (local path: 
 **Key files**
 - `snippets/cart-drawer.liquid`
 
-### 573f97a — fix(lusena): hide cart label in cart icon bubble rerenders
-
-**Goal:** Keep the cart icon label accessible to screen readers while ensuring it stays visually hidden across cart bubble rerenders.
-
-**What changed**
-- Replaced `sr-only` with Dawn’s `visually-hidden` class in the cart icon bubble snippet used for dynamic rerenders.
-
-**Key files**
-- `sections/cart-icon-bubble.liquid`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-22T17:01:40+01:00 — (current) — feat(lusena): migrate homepage v2 copy and add newsletter capture
+- 2026-02-28T09:33:32+01:00 — (current) — feat(lusena): migrate quality/about/returns pages and extend PDP v2 proof blocks
+- 2026-02-22T17:01:40+01:00 — 9def2eb — feat(lusena): migrate homepage v2 copy and add newsletter capture
 - 2026-02-22T14:43:58+01:00 — 567ef16 — feat(lusena): refine spacing system and refresh PDP + brandbook docs
 - 2026-02-22T12:11:24+01:00 — f178fd9 — fix(lusena): align PDP spacing with global gap tokens
 - 2026-02-22T11:20:24+01:00 — 0a6c1ab — feat(lusena): standardize global section spacing system

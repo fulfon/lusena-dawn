@@ -23,9 +23,16 @@
     <h2 class="text-3xl md:text-4xl font-serif text-primary">
       {{ section.settings.story_heading | escape }}
     </h2>
-    <div class="text-secondary font-light text-lg leading-relaxed max-w-3xl mx-auto lusena-content-flow">
+    <div class="text-secondary font-light text-lg leading-relaxed max-w-2xl mx-auto lusena-content-flow">
       {{ section.settings.story_body }}
     </div>
+    {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+      <div class="mt-8">
+        <a href="{{ section.settings.cta_link }}" class="lusena-btn lusena-btn--outline lusena-btn--size-default">
+          {{ section.settings.cta_label | escape }}
+        </a>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -92,6 +99,17 @@
       "id": "story_body",
       "label": "Story body",
       "default": "<p>Historia jedwabiu zaczyna siÄ™ w Chinach 5000 lat temu. Nasza historia zaczyna siÄ™ w momencie, gdy zrozumieliĹ›my, ĹĽe europejski rynek \"jedwabiu\" jest peĹ‚en kompromisĂłw. Zbyt cienki materiaĹ‚, zawyĹĽone ceny, anonimowe pochodzenie.</p><p>UdaliĹ›my siÄ™ do ĹşrĂłdĹ‚a. Do Suzhou. Aby dostarczyÄ‡ luksus bez poĹ›rednikĂłw. JesteĹ›my polskÄ… markÄ… z globalnÄ… jakoĹ›ciÄ….</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA Label",
+      "default": "Poznaj naszą jakość"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Link"
     }
   ],
   "presets": [

@@ -6,12 +6,18 @@
 
 {%- liquid
   assign specs_heading = 'Materiały i specyfikacja'
+  assign packaging_heading = 'Co zawiera opakowanie'
   assign care_heading = 'Pielęgnacja'
 
   if product != blank
     assign specs_heading_mf = product.metafields.lusena.pdp_specs_heading
     if specs_heading_mf != blank and specs_heading_mf.value != blank
       assign specs_heading = specs_heading_mf.value
+    endif
+
+    assign packaging_heading_mf = product.metafields.lusena.pdp_packaging_heading
+    if packaging_heading_mf != blank and packaging_heading_mf.value != blank
+      assign packaging_heading = packaging_heading_mf.value
     endif
 
     assign care_heading_mf = product.metafields.lusena.pdp_care_heading
@@ -62,6 +68,9 @@
   assign value_weight = blank
   assign value_certification = blank
 
+  assign packaging_items = blank
+  assign fallback_packaging_items = 'Jedwabny produkt LUSENA|Eleganckie pudełko prezentowe LUSENA|Karta z instrukcją pielęgnacji' | split: '|'
+
   assign care_steps = blank
   assign fallback_care_steps = 'Prać w pralce: program delikatny, maks. 30°C|Używać detergentu do jedwabiu lub delikatnych tkanin|Suszyć na płasko — nie używać suszarki bębnowej|Nie wybielać, nie prać z chlorem|Prasować na najniższej temperaturze z lewej strony' | split: '|'
 
@@ -106,11 +115,21 @@
       assign value_certification = mf_value_certification.value
     endif
 
+    assign mf_packaging_items = product.metafields.lusena.pdp_packaging_items
+    if mf_packaging_items != blank and mf_packaging_items.value != blank
+      assign packaging_items = mf_packaging_items.value
+    endif
+
     assign mf_care_steps = product.metafields.lusena.pdp_care_steps
     if mf_care_steps != blank and mf_care_steps.value != blank
       assign care_steps = mf_care_steps.value
     endif
   endif
+
+  if packaging_items == blank
+    assign packaging_items = fallback_packaging_items
+  endif
+
   if care_steps == blank
     assign care_steps = fallback_care_steps
   endif
@@ -234,6 +253,55 @@
             </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+    data-lusena-accordion-item
+    data-lusena-accordion-value="packaging"
+  >
+    <div class="flex">
+      <button
+        type="button"
+        class="lusena-pdp-accordion__trigger flex flex-1 items-center justify-between min-h-[44px] font-medium transition-all hover:text-accent-cta text-left"
+        data-lusena-accordion-trigger
+        data-state="closed"
+        aria-expanded="false"
+      >
+        {{ packaging_heading | escape }}
+        {% render 'lusena-icon',
+          name: 'chevron-down',
+          class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200',
+          stroke_width: 2
+        %}
+      </button>
+    </div>
+    <div
+      class="lusena-pdp-accordion__content overflow-hidden text-sm"
+      data-lusena-accordion-content
+      data-state="closed"
+    >
+      <div class="lusena-pdp-accordion__body text-secondary">
+        <ul class="space-y-3 text-secondary/80">
+          {%- if packaging_items != blank -%}
+            {%- for item in packaging_items -%}
+              <li class="flex items-start gap-3">
+                <span class="shrink-0 mt-0.5 text-accent-cta">
+                  {%- if forloop.index == 1 -%}
+                    {% render 'lusena-icon', name: 'sparkles', class: 'w-4 h-4' %}
+                  {%- elsif forloop.index == 2 -%}
+                    {% render 'lusena-icon', name: 'gift', class: 'w-4 h-4' %}
+                  {%- else -%}
+                    {% render 'lusena-icon', name: 'file-text', class: 'w-4 h-4' %}
+                  {%- endif -%}
+                </span>
+                <span>{{ item | escape }}</span>
+              </li>
+            {%- endfor -%}
+          {%- endif -%}
+        </ul>
       </div>
     </div>
   </div>

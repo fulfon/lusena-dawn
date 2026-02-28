@@ -6,14 +6,15 @@
 
 {%- liquid
   assign override_style = ''
-  if section.settings.padding_top > 0
-    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
-  endif
+  comment
+    Always emit top-padding overrides (even when 0) so the value explicitly
+    overrides the lusena-spacing--compact tier default.  This matches the
+    draft-shop layout where PDP content starts right below the header.
+  endcomment
+  assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
   if section.settings.padding_bottom > 0
     assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
-  endif
-  if section.settings.padding_top_mobile > 0
-    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
   endif
   if section.settings.padding_bottom_mobile > 0
     assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'

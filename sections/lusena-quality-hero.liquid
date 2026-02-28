@@ -12,6 +12,27 @@
   if section.settings.padding_bottom_mobile > 0
     assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
   endif
+
+  assign certificate_url = blank
+  assign certificate_label = section.settings.hero_button_label
+  if certificate_label == blank
+    assign certificate_label = 'Pobierz certyfikat OEKO-TEX (PDF)'
+  endif
+
+  if shop.metafields.lusena.oeko_tex_certificate != blank
+    assign certificate_file = shop.metafields.lusena.oeko_tex_certificate.value
+    if certificate_file != blank
+      if certificate_file.url != blank
+        assign certificate_url = certificate_file.url
+      endif
+    endif
+  endif
+
+  if certificate_url == blank
+    if section.settings.hero_button_link != blank
+      assign certificate_url = section.settings.hero_button_link
+    endif
+  endif
 -%}
 <section
   class="bg-brand-bg lusena-quality-hero lusena-spacing--hero lusena-spacing--snug-top"
@@ -31,6 +52,21 @@
     <p class="text-lg md:text-xl font-light text-secondary leading-relaxed max-w-2xl mx-auto">
       {{ section.settings.hero_body | escape }}
     </p>
+
+    {%- if certificate_url != blank -%}
+      <div class="pt-2">
+        <a
+          href="{{ certificate_url }}"
+          {% if certificate_url contains 'http' %}
+            target="_blank"
+            rel="noopener"
+          {% endif %}
+          class="lusena-btn lusena-btn--outline lusena-btn--size-default min-w-[240px]"
+        >
+          {{ certificate_label | escape }}
+        </a>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -104,6 +140,18 @@
       "id": "hero_body",
       "label": "Hero body",
       "default": "Jedwab LUSENA to 22 momme czystej perfekcji. Stworzony w Suzhou, kontrolowany w Polsce. Poczuj rĂłĹĽnicÄ™, ktĂłrej nie da siÄ™ podrobiÄ‡."
+    },
+    {
+      "type": "text",
+      "id": "hero_button_label",
+      "label": "Hero button label",
+      "default": "Pobierz certyfikat OEKO-TEX (PDF)"
+    },
+    {
+      "type": "url",
+      "id": "hero_button_link",
+      "label": "Hero button link (fallback)",
+      "info": "Preferowane: metafield sklepu `lusena.oeko_tex_certificate` (file_reference). Jeżeli metafield jest pusty, użyty zostanie ten link (np. `#certificates`)."
     }
   ],
   "presets": [

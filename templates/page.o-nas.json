@@ -11,11 +11,65 @@
   "sections": {
     "about_hero": {
       "type": "lusena-about-hero",
+      "settings": {
+        "hero_kicker": "O nas",
+        "hero_heading_line_1": "Kompletna nocna rutyna",
+        "hero_heading_line_2": "z jedwabiu 22 momme",
+        "hero_body": "<p>Każda noc na bawełnie to 8 godzin tarcia – dla Twojej skóry i włosów. LUSENA to poszewki, gumki i czepki, które chronią Cię podczas snu.</p><p>Jedwab sprowadzamy bezpośrednio z Shengze, a każda partia przechodzi polską kontrolę jakości.</p>"
+      }
+    },
+    "trust": {
+      "type": "lusena-trust-bar",
+      "blocks": {
+        "item-0": {
+          "type": "item",
+          "settings": {
+            "icon": "layers",
+            "title": "22 momme",
+            "subtitle": "30% gęstszy splot"
+          }
+        },
+        "item-1": {
+          "type": "item",
+          "settings": {
+            "icon": "shield-check",
+            "title": "OEKO-TEX® 100",
+            "subtitle": "bezpieczne dla skóry"
+          }
+        },
+        "item-2": {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "title": "Wysyłka 24h",
+            "subtitle": "z magazynu w Polsce"
+          }
+        },
+        "item-3": {
+          "type": "item",
+          "settings": {
+            "icon": "clock",
+            "title": "60 dni testu",
+            "subtitle": "zwrot bez stresu"
+          }
+        }
+      },
+      "block_order": [
+        "item-0",
+        "item-1",
+        "item-2",
+        "item-3"
+      ],
       "settings": {}
     },
     "about_story": {
       "type": "lusena-about-story",
-      "settings": {}
+      "settings": {
+        "story_heading": "Nasza Historia",
+        "story_body": "<p>LUSENA powstała z przekonania, że pielęgnacja skóry i włosów nie kończy się wieczorem – dlatego stworzyliśmy kompletną nocną rutynę piękna z jedwabiu 22 momme. Od poszewki, która chroni skórę przed zagnieceniami, po gumki i czepki, które chronią włosy przed plątaniem i puszeniem.</p><p>Nasz jedwab pochodzi z Shengze w prowincji Jiangsu, gdzie tkają od czasów dynastii Ming. Współpracujemy bezpośrednio z manufakturą, eliminując pośredników. Każda partia posiada certyfikat OEKO-TEX Standard 100 i przechodzi kontrolę w Polsce. Minimalistyczne wzornictwo, opakowania gotowe na prezent i 60-dniowa gwarancja satysfakcji.</p>",
+        "cta_label": "Poznaj naszą jakość",
+        "cta_link": "shopify://pages/nasza-jakosc"
+      }
     },
     "about_values": {
       "type": "lusena-about-values",
@@ -23,6 +77,7 @@
         "value-0": {
           "type": "value",
           "settings": {
+            "icon": "feather",
             "title": "Jakość bez kompromisów",
             "text": "Zawsze 22 momme. Zawsze klasa 6A. Nigdy \"jedwab satynowy\" (poliester)."
           }
@@ -30,28 +85,39 @@
         "value-1": {
           "type": "value",
           "settings": {
-            "title": "Szczerość",
+            "icon": "scale",
+            "title": "Uczciwość w obietnicach",
             "text": "Nie obiecujemy, że jedwab cofnie zmarszczki o 10 lat. Obiecujemy, że przestanie je utrwalać każdej nocy."
           }
         },
         "value-2": {
           "type": "value",
           "settings": {
-            "title": "Prostota",
+            "icon": "leaf",
+            "title": "Prostota i spokój",
             "text": "Minimalistyczny design. Opakowania bez plastiku. Przejrzysta oferta."
           }
         },
         "value-3": {
           "type": "value",
           "settings": {
-            "title": "Lokalność",
+            "icon": "hourglass",
+            "title": "Szacunek dla czasu klienta",
+            "text": "Wysyłka w 24h. 60 dni na testy. Zwroty bez stresu i zbędnych pytań."
+          }
+        },
+        "value-4": {
+          "type": "value",
+          "settings": {
+            "icon": "smile",
+            "title": "Zawsze blisko Ciebie",
             "text": "Jesteśmy stąd. Podatki płacimy w Polsce. Obsługa klienta mówi po polsku."
           }
         }
       },
-      "block_order": ["value-0", "value-1", "value-2", "value-3"],
+      "block_order": ["value-0", "value-1", "value-2", "value-3", "value-4"],
       "settings": {}
     }
   },
-  "order": ["about_hero", "about_story", "about_values"]
+  "order": ["about_hero", "trust", "about_story", "about_values"]
 }

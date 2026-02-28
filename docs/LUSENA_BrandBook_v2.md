@@ -1163,7 +1163,7 @@ Welcome Flow konwertuje leady w klientów. Post-Purchase Flow zamienia jednorazo
    - Video: Podpalanie nitki LUSENA vs poliestru
    - Tekst: „Jedwab pali się jak włos – pozostawia proch, 
      który można rozetrzeć. Poliester topi się jak plastik. 
-     W każdym opakowaniu znajdziesz próbkę do samodzielnego testu."
+     Test Ognia pokazujemy w formie wideo na stronie (kontrolowane warunki) – nie zachęcamy do wykonywania go w domu."
 
 6. SEKCJA: KLASA 6A
    - Infografika: Skala klas jedwabiu (3A → 6A)
@@ -2210,7 +2210,7 @@ Jeśli rozłożysz cenę na rok użytkowania, wychodzi około 0,68 zł za noc �
 
 Nasze poszewki mają certyfikat OEKO-TEX Standard 100, który mogą uzyskać tylko produkty z prawdziwych, bezpiecznych materiałów. Numer certyfikatu znajdzie Pani na stronie i może go zweryfikować bezpośrednio na oeko-tex.com.
 
-Dodatkowo, w każdym opakowaniu znajdzie Pani próbkę jedwabiu z instrukcją Testu Ognia – prawdziwy jedwab pali się jak włos, nie topi się jak plastik.
+Dodatkowo, na naszej stronie pokazujemy Test Ognia w formie krótkiego wideo (kontrolowane warunki) – prawdziwy jedwab pali się jak włos i zostawia sypki popiół, poliester topi się jak plastik.
 
 Czy mogę wysłać link do naszej strony z certyfikatami?"
 

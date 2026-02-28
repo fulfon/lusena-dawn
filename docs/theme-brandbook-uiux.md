@@ -35,9 +35,9 @@ This document was built by deep-diving **only** these five surfaces:
 | Surface | Template | Key section files |
 |---|---|---|
 | **Homepage** | `templates/index.json` | `lusena-hero`, `lusena-trust-bar`, `lusena-problem-solution`, `lusena-bestsellers`, `lusena-heritage`, `lusena-testimonials`, `lusena-bundles`, `lusena-faq`, `lusena-newsletter` |
-| **Page: /nasza-jakosc** | `templates/page.nasza-jakosc.json` | `lusena-quality-hero`, `lusena-quality-momme`, `lusena-quality-fire-test`, `lusena-quality-origin`, `lusena-quality-qc`, `lusena-quality-certificates`, `lusena-trust-bar` |
+| **Page: /nasza-jakosc** | `templates/page.nasza-jakosc.json` | `lusena-quality-hero`, `lusena-trust-bar`, `lusena-quality-origin`, `lusena-quality-momme`, `lusena-quality-certificates`, `lusena-quality-fire-test`, `lusena-quality-6a`, `lusena-quality-qc`, `lusena-quality-comparison-table`, `lusena-faq`, `lusena-quality-final-cta` |
 | **Page: /o-nas** | `templates/page.o-nas.json` | `lusena-about-hero`, `lusena-about-story`, `lusena-about-values` |
-| **PDP** | `templates/product.json` | `lusena-main-product`, `lusena-pdp-feature-highlights`, `lusena-pdp-quality-evidence`, `lusena-pdp-details` |
+| **PDP** | `templates/product.json` | `lusena-main-product`, `lusena-pdp-feature-highlights`, `lusena-pdp-quality-evidence`, `lusena-pdp-truth-table`, `lusena-pdp-details` |
 | **Cart drawer** | `layout/theme.liquid` (global) | `snippets/cart-drawer.liquid` |
 
 Patterns from **other** templates/sections (Dawn defaults, `lusena-page-returns`, `lusena-comparison`, `lusena-science`, etc.) are marked **"unvalidated / repo leftover"** and should not be treated as reference for new work.
@@ -719,6 +719,7 @@ Mobile: Stacked vertically Ă˘â‚¬â€ť horizontal scroll gallery with dot
 |---|---|---|
 | Feature Highlights | `sections/lusena-pdp-feature-highlights.liquid` | 3Ă˘â‚¬â€ś6 icon cards (responsive 1Ă˘â€ â€™2Ă˘â€ â€™3 col grid) |
 | Quality Evidence | `sections/lusena-pdp-quality-evidence.liquid` | Expandable accordion cards with icon, title, detail |
+| Truth Table (Jedwab vs satyna) | `sections/lusena-pdp-truth-table.liquid` | Structured LUSENA vs alternatives comparison (gramatura, magazyn, pochodzenie, ryzyko) |
 | Details & Questions | `sections/lusena-pdp-details.liquid` | FAQ-style accordion, centered narrow width |
 
 #### Key PDP snippets
@@ -727,7 +728,7 @@ Mobile: Stacked vertically Ă˘â‚¬â€ť horizontal scroll gallery with dot
 |---|---|
 | `lusena-pdp-media` | Gallery: thumbnails + main stage (desktop), horizontal scroll (mobile), lightbox with zoom/pinch |
 | `lusena-pdp-summary` | Title (serif), price (with compare-at line-through), eyebrow text |
-| `lusena-pdp-proof-chips` | 5 trust badges: OEKO-TEX, 22 momme, 24h shipping, 60-day returns, gifting |
+| `lusena-pdp-proof-chips` | 3 trust badges: OEKO-TEX, 22 momme, 24h shipping |
 | `lusena-pdp-variant-picker` | Color swatches + size pills with `<fieldset>` a11y |
 | `lusena-pdp-atc` | Primary CTA + Buy Now + stock indicator |
 | `lusena-pdp-guarantee` | Shield icon guarantee line with "learn more" link |
@@ -933,6 +934,15 @@ Newsletter   â†' bg-surface-2
 
 This creates a subtle visual rhythm that separates sections without hard borders.
 
+PDP pattern (current):
+```
+Main product         -> bg-surface-1
+Feature highlights   -> bg-surface-1
+Quality evidence     -> bg-surface-2
+Truth table          -> bg-brand-bg
+Details / FAQ        -> bg-surface-1
+```
+
 ---
 
 ## 5. Page-Level Composition Rules
@@ -944,7 +954,7 @@ This creates a subtle visual rhythm that separates sections without hard borders
 | **Homepage** | Hero Ă˘â€ â€™ Trust Ă˘â€ â€™ Problem/Solution Ă˘â€ â€™ Products Ă˘â€ â€™ Story Ă˘â€ â€™ Social proof Ă˘â€ â€™ Gift/Bundle Ă˘â€ â€™ FAQ â†' Newsletter |
 | **Quality page** | Hero Ă˘â€ â€™ Detail evidence (multiple sections) Ă˘â€ â€™ Trust bar |
 | **About page** | Hero Ă˘â€ â€™ Story Ă˘â€ â€™ Values |
-| **PDP** | Main (gallery + buybox) Ă˘â€ â€™ Feature highlights Ă˘â€ â€™ Quality evidence Ă˘â€ â€™ Details/FAQ |
+| **PDP** | Main (gallery + buybox) Ă˘â€ â€™ Feature highlights Ă˘â€ â€™ Quality evidence Ă˘â€ â€™ Truth table (Jedwab vs satyna) Ă˘â€ â€™ Details/FAQ |
 
 **Common pattern:** Start with hero/hook Ă˘â€ â€™ evidence/proof Ă˘â€ â€™ social proof Ă˘â€ â€™ CTA.
 
@@ -1461,6 +1471,7 @@ These have been present since the beginning and are not bugs:
 | About values | `sections/lusena-about-values.liquid` | About page |
 | PDP feature highlights | `sections/lusena-pdp-feature-highlights.liquid` | PDP |
 | PDP quality evidence | `sections/lusena-pdp-quality-evidence.liquid` | PDP |
+| PDP truth table | `sections/lusena-pdp-truth-table.liquid` | PDP |
 | PDP details | `sections/lusena-pdp-details.liquid` | PDP |
 | Main product | `sections/lusena-main-product.liquid` | PDP |
 
