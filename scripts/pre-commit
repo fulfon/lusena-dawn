@@ -1,0 +1,9 @@
+#!/bin/sh
+# Sync AGENTS.md and copilot-instructions.md with CLAUDE.md on every commit
+# Only runs if CLAUDE.md is staged for commit
+
+if git diff --cached --name-only | grep -q "^CLAUDE.md$"; then
+  cp CLAUDE.md AGENTS.md
+  cp CLAUDE.md copilot-instructions.md
+  git add AGENTS.md copilot-instructions.md
+fi

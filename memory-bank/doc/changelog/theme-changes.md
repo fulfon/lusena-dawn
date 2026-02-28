@@ -19,7 +19,30 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v2.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — feat(lusena): migrate quality/about/returns pages and extend PDP v2 proof blocks
+### (current) — refactor(lusena): restructure docs into memory bank + compact CLAUDE.md
+
+**Goal:** Reduce per-session context overhead (~19k tokens freed) by extracting generic reference material from CLAUDE.md into layered documentation, and create a persistent memory bank for cross-session project continuity.
+
+**What changed**
+- Rewrote CLAUDE.md from 1,541 lines (~52KB) to 105 lines (~5KB): now contains only memory bank instructions, project identity, key conventions, and reference doc pointers.
+- Created `memory-bank/` with 18 files: 6 core context files (projectbrief, productContext, systemPatterns, techContext, activeContext, progress), 8 feature docs (homepage, PDP, collection, quality, returns, about + 2 migration backlogs), 3 pattern docs (brand-tokens, spacing-system, css-architecture), and 1 changelog (moved from docs/).
+- Extracted 4 reference docs into `docs/reference/` from old CLAUDE.md content: liquid-syntax, theme-architecture, translation-standards, code-examples.
+- Updated 3 skills (lusena-theme-changelog, lusena-v2-page-migration, lusena-draftshop-fragment-parity) with new paths; mirrored to .agent/ and .codex/.
+- Added git pre-commit hook to auto-sync CLAUDE.md → AGENTS.md + copilot-instructions.md.
+- Updated .shopifyignore with memory-bank/* and scripts/*.
+
+**Key files**
+- `CLAUDE.md` (rewritten)
+- `AGENTS.md`, `copilot-instructions.md` (synced copies)
+- `memory-bank/` (18 new files)
+- `docs/reference/` (4 new files)
+- `.claude/skills/lusena-theme-changelog/SKILL.md`
+- `.claude/skills/lusena-v2-page-migration/SKILL.md`
+- `.claude/skills/lusena-draftshop-fragment-parity/SKILL.md`
+- `scripts/pre-commit`, `scripts/install-hooks.sh`
+- `.shopifyignore`
+
+### 7087015 — feat(lusena): migrate quality/about/returns pages and extend PDP v2 proof blocks
 
 **Goal:** Continue the v2 brandbook migration on high-impact content pages, add missing PDP proof modules, and codify migration workflows for repeatable implementation.
 
@@ -211,20 +234,11 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v2.md` (local path: 
 - `snippets/cart-drawer.liquid`
 - `docs/THEME_CHANGES.md`
 
-### 170a28b — upsell css fix
-
-**Goal:** Prevent iOS Safari cart upsell thumbnails from rendering at an oversized width when a missing utility class causes style fallback.
-
-**What changed**
-- Added an explicit width backfill for `.w-14` inside the cart upsell zone to keep upsell product image sizing stable.
-
-**Key files**
-- `snippets/cart-drawer.liquid`
-
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-28T09:33:32+01:00 — (current) — feat(lusena): migrate quality/about/returns pages and extend PDP v2 proof blocks
+- 2026-02-28 — (current) — refactor(lusena): restructure docs into memory bank + compact CLAUDE.md
+- 2026-02-28T09:33:32+01:00 — 7087015 — feat(lusena): migrate quality/about/returns pages and extend PDP v2 proof blocks
 - 2026-02-22T17:01:40+01:00 — 9def2eb — feat(lusena): migrate homepage v2 copy and add newsletter capture
 - 2026-02-22T14:43:58+01:00 — 567ef16 — feat(lusena): refine spacing system and refresh PDP + brandbook docs
 - 2026-02-22T12:11:24+01:00 — f178fd9 — fix(lusena): align PDP spacing with global gap tokens

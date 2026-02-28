@@ -59,8 +59,8 @@ Execute in this order:
 
 #### Step 1: Create per-page migration backlog
 
-- File: `docs/{PAGE_NAME}_V2_MIGRATION_BACKLOG.md`
-- Format: same as `docs/HOMEPAGE_V2_MIGRATION_BACKLOG.md` — status legend, numbered items, each with What/Ref/Why deferred/Acceptance criteria.
+- File: `memory-bank/doc/features/{page-name}-migration-backlog.md`
+- Format: same as `memory-bank/doc/features/homepage-migration-backlog.md` — status legend, numbered items, each with What/Ref/Why deferred/Acceptance criteria.
 - Only create if there are deferred items; skip if everything fits in the current pass.
 
 #### Step 2: Update the page template JSON
@@ -75,7 +75,7 @@ Execute in this order:
 For each section that needs structural changes:
 
 - Edit existing `sections/lusena-*.liquid` files, or create new ones.
-- Follow LUSENA architecture rules from `AGENTS.md`:
+- Follow LUSENA architecture rules from `CLAUDE.md` / `AGENTS.md`:
   - Use `{% stylesheet %}` for CSS (not external files, except spacing which uses `lusena-spacing.css`).
   - Use `{% javascript %}` for JS.
   - Use LUSENA spacing tier classes (`lusena-spacing--compact/standard/spacious/hero`).

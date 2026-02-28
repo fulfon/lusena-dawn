@@ -1,6 +1,8 @@
 # Prevent non-theme files from being pushed to Shopify
 lusena-shop/*
 docs/*
+memory-bank/*
+scripts/*
 .agent/*
 .claude/*
 .codex/*

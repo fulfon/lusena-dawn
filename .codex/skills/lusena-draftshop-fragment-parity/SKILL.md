@@ -271,5 +271,5 @@ Provide a concise summary:
 
 If the change is substantial, offer:
 
-- Update `docs/THEME_CHANGES.md`.
+- Update `memory-bank/doc/changelog/theme-changes.md`.
 - Create a git commit (only if the user wants).

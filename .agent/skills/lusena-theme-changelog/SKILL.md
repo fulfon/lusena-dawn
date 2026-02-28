@@ -1,6 +1,6 @@
 ---
 name: lusena-theme-changelog
-description: Workflow for maintaining the LUSENA Shopify Dawn theme. Use when making substantial theme changes (Liquid/JSON/CSS/JS, templates, theme settings, cart/PDP UX) to ensure changes are validated, committed, and documented in docs/THEME_CHANGES.md.
+description: Workflow for maintaining the LUSENA Shopify Dawn theme. Use when making substantial theme changes (Liquid/JSON/CSS/JS, templates, theme settings, cart/PDP UX) to ensure changes are validated, committed, and documented in memory-bank/doc/changelog/theme-changes.md.
 ---
 
 # LUSENA theme changelog workflow
@@ -9,8 +9,8 @@ description: Workflow for maintaining the LUSENA Shopify Dawn theme. Use when ma
 
 - Base theme: Shopify **Dawn** (official).
 - Goal: adapt Dawn for **LUSENA** (PL-first, premium feel, proof-first messaging).
-- Brand source of truth: `docs/LUSENA_BrandBook_v1.md`.
-- Engineering changelog: `docs/THEME_CHANGES.md` (commit-linked, semi-detailed).
+- Brand source of truth: `docs/LUSENA_BrandBook_v2.md`.
+- Engineering changelog: `memory-bank/doc/changelog/theme-changes.md` (commit-linked, semi-detailed).
 
 ## What counts as a “bigger change”
 
@@ -28,7 +28,7 @@ Avoid committing tiny iteration steps (e.g. “try 1”, “adjust 2px”, “ma
 ### 1) Implement the change set
 
 - Keep copy PL-first and aligned to the brandbook.
-- Avoid “fixing” known baseline `shopify theme check` warnings listed in `AGENTS.md`.
+- Avoid “fixing” known baseline `shopify theme check` warnings listed in `CLAUDE.md` / `AGENTS.md`.
 
 ### 2) Validate
 
@@ -37,7 +37,7 @@ Avoid committing tiny iteration steps (e.g. “try 1”, “adjust 2px”, “ma
 
 ### 2.5) Prevent stale `(current)` entries
 
-Before editing `docs/THEME_CHANGES.md`, ensure the existing newest detailed entry isn’t incorrectly marked as `(current)` when it already has a real commit:
+Before editing `memory-bank/doc/changelog/theme-changes.md`, ensure the existing newest detailed entry isn’t incorrectly marked as `(current)` when it already has a real commit:
 
 - If the top detailed entry is `### (current) — ...` but `git log -1` shows a different subject, replace that entry’s `(current)` with the actual hash from `git log --oneline` (and do the same in the **All commits** summary list).
 - Then add your new newest entry as `(current)` (only when the user wants a single commit).
@@ -48,7 +48,7 @@ When you believe the task is complete, ask the user explicitly:
 
 1) “Is this the end of this task?”  
 2) “Should I commit these changes?”  
-3) “Should I update a changelog entry in `docs/THEME_CHANGES.md` (or another .md you specify)?”
+3) “Should I update a changelog entry in `memory-bank/doc/changelog/theme-changes.md` (or another .md you specify)?”
 
 If the user says “not done yet”, continue iterating **without committing**.
 
@@ -61,10 +61,10 @@ If the user says “not done yet”, continue iterating **without committing**.
   - `docs: …` for documentation only
   - `chore: …` for meta/infrastructure
 
-Default: prefer **one commit per task** that includes both code changes and the `docs/THEME_CHANGES.md` update, unless the user asks to split docs into a separate commit.
+Default: prefer **one commit per task** that includes both code changes and the `memory-bank/doc/changelog/theme-changes.md` update, unless the user asks to split docs into a separate commit.
 
 **Important (avoid “extra commits”):**
-- If you notice a mistake in `docs/THEME_CHANGES.md` while the task is still in progress (paths, formatting, missing files), fix it **before** committing.
+- If you notice a mistake in `memory-bank/doc/changelog/theme-changes.md` while the task is still in progress (paths, formatting, missing files), fix it **before** committing.
 - If you already committed but haven’t pushed yet, prefer `git commit --amend` (or an interactive rebase) to keep the task as a **single commit**, instead of adding follow-up “docs fix” commits.
 - Only create additional commits if the user explicitly asks for separate commits, or if history-rewriting is not acceptable (e.g., commits already pushed and you can’t/shouldn’t force-push).
 
@@ -72,7 +72,7 @@ Default: prefer **one commit per task** that includes both code changes and the 
 
 Only do this if the user confirms they want it updated, and which file to update:
 
-- Default: `docs/THEME_CHANGES.md`
+- Default: `memory-bank/doc/changelog/theme-changes.md`
 - If the user requests a different file, update that file instead.
 
 - Add a new entry with:
@@ -80,7 +80,7 @@ Only do this if the user confirms they want it updated, and which file to update
   - goal (1–2 sentences)
   - “what changed” (bullets)
   - key files touched (high-signal list)
-- Keep only the **latest 8** change entries detailed in `docs/THEME_CHANGES.md`.
+- Keep only the **latest 8** change entries detailed in `memory-bank/doc/changelog/theme-changes.md`.
 - Keep **ALL older commit history** as a rolling summary list so it’s always possible to see everything that happened since the initial Dawn import:
   - Format (one line per commit): `<dateTime> — <hash> — <subject>`
   - Ordering: **descending by commit date/time** (newest first)
