@@ -1,0 +1,828 @@
+/**
+ * LUSENA CSS FOUNDATIONS — SINGLE SOURCE OF TRUTH
+ * Strategy: Editorial Rhythm Framework (Iterative Refinement)
+ * 
+ * Philosophy: The browser viewport is treated as a premium editorial print canvas.
+ * Heavy boxed containers, shadows, and artificial background boundaries are completely 
+ * stripped away. Layout and hierarchy are established entirely through typographic scale, 
+ * strict baseline grid alignment (8px multiples), and 1px editorial hairlines. 
+ * 
+ * Note for Dawn Theme: Base HTML font-size is 62.5%, meaning 1rem = 10px.
+ * All spatial mathematics rigorously adhere to the 8px (0.8rem) baseline rhythm.
+ */
+
+:root {
+  /* ==========================================================================
+     1. COLOR SYSTEM (Porcelain + Ink + Teal)
+     ========================================================================== */
+  --lusena-brand-bg: #F7F5F2; /* Warm porcelain */
+  --lusena-surface-1: #FFFFFF;
+  --lusena-surface-2: #F0EEEB;
+  
+  --lusena-text-1: #111111;
+  --lusena-text-2: #4A4A4A;
+  --lusena-accent-cta: #0E5E5A;
+  --lusena-accent-cta-hover: #137A75;
+  --lusena-accent-2: #8C6A3C; /* Warm gold-bronze */
+
+  --lusena-color-n0: #FFFFFF;
+  --lusena-color-n50: #FAFAF8;
+  --lusena-color-n100: #F2F2F0;
+  --lusena-color-n200: #E6E4E2;
+  --lusena-color-n300: #D4D2CF;
+  --lusena-color-n400: #B9B7B4;
+  --lusena-color-n500: #9B9996;
+  --lusena-color-n600: #7B7976;
+  --lusena-color-n700: #5A5855;
+  --lusena-color-n800: #2E2D2B;
+  --lusena-color-n900: #111111;
+
+  --lusena-status-success: #2F7D4E;
+  --lusena-status-warning: #B7791F;
+  --lusena-status-error: #B91C1C;
+
+  --lusena-scrim-60: rgba(17, 17, 17, 0.6);
+  --lusena-scrim-80: rgba(17, 17, 17, 0.8);
+
+  /* ==========================================================================
+     2. SPACING & RHYTHM (Strict 8px Editorial Baseline)
+     ========================================================================== */
+  --lusena-space-05: 0.4rem;  /* 4px */
+  --lusena-space-1: 0.8rem;   /* 8px */
+  --lusena-space-2: 1.6rem;   /* 16px */
+  --lusena-space-3: 2.4rem;   /* 24px */
+  --lusena-space-4: 3.2rem;   /* 32px */
+  --lusena-space-5: 4.0rem;   /* 40px */
+  --lusena-space-6: 4.8rem;   /* 48px */
+  --lusena-space-8: 6.4rem;   /* 64px */
+  --lusena-space-10: 8.0rem;  /* 80px */
+  --lusena-space-12: 9.6rem;  /* 96px */
+  --lusena-space-16: 12.8rem; /* 128px */
+  --lusena-space-24: 19.2rem; /* 192px */
+
+  /* ==========================================================================
+     3. TYPOGRAPHY & INTERACTION VARIABLES
+     ========================================================================== */
+  --lusena-font-brand: 'Source Serif 4', serif;
+  --lusena-font-ui: 'Inter', sans-serif;
+
+  --lusena-transition-fast: 150ms ease-in-out;
+  --lusena-transition-med: 250ms ease-in-out;
+  --lusena-transition-slow: 400ms ease-in-out;
+
+  --lusena-radius-sm: 0.2rem; /* 2px — subtle rounding, editorial-compatible */
+
+  --lusena-z-watermark: -1;
+  --lusena-z-base: 1;
+  --lusena-z-badge: 10;
+  --lusena-z-sticky-header: 100;
+  --lusena-z-search-dropdown: 200;
+  --lusena-z-overlay: 300;
+  --lusena-z-drawer: 400;
+  --lusena-z-modal: 500;
+  --lusena-z-lightbox: 500;
+  --lusena-z-sticky-bottom: 600;
+}
+
+/* ==========================================================================
+   GLOBAL A11Y, REDUCED MOTION & SELECTION
+   ========================================================================== */
+
+/* Strict 150ms Fade Fallback for Reduced Motion - Preserving layout transforms */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-property: opacity, background-color, border-color, color, fill, stroke, box-shadow !important;
+    transition-duration: 150ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .lusena-drawer {
+    transform: none !important;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .lusena-drawer.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+::selection {
+  background-color: var(--lusena-accent-cta);
+  color: var(--lusena-color-n0);
+}
+
+.lusena-section--inverted *::selection,
+.lusena-section--inverted ::selection {
+  background-color: var(--lusena-color-n0);
+  color: var(--lusena-color-n900);
+}
+
+/* 44x44px Touch Target Guarantees */
+button, 
+.lusena-pill, 
+.lusena-quantity__btn, 
+.lusena-accordion__summary, 
+.lusena-breadcrumb__link, 
+.lusena-swatch, 
+.lusena-pagination__link, 
+.lusena-input,
+.lusena-textarea,
+.lusena-select {
+  min-height: 4.4rem;
+}
+.lusena-pill, 
+.lusena-quantity__btn, 
+.lusena-swatch, 
+.lusena-pagination__link {
+  min-width: 4.4rem;
+}
+
+/* High-Contrast Focus Strategy */
+.lusena-focus-ring:focus-visible,
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--lusena-accent-cta);
+  outline-offset: 2px;
+}
+.lusena-section--inverted .lusena-focus-ring:focus-visible,
+.lusena-section--inverted button:focus-visible,
+.lusena-section--inverted a:focus-visible,
+.lusena-section--inverted input:focus-visible,
+.lusena-section--inverted select:focus-visible,
+.lusena-section--inverted textarea:focus-visible {
+  outline-color: var(--lusena-color-n0); /* Absolute high-contrast white unmapped token */
+}
+
+/* ==========================================================================
+   SEMANTIC TYPOGRAPHY (Strictly 5 Classes + Modifiers)
+   All line-heights are absolute 8px (0.8rem) multiples.
+   ========================================================================== */
+
+.lusena-type-hero {
+  font-family: var(--lusena-font-brand);
+  font-size: 4.0rem;      
+  line-height: 4.8rem;    /* 6 * 8px */
+  letter-spacing: 0.02em;
+  color: var(--lusena-text-1);
+  font-weight: 400;
+  margin: 0;
+}
+
+.lusena-type-h1 {
+  font-family: var(--lusena-font-brand);
+  font-size: 3.2rem;      
+  line-height: 4.0rem;    /* 5 * 8px */
+  letter-spacing: 0.01em;
+  color: var(--lusena-text-1);
+  font-weight: 400;
+  margin: 0;
+}
+
+.lusena-type-h2 {
+  font-family: var(--lusena-font-brand);
+  font-size: 2.0rem;      
+  line-height: 2.4rem;    /* 3 * 8px */
+  letter-spacing: 0;
+  color: var(--lusena-text-1);
+  font-weight: 400;
+  margin: 0;
+}
+
+.lusena-type-body {
+  font-family: var(--lusena-font-ui);
+  font-size: 1.6rem;      
+  line-height: 2.4rem;    /* 3 * 8px */
+  letter-spacing: 0;
+  color: var(--lusena-text-2);
+  font-weight: 400;
+  margin: 0;
+}
+
+.lusena-type-caption {
+  font-family: var(--lusena-font-ui);
+  font-size: 1.2rem;      
+  line-height: 1.6rem;    /* 2 * 8px */
+  letter-spacing: 0;
+  color: var(--lusena-text-2);
+  font-weight: 400;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .lusena-type-hero { font-size: 5.6rem; line-height: 6.4rem; /* 8 * 8px */ }
+  .lusena-type-h1 { font-size: 4.0rem; line-height: 4.8rem; /* 6 * 8px */ }
+  .lusena-type-h2 { font-size: 2.4rem; line-height: 3.2rem; /* 4 * 8px */ }
+}
+
+/* Modifiers */
+.lusena-kicker { text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; }
+.lusena-tabular-nums { font-variant-numeric: tabular-nums; font-weight: 500; color: var(--lusena-text-1); }
+
+/* ==========================================================================
+   SPACING TIERS & VERTICAL RHYTHM
+   ========================================================================== */
+
+/*
+ * Shopify Dynamic Spacing Tiers
+ * --lusena-section-pt / --lusena-section-pb override hooks allow modifiers
+ * (e.g. snug-top) to change one axis without touching the tier class.
+ * --lusena-min-gap (set by .lusena-section-gap-same) ensures a floor.
+ */
+
+/* Mobile-first tier definitions */
+.lusena-spacing--compact {
+  padding-top: max(var(--lusena-section-pt, var(--lusena-space-4)), var(--lusena-min-gap, 0rem));
+  padding-bottom: var(--lusena-section-pb, var(--lusena-space-4));
+}
+.lusena-spacing--standard {
+  padding-top: max(var(--lusena-section-pt, var(--lusena-space-6)), var(--lusena-min-gap, 0rem));
+  padding-bottom: var(--lusena-section-pb, var(--lusena-space-6));
+}
+.lusena-spacing--spacious {
+  padding-top: max(var(--lusena-section-pt, var(--lusena-space-8)), var(--lusena-min-gap, 0rem));
+  padding-bottom: var(--lusena-section-pb, var(--lusena-space-8));
+}
+.lusena-spacing--hero {
+  padding-top: max(var(--lusena-section-pt, var(--lusena-space-10)), var(--lusena-min-gap, 0rem));
+  padding-bottom: var(--lusena-section-pb, var(--lusena-space-10));
+}
+.lusena-spacing--full-bleed {
+  padding-top: max(var(--lusena-section-pt, 0rem), var(--lusena-min-gap, 0rem));
+  padding-bottom: var(--lusena-section-pb, 0rem);
+}
+
+/* Desktop tier overrides */
+@media (min-width: 768px) {
+  .lusena-spacing--compact {
+    padding-top: max(var(--lusena-section-pt, var(--lusena-space-6)), var(--lusena-min-gap, 0rem));
+    padding-bottom: var(--lusena-section-pb, var(--lusena-space-6));
+  }
+  .lusena-spacing--standard {
+    padding-top: max(var(--lusena-section-pt, var(--lusena-space-8)), var(--lusena-min-gap, 0rem));
+    padding-bottom: var(--lusena-section-pb, var(--lusena-space-8));
+  }
+  .lusena-spacing--spacious {
+    padding-top: max(var(--lusena-section-pt, var(--lusena-space-12)), var(--lusena-min-gap, 0rem));
+    padding-bottom: var(--lusena-section-pb, var(--lusena-space-12));
+  }
+  .lusena-spacing--hero {
+    padding-top: max(var(--lusena-section-pt, var(--lusena-space-16)), var(--lusena-min-gap, 0rem));
+    padding-bottom: var(--lusena-section-pb, var(--lusena-space-16));
+  }
+}
+
+/* Snug-top modifier — reduces top padding for hero sections that share
+ * background with the site header (no color boundary = less padding needed).
+ * Usage: class="lusena-spacing--hero lusena-spacing--snug-top" */
+.lusena-spacing--snug-top {
+  --lusena-section-pt: var(--lusena-space-4); /* 32px mobile */
+}
+@media (min-width: 768px) {
+  .lusena-spacing--snug-top {
+    --lusena-section-pt: var(--lusena-space-6); /* 48px desktop */
+  }
+}
+
+/* Same-background section gap — JS-applied by lusena-section-gap-detector.
+ * Ensures at least a minimum gap between same-bg adjacent sections. */
+.lusena-section-gap-same {
+  --lusena-min-gap: var(--lusena-space-6); /* 48px floor */
+}
+
+/* Different-background section gap — resets min-gap to zero. */
+.lusena-section-gap-different {
+  --lusena-min-gap: 0rem;
+}
+
+/* Neutralize Dawn's adjacent section top-margin */
+.section:has(> [class*="lusena-spacing--"]) + .section,
+.section + .section:has(> [class*="lusena-spacing--"]) {
+  margin-top: 0;
+}
+
+/* Content-Flow — spacing-only vertical rhythm (NO flex, backwards-compatible).
+ * Applied to a parent container to create uniform spacing between children.
+ * Used in 26+ Liquid files. */
+.lusena-content-flow > :not(:first-child) { margin-top: var(--lusena-space-3); }
+.lusena-content-flow--tight > :not(:first-child) { margin-top: var(--lusena-space-2); }
+.lusena-content-flow--relaxed > :not(:first-child) { margin-top: var(--lusena-space-4); }
+
+/* Editorial Stack — flex-col + vertical rhythm (new addition for future use) */
+.lusena-stack { display: flex; flex-direction: column; justify-content: flex-start; }
+.lusena-stack > * + * { margin-top: var(--lusena-stack-gap, var(--lusena-space-2)); }
+.lusena-stack--tight { --lusena-stack-gap: var(--lusena-space-1); }
+.lusena-stack--relaxed { --lusena-stack-gap: var(--lusena-space-4); }
+.lusena-stack--loose { --lusena-stack-gap: var(--lusena-space-6); }
+
+/* Semantic Gaps — match names used in 18+ Liquid files */
+.lusena-gap-kicker { display: block; margin-bottom: var(--lusena-space-1); }
+.lusena-gap-heading { margin-bottom: var(--lusena-space-3); }
+.lusena-gap-body { margin-bottom: var(--lusena-space-3); }
+.lusena-gap-cta { margin-bottom: var(--lusena-space-4); }
+.lusena-gap-cta-top { margin-top: var(--lusena-space-4); }
+.lusena-gap-section-intro { margin-bottom: var(--lusena-space-4); }
+.lusena-gap-subsection { margin-top: var(--lusena-space-8); }
+
+/* ==========================================================================
+   LAYOUT GRID & CONTAINERS
+   ========================================================================== */
+
+.lusena-container {
+  width: 100%;
+  max-width: 120rem; 
+  margin-inline: auto;
+  padding-inline: var(--lusena-space-2);
+}
+.lusena-container--narrow { max-width: 80rem; }
+
+@media (min-width: 768px) {
+  .lusena-container { padding-inline: var(--lusena-space-4); }
+}
+
+.lusena-grid {
+  display: grid;
+  gap: var(--lusena-space-4);
+}
+.lusena-grid--2, .lusena-grid--3, .lusena-grid--4, .lusena-grid--pdp { grid-template-columns: 1fr; }
+.lusena-grid--product {
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--lusena-space-4) var(--lusena-space-1);
+}
+
+@media (min-width: 768px) {
+  .lusena-grid { gap: var(--lusena-space-6); }
+  .lusena-grid--2 { grid-template-columns: repeat(2, 1fr); }
+  .lusena-grid--3 { grid-template-columns: repeat(3, 1fr); }
+  .lusena-grid--4 { grid-template-columns: repeat(4, 1fr); }
+  .lusena-grid--product { grid-template-columns: repeat(4, 1fr); gap: var(--lusena-space-8) var(--lusena-space-4); }
+  
+  .lusena-grid--pdp { grid-template-columns: repeat(12, 1fr); align-items: start; }
+  .lusena-grid--pdp > :nth-child(1) { grid-column: span 7; }
+  .lusena-grid--pdp > :nth-child(2) { grid-column: span 5; }
+}
+
+/* Problem/Solution Split */
+.lusena-split-problem-solution {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lusena-space-6);
+}
+@media (min-width: 768px) {
+  .lusena-split-problem-solution { grid-template-columns: 1fr 1fr; gap: var(--lusena-space-12); }
+}
+.lusena-split__problem { border-top: 2px solid var(--lusena-status-error); padding-top: var(--lusena-space-3); }
+.lusena-split__solution { border-top: 2px solid var(--lusena-status-success); padding-top: var(--lusena-space-3); }
+
+/* Two-column: image + text (Image Left / Image Right) */
+.lusena-split {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lusena-space-4);
+}
+@media (min-width: 768px) {
+  .lusena-split {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--lusena-space-8);
+  }
+  .lusena-split > * { flex: 1; }
+  .lusena-split--image-right { flex-direction: row-reverse; }
+}
+
+/* Two-column: sticky sidebar */
+.lusena-layout-sticky {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lusena-space-6);
+}
+@media (min-width: 768px) {
+  .lusena-layout-sticky { grid-template-columns: 32rem 1fr; align-items: start; gap: var(--lusena-space-12); }
+  .lusena-layout-sticky__sidebar { position: sticky; top: 12rem; }
+}
+
+/* ==========================================================================
+   COMPONENT PATTERNS (Intrinsic Architecture - No Heavy Boxes)
+   ========================================================================== */
+
+/* 1. Product Cards */
+.lusena-product-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+}
+.lusena-product-card__media {
+  aspect-ratio: 3/4;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: var(--lusena-space-2);
+  background-color: var(--lusena-color-n100);
+}
+.lusena-product-card__image--primary,
+.lusena-product-card__image--secondary {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity var(--lusena-transition-med) ease-in-out, transform var(--lusena-transition-med) ease-in-out;
+}
+.lusena-product-card__image--secondary {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+@media (hover: hover) {
+  .lusena-product-card:not(.lusena-product-card--oos):hover .lusena-product-card__image--primary { opacity: 0; }
+  .lusena-product-card:not(.lusena-product-card--oos):hover .lusena-product-card__image--secondary {
+    opacity: 1;
+    transform: scale(1.03); /* Calm silk unfold */
+  }
+}
+.lusena-product-card--oos .lusena-product-card__media { opacity: 0.5; filter: grayscale(100%); }
+.lusena-product-card--oos:hover .lusena-product-card__image--secondary { transform: none; }
+
+/* 2. Content & Testimonial Cards (Editorial Borders, No Backgrounds) */
+.lusena-content-card {
+  padding: var(--lusena-space-3) 0 0 0;
+  background: transparent;
+  box-shadow: none;
+  border-top: 1px solid var(--lusena-color-n200);
+}
+.lusena-testimonial {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lusena-space-2);
+  padding-left: var(--lusena-space-3);
+  border-left: 1px solid var(--lusena-color-n300);
+}
+.lusena-testimonial__stars { display: flex; gap: var(--lusena-space-05); color: var(--lusena-accent-2); }
+.lusena-testimonial__quote {
+  font-family: var(--lusena-font-brand);
+  font-style: italic;
+  font-size: 2.0rem;
+  line-height: 2.4rem;
+  color: var(--lusena-text-1);
+  margin: 0;
+}
+.lusena-testimonial__author {
+  font-family: var(--lusena-font-ui);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--lusena-text-2);
+}
+
+/* 3. Process Steps */
+.lusena-process-step {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  border-top: 1px solid var(--lusena-color-n200);
+  padding-top: var(--lusena-space-3);
+  position: relative;
+}
+.lusena-process-step__number {
+  font-family: var(--lusena-font-brand);
+  font-size: 3.2rem;
+  line-height: 4.0rem;
+  color: var(--lusena-accent-2);
+  margin-bottom: var(--lusena-space-2);
+}
+
+/* 4. Badges & Chips */
+.lusena-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lusena-space-05);
+  padding: var(--lusena-space-05) var(--lusena-space-1);
+  background-color: transparent;
+  color: var(--lusena-text-1);
+  border: 1px solid var(--lusena-text-1);
+  font-family: var(--lusena-font-ui);
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.lusena-badge--gold { color: var(--lusena-accent-2); border-color: var(--lusena-accent-2); }
+.lusena-badge--overlay { position: absolute; top: var(--lusena-space-1); left: var(--lusena-space-1); z-index: var(--lusena-z-badge); }
+
+/* 5. Trust Bar (Horizontal Strip) */
+.lusena-trust-bar {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-block: var(--lusena-space-3);
+  gap: var(--lusena-space-3);
+  border-top: 1px solid var(--lusena-color-n200);
+  border-bottom: 1px solid var(--lusena-color-n200);
+  scrollbar-width: none; 
+}
+.lusena-trust-bar::-webkit-scrollbar { display: none; }
+.lusena-trust-bar__item {
+  flex: 0 0 calc(50% - (var(--lusena-space-3) / 2));
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  gap: var(--lusena-space-1);
+}
+@media (min-width: 768px) {
+  .lusena-trust-bar { justify-content: center; overflow-x: visible; }
+  .lusena-trust-bar__item { flex: 0 0 auto; }
+}
+
+/* 6. Comparison Table (Responsive Mobile Stack) */
+.lusena-comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.lusena-comparison-table th, 
+.lusena-comparison-table td {
+  padding: var(--lusena-space-2);
+  border-bottom: 1px solid var(--lusena-color-n200);
+  text-align: left;
+}
+.lusena-comparison-table th { font-family: var(--lusena-font-brand); font-weight: 400; }
+.lusena-comparison-table__check { color: var(--lusena-status-success); }
+.lusena-comparison-table__cross { color: var(--lusena-status-error); }
+
+@media (max-width: 767px) {
+  .lusena-comparison-table thead { display: none; }
+  .lusena-comparison-table tr { 
+    display: flex; 
+    flex-wrap: wrap; 
+    margin-bottom: var(--lusena-space-4); 
+    border: 1px solid var(--lusena-color-n200);
+    padding: var(--lusena-space-2);
+  }
+  .lusena-comparison-table td { 
+    display: flex; 
+    flex-direction: column;
+    border-bottom: none; 
+    padding: var(--lusena-space-1) var(--lusena-space-1);
+    flex: 1 1 40%;
+  }
+  .lusena-comparison-table td:first-child { 
+    flex: 1 1 100%;
+    font-weight: 600; 
+    color: var(--lusena-text-1);
+    border-bottom: 1px solid var(--lusena-color-n200);
+    margin-bottom: var(--lusena-space-1);
+    padding-bottom: var(--lusena-space-1);
+  }
+  .lusena-comparison-table td:not(:first-child)::before { 
+    content: attr(data-label); 
+    font-family: var(--lusena-font-ui);
+    font-size: 1.2rem;
+    font-weight: 600; 
+    color: var(--lusena-text-2);
+    margin-bottom: var(--lusena-space-05);
+  }
+}
+
+/* 7. Auxiliary Components */
+.lusena-progress { width: 100%; height: 2px; background: var(--lusena-color-n200); }
+.lusena-progress__fill { height: 100%; background: var(--lusena-accent-cta); transition: width var(--lusena-transition-med) ease-in-out; }
+
+.lusena-counter {
+  position: absolute;
+  top: -0.8rem;
+  right: -0.8rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  background-color: var(--lusena-accent-cta);
+  color: var(--lusena-color-n0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--lusena-font-ui);
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.lusena-breadcrumb { display: flex; flex-wrap: wrap; gap: var(--lusena-space-1); list-style: none; padding: 0; margin: 0; }
+.lusena-breadcrumb__link { display: inline-flex; align-items: center; text-decoration: none; color: var(--lusena-text-2); min-height: 4.4rem; }
+.lusena-breadcrumb__separator { color: var(--lusena-color-n300); display: inline-flex; align-items: center; min-height: 4.4rem; }
+.lusena-breadcrumb__link[aria-current="page"] { color: var(--lusena-text-1); }
+
+.lusena-logo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--lusena-space-4); }
+.lusena-logo-grid__item { display: flex; align-items: center; justify-content: center; aspect-ratio: 1/1; }
+.lusena-logo-grid__img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+.lusena-video { aspect-ratio: 16/9; width: 100%; background-color: var(--lusena-color-n900); position: relative; overflow: hidden; }
+.lusena-video iframe, .lusena-video video { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+
+.lusena-watermark { position: absolute; z-index: var(--lusena-z-watermark); opacity: 0.05; pointer-events: none; width: 100%; max-width: 60rem; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+.lusena-icon-circle { display: inline-flex; align-items: center; justify-content: center; width: 4.8rem; height: 4.8rem; border-radius: 50%; border: 1px solid var(--lusena-color-n200); background-color: transparent; color: var(--lusena-text-1); }
+
+.lusena-pagination { display: flex; gap: var(--lusena-space-1); list-style: none; padding: 0; justify-content: center; align-items: center; }
+.lusena-pagination__link { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; color: var(--lusena-text-2); }
+.lusena-pagination__link[aria-current="page"] { color: var(--lusena-text-1); border-bottom: 1px solid var(--lusena-text-1); }
+.lusena-pagination__link:hover:not([aria-current="page"]) { color: var(--lusena-text-1); }
+.lusena-pagination__link[disabled] { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+
+.lusena-alert { border-top: 1px solid currentColor; border-bottom: 1px solid currentColor; padding: var(--lusena-space-2); display: flex; align-items: center; gap: var(--lusena-space-2); }
+.lusena-alert--error { color: var(--lusena-status-error); background-color: rgba(185, 28, 28, 0.05); }
+.lusena-alert--success { color: var(--lusena-status-success); background-color: rgba(47, 125, 78, 0.05); }
+.lusena-alert--info { color: var(--lusena-text-1); background-color: var(--lusena-brand-bg); }
+
+.lusena-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--lusena-space-12) 0; gap: var(--lusena-space-4); }
+
+.lusena-announcement { background-color: var(--lusena-brand-bg); padding: var(--lusena-space-1); text-align: center; border-bottom: 1px solid var(--lusena-color-n200); }
+
+/* ==========================================================================
+   FORM SYSTEM (Minimal Editorial Lines)
+   ========================================================================== */
+
+.lusena-input, .lusena-textarea, .lusena-select {
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--lusena-color-n300);
+  border-radius: 0; 
+  padding: var(--lusena-space-2);
+  font-family: var(--lusena-font-ui);
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  color: var(--lusena-text-1);
+  transition: border-color var(--lusena-transition-fast);
+}
+.lusena-input::placeholder, .lusena-textarea::placeholder { color: var(--lusena-color-n500); }
+.lusena-input:focus, .lusena-textarea:focus, .lusena-select:focus { outline: none; border-color: var(--lusena-text-1); }
+
+.lusena-input--error { border-color: var(--lusena-status-error); }
+
+.lusena-input--underline {
+  border: none;
+  border-bottom: 1px solid var(--lusena-color-n400);
+  padding-inline: 0;
+}
+
+/* Specific Form Layouts */
+.lusena-search { position: relative; display: flex; align-items: center; width: 100%; }
+.lusena-search__icon { position: absolute; left: var(--lusena-space-2); color: var(--lusena-text-2); pointer-events: none; display: flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem; }
+.lusena-search__input { padding-left: var(--lusena-space-5); width: 100%; }
+
+.lusena-newsletter { display: flex; flex-direction: column; gap: var(--lusena-space-2); width: 100%; }
+@media (min-width: 768px) {
+  .lusena-newsletter { flex-direction: row; align-items: flex-start; }
+  .lusena-newsletter .lusena-input { flex: 1; }
+  .lusena-newsletter button { flex-shrink: 0; }
+}
+
+.lusena-discount { display: flex; gap: var(--lusena-space-1); width: 100%; }
+.lusena-discount .lusena-input { flex: 1; }
+
+.lusena-select-wrapper { position: relative; }
+.lusena-select-icon { position: absolute; right: var(--lusena-space-1); top: 50%; transform: translateY(-50%); pointer-events: none; width: 2.4rem; height: 2.4rem; }
+.lusena-select { padding-right: var(--lusena-space-4); }
+
+/* Form Components */
+.lusena-quantity { display: inline-flex; align-items: center; border: 1px solid var(--lusena-color-n300); }
+.lusena-quantity__btn { background: transparent; border: none; cursor: pointer; color: var(--lusena-text-1); }
+.lusena-quantity__btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.lusena-quantity__input { width: 4rem; text-align: center; border: none; background: transparent; font-variant-numeric: tabular-nums; -moz-appearance: textfield; }
+.lusena-quantity__input::-webkit-outer-spin-button, .lusena-quantity__input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+.lusena-swatch { display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid var(--lusena-color-n200); cursor: pointer; padding: 0; background-color: transparent; }
+.lusena-swatch__color { width: 3.2rem; height: 3.2rem; border-radius: 50%; display: block; }
+.lusena-swatch.is-selected { box-shadow: 0 0 0 1px var(--lusena-surface-1), 0 0 0 2px var(--lusena-text-1); }
+
+.lusena-pill { padding: var(--lusena-space-1) var(--lusena-space-3); border: 1px solid var(--lusena-color-n300); background: transparent; cursor: pointer; font-family: var(--lusena-font-ui); }
+.lusena-pill.is-selected { border-color: var(--lusena-accent-cta); background-color: rgba(14, 94, 90, 0.05); }
+.lusena-pill:disabled { opacity: 0.5; cursor: not-allowed; text-decoration: line-through; }
+
+.lusena-form-msg { display: flex; align-items: center; gap: var(--lusena-space-1); margin-top: var(--lusena-space-1); font-family: var(--lusena-font-ui); font-size: 1.2rem; padding: var(--lusena-space-1) var(--lusena-space-2); border-radius: var(--lusena-radius-sm); }
+.lusena-form-msg--error { color: var(--lusena-status-error); background-color: rgba(185, 28, 28, 0.05); }
+.lusena-form-msg--success { color: var(--lusena-status-success); background-color: rgba(47, 125, 78, 0.05); }
+
+/* ==========================================================================
+   RICH TEXT COMPONENT (Scoped CMS Content)
+   Restricted exactly to the 5 semantic scales.
+   ========================================================================== */
+
+.lusena-richtext h1 { font-family: var(--lusena-font-brand); font-size: 3.2rem; line-height: 4.0rem; color: var(--lusena-text-1); font-weight: 400; margin-top: var(--lusena-space-6); margin-bottom: var(--lusena-space-2); }
+.lusena-richtext h2 { font-family: var(--lusena-font-brand); font-size: 2.0rem; line-height: 2.4rem; color: var(--lusena-text-1); font-weight: 400; margin-top: var(--lusena-space-6); margin-bottom: var(--lusena-space-2); }
+.lusena-richtext h3, .lusena-richtext h4, .lusena-richtext h5, .lusena-richtext h6 { font-family: var(--lusena-font-brand); font-size: 2.0rem; line-height: 2.4rem; color: var(--lusena-text-1); font-weight: 400; margin-top: var(--lusena-space-4); margin-bottom: var(--lusena-space-2); }
+
+@media (min-width: 768px) {
+  .lusena-richtext h1 { font-size: 4.0rem; line-height: 4.8rem; }
+  .lusena-richtext h2, .lusena-richtext h3, .lusena-richtext h4, .lusena-richtext h5, .lusena-richtext h6 { font-size: 2.4rem; line-height: 3.2rem; }
+}
+
+.lusena-richtext p { margin-bottom: var(--lusena-space-3); }
+.lusena-richtext a { color: var(--lusena-accent-cta); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; transition: color var(--lusena-transition-fast); }
+.lusena-richtext a:hover { color: var(--lusena-accent-cta-hover); }
+.lusena-richtext ul, .lusena-richtext ol { margin-bottom: var(--lusena-space-3); padding-left: var(--lusena-space-4); }
+.lusena-richtext li { margin-bottom: var(--lusena-space-1); }
+.lusena-richtext blockquote { border-left: 1px solid var(--lusena-accent-2); padding-left: var(--lusena-space-3); margin: var(--lusena-space-4) 0; font-family: var(--lusena-font-brand); font-style: italic; font-size: 2.0rem; line-height: 2.4rem; color: var(--lusena-text-1); }
+.lusena-richtext strong { font-weight: 600; color: var(--lusena-text-1); }
+.lusena-richtext em { font-style: italic; }
+.lusena-richtext img { max-width: 100%; height: auto; margin-block: var(--lusena-space-4); border-radius: 0; }
+.lusena-richtext hr { border: none; border-top: 1px solid currentColor; margin-block: var(--lusena-space-6); opacity: 0.2; }
+.lusena-richtext table { width: 100%; border-collapse: collapse; margin-bottom: var(--lusena-space-4); }
+.lusena-richtext th, .lusena-richtext td { border: 1px solid currentColor; padding: var(--lusena-space-2); text-align: left; }
+
+/* ==========================================================================
+   INVERTED SECTION LOGIC
+   Uses variable reassignment so everything inherits organically.
+   ========================================================================== */
+
+.lusena-section--inverted {
+  background-color: var(--lusena-color-n900);
+  color: var(--lusena-color-n0);
+  /* Remap core tokens for inverted flow */
+  --lusena-text-1: var(--lusena-color-n0);
+  --lusena-text-2: var(--lusena-color-n300);
+  --lusena-surface-1: var(--lusena-color-n800);
+  --lusena-surface-2: var(--lusena-color-n700);
+  --lusena-color-n200: var(--lusena-color-n700);
+  --lusena-color-n300: var(--lusena-color-n600);
+  --lusena-color-n400: var(--lusena-color-n500);
+}
+.lusena-section--inverted .lusena-input--underline { border-bottom-color: var(--lusena-color-n600); }
+
+/* ==========================================================================
+   INTERACTIVE STATES & OVERLAYS
+   ========================================================================== */
+
+.lusena-is-loading { cursor: wait; }
+.lusena-shimmer {
+  background: linear-gradient(90deg, var(--lusena-color-n100) 25%, var(--lusena-color-n200) 50%, var(--lusena-color-n100) 75%);
+  background-size: 200% 100%;
+  animation: lusena-shimmer 2s infinite linear;
+}
+@keyframes lusena-shimmer { to { background-position: -200% 0; } }
+
+.lusena-action--destructive { color: var(--lusena-text-2); transition: color var(--lusena-transition-fast) ease-in-out; }
+@media (hover: hover) { .lusena-action--destructive:hover { color: var(--lusena-status-error); } }
+
+.lusena-overlay { position: fixed; inset: 0; background-color: var(--lusena-scrim-60); z-index: var(--lusena-z-overlay); opacity: 0; pointer-events: none; transition: opacity var(--lusena-transition-med); }
+.lusena-overlay.is-active { opacity: 1; pointer-events: auto; }
+
+.lusena-drawer { position: fixed; top: 0; right: 0; height: 100vh; width: 100%; max-width: 40rem; background-color: var(--lusena-surface-1); z-index: var(--lusena-z-drawer); transform: translateX(100%); transition: transform var(--lusena-transition-med); display: flex; flex-direction: column; }
+.lusena-drawer.is-active { transform: translateX(0); }
+
+.lusena-modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: var(--lusena-surface-1); z-index: var(--lusena-z-modal); padding: var(--lusena-space-6); border: 1px solid var(--lusena-color-n200); width: 100%; max-width: 60rem; opacity: 0; pointer-events: none; transition: opacity var(--lusena-transition-med); }
+.lusena-modal.is-active { opacity: 1; pointer-events: auto; }
+
+.lusena-header { position: sticky; top: 0; z-index: var(--lusena-z-sticky-header); background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); border-bottom: 1px solid transparent; transition: transform var(--lusena-transition-med); }
+.lusena-header--hidden { transform: translateY(-100%); }
+.lusena-header--scrolled { border-bottom-color: var(--lusena-color-n200); }
+
+.lusena-accordion { border-bottom: 1px solid var(--lusena-color-n200); }
+.lusena-accordion__summary { display: flex; justify-content: space-between; align-items: center; padding-block: var(--lusena-space-3); cursor: pointer; list-style: none; }
+.lusena-accordion__summary::-webkit-details-marker { display: none; }
+.lusena-accordion__icon { transition: transform var(--lusena-transition-fast); }
+.lusena-accordion[open] .lusena-accordion__icon { transform: rotate(180deg); }
+.lusena-accordion__content { padding-bottom: var(--lusena-space-3); }
+
+/* ==========================================================================
+   UTILITY CLASSES & MODIFIERS
+   ========================================================================== */
+
+.lusena-bg-brand { background-color: var(--lusena-brand-bg); }
+.lusena-bg-surface-1 { background-color: var(--lusena-surface-1); }
+.lusena-bg-surface-2 { background-color: var(--lusena-surface-2); }
+.lusena-bg-dark { background-color: var(--lusena-color-n900); color: var(--lusena-surface-1); }
+
+.lusena-text-center { text-align: center; }
+.lusena-text-left { text-align: left; }
+.lusena-text-right { text-align: right; }
+
+.lusena-flex { display: flex; }
+.lusena-flex-col { display: flex; flex-direction: column; }
+.lusena-items-center { align-items: center; }
+.lusena-justify-center { justify-content: center; }
+.lusena-justify-between { justify-content: space-between; }
+.lusena-hidden { display: none !important; }
+
+.lusena-visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+.lusena-aspect-1-1 { aspect-ratio: 1 / 1; }
+.lusena-aspect-3-4 { aspect-ratio: 3 / 4; }
+.lusena-aspect-4-5 { aspect-ratio: 4 / 5; }
+.lusena-aspect-16-9 { aspect-ratio: 16 / 9; }
+
+.lusena-truncate { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lusena-line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+.lusena-object-cover { object-fit: cover; }
+.lusena-object-contain { object-fit: contain; }
+
+.lusena-divider { width: 100%; height: 1px; background-color: currentColor; opacity: 0.2; border: none; margin: 0; }
+
+@media (max-width: 767px) {
+  .lusena-hide-mobile { display: none !important; }
+  .lusena-text-center-mobile { text-align: center; }
+}
+@media (min-width: 768px) {
+  .lusena-hide-desktop { display: none !important; }
+}

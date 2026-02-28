@@ -27,6 +27,8 @@
 ## Infrastructure completed
 
 - [x] LUSENA spacing system (`assets/lusena-spacing.css`) — tiers, gaps, content-flow
+- [x] CSS foundations file (`assets/lusena-foundations.css`) — designer-generated, 7 fixes applied, production-ready
+- [x] CSS foundations brief (`docs/css-foundations-brief.md`) — self-contained spec for the designer
 - [x] Button system (`snippets/lusena-button-system.liquid`)
 - [x] Icon system (`snippets/lusena-icon.liquid`)
 - [x] Section gap detector (`snippets/lusena-section-gap-detector.liquid`)
@@ -34,7 +36,16 @@
 - [x] Footer (`sections/lusena-footer.liquid`)
 - [x] Product card (`snippets/lusena-product-card.liquid`)
 - [x] Breadcrumbs (`snippets/lusena-breadcrumbs.liquid`)
-- [x] Memory bank architecture (this restructuring)
+- [x] Memory bank architecture
+
+## CSS foundations migration (pending)
+
+The new `lusena-foundations.css` replaces 3 files: `lusena-shop.css` (Tailwind), `lusena-spacing.css`, `lusena-missing-utilities.liquid`. Migration is section-by-section:
+
+- [ ] Phase 0: Load foundations alongside existing CSS in `layout/theme.liquid`
+- [ ] Phase 1: Migrate homepage sections (9 sections)
+- [ ] Phase 2: Migrate other pages (PDP, quality, returns, about, collection)
+- [ ] Phase 3: Remove old CSS files (`lusena-shop.css`, `lusena-spacing.css`, `lusena-missing-utilities.liquid`)
 
 ## Active migration backlogs
 
