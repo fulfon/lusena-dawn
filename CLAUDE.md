@@ -34,15 +34,31 @@ Dawn's original sections remain in the repo but are NOT used on the live storefr
 
 - **UI/UX brandbook (source of truth):** `docs/theme-brandbook-uiux.md`
 - **Brand direction:** `docs/LUSENA_BrandBook_v2.md`
+- **CSS foundations (new single CSS file):** `assets/lusena-foundations.css`
+- **CSS foundations brief (design spec):** `docs/css-foundations-brief.md`
 - **Design tokens (compact):** `memory-bank/doc/patterns/brand-tokens.md`
 - **Spacing system:** `memory-bank/doc/patterns/spacing-system.md`
 - **CSS architecture:** `memory-bank/doc/patterns/css-architecture.md`
 - **Engineering changelog:** `memory-bank/doc/changelog/theme-changes.md`
 
+### CSS migration in progress
+
+We are migrating from a fragmented CSS setup to a single `lusena-foundations.css` file:
+
+| Old (still loaded, being phased out) | New (target) |
+|--------------------------------------|--------------|
+| `assets/lusena-shop.css` (Tailwind build) | `assets/lusena-foundations.css` |
+| `assets/lusena-spacing.css` (spacing tokens) | *(absorbed into foundations)* |
+| `snippets/lusena-missing-utilities.liquid` (patches) | *(absorbed into foundations)* |
+
+**Migration phases:** See `memory-bank/progress.md` → "CSS foundations migration" section.
+
+**When editing sections:** Use `lusena-foundations.css` classes for new/migrated work. See `memory-bank/doc/patterns/spacing-system.md` for the class API.
+
 ## Key Conventions
 
 - All customer-facing text in **Polish**; code/comments in **English**
-- LUSENA spacing token system is the **single source of truth** (`assets/lusena-spacing.css`) — never hardcode spacing with Tailwind utilities
+- `assets/lusena-foundations.css` is the **target single source of truth** for all CSS tokens, spacing, typography, and components — use its classes for new work
 - All custom files use `lusena-*` prefix
 - NEVER fabricate social proof (customer counts, ratings, reviews)
 - Sentence case for all headings and button labels
