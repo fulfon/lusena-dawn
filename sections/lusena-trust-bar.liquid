@@ -16,15 +16,15 @@
   endif
 -%}
 <section
-  class="bg-surface-2 lusena-trust-bar lusena-spacing--compact"
+  class="lusena-bg-surface-2 lusena-trust-bar lusena-spacing--compact"
   data-lusena-trust-bar
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container">
+  <div class="lusena-container">
     <ul
-      class="grid grid-cols-2 md:grid-cols-4 lusena-trust-bar__grid bg-surface-2"
+      class="lusena-trust-bar__grid"
       role="list"
       {% if settings.animations_reveal_on_scroll %}
         data-cascade
@@ -36,20 +36,20 @@
           {{ block.shopify_attributes }}
         >
           {%- if block.settings.icon != blank -%}
-            <div class="lusena-trust-bar__icon text-accent-cta">
+            <div class="lusena-trust-bar__icon">
               {%- if known_icons contains block.settings.icon -%}
                 {% render 'lusena-icon', name: block.settings.icon, class: 'lusena-trust-bar__icon-svg', stroke_width: 1.5 %}
               {%- else -%}
-                <span class="lusena-trust-bar__icon-svg inline-flex items-center justify-center text-sm font-medium" aria-hidden="true">
+                <span class="lusena-trust-bar__icon-svg lusena-trust-bar__icon-fallback" aria-hidden="true">
                   {{ block.settings.icon }}
                 </span>
               {%- endif -%}
             </div>
           {%- endif -%}
           <p class="lusena-trust-bar__text">
-            <span class="lusena-trust-bar__title font-medium text-primary">{{ block.settings.title | escape }}</span>
+            <span class="lusena-trust-bar__title">{{ block.settings.title | escape }}</span>
             {%- if block.settings.subtitle != blank -%}
-              <span class="lusena-trust-bar__subtitle text-secondary">{{ block.settings.subtitle | escape }}</span>
+              <span class="lusena-trust-bar__subtitle">{{ block.settings.subtitle | escape }}</span>
             {%- endif -%}
           </p>
         </li>
@@ -62,6 +62,8 @@
 
 
   .lusena-trust-bar__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 32px;
     margin: 0;
     padding: 0;
@@ -79,14 +81,23 @@
   .lusena-trust-bar__icon {
     flex: 0 0 auto;
     padding: 8px;
-    background: #fff;
+    background: var(--lusena-surface-1);
     border-radius: 9999px;
     line-height: 0;
+    color: var(--lusena-accent-cta);
   }
 
   .lusena-trust-bar__icon-svg {
     width: 20px;
     height: 20px;
+  }
+
+  .lusena-trust-bar__icon-fallback {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 500;
   }
 
   .lusena-trust-bar__text {
@@ -99,7 +110,9 @@
     display: block;
     font-size: 14px;
     line-height: 20px;
+    font-weight: 500;
     letter-spacing: normal;
+    color: var(--lusena-text-1);
   }
 
   .lusena-trust-bar__subtitle {
@@ -108,6 +121,7 @@
     font-size: 12px;
     line-height: 16px;
     letter-spacing: normal;
+    color: var(--lusena-text-2);
   }
 
   @media (min-width: 640px) {
@@ -119,9 +133,8 @@
   }
 
   @media (min-width: 768px) {
-
-
     .lusena-trust-bar__grid {
+      grid-template-columns: repeat(4, 1fr);
       gap: 32px;
     }
   }

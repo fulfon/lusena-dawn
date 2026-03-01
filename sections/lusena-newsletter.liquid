@@ -14,15 +14,15 @@
   endif
 -%}
 <section
-  class="bg-surface-2 lusena-newsletter lusena-spacing--standard"
+  class="lusena-bg-surface-2 lusena-newsletter lusena-spacing--standard"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container">
+  <div class="lusena-container">
     <div class="lusena-newsletter__inner{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {%- if section.settings.heading != blank -%}
-        <h2 class="lusena-newsletter__heading font-serif">
+        <h2 class="lusena-newsletter__heading">
           {{ section.settings.heading | escape }}
         </h2>
       {%- endif -%}
@@ -96,10 +96,11 @@
   }
 
   .lusena-newsletter__heading {
+    font-family: var(--lusena-font-brand);
     font-size: 28px;
     line-height: 1.2;
     margin: 0;
-    color: var(--primary, #111);
+    color: var(--lusena-text-1);
   }
 
   @media (min-width: 768px) {
@@ -111,7 +112,7 @@
   .lusena-newsletter__subheading {
     font-size: 16px;
     line-height: 1.5;
-    color: var(--text-secondary, #4A4A4A);
+    color: var(--lusena-text-2);
     margin: 0;
     max-width: 420px;
   }
@@ -136,32 +137,32 @@
   }
 
   .lusena-newsletter__input {
-    flex: 1;
     height: 48px;
     padding: 0 16px;
     font-size: 15px;
-    border: 1px solid #D1CFC9;
+    border: 1px solid var(--lusena-color-n300);
     border-radius: 6px;
     background: #fff;
-    color: var(--primary, #111);
+    color: var(--lusena-text-1);
     outline: none;
     transition: border-color 0.15s ease;
   }
 
   @media (min-width: 480px) {
     .lusena-newsletter__input {
+      flex: 1;
       border-radius: 6px 0 0 6px;
       border-right: none;
     }
   }
 
   .lusena-newsletter__input:focus {
-    border-color: var(--accent-cta, #0E5E5A);
-    box-shadow: 0 0 0 1px var(--accent-cta, #0E5E5A);
+    border-color: var(--lusena-accent-cta);
+    box-shadow: 0 0 0 1px var(--lusena-accent-cta);
   }
 
   .lusena-newsletter__input::placeholder {
-    color: var(--text-neutral-400, #B9B7B4);
+    color: var(--lusena-color-n400);
   }
 
   .lusena-newsletter__btn {
@@ -175,7 +176,7 @@
     white-space: nowrap;
     border: none;
     border-radius: 6px;
-    background: var(--accent-cta, #0E5E5A);
+    background: var(--lusena-accent-cta);
     color: #fff;
     cursor: pointer;
     transition: background 0.15s ease;
@@ -192,7 +193,7 @@
   }
 
   .lusena-newsletter__btn:focus-visible {
-    outline: 2px solid var(--accent-cta, #0E5E5A);
+    outline: 2px solid var(--lusena-accent-cta);
     outline-offset: 2px;
   }
 
@@ -211,7 +212,7 @@
   .lusena-newsletter__privacy {
     font-size: 12px;
     line-height: 1.5;
-    color: var(--text-neutral-700, #5A5855);
+    color: var(--lusena-color-n700);
     margin: 4px 0 0;
   }
 

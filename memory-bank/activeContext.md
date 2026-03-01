@@ -1,46 +1,44 @@
 # Active Context
 
-*Last updated: 2026-02-28*
+*Last updated: 2026-03-01*
 
 ## Current focus
 
-**CSS foundations migration** — Replacing the fragmented CSS setup (Tailwind build `lusena-shop.css` + hand-written `lusena-spacing.css` + patch file `lusena-missing-utilities.liquid`) with a single designer-crafted `lusena-foundations.css`.
+**CSS foundations migration** — Phase 1 (homepage) fully complete including visual verification and bug fixes. Ready for Phase 2 planning.
 
 ## Recent completed work
 
-- Created CSS foundations brief (`docs/css-foundations-brief.md`) — self-contained ~470-line spec for AI designer
-- AI designer (Iterative Studio) generated `assets/lusena-foundations.css` (34KB, 800+ lines)
-- Reviewed and applied 7 fixes to make foundations CSS production-ready:
-  - Added `--lusena-space-10` (80px) token to complete the 8px scale
-  - Added `--lusena-radius-sm` (2px) token (was referenced but undefined)
-  - Rewrote all 5 spacing tiers to "slightly more generous" values (was 2x too large)
-  - Added `lusena-spacing--snug-top` modifier (used by quality/returns heroes)
-  - Added `lusena-section-gap-same` / `lusena-section-gap-different` classes
-  - Renamed gap classes to match existing Liquid (`lusena-gap-heading`, etc.)
-  - Added `lusena-content-flow` classes (backwards-compatible, no flex)
-  - Added `lusena-object-cover` / `lusena-object-contain` utilities
-- Memory bank architecture restructuring
+- **Phase 0a:** Fixed padding override variable names in `lusena-foundations.css`
+- **Phase 0b:** Loaded `lusena-foundations.css` in `layout/theme.liquid`
+- **Phase 1:** Migrated all 9 homepage sections from Tailwind to foundations + section stylesheets (zero Tailwind classes remain)
+- **Phase 1 bug fixes** (5 visual regressions found via Playwright, all fixed):
+  1. Testimonials broken — curly quotes (U+201C/U+201D) in HTML class attributes caused all CSS to fail silently; replaced with straight quotes
+  2. FAQ not centered — `.lusena-container--narrow` missing `margin-inline: auto` + `padding-inline`; fixed in `lusena-foundations.css`
+  3. Buttons not rounded — `border-radius: 6px` added to 5 selectors across hero, bundles, heritage, bestsellers
+  4. Problem/Solution alignment — confirmed NOT a bug (items are aligned, content-dependent grid flow)
+  5. Newsletter input tiny on mobile — `flex: 1` collapsed height in column layout; moved to desktop-only media query
 
 ## Pending decisions
 
-- Migration strategy: load foundations alongside existing CSS first (Phase 0), then migrate sections one-by-one
-- Which homepage section to migrate first as proof-of-concept (trust-bar recommended — small, self-contained)
+- Phase 2 scope and approach (plan being prepared)
 
 ## Next steps
 
-1. **Load `lusena-foundations.css` into `layout/theme.liquid`** alongside existing CSS (Phase 0 — additive, no breakage)
-2. **Migrate homepage sections** one-by-one from Tailwind classes to foundation classes (Phase 1)
-3. **Migrate other pages** (PDP, quality, returns, about, collection)
-4. **Remove old CSS** once all pages migrated: `lusena-shop.css`, `lusena-spacing.css`, `lusena-missing-utilities.liquid`
-5. PDP migration backlog items (see `memory-bank/doc/features/pdp-migration-backlog.md`)
-6. Homepage migration backlog items (see `memory-bank/doc/features/homepage-migration-backlog.md`)
-7. Cart page LUSENA styling
-8. Remaining Dawn-default pages (search, 404, blog, account, etc.)
+1. **Phase 2:** Migrate remaining pages — PDP, quality, returns, about, collection sections
+2. **Phase 3:** Remove old CSS files (`lusena-shop.css`, `lusena-spacing.css`, `lusena-missing-utilities.liquid`)
+3. PDP migration backlog items (see `memory-bank/doc/features/pdp-migration-backlog.md`)
+4. Homepage migration backlog items (see `memory-bank/doc/features/homepage-migration-backlog.md`)
+5. Cart page LUSENA styling
+6. Remaining Dawn-default pages (search, 404, blog, account, etc.)
 
 ## Known issues
 
-- `lusena-missing-utilities.liquid` (351 lines) Tailwind patch file — will be removed after foundations migration
-- `lusena-shop.css` (26KB compiled Tailwind) — will be removed after foundations migration
-- `lusena-spacing.css` (9KB) — will be absorbed by foundations after migration
+- `lusena-missing-utilities.liquid` (351 lines) Tailwind patch file — will be removed after Phase 3
+- `lusena-shop.css` (26KB compiled Tailwind) — will be removed after Phase 3
+- `lusena-spacing.css` (9KB) — will be absorbed by foundations after Phase 3
 - `main-product.liquid` (100KB) is dead code alongside `lusena-main-product.liquid`
-- Existing sections heavily use Tailwind classes (200+ instances across 39 sections) — migration is section-by-section
+- Non-homepage sections still use Tailwind classes — migration is page-by-page in Phase 2
+
+## Architecture note (from Phase 1 learnings)
+
+CSS lives in two layers: (1) `lusena-foundations.css` — design tokens, utilities, containers; (2) per-section `{% stylesheet %}` blocks — all layout/component CSS. The Phase 1 migration swapped Tailwind utility classes for BEM + CSS variables but preserved the same visual appearance. A future visual refresh would rewrite the section stylesheets to fully adopt the designer's editorial rhythm philosophy.

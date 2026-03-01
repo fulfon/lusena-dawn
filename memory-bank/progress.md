@@ -38,12 +38,12 @@
 - [x] Breadcrumbs (`snippets/lusena-breadcrumbs.liquid`)
 - [x] Memory bank architecture
 
-## CSS foundations migration (pending)
+## CSS foundations migration
 
 The new `lusena-foundations.css` replaces 3 files: `lusena-shop.css` (Tailwind), `lusena-spacing.css`, `lusena-missing-utilities.liquid`. Migration is section-by-section:
 
-- [ ] Phase 0: Load foundations alongside existing CSS in `layout/theme.liquid`
-- [ ] Phase 1: Migrate homepage sections (9 sections)
+- [x] Phase 0: Load foundations alongside existing CSS in `layout/theme.liquid` + fix padding variable names
+- [x] Phase 1: Migrate homepage sections (9/9 sections — hero, trust-bar, problem-solution, bestsellers, heritage, testimonials, bundles, faq, newsletter) + 5 visual regression fixes verified via Playwright
 - [ ] Phase 2: Migrate other pages (PDP, quality, returns, about, collection)
 - [ ] Phase 3: Remove old CSS files (`lusena-shop.css`, `lusena-spacing.css`, `lusena-missing-utilities.liquid`)
 

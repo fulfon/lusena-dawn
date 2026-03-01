@@ -14,34 +14,34 @@
   endif
 -%}
 <section
-  class="bg-brand-bg lusena-problem-solution lusena-spacing--spacious"
+  class="lusena-bg-brand lusena-problem-solution lusena-spacing--spacious"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 lusena-problem-solution__grid{% if section.settings.cta_label != blank and section.settings.cta_link != blank %} lusena-gap-body{% endif %}">
+  <div class="lusena-container">
+    <div class="lusena-problem-solution__grid{% if section.settings.cta_label != blank and section.settings.cta_link != blank %} lusena-gap-body{% endif %}">
       <div
         {% if settings.animations_reveal_on_scroll %}
           class="scroll-trigger animate--slide-in"
         {% endif %}
       >
         <div class="lusena-content-flow--tight lusena-gap-section-intro">
-          <span class="text-secondary text-xs md:text-sm tracking-widest uppercase font-semibold lusena-problem-solution__kicker">
+          <span class="lusena-problem-solution__kicker lusena-problem-solution__kicker--problem">
             {{ section.settings.problem_label | escape }}
           </span>
-          <h3 class="text-2xl md:text-3xl font-serif text-primary leading-tight opacity-80 lusena-problem-solution__headline">
+          <h3 class="lusena-problem-solution__headline lusena-problem-solution__headline--problem">
             {{ section.settings.problem_heading | newline_to_br }}
           </h3>
         </div>
         <div class="lusena-content-flow">
           {%- for block in section.blocks -%}
             {%- if block.type == 'problem_item' -%}
-              <div class="flex gap-4" {{ block.shopify_attributes }}>
-                {% render 'lusena-icon', name: 'x', class: 'w-5 h-5 text-red-900/40 mt-1 shrink-0', stroke_width: 1.5 %}
+              <div class="lusena-problem-solution__item" {{ block.shopify_attributes }}>
+                {% render 'lusena-icon', name: 'x', class: 'lusena-problem-solution__icon lusena-problem-solution__icon--problem', stroke_width: 1.5 %}
                 <div>
-                  <h4 class="font-medium text-lg text-primary mb-1">{{ block.settings.title | escape }}</h4>
-                  <p class="text-secondary leading-relaxed font-light">{{ block.settings.text | escape }}</p>
+                  <h4 class="lusena-problem-solution__item-title">{{ block.settings.title | escape }}</h4>
+                  <p class="lusena-problem-solution__item-text">{{ block.settings.text | escape }}</p>
                 </div>
               </div>
             {%- endif -%}
@@ -55,25 +55,25 @@
         {% endif %}
       >
         <div class="lusena-content-flow--tight lusena-gap-section-intro">
-          <span class="text-accent-gold text-xs md:text-sm tracking-widest uppercase font-semibold lusena-problem-solution__kicker">
+          <span class="lusena-problem-solution__kicker lusena-problem-solution__kicker--solution">
             {{ section.settings.solution_label | escape }}
           </span>
-          <h3 class="text-2xl md:text-3xl font-serif text-primary leading-tight lusena-problem-solution__headline">
+          <h3 class="lusena-problem-solution__headline">
             {{ section.settings.solution_heading | newline_to_br }}
           </h3>
         </div>
         <div class="lusena-content-flow">
           {%- for block in section.blocks -%}
             {%- if block.type == 'solution_item' -%}
-              <div class="flex gap-4" {{ block.shopify_attributes }}>
+              <div class="lusena-problem-solution__item" {{ block.shopify_attributes }}>
                 {% render 'lusena-icon',
                   name: 'check',
-                  class: 'w-5 h-5 text-green-900/40 mt-1 shrink-0',
+                  class: 'lusena-problem-solution__icon lusena-problem-solution__icon--solution',
                   stroke_width: 1.5
                 %}
                 <div>
-                  <h4 class="font-medium text-lg text-primary mb-1">{{ block.settings.title | escape }}</h4>
-                  <p class="text-secondary leading-relaxed font-light">{{ block.settings.text | escape }}</p>
+                  <h4 class="lusena-problem-solution__item-title">{{ block.settings.title | escape }}</h4>
+                  <p class="lusena-problem-solution__item-text">{{ block.settings.text | escape }}</p>
                 </div>
               </div>
             {%- endif -%}
@@ -83,11 +83,8 @@
     </div>
 
     {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
-      <div class="text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-        <a
-          href="{{ section.settings.cta_link }}"
-          class="inline-flex items-center text-accent-cta font-medium border-b border-accent-cta/30 pb-1 hover:border-accent-cta transition-all"
-        >
+      <div class="lusena-text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <a href="{{ section.settings.cta_link }}" class="lusena-problem-solution__cta">
           {{ section.settings.cta_label | escape }}
         </a>
       </div>
@@ -96,26 +93,107 @@
 </section>
 
 {% stylesheet %}
-  .lusena-problem-solution .lusena-problem-solution__kicker {
-    font-size: 12px;
-    line-height: 16px;
-  }
-
-  .lusena-problem-solution .lusena-problem-solution__headline {
-    font-size: 24px;
-    line-height: 32px;
+  .lusena-problem-solution__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--lusena-space-12);
   }
 
   @media (min-width: 768px) {
-    .lusena-problem-solution .lusena-problem-solution__kicker {
+    .lusena-problem-solution__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--lusena-space-24);
+    }
+  }
+
+  .lusena-problem-solution__kicker {
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .lusena-problem-solution__kicker--problem {
+    color: var(--lusena-text-2);
+  }
+
+  .lusena-problem-solution__kicker--solution {
+    color: var(--lusena-accent-2);
+  }
+
+  .lusena-problem-solution__headline {
+    font-family: var(--lusena-font-brand);
+    font-size: 24px;
+    line-height: 32px;
+    color: var(--lusena-text-1);
+    margin: 0;
+  }
+
+  .lusena-problem-solution__headline--problem {
+    opacity: 0.8;
+  }
+
+  @media (min-width: 768px) {
+    .lusena-problem-solution__kicker {
       font-size: 14px;
       line-height: 20px;
     }
 
-    .lusena-problem-solution .lusena-problem-solution__headline {
+    .lusena-problem-solution__headline {
       font-size: 30px;
       line-height: 36px;
     }
+  }
+
+  .lusena-problem-solution__item {
+    display: flex;
+    gap: var(--lusena-space-4);
+  }
+
+  .lusena-problem-solution__icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .lusena-problem-solution__icon--problem {
+    color: rgba(185, 28, 28, 0.4);
+  }
+
+  .lusena-problem-solution__icon--solution {
+    color: rgba(47, 125, 78, 0.4);
+  }
+
+  .lusena-problem-solution__item-title {
+    font-weight: 500;
+    font-size: 1.8rem;
+    line-height: 1.4;
+    color: var(--lusena-text-1);
+    margin: 0 0 4px 0;
+  }
+
+  .lusena-problem-solution__item-text {
+    color: var(--lusena-text-2);
+    line-height: 1.6;
+    font-weight: 300;
+    margin: 0;
+  }
+
+  .lusena-problem-solution__cta {
+    display: inline-flex;
+    align-items: center;
+    color: var(--lusena-accent-cta);
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(14, 94, 90, 0.3);
+    padding-bottom: 4px;
+    transition: border-color var(--lusena-transition-fast);
+  }
+
+  .lusena-problem-solution__cta:hover {
+    border-bottom-color: var(--lusena-accent-cta);
   }
 {% endstylesheet %}
 

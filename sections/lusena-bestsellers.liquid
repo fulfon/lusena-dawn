@@ -24,33 +24,30 @@
   endif
 -%}
 <section
-  class="bg-surface-1 border-t border-brand-bg lusena-bestsellers lusena-spacing--spacious"
+  class="lusena-bg-surface-1 lusena-bestsellers lusena-spacing--spacious"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container">
-    <div class="flex justify-between items-end lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <div class="lusena-container">
+    <div class="lusena-bestsellers__header lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       <div class="lusena-content-flow--tight">
-        <h2 class="text-3xl md:text-4xl font-serif text-primary">
+        <h2 class="lusena-bestsellers__heading">
           {{ section.settings.heading | escape }}
         </h2>
         {%- if section.settings.subheading != blank -%}
-          <p class="text-secondary">{{ section.settings.subheading | escape }}</p>
+          <p class="lusena-bestsellers__subheading">{{ section.settings.subheading | escape }}</p>
         {%- endif -%}
       </div>
 
       {%- if section.settings.view_all_label != blank -%}
-        <a
-          href="{{ view_all_url }}"
-          class="hidden md:inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 uppercase tracking-widest text-primary underline-offset-4 hover:underline"
-        >
+        <a href="{{ view_all_url }}" class="lusena-bestsellers__view-all lusena-hide-mobile">
           {{ section.settings.view_all_label | escape }}
         </a>
       {%- endif -%}
     </div>
 
-    <div class="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 md:gap-8">
+    <div class="lusena-bestsellers__grid">
       {%- if collection != blank -%}
         {%- for product in collection.products limit: limit -%}
           {%- liquid
@@ -75,15 +72,15 @@
       {%- else -%}
         {%- for i in (1..3) -%}
           <div
-            class="group cursor-pointer{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            class="lusena-bestsellers__placeholder{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
             {% if settings.animations_reveal_on_scroll %}
               data-cascade
             {% endif %}
           >
-            <div class="relative aspect-[4/5] bg-surface-2 overflow-hidden mb-4"></div>
-            <div class="space-y-1 text-center md:text-left">
-              <div class="h-4 bg-surface-2 w-3/4"></div>
-              <div class="h-4 bg-surface-2 w-1/2"></div>
+            <div class="lusena-bestsellers__placeholder-image"></div>
+            <div class="lusena-bestsellers__placeholder-text">
+              <div class="lusena-bestsellers__placeholder-line lusena-bestsellers__placeholder-line--long"></div>
+              <div class="lusena-bestsellers__placeholder-line lusena-bestsellers__placeholder-line--short"></div>
             </div>
           </div>
         {%- endfor -%}
@@ -91,11 +88,8 @@
     </div>
 
     {%- if section.settings.view_all_mobile_label != blank -%}
-      <div class="text-center md:hidden lusena-gap-cta-top{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-        <a
-          href="{{ view_all_url }}"
-          class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors rounded-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cta focus-visible:ring-offset-2 disabled:pointer-events-none disabled:bg-neutral-400 disabled:text-surface-1/70 h-12 px-8 py-3 border border-accent-cta bg-transparent text-accent-cta hover:bg-accent-cta/5 w-full"
-        >
+      <div class="lusena-text-center lusena-hide-desktop lusena-gap-cta-top{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <a href="{{ view_all_url }}" class="lusena-bestsellers__mobile-cta">
           {{ section.settings.view_all_mobile_label | escape }}
         </a>
       </div>
@@ -104,6 +98,135 @@
 </section>
 
 {% stylesheet %}
+  .lusena-bestsellers {
+    border-top: 1px solid var(--lusena-brand-bg);
+  }
+
+  .lusena-bestsellers__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .lusena-bestsellers__heading {
+    font-family: var(--lusena-font-brand);
+    font-size: 3.0rem;
+    line-height: 1.2;
+    color: var(--lusena-text-1);
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .lusena-bestsellers__heading {
+      font-size: 4.0rem;
+    }
+  }
+
+  .lusena-bestsellers__subheading {
+    color: var(--lusena-text-2);
+    margin: 0;
+  }
+
+  .lusena-bestsellers__view-all {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--lusena-text-1);
+    text-decoration: none;
+    text-underline-offset: 4px;
+    transition: color var(--lusena-transition-fast);
+  }
+
+  .lusena-bestsellers__view-all:hover {
+    text-decoration: underline;
+  }
+
+  .lusena-bestsellers__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--lusena-space-12) var(--lusena-space-4);
+  }
+
+  @media (min-width: 768px) {
+    .lusena-bestsellers__grid {
+      gap: var(--lusena-space-8);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .lusena-bestsellers__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .lusena-bestsellers__mobile-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    font-size: 1.4rem;
+    font-weight: 500;
+    height: 4.8rem;
+    padding: 0 3.2rem;
+    width: 100%;
+    border: 1px solid var(--lusena-accent-cta);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--lusena-accent-cta);
+    text-decoration: none;
+    transition: background-color var(--lusena-transition-fast);
+  }
+
+  .lusena-bestsellers__mobile-cta:hover {
+    background-color: rgba(14, 94, 90, 0.05);
+  }
+
+  .lusena-bestsellers__mobile-cta:focus-visible {
+    outline: 2px solid var(--lusena-accent-cta);
+    outline-offset: 2px;
+  }
+
+  .lusena-bestsellers__placeholder {
+    cursor: pointer;
+  }
+
+  .lusena-bestsellers__placeholder-image {
+    aspect-ratio: 4 / 5;
+    background-color: var(--lusena-surface-2);
+    overflow: hidden;
+    margin-bottom: var(--lusena-space-4);
+  }
+
+  .lusena-bestsellers__placeholder-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .lusena-bestsellers__placeholder-text {
+      text-align: left;
+    }
+  }
+
+  .lusena-bestsellers__placeholder-line {
+    height: 16px;
+    background-color: var(--lusena-surface-2);
+  }
+
+  .lusena-bestsellers__placeholder-line--long {
+    width: 75%;
+  }
+
+  .lusena-bestsellers__placeholder-line--short {
+    width: 50%;
+  }
 {% endstylesheet %}
 
 {% schema %}

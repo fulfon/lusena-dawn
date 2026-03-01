@@ -14,56 +14,53 @@
   endif
 -%}
 <section
-  class="bg-surface-1 lusena-testimonials lusena-spacing--spacious"
+  class="lusena-bg-surface-1 lusena-testimonials lusena-spacing--spacious"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container">
-    <div class="text-center lusena-gap-section-intro lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <h2 class="text-3xl md:text-4xl font-serif text-primary">
+  <div class="lusena-container">
+    <div class="lusena-text-center lusena-gap-section-intro lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <h2 class="lusena-testimonials__heading">
         {{ section.settings.heading | escape }}
       </h2>
       {%- if section.settings.subheading != blank -%}
-        <p class="text-secondary">{{ section.settings.subheading | escape }}</p>
+        <p class="lusena-testimonials__subheading">{{ section.settings.subheading | escape }}</p>
       {%- endif -%}
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8{% if section.settings.link_label != blank %} lusena-gap-cta{% endif %}">
+    <div class="lusena-testimonials__grid{% if section.settings.link_label != blank %} lusena-gap-cta{% endif %}">
       {%- for block in section.blocks -%}
         <div
-          class="bg-surface-2 p-6 md:p-8 lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          class="lusena-testimonials__card lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
           {% if settings.animations_reveal_on_scroll %}
             data-cascade
           {% endif %}
           {{ block.shopify_attributes }}
         >
-          <div class="flex gap-1 text-accent-gold" aria-hidden="true">
+          <div class="lusena-testimonials__stars" aria-hidden="true">
             {%- for i in (1..5) -%}
-              {% render 'lusena-icon', name: 'star', class: 'w-4 h-4 fill-current', stroke_width: 1.5 %}
+              {% render 'lusena-icon', name: 'star', class: 'lusena-testimonials__star', stroke_width: 1.5 %}
             {%- endfor -%}
           </div>
-          <blockquote class="font-serif text-lg leading-relaxed text-primary">
+          <blockquote class="lusena-testimonials__quote">
             "{{ block.settings.quote | escape }}"
           </blockquote>
-          <div class="text-xs font-medium tracking-widest uppercase text-secondary">
-            â€” {{ block.settings.author | escape }}
+          <div class="lusena-testimonials__author">
+            — {{ block.settings.author | escape }}
           </div>
         </div>
       {%- endfor -%}
     </div>
 
     {%- if section.settings.link_label != blank -%}
-      <div class="text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="lusena-text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         {%- if section.settings.link_url != blank -%}
-          <a
-            href="{{ section.settings.link_url }}"
-            class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 uppercase tracking-widest text-accent-cta underline-offset-4 hover:underline"
-          >
+          <a href="{{ section.settings.link_url }}" class="lusena-testimonials__link">
             {{ section.settings.link_label | escape }}
           </a>
         {%- else -%}
-          <span class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium uppercase tracking-widest text-accent-cta">
+          <span class="lusena-testimonials__link">
             {{ section.settings.link_label | escape }}
           </span>
         {%- endif -%}
@@ -73,6 +70,99 @@
 </section>
 
 {% stylesheet %}
+  .lusena-testimonials__heading {
+    font-family: var(--lusena-font-brand);
+    font-size: 3.0rem;
+    line-height: 1.2;
+    color: var(--lusena-text-1);
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .lusena-testimonials__heading {
+      font-size: 4.0rem;
+    }
+  }
+
+  .lusena-testimonials__subheading {
+    color: var(--lusena-text-2);
+    margin: 0;
+  }
+
+  .lusena-testimonials__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--lusena-space-8);
+  }
+
+  @media (min-width: 768px) {
+    .lusena-testimonials__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .lusena-testimonials__card {
+    background-color: var(--lusena-surface-2);
+    padding: var(--lusena-space-6);
+  }
+
+  @media (min-width: 768px) {
+    .lusena-testimonials__card {
+      padding: var(--lusena-space-8);
+    }
+  }
+
+  .lusena-testimonials__stars {
+    display: flex;
+    gap: 4px;
+    color: var(--lusena-accent-2);
+  }
+
+  .lusena-testimonials__star {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  .lusena-testimonials__quote {
+    font-family: var(--lusena-font-brand);
+    font-size: 1.8rem;
+    line-height: 1.6;
+    color: var(--lusena-text-1);
+    margin: 0;
+  }
+
+  .lusena-testimonials__author {
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--lusena-text-2);
+  }
+
+  .lusena-testimonials__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--lusena-accent-cta);
+    text-decoration: none;
+    text-underline-offset: 4px;
+    transition: color var(--lusena-transition-fast);
+  }
+
+  .lusena-testimonials__link:hover {
+    text-decoration: underline;
+  }
+
+  .lusena-testimonials__link:focus-visible {
+    outline: 1px solid var(--lusena-accent-cta);
+    outline-offset: 4px;
+  }
 {% endstylesheet %}
 
 {% schema %}

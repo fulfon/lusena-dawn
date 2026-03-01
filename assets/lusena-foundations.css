@@ -230,63 +230,66 @@ textarea:focus-visible {
 
 /*
  * Shopify Dynamic Spacing Tiers
- * --lusena-section-pt / --lusena-section-pb override hooks allow modifiers
- * (e.g. snug-top) to change one axis without touching the tier class.
+ * Override hooks (set via inline style= on the <section> tag):
+ *   --lusena-section-padding-top-mobile / --lusena-section-padding-top-desktop
+ *   --lusena-section-padding-bottom-mobile / --lusena-section-padding-bottom-desktop
  * --lusena-min-gap (set by .lusena-section-gap-same) ensures a floor.
  */
 
 /* Mobile-first tier definitions */
 .lusena-spacing--compact {
-  padding-top: max(var(--lusena-section-pt, var(--lusena-space-4)), var(--lusena-min-gap, 0rem));
-  padding-bottom: var(--lusena-section-pb, var(--lusena-space-4));
+  padding-top: max(var(--lusena-section-padding-top-mobile, var(--lusena-space-4)), var(--lusena-min-gap, 0rem));
+  padding-bottom: var(--lusena-section-padding-bottom-mobile, var(--lusena-space-4));
 }
 .lusena-spacing--standard {
-  padding-top: max(var(--lusena-section-pt, var(--lusena-space-6)), var(--lusena-min-gap, 0rem));
-  padding-bottom: var(--lusena-section-pb, var(--lusena-space-6));
+  padding-top: max(var(--lusena-section-padding-top-mobile, var(--lusena-space-6)), var(--lusena-min-gap, 0rem));
+  padding-bottom: var(--lusena-section-padding-bottom-mobile, var(--lusena-space-6));
 }
 .lusena-spacing--spacious {
-  padding-top: max(var(--lusena-section-pt, var(--lusena-space-8)), var(--lusena-min-gap, 0rem));
-  padding-bottom: var(--lusena-section-pb, var(--lusena-space-8));
+  padding-top: max(var(--lusena-section-padding-top-mobile, var(--lusena-space-8)), var(--lusena-min-gap, 0rem));
+  padding-bottom: var(--lusena-section-padding-bottom-mobile, var(--lusena-space-8));
 }
 .lusena-spacing--hero {
-  padding-top: max(var(--lusena-section-pt, var(--lusena-space-10)), var(--lusena-min-gap, 0rem));
-  padding-bottom: var(--lusena-section-pb, var(--lusena-space-10));
+  padding-top: max(var(--lusena-section-padding-top-mobile, var(--lusena-space-10)), var(--lusena-min-gap, 0rem));
+  padding-bottom: var(--lusena-section-padding-bottom-mobile, var(--lusena-space-10));
 }
 .lusena-spacing--full-bleed {
-  padding-top: max(var(--lusena-section-pt, 0rem), var(--lusena-min-gap, 0rem));
-  padding-bottom: var(--lusena-section-pb, 0rem);
+  padding-top: max(var(--lusena-section-padding-top-mobile, 0rem), var(--lusena-min-gap, 0rem));
+  padding-bottom: var(--lusena-section-padding-bottom-mobile, 0rem);
 }
 
 /* Desktop tier overrides */
 @media (min-width: 768px) {
   .lusena-spacing--compact {
-    padding-top: max(var(--lusena-section-pt, var(--lusena-space-6)), var(--lusena-min-gap, 0rem));
-    padding-bottom: var(--lusena-section-pb, var(--lusena-space-6));
+    padding-top: max(var(--lusena-section-padding-top-desktop, var(--lusena-space-6)), var(--lusena-min-gap, 0rem));
+    padding-bottom: var(--lusena-section-padding-bottom-desktop, var(--lusena-space-6));
   }
   .lusena-spacing--standard {
-    padding-top: max(var(--lusena-section-pt, var(--lusena-space-8)), var(--lusena-min-gap, 0rem));
-    padding-bottom: var(--lusena-section-pb, var(--lusena-space-8));
+    padding-top: max(var(--lusena-section-padding-top-desktop, var(--lusena-space-8)), var(--lusena-min-gap, 0rem));
+    padding-bottom: var(--lusena-section-padding-bottom-desktop, var(--lusena-space-8));
   }
   .lusena-spacing--spacious {
-    padding-top: max(var(--lusena-section-pt, var(--lusena-space-12)), var(--lusena-min-gap, 0rem));
-    padding-bottom: var(--lusena-section-pb, var(--lusena-space-12));
+    padding-top: max(var(--lusena-section-padding-top-desktop, var(--lusena-space-12)), var(--lusena-min-gap, 0rem));
+    padding-bottom: var(--lusena-section-padding-bottom-desktop, var(--lusena-space-12));
   }
   .lusena-spacing--hero {
-    padding-top: max(var(--lusena-section-pt, var(--lusena-space-16)), var(--lusena-min-gap, 0rem));
-    padding-bottom: var(--lusena-section-pb, var(--lusena-space-16));
+    padding-top: max(var(--lusena-section-padding-top-desktop, var(--lusena-space-16)), var(--lusena-min-gap, 0rem));
+    padding-bottom: var(--lusena-section-padding-bottom-desktop, var(--lusena-space-16));
+  }
+  .lusena-spacing--full-bleed {
+    padding-top: max(var(--lusena-section-padding-top-desktop, 0rem), var(--lusena-min-gap, 0rem));
+    padding-bottom: var(--lusena-section-padding-bottom-desktop, 0rem);
   }
 }
 
 /* Snug-top modifier — reduces top padding for hero sections that share
  * background with the site header (no color boundary = less padding needed).
+ * Sets both mobile and desktop override hooks; the tier class picks the right
+ * one per breakpoint.
  * Usage: class="lusena-spacing--hero lusena-spacing--snug-top" */
 .lusena-spacing--snug-top {
-  --lusena-section-pt: var(--lusena-space-4); /* 32px mobile */
-}
-@media (min-width: 768px) {
-  .lusena-spacing--snug-top {
-    --lusena-section-pt: var(--lusena-space-6); /* 48px desktop */
-  }
+  --lusena-section-padding-top-mobile: 32px;
+  --lusena-section-padding-top-desktop: 48px;
 }
 
 /* Same-background section gap — JS-applied by lusena-section-gap-detector.
@@ -339,10 +342,15 @@ textarea:focus-visible {
   margin-inline: auto;
   padding-inline: var(--lusena-space-2);
 }
-.lusena-container--narrow { max-width: 80rem; }
+.lusena-container--narrow {
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: var(--lusena-space-2);
+}
 
 @media (min-width: 768px) {
   .lusena-container { padding-inline: var(--lusena-space-4); }
+  .lusena-container--narrow { padding-inline: var(--lusena-space-4); }
 }
 
 .lusena-grid {
