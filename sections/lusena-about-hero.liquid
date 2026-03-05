@@ -14,42 +14,47 @@
   endif
 -%}
 <section
-  class="bg-white relative overflow-hidden lusena-about-hero lusena-spacing--hero"
+  class="lusena-bg-surface-1 lusena-about-hero lusena-spacing--hero"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-    <div class="lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
->
+  <div class="lusena-container lusena-split">
+    <div class="lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
       <div class="lusena-content-flow--tight">
-        <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
+        <span class="lusena-kicker lusena-about-hero__kicker">
           {{ section.settings.hero_kicker | escape }}
         </span>
-        <h1 class="text-5xl md:text-7xl font-serif text-primary leading-tight">
+        <h1 class="lusena-type-hero">
           {{ section.settings.hero_heading_line_1 | escape }}<br>
-          <span class="italic text-secondary/60">{{ section.settings.hero_heading_line_2 | escape }}</span>
+          <span class="lusena-about-hero__heading-line2">{{ section.settings.hero_heading_line_2 | escape }}</span>
         </h1>
       </div>
-      <div class="text-lg md:text-xl font-light text-secondary lusena-content-flow leading-relaxed">
+      <div class="lusena-type-body lusena-content-flow">
         {{ section.settings.hero_body }}
       </div>
+      {%- if section.settings.hero_cta_label != blank and section.settings.hero_cta_link != blank -%}
+        <div class="lusena-gap-cta-top">
+          <a href="{{ section.settings.hero_cta_link }}" class="lusena-btn lusena-btn--primary lusena-btn--size-default">
+            {{ section.settings.hero_cta_label | escape }}
+          </a>
+        </div>
+      {%- endif -%}
     </div>
 
-    <div class="relative h-[600px] w-full bg-neutral-100 rounded-sm overflow-hidden{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
->
+    <div class="lusena-about-hero__image-wrap{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
       {%- if section.settings.hero_image != blank -%}
         {{
           section.settings.hero_image
           | image_url: width: 1600
           | image_tag:
-            class: 'absolute inset-0 w-full h-full object-cover',
+            class: 'lusena-about-hero__image',
             loading: 'lazy',
             widths: '600, 900, 1200, 1600',
             sizes: '(min-width: 768px) 45vw, 90vw'
         }}
       {%- else -%}
-        <span class="absolute inset-0 flex items-center justify-center text-gray-400 font-light italic">
+        <span class="lusena-about-hero__placeholder">
           {{ section.settings.hero_image_placeholder | escape }}
         </span>
       {%- endif -%}
@@ -58,7 +63,55 @@
 </section>
 
 {% stylesheet %}
+  /* Kicker color — 0-2-0 for safety */
+  .lusena-about-hero .lusena-about-hero__kicker {
+    color: var(--lusena-accent-2);
+  }
 
+  /* Heading line 2 — italic, muted */
+  .lusena-about-hero__heading-line2 {
+    font-style: italic;
+    color: var(--lusena-text-2);
+    opacity: 0.6;
+  }
+
+  /* Image container */
+  .lusena-about-hero__image-wrap {
+    position: relative;
+    height: 60rem;
+    width: 100%;
+    background-color: var(--lusena-color-n100);
+    border-radius: var(--lusena-radius-sm);
+    overflow: hidden;
+  }
+
+  /* Image fill */
+  .lusena-about-hero__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Mobile: shorter image */
+  @media (max-width: 767px) {
+    .lusena-about-hero__image-wrap {
+      height: 40rem;
+    }
+  }
+
+  /* Placeholder text */
+  .lusena-about-hero__placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lusena-color-n400);
+    font-weight: 300;
+    font-style: italic;
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -133,6 +186,17 @@
       "id": "hero_body",
       "label": "Hero body",
       "default": "<p>Wierzymy, ĹĽe sen to najwaĹĽniejszy zabieg kosmetyczny dnia.</p><p>Przez lata traktowaliĹ›my baweĹ‚nianÄ… poĹ›ciel jako \"standard\". Ale baweĹ‚na jest chĹ‚onna jak rÄ™cznik â€” wypija wilgoÄ‡ z Twojej skĂłry i kremu na noc.</p><p>StworzyliĹ›my LUSENÄ, aby zamieniÄ‡ Twoje 8 godzin snu w pasywnÄ… pielÄ™gnacjÄ™. Bez wysiĹ‚ku. Po prostu kĹ‚adziesz gĹ‚owÄ™.</p>"
+    },
+    {
+      "type": "text",
+      "id": "hero_cta_label",
+      "label": "CTA label",
+      "default": "Zobacz kolekcję"
+    },
+    {
+      "type": "url",
+      "id": "hero_cta_link",
+      "label": "CTA link"
     },
     {
       "type": "image_picker",

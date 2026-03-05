@@ -20,17 +20,15 @@
   {% endif %}
 >
   <div class="lusena-container">
-    <div class="lusena-problem-solution__grid{% if section.settings.cta_label != blank and section.settings.cta_link != blank %} lusena-gap-body{% endif %}">
+    <div class="lusena-split-problem-solution{% if section.settings.cta_label != blank and section.settings.cta_link != blank %} lusena-gap-body{% endif %}">
       <div
-        {% if settings.animations_reveal_on_scroll %}
-          class="scroll-trigger animate--slide-in"
-        {% endif %}
+        class="lusena-split__problem{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
       >
         <div class="lusena-content-flow--tight lusena-gap-section-intro">
-          <span class="lusena-problem-solution__kicker lusena-problem-solution__kicker--problem">
+          <span class="lusena-type-caption lusena-kicker lusena-problem-solution__kicker--problem">
             {{ section.settings.problem_label | escape }}
           </span>
-          <h3 class="lusena-problem-solution__headline lusena-problem-solution__headline--problem">
+          <h3 class="lusena-type-h1 lusena-problem-solution__headline--problem">
             {{ section.settings.problem_heading | newline_to_br }}
           </h3>
         </div>
@@ -40,8 +38,8 @@
               <div class="lusena-problem-solution__item" {{ block.shopify_attributes }}>
                 {% render 'lusena-icon', name: 'x', class: 'lusena-problem-solution__icon lusena-problem-solution__icon--problem', stroke_width: 1.5 %}
                 <div>
-                  <h4 class="lusena-problem-solution__item-title">{{ block.settings.title | escape }}</h4>
-                  <p class="lusena-problem-solution__item-text">{{ block.settings.text | escape }}</p>
+                  <h4 class="lusena-type-h2 lusena-problem-solution__item-title">{{ block.settings.title | escape }}</h4>
+                  <p class="lusena-type-body">{{ block.settings.text | escape }}</p>
                 </div>
               </div>
             {%- endif -%}
@@ -50,15 +48,13 @@
       </div>
 
       <div
-        {% if settings.animations_reveal_on_scroll %}
-          class="scroll-trigger animate--slide-in"
-        {% endif %}
+        class="lusena-split__solution{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
       >
         <div class="lusena-content-flow--tight lusena-gap-section-intro">
-          <span class="lusena-problem-solution__kicker lusena-problem-solution__kicker--solution">
+          <span class="lusena-type-caption lusena-kicker lusena-problem-solution__kicker--solution">
             {{ section.settings.solution_label | escape }}
           </span>
-          <h3 class="lusena-problem-solution__headline">
+          <h3 class="lusena-type-h1">
             {{ section.settings.solution_heading | newline_to_br }}
           </h3>
         </div>
@@ -72,8 +68,8 @@
                   stroke_width: 1.5
                 %}
                 <div>
-                  <h4 class="lusena-problem-solution__item-title">{{ block.settings.title | escape }}</h4>
-                  <p class="lusena-problem-solution__item-text">{{ block.settings.text | escape }}</p>
+                  <h4 class="lusena-type-h2 lusena-problem-solution__item-title">{{ block.settings.title | escape }}</h4>
+                  <p class="lusena-type-body">{{ block.settings.text | escape }}</p>
                 </div>
               </div>
             {%- endif -%}
@@ -93,27 +89,11 @@
 </section>
 
 {% stylesheet %}
-  .lusena-problem-solution__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--lusena-space-12);
-  }
+  /* Foundations handles: .lusena-split-problem-solution (grid 1fr → 1fr 1fr, gap space-6 → space-12),
+     .lusena-split__problem / .lusena-split__solution (2px red/green top borders + padding-top).
+     Foundations handles: .lusena-type-caption .lusena-kicker, .lusena-type-h1, .lusena-type-h2, .lusena-type-body. */
 
-  @media (min-width: 768px) {
-    .lusena-problem-solution__grid {
-      grid-template-columns: 1fr 1fr;
-      gap: var(--lusena-space-24);
-    }
-  }
-
-  .lusena-problem-solution__kicker {
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 600;
-  }
-
+  /* Kicker color variants */
   .lusena-problem-solution__kicker--problem {
     color: var(--lusena-text-2);
   }
@@ -122,40 +102,22 @@
     color: var(--lusena-accent-2);
   }
 
-  .lusena-problem-solution__headline {
-    font-family: var(--lusena-font-brand);
-    font-size: 24px;
-    line-height: 32px;
-    color: var(--lusena-text-1);
-    margin: 0;
-  }
-
+  /* Problem headline opacity */
   .lusena-problem-solution__headline--problem {
     opacity: 0.8;
   }
 
-  @media (min-width: 768px) {
-    .lusena-problem-solution__kicker {
-      font-size: 14px;
-      line-height: 20px;
-    }
-
-    .lusena-problem-solution__headline {
-      font-size: 30px;
-      line-height: 36px;
-    }
-  }
-
+  /* Item layout (icon + text side by side) */
   .lusena-problem-solution__item {
     display: flex;
     gap: var(--lusena-space-4);
   }
 
   .lusena-problem-solution__icon {
-    width: 20px;
-    height: 20px;
+    width: 2.0rem;
+    height: 2.0rem;
     flex-shrink: 0;
-    margin-top: 4px;
+    margin-top: var(--lusena-space-05);
   }
 
   .lusena-problem-solution__icon--problem {
@@ -166,21 +128,12 @@
     color: rgba(47, 125, 78, 0.4);
   }
 
+  /* Item title spacing below (foundations .lusena-type-h2 sets margin: 0) */
   .lusena-problem-solution__item-title {
-    font-weight: 500;
-    font-size: 1.8rem;
-    line-height: 1.4;
-    color: var(--lusena-text-1);
-    margin: 0 0 4px 0;
+    margin-bottom: var(--lusena-space-1);
   }
 
-  .lusena-problem-solution__item-text {
-    color: var(--lusena-text-2);
-    line-height: 1.6;
-    font-weight: 300;
-    margin: 0;
-  }
-
+  /* CTA link */
   .lusena-problem-solution__cta {
     display: inline-flex;
     align-items: center;
@@ -188,7 +141,7 @@
     font-weight: 500;
     text-decoration: none;
     border-bottom: 1px solid rgba(14, 94, 90, 0.3);
-    padding-bottom: 4px;
+    padding-bottom: var(--lusena-space-05);
     transition: border-color var(--lusena-transition-fast);
   }
 

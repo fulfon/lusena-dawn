@@ -33,12 +33,10 @@
   endif
 -%}
 
-{%- capture primary_image_class -%}w-full h-full object-cover transition-opacity duration-200 lusena-product-card__image lusena-product-card__image--primary{%- endcapture -%}
-
-<a href="{{ product.url }}" class="lusena-product-card block cursor-pointer {{ card_class }}">
-  <div class="relative aspect-[4/5] bg-surface-2 overflow-hidden mb-4">
+<a href="{{ product.url }}" class="lusena-product-card{% unless product.available %} lusena-product-card--oos{% endunless %} {{ card_class }}">
+  <div class="lusena-product-card__media">
     {%- if card_badge != blank -%}
-      <span class="absolute top-2 left-2 z-10 bg-white/90 px-2 py-1 text-[10px] uppercase tracking-wider font-medium text-primary backdrop-blur-sm">
+      <span class="lusena-product-card__badge">
         {{ card_badge | escape }}
       </span>
     {%- endif -%}
@@ -48,13 +46,13 @@
         product.featured_image
         | image_url: width: 1200
         | image_tag:
-          class: primary_image_class,
+          class: 'lusena-product-card__image--primary',
           loading: 'lazy',
           widths: '360, 540, 720, 900, 1080, 1200',
           sizes: '(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw'
       -}}
     {%- else -%}
-      {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover' }}
+      {{ 'product-1' | placeholder_svg_tag: 'lusena-product-card__image--primary' }}
     {%- endif -%}
 
     {%- if show_second -%}
@@ -64,7 +62,7 @@
           secondary_image
           | image_url: width: 1200
           | image_tag:
-            class: 'absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-200 lusena-product-card__image lusena-product-card__image--secondary',
+            class: 'lusena-product-card__image--secondary',
             loading: 'lazy',
             widths: '360, 540, 720, 900, 1080, 1200',
             sizes: '(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw'
@@ -73,12 +71,12 @@
     {%- endif -%}
   </div>
 
-  <div class="space-y-1 text-center md:text-left">
-    <h3 class="text-sm font-medium text-primary">{{ product.title | escape }}</h3>
-    <div class="flex items-center justify-center md:justify-start gap-2 text-sm">
-      <span class="text-secondary">{{ card_price | money_without_trailing_zeros }}</span>
+  <div class="lusena-product-card__info">
+    <h3 class="lusena-product-card__title">{{ product.title | escape }}</h3>
+    <div class="lusena-product-card__prices">
+      <span class="lusena-product-card__price">{{ card_price | money_without_trailing_zeros }}</span>
       {%- if card_compare_at and card_compare_at > card_price -%}
-        <span class="text-secondary/50 line-through text-xs">
+        <span class="lusena-product-card__compare-price">
           {{ card_compare_at | money_without_trailing_zeros }}
         </span>
       {%- endif -%}

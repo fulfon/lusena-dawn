@@ -9,36 +9,36 @@
 
 <div class="lusena-pdp-summary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
   {%- if section.settings.emotional_headline != blank -%}
-    <span class="lusena-pdp-summary__eyebrow text-accent-gold font-serif italic leading-tight">
+    <span class="lusena-pdp-summary__eyebrow">
       {{ section.settings.emotional_headline | escape }}
     </span>
   {%- endif -%}
 
-  <h1 class="lusena-pdp-summary__title font-serif text-primary leading-snug">
+  <h1 class="lusena-pdp-summary__title">
     {{ product.title | escape }}
   </h1>
 
   {%- if section.settings.tagline != blank -%}
-    <p class="lusena-pdp-summary__tagline hidden md:block text-secondary text-sm leading-relaxed">
+    <p class="lusena-pdp-summary__tagline">
       {{ section.settings.tagline | escape }}
     </p>
   {%- endif -%}
 
   <div data-lusena-price-wrap>
-    <div class="flex items-baseline gap-2 md:gap-3">
-      <span class="lusena-pdp-summary__price text-xl md:text-2xl font-medium" data-lusena-price>
+    <div class="lusena-pdp-summary__price-row">
+      <span class="lusena-pdp-summary__price" data-lusena-price>
         {{ current_variant.price | money_without_trailing_zeros }}
       </span>
       {%- if current_variant.compare_at_price and current_variant.compare_at_price > current_variant.price -%}
-        <span class="text-lg text-secondary/50 line-through" data-lusena-compare-at>
+        <span class="lusena-pdp-summary__compare-at" data-lusena-compare-at>
           {{ current_variant.compare_at_price | money_without_trailing_zeros }}
         </span>
       {%- else -%}
-        <span class="text-lg text-secondary/50 line-through hidden" data-lusena-compare-at></span>
+        <span class="lusena-pdp-summary__compare-at hidden" data-lusena-compare-at></span>
       {%- endif -%}
     </div>
     <span
-      class="block text-xs text-accent-cta font-medium mt-0.5"
+      class="lusena-pdp-summary__per-night"
       data-lusena-price-per-night
       data-prefix="{{ section.settings.price_per_night_prefix | escape }}"
       data-suffix="{{ section.settings.price_per_night_suffix | escape }}"
@@ -65,12 +65,12 @@
       <p class="lusena-pdp-summary__delivery-row">
         {% render 'lusena-icon',
           name: 'truck',
-          class: 'lusena-pdp-summary__delivery-icon text-accent-cta shrink-0',
+          class: 'lusena-pdp-summary__delivery-icon',
           stroke_width: 1.5
         %}
         <span class="lusena-pdp-summary__delivery-copy">
           {%- if section.settings.delivery_eta_label != blank -%}
-            <span class="text-primary font-medium">{{ section.settings.delivery_eta_label | escape }}</span>
+            <span class="lusena-pdp-summary__delivery-eta">{{ section.settings.delivery_eta_label | escape }}</span>
           {%- endif -%}
           {%- if section.settings.delivery_returns_link_label != blank -%}
             {%- if section.settings.delivery_eta_label != blank -%}
@@ -79,7 +79,7 @@
             <a
               href="#details"
               data-lusena-open-returns
-              class="text-accent-cta hover:underline underline-offset-2"
+              class="lusena-pdp-summary__delivery-link"
             >
               {{ section.settings.delivery_returns_link_label | escape }}
             </a>

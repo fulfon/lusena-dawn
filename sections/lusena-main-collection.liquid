@@ -13,6 +13,17 @@
   if section.settings.padding_bottom_mobile > 0
     assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
   endif
+
+  assign count = collection.products_count
+  assign count_mod10 = count | modulo: 10
+  assign count_mod100 = count | modulo: 100
+  if count == 1
+    assign product_word = 'produkt'
+  elsif count_mod10 >= 2 and count_mod10 <= 4 and count_mod100 != 12 and count_mod100 != 13 and count_mod100 != 14
+    assign product_word = 'produkty'
+  else
+    assign product_word = 'produktów'
+  endif
 -%}
 <section
   class="lusena-main-collection lusena-spacing--compact"
@@ -21,28 +32,27 @@
   {% endif %}
 >
   {%- paginate collection.products by section.settings.products_per_page -%}
-    <div class="container">
+    <div class="lusena-container">
       {% render 'lusena-breadcrumbs', page_type: 'collection', collection: collection %}
 
-      <div class="flex flex-col md:flex-row justify-between items-baseline lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="lusena-main-collection__header lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <div>
-          <h1 class="text-3xl md:text-4xl font-serif text-primary">{{ collection.title | escape }}</h1>
+          <h1 class="lusena-type-h1">{{ collection.title | escape }}</h1>
           {%- if collection.description != blank -%}
-            <p class="text-secondary mt-2">{{ collection.description | strip_html }}</p>
+            <p class="lusena-type-body">{{ collection.description | strip_html }}</p>
           {%- else -%}
-            <p class="text-secondary mt-2">{{ section.settings.default_description | escape }}</p>
+            <p class="lusena-type-body">{{ section.settings.default_description | escape }}</p>
           {%- endif -%}
         </div>
 
-        <div class="flex items-center gap-4 mt-4 md:mt-0">
-          <span class="text-sm text-secondary">
-            {{ collection.products_count }}
-            {{ collection.products_count | pluralize: 'Product', 'Products' }}
+        <div class="lusena-main-collection__meta">
+          <span class="lusena-type-caption">
+            {{ count }} {{ product_word }}
           </span>
         </div>
       </div>
 
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-12 md:gap-8">
+      <div class="lusena-main-collection__grid">
         {%- for product in collection.products -%}
           <div
             {% if settings.animations_reveal_on_scroll %}
@@ -58,16 +68,16 @@
         {%- endfor -%}
       </div>
 
-      <div class="lusena-gap-cta-top text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="lusena-gap-cta-top lusena-text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         {%- if paginate.next -%}
           <a
             href="{{ paginate.next.url }}"
-            class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/20 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest h-12 px-8 py-3 border border-primary bg-transparent text-primary hover:bg-surface-2 min-w-[200px]"
+            class="lusena-btn lusena-btn--outline lusena-btn--size-default"
           >
-            Load More
+            <span class="lusena-btn__content">Załaduj więcej</span>
           </a>
         {%- else -%}
-          <span class="text-sm text-secondary">No more products.</span>
+          <span class="lusena-type-caption">Wyświetlono wszystkie produkty.</span>
         {%- endif -%}
       </div>
     </div>
@@ -75,22 +85,42 @@
 </section>
 
 {% stylesheet %}
-  /* Optimize product grid vertical gap on mobile for better density */
-  .lusena-main-collection .grid {
-    row-gap: 4rem;
+  .lusena-main-collection .lusena-main-collection__header {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
   }
-
+  .lusena-main-collection .lusena-main-collection__header p {
+    margin-top: var(--lusena-space-1);
+  }
+  .lusena-main-collection .lusena-main-collection__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--lusena-space-05);
+    margin-top: var(--lusena-space-2);
+  }
+  .lusena-main-collection .lusena-main-collection__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--lusena-space-5) var(--lusena-space-1);
+  }
   @media (min-width: 768px) {
-    .lusena-main-collection .grid {
-      row-gap: 4rem;
-      column-gap: 2.4rem;
+    .lusena-main-collection .lusena-main-collection__header {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .lusena-main-collection .lusena-main-collection__meta {
+      margin-top: 0;
+    }
+    .lusena-main-collection .lusena-main-collection__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--lusena-space-5) var(--lusena-space-3);
     }
   }
-
   @media (min-width: 1024px) {
-    .lusena-main-collection .grid {
-      row-gap: 4.8rem;
-      column-gap: 3.2rem;
+    .lusena-main-collection .lusena-main-collection__grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--lusena-space-6) var(--lusena-space-4);
     }
   }
 {% endstylesheet %}
@@ -164,7 +194,7 @@
       "type": "text",
       "id": "default_description",
       "label": "Fallback description",
-      "default": "Premium mulberry silk for better sleep."
+      "default": "Jedwab morwowy premium dla lepszego snu."
     }
   ],
   "presets": [

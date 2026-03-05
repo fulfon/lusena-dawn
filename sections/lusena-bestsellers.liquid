@@ -32,11 +32,11 @@
   <div class="lusena-container">
     <div class="lusena-bestsellers__header lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       <div class="lusena-content-flow--tight">
-        <h2 class="lusena-bestsellers__heading">
+        <h2 class="lusena-type-h1">
           {{ section.settings.heading | escape }}
         </h2>
         {%- if section.settings.subheading != blank -%}
-          <p class="lusena-bestsellers__subheading">{{ section.settings.subheading | escape }}</p>
+          <p class="lusena-type-body">{{ section.settings.subheading | escape }}</p>
         {%- endif -%}
       </div>
 
@@ -98,39 +98,23 @@
 </section>
 
 {% stylesheet %}
+  /* Foundations handles: .lusena-type-h1, .lusena-type-body for heading/subheading. */
+
   .lusena-bestsellers {
-    border-top: 1px solid var(--lusena-brand-bg);
+    border-top: 1px solid var(--lusena-color-n200);
   }
 
+  /* Header: heading left, view-all right */
   .lusena-bestsellers__header {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
   }
 
-  .lusena-bestsellers__heading {
-    font-family: var(--lusena-font-brand);
-    font-size: 3.0rem;
-    line-height: 1.2;
-    color: var(--lusena-text-1);
-    margin: 0;
-  }
-
-  @media (min-width: 768px) {
-    .lusena-bestsellers__heading {
-      font-size: 4.0rem;
-    }
-  }
-
-  .lusena-bestsellers__subheading {
-    color: var(--lusena-text-2);
-    margin: 0;
-  }
-
+  /* View-all link (kicker-style: uppercase, small, weighted) */
   .lusena-bestsellers__view-all {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
     white-space: nowrap;
     font-size: 1.4rem;
     font-weight: 500;
@@ -146,16 +130,11 @@
     text-decoration: underline;
   }
 
+  /* Product grid: 2-col mobile → 3-col desktop */
   .lusena-bestsellers__grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--lusena-space-12) var(--lusena-space-4);
-  }
-
-  @media (min-width: 768px) {
-    .lusena-bestsellers__grid {
-      gap: var(--lusena-space-8);
-    }
+    gap: var(--lusena-space-8) var(--lusena-space-4);
   }
 
   @media (min-width: 1024px) {
@@ -164,6 +143,7 @@
     }
   }
 
+  /* Mobile CTA ghost button (editorial: no border-radius) */
   .lusena-bestsellers__mobile-cta {
     display: inline-flex;
     align-items: center;
@@ -171,11 +151,11 @@
     white-space: nowrap;
     font-size: 1.4rem;
     font-weight: 500;
-    height: 4.8rem;
-    padding: 0 3.2rem;
+    height: var(--lusena-space-6);
+    padding: 0 var(--lusena-space-4);
     width: 100%;
     border: 1px solid var(--lusena-accent-cta);
-    border-radius: 6px;
+    border-radius: var(--lusena-btn-radius);
     background: transparent;
     color: var(--lusena-accent-cta);
     text-decoration: none;
@@ -191,6 +171,7 @@
     outline-offset: 2px;
   }
 
+  /* Placeholders */
   .lusena-bestsellers__placeholder {
     cursor: pointer;
   }
@@ -205,14 +186,7 @@
   .lusena-bestsellers__placeholder-text {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    text-align: center;
-  }
-
-  @media (min-width: 768px) {
-    .lusena-bestsellers__placeholder-text {
-      text-align: left;
-    }
+    gap: var(--lusena-space-05);
   }
 
   .lusena-bestsellers__placeholder-line {

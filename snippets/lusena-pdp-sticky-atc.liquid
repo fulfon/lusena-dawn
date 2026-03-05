@@ -71,46 +71,46 @@
 -%}
 
 <div
-  class="lusena-sticky-atc fixed bottom-0 left-0 right-0 z-40 border-t border-secondary/10 transition-transform duration-300 transform shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] translate-y-full"
+  class="lusena-sticky-atc lusena-sticky-atc--hidden"
   data-lusena-sticky-atc
 >
   <div class="lusena-sticky-atc__mobile">
     <div class="lusena-sticky-atc__trust">
-      {% render 'lusena-icon', name: 'shield-check', class: 'lusena-sticky-atc__trust-icon w-3 h-3 text-accent-cta shrink-0', stroke_width: 2 %}
-      <span class="lusena-sticky-atc__trust-text text-xs text-secondary">{{ sticky_trust_returns | escape }}</span>
+      {% render 'lusena-icon', name: 'shield-check', class: 'lusena-sticky-atc__trust-icon', stroke_width: 2 %}
+      <span class="lusena-sticky-atc__trust-text">{{ sticky_trust_returns | escape }}</span>
     </div>
 
     <div class="lusena-sticky-atc__row">
       {%- if sticky_image != blank -%}
         <img
           alt="{{ product.title | escape }}"
-          class="lusena-sticky-atc__image lusena-sticky-atc__image--mobile rounded-sm object-cover shrink-0"
+          class="lusena-sticky-atc__image lusena-sticky-atc__image--mobile"
           width="44"
           height="44"
           src="{{ sticky_image | image_url: width: 88, height: 88, crop: 'center' }}"
           data-lusena-sticky-image
         >
       {%- else -%}
-        <div class="lusena-sticky-atc__image lusena-sticky-atc__image--mobile rounded-sm object-cover shrink-0 bg-surface-2" data-lusena-sticky-image-placeholder></div>
+        <div class="lusena-sticky-atc__image lusena-sticky-atc__image--mobile" data-lusena-sticky-image-placeholder></div>
       {%- endif -%}
 
       <div class="lusena-sticky-atc__meta">
-        <span class="lusena-sticky-atc__price text-sm font-medium text-primary truncate" data-lusena-sticky-price>
+        <span class="lusena-sticky-atc__price" data-lusena-sticky-price>
           {{ current_variant.price | money_without_trailing_zeros }}
         </span>
         <span
-          class="lusena-sticky-atc__per-night text-xs text-accent-cta"
+          class="lusena-sticky-atc__per-night"
           data-lusena-sticky-price-per-night
           data-prefix="{{ sticky_price_per_night_prefix | escape }}"
           data-suffix="{{ sticky_price_per_night_suffix | escape }}"
         >
           {{- sticky_price_per_night_prefix | escape -}}{{- sticky_price_per_night_cents | money_without_trailing_zeros -}}{{- sticky_price_per_night_suffix | escape -}}
         </span>
-        <span class="lusena-sticky-atc__variant text-xs text-secondary truncate" data-lusena-sticky-variant>{{ sticky_variant_label | escape }}</span>
+        <span class="lusena-sticky-atc__variant" data-lusena-sticky-variant>{{ sticky_variant_label | escape }}</span>
       </div>
 
       <button
-        class="lusena-sticky-atc__button lusena-btn lusena-btn--primary lusena-btn--size-sm text-xs px-5"
+        class="lusena-sticky-atc__button lusena-btn lusena-btn--primary lusena-btn--size-sm"
         data-lusena-sticky-atc-button
         type="submit"
         form="{{ product_form_id }}"
@@ -131,17 +131,17 @@
       {%- if sticky_image != blank -%}
         <img
           alt="{{ product.title | escape }}"
-          class="lusena-sticky-atc__image lusena-sticky-atc__image--desktop rounded-sm object-cover shrink-0"
+          class="lusena-sticky-atc__image lusena-sticky-atc__image--desktop"
           width="40"
           height="40"
           src="{{ sticky_image | image_url: width: 88, height: 88, crop: 'center' }}"
           data-lusena-sticky-image
         >
       {%- else -%}
-        <div class="lusena-sticky-atc__image lusena-sticky-atc__image--desktop rounded-sm object-cover shrink-0 bg-surface-2" data-lusena-sticky-image-placeholder></div>
+        <div class="lusena-sticky-atc__image lusena-sticky-atc__image--desktop" data-lusena-sticky-image-placeholder></div>
       {%- endif -%}
 
-      <span class="lusena-sticky-atc__desktop-title text-sm font-medium text-primary truncate">
+      <span class="lusena-sticky-atc__desktop-title">
         {{ product.title | escape }}
       </span>
     </div>
@@ -149,11 +149,11 @@
     <span class="lusena-sticky-atc__divider" aria-hidden="true"></span>
 
     <div class="lusena-sticky-atc__desktop-col lusena-sticky-atc__desktop-col--price">
-      <span class="lusena-sticky-atc__price text-sm font-semibold text-primary" data-lusena-sticky-price>
+      <span class="lusena-sticky-atc__price" data-lusena-sticky-price>
         {{ current_variant.price | money_without_trailing_zeros }}
       </span>
       <span
-        class="lusena-sticky-atc__per-night text-xs text-accent-cta"
+        class="lusena-sticky-atc__per-night"
         data-lusena-sticky-price-per-night
         data-prefix="{{ sticky_price_per_night_prefix | escape }}"
         data-suffix="{{ sticky_price_per_night_suffix | escape }}"
@@ -165,12 +165,12 @@
     <span class="lusena-sticky-atc__divider" aria-hidden="true"></span>
 
     <div class="lusena-sticky-atc__desktop-col lusena-sticky-atc__desktop-col--trust">
-      {% render 'lusena-icon', name: 'shield-check', class: 'lusena-sticky-atc__trust-icon w-3 h-3 text-accent-cta shrink-0', stroke_width: 2 %}
-      <span class="lusena-sticky-atc__trust-text text-xs text-secondary">{{ sticky_trust_returns | escape }}</span>
+      {% render 'lusena-icon', name: 'shield-check', class: 'lusena-sticky-atc__trust-icon', stroke_width: 2 %}
+      <span class="lusena-sticky-atc__trust-text">{{ sticky_trust_returns | escape }}</span>
     </div>
 
     <button
-      class="lusena-sticky-atc__button lusena-sticky-atc__button--desktop lusena-btn lusena-btn--primary lusena-btn--size-sm text-xs px-8"
+      class="lusena-sticky-atc__button lusena-sticky-atc__button--desktop lusena-btn lusena-btn--primary lusena-btn--size-sm"
       data-lusena-sticky-atc-button
       type="submit"
       form="{{ product_form_id }}"
@@ -185,174 +185,3 @@
     </button>
   </div>
 </div>
-
-{% stylesheet %}
-  .lusena-sticky-atc {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-  }
-
-  .lusena-sticky-atc__mobile {
-    display: block;
-    padding: 1rem 1.6rem;
-  }
-
-  .lusena-sticky-atc__desktop {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    gap: 2.4rem;
-    padding: 1.2rem 2.4rem;
-    width: 100%;
-    max-width: 1280px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .lusena-sticky-atc__desktop-col {
-    display: flex;
-    align-items: center;
-    min-width: 0;
-  }
-
-  .lusena-sticky-atc__desktop-col--product {
-    flex: 0 1 auto;
-    gap: 1.2rem;
-    min-width: 0;
-  }
-
-  .lusena-sticky-atc__desktop-col--price {
-    flex-direction: row;
-    align-items: baseline;
-    gap: 0.8rem;
-    flex-shrink: 0;
-  }
-
-  .lusena-sticky-atc__desktop-col--trust {
-    gap: 0.6rem;
-    flex-shrink: 0;
-    white-space: nowrap;
-  }
-
-  .lusena-sticky-atc__divider {
-    width: 1px;
-    height: 2rem;
-    background: rgba(74, 74, 74, 0.15);
-    flex-shrink: 0;
-  }
-
-  .lusena-sticky-atc__trust {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    padding-bottom: 0.8rem;
-    margin-bottom: 0.8rem;
-    border-bottom: 1px solid rgba(74, 74, 74, 0.05);
-  }
-
-  .lusena-sticky-atc__row {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-  }
-
-  .lusena-sticky-atc__desktop-title {
-    max-width: 200px;
-  }
-
-  .lusena-sticky-atc__price {
-    font-size: 1.4rem;
-    line-height: 2rem;
-  }
-
-  .lusena-sticky-atc__desktop-col--price .lusena-sticky-atc__price {
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-  }
-
-  .lusena-sticky-atc__trust-icon {
-    width: 1.2rem;
-    height: 1.2rem;
-  }
-
-  .lusena-sticky-atc__trust-text {
-    font-size: 1.2rem;
-    line-height: 1.6rem;
-  }
-
-  .lusena-sticky-atc__button--desktop {
-    margin-left: 0.8rem;
-  }
-
-  .lusena-sticky-atc__image--mobile {
-    width: 4.4rem;
-    height: 4.4rem;
-  }
-
-  .lusena-sticky-atc__image--desktop {
-    width: 4rem;
-    height: 4rem;
-  }
-
-  .lusena-sticky-atc__meta {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 auto;
-    min-width: 0;
-    gap: 0;
-  }
-
-  .lusena-sticky-atc__per-night,
-  .lusena-sticky-atc__variant {
-    font-size: 1.2rem;
-    line-height: 1.6rem;
-  }
-
-  .lusena-sticky-atc__per-night {
-    white-space: nowrap;
-  }
-
-  .lusena-sticky-atc__mobile .lusena-sticky-atc__per-night {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .lusena-sticky-atc__button {
-    height: 4.4rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    font-size: 1.2rem;
-    line-height: 1.6rem;
-    flex-shrink: 0;
-  }
-
-  @media (min-width: 1024px) {
-    .lusena-sticky-atc__desktop {
-      padding-left: 4rem;
-      padding-right: 4rem;
-    }
-
-    .lusena-sticky-atc__desktop-title {
-      max-width: 20rem;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .lusena-sticky-atc__mobile {
-      display: none;
-    }
-
-    .lusena-sticky-atc__desktop {
-      display: flex;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .lusena-sticky-atc {
-      transition: none;
-    }
-  }
-{% endstylesheet %}

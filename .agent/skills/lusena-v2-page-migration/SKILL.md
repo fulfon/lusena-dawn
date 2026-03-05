@@ -76,7 +76,7 @@ For each section that needs structural changes:
 
 - Edit existing `sections/lusena-*.liquid` files, or create new ones.
 - Follow LUSENA architecture rules from `CLAUDE.md` / `AGENTS.md`:
-  - Use `{% stylesheet %}` for CSS (not external files, except spacing which uses `lusena-spacing.css`).
+  - Use `{% stylesheet %}` for section-scoped CSS. Use `assets/lusena-foundations.css` classes for spacing, typography, and layout.
   - Use `{% javascript %}` for JS.
   - Use LUSENA spacing tier classes (`lusena-spacing--compact/standard/spacious/hero`).
   - Use LUSENA icon system (`snippets/lusena-icon.liquid`) for icons.
@@ -170,7 +170,7 @@ These rules apply to ALL copy written during migration:
 
 5. **Don't touch Dawn base files** — If a `lusena-*` version exists, always edit that. Dawn's originals (`header.liquid`, `footer.liquid`, `main-product.liquid`) are NOT used on the live store.
 
-6. **Spacing classes not inline styles** — Use `lusena-spacing--standard` etc., not `padding: 64px 0`. See `lusena-spacing` skill for the full system.
+6. **Spacing classes not inline styles** — Use `lusena-spacing--standard` etc., not `padding: 64px 0`. See `memory-bank/doc/patterns/spacing-system.md` for the full system.
 
 ---
 

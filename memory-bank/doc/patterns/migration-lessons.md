@@ -1,0 +1,338 @@
+# CSS Foundations — Architecture Lessons
+
+*Distilled from the Tailwind → foundations migration (completed 2026-03-04). Reference when adding new sections or modifying existing ones.*
+
+## 1. CSS cascade: section stylesheets load BEFORE foundations
+
+Shopify compiles `{% stylesheet %}` blocks into `compiled_assets/styles.css`, injected via `{{ content_for_header }}` (line 43 of `layout/theme.liquid`). The `lusena-foundations.css` loads at line 300 — **after** section stylesheets.
+
+**Consequence:** At equal specificity (single class), foundations always wins over section CSS.
+
+**Rule:** When a section needs to override a foundations class (e.g., white text on a dark hero overriding `.lusena-type-hero { color: var(--lusena-text-1) }`), bump the section selector to **0-2-0** by adding the parent class:
+
+```css
+/* BAD — 0-1-0, loses to foundations */
+.lusena-hero__heading { color: #fff; }
+
+/* GOOD — 0-2-0, beats foundations */
+.lusena-hero .lusena-hero__heading { color: #fff; }
+```
+
+## 2. Dawn base.css resets you need to watch for
+
+Dawn's `base.css` applies styles to bare HTML elements that can conflict with foundations components:
+
+- `blockquote` — gets `border-left: 0.2rem solid; padding-left: 1rem` (caused double border on testimonials)
+- `ul/ol` — default list styles and padding
+- `button` — various resets
+- `a` — color and text-decoration
+
+**Rule:** When using semantic HTML in foundations components, check if Dawn's base.css applies conflicting styles. Reset them in foundations (not in the section), so the fix applies everywhere.
+
+## 3. Reusable layout belongs in foundations, not section CSS
+
+If you find yourself writing layout CSS that could apply to multiple sections, put it in foundations. Section stylesheets should only contain:
+
+- Section-specific positioning (hero overlay, content positioning)
+- Section-specific animations (hero fade-up, FAQ accordion states)
+- Color/style variants unique to that section (white hero buttons, gold bullet colors)
+- Section chrome (full-width borders on trust bar section element)
+
+**Anti-pattern we fixed:** Trust bar layout was defined in section overrides fighting foundations. Once we moved the grid/flex layout into foundations, the component became instantly reusable on any page.
+
+## 4. Don't fight foundations from section CSS — update foundations instead
+
+If a section needs to override multiple foundations properties, that's a signal the foundations component definition is wrong. Fix it at the source.
+
+**Anti-pattern we fixed:** Section had `ul.lusena-trust-bar { padding: 0; border: none; }` overriding foundations — then we had to re-add spacing elsewhere. Instead, we updated the foundations component to not have borders (moved to section level) and include the list reset.
+
+## 5. Buttons: always use `var(--lusena-btn-radius)`
+
+All section buttons must use `border-radius: var(--lusena-btn-radius)` — never hardcode `0` or `0.6rem`. This gives a single control point. Currently set to `0.6rem` (warm premium feel).
+
+## 6. Borders that should span full viewport
+
+If a border needs to go edge-to-edge, put it on the `<section>` element (or a data-attribute selector like `[data-lusena-trust-bar]`), NOT on an element inside `.lusena-container`. The container constrains width to `max-width: 120rem` with inline padding.
+
+## 7. Verify with Playwright after every section migration
+
+Don't guess at layout — screenshot both desktop (1280x800) and mobile (375x812) after changes. CSS cascade bugs are invisible in code review.
+
+Specific things to check:
+- Text color on dark backgrounds (cascade override issue)
+- Border doubling from Dawn base.css on semantic elements
+- Spacing above/below sections (padding stacking)
+- Mobile single-column alignment (centered vs left-aligned)
+
+## 8. Full page migration workflow (single pass)
+
+The homepage used multiple phases because we were building the system. Now that foundations is stable, migrate each page in a **single pass**:
+
+### Phase A: Plan
+1. Read the page template JSON to identify all sections
+2. Read each section's Liquid + `{% stylesheet %}` block
+3. Map every Tailwind class → foundations equivalent (or section CSS)
+4. Identify bugs (e.g., duplicate `class` attributes, invalid HTML)
+5. Check if any section is already shared/migrated (e.g., `lusena-trust-bar`)
+6. Note which section CSS needs 0-2-0 specificity for foundation overrides
+
+### Phase B: Implement all sections
+7. Replace Tailwind classes with foundations classes in HTML
+8. Write section-specific CSS in `{% stylesheet %}` (only what foundations doesn't cover)
+9. Replace hardcoded values with tokens (`var(--lusena-space-*)`, `var(--lusena-btn-radius)`, etc.)
+10. Fix any HTML bugs found in planning
+11. Update template JSON if new settings/sections were added
+
+### Phase C: Validate
+12. Run `validate_theme` on all changed files
+13. Verify zero Tailwind classes remain (grep for `text-`, `bg-`, `font-`, `grid-`, `gap-`, `p-`, `m-`, `h-[`, `w-`, `flex`, `items-`, `justify-`, `rounded-`, `leading-`, `tracking-`, `uppercase`, `relative`, `absolute`, `inset-`, `overflow-`, `container`, `max-w-`)
+14. Run `shopify theme check` — no new warnings beyond known baseline
+
+### Phase D: Visual verification + UX audit (Playwright CLI)
+15. Desktop (1280x800) — screenshot each section, check layout, spacing, typography
+16. Mobile (375x812) — screenshot each section, check stacking, readability
+17. Measure alignment programmatically if anything looks off (bounding box checks)
+
+### Phase E: UX audit — conversion-focused proposals
+After migration is visually correct, audit the page for **conversion optimization**:
+
+18. **Dead ends:** Does every section have a path forward? Hero needs a CTA, page needs a final CTA
+19. **Text readability:** Is body text large enough? Is contrast sufficient on colored backgrounds? Compare foundations type class sizes against original Tailwind sizes — foundations may be smaller
+20. **Visual balance:** Are grids with incomplete rows centered? Are elements properly aligned?
+21. **Mobile proportions:** Are fixed-height elements (images, containers) reasonable on small screens?
+22. **Customer journey:** Does the page flow build toward a purchase decision? Brand story → proof → values → CTA
+23. **Reusable sections:** Can new sections (like final CTA) be generic for reuse on other pages?
+
+Propose changes, get approval, implement, and re-verify.
+
+## 9. Trust bar is fully reusable now
+
+The trust bar section can be dropped into any page template via the theme editor. Layout lives in foundations (2x2 grid mobile, flex space-evenly desktop). No additional CSS needed.
+
+## 10. Spacing tier reference for section wrappers
+
+| Use case | Class | Mobile | Desktop |
+|----------|-------|--------|---------|
+| Edge-to-edge media | `lusena-spacing--full-bleed` | 0 | 0 |
+| Compact utility strips | No class + custom padding | varies | varies |
+| Informational content | `lusena-spacing--standard` | 48px | 64px |
+| Trust-building, CTAs | `lusena-spacing--spacious` | 64px | 96px |
+| Hero sections | `lusena-spacing--hero` | 80px | 128px |
+
+---
+
+## Lessons from About page migration (2026-03-01)
+
+## 11. Kicker pattern: size depends on context
+
+`.lusena-kicker` is a **modifier** (uppercase, letter-spacing, weight) with NO font-size. Pair it with a type class to control size:
+
+| Context | Classes | Result |
+|---------|---------|--------|
+| Hero section (big heading) | `lusena-kicker` alone | Inherits ~1.6rem — proportional to hero heading |
+| Standard section (h1/h2 heading) | `lusena-type-caption lusena-kicker` | 1.2rem — proportional to smaller heading |
+
+**Rule:** Always pair kickers with `lusena-type-caption` except in hero sections where the larger inherited size is intentional.
+
+## 12. `margin-inline: auto` needs 0-2-0 specificity
+
+`.lusena-type-body` in foundations sets `margin: 0`, which kills `margin-inline: auto` on child elements at equal specificity. Any section element that needs centering via `margin-inline: auto` must use 0-2-0:
+
+```css
+/* BAD — margin: 0 from .lusena-type-body wins */
+.lusena-about-story__body { margin-inline: auto; }
+
+/* GOOD — 0-2-0 beats foundations */
+.lusena-about-story .lusena-about-story__body { margin-inline: auto; }
+```
+
+## 13. Check type class sizes against original Tailwind
+
+Foundations type classes may be **smaller** than the Tailwind equivalents they replace. Always compare:
+
+| Foundations class | Size (mobile → desktop) | Common Tailwind equivalent |
+|-------------------|------------------------|---------------------------|
+| `lusena-type-hero` | 4.8/5.6 → 6.4/7.2rem | `text-5xl md:text-7xl` (~4.8 → 7.2rem) ≈ match |
+| `lusena-type-h1` | 3.2/4.0 → 4.0/4.8rem | `text-3xl md:text-5xl` (~3.0 → 4.8rem) ≈ match |
+| `lusena-type-h2` | 2.0/2.4 → 2.4/3.2rem | `text-3xl md:text-4xl` (~3.0 → 3.6rem) **smaller** |
+| `lusena-type-body` | 1.6/2.4rem | `text-lg` (~1.8rem) close |
+| `lusena-type-caption` | 1.2/1.6rem | `text-sm` (~1.4rem) **smaller** |
+
+If the size difference hurts readability, consider using the next size up (e.g., `lusena-type-h1` instead of `lusena-type-h2` for a section heading, `lusena-type-body` instead of `lusena-type-caption` for card text).
+
+## 14. Flexbox for grids with incomplete rows, CSS Grid otherwise
+
+- **CSS Grid** — clean and simple when all rows are complete (e.g., 6 items in a 3-col grid)
+- **Flexbox with `justify-content: center`** — when the last row may have fewer items and they should be centered (e.g., 5 items in a 3-col grid → bottom 2 centered)
+
+```css
+/* Flexbox approach with token-based sizing */
+.my-grid { display: flex; flex-wrap: wrap; gap: var(--lusena-space-4); justify-content: center; }
+.my-grid-item { width: 100%; }
+@media (min-width: 768px) { .my-grid-item { flex: 0 0 calc(50% - var(--lusena-space-4) / 2); } }
+@media (min-width: 1024px) { .my-grid-item { flex: 0 0 calc(33.333% - var(--lusena-space-4) * 2 / 3); } }
+```
+
+## 15. Duplicate `class` attributes — common Liquid bug
+
+Watch for this pattern where animation classes are added as a second `class` attribute:
+```html
+<!-- BUG: second class attribute is silently ignored by browsers -->
+<div class="my-class" {% if settings.animations %}class="scroll-trigger"{% endif %}>
+
+<!-- FIX: merge into single class attribute -->
+<div class="my-class{% if settings.animations %} scroll-trigger{% endif %}">
+```
+
+## 16. Generic reusable sections > page-specific copies
+
+When creating a section that could apply to multiple pages, make it generic:
+- `lusena-final-cta.liquid` (reusable) instead of `lusena-quality-final-cta.liquid` + `lusena-returns-final-cta.liquid` + `lusena-about-final-cta.liquid`
+- Page-specific versions (`lusena-quality-final-cta`, `lusena-returns-final-cta`) were replaced and deleted in Phase 3 (2026-03-04)
+
+## 17. Template JSON must be updated alongside section changes
+
+When adding new schema settings or new sections, the template JSON needs corresponding updates:
+- New settings with defaults work without JSON changes (schema defaults apply)
+- New settings **without** defaults (like `url` type) need explicit values in the JSON
+- New sections must be added to both the `sections` object and the `order` array
+
+## 18. Story/narrative text on cream backgrounds: use `--lusena-text-1`
+
+`lusena-type-body` defaults to `--lusena-text-2` (secondary/muted). On cream backgrounds (`lusena-bg-brand`), this creates low contrast for the most important brand narrative. Override to `--lusena-text-1` in section CSS for readability:
+
+```css
+.lusena-about-story .lusena-type-body { color: var(--lusena-text-1); }
+```
+
+Apply this pattern to any section where body text carries the core brand message and sits on a non-white background.
+
+---
+
+## Lessons from Quality page migration (2026-03-02)
+
+## 19. ALL section color overrides need 0-2-0 — no exceptions
+
+Lesson #1 says "when a section needs to override a foundations class", but in practice it's easy to forget when the override seems unrelated. **Every `color:` declaration in section CSS must use 0-2-0**, because foundations sets colors on `.lusena-type-caption`, `.lusena-type-body`, etc.
+
+Bug found: The about-values kicker used 0-1-0 (`.lusena-about-values__kicker { color: var(--lusena-accent-2) }`), which was overridden by foundations' `.lusena-type-caption { color: var(--lusena-text-2) }` at equal specificity. Result: kicker appeared gray instead of gold.
+
+**Rule:** When writing ANY property in section CSS that competes with a foundations type class (`color`, `font-size`, `font-weight`, `margin`, etc.), always use the parent+child pattern:
+
+```css
+/* ALWAYS do this in section CSS */
+.lusena-my-section .lusena-my-section__element { color: var(--lusena-accent-2); }
+```
+
+## 20. Shared components belong in foundations, not section CSS
+
+If two or more sections need the same UI pattern (truth table, comparison grid, card layout), extract it into `lusena-foundations.css` as a shared component. Section `{% stylesheet %}` blocks should contain only section-specific overrides.
+
+**Bug found:** The quality page comparison table had ~100 lines of section CSS for a table layout. The PDP had a separate ~200 lines for a similar truth table. Both were inconsistent (different spacing, colors, mobile behavior). Extracting `.lusena-truth-table` into foundations eliminated all duplication and guaranteed visual consistency.
+
+**Checklist before writing section CSS:**
+1. Could another section need this pattern? → foundations
+2. Is this a layout primitive (grid, table, card)? → foundations
+3. Is this only about color/position unique to this section? → section CSS
+
+## 21. Section transitions: adjacent same-background sections need contrast
+
+When two adjacent sections share the same background color, they visually merge into one blob. Always audit the section order in the template JSON and ensure visual breaks:
+
+- **Alternate backgrounds:** cream (`lusena-bg-brand`) / white (`lusena-bg-surface-1`)
+- **Hairline border:** `border-top: 1px solid var(--lusena-color-n200)` on the section element
+- **Spacing tier change:** different `lusena-spacing--*` tier
+
+**Bug found:** Quality page "Pochodzenie" (white) → "Dlaczego 22 momme?" (white) had no visual transition. Fixed by changing Momme section to `lusena-bg-brand` (cream).
+
+## 22. Avoid duplicate CTAs in the page flow
+
+Audit the full page flow for redundant calls-to-action. If a CTA section (e.g., `lusena-final-cta`) follows shortly after an inline CTA (e.g., button under a comparison table), the repetition feels pushy and dilutes urgency.
+
+**Bug found:** Quality page had "Zobacz kolekcję" under the comparison table AND again in the final CTA section two sections later. Removed the table CTA.
+
+**Rule:** One primary CTA per page "chapter" (roughly 3–4 sections). The final CTA section at the bottom is the page closer — don't compete with it.
+
+## 23. Card grids need explicit equal-height setup
+
+CSS Grid's `align-items: stretch` is not the default for all grid contexts, and cards with varying content lengths will have uneven heights unless explicitly handled:
+
+```css
+.my-grid { display: grid; align-items: stretch; }
+.my-card { height: 100%; display: flex; flex-direction: column; }
+```
+
+**Bug found:** QC cards had uneven heights on desktop because `align-items: stretch` was missing from the grid and `height: 100%` was missing from the cards.
+
+## 24. Spacing tiers: trust `--standard` as the default, use `--spacious` sparingly
+
+`lusena-spacing--spacious` adds significantly more whitespace (64px mobile / 96px desktop vs 48px/64px for standard). Only use it for sections that genuinely need breathing room (hero, final CTA). For most content sections — including tables, FAQs, and info blocks — `lusena-spacing--standard` is correct.
+
+**Bug found:** Comparison table used `--spacious`, creating too much gap between the table and the FAQ section below it. Changed to `--standard`.
+
+## 25. Hero CTA hierarchy: primary action = purchase path
+
+On every page, the hero's primary CTA should lead toward purchase (collection link, product page). Secondary actions (PDF downloads, certificate links, anchor scrolls) should be visually demoted to text links or outline buttons.
+
+**Bug found:** Quality page hero had "Pobierz certyfikat OEKO-TEX (PDF)" as a prominent button alongside "Zobacz kolekcję". The PDF download is a supporting proof point, not the primary conversion action. Demoted to a text link.
+
+## 26. Truth table column headers: 1.4rem minimum for readability
+
+Uppercase tracked labels at 1.2rem (12px) are too small for table column headers, especially next to 1.7rem serif metric names. The hierarchy gap is too large and the headers feel fragile.
+
+**Standard:** All `.lusena-truth-table` column headers and card labels use `1.4rem` with `letter-spacing: 0.08em` and `text-transform: uppercase`.
+
+## 27. Responsive truth table: table desktop, cards mobile
+
+The `.lusena-truth-table` component in foundations implements a proven responsive pattern:
+
+| Breakpoint | Layout | Component |
+|---|---|---|
+| < 768px | 1-column card stack | `.lusena-truth-table__cards` |
+| 768–1023px | 2-column card grid | `.lusena-truth-table__cards` (2-col) |
+| ≥ 1024px | Semantic `<table>` | `.lusena-truth-table__table-wrap` |
+
+Key features:
+- LUSENA column gets subtle teal wash via `color-mix(in srgb, var(--lusena-accent-cta) 3%, transparent)`
+- Serif metric names (`--lusena-font-brand`, 1.7rem, weight 600)
+- Teal check icons for LUSENA, muted gray X for others
+- Mobile cards repeat the teal highlight on the LUSENA line
+- `<table>` uses `border-collapse: separate` for rounded corners + subtle `box-shadow`
+
+Sections using this component need zero section CSS — only the outer `<section>` wrapper (background, spacing) and intro heading are section-controlled.
+
+---
+
+## Lessons from Phase 3 — Tailwind removal (2026-03-05)
+
+## 28. Removing Tailwind exposes missing preflight resets
+
+Tailwind's preflight CSS includes many element resets that are invisible until removed. When deleting a Tailwind file, add equivalent resets to foundations:
+
+| Element | What Tailwind reset | What breaks without it |
+|---------|-------------------|----------------------|
+| `button` | `padding: 0; background: transparent; border: 0; cursor: pointer; font: inherit; color: inherit;` | Accordion triggers get 6px browser padding, buttons look wrong |
+| `a` | `color: inherit; text-decoration: inherit;` | All link-based buttons show underlines |
+| `img, video` | `max-width: 100%; height: auto; display: block;` | Images overflow containers, break layouts |
+
+**Rule:** When removing any CSS framework, audit its preflight/reset file and port any resets your theme depends on.
+
+## 29. SVG must NOT get `max-width: 100%` globally
+
+Unlike `<img>`, SVGs used as icons typically have no intrinsic width/height — they rely on explicit sizing from their containing class. Adding `max-width: 100%` to SVGs causes them to expand and fill their flex/grid container.
+
+**Rule:** Only apply `max-width: 100%` to `img` and `video`. SVG dimensions should always be set explicitly by the component class (e.g., `.lusena-trust-bar__icon-svg { width: 2rem; height: 2rem; }`).
+
+## 30. compiled_assets truncation is silent and cumulative
+
+Shopify compiles ALL `{% stylesheet %}` blocks into one `compiled_assets/styles.css` file. The file **silently truncates at ~73KB** — no error, no warning, CSS just stops mid-rule. The sections whose CSS gets cut off depend on compilation order, which you don't control.
+
+**Symptoms:** Random sections lose styling (often the ones added most recently or alphabetically last). The bug is intermittent-looking because different pages may compile in different orders.
+
+**Fix:** Extract large `{% stylesheet %}` blocks (>50 lines) into standalone `assets/lusena-*.css` files. After adding any section CSS, check compiled_assets size in DevTools Network tab — must stay under 55KB.
+
+**Full pattern and extraction steps:** `memory-bank/doc/patterns/css-architecture.md`
+
+## 31. Browser interactions: `/playwright-cli` skill is the only tool
+
+This is a **general project rule** (documented in `CLAUDE.md` under "Browser Interactions"), not migration-specific. But it's critical during migration Phase D (visual verification): always use the `/playwright-cli` skill for ALL browser tasks. Never use Playwright MCP tools directly.

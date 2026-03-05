@@ -1,23 +1,28 @@
 # LUSENA Design Tokens (Actionable Reference)
 
-> Compact extraction from `docs/theme-brandbook-uiux.md` and `docs/LUSENA_BrandBook_v2.md`.
-> For full specifications, read those source documents.
+> Compact extraction from `assets/lusena-foundations.css` (single source of truth).
+> For spacing system details, see `memory-bank/doc/patterns/spacing-system.md`.
 
 ## Colors
 
-| Token | Value | CSS var/class | Usage |
-|-------|-------|---------------|-------|
-| Brand background | `#F7F5F2` | `--brand-bg`, `.bg-brand-bg` | Default page background |
-| Primary text | `#111111` | `--primary`, `.text-primary` | Headings, dark text |
-| Secondary text | `#4A4A4A` | `.text-secondary` | Body copy, captions |
-| CTA accent | `#0E5E5A` | `--accent-cta`, `.text-accent-cta` | Buttons, links, active states |
-| Gold accent | `#8C6A3C` | `--accent-gold`, `.text-accent-gold` | Badges, premium highlights |
-| Surface 1 | `#FFFFFF` | `.bg-surface-1` | Card backgrounds |
-| Surface 2 | `#F0EEEB` | `.bg-surface-2` | Alternating section backgrounds |
-| Neutral 400 | `#B9B7B4` | `.text-neutral-400` | Disabled, placeholder |
-| Neutral 700 | `#5A5855` | `.text-neutral-700` | Muted labels |
-| Success | `#2F7D4E` | `.text-status-success` | In-stock indicators |
-| Error | `#B91C1C` | — | Out-of-stock indicators |
+| Token | Value | CSS variable | Usage |
+|-------|-------|-------------|-------|
+| Brand background | `#F7F5F2` | `--lusena-brand-bg` | Default page background |
+| Surface 1 | `#FFFFFF` | `--lusena-surface-1` | Card backgrounds |
+| Surface 2 | `#F0EEEB` | `--lusena-surface-2` | Alternating section backgrounds |
+| Primary text | `#111111` | `--lusena-text-1` | Headings, dark text |
+| Secondary text | `#4A4A4A` | `--lusena-text-2` | Body copy, captions |
+| CTA accent | `#0E5E5A` | `--lusena-accent-cta` | Buttons, links, active states |
+| CTA hover | `#137A75` | `--lusena-accent-cta-hover` | Button hover |
+| Gold accent | `#8C6A3C` | `--lusena-accent-2` | Badges, premium highlights |
+| Success | `#2F7D4E` | `--lusena-status-success` | In-stock indicators |
+| Error | `#B91C1C` | `--lusena-status-error` | Out-of-stock indicators |
+
+Neutral scale: `--lusena-color-n0` (#FFFFFF) through `--lusena-color-n900` (#111111).
+
+Utility classes: `.lusena-bg-brand`, `.lusena-bg-surface-1`, `.lusena-bg-surface-2`, `.lusena-section--inverted`.
+
+**Rule:** CTA color is always `#0E5E5A` — never changes between pages.
 
 ### Color schemes (Shopify admin)
 
@@ -29,49 +34,45 @@
 | scheme-4 | `#111111` | light | Full dark sections |
 | scheme-5 | `#8C6A3C` | light | Gold accent sections |
 
-**Rule:** CTA color is always `#0E5E5A` — never changes between pages.
-
 ## Typography
 
-| Role | Font | CSS |
-|------|------|-----|
-| Headings / brand | Source Serif 4, serif | `.font-serif` |
-| Body / UI | Inter, sans-serif | `.font-sans` (default) |
+| Role | Font | CSS variable |
+|------|------|-------------|
+| Headings / brand | Source Serif 4, serif | `--lusena-font-brand` |
+| Body / UI | Inter, sans-serif | `--lusena-font-body` |
 
 **Weights:** 400 (regular), 500 (medium), 600 (semibold)
 
-**Scale (Tailwind):**
+**Semantic type classes (from `lusena-foundations.css`):**
 
-| Class | Size | Line-height | Typical usage |
-|-------|------|-------------|---------------|
-| `text-xs` | 12px | 16px | Proof chips, badges, captions |
-| `text-sm` | 14px | 20px | Trust bar, accordion body, prices |
-| `text-base` | 16px | 24px | Body text, FAQ summary, buttons |
-| `text-lg` | 18px | 28px | PDP eyebrow, footer headings |
-| `text-xl` | 20px | 28px | Cart drawer title |
-| `text-2xl` | 24px | 32px | PDP title (mobile), section headings |
-| `text-3xl` | 30px | 36px | Section headings |
-| `text-4xl` | 36px | 40px | Large section headings, PDP title (desktop) |
-| `text-5xl` | 48px | 1 | Hero headline (mobile) |
-| `text-7xl` | 72px | 1 | Hero headline (tablet) |
-| `text-8xl` | 96px | 1 | Hero headline (desktop) |
+| Class | Mobile | Desktop | Usage |
+|-------|--------|---------|-------|
+| `.lusena-type-hero` | 4.8rem / 4.8rem | 9.6rem / 9.6rem | Hero headlines |
+| `.lusena-type-h1` | 3.2rem / 4rem | 4.8rem / 5.6rem | Page/section headings |
+| `.lusena-type-h2` | 2.4rem / 3.2rem | 3.2rem / 4rem | Subheadings |
+| `.lusena-type-body` | 1.6rem / 2.4rem | 1.6rem / 2.4rem | Body text |
+| `.lusena-type-small` | 1.4rem / 2rem | 1.4rem / 2rem | Captions, metadata |
 
-**Rule:** Use Tailwind utility classes (`text-*`) for LUSENA sections, not Dawn heading scale.
+**Rule:** Use `lusena-type-*` classes for all typography. All values follow the 8px baseline grid.
 
 ## Spacing
 
-### Token scale (mobile → desktop at 768px)
+### Token scale (numeric, 8px grid)
 
-| Token | Mobile | Desktop |
-|-------|--------|---------|
-| `--lusena-space-xs` | 8px | 8px |
-| `--lusena-space-sm` | 12px | 16px |
-| `--lusena-space-md` | 20px | 24px |
-| `--lusena-space-lg` | 32px | 48px |
-| `--lusena-space-xl` | 40px | 64px |
-| `--lusena-space-2xl` | 64px | 96px |
-| `--lusena-space-3xl` | 80px | 128px |
-| `--lusena-space-spacious` | 48px | 80px |
+| Token | Value |
+|-------|-------|
+| `--lusena-space-1` | 0.8rem (8px) |
+| `--lusena-space-2` | 1.6rem (16px) |
+| `--lusena-space-3` | 2.4rem (24px) |
+| `--lusena-space-4` | 3.2rem (32px) |
+| `--lusena-space-5` | 4rem (40px) |
+| `--lusena-space-6` | 4.8rem (48px) |
+| `--lusena-space-8` | 6.4rem (64px) |
+| `--lusena-space-10` | 8rem (80px) |
+| `--lusena-space-12` | 9.6rem (96px) |
+| `--lusena-space-16` | 12.8rem (128px) |
+
+Half-step: `--lusena-space-05` = 0.4rem (4px).
 
 ### Section padding tiers
 
@@ -79,52 +80,47 @@
 |------------|--------|---------|-------|
 | `lusena-spacing--full-bleed` | 0 | 0 | Edge-to-edge media |
 | `lusena-spacing--compact` | 32px | 48px | Trust bar, utility bars |
-| `lusena-spacing--standard` | 40px | 64px | Most content sections |
-| `lusena-spacing--spacious` | 48px | 80px | CTAs, trust-building |
-| `lusena-spacing--hero` | 64px | 96px | Hero sections |
+| `lusena-spacing--standard` | 48px | 64px | Most content sections |
+| `lusena-spacing--spacious` | 64px | 96px | CTAs, trust-building |
+| `lusena-spacing--hero` | 80px | 128px | Hero sections |
 
 ### Semantic gaps
 
-| Class | Mobile | Desktop | Usage |
-|-------|--------|---------|-------|
-| `lusena-gap-kicker` | 12px | 12px | Kicker text bottom |
-| `lusena-gap-heading` | 20px | 24px | Heading bottom |
-| `lusena-gap-body` | 20px | 24px | Body text bottom |
-| `lusena-gap-cta` | 28px | 36px | CTA button bottom |
-| `lusena-gap-cta-top` | 28px | 36px | CTA button top |
-| `lusena-gap-section-intro` | 32px | 48px | Section intro bottom |
-| `lusena-gap-subsection` | 48px | 80px | Major content break |
+| Class | Value | Usage |
+|-------|-------|-------|
+| `lusena-gap-kicker` | 1.2rem | Kicker text bottom |
+| `lusena-gap-heading` | 2.4rem | Heading bottom |
+| `lusena-gap-body` | 2.4rem | Body text bottom |
+| `lusena-gap-cta` | 3.2rem | CTA button top margin |
+| `lusena-gap-section-intro` | 4rem (mobile) / 4.8rem (desktop) | Section intro bottom |
+| `lusena-gap-subsection` | 4.8rem (mobile) / 8rem (desktop) | Major content break |
 
 ## Breakpoints
 
-| Name | Width | Role |
-|------|-------|------|
-| base | <640px | Mobile (default) |
-| `sm` | 640px | Small tablets (rare) |
-| **`md`** | **768px** | **Primary mobile↔desktop flip** |
-| `lg` | 1024px | Laptops |
-| `xl` | 1280px | Desktop |
-| `2xl` | 1440px | Container cap |
+| Width | Role |
+|-------|------|
+| 768px | **Primary mobile/desktop flip** (used in all `@media` queries) |
+| 1024px | Large desktop (occasional grid adjustments) |
+| 1280px | Max container width (`lusena-container`: `max-width: 120rem`) |
 
-**Rule:** Use Tailwind breakpoints (`md:`, `lg:`) for LUSENA. Dawn breakpoints (750/990px) only for existing Dawn layout classes.
+**Rule:** Use `@media (min-width: 768px)` in `{% stylesheet %}` blocks. No Tailwind breakpoint prefixes.
 
 ## Border radii
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| `rounded-brand` | 6px | Buttons, inputs (**brand standard**) |
-| `rounded-sm` | 2px | Payment badges, thumbnails |
-| `rounded-full` | 9999px | Circles, icon buttons, cart badge |
+| `--lusena-btn-radius` | 0.6rem (6px) | Buttons, inputs (**brand standard**) |
+| Small radius | 0.2rem (2px) | Payment badges, thumbnails |
+| Full radius | 9999px | Circles, icon buttons, cart badge |
 
 ## Shadows
 
-| Name | Value | Usage |
-|------|-------|-------|
-| `shadow-sm` | `0 1px 2px 0 rgb(0 0 0 / .05)` | Proof chips, swatches |
-| `shadow-2xl` | `0 25px 50px -12px rgb(0 0 0 / .25)` | Cart drawer |
-| Focus ring | `0 0 0 2px #0E5E5A, 0 0 0 4px #fff` | `:focus-visible` |
+Shadows are used sparingly — editorial rhythm favors hairline borders over shadows.
 
-**Rule:** Shadows used sparingly — most `shadow_opacity` settings are `0` in theme config.
+| Usage | Value |
+|-------|-------|
+| Proof chips, swatches | `0 1px 2px 0 rgb(0 0 0 / .05)` |
+| Focus ring | `outline: 2px solid var(--lusena-accent-cta); outline-offset: 2px` |
 
 ## Buttons
 
@@ -138,11 +134,13 @@
 
 **Sizes:** default (48px height), small (44px height)
 **Touch target:** 44x44px minimum (WCAG)
-**Border radius:** 6px (`rounded-brand`)
+**Border radius:** 6px (`--lusena-btn-radius`)
 
 ## Transitions
 
-- **UI hover/focus:** 150ms ease
-- **Button:** 150-200ms ease
-- **Image hover scale:** 300ms ease-in-out
-- **Scroll reveal:** 420ms `cubic-bezier(0.2, 0, 0, 1)`, translateY(14px)
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--lusena-transition-fast` | 150ms ease | UI hover/focus |
+| `--lusena-transition-base` | 250ms ease | Accordion, drawer |
+| Image hover scale | 300ms ease-in-out | Product cards |
+| Scroll reveal | 420ms `cubic-bezier(0.2, 0, 0, 1)`, translateY(14px) | Dawn scroll-trigger |

@@ -12,3 +12,13 @@ Thumbs.db
 config/shopify.theme.tom.txt
 lusena-shop/
 .tmp-remote-check-1/
+.playwright-cli/
+.playwright-mcp/
+
+# Temporary debugging screenshots/snapshots
+gap-investigation.png
+sticky-atc-*.png
+footer-*.png
+body-main-*.png
+collection-snap.yml
+pdp-check.yml

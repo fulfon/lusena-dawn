@@ -3,7 +3,19 @@
     "allow": [
       "Bash(wc:*)",
       "Bash(ls:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(done)",
+      "Bash(python3:*)",
+      "Bash(playwright-cli goto:*)",
+      "Bash(playwright-cli screenshot:*)",
+      "Bash(playwright-cli eval:*)",
+      "Bash(playwright-cli snapshot:*)",
+      "Bash(playwright-cli press:*)",
+      "Bash(playwright-cli run-code:*)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(echo \"STATUS: $?\")",
+      "Bash(rm:*)",
+      "Bash(node:*)"
     ]
   }
 }

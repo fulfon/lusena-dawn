@@ -16,7 +16,7 @@
 | 8 | `lusena-quality-qc` | standard | Done |
 | 9 | `lusena-quality-comparison-table` | standard | Done |
 | 10 | `lusena-faq` (shared) | standard | Done |
-| 11 | `lusena-quality-final-cta` | spacious | Done |
+| 11 | `lusena-final-cta` (shared) | spacious | Done |
 
 ## Pending work
 

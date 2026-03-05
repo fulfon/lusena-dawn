@@ -19,54 +19,79 @@
   endif
 -%}
 <section
-  class="bg-white border-t border-brand-bg lusena-quality-final-cta lusena-spacing--standard"
+  class="lusena-bg-surface-1 lusena-final-cta lusena-spacing--standard"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container">
-    <div class="text-center max-w-3xl mx-auto lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <h2 class="text-3xl md:text-4xl font-serif text-primary">
-        {{ section.settings.heading | escape }}
-      </h2>
-      {%- if section.settings.body != blank -%}
-        <p class="text-secondary font-light text-lg max-w-2xl mx-auto">
-          {{ section.settings.body | escape }}
-        </p>
-      {%- endif -%}
+  <div class="lusena-container--narrow lusena-text-center lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <h2 class="lusena-type-h1">
+      {{ section.settings.heading | escape }}
+    </h2>
+    {%- if section.settings.body != blank -%}
+      <p class="lusena-type-body">
+        {{ section.settings.body | escape }}
+      </p>
+    {%- endif -%}
 
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-        {%- if primary_url != blank -%}
-          <a
-            href="{{ primary_url }}"
-            class="lusena-btn lusena-btn--primary lusena-btn--size-default min-w-[240px]"
-          >
-            {{ section.settings.cta_label | escape }}
-          </a>
-        {%- endif -%}
+    {%- if primary_url != blank -%}
+      <div class="lusena-gap-cta-top lusena-final-cta__actions">
+        <a
+          href="{{ primary_url }}"
+          class="lusena-btn lusena-btn--primary lusena-btn--size-default"
+        >
+          {{ section.settings.cta_label | escape }}
+        </a>
 
         {%- assign secondary_label = section.settings.secondary_label | strip -%}
         {%- if secondary_label != blank and section.settings.secondary_link != blank -%}
           <a
             href="{{ section.settings.secondary_link }}"
-            target="_blank"
-            rel="noopener"
-            class="text-sm font-medium text-accent-cta underline underline-offset-4 hover:no-underline"
+            class="lusena-final-cta__secondary-link"
           >
             {{ secondary_label | escape }}
           </a>
         {%- endif -%}
       </div>
-    </div>
+    {%- endif -%}
   </div>
 </section>
 
 {% stylesheet %}
+  /* CTA actions layout */
+  .lusena-final-cta__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--lusena-space-2);
+  }
+
+  @media (min-width: 768px) {
+    .lusena-final-cta__actions {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  /* Secondary link */
+  .lusena-final-cta__secondary-link {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--lusena-accent-cta);
+    text-decoration: underline;
+    text-underline-offset: 0.4rem;
+  }
+
+  @media (hover: hover) {
+    .lusena-final-cta__secondary-link:hover {
+      text-decoration: none;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "LUSENA Quality: Final CTA",
+  "name": "LUSENA Final CTA",
   "tag": "section",
   "settings": [
     {
@@ -117,13 +142,13 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Sprawdź sama"
+      "default": "Przekonaj się sama"
     },
     {
       "type": "text",
       "id": "body",
       "label": "Body",
-      "default": "Jeśli nadal masz wątpliwości — wybierz produkt i zobacz różnicę u siebie."
+      "default": "Wybierz produkt i poczuj różnicę już pierwszej nocy."
     },
     {
       "type": "text",
@@ -155,7 +180,7 @@
   ],
   "presets": [
     {
-      "name": "LUSENA Quality: Final CTA"
+      "name": "LUSENA Final CTA"
     }
   ]
 }

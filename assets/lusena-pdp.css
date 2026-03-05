@@ -1,0 +1,1683 @@
+/**
+ * LUSENA PDP Styles — Standalone Asset
+ * Loaded via <link> in lusena-main-product.liquid.
+ * Moved from {% stylesheet %} block in lusena-pdp-styles.liquid
+ * to avoid Shopify's compiled_assets size truncation.
+ */
+
+.lusena-pdp {
+  padding-top: var(--lusena-section-padding-top-mobile);
+  padding-bottom: var(--lusena-section-padding-bottom-mobile);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (min-width: 768px) {
+  .lusena-pdp {
+    padding-top: var(--lusena-section-padding-top-desktop);
+    padding-bottom: var(--lusena-section-padding-bottom-desktop);
+  }
+}
+
+.lusena-pdp .lusena-pdp-buy-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.lusena-pdp .lusena-pdp-buy-box__summary {
+  order: 1;
+}
+
+.lusena-pdp .lusena-pdp-buy-box__variant {
+  order: 4;
+  margin-top: 1.6rem;
+}
+
+.lusena-pdp .lusena-pdp-buy-box__atc {
+  order: 5;
+  margin-top: 2rem;
+}
+
+.lusena-pdp .lusena-pdp-buy-box__guarantee {
+  order: 6;
+  margin-top: 1.2rem;
+}
+
+.lusena-pdp .lusena-pdp-buy-box__payment {
+  order: 7;
+  margin-top: 1.2rem;
+}
+
+.lusena-pdp .lusena-pdp-buy-box__proof {
+  order: 8;
+  margin-top: 1.6rem;
+}
+
+.lusena-pdp .lusena-pdp-buy-box__desktop-divider {
+  display: none;
+}
+
+.lusena-pdp .lusena-pdp-buy-box__benefits-mobile {
+  order: 9;
+  margin-top: 2.4rem;
+  border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
+  padding-top: 2rem;
+}
+
+.lusena-pdp .lusena-pdp-buy-box__benefits-list > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 1rem;
+}
+
+.lusena-pdp .lusena-pdp-buy-box__benefit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  color: var(--lusena-text-2);
+}
+
+.lusena-pdp .lusena-pdp-buy-box__benefit-dot {
+  display: block;
+  margin-top: 0.6rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 9999px;
+  background-color: var(--lusena-accent-2);
+  flex-shrink: 0;
+}
+
+.lusena-pdp .lusena-pdp-buy-box__details {
+  order: 10;
+  margin-top: 3.2rem;
+}
+
+.lusena-pdp-details__heading {
+  font-family: var(--lusena-font-brand);
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 400;
+  letter-spacing: normal;
+}
+
+.lusena-pdp-accordion,
+.lusena-pdp-details__heading {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+}
+
+.lusena-pdp-accordion__trigger {
+  font-family: var(--lusena-font-brand);
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  font-weight: 500;
+  letter-spacing: normal;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  padding-block: var(--lusena-space-3);
+}
+
+.lusena-pdp-accordion__item:first-child .lusena-pdp-accordion__trigger {
+  padding-top: 0;
+}
+
+.lusena-pdp-accordion__trigger[data-state='open'] .lusena-pdp-accordion__chevron {
+  transform: rotate(180deg);
+}
+
+.lusena-pdp-accordion__item {
+  contain: layout style;
+}
+
+.lusena-pdp-accordion__content {
+  overflow: hidden;
+  height: 0;
+  transition: height 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
+  will-change: height;
+}
+
+/* GPU-composited overlay: opacity+transform run at 120Hz on ProMotion */
+.lusena-pdp-accordion__body {
+  font-family: var(--lusena-font-ui);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  letter-spacing: normal;
+  color: var(--lusena-text-2);
+  opacity: 1;
+  transform: translateY(0);
+  padding-bottom: 1.6rem;
+  padding-top: 0;
+}
+
+@supports (touch-action: manipulation) {
+  .lusena-pdp-accordion__body {
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+  .lusena-pdp-accordion__content[data-state='closed'] .lusena-pdp-accordion__body {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lusena-pdp-accordion__content {
+    transition: none;
+    will-change: auto;
+  }
+  .lusena-pdp-accordion__body {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+.lusena-pdp-accordion__body p {
+  margin: 0;
+}
+
+.lusena-pdp-accordion__body p + p {
+  margin-top: 0.8rem;
+}
+
+.lusena-pdp-accordion__body table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.lusena-pdp-accordion__body td {
+  vertical-align: top;
+}
+
+.lusena-pdp-accordion__body [data-lusena-specs-table] .lusena-pdp-specs-row--alt {
+  background: color-mix(in srgb, var(--lusena-surface-2) 50%, transparent);
+}
+
+.lusena-pdp-accordion__body [data-lusena-specs-table] .lusena-pdp-specs-row--definition {
+  background: color-mix(in srgb, var(--lusena-brand-bg) 60%, transparent);
+}
+
+.lusena-pdp .lusena-pdp-summary__eyebrow {
+  display: block;
+  font-size: 1.4rem;
+  line-height: 1.8rem;
+}
+
+.lusena-pdp .lusena-pdp-summary__title {
+  margin-top: 0.4rem;
+  font-size: 2.4rem;
+  line-height: 3.2rem;
+}
+
+.lusena-pdp .lusena-pdp-summary__tagline {
+  padding-top: 0.4rem;
+}
+
+.lusena-pdp .lusena-pdp-summary__price {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Summary price-wrap gap: replaces mt-3 md:mt-6 */
+.lusena-pdp .lusena-pdp-buy-box__summary [data-lusena-price-wrap] {
+  margin-top: 1.2rem;
+}
+
+/* Summary delivery gap: replaces mt-4 md:mt-5 */
+.lusena-pdp .lusena-pdp-summary__delivery {
+  margin-top: 1.6rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.lusena-pdp .lusena-pdp-summary__delivery-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.8rem;
+  width: 100%;
+  max-width: 100%;
+  text-align: left;
+  color: var(--lusena-text-2);
+}
+
+.lusena-pdp .lusena-pdp-summary__delivery-icon {
+  width: 1.4rem;
+  height: 1.4rem;
+  flex-shrink: 0;
+}
+
+.lusena-pdp .lusena-pdp-summary__delivery-copy,
+.lusena-pdp .lusena-pdp-summary__delivery-text {
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+}
+
+.lusena-pdp .lusena-pdp-proof-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.lusena-pdp .lusena-pdp-proof-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--lusena-text-2) 15%, transparent);
+  border-radius: 9999px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: var(--lusena-text-2);
+  transition: border-color 150ms ease, color 150ms ease;
+  cursor: default;
+}
+
+.lusena-pdp .lusena-pdp-proof-chip:hover {
+  border-color: rgba(14, 94, 90, 0.3);
+  color: var(--lusena-text-1);
+}
+
+.lusena-pdp .lusena-pdp-payment {
+  width: 100%;
+}
+
+.lusena-pdp .lusena-pdp-payment__desktop {
+  display: none;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.lusena-pdp .lusena-pdp-payment__mobile {
+  display: block;
+}
+
+.lusena-pdp .lusena-pdp-payment__mobile-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0.4rem;
+}
+
+.lusena-pdp .lusena-pdp-payment-methods {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.lusena-pdp .lusena-pdp-payment-methods--desktop {
+  flex-wrap: nowrap;
+}
+
+.lusena-pdp .lusena-pdp-payment-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
+  border-radius: 0.2rem;
+  padding: 0.2rem 0.6rem;
+}
+
+.lusena-pdp .lusena-pdp-payment-badge--mobile {
+  flex-shrink: 1;
+  min-width: 0;
+  padding: 0.2rem 0.2rem;
+}
+
+.lusena-pdp .lusena-pdp-payment-icon {
+  width: auto;
+  object-fit: contain;
+}
+
+.lusena-pdp .lusena-pdp-payment-icon--visa-desktop {
+  height: 18px;
+}
+
+.lusena-pdp .lusena-pdp-payment-icon--desktop {
+  height: 20px;
+}
+
+.lusena-pdp .lusena-pdp-payment-icon--visa-mobile {
+  height: 12px;
+}
+
+.lusena-pdp .lusena-pdp-payment-icon--mobile {
+  height: 14px;
+}
+
+.lusena-pdp .lusena-pdp-payment-secure {
+  font-size: 11px;
+  line-height: 14px;
+  color: color-mix(in srgb, var(--lusena-text-2) 60%, transparent);
+  white-space: nowrap;
+}
+
+.lusena-pdp .lusena-pdp-payment-secure--mobile {
+  flex-shrink: 0;
+  font-size: 9px;
+  line-height: 12px;
+}
+
+.lusena-pdp .lusena-pdp-payment .lusena-icon-sm,
+.lusena-pdp .lusena-pdp-payment .lusena-icon-xs {
+  color: color-mix(in srgb, var(--lusena-text-2) 60%, transparent);
+}
+
+.lusena-pdp .lusena-pdp-payment-fallback {
+  font-size: 1.2rem;
+  color: color-mix(in srgb, var(--lusena-text-2) 50%, transparent);
+}
+.lusena-pdp .lusena-pdp-payment-fallback--mobile {
+  font-size: 1.0rem;
+}
+
+@media (min-width: 375px) {
+  .lusena-pdp .lusena-pdp-payment__mobile-row {
+    gap: 0.6rem;
+  }
+
+  .lusena-pdp .lusena-pdp-payment-badge--mobile {
+    padding: 0.2rem 0.4rem;
+  }
+
+  .lusena-pdp .lusena-pdp-payment-icon--visa-mobile {
+    height: 14px;
+  }
+
+  .lusena-pdp .lusena-pdp-payment-icon--mobile {
+    height: 16px;
+  }
+
+  .lusena-pdp .lusena-pdp-payment-secure--mobile {
+    font-size: 10px;
+    line-height: 14px;
+  }
+}
+
+.lusena-pdp .lusena-pdp__stock-dot--available {
+  background-color: var(--lusena-status-success);
+}
+
+.lusena-pdp .lusena-pdp__stock-dot--unavailable {
+  background-color: var(--lusena-status-error);
+}
+
+@media (min-width: 768px) {
+  .lusena-pdp .lusena-pdp-payment__desktop {
+    display: flex;
+  }
+
+  .lusena-pdp .lusena-pdp-payment__mobile {
+    display: none;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box {
+    position: sticky;
+    top: 12.8rem;
+    align-self: flex-start;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__proof {
+    order: 4;
+    margin-top: 2rem;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__desktop-divider {
+    display: block;
+    order: 5;
+    height: 1px;
+    background: color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
+    margin-top: 2rem;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__variant {
+    order: 6;
+    margin-top: 2rem;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__atc {
+    order: 7;
+    margin-top: 2rem;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__guarantee {
+    order: 8;
+    margin-top: 1.6rem;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__payment {
+    order: 9;
+    margin-top: 1.6rem;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__benefits-mobile {
+    display: none;
+  }
+
+  .lusena-pdp .lusena-pdp-buy-box__details {
+    margin-top: 2.4rem;
+  }
+
+  .lusena-pdp-details__heading {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .lusena-pdp .lusena-pdp-summary__eyebrow {
+    font-size: 1.8rem;
+    line-height: 2.8rem;
+  }
+
+  .lusena-pdp .lusena-pdp-summary__title {
+    margin-top: 0.8rem;
+    font-size: 4rem;
+    line-height: 4.8rem;
+  }
+
+  /* Desktop summary spacing: price-wrap mt-6 → 2.4rem, delivery mt-5 → 2rem */
+  .lusena-pdp .lusena-pdp-buy-box__summary [data-lusena-price-wrap] {
+    margin-top: 2.4rem;
+  }
+
+  .lusena-pdp .lusena-pdp-summary__delivery {
+    margin-top: 2rem;
+  }
+}
+
+.lusena-pdp .lusena-option__input:checked + .lusena-option__pill {
+  border-width: 2px;
+  border-color: var(--lusena-accent-cta);
+  background-color: var(--lusena-surface-2);
+  color: var(--lusena-text-1);
+}
+
+.lusena-pdp .lusena-option__input:focus-visible + .lusena-option__pill {
+  outline: 2px solid rgb(14 94 90);
+  outline-offset: 2px;
+}
+
+.lusena-pdp .lusena-option__input:checked + .lusena-option__swatch {
+  border-color: var(--lusena-accent-cta);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--lusena-accent-cta);
+}
+
+.lusena-pdp .lusena-option__input:focus-visible + .lusena-option__swatch {
+  border-color: var(--lusena-accent-cta);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--lusena-accent-cta);
+}
+
+.lusena-pdp .lusena-gallery__desktop {
+  display: none;
+}
+
+.lusena-pdp .lusena-gallery__mobile {
+  display: block;
+}
+
+@media screen and (min-width: 750px) {
+  .lusena-pdp .lusena-gallery__desktop {
+    display: block;
+  }
+
+  .lusena-pdp .lusena-gallery__mobile {
+    display: none;
+  }
+}
+
+.lusena-pdp .lusena-gallery__desktop-grid {
+  display: flex;
+  gap: 12px;
+}
+
+.lusena-pdp .lusena-media-thumbs-desktop {
+  width: 72px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lusena-pdp .lusena-media-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 2px solid transparent;
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--lusena-surface-2);
+  transition: border-color 150ms ease;
+}
+
+.lusena-pdp .lusena-media-thumb:hover {
+  border-color: color-mix(in srgb, var(--lusena-text-2) 30%, transparent);
+}
+
+.lusena-pdp .lusena-media-thumb:focus-visible {
+  border-color: var(--lusena-accent-cta);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--lusena-accent-cta);
+}
+
+.lusena-pdp .lusena-media-thumb[aria-current='true'] {
+  border-color: var(--lusena-accent-cta);
+}
+
+.lusena-pdp .lusena-media-thumb--proof {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lusena-pdp .lusena-media-thumb__proof-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--lusena-accent-cta);
+  background: var(--lusena-brand-bg);
+}
+
+.lusena-pdp .lusena-media-stage {
+  flex: 1;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  position: relative;
+  background: var(--lusena-surface-2);
+}
+
+.lusena-pdp .lusena-media-stage__content {
+  position: absolute;
+  inset: 0;
+  opacity: 1;
+  transition: opacity 300ms ease-in-out;
+}
+
+.lusena-pdp .lusena-media-stage[data-stage-fade='out'] .lusena-media-stage__content {
+  opacity: 0;
+}
+
+.lusena-pdp [data-lusena-stage-action][data-lusena-stage-zoomable='true'] {
+  cursor: zoom-in;
+}
+
+.lusena-pdp [data-lusena-stage-action][data-lusena-stage-zoomable='true']:focus-visible {
+  outline: 2px solid var(--lusena-accent-cta);
+  outline-offset: 2px;
+}
+
+.lusena-pdp .lusena-media-stage__zoom {
+  position: absolute;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--lusena-text-1);
+  background: rgb(255 255 255 / 0.8);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease;
+}
+
+.lusena-pdp [data-lusena-stage-action][data-lusena-stage-zoomable='true']:hover .lusena-media-stage__zoom,
+.lusena-pdp [data-lusena-stage-action][data-lusena-stage-zoomable='true']:focus-visible .lusena-media-stage__zoom {
+  opacity: 1;
+}
+
+.lusena-pdp [data-lusena-stage-action][data-lusena-stage-zoomable='false'] .lusena-media-stage__zoom,
+.lusena-pdp .lusena-media-stage[data-stage-type='proof'] .lusena-media-stage__zoom {
+  display: none;
+}
+
+.lusena-pdp [data-lusena-media-stage] img {
+  transition: opacity 200ms ease-in-out, transform 500ms ease;
+  transform-origin: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .lusena-pdp [data-lusena-media-stage]:hover img {
+    transform: scale(1.05);
+  }
+}
+
+.lusena-pdp .lusena-proof-tile {
+  width: 100%;
+  height: 100%;
+  padding: 2.4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  text-align: center;
+  background: var(--lusena-brand-bg);
+}
+
+.lusena-pdp .lusena-proof-tile__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  color: var(--lusena-accent-cta);
+  background: rgb(255 255 255 / 0.75);
+}
+
+.lusena-pdp .lusena-proof-tile__title {
+  font-family: var(--lusena-font-brand);
+  font-size: 2.2rem;
+  line-height: 1.2;
+  color: var(--lusena-text-1);
+}
+
+.lusena-pdp .lusena-proof-tile__body {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: rgba(74, 74, 74, 0.9);
+  max-width: 30ch;
+}
+
+.lusena-pdp .lusena-proof-tile__cta {
+  font-size: 1.2rem;
+  color: var(--lusena-accent-cta);
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.lusena-pdp .lusena-proof-tile__cta:hover {
+  opacity: 0.8;
+}
+
+.lusena-pdp .lusena-media-stage[data-stage-type='proof'] img {
+  display: none;
+}
+
+.lusena-pdp [data-lusena-stage-proof] {
+  display: none;
+  position: absolute;
+  inset: 0;
+}
+
+.lusena-pdp .lusena-media-stage[data-stage-type='proof'] [data-lusena-stage-proof] {
+  display: flex;
+}
+
+.lusena-pdp .lusena-gallery__mobile-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 8px;
+  margin-left: -1.6rem;
+  margin-right: -1.6rem;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  opacity: 1;
+  transition: opacity 300ms ease-in-out;
+}
+
+.lusena-pdp .lusena-gallery__mobile-track[data-fade-state='out'] {
+  opacity: 0;
+}
+
+.lusena-pdp .lusena-gallery__mobile-track::-webkit-scrollbar {
+  display: none;
+}
+
+.lusena-pdp .lusena-gallery__mobile-slide {
+  scroll-snap-align: center;
+  flex: 0 0 auto;
+  width: 85vw;
+  max-width: 400px;
+  height: min(60vh, 85vw);
+  aspect-ratio: 4 / 5;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--lusena-surface-2);
+}
+
+.lusena-pdp .lusena-gallery__mobile-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lusena-pdp .lusena-gallery__mobile-slide[data-lusena-mobile-zoomable] {
+  cursor: zoom-in;
+}
+
+.lusena-pdp .lusena-gallery__mobile-zoom {
+  position: absolute;
+  right: 0.8rem;
+  bottom: 0.8rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--lusena-text-1);
+  background: rgb(255 255 255 / 0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+.lusena-pdp .lusena-gallery__mobile-slide--proof {
+  background: var(--lusena-brand-bg);
+}
+
+.lusena-pdp .lusena-gallery__mobile-dots {
+  margin-top: 1.2rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.lusena-pdp .lusena-gallery__dot {
+  appearance: none;
+  display: block;
+  width: 8px;
+  height: 8px;
+  min-height: 0;
+  border-radius: 999px;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  background: color-mix(in srgb, var(--lusena-text-2) 25%, transparent);
+  transition: background-color 200ms ease;
+}
+
+.lusena-pdp .lusena-gallery__dot[aria-current='true'] {
+  background: var(--lusena-text-1);
+}
+
+.lusena-pdp .lusena-gallery__mobile-dots[hidden] {
+  display: none;
+}
+
+.lusena-pdp .lusena-media-thumb[hidden],
+.lusena-pdp .lusena-gallery__mobile-slide[hidden],
+.lusena-pdp .lusena-gallery__dot[hidden] {
+  display: none !important;
+}
+
+.lusena-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 6001;
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.92);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+}
+
+.lusena-lightbox.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lusena-lightbox[hidden] {
+  display: none;
+}
+
+.lusena-lightbox__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: max(0.75rem, env(safe-area-inset-top)) 1.6rem 1.2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.lusena-lightbox__counter {
+  font-size: 1.4rem;
+  line-height: 2rem;
+  color: rgb(255 255 255 / 0.7);
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+
+.lusena-lightbox__close {
+  width: 4.4rem;
+  height: 4.4rem;
+  border: 0;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(255 255 255 / 0.8);
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+.lusena-lightbox__close:hover {
+  color: rgb(255 255 255);
+  background: rgb(255 255 255 / 0.1);
+}
+
+.lusena-lightbox__viewport {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  user-select: none;
+  touch-action: none;
+  cursor: default;
+}
+
+.lusena-lightbox__image-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.lusena-lightbox__loader {
+  width: 19.2rem;
+  height: 19.2rem;
+  border-radius: 0.8rem;
+  background: rgb(255 255 255 / 0.05);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.lusena-lightbox__image-wrap.is-loaded .lusena-lightbox__loader,
+.lusena-lightbox__image-wrap.is-error .lusena-lightbox__loader {
+  display: none;
+}
+
+.lusena-lightbox__image {
+  display: block;
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  transition: transform 200ms ease-out, opacity 200ms ease-out;
+  transform-origin: center;
+  opacity: 0;
+  touch-action: none;
+  pointer-events: none;
+}
+
+.lusena-lightbox__image-wrap.is-loaded .lusena-lightbox__image {
+  opacity: 1;
+}
+
+.lusena-lightbox__image-wrap.is-error .lusena-lightbox__image {
+  display: none;
+}
+
+.lusena-lightbox__fallback {
+  background: var(--lusena-surface-2);
+  border-radius: 0.2rem;
+  padding: 4.8rem;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  color: var(--lusena-text-2);
+}
+
+.lusena-lightbox__image-wrap.is-error .lusena-lightbox__fallback {
+  display: block !important;
+}
+
+.lusena-lightbox__nav {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 4.4rem;
+  height: 4.4rem;
+  border: 0;
+  border-radius: 9999px;
+  align-items: center;
+  justify-content: center;
+  color: rgb(255 255 255 / 0.6);
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+.lusena-lightbox__nav:hover {
+  color: rgb(255 255 255);
+  background: rgb(255 255 255 / 0.1);
+}
+
+.lusena-lightbox__nav[disabled] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.lusena-lightbox__nav--prev {
+  left: 1.2rem;
+}
+
+.lusena-lightbox__nav--prev svg {
+  transform: rotate(180deg);
+}
+
+.lusena-lightbox__nav--next {
+  right: 1.2rem;
+}
+
+.lusena-lightbox__bottom {
+  padding: 0.8rem 1.6rem max(1rem, env(safe-area-inset-bottom));
+  text-align: center;
+  min-height: 3.6rem;
+}
+
+.lusena-lightbox__hint {
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: rgb(255 255 255 / 0.4);
+  user-select: none;
+}
+
+.lusena-lightbox__hint--desktop {
+  display: none;
+}
+
+.lusena-lightbox__hint--mobile {
+  display: inline;
+}
+
+@media screen and (min-width: 750px) {
+  .lusena-lightbox.is-over-image .lusena-lightbox__viewport {
+    cursor: zoom-in;
+  }
+
+  .lusena-lightbox.is-over-image.is-zoomed .lusena-lightbox__viewport {
+    cursor: zoom-out;
+  }
+
+  .lusena-lightbox__nav {
+    display: inline-flex;
+  }
+
+  .lusena-lightbox.is-zoomed .lusena-lightbox__nav {
+    display: none;
+  }
+
+  .lusena-lightbox__hint--desktop {
+    display: inline;
+  }
+
+  .lusena-lightbox__hint--mobile {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lusena-pdp .lusena-media-stage__content,
+  .lusena-pdp .lusena-gallery__mobile-track,
+  .lusena-pdp [data-lusena-media-stage] img {
+    transition: none;
+  }
+  .lusena-pdp .lusena-gallery__dot,
+  .lusena-pdp .lusena-media-thumb {
+    transition: none;
+  }
+
+  .lusena-pdp [data-lusena-media-stage]:hover img {
+    transform: none;
+  }
+
+  .lusena-lightbox,
+  .lusena-lightbox__image {
+    transition: none;
+  }
+}
+
+.lusena-pdp details[open] .lusena-pdp__chevron {
+  transform: rotate(180deg);
+}
+
+/* ==========================================================================
+   PHASE 1 — BEM VISUAL STYLES (Tailwind replacements)
+   ========================================================================== */
+
+/* ── Summary (1b) ── */
+.lusena-pdp .lusena-pdp-summary__eyebrow {
+  color: var(--lusena-accent-2);
+  font-family: var(--lusena-font-brand);
+  font-style: italic;
+}
+
+.lusena-pdp .lusena-pdp-summary__title {
+  font-family: var(--lusena-font-brand);
+  color: var(--lusena-text-1);
+}
+
+.lusena-pdp .lusena-pdp-summary__tagline {
+  display: none;
+  color: var(--lusena-text-2);
+  font-size: 1.4rem;
+  line-height: 2rem;
+}
+
+.lusena-pdp .lusena-pdp-summary__price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.lusena-pdp .lusena-pdp-summary__price {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.lusena-pdp .lusena-pdp-summary__compare-at {
+  font-size: 1.8rem;
+  color: color-mix(in srgb, var(--lusena-text-2) 50%, transparent);
+  text-decoration: line-through;
+}
+
+.lusena-pdp .lusena-pdp-summary__per-night {
+  display: block;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: var(--lusena-accent-cta);
+  font-weight: 500;
+  margin-top: 0.2rem;
+}
+
+.lusena-pdp .lusena-pdp-summary__delivery-icon {
+  color: var(--lusena-accent-cta);
+}
+
+.lusena-pdp .lusena-pdp-summary__delivery-eta {
+  color: var(--lusena-text-1);
+  font-weight: 500;
+}
+
+.lusena-pdp .lusena-pdp-summary__delivery-link {
+  color: var(--lusena-accent-cta);
+  text-decoration: none;
+  text-underline-offset: 0.2rem;
+}
+
+.lusena-pdp .lusena-pdp-summary__delivery-link:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+  .lusena-pdp .lusena-pdp-summary__tagline {
+    display: block;
+  }
+
+  .lusena-pdp .lusena-pdp-summary__price-row {
+    gap: 1.2rem;
+  }
+
+  .lusena-pdp .lusena-pdp-summary__price {
+    font-size: 2.4rem;
+  }
+}
+
+/* ── Media (1c) ── */
+.lusena-pdp .lusena-media-stage {
+  border-radius: var(--lusena-radius-sm);
+}
+
+.lusena-pdp .lusena-media-stage img,
+.lusena-pdp .lusena-gallery__mobile-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lusena-pdp .lusena-media-stage__bestseller {
+  position: absolute;
+  top: 1.6rem;
+  left: 1.6rem;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.4rem 1.2rem;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.lusena-pdp .lusena-gallery__mobile-slide .lusena-media-stage__bestseller {
+  top: 1.2rem;
+  left: 1.2rem;
+  padding: 0.4rem 1rem;
+}
+
+.lusena-pdp .lusena-media-thumb__proof-icon svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.lusena-pdp .lusena-proof-tile__icon svg {
+  width: 4rem;
+  height: 4rem;
+}
+
+.lusena-pdp .lusena-media-stage__zoom svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.lusena-pdp .lusena-gallery__mobile-zoom svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+/* ── Variant picker (1d) ── */
+.lusena-pdp .lusena-pdp-variant-picker__legend {
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  font-weight: 500;
+  color: var(--lusena-text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.lusena-pdp .lusena-pdp-variant-picker__selected {
+  color: var(--lusena-text-1);
+  font-weight: 600;
+  font-size: 1.4rem;
+  margin-left: 0.4rem;
+}
+
+.lusena-pdp .lusena-pdp-variant-picker__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+.lusena-pdp .lusena-pdp-variant-picker__label {
+  transition: all 150ms ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lusena-pdp .lusena-pdp-variant-picker__label--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.lusena-pdp .lusena-option__swatch {
+  width: 4.4rem;
+  height: 4.4rem;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in srgb, var(--lusena-text-2) 20%, transparent);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.lusena-pdp .lusena-option__swatch:hover {
+  filter: brightness(0.95);
+}
+
+.lusena-pdp .lusena-option__pill {
+  padding: 0.8rem 2.4rem;
+  border: 1px solid color-mix(in srgb, var(--lusena-text-2) 30%, transparent);
+  font-size: 1.4rem;
+  min-width: 6.4rem;
+  color: var(--lusena-text-1);
+  text-align: center;
+}
+
+.lusena-pdp .lusena-option__pill:hover {
+  border-color: var(--lusena-accent-cta);
+}
+
+/* ── Guarantee (1e) ── */
+.lusena-pdp .lusena-pdp-guarantee__box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1.2rem;
+  background: color-mix(in srgb, var(--lusena-brand-bg) 50%, transparent);
+  border: 1px solid var(--lusena-brand-bg);
+  border-radius: var(--lusena-radius-sm);
+}
+
+.lusena-pdp .lusena-pdp-guarantee__icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  color: var(--lusena-accent-cta);
+  flex-shrink: 0;
+}
+
+.lusena-pdp .lusena-pdp-guarantee__icon svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.lusena-pdp .lusena-pdp-guarantee__text {
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: var(--lusena-text-2);
+}
+
+.lusena-pdp .lusena-pdp-guarantee__heading {
+  font-weight: 500;
+  color: var(--lusena-text-1);
+}
+
+.lusena-pdp .lusena-pdp-guarantee__link {
+  color: var(--lusena-accent-cta);
+  text-decoration: none;
+  text-underline-offset: 0.2rem;
+}
+
+.lusena-pdp .lusena-pdp-guarantee__link:hover {
+  text-decoration: underline;
+}
+
+/* ── ATC (1f) ── */
+.lusena-pdp .lusena-pdp-atc__buy-now {
+  margin-top: 0.8rem;
+}
+
+.lusena-pdp .lusena-pdp-atc__stock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: var(--lusena-text-2);
+}
+
+.lusena-pdp .lusena-pdp__stock-dot {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 9999px;
+}
+
+/* ── Proof chips icon (1g) ── */
+.lusena-pdp .lusena-pdp-proof-chip__icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  color: var(--lusena-accent-cta);
+  flex-shrink: 0;
+}
+
+.lusena-pdp .lusena-pdp-proof-chip__icon svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+/* ── Buybox accordion visual styles (1h) ── */
+.lusena-pdp .lusena-pdp-accordion__item {
+  border-bottom: 1px solid var(--lusena-color-n200);
+}
+
+.lusena-pdp .lusena-pdp-accordion__trigger {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 4.4rem;
+  font-weight: 500;
+  transition: color 150ms ease;
+  text-align: left;
+}
+
+.lusena-pdp .lusena-pdp-accordion__trigger:hover {
+  color: var(--lusena-accent-cta);
+}
+
+.lusena-pdp .lusena-pdp-accordion__chevron {
+  width: 1.6rem;
+  height: 1.6rem;
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+}
+
+.lusena-pdp .lusena-pdp-accordion__content {
+  font-size: 1.4rem;
+}
+
+.lusena-pdp .lusena-pdp-accordion__body {
+  color: var(--lusena-text-2);
+}
+
+.lusena-pdp .lusena-pdp-accordion__trigger-wrap {
+  display: flex;
+}
+
+/* Specs table */
+.lusena-pdp .lusena-pdp-specs-table {
+  width: 100%;
+  font-size: 1.4rem;
+}
+
+.lusena-pdp .lusena-pdp-specs-cell {
+  padding: 0.8rem 1.2rem;
+}
+
+.lusena-pdp .lusena-pdp-specs-label {
+  color: var(--lusena-text-2);
+  font-weight: 500;
+  width: 33.333%;
+}
+
+.lusena-pdp .lusena-pdp-specs-value {
+  color: var(--lusena-text-1);
+}
+
+.lusena-pdp .lusena-pdp-specs-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0;
+  border: 0;
+  min-height: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: color 150ms ease;
+}
+
+.lusena-pdp .lusena-pdp-specs-toggle:hover {
+  color: var(--lusena-text-1);
+}
+
+.lusena-pdp .lusena-pdp-specs-hint {
+  color: var(--lusena-accent-cta);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.lusena-pdp .lusena-pdp-specs-def-cell {
+  padding: 0.8rem 1.2rem;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: var(--lusena-text-2);
+}
+
+/* Packaging list */
+.lusena-pdp .lusena-pdp-packaging-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  color: color-mix(in srgb, var(--lusena-text-2) 80%, transparent);
+}
+
+.lusena-pdp .lusena-pdp-packaging-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+.lusena-pdp .lusena-pdp-packaging-icon {
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+  color: var(--lusena-accent-cta);
+}
+
+.lusena-pdp .lusena-pdp-packaging-icon svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+/* Care list */
+.lusena-pdp .lusena-pdp-care-list {
+  list-style: disc;
+  padding-left: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  color: color-mix(in srgb, var(--lusena-text-2) 80%, transparent);
+}
+
+/* ── Cross-sell (1i) ── */
+.lusena-pdp .lusena-pdp-cross-sell__border {
+  border-top: 1px solid var(--lusena-brand-bg);
+}
+
+.lusena-pdp .lusena-pdp-cross-sell__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.4rem;
+}
+
+@media (min-width: 768px) {
+  .lusena-pdp .lusena-pdp-cross-sell__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ============================================================
+   STICKY ADD-TO-CART BAR
+   Moved from {% stylesheet %} in lusena-pdp-sticky-atc.liquid
+   to avoid Shopify compiled_assets size truncation.
+   ============================================================ */
+
+.lusena-sticky-atc {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
+  transition: transform var(--lusena-transition-med);
+  transform: translateY(0);
+  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.05);
+  background: color-mix(in srgb, var(--lusena-surface-1) 95%, transparent);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.lusena-sticky-atc--hidden {
+  transform: translateY(100%);
+}
+
+.lusena-sticky-atc__mobile {
+  display: block;
+  padding: 1rem 1.6rem;
+}
+
+.lusena-sticky-atc__desktop {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 2.4rem;
+  padding: 1.2rem 2.4rem;
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lusena-sticky-atc__desktop-col {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.lusena-sticky-atc__desktop-col--product {
+  flex: 0 1 auto;
+  gap: 1.2rem;
+  min-width: 0;
+}
+
+.lusena-sticky-atc__desktop-col--price {
+  flex-direction: row;
+  align-items: baseline;
+  gap: 0.8rem;
+  flex-shrink: 0;
+}
+
+.lusena-sticky-atc__desktop-col--trust {
+  gap: 0.6rem;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.lusena-sticky-atc__divider {
+  width: 1px;
+  height: 2rem;
+  background: color-mix(in srgb, var(--lusena-text-2) 15%, transparent);
+  flex-shrink: 0;
+}
+
+.lusena-sticky-atc__trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding-bottom: 0.8rem;
+  margin-bottom: 0.8rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--lusena-text-2) 5%, transparent);
+}
+
+.lusena-sticky-atc__trust-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  color: var(--lusena-accent-cta);
+  flex-shrink: 0;
+}
+
+.lusena-sticky-atc__trust-text {
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: var(--lusena-text-2);
+}
+
+.lusena-sticky-atc__row {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.lusena-sticky-atc__image {
+  border-radius: var(--lusena-radius-xs, 2px);
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--lusena-surface-2);
+}
+
+.lusena-sticky-atc__image--mobile {
+  width: 4.4rem;
+  height: 4.4rem;
+}
+
+.lusena-sticky-atc__image--desktop {
+  width: 4rem;
+  height: 4rem;
+}
+
+.lusena-sticky-atc__desktop-title {
+  max-width: 200px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--lusena-text-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lusena-sticky-atc__meta {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: 0;
+}
+
+.lusena-sticky-atc__price {
+  font-size: 1.4rem;
+  line-height: 2rem;
+  font-weight: 500;
+  color: var(--lusena-text-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lusena-sticky-atc__desktop-col--price .lusena-sticky-atc__price {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  font-weight: 600;
+  overflow: visible;
+}
+
+.lusena-sticky-atc__per-night {
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: var(--lusena-accent-cta);
+  white-space: nowrap;
+}
+
+.lusena-sticky-atc__mobile .lusena-sticky-atc__per-night {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lusena-sticky-atc__variant {
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: var(--lusena-text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lusena-sticky-atc__button {
+  height: 4.4rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  flex-shrink: 0;
+}
+
+.lusena-sticky-atc__button--desktop {
+  margin-left: 0.8rem;
+  padding-left: 3.2rem;
+  padding-right: 3.2rem;
+}
+
+@media (min-width: 1024px) {
+  .lusena-sticky-atc__desktop {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  .lusena-sticky-atc__desktop-title {
+    max-width: 20rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .lusena-sticky-atc__mobile {
+    display: none;
+  }
+
+  .lusena-sticky-atc__desktop {
+    display: flex;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lusena-sticky-atc {
+    transition: none;
+  }
+}

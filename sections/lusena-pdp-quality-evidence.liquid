@@ -31,7 +31,7 @@
       style="{{ override_style }}"
     {% endif %}
   >
-    <div class="container">
+    <div class="lusena-container">
       <h2 class="lusena-pdp-quality-evidence__heading lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         {{ section.settings.heading | escape }}
       </h2>
@@ -76,7 +76,7 @@
             >
               <button
                 type="button"
-                class="lusena-pdp-quality-evidence__toggle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cta focus-visible:ring-offset-2"
+                class="lusena-pdp-quality-evidence__toggle"
                 data-lusena-quality-evidence-toggle
                 aria-expanded="false"
               >
@@ -137,15 +137,15 @@
 
 {% stylesheet %}
   .lusena-pdp-quality-evidence {
-    background-color: rgb(247 245 242 / 1);
+    background-color: var(--lusena-brand-bg);
   }
 
   .lusena-pdp-quality-evidence__heading {
     margin: 0;
-    font-family: 'Source Serif 4', serif;
+    font-family: var(--lusena-font-brand);
     font-size: 24px;
     line-height: 32px;
-    color: rgb(17 17 17 / 1);
+    color: var(--lusena-text-1);
     text-align: center;
   }
 
@@ -154,12 +154,12 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: var(--lusena-space-2);
   }
 
   .lusena-pdp-quality-evidence__item {
-    background-color: rgb(240 238 235 / 1);
-    border-radius: 2px;
+    background-color: var(--lusena-surface-2);
+    border-radius: var(--lusena-radius-sm);
     overflow: hidden;
   }
 
@@ -168,23 +168,29 @@
     padding: 20px;
     display: flex;
     align-items: flex-start;
-    gap: 16px;
+    gap: var(--lusena-space-2);
     text-align: left;
-    background-color: rgb(240 238 235 / 1);
+    background-color: var(--lusena-surface-2);
     border: 0;
     transition: background-color 0.15s ease;
     color: inherit;
+    cursor: pointer;
   }
 
   .lusena-pdp-quality-evidence__toggle:hover {
-    background-color: rgb(240 238 235 / 0.8);
+    background-color: color-mix(in srgb, var(--lusena-surface-2) 80%, transparent);
+  }
+
+  .lusena-pdp-quality-evidence__toggle:focus-visible {
+    outline: 2px solid var(--lusena-accent-cta);
+    outline-offset: 2px;
   }
 
   .lusena-pdp-quality-evidence__toggle-icon-wrap {
     width: 40px;
     height: 40px;
     border-radius: 9999px;
-    background-color: rgb(247 245 242 / 1);
+    background-color: var(--lusena-brand-bg);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -195,7 +201,7 @@
   .lusena-pdp-quality-evidence__toggle-icon {
     width: 20px;
     height: 20px;
-    color: rgb(14 94 90 / 1);
+    color: var(--lusena-accent-cta);
   }
 
   .lusena-pdp-quality-evidence__toggle-copy {
@@ -203,28 +209,28 @@
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: var(--lusena-space-05);
   }
 
   .lusena-pdp-quality-evidence__title {
     margin: 0;
-    font-family: 'Source Serif 4', serif;
+    font-family: var(--lusena-font-brand);
     font-size: 20px;
     line-height: 28px;
-    color: rgb(17 17 17 / 1);
+    color: var(--lusena-text-1);
   }
 
   .lusena-pdp-quality-evidence__summary {
     margin: 0;
     font-size: 14px;
     line-height: 1.625;
-    color: rgb(74 74 74 / 1);
+    color: var(--lusena-text-2);
   }
 
   .lusena-pdp-quality-evidence__chevron {
     width: 20px;
     height: 20px;
-    color: rgb(74 74 74 / 0.5);
+    color: color-mix(in srgb, var(--lusena-text-2) 50%, transparent);
     flex-shrink: 0;
     margin-top: 4px;
     transition: transform 0.2s ease;
@@ -245,14 +251,14 @@
     margin: 0 0 12px;
     font-size: 14px;
     line-height: 1.625;
-    color: rgb(74 74 74 / 1);
+    color: var(--lusena-text-2);
   }
 
   .lusena-pdp-quality-evidence__cta {
     font-size: 12px;
     line-height: 16px;
     font-weight: 500;
-    color: rgb(14 94 90 / 1);
+    color: var(--lusena-accent-cta);
     text-decoration: none;
   }
 
@@ -261,7 +267,7 @@
   }
 
   .lusena-pdp-quality-evidence__cta:focus-visible {
-    outline: 2px solid rgb(14 94 90);
+    outline: 2px solid var(--lusena-accent-cta);
     outline-offset: 2px;
   }
 

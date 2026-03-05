@@ -1805,8 +1805,8 @@
     const mainCta = root.querySelector('#main-cta');
     if (!stickyBar || !mainCta) return;
 
-    const show = () => stickyBar.classList.remove('translate-y-full');
-    const hide = () => stickyBar.classList.add('translate-y-full');
+    const show = () => stickyBar.classList.remove('lusena-sticky-atc--hidden');
+    const hide = () => stickyBar.classList.add('lusena-sticky-atc--hidden');
     const hasPassedMainCta = () => {
       const rect = mainCta.getBoundingClientRect();
       return rect.bottom <= 0;

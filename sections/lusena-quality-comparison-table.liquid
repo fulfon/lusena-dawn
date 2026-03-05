@@ -14,98 +14,90 @@
   endif
 -%}
 <section
-  class="bg-brand-bg lusena-quality-comparison-table lusena-spacing--standard"
+  class="lusena-bg-surface-1 lusena-quality-comparison-table lusena-spacing--standard"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container">
-    <div class="text-center lusena-gap-section-intro lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <h2 class="text-3xl md:text-4xl font-serif text-primary">
-        {{ section.settings.heading | escape }}
-      </h2>
-      {%- if section.settings.subheading != blank -%}
-        <p class="text-secondary max-w-2xl mx-auto">
-          {{ section.settings.subheading | escape }}
-        </p>
-      {%- endif -%}
+  <div class="lusena-container--narrow lusena-text-center lusena-content-flow--tight lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <h2 class="lusena-type-h1">
+      {{ section.settings.heading | escape }}
+    </h2>
+    {%- if section.settings.subheading != blank -%}
+      <p class="lusena-type-body">
+        {{ section.settings.subheading | escape }}
+      </p>
+    {%- endif -%}
+  </div>
+
+  <div class="lusena-container--narrow">
+    {%- comment -%} Desktop table (visible ≥1024px) {%- endcomment -%}
+    <div class="lusena-truth-table__table-wrap{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <table class="lusena-truth-table__table" aria-label="{{ section.settings.heading | escape }}">
+        <thead>
+          <tr>
+            <th scope="col">{{ section.settings.metric_label | default: 'Porównanie' | escape }}</th>
+            <th scope="col">{{ section.settings.lusena_label | escape }}</th>
+            <th scope="col">{{ section.settings.others_label | escape }}</th>
+          </tr>
+        </thead>
+        <tbody{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'row' -%}
+              <tr class="{% if settings.animations_reveal_on_scroll %}scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
+                <th scope="row">{{ block.settings.metric | escape }}</th>
+                <td>
+                  <span class="lusena-truth-table__value lusena-truth-table__value--lusena">
+                    <svg class="lusena-truth-table__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="m9 12 2 2 4-4"/>
+                    </svg>
+                    <span>{{ block.settings.lusena_value | escape }}</span>
+                  </span>
+                </td>
+                <td>
+                  <span class="lusena-truth-table__value lusena-truth-table__value--others">
+                    <svg class="lusena-truth-table__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="m15 9-6 6"/>
+                      <path d="m9 9 6 6"/>
+                    </svg>
+                    <span>{{ block.settings.others_value | escape }}</span>
+                  </span>
+                </td>
+              </tr>
+            {%- endif -%}
+          {%- endfor -%}
+        </tbody>
+      </table>
     </div>
 
-    <div class="lusena-quality-comparison-table__desktop{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <div class="overflow-x-auto border border-secondary/10 bg-white rounded-sm">
-        <table class="w-full text-left" aria-label="{{ section.settings.heading | escape }}">
-          <thead class="bg-surface-2">
-            <tr>
-              <th class="p-4 text-xs uppercase tracking-wider text-secondary font-semibold" scope="col">
-                {{ section.settings.metric_label | escape }}
-              </th>
-              <th class="p-4 text-xs uppercase tracking-wider text-secondary font-semibold" scope="col">
-                {{ section.settings.lusena_label | escape }}
-              </th>
-              <th class="p-4 text-xs uppercase tracking-wider text-secondary font-semibold" scope="col">
-                {{ section.settings.marketplace_label | escape }}
-              </th>
-              <th class="p-4 text-xs uppercase tracking-wider text-secondary font-semibold" scope="col">
-                {{ section.settings.premium_label | escape }}
-              </th>
-            </tr>
-          </thead>
-          <tbody{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
-            {%- for block in section.blocks -%}
-              {%- if block.type == 'row' -%}
-                <tr class="border-t border-secondary/10{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
-                  <th class="p-4 font-medium text-primary align-top" scope="row">
-                    {{ block.settings.metric | escape }}
-                  </th>
-                  <td class="p-4 text-secondary align-top">
-                    {{ block.settings.lusena_value | escape }}
-                  </td>
-                  <td class="p-4 text-secondary align-top">
-                    {{ block.settings.marketplace_value | escape }}
-                  </td>
-                  <td class="p-4 text-secondary align-top">
-                    {{ block.settings.premium_value | escape }}
-                  </td>
-                </tr>
-              {%- endif -%}
-            {%- endfor -%}
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="lusena-quality-comparison-table__mobile grid grid-cols-1 gap-3"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
+    {%- comment -%} Mobile cards (visible <1024px) {%- endcomment -%}
+    <div class="lusena-truth-table__cards"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
       {%- for block in section.blocks -%}
         {%- if block.type == 'row' -%}
-          <article class="bg-white border border-secondary/10 rounded-sm p-5{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
-            <h3 class="font-serif text-lg text-primary mb-4">
-              {{ block.settings.metric | escape }}
-            </h3>
-            <div class="grid grid-cols-1 gap-3 text-sm">
-              <div class="p-3 rounded-sm bg-surface-2">
-                <div class="text-[11px] uppercase tracking-wider font-semibold text-accent-cta">
-                  {{ section.settings.lusena_label | escape }}
-                </div>
-                <div class="mt-1 text-secondary">
-                  {{ block.settings.lusena_value | escape }}
-                </div>
-              </div>
-              <div class="p-3 rounded-sm bg-neutral-50">
-                <div class="text-[11px] uppercase tracking-wider font-semibold text-secondary">
-                  {{ section.settings.marketplace_label | escape }}
-                </div>
-                <div class="mt-1 text-secondary">
-                  {{ block.settings.marketplace_value | escape }}
-                </div>
-              </div>
-              <div class="p-3 rounded-sm bg-neutral-50">
-                <div class="text-[11px] uppercase tracking-wider font-semibold text-secondary">
-                  {{ section.settings.premium_label | escape }}
-                </div>
-                <div class="mt-1 text-secondary">
-                  {{ block.settings.premium_value | escape }}
-                </div>
-              </div>
+          <article class="lusena-truth-table__card{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
+            <h3 class="lusena-truth-table__card-metric">{{ block.settings.metric | escape }}</h3>
+            <div class="lusena-truth-table__card-line lusena-truth-table__card-line--lusena">
+              <span class="lusena-truth-table__card-label lusena-truth-table__card-label--lusena">{{ section.settings.lusena_label | escape }}</span>
+              <span class="lusena-truth-table__value lusena-truth-table__value--lusena">
+                <svg class="lusena-truth-table__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="m9 12 2 2 4-4"/>
+                </svg>
+                <span>{{ block.settings.lusena_value | escape }}</span>
+              </span>
+            </div>
+            <div class="lusena-truth-table__card-line">
+              <span class="lusena-truth-table__card-label">{{ section.settings.others_label | escape }}</span>
+              <span class="lusena-truth-table__value lusena-truth-table__value--others">
+                <svg class="lusena-truth-table__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="m15 9-6 6"/>
+                  <path d="m9 9 6 6"/>
+                </svg>
+                <span>{{ block.settings.others_value | escape }}</span>
+              </span>
             </div>
           </article>
         {%- endif -%}
@@ -114,28 +106,12 @@
 
     {%- assign footer_note = section.settings.footer_note | strip -%}
     {%- if footer_note != blank -%}
-      <p class="text-xs text-secondary mt-4 max-w-3xl mx-auto text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <p class="lusena-truth-table__note{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         {{ footer_note | escape }}
       </p>
     {%- endif -%}
   </div>
 </section>
-
-{% stylesheet %}
-  .lusena-quality-comparison-table__desktop {
-    display: none;
-  }
-
-  @media (min-width: 1024px) {
-    .lusena-quality-comparison-table__desktop {
-      display: block;
-    }
-
-    .lusena-quality-comparison-table__mobile {
-      display: none;
-    }
-  }
-{% endstylesheet %}
 
 {% schema %}
 {
@@ -192,19 +168,19 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Tabela porównawcza"
+      "default": "Nie prosimy o wiarę"
     },
     {
       "type": "text",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Nie prosimy o wiarę. Pokazujemy parametry."
+      "default": "Pokazujemy parametry."
     },
     {
       "type": "text",
       "id": "metric_label",
-      "label": "Column label: metric",
-      "default": "Parametr"
+      "label": "Column label: Metric",
+      "default": "Porównanie"
     },
     {
       "type": "text",
@@ -214,15 +190,21 @@
     },
     {
       "type": "text",
-      "id": "marketplace_label",
-      "label": "Column label: marketplace",
-      "default": "Typowa oferta z marketplace"
+      "id": "others_label",
+      "label": "Column label: Others",
+      "default": "Typowe oferty"
     },
     {
       "type": "text",
-      "id": "premium_label",
-      "label": "Column label: premium",
-      "default": "Marka premium importowana"
+      "id": "cta_label",
+      "label": "CTA button label",
+      "default": "Zobacz kolekcję"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link",
+      "default": "/collections/all"
     },
     {
       "type": "textarea",
@@ -249,15 +231,9 @@
         },
         {
           "type": "text",
-          "id": "marketplace_value",
-          "label": "Marketplace value",
-          "default": "Satyna poliestrowa / mieszanka"
-        },
-        {
-          "type": "text",
-          "id": "premium_value",
-          "label": "Premium import value",
-          "default": "100% jedwab morwowy"
+          "id": "others_value",
+          "label": "Others value",
+          "default": "Satyna poliestrowa lub mieszanka"
         }
       ]
     }
@@ -271,53 +247,47 @@
           "settings": {
             "metric": "Materiał",
             "lusena_value": "100% jedwab morwowy",
-            "marketplace_value": "Satyna poliestrowa / mieszanka",
-            "premium_value": "100% jedwab morwowy"
+            "others_value": "Satyna poliestrowa lub mieszanka"
           }
         },
         {
           "type": "row",
           "settings": {
             "metric": "Gramatura",
-            "lusena_value": "22 momme",
-            "marketplace_value": "Brak danych / 16 momme",
-            "premium_value": "19–22 momme"
+            "lusena_value": "22 momme — splot gęstszy o 30%",
+            "others_value": "16–19 momme lub brak danych"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "metric": "Klasa włókna",
+            "lusena_value": "6A — najwyższa klasyfikacja",
+            "others_value": "Nieokreślona"
           }
         },
         {
           "type": "row",
           "settings": {
             "metric": "Certyfikat",
-            "lusena_value": "OEKO-TEX Standard 100",
-            "marketplace_value": "Brak",
-            "premium_value": "Czasami"
+            "lusena_value": "OEKO-TEX® Standard 100",
+            "others_value": "Brak lub nieokreślony"
           }
         },
         {
           "type": "row",
           "settings": {
-            "metric": "Wysyłka",
-            "lusena_value": "24h z Polski",
-            "marketplace_value": "14–30 dni",
-            "premium_value": "5–7 dni"
+            "metric": "Magazyn i wysyłka",
+            "lusena_value": "Polska — wysyłka 24h",
+            "others_value": "Import 14–30 dni"
           }
         },
         {
           "type": "row",
           "settings": {
             "metric": "Gwarancja",
-            "lusena_value": "60 dni testu",
-            "marketplace_value": "14 dni (prawo)",
-            "premium_value": "14–30 dni"
-          }
-        },
-        {
-          "type": "row",
-          "settings": {
-            "metric": "Cena",
-            "lusena_value": "249 zł",
-            "marketplace_value": "49–79 zł",
-            "premium_value": "400–600 zł"
+            "lusena_value": "60 dni testu, nawet po użyciu",
+            "others_value": "14 dni (prawo konsumenta)"
           }
         }
       ]

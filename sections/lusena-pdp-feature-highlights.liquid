@@ -25,12 +25,12 @@
     endif
   -%}
   <section
-    class="lusena-pdp-feature-highlights lusena-spacing--standard border-t border-brand-bg"
+    class="lusena-pdp-feature-highlights lusena-spacing--standard"
     {% if override_style != blank %}
       style="{{ override_style }}"
     {% endif %}
   >
-    <div class="container">
+    <div class="lusena-container">
       <div
         class="lusena-pdp-feature-highlights__grid"
         {% if settings.animations_reveal_on_scroll %}
@@ -88,12 +88,14 @@
                   stroke_width: 1.5
                 %}
               </div>
-              <h3 class="lusena-pdp-feature-highlights__title">
-                {{ feature_title | escape }}
-              </h3>
-              <p class="lusena-pdp-feature-highlights__description">
-                {{ feature_description | escape | newline_to_br }}
-              </p>
+              <div class="lusena-pdp-feature-highlights__text">
+                <h3 class="lusena-pdp-feature-highlights__title">
+                  {{ feature_title | escape }}
+                </h3>
+                <p class="lusena-pdp-feature-highlights__description">
+                  {{ feature_description | escape | newline_to_br }}
+                </p>
+              </div>
             </div>
           {%- endif -%}
         {%- endfor -%}
@@ -103,73 +105,109 @@
 {%- endif -%}
 
 {% stylesheet %}
+  .lusena-pdp-feature-highlights {
+    border-top: 1px solid var(--lusena-brand-bg);
+  }
+
+  /* Mobile-first: stacked rows with icon-left layout */
   .lusena-pdp-feature-highlights__grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
   }
 
   .lusena-pdp-feature-highlights__card {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
-    align-items: center;
-    text-align: center;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--lusena-space-3);
+    padding: var(--lusena-space-3) 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
+  }
+
+  .lusena-pdp-feature-highlights__card:first-child {
+    padding-top: 0;
+  }
+
+  .lusena-pdp-feature-highlights__card:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
   }
 
   .lusena-pdp-feature-highlights__icon-wrap {
-    width: 48px;
-    height: 48px;
+    width: 4rem;
+    height: 4rem;
+    min-width: 4rem;
     border-radius: 9999px;
-    background-color: rgb(240 238 235 / 1);
+    background-color: var(--lusena-surface-2);
     display: inline-flex;
     align-items: center;
     justify-content: center;
   }
 
   .lusena-pdp-feature-highlights__icon-svg {
-    width: 24px;
-    height: 24px;
-    color: rgb(14 94 90 / 1);
+    width: var(--lusena-space-3);
+    height: var(--lusena-space-3);
+    color: var(--lusena-accent-cta);
+  }
+
+  .lusena-pdp-feature-highlights__text {
+    min-width: 0;
   }
 
   .lusena-pdp-feature-highlights__title {
     margin: 0;
-    font-family: 'Source Serif 4', serif;
+    font-family: var(--lusena-font-brand);
     font-size: 16px;
     line-height: 24px;
-    color: rgb(17 17 17 / 1);
+    color: var(--lusena-text-1);
   }
 
   .lusena-pdp-feature-highlights__description {
-    margin: 0;
+    margin: 0.4rem 0 0;
     font-size: 14px;
     line-height: 1.625;
-    color: rgb(74 74 74 / 1);
+    color: var(--lusena-text-2);
   }
 
+  /* Tablet: 2-column card grid */
   @media (min-width: 640px) {
     .lusena-pdp-feature-highlights__grid {
+      display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 32px;
+      gap: var(--lusena-space-4);
     }
 
     .lusena-pdp-feature-highlights__card {
-      gap: 12px;
+      flex-direction: column;
       align-items: flex-start;
+      gap: 1.2rem;
       text-align: left;
+      padding: 0;
+      border-bottom: 0;
+    }
+
+    .lusena-pdp-feature-highlights__icon-wrap {
+      width: var(--lusena-space-6);
+      height: var(--lusena-space-6);
+      min-width: var(--lusena-space-6);
     }
 
     .lusena-pdp-feature-highlights__title {
       font-size: 20px;
       line-height: 28px;
     }
+
+    .lusena-pdp-feature-highlights__description {
+      margin-top: 0;
+    }
   }
 
+  /* Desktop: 3-column grid */
   @media (min-width: 1024px) {
     .lusena-pdp-feature-highlights__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 48px;
+      gap: var(--lusena-space-6);
     }
   }
 {% endstylesheet %}

@@ -140,7 +140,7 @@
 -%}
 
 <div
-  class="w-full lusena-pdp-accordion"
+  class="lusena-pdp-accordion"
   data-lusena-accordion-root
   data-lusena-accordion-single
   data-lusena-accordion-collapsible
@@ -149,14 +149,14 @@
   {% endif %}
 >
   <div
-    class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+    class="lusena-pdp-accordion__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
     data-lusena-accordion-item
     data-lusena-accordion-value="specs"
   >
-    <div class="flex">
+    <div class="lusena-pdp-accordion__trigger-wrap">
       <button
         type="button"
-        class="lusena-pdp-accordion__trigger flex flex-1 items-center justify-between min-h-[44px] font-medium transition-all hover:text-accent-cta text-left"
+        class="lusena-pdp-accordion__trigger"
         data-lusena-accordion-trigger
         data-state="closed"
         aria-expanded="false"
@@ -164,92 +164,92 @@
         {{ specs_heading | escape }}
         {% render 'lusena-icon',
           name: 'chevron-down',
-          class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200',
+          class: 'lusena-pdp-accordion__chevron',
           stroke_width: 2
         %}
       </button>
     </div>
     <div
-      class="lusena-pdp-accordion__content overflow-hidden text-sm"
+      class="lusena-pdp-accordion__content"
       data-lusena-accordion-content
       data-state="closed"
     >
-      <div class="lusena-pdp-accordion__body text-secondary">
-        <table class="w-full text-sm" data-lusena-specs-table>
+      <div class="lusena-pdp-accordion__body">
+        <table class="lusena-pdp-specs-table" data-lusena-specs-table>
           <tbody>
             <tr class="lusena-pdp-specs-row--alt">
-              <td class="py-2 px-3 text-secondary font-medium w-1/3">{{ label_material | escape }}</td>
-              <td class="py-2 px-3 text-primary">{{ value_material | escape }}</td>
+              <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">{{ label_material | escape }}</td>
+              <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_material | escape }}</td>
             </tr>
-            <tr class="">
-              <td class="py-2 px-3 text-secondary font-medium w-1/3">
+            <tr>
+              <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">
                 <button
                   type="button"
-                  class="inline-flex items-center gap-1 hover:text-primary transition-colors text-left"
+                  class="lusena-pdp-specs-toggle"
                   data-lusena-spec-def-toggle
                   data-spec-key="weave"
                   aria-expanded="false"
                 >
                   Splot
-                  <span class="text-accent-cta text-[10px] leading-none">?</span>
+                  <span class="lusena-pdp-specs-hint">?</span>
                 </button>
               </td>
-              <td class="py-2 px-3 text-primary">{{ value_weave | escape }}</td>
+              <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_weave | escape }}</td>
             </tr>
             <tr class="lusena-pdp-specs-row--definition" data-lusena-spec-def-row data-spec-key="weave" hidden>
-              <td colspan="2" class="px-3 py-2 text-xs text-secondary leading-relaxed">{{ def_weave }}</td>
+              <td colspan="2" class="lusena-pdp-specs-def-cell">{{ def_weave }}</td>
             </tr>
             <tr class="lusena-pdp-specs-row--alt">
-              <td class="py-2 px-3 text-secondary font-medium w-1/3">
+              <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">
                 <button
                   type="button"
-                  class="inline-flex items-center gap-1 hover:text-primary transition-colors text-left"
+                  class="lusena-pdp-specs-toggle"
                   data-lusena-spec-def-toggle
                   data-spec-key="density"
                   aria-expanded="false"
                 >
                   Gęstość
-                  <span class="text-accent-cta text-[10px] leading-none">?</span>
+                  <span class="lusena-pdp-specs-hint">?</span>
                 </button>
               </td>
-              <td class="py-2 px-3 text-primary">{{ value_momme | escape }}</td>
+              <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_momme | escape }}</td>
             </tr>
             <tr class="lusena-pdp-specs-row--definition" data-lusena-spec-def-row data-spec-key="density" hidden>
-              <td colspan="2" class="px-3 py-2 text-xs text-secondary leading-relaxed">{{ def_density }}</td>
+              <td colspan="2" class="lusena-pdp-specs-def-cell">{{ def_density }}</td>
             </tr>
-            <tr class="">
-              <td class="py-2 px-3 text-secondary font-medium w-1/3">
+            <tr>
+              <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">
                 <button
                   type="button"
-                  class="inline-flex items-center gap-1 hover:text-primary transition-colors text-left"
+                  class="lusena-pdp-specs-toggle"
                   data-lusena-spec-def-toggle
                   data-spec-key="grade"
                   aria-expanded="false"
                 >
                   Klasa
-                  <span class="text-accent-cta text-[10px] leading-none">?</span>
+                  <span class="lusena-pdp-specs-hint">?</span>
                 </button>
               </td>
-              <td class="py-2 px-3 text-primary">{{ value_grade | escape }}</td>
+              <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_grade | escape }}</td>
             </tr>
             <tr class="lusena-pdp-specs-row--definition" data-lusena-spec-def-row data-spec-key="grade" hidden>
-              <td colspan="2" class="px-3 py-2 text-xs text-secondary leading-relaxed">{{ def_grade }}</td>
+              <td colspan="2" class="lusena-pdp-specs-def-cell">{{ def_grade }}</td>
             </tr>
             <tr class="lusena-pdp-specs-row--alt">
-              <td class="py-2 px-3 text-secondary font-medium w-1/3">{{ label_dimensions | escape }}</td>
-              <td class="py-2 px-3 text-primary">{{ value_dimensions | escape }}</td>
+              <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">{{ label_dimensions | escape }}</td>
+              <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_dimensions | escape }}</td>
             </tr>
-            <tr class="">
-              <td class="py-2 px-3 text-secondary font-medium w-1/3">{{ label_closure | escape }}</td>
-              <td class="py-2 px-3 text-primary">{{ value_closure | escape }}</td>
+            <tr>
+              <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">{{ label_closure | escape }}</td>
+              <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_closure | escape }}</td>
             </tr>
             <tr class="lusena-pdp-specs-row--alt">
-              <td class="py-2 px-3 text-secondary font-medium w-1/3">{{ label_weight | escape }}</td>
-              <td class="py-2 px-3 text-primary">{{ value_weight | escape }}</td>
+              <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">{{ label_weight | escape }}</td>
+              <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_weight | escape }}</td>
             </tr>
-            <tr class="">
-              <td class="py-2 px-3 text-secondary font-medium w-1/3">{{ label_certification | escape }}</td>
-              <td class="py-2 px-3 text-primary">{{ value_certification | escape }}</td>
+            <tr>
+              <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">{{ label_certification | escape }}</td>
+              <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_certification | escape }}</td>
             </tr>
           </tbody>
         </table>
@@ -258,14 +258,14 @@
   </div>
 
   <div
-    class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+    class="lusena-pdp-accordion__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
     data-lusena-accordion-item
     data-lusena-accordion-value="packaging"
   >
-    <div class="flex">
+    <div class="lusena-pdp-accordion__trigger-wrap">
       <button
         type="button"
-        class="lusena-pdp-accordion__trigger flex flex-1 items-center justify-between min-h-[44px] font-medium transition-all hover:text-accent-cta text-left"
+        class="lusena-pdp-accordion__trigger"
         data-lusena-accordion-trigger
         data-state="closed"
         aria-expanded="false"
@@ -273,28 +273,28 @@
         {{ packaging_heading | escape }}
         {% render 'lusena-icon',
           name: 'chevron-down',
-          class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200',
+          class: 'lusena-pdp-accordion__chevron',
           stroke_width: 2
         %}
       </button>
     </div>
     <div
-      class="lusena-pdp-accordion__content overflow-hidden text-sm"
+      class="lusena-pdp-accordion__content"
       data-lusena-accordion-content
       data-state="closed"
     >
-      <div class="lusena-pdp-accordion__body text-secondary">
-        <ul class="space-y-3 text-secondary/80">
+      <div class="lusena-pdp-accordion__body">
+        <ul class="lusena-pdp-packaging-list">
           {%- if packaging_items != blank -%}
             {%- for item in packaging_items -%}
-              <li class="flex items-start gap-3">
-                <span class="shrink-0 mt-0.5 text-accent-cta">
+              <li class="lusena-pdp-packaging-item">
+                <span class="lusena-pdp-packaging-icon">
                   {%- if forloop.index == 1 -%}
-                    {% render 'lusena-icon', name: 'sparkles', class: 'w-4 h-4' %}
+                    {% render 'lusena-icon', name: 'sparkles' %}
                   {%- elsif forloop.index == 2 -%}
-                    {% render 'lusena-icon', name: 'gift', class: 'w-4 h-4' %}
+                    {% render 'lusena-icon', name: 'gift' %}
                   {%- else -%}
-                    {% render 'lusena-icon', name: 'file-text', class: 'w-4 h-4' %}
+                    {% render 'lusena-icon', name: 'file-text' %}
                   {%- endif -%}
                 </span>
                 <span>{{ item | escape }}</span>
@@ -307,14 +307,14 @@
   </div>
 
   <div
-    class="lusena-pdp-accordion__item border-b border-secondary/20{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+    class="lusena-pdp-accordion__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
     data-lusena-accordion-item
     data-lusena-accordion-value="care"
   >
-    <div class="flex">
+    <div class="lusena-pdp-accordion__trigger-wrap">
       <button
         type="button"
-        class="lusena-pdp-accordion__trigger flex flex-1 items-center justify-between min-h-[44px] font-medium transition-all hover:text-accent-cta text-left"
+        class="lusena-pdp-accordion__trigger"
         data-lusena-accordion-trigger
         data-state="closed"
         aria-expanded="false"
@@ -322,18 +322,18 @@
         {{ care_heading | escape }}
         {% render 'lusena-icon',
           name: 'chevron-down',
-          class: 'lusena-pdp-accordion__chevron h-4 w-4 shrink-0 transition-transform duration-200',
+          class: 'lusena-pdp-accordion__chevron',
           stroke_width: 2
         %}
       </button>
     </div>
     <div
-      class="lusena-pdp-accordion__content overflow-hidden text-sm"
+      class="lusena-pdp-accordion__content"
       data-lusena-accordion-content
       data-state="closed"
     >
-      <div class="lusena-pdp-accordion__body text-secondary">
-        <ul class="list-disc pl-4 space-y-1 text-secondary/80">
+      <div class="lusena-pdp-accordion__body">
+        <ul class="lusena-pdp-care-list">
           {%- if care_steps != blank -%}
             {%- for step in care_steps -%}
               <li>{{ step | escape }}</li>

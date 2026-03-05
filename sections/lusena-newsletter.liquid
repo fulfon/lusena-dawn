@@ -14,7 +14,7 @@
   endif
 -%}
 <section
-  class="lusena-bg-surface-2 lusena-newsletter lusena-spacing--standard"
+  class="lusena-bg-surface-2 lusena-spacing--standard"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
@@ -22,13 +22,13 @@
   <div class="lusena-container">
     <div class="lusena-newsletter__inner{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {%- if section.settings.heading != blank -%}
-        <h2 class="lusena-newsletter__heading">
+        <h2 class="lusena-type-h1">
           {{ section.settings.heading | escape }}
         </h2>
       {%- endif -%}
 
       {%- if section.settings.subheading != blank -%}
-        <p class="lusena-newsletter__subheading">
+        <p class="lusena-type-body lusena-newsletter__subheading">
           {{ section.settings.subheading | escape }}
         </p>
       {%- endif -%}
@@ -37,23 +37,23 @@
         <input type="hidden" name="contact[tags]" value="newsletter">
 
         {%- if form.posted_successfully? -%}
-          <div class="lusena-newsletter__success" role="status">
-            <p>{{ section.settings.success_message | escape }}</p>
+          <div class="lusena-form-msg lusena-form-msg--success lusena-newsletter__msg" role="status">
+            {{ section.settings.success_message | escape }}
           </div>
         {%- else -%}
           {%- if form.errors -%}
-            <div class="lusena-newsletter__error" role="alert">
-              <p>{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>
+            <div class="lusena-form-msg lusena-form-msg--error lusena-newsletter__msg" role="alert">
+              {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
             </div>
           {%- endif -%}
 
-          <label class="lusena-newsletter__sr-only" for="LusenaNewsletterEmail">Twój adres email</label>
-          <div class="lusena-newsletter__field-group">
+          <label class="lusena-visually-hidden" for="LusenaNewsletterEmail">Twój adres email</label>
+          <div class="lusena-newsletter lusena-newsletter__field-group">
             <input
               id="LusenaNewsletterEmail"
               type="email"
               name="contact[email]"
-              class="lusena-newsletter__input"
+              class="lusena-input"
               placeholder="Twój adres email"
               required
               autocomplete="email"
@@ -76,7 +76,7 @@
       {%- endform -%}
 
       {%- if section.settings.privacy_text != blank -%}
-        <p class="lusena-newsletter__privacy">
+        <p class="lusena-type-caption">
           {{ section.settings.privacy_text | escape }}
         </p>
       {%- endif -%}
@@ -85,111 +85,57 @@
 </section>
 
 {% stylesheet %}
+  /* Foundations handles: .lusena-newsletter (flex col → row layout), .lusena-input (editorial border-radius: 0),
+     .lusena-form-msg / --success / --error, .lusena-visually-hidden, .lusena-type-h1/body/caption. */
+
+  /* Inner wrapper: centered narrow column */
   .lusena-newsletter__inner {
-    max-width: 520px;
+    max-width: 52.0rem;
     margin: 0 auto;
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: var(--lusena-space-2);
     align-items: center;
   }
 
-  .lusena-newsletter__heading {
-    font-family: var(--lusena-font-brand);
-    font-size: 28px;
-    line-height: 1.2;
-    margin: 0;
-    color: var(--lusena-text-1);
-  }
-
-  @media (min-width: 768px) {
-    .lusena-newsletter__heading {
-      font-size: 36px;
-    }
-  }
-
+  /* Subheading max-width */
   .lusena-newsletter__subheading {
-    font-size: 16px;
-    line-height: 1.5;
-    color: var(--lusena-text-2);
-    margin: 0;
-    max-width: 420px;
+    max-width: 42.0rem;
   }
 
+  /* Form container */
   .lusena-newsletter__form {
     width: 100%;
-    margin-top: 8px;
+    margin-top: var(--lusena-space-1);
   }
 
+  /* Override foundations .lusena-newsletter gap for joined look on desktop */
   .lusena-newsletter__field-group {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
     width: 100%;
   }
 
-  @media (min-width: 480px) {
-    .lusena-newsletter__field-group {
-      flex-direction: row;
-      gap: 0;
-    }
-  }
-
-  .lusena-newsletter__input {
-    height: 48px;
-    padding: 0 16px;
-    font-size: 15px;
-    border: 1px solid var(--lusena-color-n300);
-    border-radius: 6px;
-    background: #fff;
-    color: var(--lusena-text-1);
-    outline: none;
-    transition: border-color 0.15s ease;
-  }
-
-  @media (min-width: 480px) {
-    .lusena-newsletter__input {
-      flex: 1;
-      border-radius: 6px 0 0 6px;
-      border-right: none;
-    }
-  }
-
-  .lusena-newsletter__input:focus {
-    border-color: var(--lusena-accent-cta);
-    box-shadow: 0 0 0 1px var(--lusena-accent-cta);
-  }
-
-  .lusena-newsletter__input::placeholder {
-    color: var(--lusena-color-n400);
-  }
-
+  /* Submit button (editorial: no border-radius) */
   .lusena-newsletter__btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 48px;
-    padding: 0 28px;
-    font-size: 15px;
+    min-height: 4.4rem;
+    padding: var(--lusena-space-2) var(--lusena-space-4);
+    font-family: var(--lusena-font-ui);
+    font-size: 1.6rem;
     font-weight: 600;
     white-space: nowrap;
     border: none;
-    border-radius: 6px;
+    border-radius: var(--lusena-btn-radius);
     background: var(--lusena-accent-cta);
-    color: #fff;
+    color: var(--lusena-color-n0);
     cursor: pointer;
-    transition: background 0.15s ease;
-  }
-
-  @media (min-width: 480px) {
-    .lusena-newsletter__btn {
-      border-radius: 0 6px 6px 0;
-    }
+    transition: background var(--lusena-transition-fast);
   }
 
   .lusena-newsletter__btn:hover {
-    background: #0a4e4a;
+    background: var(--lusena-accent-cta-hover);
   }
 
   .lusena-newsletter__btn:focus-visible {
@@ -197,47 +143,13 @@
     outline-offset: 2px;
   }
 
-  .lusena-newsletter__sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  .lusena-newsletter__privacy {
-    font-size: 12px;
-    line-height: 1.5;
-    color: var(--lusena-color-n700);
-    margin: 4px 0 0;
-  }
-
-  .lusena-newsletter__success {
-    padding: 16px 24px;
-    background: #f0faf4;
-    border: 1px solid #2F7D4E;
-    border-radius: 8px;
-    color: #2F7D4E;
-    font-size: 15px;
-    font-weight: 500;
-    text-align: center;
+  /* Form messages: slightly larger for newsletter context */
+  .lusena-newsletter__msg {
     width: 100%;
-  }
-
-  .lusena-newsletter__error {
-    padding: 12px 16px;
-    background: #fef2f2;
-    border: 1px solid #B91C1C;
-    border-radius: 8px;
-    color: #B91C1C;
-    font-size: 14px;
-    margin-bottom: 8px;
-    width: 100%;
+    font-size: 1.4rem;
+    padding: var(--lusena-space-2);
     text-align: center;
+    justify-content: center;
   }
 {% endstylesheet %}
 

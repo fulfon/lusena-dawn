@@ -21,32 +21,32 @@
 >
   <div class="lusena-container">
     <div class="lusena-text-center lusena-gap-section-intro lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <h2 class="lusena-testimonials__heading">
+      <h2 class="lusena-type-h1">
         {{ section.settings.heading | escape }}
       </h2>
       {%- if section.settings.subheading != blank -%}
-        <p class="lusena-testimonials__subheading">{{ section.settings.subheading | escape }}</p>
+        <p class="lusena-type-body">{{ section.settings.subheading | escape }}</p>
       {%- endif -%}
     </div>
 
-    <div class="lusena-testimonials__grid{% if section.settings.link_label != blank %} lusena-gap-cta{% endif %}">
+    <div class="lusena-grid lusena-grid--3{% if section.settings.link_label != blank %} lusena-gap-cta{% endif %}">
       {%- for block in section.blocks -%}
         <div
-          class="lusena-testimonials__card lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          class="lusena-testimonial{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
           {% if settings.animations_reveal_on_scroll %}
             data-cascade
           {% endif %}
           {{ block.shopify_attributes }}
         >
-          <div class="lusena-testimonials__stars" aria-hidden="true">
+          <div class="lusena-testimonial__stars" aria-hidden="true">
             {%- for i in (1..5) -%}
               {% render 'lusena-icon', name: 'star', class: 'lusena-testimonials__star', stroke_width: 1.5 %}
             {%- endfor -%}
           </div>
-          <blockquote class="lusena-testimonials__quote">
+          <blockquote class="lusena-testimonial__quote">
             "{{ block.settings.quote | escape }}"
           </blockquote>
-          <div class="lusena-testimonials__author">
+          <div class="lusena-testimonial__author">
             — {{ block.settings.author | escape }}
           </div>
         </div>
@@ -70,76 +70,20 @@
 </section>
 
 {% stylesheet %}
-  .lusena-testimonials__heading {
-    font-family: var(--lusena-font-brand);
-    font-size: 3.0rem;
-    line-height: 1.2;
-    color: var(--lusena-text-1);
-    margin: 0;
-  }
+  /* Foundations handles: .lusena-testimonial (flex col, left border, gap, padding-left),
+     .lusena-testimonial__stars, .lusena-testimonial__quote (italic, 2.0rem),
+     .lusena-testimonial__author (1.4rem, weight 500).
+     Foundations handles: .lusena-grid / .lusena-grid--3 (1-col → 3-col).
+     Foundations handles: .lusena-type-h1, .lusena-type-body for heading/subheading. */
 
-  @media (min-width: 768px) {
-    .lusena-testimonials__heading {
-      font-size: 4.0rem;
-    }
-  }
-
-  .lusena-testimonials__subheading {
-    color: var(--lusena-text-2);
-    margin: 0;
-  }
-
-  .lusena-testimonials__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--lusena-space-8);
-  }
-
-  @media (min-width: 768px) {
-    .lusena-testimonials__grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  .lusena-testimonials__card {
-    background-color: var(--lusena-surface-2);
-    padding: var(--lusena-space-6);
-  }
-
-  @media (min-width: 768px) {
-    .lusena-testimonials__card {
-      padding: var(--lusena-space-8);
-    }
-  }
-
-  .lusena-testimonials__stars {
-    display: flex;
-    gap: 4px;
-    color: var(--lusena-accent-2);
-  }
-
+  /* Star icon sizing (foundations handles color via .lusena-testimonial__stars) */
   .lusena-testimonials__star {
-    width: 16px;
-    height: 16px;
+    width: 1.6rem;
+    height: 1.6rem;
     fill: currentColor;
   }
 
-  .lusena-testimonials__quote {
-    font-family: var(--lusena-font-brand);
-    font-size: 1.8rem;
-    line-height: 1.6;
-    color: var(--lusena-text-1);
-    margin: 0;
-  }
-
-  .lusena-testimonials__author {
-    font-size: 1.2rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--lusena-text-2);
-  }
-
+  /* CTA link */
   .lusena-testimonials__link {
     display: inline-flex;
     align-items: center;

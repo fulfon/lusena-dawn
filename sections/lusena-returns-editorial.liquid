@@ -14,104 +14,205 @@
   endif
 -%}
 <section
-  class="bg-brand-bg lusena-returns-editorial lusena-spacing--standard"
+  class="lusena-bg-brand lusena-returns-editorial lusena-spacing--standard"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container lusena-returns-editorial__container mx-auto">
-    <div class="lusena-returns-editorial__grid">
-      <div class="lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-        <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
-          {{ section.settings.kicker | escape }}
+  <div class="lusena-container lusena-split">
+    <div class="lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <span class="lusena-type-caption lusena-kicker lusena-returns-editorial__kicker">
+        {{ section.settings.kicker | escape }}
+      </span>
+      <h2 class="lusena-type-h1 lusena-returns-editorial__heading">
+        {{ section.settings.heading_line_1 | escape }}
+        <em>{{ section.settings.heading_line_2 | escape }}</em>
+      </h2>
+      <div class="lusena-type-body lusena-returns-editorial__body">
+        {{ section.settings.body_paragraph_1 }}
+      </div>
+      <div class="lusena-type-body lusena-returns-editorial__body">
+        {{ section.settings.body_paragraph_2 }}
+      </div>
+      {%- if section.settings.link_label != blank and section.settings.link_url != blank -%}
+        <a href="{{ section.settings.link_url }}" class="lusena-returns-editorial__link">
+          {{ section.settings.link_label | escape }}
+          {% render 'lusena-icon', name: 'arrow-right', class: 'lusena-returns-editorial__link-icon', stroke_width: 1.8 %}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="lusena-returns-editorial__compare{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="lusena-returns-editorial__compare-header">
+        <span class="lusena-returns-editorial__compare-label">
+          {{ section.settings.standard_label | escape }}
         </span>
-        <h2 class="text-3xl md:text-5xl font-serif text-primary leading-tight">
-          {{ section.settings.heading_line_1 | escape }}
-          <span class="italic">{{ section.settings.heading_line_2 | escape }}</span>
-        </h2>
-        <div class="text-secondary leading-relaxed">
-          {{ section.settings.body_paragraph_1 }}
-        </div>
-        <div class="text-secondary leading-relaxed">
-          {{ section.settings.body_paragraph_2 }}
-        </div>
-        {%- if section.settings.link_label != blank and section.settings.link_url != blank -%}
-          <a href="{{ section.settings.link_url }}" class="inline-flex items-center gap-2 text-accent-cta">
-            {{ section.settings.link_label | escape }}
-            {% render 'lusena-icon', name: 'arrow-right', class: 'w-4 h-4', stroke_width: 1.8 %}
-          </a>
-        {%- endif -%}
+        <span class="lusena-returns-editorial__compare-label lusena-returns-editorial__compare-label--lusena">
+          {{ section.settings.lusena_label | escape }}
+        </span>
       </div>
 
-      <div class="space-y-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-        <div class="grid grid-cols-2 gap-4">
-          <span class="text-xs uppercase tracking-widest text-secondary font-semibold text-center">
-            {{ section.settings.standard_label | escape }}
-          </span>
-          <span class="text-xs uppercase tracking-widest text-accent-cta font-semibold text-center">
-            {{ section.settings.lusena_label | escape }}
-          </span>
-        </div>
-
-        <div
-          class="space-y-4"
-          {% if settings.animations_reveal_on_scroll %}
-            data-cascade
-          {% endif %}
-        >
-          {%- for block in section.blocks -%}
-            {%- if block.type == 'compare_row' -%}
-              <div
-                class="grid grid-cols-2 gap-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-                {{ block.shopify_attributes }}
-              >
-                <div class="flex items-center gap-3 bg-white rounded-brand p-4">
-                  <div class="w-6 h-6 rounded-full bg-neutral-100 flex items-center justify-center flex-shrink-0">
-                    <span class="text-secondary text-sm leading-none">&times;</span>
-                  </div>
-                  <span class="text-sm text-secondary">{{ block.settings.standard | escape }}</span>
+      <div
+        class="lusena-returns-editorial__compare-rows"
+        {% if settings.animations_reveal_on_scroll %}
+          data-cascade
+        {% endif %}
+      >
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'compare_row' -%}
+            <div
+              class="lusena-returns-editorial__compare-row{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+              {{ block.shopify_attributes }}
+            >
+              <div class="lusena-returns-editorial__row lusena-returns-editorial__row--standard">
+                <div class="lusena-returns-editorial__row-icon lusena-returns-editorial__row-icon--x">
+                  <span>&times;</span>
                 </div>
-                <div class="flex items-center gap-3 lusena-returns-editorial__lusena-row rounded-brand p-4">
-                  <div class="w-6 h-6 rounded-full lusena-returns-editorial__lusena-dot flex items-center justify-center flex-shrink-0">
-                    {% render 'lusena-icon', name: 'check', class: 'w-3.5 h-3.5 text-accent-cta', stroke_width: 2.5 %}
-                  </div>
-                  <span class="text-sm text-primary font-medium">{{ block.settings.lusena | escape }}</span>
-                </div>
+                <span class="lusena-returns-editorial__row-text">{{ block.settings.standard | escape }}</span>
               </div>
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
+              <div class="lusena-returns-editorial__row lusena-returns-editorial__row--lusena">
+                <div class="lusena-returns-editorial__row-icon lusena-returns-editorial__row-icon--check">
+                  {% render 'lusena-icon', name: 'check', class: 'lusena-returns-editorial__check-icon', stroke_width: 2.5 %}
+                </div>
+                <span class="lusena-returns-editorial__row-text lusena-returns-editorial__row-text--lusena">{{ block.settings.lusena | escape }}</span>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
       </div>
     </div>
   </div>
 </section>
 
 {% stylesheet %}
-  .lusena-returns-editorial__container {
-    max-width: 115.2rem !important;
+  /* Kicker color — 0-2-0 */
+  .lusena-returns-editorial .lusena-returns-editorial__kicker {
+    color: var(--lusena-accent-2);
   }
 
-  .lusena-returns-editorial__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 4.8rem;
+  /* Heading italic — 0-2-0 */
+  .lusena-returns-editorial .lusena-returns-editorial__heading em {
+    font-style: italic;
+  }
+
+  /* Body text contrast on cream bg — 0-2-0 */
+  .lusena-returns-editorial .lusena-returns-editorial__body {
+    color: var(--lusena-text-1);
+  }
+
+  /* Link style */
+  .lusena-returns-editorial__link {
+    display: inline-flex;
     align-items: center;
+    gap: 0.8rem;
+    color: var(--lusena-accent-cta);
+    font-weight: 500;
+    font-size: 1.6rem;
+    transition: gap var(--lusena-transition-med);
   }
 
-  .lusena-returns-editorial__lusena-row {
-    background-color: rgb(14 94 90 / 0.05);
-    border: 1px solid rgb(14 94 90 / 0.1);
+  .lusena-returns-editorial__link:hover {
+    gap: 1.2rem;
   }
 
-  .lusena-returns-editorial__lusena-dot {
-    background-color: rgb(14 94 90 / 0.1);
+  .lusena-returns-editorial__link-icon {
+    width: 1.6rem;
+    height: 1.6rem;
   }
 
-  @media (min-width: 1024px) {
-    .lusena-returns-editorial__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 6.4rem;
-    }
+  /* Comparison grid */
+  .lusena-returns-editorial__compare {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lusena-space-2);
+  }
+
+  .lusena-returns-editorial__compare-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--lusena-space-2);
+  }
+
+  .lusena-returns-editorial__compare-label {
+    text-align: center;
+    font-size: 1.2rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--lusena-text-2);
+  }
+
+  .lusena-returns-editorial__compare-label--lusena {
+    color: var(--lusena-accent-cta);
+  }
+
+  .lusena-returns-editorial__compare-rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lusena-space-2);
+  }
+
+  .lusena-returns-editorial__compare-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--lusena-space-2);
+  }
+
+  /* Row cells */
+  .lusena-returns-editorial__row {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1.6rem;
+    border-radius: var(--lusena-btn-radius);
+  }
+
+  .lusena-returns-editorial__row--standard {
+    background-color: var(--lusena-color-n0);
+  }
+
+  .lusena-returns-editorial__row--lusena {
+    background-color: color-mix(in srgb, var(--lusena-accent-cta) 5%, transparent);
+    border: 1px solid color-mix(in srgb, var(--lusena-accent-cta) 10%, transparent);
+  }
+
+  /* Icon circles */
+  .lusena-returns-editorial__row-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .lusena-returns-editorial__row-icon--x {
+    background-color: var(--lusena-color-n100);
+    color: var(--lusena-text-2);
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+
+  .lusena-returns-editorial__row-icon--check {
+    background-color: color-mix(in srgb, var(--lusena-accent-cta) 10%, transparent);
+  }
+
+  .lusena-returns-editorial__check-icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    color: var(--lusena-accent-cta);
+  }
+
+  /* Row text */
+  .lusena-returns-editorial__row-text {
+    font-size: 1.4rem;
+    color: var(--lusena-text-2);
+  }
+
+  .lusena-returns-editorial__row-text--lusena {
+    color: var(--lusena-text-1);
+    font-weight: 500;
   }
 {% endstylesheet %}
 
@@ -186,19 +287,19 @@
       "type": "richtext",
       "id": "body_paragraph_1",
       "label": "Body paragraph 1",
-      "default": "<p>Prawdziwe korzyĹ›ci jedwabiu - mniej Ĺ‚amania wĹ‚osĂłw, gĹ‚adsza skĂłra, lepszy sen - ujawniajÄ… siÄ™ po tygodniach codziennego uĹĽytkowania.</p>"
+      "default": "<p>Prawdziwe korzyści jedwabiu - mniej łamania włosów, gładsza skóra, lepszy sen - ujawniają się po tygodniach codziennego użytkowania.</p>"
     },
     {
       "type": "richtext",
       "id": "body_paragraph_2",
       "label": "Body paragraph 2",
-      "default": "<p>Dlatego dajemy Ci peĹ‚ne dwa miesiÄ…ce. A jeĹ›li mimo wszystko nie pokochasz efektu, zwrot jest bezproblemowy.</p>"
+      "default": "<p>Dlatego dajemy Ci pełne dwa miesiące. A jeśli mimo wszystko nie pokochasz efektu, zwrot jest bezproblemowy.</p>"
     },
     {
       "type": "text",
       "id": "link_label",
       "label": "Link label",
-      "default": "Dowiedz siÄ™ wiÄ™cej o naszej jakoĹ›ci"
+      "default": "Dowiedz się więcej o naszej jakości"
     },
     {
       "type": "url",
@@ -252,22 +353,22 @@
         {
           "type": "compare_row",
           "settings": {
-            "standard": "Produkt musi byÄ‡ nieuĹĽywany",
-            "lusena": "Zwrot nawet po uĹĽyciu"
+            "standard": "Produkt musi być nieużywany",
+            "lusena": "Zwrot nawet po użyciu"
           }
         },
         {
           "type": "compare_row",
           "settings": {
             "standard": "Skomplikowane formularze",
-            "lusena": "Jeden krĂłtki e-mail"
+            "lusena": "Jeden krótki e-mail"
           }
         },
         {
           "type": "compare_row",
           "settings": {
             "standard": "Zwrot po 14+ dniach",
-            "lusena": "PieniÄ…dze w 3-5 dni"
+            "lusena": "Pieniądze w 3-5 dni"
           }
         }
       ]

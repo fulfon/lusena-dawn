@@ -35,43 +35,79 @@
   endif
 -%}
 <section
-  class="bg-brand-bg lusena-quality-hero lusena-spacing--hero lusena-spacing--snug-top"
+  class="lusena-bg-brand lusena-quality-hero lusena-spacing--hero lusena-spacing--snug-top"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container text-center max-w-4xl mx-auto lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <div class="lusena-container--narrow lusena-text-center lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
     <div class="lusena-content-flow--tight">
-      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
+      <span class="lusena-kicker lusena-quality-hero__kicker">
         {{ section.settings.hero_kicker | escape }}
       </span>
-      <h1 class="text-5xl md:text-7xl font-serif text-primary">
+      <h1 class="lusena-type-hero">
         {{ section.settings.hero_heading | newline_to_br }}
       </h1>
     </div>
-    <p class="text-lg md:text-xl font-light text-secondary leading-relaxed max-w-2xl mx-auto">
+    <p class="lusena-type-body lusena-quality-hero__body">
       {{ section.settings.hero_body | escape }}
     </p>
 
-    {%- if certificate_url != blank -%}
-      <div class="pt-2">
+    <div class="lusena-gap-cta-top lusena-quality-hero__actions">
+      {%- if section.settings.hero_cta_link != blank -%}
+        <a
+          href="{{ section.settings.hero_cta_link }}"
+          class="lusena-btn lusena-btn--primary lusena-btn--size-default"
+        >
+          {{ section.settings.hero_cta_label | escape }}
+        </a>
+      {%- endif -%}
+
+      {%- if certificate_url != blank -%}
         <a
           href="{{ certificate_url }}"
           {% if certificate_url contains 'http' %}
             target="_blank"
             rel="noopener"
           {% endif %}
-          class="lusena-btn lusena-btn--outline lusena-btn--size-default min-w-[240px]"
+          class="lusena-quality-hero__cert-link"
         >
           {{ certificate_label | escape }}
         </a>
-      </div>
-    {%- endif -%}
+      {%- endif -%}
+    </div>
   </div>
 </section>
 
 {% stylesheet %}
+  .lusena-quality-hero .lusena-quality-hero__kicker {
+    color: var(--lusena-accent-2);
+  }
 
+  .lusena-quality-hero .lusena-quality-hero__body {
+    max-width: 64rem;
+    margin-inline: auto;
+    color: var(--lusena-text-1);
+  }
+
+  .lusena-quality-hero__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--lusena-space-3);
+  }
+
+  .lusena-quality-hero__cert-link {
+    font-size: 1.4rem;
+    color: var(--lusena-text-2);
+    text-decoration: underline;
+    text-underline-offset: 0.3rem;
+    transition: color 0.2s ease;
+  }
+
+  .lusena-quality-hero__cert-link:hover {
+    color: var(--lusena-text-1);
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -127,30 +163,42 @@
       "type": "text",
       "id": "hero_kicker",
       "label": "Hero kicker",
-      "default": "Nasza JakoĹ›Ä‡"
+      "default": "Nasza jakość"
     },
     {
       "type": "textarea",
       "id": "hero_heading",
       "label": "Hero heading",
-      "default": "Nie wierz nam na sĹ‚owo.\nSprawdĹş."
+      "default": "Nie wierz nam na słowo.\nSprawdź."
     },
     {
       "type": "text",
       "id": "hero_body",
       "label": "Hero body",
-      "default": "Jedwab LUSENA to 22 momme czystej perfekcji. Stworzony w Suzhou, kontrolowany w Polsce. Poczuj rĂłĹĽnicÄ™, ktĂłrej nie da siÄ™ podrobiÄ‡."
+      "default": "Jedwab LUSENA to 22 momme czystej perfekcji. Stworzony w Suzhou, kontrolowany w Polsce. Poczuj różnicę, której nie da się podrobić."
+    },
+    {
+      "type": "text",
+      "id": "hero_cta_label",
+      "label": "Primary CTA label",
+      "default": "Zobacz kolekcję"
+    },
+    {
+      "type": "url",
+      "id": "hero_cta_link",
+      "label": "Primary CTA link",
+      "default": "/collections/all"
     },
     {
       "type": "text",
       "id": "hero_button_label",
-      "label": "Hero button label",
+      "label": "Certificate link label",
       "default": "Pobierz certyfikat OEKO-TEX (PDF)"
     },
     {
       "type": "url",
       "id": "hero_button_link",
-      "label": "Hero button link (fallback)",
+      "label": "Certificate link (fallback)",
       "info": "Preferowane: metafield sklepu `lusena.oeko_tex_certificate` (file_reference). Jeżeli metafield jest pusty, użyty zostanie ten link (np. `#certificates`)."
     }
   ],

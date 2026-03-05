@@ -14,30 +14,29 @@
   endif
 -%}
 <section
-  class="bg-brand-bg text-center lusena-quality-qc lusena-spacing--standard"
+  class="lusena-bg-brand lusena-text-center lusena-quality-qc lusena-spacing--standard"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container max-w-4xl mx-auto">
-    <h2 class="text-3xl md:text-4xl font-serif text-primary lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <div class="lusena-container--narrow">
+    <h2 class="lusena-type-h1 lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.qc_heading | escape }}
     </h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="lusena-quality-qc__grid">
       {%- for block in section.blocks -%}
         {%- if block.type == 'qc_step' -%}
-          <div {% if settings.animations_reveal_on_scroll %}class="scroll-trigger animate--slide-in" data-cascade{% endif %}
->
-            <div class="lusena-quality-qc__card lusena-content-flow--tight p-8 bg-white/50 backdrop-blur-sm rounded-sm border border-white/40{% if block.settings.highlight %} shadow-sm relative overflow-hidden{% endif %}" {{ block.shopify_attributes }}>
+          <div {% if settings.animations_reveal_on_scroll %}class="scroll-trigger animate--slide-in" data-cascade{% endif %}>
+            <div class="lusena-quality-qc__card lusena-content-flow--tight{% if block.settings.highlight %} lusena-quality-qc__card--highlight{% endif %}" {{ block.shopify_attributes }}>
               {%- if block.settings.highlight -%}
-                <div class="absolute top-0 right-0 bg-accent-gold text-white text-[10px] px-2 py-1 uppercase tracking-wider">
+                <div class="lusena-quality-qc__badge">
                   {{ section.settings.qc_highlight_badge | escape }}
                 </div>
               {%- endif -%}
-              <div class="text-4xl">{{ block.settings.icon }}</div>
-              <h3 class="font-serif text-xl">{{ block.settings.title | escape }}</h3>
-              <p class="text-secondary font-light text-sm">{{ block.settings.text | escape }}</p>
+              <div class="lusena-quality-qc__icon">{{ block.settings.icon }}</div>
+              <h3 class="lusena-quality-qc__title">{{ block.settings.title | escape }}</h3>
+              <p class="lusena-quality-qc__text">{{ block.settings.text | escape }}</p>
             </div>
           </div>
         {%- endif -%}
@@ -47,6 +46,71 @@
 </section>
 
 {% stylesheet %}
+  /* 3-col grid */
+  .lusena-quality-qc__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--lusena-space-4);
+  }
+
+  @media (min-width: 768px) {
+    .lusena-quality-qc__grid {
+      grid-template-columns: repeat(3, 1fr);
+      align-items: stretch;
+    }
+  }
+
+  /* Glassmorphism card */
+  .lusena-quality-qc__card {
+    padding: var(--lusena-space-4);
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 0.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Highlight modifier */
+  .lusena-quality-qc__card--highlight {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Badge */
+  .lusena-quality-qc__badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--lusena-accent-2);
+    color: #fff;
+    font-size: 1.0rem;
+    padding: 0.4rem 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Icon */
+  .lusena-quality-qc__icon {
+    font-size: 3.6rem;
+  }
+
+  /* Card title */
+  .lusena-quality-qc__title {
+    font-family: var(--lusena-font-brand);
+    font-size: 2.0rem;
+  }
+
+  /* Card description text */
+  .lusena-quality-qc__text {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    color: var(--lusena-text-2);
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -102,7 +166,7 @@
       "type": "text",
       "id": "qc_heading",
       "label": "QC heading",
-      "default": "PodwĂłjna Kontrola JakoĹ›ci"
+      "default": "Podwójna Kontrola Jakości"
     },
     {
       "type": "text",
@@ -120,7 +184,7 @@
           "type": "text",
           "id": "icon",
           "label": "Icon (emoji)",
-          "default": "đź‡¨đź‡ł"
+          "default": "🇨🇳"
         },
         {
           "type": "text",
@@ -150,7 +214,7 @@
         {
           "type": "qc_step",
           "settings": {
-            "icon": "đź‡¨đź‡ł",
+            "icon": "🇨🇳",
             "title": "Produkcja",
             "text": "Precyzyjne szycie w specjalistycznej manufakturze w Suzhou.",
             "highlight": false
@@ -159,18 +223,18 @@
         {
           "type": "qc_step",
           "settings": {
-            "icon": "đź‡µđź‡±",
+            "icon": "🇵🇱",
             "title": "Kontrola w Polsce",
-            "text": "KaĹĽda sztuka jest rÄ™cznie sprawdzana i prasowana w naszym magazynie pod WarszawÄ….",
+            "text": "Każda sztuka jest ręcznie sprawdzana i prasowana w naszym magazynie pod Warszawą.",
             "highlight": true
           }
         },
         {
           "type": "qc_step",
           "settings": {
-            "icon": "đź“¦",
-            "title": "WysyĹ‚ka 24h",
-            "text": "Estetyczne pakowanie \"prezentowe\" i natychmiastowa wysyĹ‚ka do Ciebie.",
+            "icon": "📦",
+            "title": "Wysyłka 24h",
+            "text": "Estetyczne pakowanie \"prezentowe\" i natychmiastowa wysyłka do Ciebie.",
             "highlight": false
           }
         }

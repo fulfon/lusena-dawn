@@ -1,0 +1,123 @@
+/* ==========================================================================
+   LUSENA Footer Section
+   Standalone asset — loaded via <link> to avoid compiled_assets truncation.
+   ========================================================================== */
+
+.lusena-footer {
+  background-color: var(--lusena-text-1);
+  color: var(--lusena-color-n0);
+  padding: 4.8rem 0 4rem;
+}
+
+@media (min-width: 768px) {
+  .lusena-footer {
+    padding: 8rem 0 6.4rem;
+  }
+}
+
+.lusena-footer .lusena-footer__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lusena-space-6);
+}
+
+@media (min-width: 768px) {
+  .lusena-footer .lusena-footer__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.lusena-footer .lusena-footer__col > * + * {
+  margin-top: var(--lusena-space-2);
+}
+
+.lusena-footer .lusena-footer__brand {
+  font-family: var(--lusena-font-brand);
+  font-size: 2.4rem;
+  color: var(--lusena-color-n0);
+}
+
+.lusena-footer .lusena-footer__brand-text {
+  font-size: 1.4rem;
+  color: color-mix(in srgb, var(--lusena-color-n0) 60%, transparent);
+  max-width: 32rem;
+}
+
+.lusena-footer .lusena-footer__heading {
+  font-family: var(--lusena-font-brand);
+  font-size: 1.8rem;
+  color: var(--lusena-color-n0);
+  margin-bottom: var(--lusena-space-3);
+}
+
+.lusena-footer .lusena-footer__menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lusena-footer .lusena-footer__menu > li + li {
+  margin-top: var(--lusena-space-2);
+}
+
+.lusena-footer .lusena-footer__menu li {
+  font-size: 1.4rem;
+  color: color-mix(in srgb, var(--lusena-color-n0) 60%, transparent);
+}
+
+.lusena-footer .lusena-footer__link {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--lusena-transition-fast);
+}
+
+@media (hover: hover) {
+  .lusena-footer .lusena-footer__link:hover {
+    color: var(--lusena-color-n0);
+  }
+}
+
+.lusena-footer .lusena-footer__newsletter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lusena-space-2);
+}
+
+.lusena-footer .lusena-footer__newsletter-text {
+  font-size: 1.4rem;
+  color: color-mix(in srgb, var(--lusena-color-n0) 60%, transparent);
+}
+
+.lusena-footer .lusena-footer__newsletter-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lusena-space-2);
+}
+
+.lusena-footer .lusena-footer__input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--lusena-color-n0) 30%, transparent);
+  padding: var(--lusena-space-1) 0;
+  font-size: 1.4rem;
+  color: var(--lusena-color-n0);
+  outline: none;
+  transition: border-color var(--lusena-transition-fast);
+}
+
+.lusena-footer .lusena-footer__input:focus {
+  border-bottom-color: var(--lusena-color-n0);
+}
+
+.lusena-footer .lusena-footer__input::placeholder {
+  color: color-mix(in srgb, var(--lusena-color-n0) 40%, transparent);
+}
+
+.lusena-footer .lusena-footer__bottom {
+  margin-top: var(--lusena-space-8);
+  padding-top: var(--lusena-space-4);
+  border-top: 1px solid color-mix(in srgb, var(--lusena-color-n0) 15%, transparent);
+  font-size: 1.2rem;
+  text-align: center;
+  color: color-mix(in srgb, var(--lusena-color-n0) 45%, transparent);
+}

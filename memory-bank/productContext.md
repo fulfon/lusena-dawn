@@ -38,4 +38,5 @@ Problem/solution   → Testimonials        → Comparison tables  → Sticky ATC
 ## Reusable sections (shared across pages)
 
 - `lusena-trust-bar` — appears on homepage, quality page, about page
-- `lusena-faq` — appears on homepage and quality page
+- `lusena-faq` — appears on homepage, quality page, returns page, and PDP
+- `lusena-final-cta` — appears on about page, quality page, returns page

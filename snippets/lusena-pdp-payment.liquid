@@ -10,7 +10,7 @@
 
 <div class="lusena-pdp-payment">
   <div class="lusena-pdp-payment__desktop{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    {% render 'lusena-icon', name: 'lock', class: 'w-3.5 h-3.5 text-secondary/60 shrink-0', stroke_width: 1.5 %}
+    {% render 'lusena-icon', name: 'lock', class: 'lusena-icon-sm lusena-shrink-0', stroke_width: 1.5 %}
     <div class="lusena-pdp-payment-methods lusena-pdp-payment-methods--desktop"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
       {%- for method in payment_methods -%}
         {%- assign payment_asset = blank -%}
@@ -56,7 +56,7 @@
               loading="lazy"
             >
           {%- else -%}
-            <span class="text-xs text-secondary/50">{{ method }}</span>
+            <span class="lusena-pdp-payment-fallback">{{ method }}</span>
           {%- endif -%}
         </span>
       {%- endfor -%}
@@ -66,7 +66,7 @@
 
   <div class="lusena-pdp-payment__mobile{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
     <div class="lusena-pdp-payment__mobile-row"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
-      {% render 'lusena-icon', name: 'lock', class: 'w-3 h-3 text-secondary/60 shrink-0', stroke_width: 1.5 %}
+      {% render 'lusena-icon', name: 'lock', class: 'lusena-icon-xs lusena-shrink-0', stroke_width: 1.5 %}
       {%- for method in payment_methods -%}
         {%- assign payment_asset = blank -%}
         {%- assign icon_width = blank -%}
@@ -111,7 +111,7 @@
               loading="lazy"
             >
           {%- else -%}
-            <span class="text-[10px] text-secondary/50">{{ method }}</span>
+            <span class="lusena-pdp-payment-fallback lusena-pdp-payment-fallback--mobile">{{ method }}</span>
           {%- endif -%}
         </span>
       {%- endfor -%}

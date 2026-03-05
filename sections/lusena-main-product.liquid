@@ -20,6 +20,7 @@
     assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
   endif
 -%}
+{{ 'lusena-pdp.css' | asset_url | stylesheet_tag }}
 <section
   class="lusena-pdp lusena-spacing--compact"
   data-lusena-product-section
@@ -33,13 +34,13 @@
 
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
 
-  <div class="container">
+  <div class="lusena-container">
     {% render 'lusena-breadcrumbs', page_type: 'product', product: product, collection: collection %}
 
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-16">
+    <div class="lusena-grid lusena-grid--pdp">
       {% render 'lusena-pdp-media', product: product, current_variant: current_variant, section: section %}
 
-      <div class="md:col-span-5 lusena-pdp-buy-box">
+      <div class="lusena-pdp-buy-box">
         <div class="lusena-pdp-buy-box__summary">
           {% render 'lusena-pdp-summary', product: product, current_variant: current_variant, section: section, price_per_night_cents: price_per_night_cents %}
         </div>
@@ -142,16 +143,16 @@
           <div class="lusena-pdp-buy-box__benefits-mobile">
             <ul class="lusena-pdp-buy-box__benefits-list"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}
 >
-              <li class="flex items-start gap-3 text-sm text-secondary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent-gold shrink-0"></span>
+              <li class="lusena-pdp-buy-box__benefit-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+                <span class="lusena-pdp-buy-box__benefit-dot"></span>
                 {{ benefit_1_text | escape }}
               </li>
-              <li class="flex items-start gap-3 text-sm text-secondary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent-gold shrink-0"></span>
+              <li class="lusena-pdp-buy-box__benefit-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+                <span class="lusena-pdp-buy-box__benefit-dot"></span>
                 {{ benefit_2_text | escape }}
               </li>
-              <li class="flex items-start gap-3 text-sm text-secondary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-                <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent-gold shrink-0"></span>
+              <li class="lusena-pdp-buy-box__benefit-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+                <span class="lusena-pdp-buy-box__benefit-dot"></span>
                 {{ benefit_3_text | escape }}
               </li>
             </ul>
@@ -169,8 +170,6 @@
 
   {% render 'lusena-pdp-sticky-atc', product: product, current_variant: current_variant, section: section, product_form_id: product_form_id %}
 </section>
-
-{% render 'lusena-pdp-styles' %}
 
 {% render 'lusena-pdp-scripts' %}
 

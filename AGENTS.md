@@ -39,26 +39,27 @@ Dawn's original sections remain in the repo but are NOT used on the live storefr
 - **Design tokens (compact):** `memory-bank/doc/patterns/brand-tokens.md`
 - **Spacing system:** `memory-bank/doc/patterns/spacing-system.md`
 - **CSS architecture:** `memory-bank/doc/patterns/css-architecture.md`
-- **Engineering changelog:** `memory-bank/doc/changelog/theme-changes.md`
+- **Migration lessons (read before migrating pages):** `memory-bank/doc/patterns/migration-lessons.md`
 
-### CSS migration in progress
+### CSS architecture
 
-We are migrating from a fragmented CSS setup to a single `lusena-foundations.css` file:
+`assets/lusena-foundations.css` is the single source of truth for all CSS tokens, spacing, typography, components, and global body/main rules. The old Tailwind files (`lusena-shop.css`, `lusena-spacing.css`, `lusena-missing-utilities.liquid`) were deleted on 2026-03-04 after full migration.
 
-| Old (still loaded, being phased out) | New (target) |
-|--------------------------------------|--------------|
-| `assets/lusena-shop.css` (Tailwind build) | `assets/lusena-foundations.css` |
-| `assets/lusena-spacing.css` (spacing tokens) | *(absorbed into foundations)* |
-| `snippets/lusena-missing-utilities.liquid` (patches) | *(absorbed into foundations)* |
+**When editing sections:** Use `lusena-foundations.css` classes. See `memory-bank/doc/patterns/spacing-system.md` for the class API.
 
-**Migration phases:** See `memory-bank/progress.md` → "CSS foundations migration" section.
+### compiled_assets truncation guard (MANDATORY)
 
-**When editing sections:** Use `lusena-foundations.css` classes for new/migrated work. See `memory-bank/doc/patterns/spacing-system.md` for the class API.
+Shopify compiles all `{% stylesheet %}` blocks into one `compiled_assets/styles.css` file that **silently truncates at ~73KB**. Rules after the cut-off are lost with no error.
+
+- **≤50 lines of section-scoped CSS** → OK in `{% stylesheet %}`
+- **>50 lines or shared CSS** → must go in a standalone `assets/lusena-*.css` file
+- **After adding CSS to any `{% stylesheet %}` block:** check compiled_assets size in DevTools Network tab — it must stay **under 55KB**
+- If over 55KB: extract the largest block into a standalone asset (see `memory-bank/doc/patterns/css-architecture.md` for the extraction steps)
 
 ## Key Conventions
 
 - All customer-facing text in **Polish**; code/comments in **English**
-- `assets/lusena-foundations.css` is the **target single source of truth** for all CSS tokens, spacing, typography, and components — use its classes for new work
+- `assets/lusena-foundations.css` is the **single source of truth** for all CSS tokens, spacing, typography, and components — use its classes for all work
 - All custom files use `lusena-*` prefix
 - NEVER fabricate social proof (customer counts, ratings, reviews)
 - Sentence case for all headings and button labels
@@ -82,15 +83,25 @@ We are migrating from a fragmented CSS setup to a single `lusena-foundations.css
 
 ### Quality assurance
 - Run `shopify theme check` — only known baseline warnings should remain.
-- Visual verification via Playwright MCP when uncertain about layout.
+- Use `/playwright-cli` skill for any browser interaction — visual checks, debugging, testing interactions.
 
 ## MANDATORY: Shopify Dev MCP
 
 Call `learn_shopify_api` with `api: "liquid"` ONCE before editing any Liquid files.
 
-## Visual Verification (Playwright)
+## Browser Interactions (Playwright CLI)
 
-- When not sure about a UI/layout issue, verify using Playwright MCP (don't guess).
+The `/playwright-cli` skill is the **only** way to interact with the browser. Use it for ALL browser tasks — not just visual verification:
+- Screenshots & visual verification (layout, spacing, colors)
+- Debugging CSS issues (checking computed styles, element sizes)
+- Checking network resources (compiled_assets size, asset loading)
+- Testing interactions (clicking buttons, opening menus, filling forms)
+- Comparing before/after states
+- Any situation where you need to see or interact with the live site
+
+**CRITICAL RULES:**
+- **ALWAYS use the `/playwright-cli` skill** — NEVER use Playwright MCP browser tools directly (`browser_navigate`, `browser_snapshot`, `browser_click`, etc.). The MCP tools bypass the project workflow.
+- When not sure about a UI/layout issue, use `/playwright-cli` — don't guess.
 - Dev server: `http://127.0.0.1:9292/` (start with `shopify theme dev` if not running).
 
 ## Animations (consistency)

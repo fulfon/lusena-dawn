@@ -14,17 +14,17 @@
   endif
 -%}
 <section
-  class="bg-white lusena-about-values lusena-spacing--standard"
+  class="lusena-bg-surface-1 lusena-about-values lusena-spacing--standard"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container">
-    <div class="text-center lusena-gap-section-intro lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold">
+  <div class="lusena-container">
+    <div class="lusena-text-center lusena-gap-section-intro lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <span class="lusena-type-caption lusena-kicker lusena-about-values__kicker">
         {{ section.settings.values_kicker | escape }}
       </span>
-      <h2 class="text-3xl md:text-5xl font-serif text-primary">
+      <h2 class="lusena-type-h1">
         {{ section.settings.values_heading | escape }}
       </h2>
     </div>
@@ -32,15 +32,15 @@
     <div class="lusena-about-values__grid">
       {%- for block in section.blocks -%}
         {%- if block.type == 'value' -%}
-          <div class="lusena-about-values__grid-item" {% if settings.animations_reveal_on_scroll %}class="scroll-trigger animate--slide-in" data-cascade{% endif %}>
-            <div class="lusena-about-values__card lusena-content-flow--tight h-full p-8 bg-neutral-50 rounded-sm" {{ block.shopify_attributes }}>
+          <div class="lusena-about-values__grid-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
+            <div class="lusena-about-values__card lusena-content-flow--tight" {{ block.shopify_attributes }}>
               {%- if block.settings.icon != blank -%}
-                <div class="mb-4 text-accent-cta">
-                  {% render 'lusena-icon', name: block.settings.icon, class: 'w-8 h-8', stroke_width: 1.5 %}
+                <div class="lusena-about-values__icon">
+                  {% render 'lusena-icon', name: block.settings.icon, class: 'lusena-about-values__icon-svg', stroke_width: 1.5 %}
                 </div>
               {%- endif -%}
-              <h3 class="font-serif text-xl text-primary">{{ block.settings.title | escape }}</h3>
-              <p class="text-secondary font-light text-sm leading-relaxed">
+              <h3 class="lusena-about-values__title">{{ block.settings.title | escape }}</h3>
+              <p class="lusena-type-body">
                 {{ block.settings.text | escape }}
               </p>
             </div>
@@ -52,10 +52,11 @@
 </section>
 
 {% stylesheet %}
+  /* Responsive card grid: 1 col → 2 col (tablet) → 3 col (desktop), centered incomplete rows */
   .lusena-about-values__grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem; /* 32px gap-8 */
+    gap: var(--lusena-space-4);
     justify-content: center;
   }
 
@@ -65,24 +66,53 @@
 
   @media (min-width: 768px) {
     .lusena-about-values__grid-item {
-      width: calc(50% - 1rem);
+      flex: 0 0 calc(50% - var(--lusena-space-4) / 2);
     }
   }
 
   @media (min-width: 1024px) {
     .lusena-about-values__grid-item {
-      width: calc(33.333% - 1.333rem);
+      flex: 0 0 calc(33.333% - var(--lusena-space-4) * 2 / 3);
     }
   }
 
+  /* Card styling */
   .lusena-about-values__card {
-    transition: transform 0.3s ease;
+    height: 100%;
+    padding: var(--lusena-space-4);
+    background-color: var(--lusena-color-n50);
+    border-radius: var(--lusena-radius-sm);
+    transition: transform var(--lusena-transition-med);
   }
 
   @media (hover: hover) {
     .lusena-about-values__card:hover {
       transform: translateY(-0.4rem);
     }
+  }
+
+  /* Kicker color — 0-2-0 to beat foundations .lusena-type-caption */
+  .lusena-about-values .lusena-about-values__kicker {
+    color: var(--lusena-accent-2);
+  }
+
+  /* Icon */
+  .lusena-about-values__icon {
+    margin-bottom: var(--lusena-space-2);
+    color: var(--lusena-accent-cta);
+  }
+
+  .lusena-about-values__icon-svg {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+
+  /* Card title */
+  .lusena-about-values__title {
+    font-family: var(--lusena-font-brand);
+    font-size: 2.0rem;
+    line-height: 2.4rem;
+    color: var(--lusena-text-1);
   }
 {% endstylesheet %}
 

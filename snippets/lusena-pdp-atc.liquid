@@ -42,7 +42,7 @@
       <button
         type="button"
         data-lusena-buy-now
-        class="lusena-btn lusena-btn--outline lusena-btn--size-pdp lusena-btn--text-sm lusena-btn--full-width mt-2"
+        class="lusena-btn lusena-btn--outline lusena-btn--size-pdp lusena-btn--text-sm lusena-btn--full-width lusena-pdp-atc__buy-now"
         {% unless current_variant.available %}
           disabled
         {% endunless %}
@@ -57,9 +57,9 @@
     {%- endform -%}
   </product-form>
 
-  <div class="flex items-center justify-center gap-2 text-xs text-secondary" data-lusena-stock>
+  <div class="lusena-pdp-atc__stock" data-lusena-stock>
     <span
-      class="w-2 h-2 rounded-full lusena-pdp__stock-dot lusena-pdp__stock-dot--available"
+      class="lusena-pdp__stock-dot lusena-pdp__stock-dot--available"
       data-lusena-stock-dot
     ></span>
     <span

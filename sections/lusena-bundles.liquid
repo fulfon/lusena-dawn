@@ -19,8 +19,8 @@
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="lusena-container lusena-bundles__grid">
-    <div class="lusena-bundles__image-frame{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <div class="lusena-container lusena-split lusena-bundles__split">
+    <div class="lusena-bundles__image-col{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {%- if section.settings.image != blank -%}
         {{
           section.settings.image
@@ -41,18 +41,18 @@
     <div class="lusena-bundles__content{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       <div class="lusena-content-flow--tight lusena-gap-section-intro">
         {%- if section.settings.kicker != blank -%}
-          <span class="lusena-bundles__kicker">
+          <span class="lusena-type-caption lusena-kicker">
             {{ section.settings.kicker | escape }}
           </span>
         {%- endif -%}
 
-        <h2 class="lusena-bundles__heading">
+        <h2 class="lusena-type-h1">
           {{ section.settings.heading | newline_to_br }}
         </h2>
       </div>
 
       {%- if section.settings.body != blank -%}
-        <p class="lusena-bundles__body lusena-gap-body">
+        <p class="lusena-type-body lusena-gap-body">
           {{ section.settings.body | escape }}
         </p>
       {%- endif -%}
@@ -81,55 +81,12 @@
 </section>
 
 {% stylesheet %}
-  .lusena-bundles__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--lusena-space-12);
-    align-items: center;
-  }
+  /* Foundations handles: .lusena-split (flex col → row, gap space-4 → space-8),
+     .lusena-type-caption .lusena-kicker, .lusena-type-h1, .lusena-type-body. */
 
-  @media (min-width: 768px) {
-    .lusena-bundles__grid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-
-  .lusena-bundles__image-frame {
+  /* Mobile order: content first, image second; desktop: image left, content right */
+  .lusena-bundles__image-col {
     order: 2;
-    position: relative;
-    aspect-ratio: 4 / 3;
-    background: var(--lusena-brand-bg);
-    padding: var(--lusena-space-8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  @media (min-width: 768px) {
-    .lusena-bundles__image-frame {
-      order: 1;
-    }
-  }
-
-  .lusena-bundles__image {
-    width: 80%;
-    height: auto;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-    transform: rotate(3deg);
-  }
-
-  .lusena-bundles__placeholder {
-    width: 80%;
-    height: auto;
-    aspect-ratio: 4 / 3;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-    transform: rotate(3deg);
-    background: rgba(255, 255, 255, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--lusena-text-2);
-    font-size: 1.4rem;
   }
 
   .lusena-bundles__content {
@@ -137,44 +94,37 @@
   }
 
   @media (min-width: 768px) {
-    .lusena-bundles__content {
-      order: 2;
-    }
+    .lusena-bundles__image-col { order: 1; }
+    .lusena-bundles__content { order: 2; }
   }
 
-  .lusena-bundles__kicker {
-    color: var(--lusena-accent-cta);
-    font-size: 1.4rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 600;
+  /* Image (editorial: flat, no rotation/shadow/frame) */
+  .lusena-bundles__image-col {
+    overflow: hidden;
   }
 
-  .lusena-bundles__heading {
-    font-family: var(--lusena-font-brand);
-    font-size: 3.0rem;
-    line-height: 1.2;
-    color: var(--lusena-text-1);
-    margin: 0;
+  .lusena-bundles__image {
+    width: 100%;
+    height: auto;
+    display: block;
   }
 
-  @media (min-width: 768px) {
-    .lusena-bundles__heading {
-      font-size: 4.0rem;
-    }
-  }
-
-  .lusena-bundles__body {
-    font-size: 1.8rem;
-    line-height: 1.6;
+  .lusena-bundles__placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--lusena-surface-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--lusena-text-2);
-    margin: 0;
+    font-size: 1.4rem;
   }
 
+  /* Benefit list items */
   .lusena-bundles__benefit {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: var(--lusena-space-2);
     color: var(--lusena-text-2);
   }
 
@@ -186,24 +136,27 @@
     flex-shrink: 0;
   }
 
+  /* CTA button (editorial: no border-radius) */
   .lusena-bundles__button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     white-space: nowrap;
+    font-family: var(--lusena-font-ui);
     font-size: 1.6rem;
     font-weight: 500;
-    height: 4.8rem;
-    padding: 0 4.0rem;
+    height: var(--lusena-space-6);
+    padding: 0 var(--lusena-space-5);
     background: var(--lusena-accent-cta);
-    color: var(--lusena-surface-1);
-    border-radius: 6px;
+    color: var(--lusena-color-n0);
+    border: none;
+    border-radius: var(--lusena-btn-radius);
     text-decoration: none;
-    transition: background-color var(--lusena-transition-fast);
+    transition: background var(--lusena-transition-fast);
   }
 
   .lusena-bundles__button:hover {
-    opacity: 0.9;
+    background: var(--lusena-accent-cta-hover);
   }
 
   .lusena-bundles__button:focus-visible {

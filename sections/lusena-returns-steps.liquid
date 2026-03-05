@@ -14,23 +14,23 @@
   endif
 -%}
 <section
-  class="bg-white lusena-returns-steps lusena-spacing--spacious"
+  class="lusena-bg-surface-1 lusena-returns-steps lusena-spacing--spacious"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container lusena-returns-steps__container mx-auto">
-    <div class="text-center lusena-gap-section-intro lusena-content-flow--tight">
-      <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <div class="lusena-container">
+    <div class="lusena-text-center lusena-gap-section-intro lusena-content-flow--tight">
+      <span class="lusena-type-caption lusena-kicker lusena-returns-steps__kicker{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         {{ section.settings.steps_kicker | escape }}
       </span>
-      <h2 class="text-3xl md:text-5xl font-serif text-primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <h2 class="lusena-type-h1{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         {{ section.settings.steps_heading | escape }}
       </h2>
     </div>
 
     <div
-      class="grid grid-cols-1 md:grid-cols-3 gap-8 relative"
+      class="lusena-returns-steps__grid"
       {% if settings.animations_reveal_on_scroll %}
         data-cascade
       {% endif %}
@@ -42,15 +42,15 @@
           {%- liquid
             assign icon_name = block.settings.icon | strip | downcase
             case icon_name
-              when 'đź›’'
+              when '🛒'
                 assign icon_name = 'shopping-bag'
               when 'shopping-bag', 'shopping bag', 'shoppingbag'
                 assign icon_name = 'shopping-bag'
-              when 'đź“§'
+              when '📧'
                 assign icon_name = 'mail'
               when 'mail', 'email', 'envelope'
                 assign icon_name = 'mail'
-              when 'đź’°'
+              when '💰'
                 assign icon_name = 'banknote'
               when 'banknote', 'money'
                 assign icon_name = 'banknote'
@@ -62,16 +62,16 @@
             class="lusena-returns-steps__card-wrap{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
             {{ block.shopify_attributes }}
           >
-            <div class="relative z-10 bg-surface-2 lusena-returns-steps__card p-8 text-center space-y-4">
-              <span class="text-accent-gold text-xs tracking-widest uppercase font-semibold">
+            <div class="lusena-returns-steps__card lusena-content-flow--tight">
+              <span class="lusena-returns-steps__step-label">
                 {{ section.settings.step_label_prefix | escape }}
                 {{ forloop.index }}
               </span>
-              <div class="w-16 h-16 mx-auto bg-white rounded-full flex items-center justify-center text-accent-cta shadow-sm">
+              <div class="lusena-returns-steps__icon-circle">
                 {% render 'lusena-icon', name: icon_name, class: 'lusena-returns-steps__step-icon', stroke_width: 1.5 %}
               </div>
-              <h3 class="font-serif text-xl text-primary">{{ block.settings.title | escape }}</h3>
-              <p class="text-secondary text-sm leading-relaxed">{{ block.settings.text | escape }}</p>
+              <h3 class="lusena-returns-steps__card-title">{{ block.settings.title | escape }}</h3>
+              <p class="lusena-type-body">{{ block.settings.text | escape }}</p>
             </div>
           </div>
         {%- endif -%}
@@ -81,23 +81,37 @@
 </section>
 
 {% stylesheet %}
-  .lusena-returns-steps__container {
-    max-width: 102.4rem !important;
+  /* Grid: 1 col → 3 col at 768px */
+  .lusena-returns-steps__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--lusena-space-4);
+    position: relative;
   }
 
+  @media (min-width: 768px) {
+    .lusena-returns-steps__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Card wrap — equal height */
   .lusena-returns-steps__card-wrap {
     position: relative;
     z-index: 10;
     height: 100%;
   }
 
+  /* Card styling */
   .lusena-returns-steps__card {
     display: flex;
     flex-direction: column;
     height: 100%;
-    border-radius: 0.8rem;
-    transition: transform 0.3s;
-    will-change: transform;
+    padding: var(--lusena-space-4);
+    text-align: center;
+    background-color: var(--lusena-color-n50);
+    border-radius: var(--lusena-radius-sm);
+    transition: transform var(--lusena-transition-med);
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -106,6 +120,48 @@
     }
   }
 
+  /* Step label — gold kicker style */
+  .lusena-returns-steps .lusena-returns-steps__step-label {
+    font-size: 1.2rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--lusena-accent-2);
+  }
+
+  /* Icon circle */
+  .lusena-returns-steps__icon-circle {
+    width: 6.4rem;
+    height: 6.4rem;
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background-color: var(--lusena-color-n0);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.06);
+    color: var(--lusena-accent-cta);
+  }
+
+  .lusena-returns-steps__step-icon {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+
+  /* Card title */
+  .lusena-returns-steps__card-title {
+    font-family: var(--lusena-font-brand);
+    font-size: 2rem;
+    line-height: 2.4rem;
+    color: var(--lusena-text-1);
+  }
+
+  /* Kicker color — 0-2-0 */
+  .lusena-returns-steps .lusena-returns-steps__kicker {
+    color: var(--lusena-accent-2);
+  }
+
+  /* Connector dashed line (desktop only) */
   .lusena-returns-steps__connector {
     display: none;
     position: absolute;
@@ -120,11 +176,6 @@
     display: block;
     height: 0;
     border-top: 1px dashed rgb(74 74 74 / 0.2);
-  }
-
-  .lusena-returns-steps__step-icon {
-    width: 2.8rem;
-    height: 2.8rem;
   }
 
   @media (min-width: 768px) {
@@ -193,7 +244,7 @@
       "type": "text",
       "id": "steps_heading",
       "label": "Section heading",
-      "default": "Jak to dziaĹ‚a?"
+      "default": "Jak to działa?"
     },
     {
       "type": "text",
@@ -223,7 +274,7 @@
           "type": "textarea",
           "id": "text",
           "label": "Text",
-          "default": "Masz peĹ‚ne 60 dni od momentu otrzymania paczki. Nie musisz trzymaÄ‡ folii ani metek - po prostu Ĺ›pij i oceniaj."
+          "default": "Masz pełne 60 dni od momentu otrzymania paczki. Nie musisz trzymać folii ani metek - po prostu śpij i oceniaj."
         }
       ]
     }
@@ -237,7 +288,7 @@
           "settings": {
             "icon": "shopping-bag",
             "title": "Kupujesz i testujesz",
-            "text": "Masz peĹ‚ne 60 dni od momentu otrzymania paczki. Nie musisz trzymaÄ‡ folii ani metek - po prostu Ĺ›pij i oceniaj."
+            "text": "Masz pełne 60 dni od momentu otrzymania paczki. Nie musisz trzymać folii ani metek - po prostu śpij i oceniaj."
           }
         },
         {
@@ -245,15 +296,15 @@
           "settings": {
             "icon": "mail",
             "title": "Piszesz do nas",
-            "text": "Wystarczy krĂłtki mail na czesc@lusena.pl. Odezwiemy siÄ™ w ciÄ…gu 24h i wyĹ›lemy instrukcjÄ™ zwrotu."
+            "text": "Wystarczy krótki mail na czesc@lusena.pl. Odezwiemy się w ciągu 24h i wyślemy instrukcję zwrotu."
           }
         },
         {
           "type": "step",
           "settings": {
             "icon": "banknote",
-            "title": "Szybki zwrot Ĺ›rodkĂłw",
-            "text": "PieniÄ…dze wrĂłcÄ… na Twoje konto w ciÄ…gu 3-5 dni roboczych od odebrania przez nas przesyĹ‚ki."
+            "title": "Szybki zwrot środków",
+            "text": "Pieniądze wrócą na Twoje konto w ciągu 3-5 dni roboczych od odebrania przez nas przesyłki."
           }
         }
       ]

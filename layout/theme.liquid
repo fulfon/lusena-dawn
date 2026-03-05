@@ -297,12 +297,11 @@
       {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
-    {{ 'lusena-shop.css' | asset_url | stylesheet_tag }}
-    {{ 'lusena-spacing.css' | asset_url | stylesheet_tag }}
     {{ 'lusena-foundations.css' | asset_url | stylesheet_tag }}
-    {% render 'lusena-missing-utilities' %}
-    {% render 'lusena-button-system' %}
-    {% render 'lusena-spacing-system' %}
+    {{ 'lusena-button-system.css' | asset_url | stylesheet_tag }}
+    {{ 'lusena-header.css' | asset_url | stylesheet_tag }}
+    {{ 'lusena-hero.css' | asset_url | stylesheet_tag }}
+    {{ 'lusena-footer.css' | asset_url | stylesheet_tag }}
 
     {%- unless settings.type_body_font.system? -%}
       {% comment %}theme-check-disable AssetPreload{% endcomment %}
@@ -336,7 +335,7 @@
     </script>
   </head>
 
-  <body class="min-h-screen flex flex-col font-sans text-primary bg-brand-bg antialiased selection:bg-accent-cta selection:text-white tracking-normal text-base">
+  <body>
     {%- if settings.cart_type == 'drawer' -%}
       {%- render 'cart-drawer' -%}
     {%- endif -%}
@@ -350,7 +349,7 @@
 
     <main
       id="MainContent"
-      class="content-for-layout focus-none flex-grow"
+      class="content-for-layout focus-none"
       {% if lusena_main_style != blank %}
         style="{{ lusena_main_style }}"
       {% endif %}

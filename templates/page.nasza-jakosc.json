@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "quality_hero": {
@@ -15,6 +6,8 @@
         "hero_kicker": "Nasza jakość",
         "hero_heading": "Nie wierz nam na słowo.\nSprawdź.",
         "hero_body": "Każda poszewka LUSENA przechodzi kontrolę jakości. Oto dowody.",
+        "hero_cta_label": "Zobacz kolekcję",
+        "hero_cta_link": "/collections/all",
         "hero_button_label": "Pobierz certyfikat OEKO-TEX (PDF)",
         "hero_button_link": "#certificates"
       }
@@ -157,64 +150,59 @@
           "settings": {
             "metric": "Materiał",
             "lusena_value": "100% jedwab morwowy",
-            "marketplace_value": "Satyna poliestrowa / mieszanka",
-            "premium_value": "100% jedwab morwowy"
+            "others_value": "Satyna poliestrowa lub mieszanka"
           }
         },
         "row-1": {
           "type": "row",
           "settings": {
             "metric": "Gramatura",
-            "lusena_value": "22 momme",
-            "marketplace_value": "Brak danych / 16 momme",
-            "premium_value": "19–22 momme"
+            "lusena_value": "22 momme — splot gęstszy o 30%",
+            "others_value": "16–19 momme lub brak danych"
           }
         },
         "row-2": {
           "type": "row",
           "settings": {
-            "metric": "Certyfikat",
-            "lusena_value": "OEKO-TEX Standard 100",
-            "marketplace_value": "Brak",
-            "premium_value": "Czasami"
+            "metric": "Klasa włókna",
+            "lusena_value": "6A — najwyższa klasyfikacja",
+            "others_value": "Nieokreślona"
           }
         },
         "row-3": {
           "type": "row",
           "settings": {
-            "metric": "Wysyłka",
-            "lusena_value": "24h z Polski",
-            "marketplace_value": "14–30 dni",
-            "premium_value": "5–7 dni"
+            "metric": "Certyfikat",
+            "lusena_value": "OEKO-TEX® Standard 100",
+            "others_value": "Brak lub nieokreślony"
           }
         },
         "row-4": {
           "type": "row",
           "settings": {
-            "metric": "Gwarancja",
-            "lusena_value": "60 dni testu",
-            "marketplace_value": "14 dni (prawo)",
-            "premium_value": "14–30 dni"
+            "metric": "Magazyn i wysyłka",
+            "lusena_value": "Polska — wysyłka 24h",
+            "others_value": "Import 14–30 dni"
           }
         },
         "row-5": {
           "type": "row",
           "settings": {
-            "metric": "Cena",
-            "lusena_value": "249 zł",
-            "marketplace_value": "49–79 zł",
-            "premium_value": "400–600 zł"
+            "metric": "Gwarancja",
+            "lusena_value": "60 dni testu, nawet po użyciu",
+            "others_value": "14 dni (prawo konsumenta)"
           }
         }
       },
       "block_order": ["row-0", "row-1", "row-2", "row-3", "row-4", "row-5"],
       "settings": {
-        "heading": "Tabela porównawcza",
-        "subheading": "Nie prosimy o wiarę. Pokazujemy parametry.",
-        "metric_label": "Parametr",
+        "heading": "Nie prosimy o wiarę",
+        "subheading": "Pokazujemy parametry.",
+        "metric_label": "Porównanie",
         "lusena_label": "LUSENA",
-        "marketplace_label": "Typowa oferta z marketplace",
-        "premium_label": "Marka premium importowana",
+        "others_label": "Typowe oferty",
+        "cta_label": "",
+        "cta_link": "",
         "footer_note": ""
       }
     },
@@ -257,7 +245,7 @@
       }
     },
     "quality_final_cta": {
-      "type": "lusena-quality-final-cta",
+      "type": "lusena-final-cta",
       "settings": {
         "heading": "Sprawdź kolekcję",
         "body": "Poznaj produkty LUSENA i wybierz element nocnej rutyny.",

@@ -2,9 +2,9 @@
 
 ## Migration status
 
-We are migrating from a fragmented CSS setup to a single `assets/lusena-foundations.css`. During transition, both old and new files coexist. See `memory-bank/progress.md` for phase status.
+**Migration complete (2026-03-04).** All old CSS files (`lusena-shop.css`, `lusena-spacing.css`, `lusena-missing-utilities.liquid`) have been deleted. The theme now runs on a single CSS architecture.
 
-## Target layer stack (after migration completes)
+## Layer stack
 
 ```
 1. Inline <style> block
@@ -20,35 +20,60 @@ We are migrating from a fragmented CSS setup to a single `assets/lusena-foundati
    ├── component-cart-drawer.css
    ├── component-cart.css / component-totals.css / component-price.css / component-discounts.css
 
-4. lusena-foundations.css (34KB — single source of truth)
-   ├── Color tokens (N0-N900, brand, status, scrims)
-   ├── Spacing tokens (8px baseline: space-1 through space-24)
-   ├── Typography system (5 semantic classes + richtext)
-   ├── Z-index layering scale
-   ├── Transition tokens
-   ├── Section spacing tiers + snug-top + same-bg gap handling
-   ├── Dawn margin neutralization
-   ├── Layout grid & containers
-   ├── Component patterns (product cards, testimonials, badges, trust bar, etc.)
-   ├── Form system (inputs, selects, swatches, pills, quantity)
-   ├── Inverted section logic (token remapping)
-   ├── Interactive states (drawer, modal, overlay, accordion)
-   └── Utility classes (bg, text, flex, aspect, hidden, object-fit, etc.)
+4. Standalone LUSENA assets (loaded globally via <link> in theme.liquid)
+   ├── lusena-foundations.css (~40KB) — single source of truth for tokens, spacing, typography, components
+   ├── lusena-button-system.css — button/icon-button primitives
+   ├── lusena-header.css — header section (fixed positioning, nav, mobile menu, cart badge)
+   ├── lusena-hero.css — hero section (layout, animations, buttons, content positioning)
+   └── lusena-footer.css — footer section (dark bg, grid, newsletter, bottom bar)
 
-5. Inline snippets (rendered via {% render %})
-   ├── lusena-button-system — Button/icon-button primitives
-   └── lusena-pdp-styles — PDP-specific component styles
+5. Page-specific assets (loaded per-page via <link> in their section)
+   └── lusena-pdp.css (~34KB) — PDP + sticky ATC styles (loaded in lusena-main-product.liquid)
 
-6. Component {% stylesheet %} blocks
-   └── Compiled into compiled_assets/styles.css (~73KB limit)
+6. Component {% stylesheet %} blocks (small, section-scoped CSS only)
+   └── Compiled into compiled_assets/styles.css (~38KB after extraction, ~73KB hard limit)
 ```
 
-## Old layer stack (being phased out)
+## compiled_assets truncation — CRITICAL pattern
 
-These files will be removed once all sections are migrated to foundations classes:
-- `assets/lusena-shop.css` (26KB Tailwind) → replaced by foundations
-- `assets/lusena-spacing.css` (266 lines) → absorbed into foundations
-- `snippets/lusena-missing-utilities.liquid` (351 lines) → absorbed into foundations
+### The problem
+
+Shopify compiles ALL `{% stylesheet %}` blocks from every section and snippet into one file: `compiled_assets/styles.css`. This file **silently truncates at ~73KB** — no error, no warning, CSS just stops mid-rule. Any rules after the cut-off point are lost.
+
+### The rule: standalone vs {% stylesheet %}
+
+| CSS size | Where to put it | Loaded via |
+|----------|----------------|------------|
+| **Small** (≤50 lines, section-scoped) | `{% stylesheet %}` block in the section | compiled_assets (shared) |
+| **Large** (>50 lines) or **shared** | `assets/lusena-*.css` standalone file | `<link>` tag in theme.liquid or section |
+
+### Mandatory verification after adding section CSS
+
+After adding or expanding CSS in any `{% stylesheet %}` block:
+
+1. Start dev server (`shopify theme dev`)
+2. Open any page in the browser
+3. Check compiled_assets size via DevTools Network tab — filter for `compiled_assets`
+4. **The file must stay under 55KB** (leaves ~18KB safety margin)
+5. If it exceeds 55KB, extract the largest `{% stylesheet %}` block into a standalone asset file
+
+### How to extract a section's CSS into a standalone asset
+
+1. Create `assets/lusena-{section-name}.css` with the CSS content
+2. Empty the `{% stylesheet %}` block in the section (leave a comment pointing to the new file)
+3. Add `{{ 'lusena-{section-name}.css' | asset_url | stylesheet_tag }}` to `theme.liquid` (global sections) or the section file itself (page-specific sections)
+4. Verify the page visually — CSS is identical, just loaded differently
+
+### Current inventory of standalone assets (2026-03-05)
+
+| File | Scope | Loaded in |
+|------|-------|-----------|
+| `lusena-foundations.css` | Global tokens + components | theme.liquid |
+| `lusena-button-system.css` | Button/icon-button primitives | theme.liquid |
+| `lusena-header.css` | Header section | theme.liquid |
+| `lusena-hero.css` | Hero section | theme.liquid |
+| `lusena-footer.css` | Footer section | theme.liquid |
+| `lusena-pdp.css` | PDP page | lusena-main-product.liquid |
 
 ## Naming conventions
 

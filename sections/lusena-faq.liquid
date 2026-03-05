@@ -22,33 +22,33 @@
 >
   <div class="lusena-container--narrow">
     <div class="lusena-text-center lusena-gap-section-intro lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <h2 class="lusena-faq__heading">
+      <h2 class="lusena-type-h1">
         {{ section.settings.heading | escape }}
       </h2>
       {%- if section.settings.subheading != blank -%}
-        <p class="lusena-faq__subheading">{{ section.settings.subheading | escape }}</p>
+        <p class="lusena-type-body">{{ section.settings.subheading | escape }}</p>
       {%- endif -%}
     </div>
 
     <div class="lusena-faq__list">
       {%- for block in section.blocks -%}
         <details
-          class="lusena-faq__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          class="lusena-accordion lusena-faq__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
           {% if settings.animations_reveal_on_scroll %}
             data-cascade
           {% endif %}
           {{ block.shopify_attributes }}
         >
-          <summary class="lusena-faq__summary">
+          <summary class="lusena-accordion__summary lusena-faq__summary">
             {{ block.settings.question | escape }}
             {% render 'lusena-icon',
               name: 'chevron-down',
-              class: 'lusena-faq__chevron',
+              class: 'lusena-accordion__icon lusena-faq__chevron',
               stroke_width: 2
             %}
           </summary>
           <div class="lusena-faq__content">
-            <div class="lusena-faq__content-inner">
+            <div class="lusena-faq__content-inner lusena-type-body">
               {{ block.settings.answer }}
             </div>
           </div>
@@ -59,71 +59,38 @@
 </section>
 
 {% stylesheet %}
-  .lusena-faq__heading {
-    font-family: var(--lusena-font-brand);
-    font-size: 3.0rem;
-    line-height: 1.2;
-    color: var(--lusena-text-1);
-    margin: 0;
-  }
-
-  @media (min-width: 768px) {
-    .lusena-faq__heading {
-      font-size: 4.0rem;
-    }
-  }
-
-  .lusena-faq__subheading {
-    color: var(--lusena-text-2);
-    margin: 0;
-  }
-
+  /* Containment for animation performance */
   .lusena-faq__item {
     contain: layout style;
-    border-bottom: 1px solid var(--lusena-color-n300);
   }
 
-  .lusena-faq__item[data-state='open'] .lusena-faq__chevron {
-    transform: rotate(180deg);
-  }
-
+  /* Custom font overrides for summary (foundations .lusena-accordion__summary handles layout) */
   .lusena-faq__summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     font-family: var(--lusena-font-brand);
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
     font-weight: 500;
-    letter-spacing: normal;
-    cursor: pointer;
     transition: color var(--lusena-transition-fast);
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
-    padding-top: 1.6rem;
-    padding-bottom: 0.8rem;
-    list-style: none;
-  }
-
-  .lusena-faq__summary::-webkit-details-marker {
-    display: none;
   }
 
   .lusena-faq__summary:hover {
     color: var(--lusena-accent-cta);
   }
 
-  .lusena-faq__item:first-child .lusena-faq__summary {
-    padding-top: 0;
-  }
-
+  /* Chevron sizing + data-state rotation for JS animation */
   .lusena-faq__chevron {
-    width: 16px;
-    height: 16px;
+    width: 1.6rem;
+    height: 1.6rem;
     flex-shrink: 0;
-    transition: transform 200ms ease-in-out;
   }
 
+  .lusena-faq__item[data-state='open'] .lusena-faq__chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Height animation wrapper */
   .lusena-faq__content {
     overflow: hidden;
     height: 0;
@@ -131,7 +98,11 @@
     will-change: height;
   }
 
-  /* GPU-composited overlay: opacity+transform run at 120Hz on ProMotion */
+  /* Content inner: padding + GPU-composited fade */
+  .lusena-faq__content-inner {
+    padding-bottom: var(--lusena-space-3);
+  }
+
   @supports (touch-action: manipulation) {
     .lusena-faq__content-inner {
       opacity: 1;
@@ -143,13 +114,6 @@
       opacity: 0;
       transform: translateY(-6px);
     }
-  }
-
-  .lusena-faq__content-inner {
-    padding-bottom: 1.6rem;
-    font-size: 14px;
-    line-height: 1.6;
-    color: var(--lusena-text-2);
   }
 
   @media (prefers-reduced-motion: reduce) {

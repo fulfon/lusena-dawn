@@ -14,120 +14,171 @@
   endif
 -%}
 <section
-  class="bg-white border-t border-brand-bg lusena-quality-certificates lusena-spacing--standard"
+  class="lusena-bg-surface-1 lusena-quality-certificates lusena-spacing--standard"
   id="certificates"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-      <div class="lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
->
-        <h2 class="text-3xl md:text-4xl font-serif text-primary">
-          {{ section.settings.cert_heading | escape }}
-        </h2>
-        <div class="text-secondary font-light text-lg">
-          {{ section.settings.cert_body }}
-        </div>
-
-        {%- assign oeko_number = section.settings.oeko_number | strip -%}
-        {%- if shop.metafields.lusena.oeko_tex_certificate_number != blank -%}
-          {%- assign oeko_number_value = shop.metafields.lusena.oeko_tex_certificate_number.value -%}
-          {%- if oeko_number_value != blank -%}
-            {%- assign oeko_number = oeko_number_value | strip -%}
-          {%- endif -%}
-        {%- endif -%}
-
-        {%- assign verify_label = section.settings.oeko_verify_label -%}
-        {%- if verify_label == blank -%}
-          {%- assign verify_label = 'Zweryfikuj certyfikat online' -%}
-        {%- endif -%}
-
-        {%- assign verify_url = section.settings.oeko_verify_url -%}
-        {%- if verify_url == blank -%}
-          {%- if oeko_number != blank -%}
-            {%- assign oeko_number_encoded = oeko_number | url_encode -%}
-            {%- assign verify_url = 'https://www.oeko-tex.com/en/detail/?number=' | append: oeko_number_encoded -%}
-          {%- endif -%}
-        {%- endif -%}
-
-        {%- assign certificate_url = blank -%}
-        {%- assign certificate_label = section.settings.cert_button_label -%}
-        {%- if certificate_label == blank -%}
-          {%- assign certificate_label = 'Pobierz Certyfikat (PDF)' -%}
-        {%- endif -%}
-
-        {%- if shop.metafields.lusena.oeko_tex_certificate != blank -%}
-          {%- assign certificate_file = shop.metafields.lusena.oeko_tex_certificate.value -%}
-          {%- if certificate_file != blank -%}
-            {%- if certificate_file.url != blank -%}
-              {%- assign certificate_url = certificate_file.url -%}
-            {%- endif -%}
-          {%- endif -%}
-        {%- endif -%}
-
-        {%- if certificate_url == blank -%}
-          {%- if section.settings.cert_button_link != blank -%}
-            {%- assign certificate_url = section.settings.cert_button_link -%}
-          {%- endif -%}
-        {%- endif -%}
-
-        {%- if oeko_number != blank -%}
-          <p class="text-sm text-secondary">
-            Numer certyfikatu: <span class="font-medium text-primary">{{ oeko_number | escape }}</span>
-          </p>
-        {%- endif -%}
-
-        {%- if certificate_url != blank or verify_url != blank -%}
-          <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-            {%- if certificate_url != blank -%}
-              <a
-                href="{{ certificate_url }}"
-                target="_blank"
-                rel="noopener"
-                class="lusena-btn lusena-btn--outline lusena-btn--size-default min-w-[200px]"
-              >
-                {{ certificate_label | escape }}
-              </a>
-            {%- endif -%}
-            {%- if verify_url != blank -%}
-              <a
-                href="{{ verify_url }}"
-                target="_blank"
-                rel="noopener"
-                class="text-sm font-medium text-accent-cta underline underline-offset-4 hover:no-underline"
-              >
-                {{ verify_label | escape }}
-              </a>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
+  <div class="lusena-container lusena-split">
+    <div class="lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
+      <h2 class="lusena-type-h1">
+        {{ section.settings.cert_heading | escape }}
+      </h2>
+      <div class="lusena-type-body">
+        {{ section.settings.cert_body }}
       </div>
 
-      <div class="grid grid-cols-2 gap-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
->
-        <div class="bg-neutral-50 aspect-square flex items-center justify-center border border-neutral-100">
-          {%- if section.settings.cert_logo_1 != blank -%}
-            {{ section.settings.cert_logo_1 | image_url: width: 400 | image_tag: loading: 'lazy' }}
-          {%- else -%}
-            <span class="text-xs text-gray-400">{{ section.settings.cert_logo_1_placeholder | escape }}</span>
+      {%- assign oeko_number = section.settings.oeko_number | strip -%}
+      {%- if shop.metafields.lusena.oeko_tex_certificate_number != blank -%}
+        {%- assign oeko_number_value = shop.metafields.lusena.oeko_tex_certificate_number.value -%}
+        {%- if oeko_number_value != blank -%}
+          {%- assign oeko_number = oeko_number_value | strip -%}
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- assign verify_label = section.settings.oeko_verify_label -%}
+      {%- if verify_label == blank -%}
+        {%- assign verify_label = 'Zweryfikuj certyfikat online' -%}
+      {%- endif -%}
+
+      {%- assign verify_url = section.settings.oeko_verify_url -%}
+      {%- if verify_url == blank -%}
+        {%- if oeko_number != blank -%}
+          {%- assign oeko_number_encoded = oeko_number | url_encode -%}
+          {%- assign verify_url = 'https://www.oeko-tex.com/en/detail/?number=' | append: oeko_number_encoded -%}
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- assign certificate_url = blank -%}
+      {%- assign certificate_label = section.settings.cert_button_label -%}
+      {%- if certificate_label == blank -%}
+        {%- assign certificate_label = 'Pobierz Certyfikat (PDF)' -%}
+      {%- endif -%}
+
+      {%- if shop.metafields.lusena.oeko_tex_certificate != blank -%}
+        {%- assign certificate_file = shop.metafields.lusena.oeko_tex_certificate.value -%}
+        {%- if certificate_file != blank -%}
+          {%- if certificate_file.url != blank -%}
+            {%- assign certificate_url = certificate_file.url -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if certificate_url == blank -%}
+        {%- if section.settings.cert_button_link != blank -%}
+          {%- assign certificate_url = section.settings.cert_button_link -%}
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if oeko_number != blank -%}
+        <p class="lusena-type-caption">
+          Numer certyfikatu: <span class="lusena-quality-certificates__oeko-number">{{ oeko_number | escape }}</span>
+        </p>
+      {%- endif -%}
+
+      {%- if certificate_url != blank or verify_url != blank -%}
+        <div class="lusena-quality-certificates__actions">
+          {%- if certificate_url != blank -%}
+            <a
+              href="{{ certificate_url }}"
+              target="_blank"
+              rel="noopener"
+              class="lusena-btn lusena-btn--outline lusena-btn--size-default"
+            >
+              {{ certificate_label | escape }}
+            </a>
+          {%- endif -%}
+          {%- if verify_url != blank -%}
+            <a
+              href="{{ verify_url }}"
+              target="_blank"
+              rel="noopener"
+              class="lusena-quality-certificates__verify-link"
+            >
+              {{ verify_label | escape }}
+            </a>
           {%- endif -%}
         </div>
-        <div class="bg-neutral-50 aspect-square flex items-center justify-center border border-neutral-100">
-          {%- if section.settings.cert_logo_2 != blank -%}
-            {{ section.settings.cert_logo_2 | image_url: width: 400 | image_tag: loading: 'lazy' }}
-          {%- else -%}
-            <span class="text-xs text-gray-400">{{ section.settings.cert_logo_2_placeholder | escape }}</span>
-          {%- endif -%}
-        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="lusena-quality-certificates__logos{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
+      <div class="lusena-quality-certificates__logo-cell">
+        {%- if section.settings.cert_logo_1 != blank -%}
+          {{ section.settings.cert_logo_1 | image_url: width: 400 | image_tag: loading: 'lazy' }}
+        {%- else -%}
+          <span class="lusena-quality-certificates__logo-placeholder">{{ section.settings.cert_logo_1_placeholder | escape }}</span>
+        {%- endif -%}
+      </div>
+      <div class="lusena-quality-certificates__logo-cell">
+        {%- if section.settings.cert_logo_2 != blank -%}
+          {{ section.settings.cert_logo_2 | image_url: width: 400 | image_tag: loading: 'lazy' }}
+        {%- else -%}
+          <span class="lusena-quality-certificates__logo-placeholder">{{ section.settings.cert_logo_2_placeholder | escape }}</span>
+        {%- endif -%}
       </div>
     </div>
   </div>
 </section>
 
 {% stylesheet %}
+  /* OEKO number styling */
+  .lusena-quality-certificates__oeko-number {
+    font-weight: 500;
+    color: var(--lusena-text-1);
+  }
 
+  /* Actions layout */
+  .lusena-quality-certificates__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lusena-space-2);
+    align-items: flex-start;
+  }
+
+  @media (min-width: 576px) {
+    .lusena-quality-certificates__actions {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  /* Verify link */
+  .lusena-quality-certificates__verify-link {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--lusena-accent-cta);
+    text-decoration: underline;
+    text-underline-offset: 0.4rem;
+  }
+
+  @media (hover: hover) {
+    .lusena-quality-certificates__verify-link:hover {
+      text-decoration: none;
+    }
+  }
+
+  /* Logo grid */
+  .lusena-quality-certificates__logos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--lusena-space-2);
+  }
+
+  .lusena-quality-certificates__logo-cell {
+    background-color: var(--lusena-color-n100);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--lusena-color-n200);
+  }
+
+  .lusena-quality-certificates__logo-placeholder {
+    font-size: 1.2rem;
+    color: var(--lusena-color-n400);
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -183,13 +234,13 @@
       "type": "text",
       "id": "cert_heading",
       "label": "Certificates heading",
-      "default": "Certyfikaty BezpieczeĹ„stwa"
+      "default": "Certyfikaty Bezpieczeństwa"
     },
     {
       "type": "richtext",
       "id": "cert_body",
       "label": "Certificates body",
-      "default": "<p>Twoja skĂłra dotyka poduszki przez 8 godzin dziennie. Musisz mieÄ‡ pewnoĹ›Ä‡, ĹĽe jest wolna od chemii. Nasz jedwab posiada certyfikat <strong>OEKO-TEXÂ® Standard 100</strong> (Klasa I â€” bezpieczne nawet dla niemowlÄ…t).</p>"
+      "default": "<p>Twoja skóra dotyka poduszki przez 8 godzin dziennie. Musisz mieć pewność, że jest wolna od chemii. Nasz jedwab posiada certyfikat <strong>OEKO-TEX® Standard 100</strong> (Klasa I — bezpieczne nawet dla niemowląt).</p>"
     },
     {
       "type": "text",
@@ -218,7 +269,7 @@
       "type": "url",
       "id": "cert_button_link",
       "label": "Certificate button link (fallback)",
-      "info": "Preferowane: metafield sklepu `lusena.oeko_tex_certificate` (file_reference). JeĹ›li metafield jest pusty, uĹĽyty zostanie ten link."
+      "info": "Preferowane: metafield sklepu `lusena.oeko_tex_certificate` (file_reference). Jeśli metafield jest pusty, użyty zostanie ten link."
     },
     {
       "type": "image_picker",

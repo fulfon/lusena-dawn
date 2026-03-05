@@ -14,7 +14,7 @@
   endif
 -%}
 <section
-  class="bg-brand-bg text-center overflow-hidden lusena-returns-hero lusena-spacing--hero lusena-spacing--snug-top"
+  class="lusena-bg-brand lusena-text-center lusena-returns-hero lusena-spacing--hero lusena-spacing--snug-top"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
@@ -23,25 +23,24 @@
     {% render 'lusena-icon', name: 'shield-check', class: 'lusena-returns-hero__shield-icon', stroke_width: 0.5 %}
   </div>
 
-  <div class="container lusena-returns-hero__container relative mx-auto lusena-content-flow">
-    <span class="text-accent-gold text-sm tracking-widest uppercase font-semibold{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <div class="lusena-container lusena-returns-hero__container lusena-content-flow">
+    <span class="lusena-kicker lusena-returns-hero__kicker{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.hero_kicker | escape }}
     </span>
-    <h1 class="lusena-returns-hero__title font-serif text-primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <h1 class="lusena-type-hero lusena-returns-hero__title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.hero_heading_line_1 | escape }}<br>
-      <span class="italic">{{ section.settings.hero_heading_line_2 | escape }}</span>
+      <em>{{ section.settings.hero_heading_line_2 | escape }}</em>
     </h1>
-    <p class="text-lg md:text-xl font-light text-secondary leading-relaxed max-w-2xl mx-auto{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <p class="lusena-type-body lusena-returns-hero__body{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.hero_body | escape }}
     </p>
 
     {%- if section.blocks.size > 0 -%}
-      <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6 pt-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
->
+      <div class="lusena-returns-hero__chips{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
         {%- for block in section.blocks -%}
           {%- if block.type == 'proof' and block.settings.text != blank -%}
-            <span class="inline-flex items-center gap-2 text-sm text-primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
-              {% render 'lusena-icon', name: 'check', class: 'w-4 h-4 text-accent-cta', stroke_width: 2 %}
+            <span class="lusena-returns-hero__chip{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
+              {% render 'lusena-icon', name: 'check', class: 'lusena-returns-hero__chip-icon', stroke_width: 2 %}
               {{ block.settings.text | escape }}
             </span>
           {%- endif -%}
@@ -49,10 +48,10 @@
       </div>
     {%- endif -%}
 
-    <div class="pt-4{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-      <div class="inline-flex items-center gap-2 px-6 py-3 border border-accent-gold/30 rounded-full bg-white/50 lusena-returns-hero__badge">
-        {% render 'lusena-icon', name: 'rotate-ccw', class: 'w-4 h-4 text-accent-gold', stroke_width: 1.5 %}
-        <span class="text-accent-gold font-medium text-sm">{{ section.settings.hero_badge | escape }}</span>
+    <div class="lusena-returns-hero__badge-wrap{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="lusena-returns-hero__badge">
+        {% render 'lusena-icon', name: 'rotate-ccw', class: 'lusena-returns-hero__badge-icon', stroke_width: 1.5 %}
+        <span class="lusena-returns-hero__badge-text">{{ section.settings.hero_badge | escape }}</span>
       </div>
     </div>
   </div>
@@ -61,8 +60,10 @@
 {% stylesheet %}
   .lusena-returns-hero {
     position: relative;
+    overflow: hidden;
   }
 
+  /* Shield overlay */
   .lusena-returns-hero__shield {
     position: absolute;
     inset: 0;
@@ -78,26 +79,93 @@
     height: 44.8rem;
   }
 
-  .lusena-returns-hero__container {
-    max-width: 89.6rem !important;
+  /* Container narrowing — 0-2-0 to beat foundations .lusena-container */
+  .lusena-returns-hero .lusena-returns-hero__container {
+    position: relative;
+    max-width: 89.6rem;
   }
 
-  .lusena-returns-hero__badge {
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
+  /* Kicker color — 0-2-0 */
+  .lusena-returns-hero .lusena-returns-hero__kicker {
+    color: var(--lusena-accent-2);
   }
 
-  .lusena-returns-hero__title {
+  /* Heading custom sizing */
+  .lusena-returns-hero .lusena-returns-hero__title {
     font-size: 3.6rem;
     line-height: 1.05;
   }
 
   @media (min-width: 768px) {
-
-    .lusena-returns-hero__title {
+    .lusena-returns-hero .lusena-returns-hero__title {
       font-size: 6rem;
       line-height: 1;
     }
+  }
+
+  /* Body constrained width — 0-2-0 for margin-inline */
+  .lusena-returns-hero .lusena-returns-hero__body {
+    max-width: 64rem;
+    margin-inline: auto;
+  }
+
+  /* Proof chips row */
+  .lusena-returns-hero__chips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--lusena-space-2);
+    margin-top: var(--lusena-space-2);
+  }
+
+  @media (min-width: 768px) {
+    .lusena-returns-hero__chips {
+      gap: var(--lusena-space-3);
+    }
+  }
+
+  .lusena-returns-hero__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.4rem;
+    color: var(--lusena-text-1);
+  }
+
+  .lusena-returns-hero__chip-icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--lusena-accent-cta);
+  }
+
+  /* Badge */
+  .lusena-returns-hero__badge-wrap {
+    margin-top: var(--lusena-space-2);
+  }
+
+  .lusena-returns-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1.2rem 2.4rem;
+    border: 1px solid color-mix(in srgb, var(--lusena-accent-2) 30%, transparent);
+    border-radius: 9999px;
+    background-color: rgb(255 255 255 / 0.5);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  .lusena-returns-hero__badge-icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    color: var(--lusena-accent-2);
+  }
+
+  .lusena-returns-hero__badge-text {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--lusena-accent-2);
   }
 {% endstylesheet %}
 
@@ -172,13 +240,13 @@
       "type": "textarea",
       "id": "hero_body",
       "label": "Hero body",
-      "default": "JesteĹ›my tak pewni jakoĹ›ci LUSENA, ĹĽe dajemy Ci 60 nocy na testy. Ĺšpij na niej, pierz jÄ…, uĹĽywaj. JeĹ›li nie poczujesz rĂłĹĽnicy - oddamy Ci pieniÄ…dze."
+      "default": "Jesteśmy tak pewni jakości LUSENA, że dajemy Ci 60 nocy na testy. Śpij na niej, pierz ją, używaj. Jeśli nie poczujesz różnicy - oddamy Ci pieniądze."
     },
     {
       "type": "text",
       "id": "hero_badge",
       "label": "Hero badge",
-      "default": "Zwrot nawet uĹĽywanego produktu"
+      "default": "Zwrot nawet używanego produktu"
     }
   ],
   "blocks": [
@@ -208,13 +276,13 @@
         {
           "type": "proof",
           "settings": {
-            "text": "Zwrot uĹĽywanego produktu"
+            "text": "Zwrot używanego produktu"
           }
         },
         {
           "type": "proof",
           "settings": {
-            "text": "PeĹ‚ny zwrot Ĺ›rodkĂłw"
+            "text": "Pełny zwrot środków"
           }
         }
       ]

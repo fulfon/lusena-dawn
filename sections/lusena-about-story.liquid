@@ -14,20 +14,20 @@
   endif
 -%}
 <section
-  class="bg-brand-bg lusena-about-story lusena-spacing--spacious"
+  class="lusena-bg-brand lusena-about-story lusena-spacing--spacious"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container max-w-4xl mx-auto text-center lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-    <h2 class="text-3xl md:text-4xl font-serif text-primary">
+  <div class="lusena-container--narrow lusena-text-center lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <h2 class="lusena-type-h1">
       {{ section.settings.story_heading | escape }}
     </h2>
-    <div class="text-secondary font-light text-lg leading-relaxed max-w-2xl mx-auto lusena-content-flow">
+    <div class="lusena-type-body lusena-about-story__body lusena-content-flow">
       {{ section.settings.story_body }}
     </div>
     {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
-      <div class="mt-8">
+      <div class="lusena-gap-cta-top">
         <a href="{{ section.settings.cta_link }}" class="lusena-btn lusena-btn--outline lusena-btn--size-default">
           {{ section.settings.cta_label | escape }}
         </a>
@@ -37,6 +37,12 @@
 </section>
 
 {% stylesheet %}
+  /* Body text: width constraint + stronger contrast on cream bg (0-2-0 to beat foundations) */
+  .lusena-about-story .lusena-about-story__body {
+    max-width: 64rem;
+    margin-inline: auto;
+    color: var(--lusena-text-1);
+  }
 {% endstylesheet %}
 
 {% schema %}

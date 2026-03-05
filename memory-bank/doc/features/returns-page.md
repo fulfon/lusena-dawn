@@ -9,8 +9,8 @@
 | 1 | `lusena-returns-hero` | hero | Done |
 | 2 | `lusena-returns-steps` | standard | Done |
 | 3 | `lusena-returns-editorial` | standard | Done |
-| 4 | `lusena-returns-faq` | standard | Done |
-| 5 | `lusena-returns-final-cta` | spacious | Done |
+| 4 | `lusena-faq` (shared) | standard | Done |
+| 5 | `lusena-final-cta` (shared) | spacious | Done |
 
 ## Pending work
 

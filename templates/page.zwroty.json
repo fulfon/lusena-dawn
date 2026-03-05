@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "returns_hero": {
@@ -146,38 +137,38 @@
       }
     },
     "returns_faq": {
-      "type": "lusena-returns-faq",
+      "type": "lusena-faq",
       "blocks": {
         "faq-0": {
-          "type": "faq",
+          "type": "item",
           "settings": {
             "question": "Kto pokrywa koszt wysyłki zwrotnej?",
             "answer": "<p>My! W LUSENA wierzymy w nasz produkt, dlatego oferujemy w pełni darmowe zwroty. Po zgłoszeniu chęci zwrotu wygenerujemy dla Ciebie darmowy kod nadania w Paczkomacie InPost. Zwracamy również 100% wartości zamówienia.</p>"
           }
         },
         "faq-1": {
-          "type": "faq",
+          "type": "item",
           "settings": {
             "question": "Czy muszę mieć oryginalne pudełko?",
             "answer": "<p>Nie, nie wymagamy oryginalnego pudełka \"prezentowego\", choć ułatwia ono bezpieczny transport. Ważne, aby produkt był zabezpieczony podczas transportu.</p>"
           }
         },
         "faq-2": {
-          "type": "faq",
+          "type": "item",
           "settings": {
             "question": "W jakim stanie musi być produkt?",
             "answer": "<p>Akceptujemy produkty używane i prane. Gwarancja nie obejmuje jedynie uszkodzeń mechanicznych powstałych z winy użytkownika (np. rozdarcie, wypalenie, zafarbowanie w praniu z innymi rzeczami).</p>"
           }
         },
         "faq-3": {
-          "type": "faq",
+          "type": "item",
           "settings": {
             "question": "Ile czasu mam na decyzję?",
             "answer": "<p>Masz 60 dni kalendarzowych od momentu odebrania paczki. To około 480 godzin snu na podjęcie decyzji.</p>"
           }
         },
         "faq-4": {
-          "type": "faq",
+          "type": "item",
           "settings": {
             "question": "Jak wygląda proces po wysłaniu maila?",
             "answer": "<p>Odpowiadamy w ciągu 24 godzin z instrukcją zwrotu. Po odebraniu paczki weryfikujemy produkt i przelewamy środki w ciągu 3-5 dni roboczych.</p>"
@@ -196,11 +187,8 @@
         "padding_bottom": 0,
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 0,
-        "faq_kicker": "FAQ",
-        "faq_heading": "Pytania i odpowiedzi",
-        "contact_prompt": "Masz inne pytanie?",
-        "contact_button_label": "Skontaktuj się z nami",
-        "contact_button_link": "shopify://pages/contact"
+        "heading": "Pytania i odpowiedzi",
+        "subheading": ""
       }
     },
     "returns_final_cta": {

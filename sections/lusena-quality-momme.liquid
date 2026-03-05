@@ -14,49 +14,43 @@
   endif
 -%}
 <section
-  class="bg-white lusena-quality-momme lusena-spacing--standard"
+  class="lusena-bg-brand lusena-quality-momme lusena-spacing--standard"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-    <div class="bg-neutral-100 aspect-square flex items-center justify-center rounded-sm overflow-hidden{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
->
+  <div class="lusena-container lusena-split">
+    <div class="lusena-quality-momme__image-wrap{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
       {%- if section.settings.momme_image != blank -%}
         {{
           section.settings.momme_image
           | image_url: width: 1400
           | image_tag:
-            class: 'w-full h-full object-cover',
+            class: 'lusena-quality-momme__image',
             loading: 'lazy',
             widths: '600, 900, 1200, 1400',
             sizes: '(min-width: 768px) 45vw, 90vw'
         }}
       {%- else -%}
-        <span class="text-gray-400 font-light italic text-center px-6">
+        <span class="lusena-quality-momme__placeholder">
           {{ section.settings.momme_image_placeholder | escape }}
         </span>
       {%- endif -%}
     </div>
 
-    <div class="lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
->
-      <h2 class="text-3xl md:text-4xl font-serif text-primary">
+    <div class="lusena-content-flow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
+      <h2 class="lusena-type-h1">
         {{ section.settings.momme_heading | escape }}
       </h2>
-      <div class="lusena-content-flow--tight text-secondary text-lg font-light leading-relaxed">
+      <div class="lusena-content-flow--tight lusena-type-body">
         {{ section.settings.momme_body }}
         {%- if section.blocks.size > 0 -%}
           <ul class="lusena-content-flow--tight">
             {%- for block in section.blocks -%}
               {%- if block.type == 'momme_benefit' -%}
-                <li class="flex flex-nowrap items-start gap-3" {{ block.shopify_attributes }}>
-                  <span
-                    class="w-1.5 h-1.5 rounded-full bg-accent-gold shrink-0"
-                    style="margin-top: calc((1.625em - 0.375rem) / 2);"
-                    aria-hidden="true"
-                  ></span>
-                  <span class="min-w-0 flex-1">{{- block.settings.text | escape -}}</span>
+                <li class="lusena-quality-momme__bullet" {{ block.shopify_attributes }}>
+                  <span class="lusena-quality-momme__bullet-dot" aria-hidden="true"></span>
+                  <span class="lusena-quality-momme__bullet-text">{{- block.settings.text | escape -}}</span>
                 </li>
               {%- endif -%}
             {%- endfor -%}
@@ -68,6 +62,53 @@
 </section>
 
 {% stylesheet %}
+  /* Image wrap */
+  .lusena-quality-momme__image-wrap {
+    aspect-ratio: 1;
+    background-color: var(--lusena-color-n100);
+    border-radius: 0.2rem;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lusena-quality-momme__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .lusena-quality-momme__placeholder {
+    color: var(--lusena-color-n400);
+    font-weight: 300;
+    font-style: italic;
+    text-align: center;
+    padding-inline: var(--lusena-space-3);
+  }
+
+  /* Gold bullet list */
+  .lusena-quality-momme__bullet {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 0.8rem;
+    list-style: none;
+  }
+
+  .lusena-quality-momme__bullet-dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background-color: var(--lusena-accent-2);
+    flex-shrink: 0;
+    margin-top: calc((1.625em - 0.6rem) / 2);
+  }
+
+  .lusena-quality-momme__bullet-text {
+    min-width: 0;
+    flex: 1;
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -128,7 +169,7 @@
       "type": "text",
       "id": "momme_image_placeholder",
       "label": "Momme image placeholder",
-      "default": "ZdjÄ™cie mikroskopowe: 19 vs 22 momme"
+      "default": "Zdjęcie mikroskopowe: 19 vs 22 momme"
     },
     {
       "type": "text",
@@ -140,7 +181,7 @@
       "type": "richtext",
       "id": "momme_body",
       "label": "Momme body",
-      "default": "<p>Standard rynkowy to 19 momme. Dla nas to za maĹ‚o.</p><p>LUSENA uĹĽywa wyĹ‚Ä…cznie jedwabiu o gramaturze <strong>22 momme</strong>. Jest to splot o 30% gÄ™stszy, co przekĹ‚ada siÄ™ na:</p>"
+      "default": "<p>Standard rynkowy to 19 momme. Dla nas to za mało.</p><p>LUSENA używa wyłącznie jedwabiu o gramaturze <strong>22 momme</strong>. Jest to splot o 30% gęstszy, co przekłada się na:</p>"
     }
   ],
   "blocks": [
@@ -152,7 +193,7 @@
           "type": "text",
           "id": "text",
           "label": "Text",
-          "default": "WyĹĽszÄ… trwaĹ‚oĹ›Ä‡ â€” znosi pranie znacznie lepiej niĹĽ cieĹ„sze odpowiedniki."
+          "default": "Wyższą trwałość — znosi pranie znacznie lepiej niż cieńsze odpowiedniki."
         }
       ]
     }
@@ -164,19 +205,19 @@
         {
           "type": "momme_benefit",
           "settings": {
-            "text": "WyĹĽszÄ… trwaĹ‚oĹ›Ä‡ â€” znosi pranie znacznie lepiej niĹĽ cieĹ„sze odpowiedniki."
+            "text": "Wyższą trwałość — znosi pranie znacznie lepiej niż cieńsze odpowiedniki."
           }
         },
         {
           "type": "momme_benefit",
           "settings": {
-            "text": "GĹ‚adszÄ… fakturÄ™ â€” mniejsze tarcie dla Twojej skĂłry i wĹ‚osĂłw."
+            "text": "Gładszą fakturę — mniejsze tarcie dla Twojej skóry i włosów."
           }
         },
         {
           "type": "momme_benefit",
           "settings": {
-            "text": "LepszÄ… termoregulacjÄ™ â€” chĹ‚odzi latem, grzeje zimÄ…."
+            "text": "Lepszą termoregulację — chłodzi latem, grzeje zimą."
           }
         }
       ]

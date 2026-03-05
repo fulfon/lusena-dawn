@@ -1,0 +1,216 @@
+/* ==========================================================================
+   LUSENA Header Section
+   Standalone asset — loaded via <link> to avoid compiled_assets truncation.
+   ========================================================================== */
+
+/* ── Override foundations: fixed positioning + cream tint ───────── */
+/* 0-2-0 specificity to beat foundations 0-1-0 (loads after section CSS) */
+[data-lusena-header].lusena-header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  background-color: rgba(247, 245, 242, 0.95);
+  padding-block: var(--lusena-space-2);
+  color: var(--lusena-text-1);
+}
+
+/* ── Bar layout ────────────────────────────────────────────────── */
+.lusena-header .lusena-header__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ── Logo ──────────────────────────────────────────────────────── */
+.lusena-header .lusena-header__logo {
+  display: inline-flex;
+  align-items: center;
+}
+
+.lusena-header .lusena-header__logo-text {
+  font-family: var(--lusena-font-brand);
+  font-size: 2.4rem;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+}
+
+/* ── Desktop nav ──────────────────────────────────────────────── */
+.lusena-header .lusena-header__nav {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .lusena-header .lusena-header__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--lusena-space-4);
+  }
+}
+
+/* ── Nav links (shared desktop + mobile) ──────────────────────── */
+.lusena-header .lusena-header__link {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--lusena-text-1);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--lusena-transition-fast);
+}
+
+@media (hover: hover) {
+  .lusena-header .lusena-header__link:hover {
+    color: var(--lusena-accent-cta);
+  }
+}
+
+/* ── Actions area ─────────────────────────────────────────────── */
+.lusena-header .lusena-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--lusena-space-1);
+}
+
+@media (min-width: 768px) {
+  .lusena-header .lusena-header__actions {
+    gap: var(--lusena-space-2);
+  }
+}
+
+/* ── Desktop-only elements ────────────────────────────────────── */
+.lusena-header .lusena-header__desktop-only {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .lusena-header .lusena-header__desktop-only {
+    display: flex;
+  }
+}
+
+/* ── Mobile toggle ────────────────────────────────────────────── */
+.lusena-header .lusena-header__mobile-toggle {
+  position: relative;
+}
+
+.lusena-header .lusena-header__mobile-toggle > summary {
+  list-style: none;
+}
+
+.lusena-header .lusena-header__mobile-toggle > summary::-webkit-details-marker {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .lusena-header .lusena-header__mobile-toggle {
+    display: none;
+  }
+}
+
+/* ── Cart link (position context for badge) ───────────────────── */
+.lusena-header .lusena-header__cart {
+  position: relative;
+}
+
+/* ── Icon tap highlight reset ─────────────────────────────────── */
+.lusena-header .lusena-icon-button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .lusena-header .lusena-icon-button:hover {
+    background-color: transparent !important;
+  }
+}
+
+/* ── Cart count badge ─────────────────────────────────────────── */
+.lusena-header .lusena-header__cart-count {
+  position: absolute;
+  top: -0.3rem;
+  right: -0.3rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 2px solid rgb(255 255 255);
+  background-color: var(--lusena-accent-cta);
+  color: var(--lusena-color-n0, #fff);
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  text-indent: 0.04em;
+}
+
+/* ── Mobile menu panel ────────────────────────────────────────── */
+@media (min-width: 1024px) {
+  .lusena-header .lusena-header__mobile-menu {
+    display: none;
+  }
+}
+
+/* ── Mobile menu grid animation ───────────────────────────────── */
+[data-lusena-mobile-menu-wrapper] {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 260ms cubic-bezier(0.2, 0.9, 0.2, 1), opacity 160ms ease;
+}
+
+[data-lusena-mobile-menu-inner] {
+  overflow: hidden;
+  background-color: inherit;
+  border-bottom: 1px solid var(--lusena-color-n200, rgba(74, 74, 74, 0.12));
+}
+
+[data-lusena-header].lusena-header--menu-open [data-lusena-mobile-menu-wrapper] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+[data-lusena-mobile-menu-content] {
+  opacity: 0;
+  transform: translateY(-0.5rem);
+  transition: opacity 160ms ease, transform 220ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+[data-lusena-header].lusena-header--menu-open [data-lusena-mobile-menu-content] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Mobile content padding ───────────────────────────────────── */
+.lusena-header .lusena-header__mobile-content {
+  padding-block: var(--lusena-space-2);
+}
+
+/* ── Mobile nav ───────────────────────────────────────────────── */
+.lusena-header .lusena-header__mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lusena-space-2);
+}
+
+/* ── Auto-hide on scroll: keep menu visible when open ─────────── */
+@media (max-width: 767px) {
+  [data-lusena-header].lusena-header--menu-open {
+    transform: translateY(0);
+    padding-bottom: 0 !important;
+  }
+}
+
+/* ── Reduced motion ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  [data-lusena-header] {
+    transition: none;
+  }
+  [data-lusena-mobile-menu-wrapper] {
+    transition: none;
+  }
+  [data-lusena-mobile-menu-content] {
+    transition: none;
+    transform: none;
+  }
+}

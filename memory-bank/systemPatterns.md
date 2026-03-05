@@ -2,26 +2,27 @@
 
 ## CSS Architecture
 
-### Migration in progress
+### CSS layer stack
 
-We are replacing the old fragmented CSS with a single `assets/lusena-foundations.css`. During transition, both old and new files coexist. See `memory-bank/progress.md` for phase status.
-
-**Target stack (after migration):**
 1. **Inline font-faces & root CSS** — Custom fonts (Inter, Source Serif 4), CSS custom properties
 2. **Dawn base:** `assets/base.css` — Foundation styles
-3. **LUSENA foundations:** `assets/lusena-foundations.css` — Single source of truth (tokens, spacing, typography, components, utilities)
-4. **Button system:** `snippets/lusena-button-system.liquid`
-5. **Component styles:** `{% stylesheet %}` blocks in sections/snippets
+3. **Cart CSS** (conditional — `cart_type == 'drawer'`)
+4. **Standalone LUSENA assets** (loaded globally via `<link>` in `theme.liquid`):
+   - `lusena-foundations.css` (~40KB) — tokens, spacing, typography, components, body/main rules
+   - `lusena-button-system.css` — button/icon-button primitives
+   - `lusena-header.css` — header section styles
+   - `lusena-hero.css` — hero section styles
+   - `lusena-footer.css` — footer section styles
+5. **Page-specific assets:** `lusena-pdp.css` (~34KB) — loaded per-page in section file
+6. **Component `{% stylesheet %}` blocks** — small section-scoped CSS only (~38KB compiled, 73KB hard limit)
 
-**Old stack (being phased out):**
-- `assets/lusena-shop.css` (26KB Tailwind) → replaced by foundations
-- `assets/lusena-spacing.css` (266 lines) → absorbed into foundations
-- `snippets/lusena-missing-utilities.liquid` (351 lines) → absorbed into foundations
+### compiled_assets truncation guard (MANDATORY)
+`{% stylesheet %}` blocks compile into `compiled_assets/styles.css` which **silently truncates at ~73KB**. Rules:
+- **≤50 lines** section-scoped CSS → OK in `{% stylesheet %}`
+- **>50 lines** or shared CSS → standalone `assets/lusena-*.css` file
+- **After adding section CSS:** check compiled_assets size in DevTools — must stay **under 55KB**
 
-### Key constraint
-`{% stylesheet %}` blocks have ~73KB cumulative limit (`compiled_assets/styles.css` truncation). Large CSS MUST go in standalone asset files, NOT in `{% stylesheet %}` blocks.
-
-> Full CSS architecture details: `memory-bank/doc/patterns/css-architecture.md`
+> Full CSS architecture details + extraction steps: `memory-bank/doc/patterns/css-architecture.md`
 
 ## Naming conventions
 
@@ -38,7 +39,7 @@ We are replacing the old fragmented CSS with a single `assets/lusena-foundations
 | Tier | Mobile | Desktop | Usage |
 |------|--------|---------|-------|
 | `lusena-spacing--full-bleed` | 0 | 0 | Edge-to-edge media |
-| `lusena-spacing--compact` | 32px | 48px | Utility sections (trust bar) |
+| `lusena-spacing--compact` | 32px | 48px | Utility sections |
 | `lusena-spacing--standard` | 48px | 64px | Informational content |
 | `lusena-spacing--spacious` | 64px | 96px | Trust-building, CTAs |
 | `lusena-spacing--hero` | 80px | 128px | Hero sections |
@@ -84,9 +85,23 @@ Modifier: `lusena-spacing--snug-top` — reduces top to 32/48px for heroes shari
 
 ## Component systems
 
-- **Buttons:** `snippets/lusena-button-system.liquid` — primary, outline, ghost, text, link variants
+- **Buttons:** `assets/lusena-button-system.css` + `snippets/lusena-button-system.liquid` — primary, outline, ghost, text, link variants (CSS in standalone asset, Liquid renders markup)
 - **Icons:** `snippets/lusena-icon.liquid` — centralized SVG rendering
 - **Product cards:** `snippets/lusena-product-card.liquid`
 - **Breadcrumbs:** `snippets/lusena-breadcrumbs.liquid`
+- **Final CTA:** `sections/lusena-final-cta.liquid` — generic reusable section (replaces per-page copies)
+
+## Page migration workflow
+
+Each page follows a **single-pass workflow** (Phases A–E). Read the full workflow and 18 lessons learned before migrating any page:
+
+> **Mandatory reading:** `memory-bank/doc/patterns/migration-lessons.md`
+
+Quick reference:
+- **Phase A:** Plan — read template JSON, map Tailwind → foundations, identify bugs
+- **Phase B:** Implement — replace classes, write section CSS, fix HTML bugs
+- **Phase C:** Validate — `validate_theme`, grep for remaining Tailwind, `shopify theme check`
+- **Phase D:** Visual verify — **use `/playwright-cli` skill** (NEVER Playwright MCP tools) — desktop (1280x800) + mobile (375x812)
+- **Phase E:** UX audit — conversion-focused review (dead ends, readability, balance, mobile, customer journey)
 
 > Full design tokens: `memory-bank/doc/patterns/brand-tokens.md`

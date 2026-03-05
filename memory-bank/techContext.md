@@ -22,32 +22,39 @@
 ### Global components
 - `snippets/lusena-button-system.liquid` — Button primitives
 - `snippets/lusena-icon.liquid` — SVG icon system
-- `snippets/lusena-missing-utilities.liquid` — Tailwind utility patches (tech debt)
 - `snippets/lusena-section-gap-detector.liquid` — Same-bg section gap detection (JS)
-- `snippets/lusena-spacing-system.liquid` — Doc-only stub (CSS in asset file)
 
 ### Styles
-- `assets/lusena-shop.css` — Tailwind-compiled brand utilities (26KB)
-- `assets/lusena-spacing.css` — Spacing token system (source of truth, 266 lines)
+- `assets/lusena-foundations.css` — Single source of truth for design tokens, utilities, containers, components, body/main global rules, preflight resets (~40KB)
+- `assets/lusena-button-system.css` — Button/icon-button primitives (extracted from snippet {% stylesheet %})
+- `assets/lusena-header.css` — Header section styles (extracted from section {% stylesheet %})
+- `assets/lusena-hero.css` — Hero section styles (extracted from section {% stylesheet %})
+- `assets/lusena-footer.css` — Footer section styles (extracted from section {% stylesheet %})
+- `assets/lusena-pdp.css` — All PDP-specific CSS (~34KB), loaded per-page
 - `assets/base.css` — Dawn foundation (3,641 lines)
+
+### CSS loading architecture
+- **Global assets in `theme.liquid`:** `lusena-foundations.css` → `lusena-button-system.css` → `lusena-header.css` → `lusena-hero.css` → `lusena-footer.css`
+- **Page-specific assets:** `lusena-pdp.css` loaded via `{{ 'lusena-pdp.css' | asset_url | stylesheet_tag }}` in `lusena-main-product.liquid`
+- **`{% stylesheet %}` compiled_assets truncation:** All `{% stylesheet %}` blocks compile into `compiled_assets/styles.css` (~38KB after extraction, 73KB hard limit). Rules after limit silently dropped. **MANDATORY:** check size stays under 55KB after adding section CSS. See `memory-bank/doc/patterns/css-architecture.md`.
+- **Preflight resets in foundations:** `button`, `a`, `img`, `video` resets (replacing old Tailwind preflight). SVG intentionally excluded — SVGs expand without explicit dimensions.
 
 ## Development tools
 
 - **Shopify CLI:** `shopify theme dev` → `http://127.0.0.1:9292/`
 - **Theme check:** `shopify theme check` (only known baseline warnings should remain)
-- **Playwright MCP:** Visual verification when uncertain about layout
+- **Playwright CLI (`/playwright-cli` skill):** The **only** way to interact with the browser. Use for ALL browser tasks: screenshots, debugging CSS, checking network resources, testing interactions, comparing before/after, anything that needs a live page. **CRITICAL: NEVER use Playwright MCP browser tools directly** (`browser_navigate`, `browser_snapshot`, `browser_click`, etc.) — they bypass the project workflow. The `/playwright-cli` skill handles correct dev server URL, viewport sizes, and screenshot naming.
 - **Shopify Dev MCP:** MUST call `learn_shopify_api` with `api: "liquid"` before editing Liquid
 
 ## Skills inventory
 
-10 skills mirrored in `.claude/`, `.agent/`, `.codex/`:
+9 skills mirrored in `.claude/`, `.agent/`, `.codex/`:
 
 | Skill | Purpose |
 |-------|---------|
-| `lusena-theme-changelog` | Commit + changelog workflow |
+| `lusena-update-memory-bank` | Post-work memory bank update |
 | `lusena-v2-page-migration` | Page migration to brandbook v2 |
 | `lusena-draftshop-fragment-parity` | Copy UI from React prototype to theme |
-| `lusena-spacing` | Spacing review and adjustment |
 | `shopify-dev-mcp` | Shopify Dev MCP tool usage |
 | `shopify-expert` | Shopify theme development |
 | `frontend-design` | Production-grade frontend UI |

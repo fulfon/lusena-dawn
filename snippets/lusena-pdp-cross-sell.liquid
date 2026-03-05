@@ -13,14 +13,14 @@
   {%- endfor -%}
 
   {%- if has_cross_sell -%}
-    <div class="container">
-      <div class="border-t border-brand-bg lusena-gap-subsection">
-        <div class="text-center lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-          <h2 class="text-2xl md:text-3xl font-serif text-primary">
+    <div class="lusena-container">
+      <div class="lusena-pdp-cross-sell__border lusena-gap-subsection">
+        <div class="lusena-text-center lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          <h2 class="lusena-type-h1">
             {{ section.settings.cross_sell_heading | escape }}
           </h2>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="lusena-pdp-cross-sell__grid">
           {%- for block in section.blocks -%}
             {%- if block.type == 'cross_sell' and block.settings.product != blank -%}
               <div

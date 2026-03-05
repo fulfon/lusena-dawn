@@ -36,7 +36,7 @@
 -%}
 
 <div
-  class="md:col-span-7 lusena-content-flow--tight lusena-gallery{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+  class="lusena-content-flow--tight lusena-gallery{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
   data-lusena-gallery
   {% if certificate_url != blank %}
     data-lusena-proof-id="{{ proof_media_id }}"
@@ -68,7 +68,7 @@
                 media_preview
                 | image_url: width: 300
                 | image_tag:
-                  class: 'w-full h-full object-cover',
+                  class: '',
                   loading: 'lazy',
                   widths: '120, 180, 240, 300',
                   sizes: '72px',
@@ -87,14 +87,14 @@
             aria-label="Certyfikat"
           >
             <span class="lusena-media-thumb__proof-icon">
-              {% render 'lusena-icon', name: 'shield-check', class: 'w-4 h-4', stroke_width: 1.5 %}
+              {% render 'lusena-icon', name: 'shield-check', stroke_width: 1.5 %}
             </span>
           </button>
         {%- endif -%}
       </div>
 
       <div
-        class="lusena-media-stage bg-surface-2 overflow-hidden rounded-sm relative"
+        class="lusena-media-stage"
         data-lusena-media-stage
         data-stage-type="image"
         data-stage-fade="in"
@@ -112,7 +112,7 @@
               initial_preview
               | image_url: width: 1600
               | image_tag:
-                class: 'w-full h-full object-cover',
+                class: '',
                 loading: 'eager',
                 fetchpriority: 'high',
                 widths: '600, 800, 1200, 1600',
@@ -120,13 +120,13 @@
                 alt: initial_alt
             }}
           {%- else -%}
-            {{ 'product-1' | placeholder_svg_tag: 'w-full h-full object-cover' }}
+            {{ 'product-1' | placeholder_svg_tag }}
           {%- endif -%}
 
           {%- if certificate_url != blank -%}
             <div class="lusena-proof-tile" data-lusena-stage-proof>
               <span class="lusena-proof-tile__icon">
-                {% render 'lusena-icon', name: 'shield-check', class: 'w-10 h-10', stroke_width: 1.6 %}
+                {% render 'lusena-icon', name: 'shield-check', stroke_width: 1.6 %}
               </span>
               <p class="lusena-proof-tile__title">Certyfikat OEKO-TEX</p>
               <p class="lusena-proof-tile__body">Niezalezny certyfikat bezpieczenstwa tekstyliow.</p>
@@ -144,7 +144,7 @@
 
         {%- if is_bestseller -%}
           <span
-            class="absolute top-4 left-4 bg-white/90 px-3 py-1 text-xs uppercase tracking-wider font-medium backdrop-blur-sm"
+            class="lusena-media-stage__bestseller"
             data-lusena-stage-bestseller
             hidden
           >
@@ -153,7 +153,7 @@
         {%- endif -%}
 
         <span class="lusena-media-stage__zoom" data-lusena-stage-zoom aria-hidden="true">
-          {% render 'lusena-icon', name: 'search', class: 'w-4 h-4', stroke_width: 1.8 %}
+          {% render 'lusena-icon', name: 'search', stroke_width: 1.8 %}
         </span>
       </div>
     </div>
@@ -174,7 +174,7 @@
 
         {%- if media_preview != blank -%}
           <div
-            class="lusena-gallery__mobile-slide bg-surface-2 overflow-hidden rounded-sm relative"
+            class="lusena-gallery__mobile-slide"
             data-lusena-mobile-slide
             data-media-id="{{ media.id }}"
             data-media-type="{{ media.media_type }}"
@@ -188,7 +188,7 @@
                 media_preview
                 | image_url: width: 900
                 | image_tag:
-                  class: 'w-full h-full object-cover',
+                  class: '',
                   loading: 'eager',
                   fetchpriority: 'high',
                   widths: '320, 480, 640, 900',
@@ -200,7 +200,7 @@
                 media_preview
                 | image_url: width: 900
                 | image_tag:
-                  class: 'w-full h-full object-cover',
+                  class: '',
                   loading: 'lazy',
                   widths: '320, 480, 640, 900',
                   sizes: '85vw',
@@ -209,12 +209,12 @@
             {%- endif -%}
             {%- if media.media_type == 'image' -%}
               <span class="lusena-gallery__mobile-zoom" aria-hidden="true">
-                {% render 'lusena-icon', name: 'search', class: 'w-3.5 h-3.5', stroke_width: 1.8 %}
+                {% render 'lusena-icon', name: 'search', stroke_width: 1.8 %}
               </span>
             {%- endif -%}
             {%- if is_bestseller and forloop.first -%}
               <span
-                class="absolute top-3 left-3 bg-white/90 px-2.5 py-1 text-xs uppercase tracking-wider font-medium backdrop-blur-sm"
+                class="lusena-media-stage__bestseller"
                 data-lusena-mobile-bestseller
                 hidden
               >
@@ -235,7 +235,7 @@
         >
           <div class="lusena-proof-tile">
             <span class="lusena-proof-tile__icon">
-              {% render 'lusena-icon', name: 'shield-check', class: 'w-10 h-10', stroke_width: 1.6 %}
+              {% render 'lusena-icon', name: 'shield-check', stroke_width: 1.6 %}
             </span>
             <p class="lusena-proof-tile__title">Certyfikat OEKO-TEX</p>
             <p class="lusena-proof-tile__body">Niezalezny certyfikat bezpieczenstwa tekstyliow.</p>
@@ -250,7 +250,7 @@
           </div>
           {%- if is_bestseller -%}
             <span
-              class="absolute top-3 left-3 bg-white/90 px-2.5 py-1 text-xs uppercase tracking-wider font-medium backdrop-blur-sm"
+              class="lusena-media-stage__bestseller"
               data-lusena-mobile-bestseller
               hidden
             >
@@ -292,7 +292,7 @@
         data-lusena-lightbox-close
         aria-label="Zamknij podglad"
       >
-        {% render 'lusena-icon', name: 'x', class: 'w-6 h-6', stroke_width: 1.8 %}
+        {% render 'lusena-icon', name: 'x', class: 'lusena-icon-lg', stroke_width: 1.8 %}
       </button>
     </div>
 
@@ -303,7 +303,7 @@
         data-lusena-lightbox-prev
         aria-label="Poprzednie zdjecie"
       >
-        {% render 'lusena-icon', name: 'chevron-right', class: 'w-6 h-6', stroke_width: 1.8 %}
+        {% render 'lusena-icon', name: 'chevron-right', class: 'lusena-icon-lg', stroke_width: 1.8 %}
       </button>
 
       <div class="lusena-lightbox__image-wrap" data-lusena-lightbox-image-wrap>
@@ -327,7 +327,7 @@
         data-lusena-lightbox-next
         aria-label="Nastepne zdjecie"
       >
-        {% render 'lusena-icon', name: 'chevron-right', class: 'w-6 h-6', stroke_width: 1.8 %}
+        {% render 'lusena-icon', name: 'chevron-right', class: 'lusena-icon-lg', stroke_width: 1.8 %}
       </button>
     </div>
 

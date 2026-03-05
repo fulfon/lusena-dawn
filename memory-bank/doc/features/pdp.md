@@ -10,9 +10,9 @@
 | 2 | `lusena-pdp-feature-highlights` | standard | Done |
 | 3 | `lusena-pdp-quality-evidence` | standard | Done |
 | 4 | `lusena-pdp-truth-table` | standard | Done |
-| 5 | `lusena-pdp-details` | standard | Done |
+| 5 | `lusena-faq` (shared) | standard | Done |
 
-## PDP snippets (13)
+## PDP snippets (11)
 
 - `lusena-pdp-media.liquid` — Gallery/media
 - `lusena-pdp-summary.liquid` — Title, price, rating
@@ -22,11 +22,9 @@
 - `lusena-pdp-proof-chips.liquid` — Evidence chips
 - `lusena-pdp-guarantee.liquid` — Guarantee messaging
 - `lusena-pdp-cross-sell.liquid` — Cross-sell recommendations
-- `lusena-pdp-accordions.liquid` — Expandable details
 - `lusena-pdp-sticky-atc.liquid` — Sticky add-to-cart bar
-- `lusena-pdp-payment.liquid` — Payment icons
 - `lusena-pdp-scripts.liquid` — PDP JavaScript
-- `lusena-pdp-styles.liquid` — PDP-specific CSS
+- `lusena-pdp-styles.liquid` — Doc-only stub (CSS in `assets/lusena-pdp.css`)
 
 ## Pending work
 

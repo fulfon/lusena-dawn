@@ -33,18 +33,18 @@
           data-lusena-option-type="color"
         {% endif %}
       >
-        <legend class="text-sm font-medium text-secondary uppercase tracking-wider text-xs">
+        <legend class="lusena-pdp-variant-picker__legend">
           {%- if is_color and section.settings.select_color_label != blank -%}
             {{ section.settings.select_color_label | escape }}:
           {%- else -%}
             {{ option.name | escape }}:
           {%- endif -%}
-          <span class="text-primary font-semibold text-sm ml-1" data-lusena-selected>
+          <span class="lusena-pdp-variant-picker__selected" data-lusena-selected>
             {{- selected_value | escape -}}
           </span>
         </legend>
 
-        <div class="flex flex-wrap gap-3">
+        <div class="lusena-pdp-variant-picker__options">
           {%- for value in option.values -%}
             {%- liquid
               assign is_selected = value.selected
@@ -67,26 +67,27 @@
                   assign swatch_value = 'rgb(' | append: value.swatch.color.rgb | append: ')'
                 endif
 
-                assign bg_class = ''
+                assign swatch_style = ''
                 if swatch_value == null
-                  assign bg_class = 'bg-gray-200'
                   assign value_downcase = value | downcase
                   case value_downcase
                     when 'beige'
-                      assign bg_class = 'bg-[#E8E0D5]'
+                      assign swatch_style = 'background:#E8E0D5'
                     when 'midnight blue'
-                      assign bg_class = 'bg-[#1B243B]'
+                      assign swatch_style = 'background:#1B243B'
                     when 'pearl white'
-                      assign bg_class = 'bg-[#FDFCF8]'
+                      assign swatch_style = 'background:#FDFCF8'
                     when 'pink'
-                      assign bg_class = 'bg-[#F3E5DC]'
+                      assign swatch_style = 'background:#F3E5DC'
                     when 'silver'
-                      assign bg_class = 'bg-[#D6D6D6]'
+                      assign swatch_style = 'background:#D6D6D6'
+                    else
+                      assign swatch_style = 'background:#E5E5E5'
                   endcase
                 endif
               -%}
 
-              <label class="transition-all duration-200 relative flex items-center justify-center{% if option_disabled %} opacity-40 cursor-not-allowed{% endif %}">
+              <label class="lusena-pdp-variant-picker__label{% if option_disabled %} lusena-pdp-variant-picker__label--disabled{% endif %}">
                 <input
                   class="lusena-option__input visually-hidden"
                   type="radio"
@@ -100,7 +101,7 @@
                   {% endif %}
                 >
                 <span
-                  class="lusena-option__swatch w-11 h-11 rounded-full border border-secondary/20 hover:brightness-95 shadow-sm {{ bg_class }}"
+                  class="lusena-option__swatch"
                   data-lusena-value
                   data-lusena-option-value="{{ value | escape }}"
                   title="{{ value | escape }}"
@@ -110,12 +111,14 @@
                       background-size: cover;
                       {% if swatch_focal_point %}background-position: {{ swatch_focal_point }};{% endif %}
                     "
+                  {% elsif swatch_style != blank %}
+                    style="{{ swatch_style }}"
                   {% endif %}
                 ></span>
                 <span class="visually-hidden">{{ value | escape }}</span>
               </label>
             {%- else -%}
-              <label class="transition-all duration-200 relative flex items-center justify-center{% if option_disabled %} opacity-40 cursor-not-allowed{% endif %}">
+              <label class="lusena-pdp-variant-picker__label{% if option_disabled %} lusena-pdp-variant-picker__label--disabled{% endif %}">
                 <input
                   class="lusena-option__input visually-hidden"
                   type="radio"
@@ -129,7 +132,7 @@
                   {% endif %}
                 >
                 <span
-                  class="lusena-option__pill px-6 py-2 border text-sm min-w-[6.4rem] border-secondary/30 text-primary hover:border-accent-cta"
+                  class="lusena-option__pill"
                   data-lusena-value
                   data-lusena-option-value="{{ value | escape }}"
                 >

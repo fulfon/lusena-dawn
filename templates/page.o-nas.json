@@ -15,7 +15,9 @@
         "hero_kicker": "O nas",
         "hero_heading_line_1": "Kompletna nocna rutyna",
         "hero_heading_line_2": "z jedwabiu 22 momme",
-        "hero_body": "<p>Każda noc na bawełnie to 8 godzin tarcia – dla Twojej skóry i włosów. LUSENA to poszewki, gumki i czepki, które chronią Cię podczas snu.</p><p>Jedwab sprowadzamy bezpośrednio z Shengze, a każda partia przechodzi polską kontrolę jakości.</p>"
+        "hero_body": "<p>Każda noc na bawełnie to 8 godzin tarcia – dla Twojej skóry i włosów. LUSENA to poszewki, gumki i czepki, które chronią Cię podczas snu.</p><p>Jedwab sprowadzamy bezpośrednio z Shengze, a każda partia przechodzi polską kontrolę jakości.</p>",
+        "hero_cta_label": "Zobacz kolekcję",
+        "hero_cta_link": "/collections/all"
       }
     },
     "trust": {
@@ -117,7 +119,16 @@
       },
       "block_order": ["value-0", "value-1", "value-2", "value-3", "value-4"],
       "settings": {}
+    },
+    "final_cta": {
+      "type": "lusena-final-cta",
+      "settings": {
+        "heading": "Przekonaj się sama",
+        "body": "Wybierz produkt i poczuj różnicę już pierwszej nocy.",
+        "cta_label": "Zobacz kolekcję",
+        "cta_link": "/collections/all"
+      }
     }
   },
-  "order": ["about_hero", "trust", "about_story", "about_values"]
+  "order": ["about_hero", "trust", "about_story", "about_values", "final_cta"]
 }

@@ -14,39 +14,72 @@
   endif
 -%}
 <section
-  class="bg-brand-bg lusena-quality-fire-test lusena-spacing--standard"
+  class="lusena-bg-brand lusena-quality-fire-test lusena-spacing--standard"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="container text-center">
-    <h2 class="text-3xl md:text-4xl font-serif text-primary lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <div class="lusena-container lusena-text-center">
+    <h2 class="lusena-type-h1 lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.fire_heading | escape }}
     </h2>
 
-    <div class="max-w-4xl mx-auto bg-black/5 aspect-video flex items-center justify-center rounded-sm border border-secondary/10 overflow-hidden lusena-gap-body{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <div class="lusena-quality-fire-test__video-wrap lusena-gap-body{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {%- if section.settings.fire_video != blank -%}
         {{
           section.settings.fire_video
           | video_tag:
             controls: true,
             preload: 'metadata',
-            class: 'w-full h-full object-cover'
+            class: 'lusena-quality-fire-test__video'
         }}
       {%- else -%}
-        <span class="text-gray-500 font-light text-center px-6">
+        <span class="lusena-quality-fire-test__placeholder">
           {{ section.settings.fire_video_placeholder | escape }}
         </span>
       {%- endif -%}
     </div>
 
-    <p class="text-secondary font-light max-w-2xl mx-auto{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <p class="lusena-type-body lusena-quality-fire-test__body{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {{ section.settings.fire_body | escape }}
     </p>
   </div>
 </section>
 
 {% stylesheet %}
+  /* Video wrap */
+  .lusena-quality-fire-test__video-wrap {
+    max-width: 76.8rem;
+    margin-inline: auto;
+    background-color: rgba(0, 0, 0, 0.05);
+    aspect-ratio: 16 / 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.2rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .lusena-quality-fire-test__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .lusena-quality-fire-test__placeholder {
+    color: var(--lusena-text-2);
+    font-weight: 300;
+    text-align: center;
+    padding-inline: var(--lusena-space-3);
+  }
+
+  /* Body max-width centering + contrast on cream — 0-2-0 to beat foundations */
+  .lusena-quality-fire-test .lusena-quality-fire-test__body {
+    max-width: 64rem;
+    margin-inline: auto;
+    color: var(--lusena-text-1);
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -119,7 +152,7 @@
       "type": "text",
       "id": "fire_body",
       "label": "Fire body",
-      "default": "Prawdziwy jedwab po spaleniu pachnie jak pieczone wĹ‚osy i zamienia siÄ™ w sypki popiĂłĹ‚. Poliester topi siÄ™ w twardÄ… kulkÄ™. Nie mamy nic do ukrycia."
+      "default": "Prawdziwy jedwab po spaleniu pachnie jak pieczone włosy i zamienia się w sypki popiół. Poliester topi się w twardą kulkę. Nie mamy nic do ukrycia."
     }
   ],
   "presets": [

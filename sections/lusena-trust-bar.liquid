@@ -3,55 +3,38 @@
 {%- liquid
   assign override_style = ''
   if section.settings.padding_top > 0
-    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+    assign override_style = override_style | append: 'padding-top:' | append: section.settings.padding_top | append: 'px;'
   endif
   if section.settings.padding_bottom > 0
-    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
-  endif
-  if section.settings.padding_top_mobile > 0
-    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
-  endif
-  if section.settings.padding_bottom_mobile > 0
-    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+    assign override_style = override_style | append: 'padding-bottom:' | append: section.settings.padding_bottom | append: 'px;'
   endif
 -%}
 <section
-  class="lusena-bg-surface-2 lusena-trust-bar lusena-spacing--compact"
+  class="lusena-bg-surface-1"
   data-lusena-trust-bar
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
 >
   <div class="lusena-container">
-    <ul
-      class="lusena-trust-bar__grid"
-      role="list"
-      {% if settings.animations_reveal_on_scroll %}
-        data-cascade
-      {% endif %}
->
+    <ul class="lusena-trust-bar" role="list">
       {%- for block in section.blocks -%}
-        <li
-          class="lusena-trust-bar__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-          {{ block.shopify_attributes }}
-        >
+        <li class="lusena-trust-bar__item" {{ block.shopify_attributes }}>
           {%- if block.settings.icon != blank -%}
-            <div class="lusena-trust-bar__icon">
-              {%- if known_icons contains block.settings.icon -%}
-                {% render 'lusena-icon', name: block.settings.icon, class: 'lusena-trust-bar__icon-svg', stroke_width: 1.5 %}
-              {%- else -%}
-                <span class="lusena-trust-bar__icon-svg lusena-trust-bar__icon-fallback" aria-hidden="true">
-                  {{ block.settings.icon }}
-                </span>
-              {%- endif -%}
-            </div>
+            {%- if known_icons contains block.settings.icon -%}
+              {% render 'lusena-icon', name: block.settings.icon, class: 'lusena-trust-bar__icon-svg', stroke_width: 1.5 %}
+            {%- else -%}
+              <span class="lusena-trust-bar__icon-fallback" aria-hidden="true">
+                {{ block.settings.icon }}
+              </span>
+            {%- endif -%}
           {%- endif -%}
-          <p class="lusena-trust-bar__text">
+          <span class="lusena-trust-bar__text">
             <span class="lusena-trust-bar__title">{{ block.settings.title | escape }}</span>
             {%- if block.settings.subtitle != blank -%}
-              <span class="lusena-trust-bar__subtitle">{{ block.settings.subtitle | escape }}</span>
+              <span class="lusena-trust-bar__subtitle lusena-type-caption">{{ block.settings.subtitle | escape }}</span>
             {%- endif -%}
-          </p>
+          </span>
         </li>
       {%- endfor -%}
     </ul>
@@ -59,85 +42,7 @@
 </section>
 
 {% stylesheet %}
-
-
-  .lusena-trust-bar__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .lusena-trust-bar__item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    text-align: center;
-  }
-
-  .lusena-trust-bar__icon {
-    flex: 0 0 auto;
-    padding: 8px;
-    background: var(--lusena-surface-1);
-    border-radius: 9999px;
-    line-height: 0;
-    color: var(--lusena-accent-cta);
-  }
-
-  .lusena-trust-bar__icon-svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .lusena-trust-bar__icon-fallback {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 500;
-  }
-
-  .lusena-trust-bar__text {
-    margin: 0;
-    min-width: 0;
-    text-wrap: balance;
-  }
-
-  .lusena-trust-bar__title {
-    display: block;
-    font-size: 14px;
-    line-height: 20px;
-    font-weight: 500;
-    letter-spacing: normal;
-    color: var(--lusena-text-1);
-  }
-
-  .lusena-trust-bar__subtitle {
-    display: block;
-    margin-top: 2px;
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: normal;
-    color: var(--lusena-text-2);
-  }
-
-  @media (min-width: 640px) {
-    .lusena-trust-bar__item {
-      flex-direction: row;
-      align-items: flex-start;
-      text-align: left;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .lusena-trust-bar__grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 32px;
-    }
-  }
+  /* All trust bar CSS moved to lusena-foundations.css to avoid compiled_assets truncation. */
 {% endstylesheet %}
 
 {% schema %}

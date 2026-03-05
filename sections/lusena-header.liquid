@@ -1,129 +1,9 @@
 <header
-  class="fixed top-0 left-0 right-0 z-50 bg-brand-bg/95 backdrop-blur-sm py-4"
+  class="lusena-header"
   data-lusena-header{% if section.settings.auto_hide_on_scroll_mobile %} data-lusena-auto-hide-on-scroll-mobile{% endif %}{% if section.settings.auto_hide_on_scroll_desktop %} data-lusena-auto-hide-on-scroll-desktop{% endif %}
 >
   {% stylesheet %}
-    .lusena-header__nav {
-      display: none;
-    }
-
-    @media (max-width: 767px) {
-      [data-lusena-header] {
-        transition: transform 220ms ease;
-        will-change: transform;
-      }
-
-      [data-lusena-header].lusena-header--auto-hidden {
-        transform: translateY(-110%);
-      }
-
-      [data-lusena-header].lusena-header--menu-open {
-        transform: translateY(0);
-        padding-bottom: 0 !important;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      [data-lusena-header] {
-        transition: transform 220ms ease;
-        will-change: transform;
-      }
-
-      [data-lusena-header].lusena-header--auto-hidden {
-        transform: translateY(-110%);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      [data-lusena-header] {
-        transition: none;
-      }
-    }
-
-    .lusena-header__desktop-only {
-      display: none;
-    }
-
-    .lusena-header__icon-action {
-      border-radius: 9999px;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    @media (hover: none) and (pointer: coarse) {
-      .lusena-header__icon-action:hover {
-        background-color: transparent !important;
-      }
-    }
-
-    .lusena-header__cart-count {
-      position: absolute;
-      top: -0.3rem;
-      right: -0.3rem;
-      width: 1.8rem;
-      height: 1.8rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 9999px;
-      border: 2px solid rgb(255 255 255);
-      background-color: rgb(14 94 90);
-      color: rgb(255 255 255);
-      font-size: 10px;
-      line-height: 1;
-      font-weight: 500;
-      font-variant-numeric: tabular-nums;
-      text-indent: 0.04em;
-    }
-
-    [data-lusena-mobile-menu-wrapper] {
-      display: grid;
-      grid-template-rows: 0fr;
-      opacity: 0;
-      transition: grid-template-rows 260ms cubic-bezier(0.2, 0.9, 0.2, 1), opacity 160ms ease;
-    }
-
-    [data-lusena-mobile-menu-inner] {
-      overflow: hidden;
-      background-color: inherit;
-      border-bottom: 1px solid rgba(74, 74, 74, 0.12);
-    }
-
-    [data-lusena-header].lusena-header--menu-open [data-lusena-mobile-menu-wrapper] {
-      grid-template-rows: 1fr;
-      opacity: 1;
-    }
-
-    [data-lusena-mobile-menu-content] {
-      opacity: 0;
-      transform: translateY(-0.5rem);
-      transition: opacity 160ms ease, transform 220ms cubic-bezier(0.2, 0.9, 0.2, 1);
-      will-change: transform, opacity;
-    }
-
-    [data-lusena-header].lusena-header--menu-open [data-lusena-mobile-menu-content] {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      [data-lusena-mobile-menu-wrapper] {
-        transition: none;
-      }
-      [data-lusena-mobile-menu-content] {
-        transition: none;
-        transform: none;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .lusena-header__nav {
-        display: flex;
-      }
-
-      .lusena-header__desktop-only {
-        display: flex;
-      }
-    }
+    /* CSS moved to assets/lusena-header.css (standalone asset) to avoid compiled_assets truncation. */
   {% endstylesheet %}
 
   {%- liquid
@@ -141,16 +21,16 @@
     assign primary_urls = sklep_url | append: '||' | append: about_url | append: '||' | append: silk_url | split: '||'
   -%}
 
-  <div class="container flex items-center justify-between" data-lusena-header-bar>
-    <details class="lg:hidden relative" data-lusena-mobile-menu-details>
-      <summary class="lusena-icon-button lusena-icon-button--ghost lusena-icon-button--md list-none cursor-pointer" aria-label="Menu" aria-controls="lusena-mobile-menu-panel">
-        {% render 'lusena-icon', name: 'menu', class: 'w-6 h-6 text-primary', stroke_width: 1.5 %}
+  <div class="lusena-container lusena-header__bar" data-lusena-header-bar>
+    <details class="lusena-header__mobile-toggle" data-lusena-mobile-menu-details>
+      <summary class="lusena-icon-button lusena-icon-button--ghost lusena-icon-button--md" aria-label="Menu" aria-controls="lusena-mobile-menu-panel">
+        {% render 'lusena-icon', name: 'menu', class: 'lusena-icon-lg', stroke_width: 1.5 %}
       </summary>
     </details>
 
     <a
       href="{{ routes.root_url }}"
-      class="flex items-center cursor-pointer"
+      class="lusena-header__logo"
       aria-label="{{ shop.name | escape }}"
       style="color: {{ section.settings.logo_color }};"
     >
@@ -162,24 +42,24 @@
         {{
           section.settings.logo_image
           | image_url: width: section.settings.logo_width
-          | image_tag: alt: shop.name, loading: 'eager', class: 'h-auto w-auto'
+          | image_tag: alt: shop.name, loading: 'eager'
         }}
       {%- else -%}
-        <span class="text-2xl font-serif tracking-tight font-medium">
+        <span class="lusena-header__logo-text">
           {{ section.settings.logo_text_fallback | default: shop.name | escape }}
         </span>
       {%- endif -%}
     </a>
 
-    <nav class="lusena-header__nav items-center gap-8">
-      <a href="{{ sklep_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">SKLEP</a>
-      <a href="{{ about_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">O NAS</a>
-      <a href="{{ silk_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">DLACZEGO JEDWAB?</a>
+    <nav class="lusena-header__nav">
+      <a href="{{ sklep_url }}" class="lusena-header__link">SKLEP</a>
+      <a href="{{ about_url }}" class="lusena-header__link">O NAS</a>
+      <a href="{{ silk_url }}" class="lusena-header__link">DLACZEGO JEDWAB?</a>
 
       {%- if section.settings.show_additional_menu and section.settings.menu != blank -%}
         {%- for link in section.settings.menu.links -%}
           {%- unless primary_urls contains link.url -%}
-            <a href="{{ link.url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">
+            <a href="{{ link.url }}" class="lusena-header__link">
               {{ link.title | escape }}
             </a>
           {%- endunless -%}
@@ -187,22 +67,22 @@
       {%- endif -%}
     </nav>
 
-    <div class="flex items-center gap-2 md:gap-4">
+    <div class="lusena-header__actions">
       {%- if section.settings.enable_search -%}
-        <a href="{{ routes.search_url }}" class="lusena-header__desktop-only lusena-header__icon-action lusena-icon-button lusena-icon-button--ghost lusena-icon-button--md text-primary" aria-label="Search">
-          {% render 'lusena-icon', name: 'search', class: 'w-5 h-5 text-primary', stroke_width: 1.5 %}
+        <a href="{{ routes.search_url }}" class="lusena-header__desktop-only lusena-icon-button lusena-icon-button--ghost lusena-icon-button--md" aria-label="Search">
+          {% render 'lusena-icon', name: 'search', class: 'lusena-icon-base', stroke_width: 1.5 %}
         </a>
       {%- endif -%}
 
       {%- if section.settings.enable_account and shop.customer_accounts_enabled -%}
-        <a href="{{ routes.account_url }}" class="lusena-header__desktop-only lusena-header__icon-action lusena-icon-button lusena-icon-button--ghost lusena-icon-button--md text-primary" aria-label="Account">
-          {% render 'lusena-icon', name: 'user', class: 'w-5 h-5 text-primary', stroke_width: 2 %}
+        <a href="{{ routes.account_url }}" class="lusena-header__desktop-only lusena-icon-button lusena-icon-button--ghost lusena-icon-button--md" aria-label="Account">
+          {% render 'lusena-icon', name: 'user', class: 'lusena-icon-base', stroke_width: 2 %}
         </a>
       {%- endif -%}
 
       {%- if section.settings.enable_cart -%}
-        <a href="{{ routes.cart_url }}" id="cart-icon-bubble" class="lusena-header__icon-action lusena-icon-button lusena-icon-button--ghost lusena-icon-button--md relative text-primary" aria-label="Cart">
-          {% render 'lusena-icon', name: 'shopping-bag', class: 'w-5 h-5 text-primary', stroke_width: 2 %}
+        <a href="{{ routes.cart_url }}" id="cart-icon-bubble" class="lusena-icon-button lusena-icon-button--ghost lusena-icon-button--md lusena-header__cart" aria-label="Cart">
+          {% render 'lusena-icon', name: 'shopping-bag', class: 'lusena-icon-base', stroke_width: 2 %}
           {%- if cart.item_count > 0 -%}
             <span class="lusena-header__cart-count">
               {{- cart.item_count -}}
@@ -213,18 +93,18 @@
     </div>
   </div>
 
-  <div class="lg:hidden" id="lusena-mobile-menu-panel" data-lusena-mobile-menu-wrapper aria-hidden="true">
+  <div class="lusena-header__mobile-menu" id="lusena-mobile-menu-panel" data-lusena-mobile-menu-wrapper aria-hidden="true">
     <div data-lusena-mobile-menu-inner>
-      <div class="container pt-4 pb-4" data-lusena-mobile-menu-content>
-        <nav class="flex flex-col gap-4">
-          <a href="{{ sklep_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">SKLEP</a>
-          <a href="{{ about_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors whitespace-nowrap">O NAS</a>
-          <a href="{{ silk_url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">DLACZEGO JEDWAB?</a>
+      <div class="lusena-container lusena-header__mobile-content" data-lusena-mobile-menu-content>
+        <nav class="lusena-header__mobile-nav">
+          <a href="{{ sklep_url }}" class="lusena-header__link">SKLEP</a>
+          <a href="{{ about_url }}" class="lusena-header__link">O NAS</a>
+          <a href="{{ silk_url }}" class="lusena-header__link">DLACZEGO JEDWAB?</a>
 
           {%- if section.settings.show_additional_menu and section.settings.menu != blank -%}
             {%- for link in section.settings.menu.links -%}
               {%- unless primary_urls contains link.url -%}
-                <a href="{{ link.url }}" class="text-sm font-medium hover:text-accent-cta transition-colors">
+                <a href="{{ link.url }}" class="lusena-header__link">
                   {{ link.title | escape }}
                 </a>
               {%- endunless -%}
@@ -280,9 +160,6 @@
 
     let lastScrollY = window.scrollY;
 
-    const scrolledClasses = ['bg-brand-bg/95', 'backdrop-blur-sm', 'py-4'];
-    const topClasses = ['bg-transparent', 'py-6'];
-
     const mobileMenuDetails = header.querySelector('[data-lusena-mobile-menu-details]');
     const mobileMenuPanel = header.querySelector('[data-lusena-mobile-menu-wrapper]');
 
@@ -313,7 +190,7 @@
 
     const resetTouchIconFocus = () => {
       if (!touchOnlyMq.matches) return;
-      header.querySelectorAll('.lusena-header__icon-action').forEach((element) => {
+      header.querySelectorAll('.lusena-icon-button').forEach((element) => {
         element.blur();
       });
     };
@@ -322,21 +199,18 @@
       const isMenuVisible =
         !!mobileMenuDetails?.open || mobileMenuDetails?.hasAttribute('data-lusena-mobile-menu-closing');
 
-      header.classList.add(...scrolledClasses);
-      header.classList.remove(...topClasses);
-
       const shouldAutoHide =
         (autoHideOnScrollMobile && autoHideMobileMq.matches) ||
         (autoHideOnScrollDesktop && autoHideDesktopMq.matches);
 
       if (!shouldAutoHide) {
-        header.classList.remove('lusena-header--auto-hidden');
+        header.classList.remove('lusena-header--hidden');
         lastScrollY = window.scrollY;
         return;
       }
 
       if (isMenuVisible) {
-        header.classList.remove('lusena-header--auto-hidden');
+        header.classList.remove('lusena-header--hidden');
         lastScrollY = window.scrollY;
         return;
       }
@@ -347,12 +221,12 @@
       if (Math.abs(delta) < autoHideDeltaThresholdPx) return;
 
       if (nextScrollY < autoHideTopThresholdPx) {
-        header.classList.remove('lusena-header--auto-hidden');
+        header.classList.remove('lusena-header--hidden');
         lastScrollY = nextScrollY;
         return;
       }
 
-      header.classList.toggle('lusena-header--auto-hidden', delta > 0);
+      header.classList.toggle('lusena-header--hidden', delta > 0);
       lastScrollY = nextScrollY;
     };
 
@@ -370,13 +244,13 @@
 
     if (autoHideMobileMq.addEventListener) {
       autoHideMobileMq.addEventListener('change', () => {
-        header.classList.remove('lusena-header--auto-hidden');
+        header.classList.remove('lusena-header--hidden');
         lastScrollY = window.scrollY;
       });
     }
     if (autoHideDesktopMq.addEventListener) {
       autoHideDesktopMq.addEventListener('change', () => {
-        header.classList.remove('lusena-header--auto-hidden');
+        header.classList.remove('lusena-header--hidden');
         lastScrollY = window.scrollY;
       });
     }
@@ -425,7 +299,7 @@
 
 {% schema %}
 {
-  "name": "LUSENA header (draft)",
+  "name": "LUSENA header",
   "tag": "section",
   "settings": [
     {
@@ -520,7 +394,7 @@
   ],
   "presets": [
     {
-      "name": "LUSENA header (draft)"
+      "name": "LUSENA header"
     }
   ]
 }
