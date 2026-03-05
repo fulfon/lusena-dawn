@@ -327,6 +327,9 @@
   }
 
   /* === UPSELL ZONE === */
+  .lusena-cart-drawer__upsell :where(p) { margin: 0; }
+  .lusena-cart-drawer .lusena-cart-drawer__upsell .lusena-btn--size-xs { min-height: auto; }
+
   .lusena-cart-drawer .lusena-cart-drawer__upsell {
     border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
     padding: var(--lusena-space-2) var(--lusena-space-3);
@@ -335,15 +338,16 @@
 
   .lusena-cart-drawer .lusena-cart-drawer__upsell-label {
     font-family: var(--lusena-font-brand);
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+    line-height: 1.4;
     color: var(--lusena-text-2);
-    margin-bottom: var(--lusena-space-2);
+    margin-bottom: 1.2rem;
   }
 
   .lusena-cart-drawer .lusena-cart-drawer__upsell-card {
     display: flex;
-    gap: var(--lusena-space-2);
-    padding: var(--lusena-space-2);
+    gap: 1.2rem;
+    padding: 1.2rem;
     background-color: var(--lusena-color-n0);
     border-radius: var(--lusena-btn-radius);
     border: 1px solid color-mix(in srgb, var(--lusena-text-2) 5%, transparent);
@@ -393,7 +397,8 @@
   }
 
   .lusena-cart-drawer .lusena-cart-drawer__upsell-info-color {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    line-height: 1.5;
     color: color-mix(in srgb, var(--lusena-text-2) 70%, transparent);
     margin-top: var(--lusena-space-05);
   }
@@ -413,6 +418,7 @@
 
   .lusena-cart-drawer .lusena-cart-drawer__upsell-price {
     font-size: 1.4rem;
+    line-height: 1.4;
     font-weight: 500;
     color: var(--lusena-text-1);
     font-variant-numeric: tabular-nums;
@@ -815,7 +821,10 @@
             assign upsell_message = upsell_message_metafield.value | default: settings.lusena_cart_upsell_message_fallback
             assign upsell_display_title = upsell_product_1.title
             assign upsell_display_message = upsell_message
-            assign upsell_display_color = upsell_color_label
+            comment
+              DEV-ONLY: hardcoded fallback for visual testing — REMOVE before production
+            endcomment
+            assign upsell_display_color = upsell_color_label | default: 'Beżowy'
             assign upsell_display_price = upsell_variant_1.price | money_without_trailing_zeros
           -%}
           <div class="lusena-cart-drawer__upsell" data-cart-upsell-zone aria-live="polite">

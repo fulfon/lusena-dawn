@@ -1,0 +1,382 @@
+{%- comment -%}
+  LUSENA Cart Footer — styled to match cart drawer footer.
+  All JS-required IDs and classes preserved for cart.js compatibility.
+{%- endcomment -%}
+
+<div
+  class="lusena-cart-footer{% if cart == empty %} is-empty{% endif %}"
+  id="main-cart-footer"
+  data-id="{{ section.id }}"
+>
+  <div class="lusena-container">
+    <div class="lusena-cart-footer__inner">
+      {%- if cart != empty -%}
+        {%- comment -%} Gift note / Cart note {%- endcomment -%}
+        {%- if settings.lusena_enable_gift_mode -%}
+          <details class="lusena-accordion lusena-cart-gift"
+            id="Details-Cart-GiftNote"
+            {% if cart.note != blank %} open{% endif %}
+          >
+            <summary class="lusena-accordion__summary">
+              <span class="lusena-type-body" style="font-weight: 500;">
+                Kupuję na prezent
+              </span>
+              <span class="lusena-accordion__icon">
+                {{- 'icon-caret.svg' | inline_asset_content -}}
+              </span>
+            </summary>
+            <div class="lusena-accordion__content">
+              <cart-note class="lusena-form__field">
+                <label class="lusena-visually-hidden" for="Cart-GiftNote">Dedykacja</label>
+                <textarea
+                  id="Cart-GiftNote"
+                  class="lusena-textarea"
+                  name="note"
+                  form="cart"
+                  rows="3"
+                  placeholder="{{ settings.lusena_gift_note_placeholder | default: 'Wpisz krótką dedykację (opcjonalnie)' | escape }}"
+                >{{ cart.note }}</textarea>
+                <p class="lusena-form__hint">Dedykację dodamy jako notatkę do zamówienia.</p>
+              </cart-note>
+            </div>
+          </details>
+        {%- elsif settings.show_cart_note -%}
+          <div class="lusena-cart-note">
+            <cart-note class="lusena-form__field">
+              <label class="lusena-form__label" for="Cart-note">Specjalne instrukcje do zamówienia</label>
+              <textarea
+                class="lusena-textarea"
+                name="note"
+                form="cart"
+                id="Cart-note"
+                rows="3"
+                placeholder="Specjalne instrukcje do zamówienia"
+              >{{ cart.note }}</textarea>
+            </cart-note>
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+
+      <div class="lusena-cart-footer__blocks">
+        {%- if cart != empty -%}
+          {%- comment -%} Free shipping bar {%- endcomment -%}
+          <div class="lusena-cart-meta">
+            {%- liquid
+              assign free_shipping_threshold_zl = settings.lusena_free_shipping_threshold | default: 0 | plus: 0
+              assign free_shipping_threshold_cents = free_shipping_threshold_zl | times: 100
+            -%}
+
+            {%- if settings.lusena_enable_free_shipping_progress and free_shipping_threshold_cents > 0 -%}
+              {%- liquid
+                assign cart_total_cents = cart.total_price
+                assign free_shipping_progress = 0
+                if free_shipping_threshold_cents > 0
+                  assign free_shipping_progress = cart_total_cents | times: 100 | divided_by: free_shipping_threshold_cents
+                endif
+                if free_shipping_progress > 100
+                  assign free_shipping_progress = 100
+                endif
+                assign free_shipping_remaining_cents = free_shipping_threshold_cents | minus: cart_total_cents
+                assign free_shipping_remaining_formatted = free_shipping_remaining_cents | money_without_trailing_zeros
+                assign free_shipping_threshold_formatted = free_shipping_threshold_cents | money_without_trailing_zeros
+              -%}
+
+              <div class="lusena-free-shipping" role="region" aria-label="Darmowa wysyłka">
+                <div class="lusena-free-shipping__msg">
+                  {%- if free_shipping_remaining_cents > 0 -%}
+                    {%- render 'lusena-icon', name: 'truck', class: 'lusena-icon-sm lusena-shrink-0', stroke_width: 2 -%}
+                    <span class="lusena-free-shipping__text">
+                      Brakuje Ci <span class="lusena-free-shipping__amount">{{ free_shipping_remaining_formatted }}</span> do darmowej dostawy
+                    </span>
+                  {%- else -%}
+                    {%- render 'lusena-icon', name: 'truck', class: 'lusena-icon-sm lusena-shrink-0', stroke_width: 2 -%}
+                    <span class="lusena-free-shipping__text lusena-free-shipping__text--qualified">
+                      Masz darmową dostawę!
+                    </span>
+                  {%- endif -%}
+                </div>
+                <div class="lusena-free-shipping__track">
+                  <span
+                    class="lusena-free-shipping__fill{% if free_shipping_remaining_cents <= 0 %} lusena-free-shipping__fill--qualified{% endif %}"
+                    style="width: {{ free_shipping_progress }}%;"
+                  ></span>
+                </div>
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Section blocks (subtotal, buttons, apps) {%- endcomment -%}
+        {% for block in section.blocks %}
+          {%- case block.type -%}
+            {%- when '@app' -%}
+              {% render block %}
+
+            {%- when 'subtotal' -%}
+              <div class="js-contents" {{ block.shopify_attributes }}>
+                <div>
+                  {%- if cart.cart_level_discount_applications.size > 0 -%}
+                    <ul class="lusena-cart-discounts" role="list" aria-label="Rabat">
+                      {%- for discount in cart.cart_level_discount_applications -%}
+                        <li class="lusena-cart-discounts__item">
+                          <span class="lusena-cart-discounts__icon">{{- 'icon-discount.svg' | inline_asset_content -}}</span>
+                          {{ discount.title | escape }}
+                          (-{{ discount.total_allocated_amount | money }})
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                </div>
+
+                <div class="lusena-cart-totals">
+                  <span class="lusena-cart-totals__label">Suma</span>
+                  <span class="lusena-cart-totals__value">{{ cart.total_price | money_with_currency }}</span>
+                </div>
+
+                <p class="lusena-cart-tax lusena-type-caption">
+                  {%- if cart.duties_included and cart.taxes_included -%}
+                    {%- if shop.shipping_policy.body == blank -%}
+                      Z wliczonymi cłami i podatkami. Obliczenie rabatów i wysyłki przy realizacji zakupu.
+                    {%- else -%}
+                      Z wliczonymi cłami i podatkami. Obliczenie rabatów i <a href="{{ shop.shipping_policy.url }}">wysyłki</a> przy realizacji zakupu.
+                    {%- endif -%}
+                  {%- elsif cart.duties_included == false and cart.taxes_included -%}
+                    {%- if shop.shipping_policy.body == blank -%}
+                      Z wliczonymi podatkami. Obliczenie rabatów i wysyłki przy realizacji zakupu.
+                    {%- else -%}
+                      Z wliczonymi podatkami. Obliczenie rabatów i <a href="{{ shop.shipping_policy.url }}">wysyłki</a> przy realizacji zakupu.
+                    {%- endif -%}
+                  {%- elsif cart.duties_included and cart.taxes_included == false -%}
+                    {%- if shop.shipping_policy.body == blank -%}
+                      Z wliczonymi cłami. Obliczenie podatków, rabatów i wysyłki przy realizacji zakupu.
+                    {%- else -%}
+                      Z wliczonymi cłami. Obliczenie podatków, rabatów i <a href="{{ shop.shipping_policy.url }}">wysyłki</a> przy realizacji zakupu.
+                    {%- endif -%}
+                  {%- elsif cart.duties_included == false and cart.taxes_included == false -%}
+                    {%- if shop.shipping_policy.body == blank -%}
+                      Obliczenie podatków, rabatów i wysyłki przy realizacji zakupu.
+                    {%- else -%}
+                      Obliczenie podatków, rabatów i <a href="{{ shop.shipping_policy.url }}">wysyłki</a> przy realizacji zakupu.
+                    {%- endif -%}
+                  {%- endif -%}
+                </p>
+              </div>
+
+            {%- else -%}
+              {%- comment -%} Buttons block {%- endcomment -%}
+              <div class="lusena-cart-ctas" {{ block.shopify_attributes }}>
+                <button
+                  type="submit"
+                  id="checkout"
+                  name="checkout"
+                  form="cart"
+                  class="lusena-btn lusena-btn--primary lusena-btn--size-lg lusena-btn--full-width"
+                  {% if cart == empty %}disabled{% endif %}
+                >
+                  Przejdź do kasy
+                </button>
+
+                {%- if cart != empty -%}
+                  <div class="lusena-cart-ctas__trust">
+                    {%- render 'lusena-icon', name: 'shield-check', class: 'lusena-icon-sm lusena-shrink-0', stroke_width: 2 -%}
+                    <span class="lusena-cart-ctas__trust-text">60 dni na zwrot · Bezpieczna płatność</span>
+                  </div>
+                {%- endif -%}
+
+                <div class="lusena-cart-ctas__continue">
+                  <a href="{{ routes.all_products_collection_url }}" class="lusena-cart-ctas__continue-link">
+                    Kontynuuj zakupy
+                  </a>
+                </div>
+              </div>
+
+              {%- if additional_checkout_buttons -%}
+                <div class="lusena-cart-dynamic-checkout">
+                  {{ content_for_additional_checkout_buttons }}
+                </div>
+              {%- endif -%}
+          {%- endcase -%}
+        {% endfor %}
+
+        <div id="cart-errors"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  /* --- Footer layout --- */
+  .lusena-cart-footer.is-empty { display: none; }
+  .lusena-cart-footer__inner {
+    padding: var(--lusena-space-3) 0;
+  }
+  /* Block reorder: Totals → Shipping → CTA (HTML has Shipping first) */
+  .lusena-cart-footer__blocks .js-contents { order: -2; }
+  .lusena-cart-footer__blocks .lusena-cart-meta { order: -1; }
+  /* Mobile: match drawer footer background */
+  @media (max-width: 767px) {
+    .lusena-cart-footer-wrapper {
+      background-color: var(--lusena-color-n0);
+    }
+  }
+  /* Desktop: no border — upsell tinted bg provides separation; totals border-top handles the rest */
+  .lusena-cart-footer__blocks {
+    display: grid;
+    gap: var(--lusena-space-3);
+    max-width: 48rem;
+    margin-left: auto;
+  }
+
+  /* --- Gift note accordion --- */
+  .lusena-cart-gift { margin-bottom: var(--lusena-space-3); }
+  .lusena-cart-gift .lusena-accordion__icon svg { width: 1.2rem; height: 1.2rem; }
+
+  /* --- Cart note --- */
+  .lusena-cart-note { margin-bottom: var(--lusena-space-3); }
+
+  /* --- Meta section (free shipping) --- */
+  .lusena-cart-meta { display: grid; gap: var(--lusena-space-2); }
+
+  /* --- Free shipping bar (matches drawer pill style) --- */
+  .lusena-free-shipping > * + * { margin-top: var(--lusena-space-1); }
+  .lusena-free-shipping__msg {
+    display: flex;
+    align-items: center;
+    gap: var(--lusena-space-1);
+    justify-content: center;
+  }
+  .lusena-free-shipping__text {
+    font-size: 1.3rem;
+    color: var(--lusena-text-2);
+    line-height: 1.375;
+  }
+  .lusena-free-shipping__text--qualified {
+    color: var(--lusena-status-success);
+    font-weight: 500;
+  }
+  .lusena-free-shipping__amount {
+    font-weight: 500;
+    color: var(--lusena-text-1);
+    font-variant-numeric: tabular-nums;
+  }
+  .lusena-free-shipping__track {
+    width: 100%;
+    height: 0.6rem;
+    border-radius: 9999px;
+    overflow: hidden;
+    background: var(--lusena-surface-2);
+  }
+  .lusena-free-shipping__fill {
+    display: block;
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 500ms ease-in-out, background-color 250ms ease;
+    background: var(--lusena-accent-cta);
+  }
+  .lusena-free-shipping__fill--qualified {
+    background: var(--lusena-status-success);
+  }
+
+  /* --- Cart-level discounts --- */
+  .lusena-cart-discounts {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--lusena-space-2);
+  }
+  .lusena-cart-discounts__item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 1.4rem;
+    color: var(--lusena-accent-cta);
+    font-weight: 500;
+    padding: var(--lusena-space-1) 0;
+  }
+  .lusena-cart-discounts__icon { display: flex; width: 1.6rem; height: 1.6rem; }
+  .lusena-cart-discounts__icon svg { width: 100%; height: 100%; }
+
+  /* --- Totals (matches drawer: label left, value right) --- */
+  .lusena-cart-totals {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--lusena-space-2) 0;
+    border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
+  }
+  .lusena-cart-totals__label {
+    font-size: 1.4rem;
+    color: var(--lusena-text-2);
+    margin: 0;
+  }
+  .lusena-cart-totals__value {
+    font-family: var(--lusena-font-brand);
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--lusena-text-1);
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+  }
+
+  /* --- Tax note (hidden — totals + shipping bar are sufficient) --- */
+  .lusena-cart-tax { display: none; }
+
+  /* Mobile: match drawer footer spacing (16px gaps, no totals border/padding) */
+  @media (max-width: 767px) {
+    .lusena-cart-footer__blocks { gap: var(--lusena-space-2); }
+    .lusena-cart-totals { border-top: none; padding: 0; }
+  }
+
+  /* --- CTA block (matches drawer) --- */
+  .lusena-cart-ctas { display: grid; gap: var(--lusena-space-2); }
+  .lusena-cart-ctas__trust {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--lusena-space-1);
+    padding-top: var(--lusena-space-05);
+  }
+  .lusena-cart-ctas__trust-text {
+    font-size: 1.3rem;
+    color: var(--lusena-text-2);
+  }
+
+  /* --- Continue shopping link --- */
+  .lusena-cart-ctas__continue {
+    text-align: center;
+  }
+  .lusena-cart-ctas__continue-link {
+    font-size: 1.4rem;
+    color: var(--lusena-text-2);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+    transition: color var(--lusena-transition-fast);
+  }
+  .lusena-cart-ctas__continue-link:hover { color: var(--lusena-accent-cta); }
+
+  /* --- Dynamic checkout buttons --- */
+  .lusena-cart-dynamic-checkout { margin-top: var(--lusena-space-2); }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "LUSENA koszyk – suma",
+  "class": "lusena-cart-footer-wrapper",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "subtotal",
+      "name": "t:sections.main-cart-footer.blocks.subtotal.name",
+      "limit": 1
+    },
+    {
+      "type": "buttons",
+      "name": "t:sections.main-cart-footer.blocks.buttons.name",
+      "limit": 1
+    },
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

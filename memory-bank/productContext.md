@@ -13,10 +13,14 @@ LUSENA exists to make premium silk accessories accessible and trustworthy in the
 4. **Quality page** (`page.nasza-jakosc.json`) — Deep proof: momme, origin, certificates, fire test, comparison
 5. **Returns page** (`page.zwroty.json`) — Frictionless returns messaging, trust building
 6. **About page** (`page.o-nas.json`) — Brand story, heritage, values
+7. **Cart page** (`cart.json`) — Full drawer parity: items + upsell cross-sell + totals/shipping/CTA footer
+8. **Search page** (`search.json`) — Predictive search, product grid, empty state with bestsellers, Polish translations
 
 ### System pages (Dawn defaults, pending LUSENA styling)
-- Cart, Blog, Article, Search, Collections list, 404, Password, Contact
-- All customer account pages (login, register, addresses, orders)
+- Blog, Article, 404, Password, Contact
+
+### System pages (Shopify-managed, branded via admin)
+- Checkout, Thank you, Sign in, Orders, Order status, Profile
 
 ## UX goals
 

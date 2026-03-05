@@ -1,21 +1,7 @@
 {
   "sections": {
     "main": {
-      "type": "main-search",
-      "settings": {
-        "columns_desktop": 4,
-        "image_ratio": "portrait",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": true,
-        "enable_filtering": true,
-        "enable_sorting": true,
-        "article_show_date": true,
-        "article_show_author": false,
-        "columns_mobile": "2",
-        "padding_top": 40,
-        "padding_bottom": 40
-      }
+      "type": "lusena-search"
     }
   },
   "order": [

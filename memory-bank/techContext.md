@@ -15,9 +15,14 @@
 ### LUSENA sections (customer-facing)
 - **Header:** `sections/lusena-header.liquid`
 - **Footer:** `sections/lusena-footer.liquid`
+- **Cart page:** `sections/lusena-cart-items.liquid` + `snippets/lusena-cart-quantity.liquid` + `sections/lusena-cart-footer.liquid`
 - **Product page:** `sections/lusena-main-product.liquid` + `snippets/lusena-pdp-*.liquid` (13 PDP snippets)
 - **Collection:** `sections/lusena-main-collection.liquid` + `snippets/lusena-product-card.liquid`
+- **Search:** `sections/lusena-search.liquid` — predictive search, product grid, empty state with bestsellers
 - **Homepage:** `sections/lusena-hero.liquid`, `lusena-bestsellers.liquid`, `lusena-trust-bar.liquid`, etc. (9 sections)
+
+### Translations
+- `locales/en.default.json` — **Polish strings override English defaults** (store is PL-first). Search-related keys (`templates.search.*`, `accessibility.search.*`, `accessibility.loading`) translated to Polish. Polish quotation marks „..." use Unicode `\u201E` + `\u201D` (not ASCII `"`) to avoid breaking JSON.
 
 ### Global components
 - `snippets/lusena-button-system.liquid` — Button primitives

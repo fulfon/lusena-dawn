@@ -336,3 +336,104 @@ Shopify compiles ALL `{% stylesheet %}` blocks into one `compiled_assets/styles.
 ## 31. Browser interactions: `/playwright-cli` skill is the only tool
 
 This is a **general project rule** (documented in `CLAUDE.md` under "Browser Interactions"), not migration-specific. But it's critical during migration Phase D (visual verification): always use the `/playwright-cli` skill for ALL browser tasks. Never use Playwright MCP tools directly.
+
+---
+
+## Lessons from Cart page migration (2026-03-05)
+
+## 32. `:has()` selector and Shopify section wrappers
+
+Shopify wraps every section in a `<div class="shopify-section">` (or `<section class="shopify-section">`). This means sections are NOT direct children of `<main>`. When using `:has()` to style `<main>` based on a section's web component:
+
+```css
+/* BAD — won't match, cart-items is inside .shopify-section, not direct child */
+main:has(> cart-items) { ... }
+
+/* GOOD — descendant selector matches through wrapper */
+main:has(cart-items) { ... }
+```
+
+When the `.shopify-section` wrapper also needs styling (e.g., `flex: 1`), target it explicitly:
+```css
+main:has(cart-items) > .shopify-section:has(cart-items) {
+  flex: 1; display: flex; flex-direction: column;
+}
+```
+
+## 33. Viewport-fill with `min-height: 100dvh` — `<main>` padding matters
+
+Dawn's `<main>` has `padding-top` matching the sticky header height (76px). Since padding is INSIDE the element, `min-height: 100dvh` is correct (not `calc(100dvh - header)`). The padding pushes content down within the 100dvh box.
+
+## 34. Flex chain for height propagation — every wrapper needs flex
+
+To push a child element (like upsell) to the bottom of a flex container that fills the viewport, EVERY intermediate wrapper element must participate in the flex chain: `display: flex; flex-direction: column; flex: 1`. Missing one link breaks the chain and the child won't reach the bottom.
+
+Typical chain for cart: `main` → `.shopify-section` → `cart-items` → `.lusena-container` → `form` → `#main-cart-items` → `.js-contents` → upsell (`margin-top: auto`).
+
+## 35. CSS source order: mobile overrides must come AFTER base rules
+
+When two selectors have the same specificity, the one appearing later in the stylesheet wins. A mobile `@media` override placed early in the file will be overridden by a base rule that appears later:
+
+```css
+/* BUG: this mobile override... */
+@media (max-width: 767px) { .my-class { border: none; } }  /* line 220 */
+
+/* ...is overridden by this base rule at same specificity */
+.my-class { border: 1px solid gray; }  /* line 310 */
+```
+
+**Rule:** Place mobile overrides AFTER the base rules they override, or increase specificity.
+
+## 36. Desktop vs mobile flex strategies for viewport-fill
+
+Different screens need different approaches:
+- **Mobile:** Flex chain with `flex: 1` on cart-items section, `margin-top: auto` on upsell — fills viewport, upsell sticks to footer
+- **Desktop:** NO flex-grow on cart-items — content stays compact at top, remaining space is empty background. Site footer pushed below fold by `<main>` min-height.
+
+Making the flex chain global causes a gap between items and footer on desktop (content stretches to fill). Making it mobile-only keeps desktop compact.
+
+## 37. Redundant borders at section boundaries
+
+When a section has a full-bleed tinted background (like the upsell zone), the background edge already provides visual separation from the next section. Adding a `border-top` on the next section creates a double-separator effect with mismatched widths (full-bleed bg vs container-width border).
+
+**Rule:** Audit border/line sources at section transitions. If a tinted background already creates the break, remove redundant borders on adjacent sections.
+
+---
+
+## Lessons from Batch 4 — Customer account pages (2026-03-05)
+
+## 38. Verify Shopify account system before migrating customer pages
+
+Shopify deprecated legacy/classic customer accounts in **February 2026**. Stores created after this date (or stores that never explicitly opted into legacy) use the **new customer accounts** system, which is entirely hosted on `shopify.com/authentication/...`. This means:
+
+- **Liquid templates for `customers/*` are completely bypassed** — login, register, activate, reset password, account, order, addresses
+- **`shopify theme dev` cannot test customer pages** — authentication redirects to Shopify's hosted login (GitHub issue #1055, open since 2023)
+- **Customization options:** Only Shopify admin branding settings (logo, colors, typography) or building a custom Shopify app with customer account UI extensions (JavaScript/React + Polaris)
+
+**Rule:** Before starting ANY customer page migration, check which account system the store uses: Shopify admin → Settings → Customer accounts. If "New customer accounts" is active, skip ALL `customers/*` template migrations — they are dead code.
+
+## 39. Research platform constraints before building
+
+The Batch 4 migration built 3 full sections (~1100 lines), 5 icons, 8 CSS rules, and a pagination snippet before discovering the work was unusable. This cost could have been avoided by testing login access early or researching Shopify's account system deprecation timeline.
+
+**Rule:** For any page that depends on a platform-managed flow (authentication, checkout, payments), verify the store's configuration first. Test the actual user flow before writing code.
+
+---
+
+## Lessons from Batch 5 — Search page (2026-03-05)
+
+## 40. Viewport-fill: use `min-height: 100dvh` on `main`, not `flex: 1` on section
+
+When a page has little content (e.g., empty search state), using `flex: 1` on the section makes it stretch and the footer fills the remaining space — ugly on mobile. Better pattern: `min-height: 100dvh` on `main` pushes the footer below the fold, while the section stays its natural size. Combine with `padding-top: 18vh` on the initial state for upper-third positioning (like Google search), leaving room for keyboard + predictive dropdown on mobile.
+
+## 41. Dawn's `main-search.js` scrollIntoView must be disabled
+
+Dawn's `MainSearch` class calls `this.scrollIntoView({ behavior: 'smooth' })` on input focus for screens < 750px. This causes jarring scroll when the field is already visible. Fix: override `scrollIntoView` on the `<main-search>` element instance (not the method — the bound listener can't be removed). Pattern: `customElements.whenDefined('main-search').then(() => { el.scrollIntoView = () => {}; });`
+
+## 42. Polish quotation marks in JSON locale files need Unicode escapes
+
+Polish uses `„..."` (U+201E opening, U+201D closing) for quotation marks. In JSON string values, these MUST be actual Unicode characters, not ASCII `"` (U+0022) which breaks the JSON string delimiter. When editing `en.default.json`, never use ASCII quotes for inner Polish quotes — use real Unicode characters `„` and `"`. If an edit tool converts them to ASCII, the JSON will be invalid.
+
+## 43. Translating a PL-first store: override `en.default.json`, not `pl.json`
+
+If the store's default locale is English but all customer-facing text should be Polish, translate strings directly in `en.default.json` (the active locale). The `pl.json` file exists but is only used if Polish is set as a published language in Shopify admin. Overriding `en.default.json` is simpler and works immediately without admin changes.

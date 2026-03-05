@@ -837,6 +837,7 @@ textarea:focus-visible {
 
 .lusena-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--lusena-space-12) 0; gap: var(--lusena-space-4); }
 
+
 .lusena-announcement { background-color: var(--lusena-brand-bg); padding: var(--lusena-space-1); text-align: center; border-bottom: 1px solid var(--lusena-color-n200); }
 
 /* ==========================================================================
@@ -904,6 +905,168 @@ textarea:focus-visible {
 .lusena-form-msg { display: flex; align-items: center; gap: var(--lusena-space-1); margin-top: var(--lusena-space-1); font-family: var(--lusena-font-ui); font-size: 1.2rem; padding: var(--lusena-space-1) var(--lusena-space-2); border-radius: var(--lusena-radius-sm); }
 .lusena-form-msg--error { color: var(--lusena-status-error); background-color: rgba(185, 28, 28, 0.05); }
 .lusena-form-msg--success { color: var(--lusena-status-success); background-color: rgba(47, 125, 78, 0.05); }
+
+/* Form Layout — field groups, stacking, two-column rows */
+.lusena-form { display: flex; flex-direction: column; gap: var(--lusena-space-3); }
+.lusena-form__field { display: flex; flex-direction: column; gap: var(--lusena-space-05); }
+.lusena-form__label {
+  font-family: var(--lusena-font-ui);
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+  color: var(--lusena-text-1);
+  font-weight: 500;
+}
+.lusena-form__label--required::after { content: ' *'; color: var(--lusena-status-error); }
+.lusena-form__hint {
+  font-family: var(--lusena-font-ui);
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: var(--lusena-text-2);
+}
+.lusena-form__row { display: grid; grid-template-columns: 1fr; gap: var(--lusena-space-3); }
+@media (min-width: 768px) {
+  .lusena-form__row { grid-template-columns: 1fr 1fr; }
+}
+.lusena-form__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--lusena-space-2); padding-top: var(--lusena-space-1); }
+.lusena-form__footer { display: flex; flex-direction: column; align-items: center; gap: var(--lusena-space-2); text-align: center; }
+.lusena-form__footer a { color: var(--lusena-accent-cta); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.lusena-form__footer a:hover { color: var(--lusena-accent-cta-hover); }
+.lusena-form__divider { display: flex; align-items: center; gap: var(--lusena-space-2); color: var(--lusena-text-2); font-size: 1.4rem; }
+.lusena-form__divider::before,
+.lusena-form__divider::after { content: ''; flex: 1; height: 1px; background-color: var(--lusena-color-n200); }
+
+/* Checkbox & radio */
+.lusena-checkbox { display: flex; align-items: flex-start; gap: var(--lusena-space-1); cursor: pointer; }
+.lusena-checkbox__input {
+  width: 2rem; height: 2rem; flex-shrink: 0; margin-top: 0.2rem;
+  accent-color: var(--lusena-accent-cta);
+}
+.lusena-checkbox__label { font-family: var(--lusena-font-ui); font-size: 1.4rem; line-height: 2.4rem; color: var(--lusena-text-1); }
+
+/* ==========================================================================
+   DATA TABLE (Responsive — stacks to card layout on mobile)
+   Used by: cart line items, account order list, order details
+   ========================================================================== */
+
+.lusena-table { width: 100%; border-collapse: collapse; }
+.lusena-table th,
+.lusena-table td {
+  padding: var(--lusena-space-2) var(--lusena-space-2);
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--lusena-color-n200);
+}
+.lusena-table thead th {
+  font-family: var(--lusena-font-ui);
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lusena-text-2);
+  font-weight: 600;
+  padding-bottom: var(--lusena-space-2);
+  border-bottom-color: var(--lusena-color-n300);
+}
+.lusena-table tbody tr:last-child td,
+.lusena-table tbody tr:last-child th { border-bottom: 0; }
+.lusena-table tfoot td,
+.lusena-table tfoot th {
+  padding: var(--lusena-space-1) var(--lusena-space-2);
+  border-bottom: 0;
+  font-size: 1.4rem;
+}
+.lusena-table tfoot tr:last-child td,
+.lusena-table tfoot tr:last-child th { font-weight: 600; font-size: 1.6rem; color: var(--lusena-text-1); }
+.lusena-table__cell--right { text-align: right; }
+.lusena-table__cell--numeric { font-variant-numeric: tabular-nums; }
+
+/* Responsive stacking — hides headers, shows data-label as pseudo-header */
+@media (max-width: 767px) {
+  .lusena-table--responsive thead { display: none; }
+  .lusena-table--responsive tbody tr {
+    display: block;
+    padding: var(--lusena-space-3) 0;
+    border-bottom: 1px solid var(--lusena-color-n200);
+  }
+  .lusena-table--responsive tbody tr:last-child { border-bottom: 0; }
+  .lusena-table--responsive tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: var(--lusena-space-05) 0;
+    border-bottom: 0;
+  }
+  .lusena-table--responsive tbody td::before {
+    content: attr(data-label);
+    font-family: var(--lusena-font-ui);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--lusena-text-2);
+    flex-shrink: 0;
+    margin-right: var(--lusena-space-2);
+  }
+  .lusena-table--responsive tbody td[data-label=""]::before,
+  .lusena-table--responsive tbody td:not([data-label])::before { display: none; }
+  .lusena-table--responsive tfoot { display: block; border-top: 1px solid var(--lusena-color-n300); padding-top: var(--lusena-space-2); }
+  .lusena-table--responsive tfoot tr { display: flex; justify-content: space-between; }
+  .lusena-table--responsive tfoot td,
+  .lusena-table--responsive tfoot th { padding: var(--lusena-space-05) 0; border: 0; }
+}
+
+/* Line item — shared pattern for cart and order detail rows */
+.lusena-line-item { display: flex; gap: var(--lusena-space-2); align-items: flex-start; }
+.lusena-line-item__media {
+  width: 8rem; height: 10rem; flex-shrink: 0;
+  background-color: var(--lusena-color-n100);
+  overflow: hidden;
+}
+.lusena-line-item__media img { width: 100%; height: 100%; object-fit: cover; }
+.lusena-line-item__details { flex: 1; min-width: 0; }
+.lusena-line-item__title {
+  font-family: var(--lusena-font-ui);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--lusena-text-1);
+  text-decoration: none;
+  display: block;
+}
+.lusena-line-item__title:hover { text-decoration: underline; }
+.lusena-line-item__meta {
+  font-family: var(--lusena-font-ui);
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: var(--lusena-text-2);
+  margin-top: var(--lusena-space-05);
+}
+.lusena-line-item__price {
+  font-family: var(--lusena-font-ui);
+  font-size: 1.4rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--lusena-text-1);
+  margin-top: var(--lusena-space-1);
+}
+.lusena-line-item__compare-price { text-decoration: line-through; color: var(--lusena-text-2); opacity: 0.6; }
+
+/* ==========================================================================
+   PAGE HEADER (Shared title + optional breadcrumbs for system pages)
+   ========================================================================== */
+
+.lusena-page-header { padding-top: var(--lusena-space-4); padding-bottom: var(--lusena-space-4); }
+.lusena-page-header__title {
+  font-family: var(--lusena-font-brand);
+  font-size: 3.2rem;
+  line-height: 4.0rem;
+  font-weight: 400;
+  color: var(--lusena-text-1);
+  margin: 0;
+}
+.lusena-page-header__breadcrumbs { margin-bottom: var(--lusena-space-1); }
+@media (min-width: 768px) {
+  .lusena-page-header { padding-top: var(--lusena-space-6); padding-bottom: var(--lusena-space-4); }
+  .lusena-page-header__title { font-size: 4.0rem; line-height: 4.8rem; }
+}
 
 /* ==========================================================================
    RICH TEXT COMPONENT (Scoped CMS Content)

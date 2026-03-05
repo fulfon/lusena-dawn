@@ -1,0 +1,285 @@
+{% doc %}
+  Renders quantity stepper + remove button for a cart line item.
+  Styled to match the cart drawer's stepper (bordered group, icon-button--sm).
+  Preserves all JS-required IDs/classes for cart.js + quantity-popover.js compatibility.
+
+  @param {line_item} item - The cart line item object
+{% enddoc %}
+
+{%- liquid
+  assign has_qty_rules = false
+  if item.variant.quantity_rule.increment > 1 or item.variant.quantity_rule.min > 1 or item.variant.quantity_rule.max != null
+    assign has_qty_rules = true
+  endif
+
+  assign has_vol_pricing = false
+  if item.variant.quantity_price_breaks.size > 0
+    assign has_vol_pricing = true
+  endif
+
+  assign can_update_quantity = item.instructions.can_update_quantity | default: true
+  assign can_remove = item.instructions.can_remove | default: true
+-%}
+
+<quantity-popover>
+  <div class="lusena-cart-qty">
+    <label class="lusena-visually-hidden" for="Quantity-{{ item.index | plus: 1 }}">
+      Ilość
+    </label>
+    <div class="lusena-cart-qty__stepper{% if has_qty_rules or has_vol_pricing %} quantity-popover-container--hover{% endif %}">
+      {%- if has_qty_rules or has_vol_pricing -%}
+        <button
+          type="button"
+          aria-expanded="false"
+          class="quantity-popover__info-button quantity-popover__info-button--icon-only lusena-cart-qty__info lusena-hide-mobile"
+        >
+          {{- 'icon-info.svg' | inline_asset_content -}}
+        </button>
+      {%- endif -%}
+      <quantity-input class="quantity lusena-cart-qty__group">
+        <button
+          class="quantity__button lusena-icon-button lusena-icon-button--subtle lusena-icon-button--sm"
+          name="minus"
+          type="button"
+          {% if can_update_quantity == false %}disabled{% endif %}
+        >
+          <span class="lusena-visually-hidden">
+            Zmniejsz ilość dla {{ item.product.title | escape }}
+          </span>
+          {% render 'lusena-icon', name: 'minus', class: 'lusena-icon-sm', stroke_width: 2 %}
+        </button>
+        <input
+          class="quantity__input lusena-cart-qty__display"
+          data-quantity-variant-id="{{ item.variant.id }}"
+          type="number"
+          name="updates[]"
+          value="{{ item.quantity }}"
+          {% comment %}theme-check-disable{% endcomment %}
+          data-cart-quantity="{{ cart | item_count_for_variant: item.variant.id }}"
+          min="0"
+          data-min="{{ item.variant.quantity_rule.min }}"
+          {% if item.variant.quantity_rule.max != null %}
+            max="{{ item.variant.quantity_rule.max }}"
+          {% endif %}
+          step="{{ item.variant.quantity_rule.increment }}"
+          {% comment %}theme-check-enable{% endcomment %}
+          aria-label="Ilość dla {{ item.product.title | escape }}"
+          id="Quantity-{{ item.index | plus: 1 }}"
+          data-index="{{ item.index | plus: 1 }}"
+          {% if can_update_quantity == false %}disabled{% endif %}
+        >
+        <button
+          class="quantity__button lusena-icon-button lusena-icon-button--subtle lusena-icon-button--sm"
+          name="plus"
+          type="button"
+          {% if can_update_quantity == false %}disabled{% endif %}
+        >
+          <span class="lusena-visually-hidden">
+            Zwiększ ilość dla {{ item.product.title | escape }}
+          </span>
+          {% render 'lusena-icon', name: 'plus', class: 'lusena-icon-sm', stroke_width: 2 %}
+        </button>
+      </quantity-input>
+    </div>
+    <cart-remove-button
+      id="Remove-{{ item.index | plus: 1 }}"
+      data-index="{{ item.index | plus: 1 }}"
+      {% unless can_remove %}class="hidden"{% endunless %}
+    >
+      <a
+        href="{{ item.url_to_remove }}"
+        class="lusena-cart-qty__remove"
+        aria-label="Usuń {{ item.title | escape }}"
+      >
+        Usuń
+      </a>
+    </cart-remove-button>
+  </div>
+
+  {%- if has_qty_rules or has_vol_pricing -%}
+    <button
+      type="button"
+      class="quantity-popover__info-button quantity-popover__info-button--icon-with-label lusena-cart-qty__info-mobile lusena-hide-desktop"
+      aria-expanded="false"
+    >
+      {{- 'icon-info.svg' | inline_asset_content -}}
+      <span>
+        {%- if has_vol_pricing -%}
+          Ceny zależne od wolumenu są dostępne
+        {%- elsif has_qty_rules -%}
+          Wyświetl reguły ilości
+        {%- endif -%}
+      </span>
+    </button>
+  {%- endif -%}
+
+  {%- if has_vol_pricing or has_qty_rules -%}
+    <div class="cart-items__info global-settings-popup quantity-popover__info" tabindex="-1" hidden>
+      {%- if has_qty_rules == false -%}
+        <span class="lusena-type-caption lusena-kicker">
+          Ceny zależne od wolumenu
+        </span>
+      {%- endif -%}
+      <div class="lusena-type-caption">
+        {%- if item.variant.quantity_rule.increment > 1 -%}
+          <span>Przyrost o {{ item.variant.quantity_rule.increment }}</span>
+        {%- endif -%}
+        {%- if item.variant.quantity_rule.min > 1 -%}
+          <span>Min. {{ item.variant.quantity_rule.min }}</span>
+        {%- endif -%}
+        {%- if item.variant.quantity_rule.max != null -%}
+          <span>Maks. {{ item.variant.quantity_rule.max }}</span>
+        {%- endif -%}
+      </div>
+      <button class="lusena-cart-qty__close lusena-hide-desktop" type="button" aria-label="Zamknij">
+        <span class="svg-wrapper">{{- 'icon-close.svg' | inline_asset_content -}}</span>
+      </button>
+      {%- if item.variant.quantity_price_breaks.size > 0 -%}
+        <volume-pricing class="parent-display">
+          <ul class="lusena-cart-qty__vol-list">
+            <li>
+              <span>{{ item.variant.quantity_rule.min }}+</span>
+              {%- assign price = item.variant.price | money_with_currency -%}
+              <span>{{ price }}/szt.</span>
+            </li>
+            {%- for price_break in item.variant.quantity_price_breaks -%}
+              <li>
+                <span>{{ price_break.minimum_quantity }}<span aria-hidden="true">+</span></span>
+                {%- assign price = price_break.price | money_with_currency -%}
+                <span>{{ price }}/szt.</span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </volume-pricing>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="cart-item__error" id="Line-item-error-{{ item.index | plus: 1 }}" role="alert">
+    <small class="cart-item__error-text"></small>
+    <span class="svg-wrapper">{{- 'icon-error.svg' | inline_asset_content -}}</span>
+  </div>
+</quantity-popover>
+
+{% stylesheet %}
+  /* --- Qty row: stepper + remove side by side --- */
+  .lusena-cart-qty {
+    display: flex;
+    align-items: center;
+    gap: var(--lusena-space-2);
+  }
+
+  /* --- Stepper bordered group — double-class to override Dawn .quantity --- */
+  .lusena-cart-qty__group.quantity {
+    display: inline-flex;
+    align-items: center;
+    width: auto;
+    min-height: 0;
+    border: 1px solid color-mix(in srgb, var(--lusena-text-2) 20%, transparent);
+    border-radius: var(--lusena-btn-radius);
+    color: inherit;
+    position: relative;
+  }
+  /* Kill Dawn .quantity::before/::after border overlay */
+  .lusena-cart-qty__group.quantity::before,
+  .lusena-cart-qty__group.quantity::after { display: none; }
+  .lusena-cart-qty__group .lusena-icon-button { border-radius: 0; }
+  .lusena-cart-qty__group .lusena-icon-button:first-child {
+    border-radius: var(--lusena-btn-radius) 0 0 var(--lusena-btn-radius);
+  }
+  .lusena-cart-qty__group .lusena-icon-button:last-child {
+    border-radius: 0 var(--lusena-btn-radius) var(--lusena-btn-radius) 0;
+  }
+
+  /* --- Qty display — double-class to override Dawn base.css .quantity__input --- */
+  .lusena-cart-qty__group .lusena-cart-qty__display {
+    width: 2.8rem;
+    flex-grow: 0;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    font-family: var(--lusena-font-ui);
+    color: var(--lusena-text-1);
+    opacity: 1;
+    border: none;
+    background: transparent;
+    padding: 0;
+    -moz-appearance: textfield;
+  }
+  .lusena-cart-qty__group .lusena-cart-qty__display::-webkit-outer-spin-button,
+  .lusena-cart-qty__group .lusena-cart-qty__display::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* --- Remove button (text "Usuń", matches drawer) --- */
+  .lusena-cart-qty__remove {
+    font-size: 1.3rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--lusena-space-05) var(--lusena-space-1);
+    color: var(--lusena-text-2);
+    text-decoration: none;
+    transition: color var(--lusena-transition-fast);
+  }
+  @media (hover: hover) {
+    .lusena-cart-qty__remove:hover {
+      color: var(--lusena-status-error);
+    }
+  }
+
+  /* --- Info button (qty rules / volume pricing) --- */
+  .lusena-cart-qty__stepper {
+    display: flex;
+    align-items: center;
+    gap: var(--lusena-space-05);
+  }
+  .lusena-cart-qty__info,
+  .lusena-cart-qty__info-mobile {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: none;
+    color: var(--lusena-text-2);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: var(--lusena-space-05);
+  }
+  .lusena-cart-qty__info svg,
+  .lusena-cart-qty__info-mobile svg { width: 1.6rem; height: 1.6rem; }
+  .lusena-cart-qty__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--lusena-space-05);
+  }
+  .lusena-cart-qty__close svg { width: 1.6rem; height: 1.6rem; }
+
+  /* --- Volume pricing list --- */
+  .lusena-cart-qty__vol-list {
+    list-style: none;
+    padding: 0;
+    margin: var(--lusena-space-1) 0 0;
+    font-size: 1.2rem;
+  }
+  .lusena-cart-qty__vol-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--lusena-space-05) 0;
+    border-bottom: 1px solid var(--lusena-color-n100);
+  }
+
+  /* --- Error styling — hidden by default, visible when JS injects text --- */
+  .cart-item__error-text:empty { display: none; }
+  .cart-item__error-text:empty + .svg-wrapper { display: none; }
+  .cart-item__error:not(:has(.cart-item__error-text:not(:empty))) { display: none; }
+  .cart-item__error { margin-top: var(--lusena-space-1); }
+  .cart-item__error-text {
+    color: var(--lusena-status-error);
+    font-size: 1.2rem;
+    line-height: 1.4;
+  }
+{% endstylesheet %}

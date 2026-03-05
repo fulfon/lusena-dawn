@@ -2,7 +2,7 @@
 
 *Last updated: 2026-03-05*
 
-## LUSENA-styled pages (6 of ~21 total)
+## LUSENA-styled pages (8 of ~21 total)
 
 - [x] **Homepage** (`index.json`) — 9 sections: hero, trust bar, problem/solution, bestsellers, heritage, testimonials, bundles, FAQ, newsletter
 - [x] **Product page** (`product.json`) — 5 sections: main-product, feature highlights, quality evidence, truth table, FAQ (shared `lusena-faq`)
@@ -10,19 +10,21 @@
 - [x] **Quality page** (`page.nasza-jakosc.json`) — 11 sections: hero, trust bar, origin, momme, certificates, fire test, 6a, qc, comparison table, FAQ, final CTA
 - [x] **Returns page** (`page.zwroty.json`) — 5 sections: hero, steps, editorial, FAQ, final CTA
 - [x] **About page** (`page.o-nas.json`) — 5 sections: hero, trust bar, story, values, final CTA
+- [x] **Cart page** (`cart.json`) — 2 sections: cart-items (with upsell), cart-footer (totals, shipping bar, CTA, trust row)
+- [x] **Search page** (`search.json`) — 1 section: lusena-search (product grid, non-product results, empty state with bestsellers, predictive search, Polish translations)
 
-## Dawn-default pages (pending LUSENA styling)
+## Dawn → LUSENA page migration (2 of 10 templates — 5 customer pages N/A)
 
-- [ ] Cart (`cart.json`)
-- [ ] Blog listing (`blog.json`)
-- [ ] Article (`article.json`)
-- [ ] Search (`search.json`)
-- [ ] Collections list (`list-collections.json`)
-- [ ] 404 (`404.json`)
-- [ ] Password (`password.json`)
-- [ ] Generic page (`page.json`)
-- [ ] Contact page (`page.contact.json`)
-- [ ] Customer: login, register, account, addresses, order, activate, reset password
+Full plan: `memory-bank/doc/features/dawn-pages-migration-plan.md`
+
+- [x] **Batch 0: Shared infrastructure** — `.lusena-form` layout, `.lusena-table` + `.lusena-line-item`, `.lusena-page-header` snippet, `.lusena-checkbox` (2026-03-04)
+- [x] **Batch 1: Cart** — `cart.json` — 3 new files: `lusena-cart-items.liquid`, `lusena-cart-quantity.liquid`, `lusena-cart-footer.liquid`. Full drawer parity. (2026-03-05)
+- [ ] **Batch 2: Content pages** — `404.json`, `page.json`, `page.contact.json`
+- ~~**Batch 3: Customer auth**~~ — **N/A (Shopify-managed)** — Sign in page branded via admin settings (2026-03-05)
+- ~~**Batch 4: Customer account**~~ — **N/A (Shopify-managed)** — Checkout, thank you, orders, order status, profile pages branded via admin settings (2026-03-05)
+- [x] **Batch 5: Search** — `search.json` → `lusena-search`. Polish translations in `en.default.json`. list-collections skipped. (2026-03-05)
+- [ ] **Batch 6: Blog** — `blog.json`, `article.json`
+- [ ] **Batch 7: Password** — `password.json`
 
 ## Infrastructure completed
 
@@ -106,6 +108,10 @@ Body/main Tailwind classes moved to `lusena-foundations.css` global rules (body 
 
 - **PDP:** 4 deferred items — see `memory-bank/doc/features/pdp-migration-backlog.md`
 - **Homepage:** 6 deferred items — see `memory-bank/doc/features/homepage-migration-backlog.md`
+
+## UX backlog (evaluate during polish phase)
+
+- **Mobile header icons** — Currently only cart icon visible on mobile. Consider adding search icon and account/login icon to the mobile header for better discoverability.
 
 ## Cleanup backlog (not urgent — Dawn originals needed by theme editor)
 

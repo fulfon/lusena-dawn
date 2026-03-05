@@ -1,0 +1,725 @@
+{%- comment -%}
+  LUSENA Cart Items — flex-based layout matching cart drawer.
+  All JS-required IDs and classes preserved for cart.js compatibility.
+  Upsell uses custom JS (not product-form.js) to avoid opening the drawer.
+{%- endcomment -%}
+
+{%- unless settings.cart_type == 'drawer' -%}
+  <script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+{%- endunless -%}
+<script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  comment
+    Upsell product selection — mirrors cart-drawer.liquid waterfall:
+    1. Check global enable toggle + distinct-product suppression
+    2. Find trigger product (hero role or first item)
+    3. Resolve candidate: primary metafield → secondary → global fallback
+  endcomment
+
+  assign upsell_enabled = settings.lusena_enable_cart_upsell
+  if upsell_enabled == nil
+    assign upsell_enabled = true
+  endif
+
+  assign suppress_distinct_threshold = settings.lusena_cart_upsell_suppress_distinct_count | default: 2
+  assign cart_product_ids = cart.items | map: 'product_id' | uniq
+  assign distinct_count = cart_product_ids | size
+
+  assign suppress_upsell = false
+  if distinct_count >= suppress_distinct_threshold
+    assign suppress_upsell = true
+  endif
+
+  for item in cart.items
+    if item.product.metafields.lusena.upsell_suppress == true or item.product.metafields.lusena.upsell_role == 'bundle'
+      assign suppress_upsell = true
+      break
+    endif
+  endfor
+
+  assign trigger_product = nil
+  if cart != empty and suppress_upsell == false and upsell_enabled
+    for item in cart.items
+      if item.product.metafields.lusena.upsell_role == 'hero' and item.product.metafields.lusena.upsell_suppress != true
+        assign trigger_product = item.product
+        break
+      endif
+    endfor
+    if trigger_product == nil
+      assign trigger_product = cart.items.first.product
+    endif
+  endif
+
+  assign candidate_primary = blank
+  assign candidate_secondary = blank
+  assign candidate_fallback = settings.lusena_cart_upsell_global_fallback
+
+  if trigger_product != nil
+    assign primary_metafield = trigger_product.metafields.lusena.upsell_primary
+    assign secondary_metafield = trigger_product.metafields.lusena.upsell_secondary
+    assign candidate_primary = primary_metafield.value
+    assign candidate_secondary = secondary_metafield.value
+  endif
+
+  assign upsell_product = blank
+
+  assign in_cart_primary = false
+  if candidate_primary != blank and cart_product_ids contains candidate_primary.id
+    assign in_cart_primary = true
+  endif
+
+  assign in_cart_secondary = false
+  if candidate_secondary != blank and cart_product_ids contains candidate_secondary.id
+    assign in_cart_secondary = true
+  endif
+
+  assign in_cart_fallback = false
+  if candidate_fallback != blank and cart_product_ids contains candidate_fallback.id
+    assign in_cart_fallback = true
+  endif
+
+  if suppress_upsell == false and upsell_enabled and cart != empty
+    if candidate_primary != blank and candidate_primary.available and in_cart_primary == false
+      assign upsell_product = candidate_primary
+    elsif candidate_secondary != blank and candidate_secondary.available and in_cart_secondary == false
+      assign upsell_product = candidate_secondary
+    elsif candidate_fallback != blank and candidate_fallback.available and in_cart_fallback == false
+      assign upsell_product = candidate_fallback
+    endif
+
+    comment
+      DEV-ONLY: hardcoded fallback for visual testing — REMOVE before production
+    endcomment
+    if upsell_product == blank
+      assign upsell_product = all_products['the-compare-at-price-snowboard']
+    endif
+  endif
+-%}
+
+<cart-items
+  class="lusena-spacing--compact{% if cart == empty %} is-empty{% endif %}"
+  data-section-type="lusena-cart-items"
+>
+  <div class="lusena-container">
+    {%- comment -%} Page header {%- endcomment -%}
+    <div class="lusena-cart-header">
+      <h1 class="lusena-cart-header__title">Twój koszyk</h1>
+    </div>
+
+    {%- comment -%} Empty state {%- endcomment -%}
+    <div class="cart__warnings lusena-cart-empty">
+      <div class="lusena-empty">
+        <h1 class="lusena-type-h2">Twój koszyk jest pusty</h1>
+        <a href="{{ routes.all_products_collection_url }}" class="lusena-btn lusena-btn--primary lusena-btn--size-default">
+          Kontynuuj zakupy
+        </a>
+
+        {%- if shop.customer_accounts_enabled and customer == null -%}
+          <div class="lusena-cart-empty__login lusena-content-flow--tight">
+            <h2 class="lusena-type-body" style="font-weight: 500;">Masz już konto?</h2>
+            <p class="lusena-type-caption">
+              <a href="{{ routes.account_login_url }}" class="link underlined-link">Zaloguj się</a>, aby szybciej realizować zakupy.
+            </p>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} Cart form {%- endcomment -%}
+    <form action="{{ routes.cart_url }}" class="lusena-cart-form critical-hidden" method="post" id="cart">
+      <div class="cart__items" id="main-cart-items" data-id="{{ section.id }}">
+        <div class="js-contents">
+          {%- if cart != empty -%}
+            <div class="lusena-cart-list">
+              {%- for item in cart.items -%}
+                <div
+                  class="cart-item lusena-cart-item"
+                  id="CartItem-{{ item.index | plus: 1 }}"
+                  {% if item.parent_relationship.parent != null %}
+                    aria-label="{{ item.product.title | escape }} (część {{ item.parent_relationship.parent.title | escape }})"
+                  {% endif %}
+                >
+                  {%- comment -%} Image {%- endcomment -%}
+                  {% if item.image %}
+                    <a href="{{ item.url }}" class="lusena-cart-item__media" aria-hidden="true" tabindex="-1">
+                      <img
+                        src="{{ item.image | image_url: width: 300 }}"
+                        alt="{{ item.image.alt | escape }}"
+                        class="lusena-cart-item__img"
+                        loading="lazy"
+                        width="80"
+                        height="{{ 96 | divided_by: item.image.aspect_ratio | ceil }}"
+                      >
+                    </a>
+                  {% endif %}
+
+                  {%- comment -%} Info column {%- endcomment -%}
+                  <div class="lusena-cart-item__info">
+                    <div>
+                      {%- comment -%} Top row: name + line price {%- endcomment -%}
+                      <div class="lusena-cart-item__top">
+                        <div class="lusena-cart-item__name-wrap">
+                          {%- if settings.show_vendor -%}
+                            <p class="lusena-cart-item__vendor">{{ item.product.vendor }}</p>
+                          {%- endif -%}
+                          <a href="{{ item.url }}" class="cart-item__name lusena-cart-item__title">
+                            {{ item.product.title | escape }}
+                          </a>
+                        </div>
+                        <div class="lusena-cart-item__prices">
+                          {%- render 'loading-spinner' -%}
+                          <span class="lusena-cart-item__price">{{ item.final_line_price | money }}</span>
+                          {%- if item.original_line_price != item.final_line_price -%}
+                            <span class="lusena-cart-item__compare-price">{{ item.original_line_price | money }}</span>
+                          {%- endif -%}
+                        </div>
+                      </div>
+
+                      {%- comment -%} Options — value-only, slash-separated (matching drawer) {%- endcomment -%}
+                      {%- if item.product.has_only_default_variant == false -%}
+                        <p class="lusena-cart-item__options">
+                          {%- for option in item.options_with_values -%}
+                            {{ option.value }}{%- unless forloop.last %} / {% endunless -%}
+                          {%- endfor -%}
+                        </p>
+                      {%- endif -%}
+
+                      {%- comment -%} Properties (custom uploads, etc.) {%- endcomment -%}
+                      {%- if item.properties.size > 0 -%}
+                        {%- for property in item.properties -%}
+                          {%- assign property_first_char = property.first | slice: 0 -%}
+                          {%- if property.last != blank and property_first_char != '_' -%}
+                            <p class="lusena-cart-item__property">
+                              {{ property.first }}:
+                              {%- if property.last contains '/uploads/' -%}
+                                <a href="{{ property.last }}" class="lusena-cart-item__upload-link" target="_blank">
+                                  {{ property.last | split: '/' | last }}
+                                </a>
+                              {%- else -%}
+                                {{ property.last }}
+                              {%- endif -%}
+                            </p>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      {%- endif -%}
+
+                      {%- if item.selling_plan_allocation != null -%}
+                        <p class="lusena-cart-item__options">{{ item.selling_plan_allocation.selling_plan.name }}</p>
+                      {%- endif -%}
+
+                      {%- comment -%} Line-level discounts {%- endcomment -%}
+                      {%- if item.line_level_discount_allocations.size > 0 -%}
+                        <ul class="lusena-cart-item__discounts" role="list" aria-label="Rabat">
+                          {%- for discount in item.line_level_discount_allocations -%}
+                            <li class="lusena-cart-item__discount">
+                              <span class="lusena-cart-item__discount-icon">{{- 'icon-discount.svg' | inline_asset_content -}}</span>
+                              {{ discount.discount_application.title | escape }}
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      {%- endif -%}
+                    </div>
+
+                    {%- comment -%} Bottom row: quantity stepper + remove {%- endcomment -%}
+                    <div class="lusena-cart-item__bottom">
+                      {%- render 'lusena-cart-quantity', item: item -%}
+                    </div>
+                  </div>
+                </div>
+              {%- endfor -%}
+            </div>
+
+            {%- comment -%} Upsell card — below items, inside items area {%- endcomment -%}
+            {%- if upsell_product != blank -%}
+              {%- assign upsell_variant = upsell_product.selected_or_first_available_variant -%}
+              {%- liquid
+                assign upsell_color_label = ''
+                if upsell_product.options_with_values != blank
+                  for option in upsell_product.options_with_values
+                    assign option_name_downcase = option.name | downcase
+                    assign option_matches_color = false
+                    if option_name_downcase contains 'color'
+                      assign option_matches_color = true
+                    else
+                      if option_name_downcase contains 'colour'
+                        assign option_matches_color = true
+                      else
+                        if option_name_downcase contains 'kolor'
+                          assign option_matches_color = true
+                        endif
+                      endif
+                    endif
+                    if option_matches_color
+                      assign option_position = forloop.index
+                      if option_position == 1
+                        assign upsell_color_label = upsell_variant.option1
+                      elsif option_position == 2
+                        assign upsell_color_label = upsell_variant.option2
+                      elsif option_position == 3
+                        assign upsell_color_label = upsell_variant.option3
+                      endif
+                      break
+                    endif
+                  endfor
+                endif
+
+                assign upsell_message_metafield = upsell_product.metafields.lusena.upsell_message
+                assign upsell_message = upsell_message_metafield.value | default: settings.lusena_cart_upsell_message_fallback
+                assign upsell_display_title = upsell_product.title
+                assign upsell_display_price = upsell_variant.price | money_without_trailing_zeros
+              -%}
+
+              <div class="lusena-cart-upsell" data-cart-page-upsell aria-live="polite">
+                <p class="lusena-cart-upsell__label">Pasuje do</p>
+                <div class="lusena-cart-upsell__card">
+                  <div class="lusena-cart-upsell__media">
+                    {%- if upsell_product.featured_image -%}
+                      <img
+                        src="{{ upsell_product.featured_image | image_url: width: 240 }}"
+                        alt="{{ upsell_product.featured_image.alt | escape }}"
+                        class="lusena-cart-upsell__img"
+                        loading="lazy"
+                        width="56"
+                        height="{{ 56 | divided_by: upsell_product.featured_image.aspect_ratio | ceil }}"
+                      >
+                    {%- endif -%}
+                  </div>
+                  <div class="lusena-cart-upsell__info">
+                    <p class="lusena-cart-upsell__title">{{ upsell_display_title | escape }}</p>
+                    {%- if upsell_message != blank -%}
+                      <p class="lusena-cart-upsell__msg">{{ upsell_message | escape }}</p>
+                    {%- endif -%}
+                    {%- comment -%} Hardcoded color for visual testing — remove after review {%- endcomment -%}
+                    {%- assign upsell_color_label_display = upsell_color_label | default: 'Beżowy' -%}
+                    <p class="lusena-cart-upsell__color">
+                      Kolor: <span>{{ upsell_color_label_display | escape }}</span>
+                    </p>
+                  </div>
+                  <div class="lusena-cart-upsell__aside">
+                    <p class="lusena-cart-upsell__price">{{ upsell_display_price | escape }}</p>
+                    <button
+                      type="button"
+                      class="lusena-btn lusena-btn--outline lusena-btn--size-xs"
+                      data-cart-page-upsell-add
+                      data-variant-id="{{ upsell_variant.id }}"
+                    >
+                      <span class="lusena-btn__content" data-upsell-btn-text>Dodaj</span>
+                      <span class="lusena-cart-upsell__dots hidden" data-upsell-loading aria-hidden="true">
+                        <span></span><span></span><span></span>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            {%- endif -%}
+
+          {%- endif -%}
+        </div>
+      </div>
+
+      <p class="lusena-visually-hidden" id="cart-live-region-text" aria-live="polite" role="status"></p>
+      <p class="lusena-visually-hidden" id="shopping-cart-line-item-status" aria-live="polite" aria-hidden="true" role="status">
+        Ładowanie...
+      </p>
+    </form>
+  </div>
+</cart-items>
+
+{%- comment -%}
+  Upsell add-to-cart — event delegation so it survives cart.js section re-renders.
+  Bypasses product-form.js to avoid opening the drawer.
+{%- endcomment -%}
+<script>
+  (function() {
+    var container = document.getElementById('main-cart-items');
+    if (!container) return;
+
+    container.addEventListener('click', async function(e) {
+      var btn = e.target.closest('[data-cart-page-upsell-add]');
+      if (!btn || btn.disabled) return;
+
+      btn.disabled = true;
+      var btnText = btn.querySelector('[data-upsell-btn-text]');
+      var dots = btn.querySelector('[data-upsell-loading]');
+      if (btnText) btnText.classList.add('hidden');
+      if (dots) dots.classList.remove('hidden');
+
+      try {
+        var res = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: [{ id: parseInt(btn.dataset.variantId), quantity: 1 }] })
+        });
+        if (!res.ok) throw new Error('Add failed');
+        window.location.reload();
+      } catch (e) {
+        btn.disabled = false;
+        if (btnText) btnText.classList.remove('hidden');
+        if (dots) dots.classList.add('hidden');
+      }
+    });
+  })();
+</script>
+
+{% stylesheet %}
+  /* --- Section spacing — kill compact-tier bottom pad so footer bg creates the break --- */
+  cart-items.lusena-spacing--compact {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  /* Make <main> a flex column so cart content fills viewport and pushes
+     the site footer below the fold on every screen size. */
+  main:has(cart-items) {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+  }
+  /* Mobile: grow the cart-items section so upsell sticks to footer bottom.
+     Desktop: cart stays compact at top; remaining space is empty background. */
+  @media (max-width: 767px) {
+    main:has(cart-items) > .shopify-section:has(cart-items) {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    cart-items.lusena-spacing--compact {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    cart-items.lusena-spacing--compact > .lusena-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    cart-items.lusena-spacing--compact .lusena-cart-form {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    cart-items.lusena-spacing--compact #main-cart-items {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    cart-items.lusena-spacing--compact .js-contents {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .lusena-cart-upsell {
+      margin-top: auto;
+    }
+  }
+
+  /* --- Kill Dawn .cart__items border + padding (component-cart.css) --- */
+  #main-cart-items.cart__items {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  /* --- Cart header --- */
+  .lusena-cart-header {
+    padding-top: var(--lusena-space-2);
+    padding-bottom: var(--lusena-space-2);
+  }
+  /* Mobile: tinted header zone matching drawer's header background */
+  @media (max-width: 767px) {
+    .lusena-cart-header {
+      background-color: color-mix(in srgb, var(--lusena-surface-1) 50%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
+      margin-left: calc(-1 * var(--lusena-space-2));
+      margin-right: calc(-1 * var(--lusena-space-2));
+      padding-left: var(--lusena-space-2);
+      padding-right: var(--lusena-space-2);
+    }
+  }
+  @media (min-width: 768px) {
+    .lusena-cart-header { padding-top: var(--lusena-space-4); }
+  }
+  .lusena-cart-header__title {
+    font-family: var(--lusena-font-brand);
+    font-size: 2rem;
+    line-height: 1.2;
+    color: var(--lusena-text-1);
+    margin: 0;
+  }
+
+  /* --- Empty state --- */
+  cart-items:not(.is-empty) .lusena-cart-empty { display: none; }
+  cart-items.is-empty .lusena-cart-form { display: none; }
+  .lusena-cart-empty__login { margin-top: var(--lusena-space-4); }
+
+  /* --- Item list --- */
+  .lusena-cart-list {
+    border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
+  }
+  /* Mobile: header border-bottom already provides the separator */
+  @media (max-width: 767px) {
+    .lusena-cart-list { border-top: none; }
+  }
+
+  /* --- Item row (flex, matches drawer) --- */
+  /* Double-class to override Dawn's component-cart-items.css (.cart-item { display: table-row/grid }) */
+  .lusena-cart-item.cart-item {
+    display: flex;
+    gap: var(--lusena-space-2);
+    padding: var(--lusena-space-3) 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
+  }
+  .lusena-cart-item.cart-item:last-child { border-bottom: 0; }
+
+  /* --- Item image --- */
+  .lusena-cart-item__media {
+    display: block;
+    width: 8rem;
+    height: 9.6rem;
+    background-color: var(--lusena-surface-2);
+    border-radius: var(--lusena-radius-sm);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .lusena-cart-item__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* --- Item info column --- */
+  .lusena-cart-item__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+  }
+
+  /* --- Top: name + price --- */
+  .lusena-cart-item__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--lusena-space-1);
+  }
+  .lusena-cart-item__name-wrap { min-width: 0; }
+  .lusena-cart-item__vendor {
+    font-size: 1.2rem;
+    color: var(--lusena-text-2);
+    margin: 0 0 var(--lusena-space-05);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .lusena-cart-item__title {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--lusena-text-1);
+    line-height: 1.25;
+    text-decoration: none;
+    display: block;
+  }
+  .lusena-cart-item__title:hover { color: var(--lusena-accent-cta); }
+
+  /* --- Prices (right side of top row) --- */
+  .lusena-cart-item__prices {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .lusena-cart-item__price {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    color: var(--lusena-text-1);
+  }
+  .lusena-cart-item__compare-price {
+    display: block;
+    font-size: 1.2rem;
+    color: var(--lusena-text-2);
+    text-decoration: line-through;
+  }
+
+  /* --- Options (value-only, slash-separated) --- */
+  .lusena-cart-item__options {
+    font-size: 1.3rem;
+    color: var(--lusena-text-2);
+    margin: var(--lusena-space-05) 0 0;
+  }
+
+  /* --- Properties --- */
+  .lusena-cart-item__property {
+    font-size: 1.2rem;
+    color: var(--lusena-text-2);
+    margin: var(--lusena-space-05) 0 0;
+  }
+  .lusena-cart-item__upload-link {
+    color: var(--lusena-accent-cta);
+    text-decoration: underline;
+  }
+
+  /* --- Discounts --- */
+  .lusena-cart-item__discounts {
+    list-style: none;
+    padding: 0;
+    margin: var(--lusena-space-1) 0 0;
+  }
+  .lusena-cart-item__discount {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 1.2rem;
+    color: var(--lusena-accent-cta);
+    font-weight: 500;
+  }
+  .lusena-cart-item__discount-icon { display: flex; width: 1.4rem; height: 1.4rem; }
+  .lusena-cart-item__discount-icon svg { width: 100%; height: 100%; }
+
+  /* --- Bottom row (qty + remove) — handled by lusena-cart-quantity snippet --- */
+  .lusena-cart-item__bottom {
+    margin-top: var(--lusena-space-1);
+  }
+
+  /* --- Loading state --- */
+  .cart__items--disabled { pointer-events: none; opacity: 0.5; }
+  .loading__spinner { display: flex; align-items: center; justify-content: center; }
+  .loading__spinner.hidden { display: none; }
+  .loading__spinner svg { width: 2rem; height: 2rem; animation: lusena-spin 600ms linear infinite; }
+  @keyframes lusena-spin { to { transform: rotate(360deg); } }
+
+  /* === UPSELL ZONE (matches drawer, positioned in items area) === */
+  .lusena-cart-upsell :where(p) { margin: 0; }
+  .lusena-cart-upsell .lusena-btn--size-xs { min-height: auto; }
+
+  .lusena-cart-upsell {
+    padding: var(--lusena-space-2);
+    border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
+    background-color: color-mix(in srgb, var(--lusena-surface-2) 50%, transparent);
+    margin-left: calc(-1 * var(--lusena-space-2));
+    margin-right: calc(-1 * var(--lusena-space-2));
+  }
+  @media (min-width: 768px) {
+    .lusena-cart-upsell {
+      margin-left: calc(-1 * var(--lusena-space-4));
+      margin-right: calc(-1 * var(--lusena-space-4));
+      padding-left: var(--lusena-space-4);
+      padding-right: var(--lusena-space-4);
+    }
+  }
+  .lusena-cart-upsell__label {
+    font-family: var(--lusena-font-brand);
+    font-size: 1.2rem;
+    line-height: 1.4;
+    color: var(--lusena-text-2);
+    margin: 0 0 1.2rem;
+  }
+  .lusena-cart-upsell__card {
+    display: flex;
+    gap: 1.2rem;
+    padding: 1.2rem;
+    background-color: var(--lusena-color-n0);
+    border-radius: var(--lusena-btn-radius);
+    border: 1px solid color-mix(in srgb, var(--lusena-text-2) 5%, transparent);
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  }
+  .lusena-cart-upsell__media {
+    width: 5.6rem;
+    height: 5.6rem;
+    background-color: var(--lusena-surface-2);
+    border-radius: var(--lusena-radius-sm);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .lusena-cart-upsell__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .lusena-cart-upsell__info {
+    flex: 1;
+    min-width: 0;
+  }
+  .lusena-cart-upsell__title {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--lusena-text-1);
+    line-height: 1.25;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .lusena-cart-upsell__msg {
+    font-size: 1.2rem;
+    color: var(--lusena-text-2);
+    margin: var(--lusena-space-05) 0 0;
+    line-height: 1.375;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .lusena-cart-upsell__color {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: color-mix(in srgb, var(--lusena-text-2) 70%, transparent);
+    margin: var(--lusena-space-05) 0 0;
+  }
+  .lusena-cart-upsell__color span {
+    color: var(--lusena-text-1);
+    font-weight: 500;
+  }
+  .lusena-cart-upsell__aside {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-shrink: 0;
+    gap: var(--lusena-space-1);
+  }
+  .lusena-cart-upsell__price {
+    font-size: 1.4rem;
+    line-height: 1.4;
+    font-weight: 500;
+    color: var(--lusena-text-1);
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+  }
+
+  /* --- Upsell loading dots (matches drawer) --- */
+  .lusena-cart-upsell__dots {
+    display: inline-flex;
+    gap: 0.3rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .lusena-cart-upsell__dots.hidden { display: none; }
+  .lusena-cart-upsell__dots span {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: currentColor;
+    animation: lusena-dot-pulse 1.2s infinite ease-in-out;
+  }
+  .lusena-cart-upsell__dots span:nth-child(2) { animation-delay: 0.2s; }
+  .lusena-cart-upsell__dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes lusena-dot-pulse {
+    0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+    40% { opacity: 1; transform: scale(1); }
+  }
+
+  /* --- Responsive — desktop image larger for page proportions --- */
+  @media (min-width: 768px) {
+    .lusena-cart-header__title { font-size: 3.2rem; }
+    .lusena-cart-item__media { width: 10rem; height: 12rem; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "LUSENA koszyk",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

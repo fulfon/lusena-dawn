@@ -1,0 +1,43 @@
+{% doc %}
+  Renders a consistent page header for system pages (cart, search, account, etc.).
+  Includes page title + optional breadcrumbs.
+
+  @param {string} title - Page title text
+  @param {string} [title_tag] - HTML tag for title, defaults to 'h1'
+  @param {boolean} [show_breadcrumbs] - Whether to show breadcrumbs (default: false)
+  @param {string} [breadcrumbs] - Breadcrumb objects passed via Liquid assign, each with label and url.
+    Last item is treated as current page (no link).
+{% enddoc %}
+
+{%- liquid
+  unless title_tag
+    assign title_tag = 'h1'
+  endunless
+-%}
+
+<div class="lusena-page-header">
+  <div class="lusena-container">
+    {%- if show_breadcrumbs and breadcrumbs.size > 0 -%}
+      <nav aria-label="Breadcrumb" class="lusena-page-header__breadcrumbs">
+        <ol class="lusena-breadcrumb">
+          <li class="lusena-breadcrumb__item">
+            <a href="{{ routes.root_url }}" class="lusena-breadcrumb__link">Strona główna</a>
+            {% render 'lusena-icon', name: 'chevron-right', class: 'lusena-breadcrumb__separator' %}
+          </li>
+          {%- for crumb in breadcrumbs -%}
+            <li class="lusena-breadcrumb__item">
+              {%- if forloop.last -%}
+                <span class="lusena-breadcrumb__link" aria-current="page">{{ crumb.label }}</span>
+              {%- else -%}
+                <a href="{{ crumb.url }}" class="lusena-breadcrumb__link">{{ crumb.label }}</a>
+                {% render 'lusena-icon', name: 'chevron-right', class: 'lusena-breadcrumb__separator' %}
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ol>
+      </nav>
+    {%- endif -%}
+
+    <{{ title_tag }} class="lusena-page-header__title">{{ title }}</{{ title_tag }}>
+  </div>
+</div>
