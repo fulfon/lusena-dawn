@@ -1,40 +1,23 @@
 {
   "sections": {
     "main": {
-      "type": "main-article",
-      "blocks": {
-        "featured_image": {
-          "type": "featured_image",
-          "settings": {
-            "image_height": "adapt"
-          }
-        },
-        "title": {
-          "type": "title",
-          "settings": {
-            "blog_show_date": true,
-            "blog_show_author": false
-          }
-        },
-        "share": {
-          "type": "share",
-          "settings": {
-            "share_label": "Share"
-          }
-        },
-        "content": {
-          "type": "content"
-        }
-      },
-      "block_order": [
-        "featured_image",
-        "title",
-        "share",
-        "content"
-      ]
+      "type": "lusena-article",
+      "settings": {
+        "show_author": false
+      }
+    },
+    "newsletter": {
+      "type": "lusena-newsletter",
+      "settings": {}
+    },
+    "final_cta": {
+      "type": "lusena-final-cta",
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "newsletter",
+    "final_cta"
   ]
 }

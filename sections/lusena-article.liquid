@@ -1,0 +1,205 @@
+{%- liquid
+  assign override_style = ''
+  assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
+
+<article
+  class="lusena-article lusena-spacing--compact"
+  {% if override_style != blank %}style="{{ override_style }}"{% endif %}
+  itemscope
+  itemtype="http://schema.org/BlogPosting"
+>
+  {%- comment -%} Breadcrumbs {%- endcomment -%}
+  <div class="lusena-container">
+    {% render 'lusena-breadcrumbs', page_type: 'article', blog: blog, article: article %}
+  </div>
+
+  {%- comment -%} Hero image {%- endcomment -%}
+  {%- if article.image -%}
+    <div class="lusena-container lusena-article__hero{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="lusena-aspect-16-9 lusena-article__hero-media">
+        {{
+          article.image
+          | image_url: width: 1600
+          | image_tag:
+            loading: 'eager',
+            sizes: '(min-width: 1200px) 1200px, 100vw',
+            widths: '375, 750, 1100, 1400, 1600',
+            class: 'lusena-object-cover',
+            itemprop: 'image'
+        }}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} Title + meta {%- endcomment -%}
+  <div class="lusena-container--narrow lusena-article__header{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <div class="lusena-article__meta lusena-type-caption">
+      <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}" itemprop="datePublished">
+        {{ article.published_at | time_tag: format: 'date' }}
+      </time>
+      {%- if section.settings.show_author and article.author != blank -%}
+        <span aria-hidden="true">&middot;</span>
+        <span itemprop="author">{{ article.author }}</span>
+      {%- endif -%}
+    </div>
+    <h1 class="lusena-type-h1" itemprop="headline">{{ article.title | escape }}</h1>
+  </div>
+
+  {%- comment -%} Article content {%- endcomment -%}
+  <div class="lusena-container--narrow lusena-article__body{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <div class="lusena-richtext" itemprop="articleBody">
+      {{ article.content }}
+    </div>
+  </div>
+
+  {%- comment -%} Share + back link {%- endcomment -%}
+  <div class="lusena-container--narrow lusena-article__footer{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <div class="lusena-article__actions">
+      {% render 'lusena-share-button',
+        share_url: request.origin | append: article.url,
+        share_title: article.title
+      %}
+      <a href="{{ blog.url }}" class="lusena-btn lusena-btn--text lusena-btn--text-sm">
+        ← Wróć do bloga
+      </a>
+    </div>
+  </div>
+</article>
+
+{%- comment -%} LD+JSON structured data {%- endcomment -%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ article.title | json }},
+    "datePublished": "{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}",
+    {%- if article.updated_at -%}
+      "dateModified": "{{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%z' }}",
+    {%- endif -%}
+    {%- if article.author != blank -%}
+      "author": {
+        "@type": "Person",
+        "name": {{ article.author | json }}
+      },
+    {%- endif -%}
+    {%- if article.image -%}
+      "image": "{{ article.image | image_url: width: 1200 }}",
+    {%- endif -%}
+    "publisher": {
+      "@type": "Organization",
+      "name": {{ shop.name | json }}
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "{{ request.origin }}{{ article.url }}"
+    }
+  }
+</script>
+
+{% stylesheet %}
+  .lusena-article__hero {
+    margin-bottom: var(--lusena-space-4);
+  }
+  .lusena-article__hero-media {
+    overflow: hidden;
+    border-radius: var(--lusena-btn-radius, 0.6rem);
+  }
+  .lusena-article__hero-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .lusena-article__header {
+    margin-bottom: var(--lusena-space-4);
+  }
+  .lusena-article__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--lusena-text-2);
+    margin-bottom: var(--lusena-space-1);
+  }
+  .lusena-article__body {
+    margin-bottom: var(--lusena-space-6);
+  }
+  .lusena-article__footer {
+    border-top: 1px solid var(--lusena-color-n200, #e5e2de);
+    padding-top: var(--lusena-space-3);
+  }
+  .lusena-article__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--lusena-space-2);
+    flex-wrap: wrap;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "LUSENA Article",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "default": false,
+      "label": "Pokaż autora"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA Article"
+    }
+  ]
+}
+{% endschema %}

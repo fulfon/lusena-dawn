@@ -1,9 +1,11 @@
 {% doc %}
   Renders LUSENA breadcrumbs in the draft-shop visual style.
 
-  @param {string} page_type - Supported values: "product" or "collection"
+  @param {string} page_type - Supported values: "product", "collection", "blog", "article"
   @param {product} [product] - Product object for product page breadcrumbs
   @param {collection} [collection] - Current collection context
+  @param {blog} [blog] - Blog object for blog/article breadcrumbs
+  @param {article} [article] - Article object for article breadcrumbs
 {% enddoc %}
 
 {%- liquid
@@ -50,6 +52,20 @@
     {%- elsif page_type == 'collection' -%}
       <li class="lusena-breadcrumb__item">
         <span class="lusena-breadcrumb__link" aria-current="page">Jedwab</span>
+      </li>
+
+    {%- elsif page_type == 'blog' -%}
+      <li class="lusena-breadcrumb__item">
+        <span class="lusena-breadcrumb__link" aria-current="page">{{ blog.title | escape }}</span>
+      </li>
+
+    {%- elsif page_type == 'article' -%}
+      <li class="lusena-breadcrumb__item">
+        <a href="{{ blog.url }}" class="lusena-breadcrumb__link">{{ blog.title | escape }}</a>
+        {% render 'lusena-icon', name: 'chevron-right', class: 'lusena-breadcrumb__separator' %}
+      </li>
+      <li class="lusena-breadcrumb__item">
+        <span class="lusena-breadcrumb__link" aria-current="page">{{ article.title | escape }}</span>
       </li>
     {%- endif -%}
   </ol>

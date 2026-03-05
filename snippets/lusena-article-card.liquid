@@ -1,0 +1,112 @@
+{% doc %}
+  Renders a LUSENA article card for the blog listing grid.
+
+  @param {article} article - The article object
+  @param {boolean} [show_author] - Whether to show the author name (default: false)
+{% enddoc %}
+
+<a href="{{ article.url }}" class="lusena-article-card{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <div class="lusena-article-card__media lusena-aspect-16-9">
+    {%- if article.image -%}
+      {{
+        article.image
+        | image_url: width: 840
+        | image_tag:
+          loading: 'lazy',
+          sizes: '(min-width: 768px) 50vw, 100vw',
+          widths: '375, 550, 720, 840',
+          class: 'lusena-object-cover'
+      }}
+    {%- else -%}
+      <div class="lusena-article-card__placeholder">
+        {{ 'image' | placeholder_svg_tag: 'lusena-article-card__placeholder-svg' }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="lusena-article-card__content">
+    <div class="lusena-article-card__meta lusena-type-caption">
+      <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+        {{ article.published_at | time_tag: format: 'date' }}
+      </time>
+      {%- if show_author and article.author != blank -%}
+        <span aria-hidden="true">&middot;</span>
+        <span>{{ article.author }}</span>
+      {%- endif -%}
+    </div>
+
+    <h3 class="lusena-article-card__title lusena-type-h2">{{ article.title | escape }}</h3>
+
+    {%- if article.excerpt_or_content != blank -%}
+      <p class="lusena-article-card__excerpt lusena-type-body">
+        {{ article.excerpt_or_content | strip_html | truncate: 140 }}
+      </p>
+    {%- endif -%}
+
+    <span class="lusena-article-card__read-more lusena-kicker lusena-type-caption">
+      Czytaj dalej →
+    </span>
+  </div>
+</a>
+
+{% stylesheet %}
+  .lusena-article-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+  }
+  .lusena-article-card__media {
+    overflow: hidden;
+    border-radius: var(--lusena-btn-radius, 0.6rem);
+    margin-bottom: var(--lusena-space-2);
+  }
+  .lusena-article-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .lusena-article-card:hover .lusena-article-card__media img {
+    transform: scale(1.03);
+  }
+  .lusena-article-card__placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--lusena-surface-1, #f0eeeb);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lusena-article-card__placeholder-svg {
+    width: 40%;
+    height: 40%;
+    opacity: 0.3;
+  }
+  .lusena-article-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--lusena-space-1);
+  }
+  .lusena-article-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--lusena-text-2);
+  }
+  .lusena-article-card__title {
+    margin: 0;
+  }
+  .lusena-article-card__excerpt {
+    color: var(--lusena-text-2);
+    margin: 0;
+  }
+  .lusena-article-card__read-more {
+    color: var(--lusena-accent-cta);
+    margin-top: var(--lusena-space-05);
+    transition: color 0.15s ease;
+  }
+  .lusena-article-card:hover .lusena-article-card__read-more {
+    color: var(--lusena-accent-cta-hover);
+  }
+{% endstylesheet %}

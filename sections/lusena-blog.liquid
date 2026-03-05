@@ -1,0 +1,182 @@
+{%- liquid
+  assign override_style = ''
+  assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
+
+<section
+  class="lusena-blog lusena-spacing--compact"
+  {% if override_style != blank %}style="{{ override_style }}"{% endif %}
+>
+  {%- paginate blog.articles by section.settings.articles_per_page -%}
+    <div class="lusena-container">
+      {% render 'lusena-breadcrumbs', page_type: 'blog', blog: blog %}
+
+      <div class="lusena-blog__header lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <h1 class="lusena-type-h1">{{ blog.title | escape }}</h1>
+      </div>
+
+      {%- if blog.articles.size > 0 -%}
+        <div class="lusena-grid lusena-grid--2"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
+          {%- for article in blog.articles -%}
+            {% render 'lusena-article-card', article: article, show_author: section.settings.show_author %}
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          <nav class="lusena-blog__pagination lusena-text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" aria-label="Paginacja bloga">
+            <ul class="lusena-pagination">
+              {%- if paginate.previous -%}
+                <li>
+                  <a href="{{ paginate.previous.url }}" class="lusena-pagination__link" aria-label="Poprzednia strona">&laquo;</a>
+                </li>
+              {%- else -%}
+                <li>
+                  <span class="lusena-pagination__link" disabled aria-hidden="true">&laquo;</span>
+                </li>
+              {%- endif -%}
+
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}
+                  <li>
+                    <a href="{{ part.url }}" class="lusena-pagination__link">{{ part.title }}</a>
+                  </li>
+                {%- else -%}
+                  <li>
+                    <span class="lusena-pagination__link" aria-current="page">{{ part.title }}</span>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+
+              {%- if paginate.next -%}
+                <li>
+                  <a href="{{ paginate.next.url }}" class="lusena-pagination__link" aria-label="Następna strona">&raquo;</a>
+                </li>
+              {%- else -%}
+                <li>
+                  <span class="lusena-pagination__link" disabled aria-hidden="true">&raquo;</span>
+                </li>
+              {%- endif -%}
+            </ul>
+          </nav>
+        {%- endif -%}
+      {%- else -%}
+        <div class="lusena-empty{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {%- render 'lusena-icon', name: 'feather', class: 'lusena-blog__empty-icon' -%}
+          <h2 class="lusena-type-h2">Wkrótce pojawią się tu artykuły</h2>
+          <p class="lusena-type-caption">Zaglądaj regularnie po porady dotyczące pielęgnacji jedwabiu.</p>
+          <a href="{{ routes.all_products_collection_url }}" class="lusena-btn lusena-btn--outline lusena-btn--size-default">
+            <span class="lusena-btn__content">Przeglądaj produkty</span>
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endpaginate -%}
+</section>
+
+{% stylesheet %}
+  /* Push footer below fold when blog is empty */
+  main:has(.lusena-blog) {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+  }
+  main:has(.lusena-blog) > .shopify-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .lusena-blog__header {
+    margin-bottom: var(--lusena-space-4);
+  }
+  .lusena-blog__pagination {
+    margin-top: var(--lusena-space-6);
+  }
+  .lusena-pagination__link {
+    min-width: 4.4rem;
+    min-height: 4.4rem;
+    font-size: 1.4rem;
+  }
+  .lusena-blog__empty-icon {
+    width: 4.8rem;
+    height: 4.8rem;
+    stroke-width: 1;
+    color: var(--lusena-color-n400);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "LUSENA Blog",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "default": 8,
+      "label": "Artykułów na stronę"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "default": false,
+      "label": "Pokaż autora"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA Blog"
+    }
+  ]
+}
+{% endschema %}

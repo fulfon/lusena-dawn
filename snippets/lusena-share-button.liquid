@@ -1,0 +1,42 @@
+{% doc %}
+  Renders a LUSENA share button.
+  Mobile: native Web Share API. Desktop: copies URL to clipboard with feedback.
+
+  @param {string} share_url - URL to share
+  @param {string} share_title - Title for the share dialog
+{% enddoc %}
+
+<button
+  type="button"
+  class="lusena-btn lusena-btn--text lusena-btn--text-sm lusena-share-button"
+  data-share-url="{{ share_url | default: request.origin | append: request.path }}"
+  data-share-title="{{ share_title | escape }}"
+  aria-label="Udostępnij"
+>
+  {% render 'lusena-icon', name: 'share', class: 'lusena-icon-md' %}
+  <span class="lusena-share-button__label">Udostępnij</span>
+</button>
+
+<script>
+  (function () {
+    document.querySelectorAll('.lusena-share-button').forEach(function (btn) {
+      if (btn._shareInit) return;
+      btn._shareInit = true;
+      btn.addEventListener('click', function () {
+        var url = btn.getAttribute('data-share-url');
+        var title = btn.getAttribute('data-share-title') || '';
+        var label = btn.querySelector('.lusena-share-button__label');
+
+        if (navigator.share) {
+          navigator.share({ title: title, url: url }).catch(function () {});
+        } else if (navigator.clipboard) {
+          navigator.clipboard.writeText(url).then(function () {
+            var orig = label.textContent;
+            label.textContent = 'Skopiowano link!';
+            setTimeout(function () { label.textContent = orig; }, 2000);
+          });
+        }
+      });
+    });
+  })();
+</script>
