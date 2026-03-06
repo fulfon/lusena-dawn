@@ -19,6 +19,11 @@
 - **Product page:** `sections/lusena-main-product.liquid` + `snippets/lusena-pdp-*.liquid` (13 PDP snippets)
 - **Collection:** `sections/lusena-main-collection.liquid` + `snippets/lusena-product-card.liquid`
 - **Search:** `sections/lusena-search.liquid` — predictive search, product grid, empty state with bestsellers
+- **Blog listing:** `sections/lusena-blog.liquid` — 2-col grid, pagination, rich empty state
+- **Article page:** `sections/lusena-article.liquid` — hero image, richtext body, share button, LD+JSON
+- **404 page:** `sections/lusena-404.liquid` — centered error message, bestseller grid, viewport-fill
+- **Generic page:** `sections/lusena-main-page.liquid` — breadcrumbs, title, richtext, viewport-fill, compact spacing
+- **Contact page:** `sections/lusena-contact-form.liquid` — breadcrumbs, heading, LUSENA form system, viewport-fill, full-width mobile button
 - **Homepage:** `sections/lusena-hero.liquid`, `lusena-bestsellers.liquid`, `lusena-trust-bar.liquid`, etc. (9 sections)
 
 ### Translations
@@ -26,8 +31,12 @@
 
 ### Global components
 - `snippets/lusena-button-system.liquid` — Button primitives
-- `snippets/lusena-icon.liquid` — SVG icon system
+- `snippets/lusena-icon.liquid` — SVG icon system (includes `share` icon)
 - `snippets/lusena-section-gap-detector.liquid` — Same-bg section gap detection (JS)
+- `snippets/lusena-breadcrumbs.liquid` — Breadcrumbs (supports: product, collection, blog, article, page). Has `breadcrumb_label` param to override `page.title` (e.g., "Kontakt" instead of English "Contact")
+- `snippets/lusena-article-card.liquid` — Blog listing card (16:9 image, hover zoom, date, excerpt)
+- `snippets/lusena-share-button.liquid` — Web Share API (mobile) + clipboard copy (desktop)
+- `snippets/lusena-date-pl.liquid` — Polish date formatting (bypasses English store locale)
 
 ### Styles
 - `assets/lusena-foundations.css` — Single source of truth for design tokens, utilities, containers, components, body/main global rules, preflight resets (~40KB)

@@ -80,6 +80,12 @@
           {{ section.settings.privacy_text | escape }}
         </p>
       {%- endif -%}
+
+      {%- if section.settings.secondary_label != blank and section.settings.secondary_link != blank -%}
+        <a href="{{ section.settings.secondary_link }}" class="lusena-newsletter__secondary-link">
+          {{ section.settings.secondary_label | escape }}
+        </a>
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -150,6 +156,18 @@
     padding: var(--lusena-space-2);
     text-align: center;
     justify-content: center;
+  }
+
+  /* Optional secondary link (e.g. "lub przejdź do sklepu") */
+  .lusena-newsletter__secondary-link {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--lusena-accent-cta);
+    text-decoration: underline;
+    text-underline-offset: 0.4rem;
+  }
+  .lusena-newsletter__secondary-link:hover {
+    text-decoration: none;
   }
 {% endstylesheet %}
 
@@ -231,6 +249,16 @@
       "id": "success_message",
       "label": "Success message",
       "default": "Dziękujemy! Sprawdź swoją skrzynkę email."
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary link label"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary link URL"
     }
   ],
   "presets": [

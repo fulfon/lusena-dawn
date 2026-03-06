@@ -8,16 +8,14 @@
     },
     "newsletter": {
       "type": "lusena-newsletter",
-      "settings": {}
-    },
-    "final_cta": {
-      "type": "lusena-final-cta",
-      "settings": {}
+      "settings": {
+        "secondary_label": "lub przejdź do sklepu",
+        "secondary_link": "/collections/all"
+      }
     }
   },
   "order": [
     "main",
-    "newsletter",
-    "final_cta"
+    "newsletter"
   ]
 }

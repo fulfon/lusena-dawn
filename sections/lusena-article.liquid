@@ -43,7 +43,7 @@
   <div class="lusena-container--narrow lusena-article__header{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
     <div class="lusena-article__meta lusena-type-caption">
       <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}" itemprop="datePublished">
-        {{ article.published_at | time_tag: format: 'date' }}
+        {%- render 'lusena-date-pl', date: article.published_at -%}
       </time>
       {%- if section.settings.show_author and article.author != blank -%}
         <span aria-hidden="true">&middot;</span>
@@ -106,7 +106,7 @@
 
 {% stylesheet %}
   .lusena-article__hero {
-    margin-bottom: var(--lusena-space-4);
+    margin-bottom: var(--lusena-space-6);
   }
   .lusena-article__hero-media {
     overflow: hidden;

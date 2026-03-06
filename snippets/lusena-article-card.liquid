@@ -27,7 +27,7 @@
   <div class="lusena-article-card__content">
     <div class="lusena-article-card__meta lusena-type-caption">
       <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
-        {{ article.published_at | time_tag: format: 'date' }}
+        {%- render 'lusena-date-pl', date: article.published_at -%}
       </time>
       {%- if show_author and article.author != blank -%}
         <span aria-hidden="true">&middot;</span>

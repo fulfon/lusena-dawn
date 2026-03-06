@@ -1,25 +1,22 @@
 # Active Context
 
-*Last updated: 2026-03-05*
+*Last updated: 2026-03-06*
 
 ## Current focus
 
-**Dawn pages → LUSENA migration.** Batches 1 + 5 COMPLETE. Next: Batch 2 (simple content pages: 404, generic page, contact).
+**Dawn pages → LUSENA migration.** Batches 1, 2, 5, 6 COMPLETE. Next: Batch 7 (password page), then polish backlogs.
 
-## Recent completed work (2026-03-05)
+## Recent completed work (2026-03-06)
 
-- **Search page migration COMPLETE (Batch 5)** — Created `sections/lusena-search.liquid` with full LUSENA styling. Features: predictive search with Polish translations, product grid (2/3/4 cols), non-product results list, empty state with bestseller suggestions, "load more" pagination. Smart viewport management: `min-height: 100dvh` on main pushes footer below fold; initial state (no query) uses `padding-top: 18vh` for upper-third positioning; results state uses flex-grow for natural content flow. Disabled Dawn's `scrollIntoView`-on-focus to prevent jarring scroll on mobile. Rewired `templates/search.json`.
-- **Search translations (Polish)** — Translated all search-related strings in `locales/en.default.json`: predictive search dropdown text, no-results message, result count labels, accessibility labels ("Szukaj", "Wyczyść wyszukiwanie"), loading text ("Ładowanie..."). Polish quotation marks „..." used in user-facing strings.
-- **Cart page migration COMPLETE (Batch 1)** — Full-page cart with drawer parity. 3 new files: `lusena-cart-items.liquid`, `lusena-cart-quantity.liquid`, `lusena-cart-footer.liquid`.
-- **Batches 3 & 4 N/A** — Shopify deprecated legacy customer accounts (Feb 2026). All artifacts cleaned up. Branding configured in Shopify admin for checkout, thank you, sign in, orders, order status, profile pages.
+- **Content pages migration COMPLETE + polished (Batch 2)** — Created `sections/lusena-404.liquid` (centered error message + 4-product bestseller grid + viewport-fill), `sections/lusena-main-page.liquid` (breadcrumbs + title + richtext + viewport-fill), `sections/lusena-contact-form.liquid` (full `.lusena-form` system: Name/Email side-by-side, Phone, Message textarea, success/error messages, customer pre-fill). Extended `lusena-breadcrumbs.liquid` for `page` type with `breadcrumb_label` override param. Polish translations for 404 + contact in `en.default.json`. Contact page includes `lusena-newsletter` as footer section. Zero new CSS added to foundations — all reused existing components.
+  - **Polish pass:** Viewport-fill on contact + generic page (page section grows, not newsletter — lesson #48). Animations: all content blocks use `scroll-trigger animate--slide-in` (not fade-in — lesson #47), form animated via class on `{% form %}` tag (not wrapper div, which breaks flex gap). Submit button full-width on mobile. Mobile top padding tightened to 16px (`--lusena-space-2`) on both contact and generic page. Breadcrumb `breadcrumb_label` param added for Polish override ("Kontakt").
+- **Blog + Article page migration COMPLETE (Batch 6)** — Created `sections/lusena-blog.liquid` (2-col grid, pagination, rich empty state with viewport fill) and `sections/lusena-article.liquid` (breadcrumbs, 16:9 hero, richtext body, share button, LD+JSON structured data). New snippets: `lusena-article-card.liquid`, `lusena-share-button.liquid` (Web Share API + clipboard fallback), `lusena-date-pl.liquid` (Polish date formatting — bypasses English store locale). Extended `lusena-breadcrumbs.liquid` for `blog`/`article` page types. Added `share` icon to `lusena-icon.liquid`.
 
 ## Next steps
 
-1. **Batch 2: Simple content pages** — 404, generic page, contact
-2. **Batch 6: Blog** — `blog.json`, `article.json`
-3. **Batch 7: Password** — `password.json`
-4. PDP migration backlog items (see `memory-bank/doc/features/pdp-migration-backlog.md`)
-5. Homepage migration backlog items (see `memory-bank/doc/features/homepage-migration-backlog.md`)
+1. **Batch 7: Password** — `password.json` (last theme-controlled page)
+2. PDP migration backlog items (see `memory-bank/doc/features/pdp-migration-backlog.md`)
+3. Homepage migration backlog items (see `memory-bank/doc/features/homepage-migration-backlog.md`)
 
 ## Known issues
 
@@ -61,4 +58,4 @@ CSS loads in this order via `layout/theme.liquid`:
 
 Shared components in foundations: `.lusena-split`, `.lusena-accordion`, `.lusena-trust-bar`, `.lusena-testimonial`, `.lusena-content-card`, `.lusena-newsletter`, `.lusena-truth-table`.
 
-Shared sections (reusable across pages): `lusena-faq` (homepage, quality, returns, PDP), `lusena-trust-bar` (homepage, about, quality), `lusena-final-cta` (about, quality, returns).
+Shared sections (reusable across pages): `lusena-faq` (homepage, quality, returns, PDP), `lusena-trust-bar` (homepage, about, quality), `lusena-final-cta` (about, quality, returns), `lusena-newsletter` (homepage, article, contact — with optional secondary link on article).

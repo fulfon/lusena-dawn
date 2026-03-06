@@ -1,0 +1,125 @@
+{%- liquid
+  assign override_style = ''
+  if section.settings.padding_top > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
+  endif
+  if section.settings.padding_bottom > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-desktop:' | append: section.settings.padding_bottom | append: 'px;'
+  endif
+  if section.settings.padding_top_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
+  endif
+  if section.settings.padding_bottom_mobile > 0
+    assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
+  endif
+-%}
+
+<section
+  class="lusena-main-page lusena-bg-surface-1 lusena-spacing--compact"
+  {% if override_style != blank %}style="{{ override_style }}"{% endif %}
+>
+  <div class="lusena-container--narrow">
+    {%- if section.settings.show_breadcrumbs -%}
+      {% render 'lusena-breadcrumbs', page_type: 'page', page: page %}
+    {%- endif -%}
+
+    <h1 class="lusena-page-header__title{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      {{ page.title | escape }}
+    </h1>
+
+    <div class="lusena-richtext{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      {{ page.content }}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  /* Viewport-fill: push footer below fold on tall screens */
+  main:has(.lusena-main-page) {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+  }
+  main:has(.lusena-main-page) > .shopify-section:has(.lusena-main-page) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  main:has(.lusena-main-page) > .shopify-section:has(.lusena-main-page) > .lusena-main-page {
+    flex: 1;
+  }
+
+  /* Tighter top padding on mobile */
+  @media (max-width: 767px) {
+    .lusena-main-page.lusena-spacing--compact { padding-top: var(--lusena-space-2); }
+  }
+
+  /* Title bottom margin */
+  .lusena-main-page .lusena-page-header__title {
+    margin-bottom: var(--lusena-space-4);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "LUSENA Strona",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Pokaż okruszki (breadcrumbs)",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing overrides (0 = use global default)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (desktop)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (mobile)",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA Strona"
+    }
+  ]
+}
+{% endschema %}

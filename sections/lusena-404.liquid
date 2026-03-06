@@ -1,0 +1,96 @@
+<section class="lusena-404 lusena-bg-brand lusena-spacing--standard">
+  <div class="lusena-container">
+
+    {%- comment -%} ── ERROR MESSAGE ── {%- endcomment -%}
+    <div class="lusena-404__message{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <h1 class="lusena-type-h1">{{ 'templates.404.title' | t }}</h1>
+      <p class="lusena-type-body">Strona, której szukasz, nie istnieje lub została przeniesiona.</p>
+      <a
+        href="{{ routes.all_products_collection_url }}"
+        class="lusena-btn lusena-btn--primary lusena-btn--size-default"
+      >
+        Przejdź do sklepu
+      </a>
+    </div>
+
+    {%- comment -%} ── BESTSELLER SUGGESTIONS ── {%- endcomment -%}
+    <div class="lusena-404__suggestions{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <h2 class="lusena-type-h2 lusena-text-center lusena-404__suggestions-heading">Może Cię zainteresować</h2>
+      <div class="lusena-404__grid">
+        {%- for product in collections.all.products limit: 4 -%}
+          <div
+            {% if settings.animations_reveal_on_scroll %}
+              class="scroll-trigger animate--slide-in"
+              data-cascade
+            {% endif %}
+          >
+            {% render 'lusena-product-card',
+              product: product,
+              show_secondary_image: true
+            %}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+  /* Push footer below fold */
+  main:has(.lusena-404) {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+  }
+  main:has(.lusena-404) > .shopify-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Upper-third positioning (same as search initial state) */
+  .lusena-404 {
+    flex: 1;
+  }
+  .lusena-404 .lusena-404__message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--lusena-space-3);
+    padding-top: 10vh;
+    padding-bottom: var(--lusena-space-6);
+  }
+
+  /* Suggestions heading */
+  .lusena-404 .lusena-404__suggestions-heading {
+    margin-bottom: var(--lusena-space-4);
+  }
+
+  /* Product grid — 2 / 3 / 4 columns (matches search + collection) */
+  .lusena-404 .lusena-404__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--lusena-space-5) var(--lusena-space-1);
+  }
+  @media (min-width: 768px) {
+    .lusena-404 .lusena-404__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--lusena-space-5) var(--lusena-space-3);
+    }
+  }
+  @media (min-width: 1024px) {
+    .lusena-404 .lusena-404__grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--lusena-space-6) var(--lusena-space-4);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "LUSENA 404",
+  "tag": "section"
+}
+{% endschema %}

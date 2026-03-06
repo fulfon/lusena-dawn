@@ -1,11 +1,13 @@
 {% doc %}
   Renders LUSENA breadcrumbs in the draft-shop visual style.
 
-  @param {string} page_type - Supported values: "product", "collection", "blog", "article"
+  @param {string} page_type - Supported values: "product", "collection", "blog", "article", "page"
   @param {product} [product] - Product object for product page breadcrumbs
   @param {collection} [collection] - Current collection context
   @param {blog} [blog] - Blog object for blog/article breadcrumbs
   @param {article} [article] - Article object for article breadcrumbs
+  @param {page} [page] - Page object for generic page breadcrumbs
+  @param {string} [breadcrumb_label] - Override label for the current page breadcrumb (e.g. "Kontakt" instead of page.title)
 {% enddoc %}
 
 {%- liquid
@@ -66,6 +68,11 @@
       </li>
       <li class="lusena-breadcrumb__item">
         <span class="lusena-breadcrumb__link" aria-current="page">{{ article.title | escape }}</span>
+      </li>
+
+    {%- elsif page_type == 'page' -%}
+      <li class="lusena-breadcrumb__item">
+        <span class="lusena-breadcrumb__link" aria-current="page">{{ breadcrumb_label | default: page.title | escape }}</span>
       </li>
     {%- endif -%}
   </ol>

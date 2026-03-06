@@ -251,18 +251,18 @@
     },
     "contact": {
       "form": {
-        "title": "Contact form",
-        "name": "Name",
+        "title": "Formularz kontaktowy",
+        "name": "Imię i nazwisko",
         "email": "Email",
-        "phone": "Phone number",
-        "comment": "Comment",
-        "send": "Send",
-        "post_success": "Thanks for contacting us. We'll get back to you as soon as possible.",
-        "error_heading": "Please adjust the following:"
+        "phone": "Numer telefonu",
+        "comment": "Wiadomość",
+        "send": "Wyślij wiadomość",
+        "post_success": "Dziękujemy za wiadomość. Odpowiemy najszybciej jak to możliwe.",
+        "error_heading": "Popraw następujące pola:"
       }
     },
     "404": {
-      "title": "Page not found",
+      "title": "Nie znaleźliśmy tej strony",
       "subtext": "404"
     }
   },

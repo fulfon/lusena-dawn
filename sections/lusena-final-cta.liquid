@@ -19,7 +19,7 @@
   endif
 -%}
 <section
-  class="lusena-bg-surface-1 lusena-final-cta lusena-spacing--standard"
+  class="{% unless section.settings.transparent_bg %}lusena-bg-surface-1 {% endunless %}lusena-final-cta lusena-spacing--standard"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
@@ -137,6 +137,12 @@
       "step": 4,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_bg",
+      "label": "Transparent background (inherit page color)",
+      "default": false
     },
     {
       "type": "text",

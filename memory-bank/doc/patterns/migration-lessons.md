@@ -437,3 +437,53 @@ Polish uses `„..."` (U+201E opening, U+201D closing) for quotation marks. In J
 ## 43. Translating a PL-first store: override `en.default.json`, not `pl.json`
 
 If the store's default locale is English but all customer-facing text should be Polish, translate strings directly in `en.default.json` (the active locale). The `pl.json` file exists but is only used if Polish is set as a published language in Shopify admin. Overriding `en.default.json` is simpler and works immediately without admin changes.
+
+---
+
+## Lessons from Batch 6 — Blog + Article (2026-03-06)
+
+## 44. Polish dates: `time_tag` outputs English when store locale is English
+
+Shopify's `time_tag` filter uses the store's primary locale for formatting. If the store is set to English (even though customer-facing text is Polish), dates render as "March 5, 2026". Fix: create `snippets/lusena-date-pl.liquid` that manually maps month numbers to Polish genitive forms (stycznia, lutego, marca...) using a `case` statement. Usage: `{% render 'lusena-date-pl', date: article.published_at %}`. The `{date}` param type is not valid in Shopify's `{% doc %}` block — use `{string}` instead.
+
+## 45. Back-to-back conversion sections create decision fatigue
+
+On the article page, having newsletter signup + shop CTA as two separate sections felt like a "pushy exit gauntlet" and broke the calm editorial feel. Solution: merge into one section by adding optional `secondary_label`/`secondary_link` fields to the newsletter. This respects brandbook's "max 2 CTAs per section" (1 primary form + 1 text link) and keeps newsletter as the terminal section (matching homepage pattern). Default empty = no change on other pages.
+
+## 46. Blog empty state needs viewport fill (same pattern as search)
+
+An empty blog page with just "no articles" text makes the footer dominate the viewport. Apply the same `min-height: 100dvh` pattern used on search: `main:has(.lusena-blog) { display: flex; flex-direction: column; min-height: 100dvh; }` + flex children. Combine with a rich empty state (icon + heading + subtext + CTA button) to fill the space intentionally.
+
+---
+
+## Lessons from Batch 2 — System pages: 404, generic page, contact (2026-03-06)
+
+## 47. Animations: always use `animate--slide-in`, wrap form content
+
+Use `scroll-trigger animate--slide-in` for ALL content blocks — headings, text, forms. Do NOT use `animate--fade-in` (too subtle, inconsistent with other pages).
+
+When adding animation to a `{% form %}` tag, put the class on the form element itself (via a Liquid variable), not on a wrapper div inside it. A wrapper div becomes the form's only flex child, breaking `gap` between form fields:
+
+```liquid
+{%- liquid
+  assign form_class = 'lusena-form'
+  if settings.animations_reveal_on_scroll
+    assign form_class = form_class | append: ' scroll-trigger animate--slide-in'
+  endif
+-%}
+{%- form 'contact', id: 'ContactForm', class: form_class -%}
+```
+
+## 48. Viewport-fill: grow the PAGE section, not the reusable section
+
+When a page uses viewport-fill (`min-height: 100dvh` on `main`) and has a reusable section at the bottom (e.g., newsletter), the extra space must be absorbed by the page-specific section — not the reusable one. Stretching a shared section changes its height across pages, breaking visual consistency.
+
+Target the page section's `.shopify-section` wrapper specifically:
+```css
+main:has(.lusena-contact-form) > .shopify-section:has(.lusena-contact-form) {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.lusena-contact-form { flex: 1; }
+```

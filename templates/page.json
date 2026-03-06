@@ -1,10 +1,9 @@
 {
   "sections": {
     "main": {
-      "type": "main-page",
+      "type": "lusena-main-page",
       "settings": {
-        "padding_top": 32,
-        "padding_bottom": 32
+        "show_breadcrumbs": true
       }
     }
   },

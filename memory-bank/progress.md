@@ -1,8 +1,8 @@
 # Progress
 
-*Last updated: 2026-03-05*
+*Last updated: 2026-03-06*
 
-## LUSENA-styled pages (8 of ~21 total)
+## LUSENA-styled pages (13 of ~21 total)
 
 - [x] **Homepage** (`index.json`) — 9 sections: hero, trust bar, problem/solution, bestsellers, heritage, testimonials, bundles, FAQ, newsletter
 - [x] **Product page** (`product.json`) — 5 sections: main-product, feature highlights, quality evidence, truth table, FAQ (shared `lusena-faq`)
@@ -12,18 +12,23 @@
 - [x] **About page** (`page.o-nas.json`) — 5 sections: hero, trust bar, story, values, final CTA
 - [x] **Cart page** (`cart.json`) — 2 sections: cart-items (with upsell), cart-footer (totals, shipping bar, CTA, trust row)
 - [x] **Search page** (`search.json`) — 1 section: lusena-search (product grid, non-product results, empty state with bestsellers, predictive search, Polish translations)
+- [x] **Blog listing** (`blog.json`) — 1 section: lusena-blog (2-col grid, pagination, rich empty state with viewport fill)
+- [x] **Article page** (`article.json`) — 2 sections: lusena-article (hero, richtext, share button, LD+JSON) + lusena-newsletter (with secondary shop link)
+- [x] **404 page** (`404.json`) — 1 section: lusena-404 (centered error message, bestseller grid, viewport-fill)
+- [x] **Generic page** (`page.json`) — 1 section: lusena-main-page (breadcrumbs, title, richtext via `.lusena-richtext`, viewport-fill, compact spacing)
+- [x] **Contact page** (`page.contact.json`) — 2 sections: lusena-contact-form (breadcrumbs, heading, LUSENA form system, customer pre-fill, viewport-fill, full-width mobile button) + lusena-newsletter
 
-## Dawn → LUSENA page migration (2 of 10 templates — 5 customer pages N/A)
+## Dawn → LUSENA page migration (7 of 10 templates — 5 customer pages N/A)
 
 Full plan: `memory-bank/doc/features/dawn-pages-migration-plan.md`
 
 - [x] **Batch 0: Shared infrastructure** — `.lusena-form` layout, `.lusena-table` + `.lusena-line-item`, `.lusena-page-header` snippet, `.lusena-checkbox` (2026-03-04)
 - [x] **Batch 1: Cart** — `cart.json` — 3 new files: `lusena-cart-items.liquid`, `lusena-cart-quantity.liquid`, `lusena-cart-footer.liquid`. Full drawer parity. (2026-03-05)
-- [ ] **Batch 2: Content pages** — `404.json`, `page.json`, `page.contact.json`
+- [x] **Batch 2: Content pages** — `404.json` → `lusena-404`, `page.json` → `lusena-main-page`, `page.contact.json` → `lusena-main-page` + `lusena-contact-form` + `lusena-newsletter`. Breadcrumbs extended for `page` type. Polish translations for 404 + contact. Zero new CSS in foundations — all reused. (2026-03-06)
 - ~~**Batch 3: Customer auth**~~ — **N/A (Shopify-managed)** — Sign in page branded via admin settings (2026-03-05)
 - ~~**Batch 4: Customer account**~~ — **N/A (Shopify-managed)** — Checkout, thank you, orders, order status, profile pages branded via admin settings (2026-03-05)
 - [x] **Batch 5: Search** — `search.json` → `lusena-search`. Polish translations in `en.default.json`. list-collections skipped. (2026-03-05)
-- [ ] **Batch 6: Blog** — `blog.json`, `article.json`
+- [x] **Batch 6: Blog + Article** — `blog.json` → `lusena-blog`, `article.json` → `lusena-article` + `lusena-newsletter`. New snippets: `lusena-article-card`, `lusena-share-button`, `lusena-date-pl`. Breadcrumbs extended. Newsletter enhanced with optional secondary link. (2026-03-06)
 - [ ] **Batch 7: Password** — `password.json`
 
 ## Infrastructure completed
