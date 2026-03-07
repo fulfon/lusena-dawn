@@ -32,7 +32,8 @@
       "Bash(awk NR>=1800 && NR<=1870:*)",
       "mcp__shopify-dev-mcp__learn_shopify_api",
       "mcp__shopify-dev-mcp__validate_theme",
-      "Skill(playwright-cli)"
+      "Skill(playwright-cli)",
+      "Bash(playwright-cli:*)"
     ]
   }
 }

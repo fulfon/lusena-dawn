@@ -17,9 +17,11 @@
   {% endif %}
 >
   <div class="lusena-container">
-    <ul class="lusena-trust-bar" role="list">
+    <ul class="lusena-trust-bar" role="list"
+      {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
+    >
       {%- for block in section.blocks -%}
-        <li class="lusena-trust-bar__item" {{ block.shopify_attributes }}>
+        <li class="lusena-trust-bar__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
           {%- if block.settings.icon != blank -%}
             {%- if known_icons contains block.settings.icon -%}
               {% render 'lusena-icon', name: block.settings.icon, class: 'lusena-trust-bar__icon-svg', stroke_width: 1.5 %}

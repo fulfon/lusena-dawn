@@ -4,7 +4,7 @@
 
 ## Current focus
 
-**Dawn pages → LUSENA migration.** Batches 1, 2, 5, 6 COMPLETE. Next: Batch 7 (password page), then polish backlogs.
+**Dawn pages → LUSENA migration — COMPLETE.** All 13 customer-facing pages branded. Password page (Batch 7) deliberately skipped as unnecessary. Focus shifts to backlog items (PDP, homepage).
 
 ## Recent completed work (2026-03-06)
 
@@ -14,15 +14,19 @@
 
 ## Next steps
 
-1. **Batch 7: Password** — `password.json` (last theme-controlled page)
-2. PDP migration backlog items (see `memory-bank/doc/features/pdp-migration-backlog.md`)
-3. Homepage migration backlog items (see `memory-bank/doc/features/homepage-migration-backlog.md`)
+1. PDP migration backlog items (see `memory-bank/doc/features/pdp-migration-backlog.md`)
+2. Homepage migration backlog items (see `memory-bank/doc/features/homepage-migration-backlog.md`)
+
+## Deliberately skipped
+
+- **Batch 7: Password page** (`password.json`) — Abandoned 2026-03-06. The password page is only shown when store is password-protected (pre-launch / maintenance mode). Since all 13 customer-facing pages are LUSENA-branded and the store can launch without it, this migration is not worth the effort. Can revisit in the future if needed. A full migration plan exists at `.claude/plans/dazzling-exploring-neumann.md`.
 
 ## Known issues
 
 - `main-product.liquid` (100KB) is dead code alongside `lusena-main-product.liquid`
 - `snippets/lusena-pdp-styles.liquid` is a doc-only stub (CSS moved to `assets/lusena-pdp.css`)
 - **DEV-ONLY in cart upsell:** Hardcoded fallback product (`all_products['the-compare-at-price-snowboard']`) in both `lusena-cart-items.liquid` and `cart-drawer.liquid`. Hardcoded color label (`'Beżowy'`) in both files. Must be replaced with real product data before production.
+- **Stale doc: `memory-bank/doc/patterns/brand-tokens.md`** — The typography scale table lists values that don't match the live CSS in `lusena-foundations.css` (e.g., hero, h1, h2 sizes differ; `.lusena-type-small` listed but actual class is `.lusena-type-caption`). Needs a full review and update to reflect actual implemented values.
 
 ## Shopify-managed pages (not in theme — configured via admin)
 

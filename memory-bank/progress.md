@@ -18,7 +18,7 @@
 - [x] **Generic page** (`page.json`) — 1 section: lusena-main-page (breadcrumbs, title, richtext via `.lusena-richtext`, viewport-fill, compact spacing)
 - [x] **Contact page** (`page.contact.json`) — 2 sections: lusena-contact-form (breadcrumbs, heading, LUSENA form system, customer pre-fill, viewport-fill, full-width mobile button) + lusena-newsletter
 
-## Dawn → LUSENA page migration (7 of 10 templates — 5 customer pages N/A)
+## Dawn → LUSENA page migration — COMPLETE (all customer-facing pages branded)
 
 Full plan: `memory-bank/doc/features/dawn-pages-migration-plan.md`
 
@@ -29,7 +29,7 @@ Full plan: `memory-bank/doc/features/dawn-pages-migration-plan.md`
 - ~~**Batch 4: Customer account**~~ — **N/A (Shopify-managed)** — Checkout, thank you, orders, order status, profile pages branded via admin settings (2026-03-05)
 - [x] **Batch 5: Search** — `search.json` → `lusena-search`. Polish translations in `en.default.json`. list-collections skipped. (2026-03-05)
 - [x] **Batch 6: Blog + Article** — `blog.json` → `lusena-blog`, `article.json` → `lusena-article` + `lusena-newsletter`. New snippets: `lusena-article-card`, `lusena-share-button`, `lusena-date-pl`. Breadcrumbs extended. Newsletter enhanced with optional secondary link. (2026-03-06)
-- [ ] **Batch 7: Password** — `password.json`
+- [~] **Batch 7: Password** — `password.json` — **Abandoned (2026-03-06).** Not needed: page only shows when store is password-protected. Can revisit if needed; migration plan exists at `.claude/plans/dazzling-exploring-neumann.md`.
 
 ## Infrastructure completed
 

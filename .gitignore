@@ -15,10 +15,7 @@ lusena-shop/
 .playwright-cli/
 .playwright-mcp/
 
-# Temporary debugging screenshots/snapshots
-gap-investigation.png
-sticky-atc-*.png
-footer-*.png
-body-main-*.png
-collection-snap.yml
-pdp-check.yml
+# Temporary debugging screenshots/snapshots (Playwright CLI, etc.)
+*.png
+*.yml
+!locales/*.yml
