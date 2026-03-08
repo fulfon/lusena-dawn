@@ -4,6 +4,7 @@
   @param {product} product - Shopify product
   @param {string} [badge] - Optional badge text (e.g. "Bestseller", "New")
   @param {boolean} [show_secondary_image] - If true, shows image crossfade on hover when a second image exists
+  @param {boolean} [show_value_anchor] - If true, shows per-night price below the price
   @param {string} [class] - Optional wrapper classes
 {% enddoc %}
 
@@ -81,5 +82,11 @@
         </span>
       {%- endif -%}
     </div>
+    {%- if show_value_anchor and card_price > 0 -%}
+      {%- assign per_night_cents = card_price | divided_by: 365.0 | round -%}
+      <span class="lusena-product-card__per-night">
+        {{- per_night_cents | money_without_trailing_zeros }} / noc
+      </span>
+    {%- endif -%}
   </div>
 </a>

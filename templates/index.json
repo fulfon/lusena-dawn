@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "hero": {
@@ -21,13 +12,13 @@
         "subheading": {
           "type": "subheading",
           "settings": {
-            "text": "Jedwab 22 momme, który chroni Twoje włosy i skórę, gdy śpisz."
+            "text": "8 godzin jedwabnej pielęgnacji — każdej nocy. Obudź się piękniejsza."
           }
         },
         "buttons": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "Sprawdź kolekcję",
+            "button_label_1": "Zacznij swoją rutynę",
             "button_link_1": "shopify://collections/all",
             "button_label_2": "Dlaczego jedwab?",
             "button_link_2": "shopify://pages/nasza-jakosc"
@@ -64,7 +55,7 @@
           "settings": {
             "icon": "layers",
             "title": "22 momme jedwab",
-            "subtitle": "30% gęstszy splot"
+            "subtitle": "Gęstszy splot, dłuższa trwałość"
           }
         },
         "item-1": {
@@ -143,7 +134,7 @@
         "problem_heading": "Bawełna chłonie.\nTarcie i suchość.",
         "solution_label": "Rozwiązanie",
         "solution_heading": "Jedwab chroni.\nNawilżenie i gładkość.",
-        "cta_label": "Dlaczego to ważne? →",
+        "cta_label": "Sprawdź dowody jakości →",
         "cta_link": "shopify://pages/nasza-jakosc"
       }
     },
@@ -151,50 +142,11 @@
       "type": "lusena-bestsellers",
       "settings": {
         "heading": "Nasze bestsellery",
-        "subheading": "Produkty, które pokochasz od pierwszej nocy.",
+        "subheading": "Twoja nocna rutyna zaczyna się tutaj.",
         "collection": "all",
-        "products_to_show": 4,
-        "view_all_label": "Zobacz wszystkie produkty",
-        "view_all_mobile_label": "Zobacz wszystkie produkty"
-      }
-    },
-    "heritage": {
-      "type": "lusena-heritage",
-      "blocks": {
-        "tile-0": {
-          "type": "tile",
-          "settings": {
-            "icon": "map-pin",
-            "title": "Manufaktura w Shengze",
-            "subtitle": "Prowincja Jiangsu, region jedwabiu od dynastii Ming"
-          }
-        },
-        "tile-1": {
-          "type": "tile",
-          "settings": {
-            "icon": "shield-check",
-            "title": "OEKO-TEX® Standard 100",
-            "subtitle": "Certyfikat bezpieczeństwa dla skóry i zdrowia"
-          }
-        },
-        "tile-2": {
-          "type": "tile",
-          "settings": {
-            "icon": "layers",
-            "title": "22 momme • Klasa 6A",
-            "subtitle": "30% więcej jedwabiu niż standard 19 momme"
-          }
-        }
-      },
-      "block_order": [
-        "tile-0",
-        "tile-1",
-        "tile-2"
-      ],
-      "settings": {
-        "heading": "Z Suzhou – Stolicy Jedwabiu od XV wieku",
-        "button_label": "Poznaj naszą historię →",
-        "button_link": "shopify://pages/nasza-jakosc"
+        "products_to_show": 3,
+        "view_all_label": "Zobacz całą kolekcję",
+        "view_all_mobile_label": "Zobacz całą kolekcję"
       }
     },
     "reviews": {
@@ -237,37 +189,91 @@
     "gift": {
       "type": "lusena-bundles",
       "blocks": {
-        "benefit-0": {
-          "type": "benefit",
+        "bundle-0": {
+          "type": "bundle_card",
           "settings": {
-            "text": "Oszczędzasz do 19% w zestawie"
+            "title": "Nocna Rutyna",
+            "contents": "Poszewka + Czepek na noc + Scrunchie",
+            "original_price": "",
+            "bundle_price": "",
+            "savings_text": "",
+            "button_label": "Sprawdź zestaw",
+            "button_link": "shopify://collections/all"
           }
         },
-        "benefit-1": {
-          "type": "benefit",
+        "bundle-1": {
+          "type": "bundle_card",
           "settings": {
-            "text": "Pudełko prezentowe w cenie"
+            "title": "Starter Kit",
+            "contents": "Poszewka + Scrunchie",
+            "original_price": "",
+            "bundle_price": "",
+            "savings_text": "",
+            "button_label": "Sprawdź zestaw",
+            "button_link": "shopify://collections/all"
           }
         },
-        "benefit-2": {
-          "type": "benefit",
+        "bundle-2": {
+          "type": "bundle_card",
           "settings": {
-            "text": "Darmowa wysyłka na zestawy"
+            "title": "Scrunchie Trio",
+            "contents": "3× Scrunchie w różnych kolorach",
+            "original_price": "",
+            "bundle_price": "",
+            "savings_text": "",
+            "button_label": "Sprawdź zestaw",
+            "button_link": "shopify://collections/all"
           }
         }
       },
       "block_order": [
-        "benefit-0",
-        "benefit-1",
-        "benefit-2"
+        "bundle-0",
+        "bundle-1",
+        "bundle-2"
       ],
       "settings": {
         "kicker": "Zestawy Premium",
         "heading": "Nocna Rutyna\nw zestawie.",
-        "body": "Kompletna pielęgnacja snu i włosów w jednym zestawie. Kupując razem, oszczędzasz i budujesz swoją nocną rutynę.",
-        "image_placeholder": "Zdjęcie zestawu",
-        "button_label": "Zobacz zestawy",
-        "button_link": "shopify://collections/all"
+        "body": "Kompletna pielęgnacja snu i włosów w jednym zamówieniu. Kupując zestaw, oszczędzasz i budujesz swoją nocną rutynę."
+      }
+    },
+    "heritage": {
+      "type": "lusena-heritage",
+      "blocks": {
+        "tile-0": {
+          "type": "tile",
+          "settings": {
+            "icon": "map-pin",
+            "title": "Manufaktura w Shengze",
+            "subtitle": "Region jedwabiu od dynastii Ming (XV wiek)"
+          }
+        },
+        "tile-1": {
+          "type": "tile",
+          "settings": {
+            "icon": "package",
+            "title": "Bezpośrednia współpraca",
+            "subtitle": "Od manufaktury do Twojej sypialni — bez pośredników"
+          }
+        },
+        "tile-2": {
+          "type": "tile",
+          "settings": {
+            "icon": "shield-check",
+            "title": "Polska kontrola jakości",
+            "subtitle": "Każda partia sprawdzana przed wysyłką"
+          }
+        }
+      },
+      "block_order": [
+        "tile-0",
+        "tile-1",
+        "tile-2"
+      ],
+      "settings": {
+        "heading": "Z Suzhou — Stolicy Jedwabiu od XV wieku",
+        "button_label": "Poznaj naszą historię →",
+        "button_link": "shopify://pages/o-nas"
       }
     },
     "faq": {
@@ -300,26 +306,34 @@
             "question": "Czy 60 dni gwarancji to serio?",
             "answer": "<p>Jak najbardziej. Oferujemy 60 nocy testu — śpij na jedwabiu przez dwa miesiące. Jeśli nie poczujesz różnicy na skórze i włosach, zwróć produkt, nawet używany. Oddajemy pieniądze bez zbędnych pytań.</p>"
           }
+        },
+        "item-4": {
+          "type": "item",
+          "settings": {
+            "question": "Od czego zacząć swoją rutynę?",
+            "answer": "<p>Większość klientek zaczyna od jedwabnej poszewki — to fundament nocnej rutyny. Następnie dodają jedwabny czepek na noc (bonnet) do ochrony włosów i jedwabną gumkę (scrunchie) na dzień. Każdy produkt możesz kupić osobno lub w zestawie.</p>"
+          }
         }
       },
       "block_order": [
         "item-0",
         "item-1",
         "item-2",
-        "item-3"
+        "item-3",
+        "item-4"
       ],
       "settings": {
         "heading": "Najczęstsze pytania",
         "subheading": "Wszystko, co musisz wiedzieć o spaniu na jedwabiu."
       }
     },
-    "newsletter": {
-      "type": "lusena-newsletter",
+    "final_cta": {
+      "type": "lusena-final-cta",
       "settings": {
-        "heading": "Dołącz do Klubu LUSENA",
-        "subheading": "Zapisz się i odbierz kod -10% na pierwsze zamówienie.",
-        "button_label": "Dołącz",
-        "privacy_text": "Bez spamu. Wypisz się w każdej chwili."
+        "heading": "Gotowa na lepszy sen?",
+        "body": "Wybierz produkt i poczuj różnicę już pierwszej nocy.",
+        "cta_label": "Zacznij swoją rutynę",
+        "cta_link": "shopify://collections/all"
       }
     }
   },
@@ -328,10 +342,10 @@
     "trust",
     "problem_solution",
     "bestsellers",
-    "heritage",
     "reviews",
     "gift",
+    "heritage",
     "faq",
-    "newsletter"
+    "final_cta"
   ]
 }

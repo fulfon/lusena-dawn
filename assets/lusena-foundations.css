@@ -495,6 +495,7 @@ textarea:focus-visible {
 .lusena-product-card__prices { display: flex; align-items: center; justify-content: flex-start; gap: 0.8rem; font-size: 1.4rem; }
 .lusena-product-card__price { color: var(--lusena-text-2); }
 .lusena-product-card__compare-price { color: var(--lusena-text-2); opacity: 0.5; text-decoration: line-through; font-size: 1.2rem; }
+.lusena-product-card__per-night { display: block; font-size: 1.2rem; font-weight: 500; color: var(--lusena-accent-cta); margin-top: 0.2rem; }
 
 /* 2. Content & Testimonial Cards (Editorial Borders, No Backgrounds) */
 .lusena-content-card {

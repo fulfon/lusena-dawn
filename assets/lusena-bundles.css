@@ -1,0 +1,131 @@
+/* ==========================================================================
+   LUSENA Bundles — Bundle card grid
+   Standalone CSS (loaded per-section to avoid compiled_assets truncation).
+   ========================================================================== */
+
+/* Grid: 1-col mobile → 3-col desktop */
+.lusena-bundles__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--lusena-space-5);
+  margin-top: var(--lusena-space-6);
+}
+
+@media (min-width: 768px) {
+  .lusena-bundles__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Card */
+.lusena-bundles__card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card media */
+.lusena-bundles__card-media {
+  overflow: hidden;
+}
+
+.lusena-bundles__card-media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.lusena-bundles__card-placeholder {
+  aspect-ratio: 4 / 5;
+  background: var(--lusena-color-n200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lusena-bundles__card-placeholder svg {
+  width: 40%;
+  opacity: 0.3;
+}
+
+/* Card info */
+.lusena-bundles__card-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: var(--lusena-space-1);
+  padding-top: var(--lusena-space-3);
+}
+
+.lusena-bundles__card-title {
+  font-family: var(--lusena-font-heading);
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--lusena-text-1);
+  margin: 0;
+}
+
+.lusena-bundles__card-contents {
+  font-size: 1.4rem;
+  color: var(--lusena-text-2);
+  margin: 0;
+}
+
+/* Pricing row */
+.lusena-bundles__card-pricing {
+  display: flex;
+  align-items: baseline;
+  gap: var(--lusena-space-2);
+  margin-top: var(--lusena-space-1);
+}
+
+.lusena-bundles__card-price {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--lusena-text-1);
+}
+
+.lusena-bundles__card-compare-price {
+  font-size: 1.4rem;
+  color: var(--lusena-text-2);
+  text-decoration: line-through;
+}
+
+/* Savings badge */
+.lusena-bundles__card-savings {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--lusena-accent-2);
+}
+
+/* Card CTA */
+.lusena-bundles__card-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-family: var(--lusena-font-ui);
+  font-size: 1.4rem;
+  font-weight: 500;
+  height: 4rem;
+  padding: 0 var(--lusena-space-4);
+  background: transparent;
+  color: var(--lusena-accent-cta);
+  border: 1px solid var(--lusena-accent-cta);
+  border-radius: var(--lusena-btn-radius);
+  text-decoration: none;
+  transition: background var(--lusena-transition-fast), color var(--lusena-transition-fast);
+  margin-top: auto;
+}
+
+@media (hover: hover) {
+  .lusena-bundles__card-cta:hover {
+    background: var(--lusena-accent-cta);
+    color: var(--lusena-color-n0);
+  }
+}
+
+.lusena-bundles__card-cta:focus-visible {
+  outline: 2px solid var(--lusena-accent-cta);
+  outline-offset: 2px;
+}

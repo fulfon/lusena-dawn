@@ -1,10 +1,10 @@
 # Progress
 
-*Last updated: 2026-03-06*
+*Last updated: 2026-03-08*
 
 ## LUSENA-styled pages (13 of ~21 total)
 
-- [x] **Homepage** (`index.json`) — 9 sections: hero, trust bar, problem/solution, bestsellers, heritage, testimonials, bundles, FAQ, newsletter
+- [x] **Homepage** (`index.json`) — 9 sections: hero, trust bar, problem/solution, bestsellers, testimonials, bundles (card grid), heritage, FAQ, final CTA. Full UX audit completed 2026-03-08 (copy, flow, visual rhythm, value anchors, spacing). Newsletter removed (footer handles it).
 - [x] **Product page** (`product.json`) — 5 sections: main-product, feature highlights, quality evidence, truth table, FAQ (shared `lusena-faq`)
 - [x] **Collection page** (`collection.json`) — 1 section: main-collection + product card snippet
 - [x] **Quality page** (`page.nasza-jakosc.json`) — 11 sections: hero, trust bar, origin, momme, certificates, fire test, 6a, qc, comparison table, FAQ, final CTA
@@ -49,6 +49,7 @@ Full plan: `memory-bank/doc/features/dawn-pages-migration-plan.md`
 - [x] Product card (`snippets/lusena-product-card.liquid`)
 - [x] Breadcrumbs (`snippets/lusena-breadcrumbs.liquid`)
 - [x] Generic final CTA (`sections/lusena-final-cta.liquid`) — reusable across all pages
+- [x] Bundles standalone CSS (`assets/lusena-bundles.css`) — bundle card grid styles (loaded per-section) (2026-03-07)
 - [x] Preflight resets in foundations — button, anchor, img/video (2026-03-05)
 - [x] compiled_assets truncation guard pattern documented (2026-03-05)
 - [x] Memory bank architecture
@@ -112,11 +113,14 @@ Body/main Tailwind classes moved to `lusena-foundations.css` global rules (body 
 ## Active migration backlogs
 
 - **PDP:** 4 deferred items — see `memory-bank/doc/features/pdp-migration-backlog.md`
-- **Homepage:** 6 deferred items — see `memory-bank/doc/features/homepage-migration-backlog.md`
+- **Homepage:** Bundles redesign (item 1) DONE. Remaining: 2 (value anchors), 3 (tier ordering — manual config needed), 4 (UGC testimonials), 5 (hero animation), 6 (P/S accordion). See `memory-bank/doc/features/homepage-migration-backlog.md`
 
 ## UX backlog (evaluate during polish phase)
 
 - **Mobile header icons** — Currently only cart icon visible on mobile. Consider adding search icon and account/login icon to the mobile header for better discoverability.
+- **Cross-site "30%" claim cleanup** — See `activeContext.md` for details. All pages using "30% gęstszy/więcej" must be reviewed and corrected.
+- **Bonnet naming** — Apply Polish-first naming ("jedwabny czepek na noc (bonnet)") on all customer-facing pages. Homepage done, other pages pending.
+- **Value anchors expansion** — Homepage bestsellers done (`lusena-product-card__per-night`, `show_value_anchor` param). Expand to collection/search pages when ready.
 
 ## Cleanup backlog (not urgent — Dawn originals needed by theme editor)
 
