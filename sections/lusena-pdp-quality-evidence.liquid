@@ -49,20 +49,19 @@
               assign cta_opens_new_tab = false
 
               if block.settings.use_certificate_link
-                assign certificate_url = blank
+                assign oeko_number = blank
+                assign cta_opens_new_tab = true
 
-                if shop.metafields.lusena.oeko_tex_certificate != blank
-                  assign certificate_file = shop.metafields.lusena.oeko_tex_certificate.value
-                  if certificate_file != blank
-                    if certificate_file.url != blank
-                      assign certificate_url = certificate_file.url
-                      assign cta_opens_new_tab = true
-                    endif
+                if shop.metafields.lusena.oeko_tex_certificate_number != blank
+                  assign oeko_number_value = shop.metafields.lusena.oeko_tex_certificate_number.value
+                  if oeko_number_value != blank
+                    assign oeko_number = oeko_number_value | strip
                   endif
                 endif
 
-                if certificate_url != blank
-                  assign cta_url = certificate_url
+                if oeko_number != blank
+                  assign oeko_number_encoded = oeko_number | url_encode
+                  assign cta_url = 'https://www.oeko-tex.com/en/detail/?number=' | append: oeko_number_encoded
                 else
                   assign cta_url = '/pages/nasza-jakosc'
                 endif
@@ -158,7 +157,7 @@
   }
 
   .lusena-pdp-quality-evidence__item {
-    background-color: var(--lusena-surface-2);
+    background-color: var(--lusena-surface-1);
     border-radius: var(--lusena-radius-sm);
     overflow: hidden;
   }
@@ -170,7 +169,7 @@
     align-items: flex-start;
     gap: var(--lusena-space-2);
     text-align: left;
-    background-color: var(--lusena-surface-2);
+    background-color: var(--lusena-surface-1);
     border: 0;
     transition: background-color 0.15s ease;
     color: inherit;
@@ -178,7 +177,7 @@
   }
 
   .lusena-pdp-quality-evidence__toggle:hover {
-    background-color: color-mix(in srgb, var(--lusena-surface-2) 80%, transparent);
+    background-color: var(--lusena-surface-1);
   }
 
   .lusena-pdp-quality-evidence__toggle:focus-visible {
@@ -190,7 +189,7 @@
     width: 40px;
     height: 40px;
     border-radius: 9999px;
-    background-color: var(--lusena-brand-bg);
+    background-color: var(--lusena-surface-2);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -244,7 +243,8 @@
   }
 
   .lusena-pdp-quality-evidence__panel-inner {
-    padding: 0 20px 20px 72px;
+    /* 20px padding + 40px icon + 16px gap = 76px */
+    padding: 0 20px 20px 76px;
   }
 
   .lusena-pdp-quality-evidence__detail {
@@ -276,7 +276,6 @@
   }
 
   .lusena-pdp-quality-evidence__item.is-open .lusena-pdp-quality-evidence__panel {
-    max-height: 500px;
     opacity: 1;
   }
 
@@ -291,7 +290,8 @@
     }
 
     .lusena-pdp-quality-evidence__panel-inner {
-      padding: 0 24px 24px 72px;
+      /* 24px padding + 40px icon + 16px gap = 80px */
+      padding: 0 24px 24px 80px;
     }
   }
 {% endstylesheet %}
@@ -312,6 +312,8 @@
       };
 
       const closeItem = (item) => {
+        const panel = item.querySelector('[data-lusena-quality-evidence-panel]');
+        if (panel) panel.style.maxHeight = '0';
         item.classList.remove('is-open');
         setExpanded(item, false);
       };
@@ -322,6 +324,8 @@
             closeItem(otherItem);
           }
         });
+        const panel = item.querySelector('[data-lusena-quality-evidence-panel]');
+        if (panel) panel.style.maxHeight = panel.scrollHeight + 'px';
         item.classList.add('is-open');
         setExpanded(item, true);
       };
@@ -454,7 +458,8 @@
             { "value": "layers", "label": "Layers" },
             { "value": "package", "label": "Package" },
             { "value": "sparkles", "label": "Sparkles" },
-            { "value": "gift", "label": "Gift" }
+            { "value": "gift", "label": "Gift" },
+            { "value": "rotate-ccw", "label": "Rotate (returns)" }
           ]
         },
         {
@@ -489,7 +494,7 @@
         {
           "type": "checkbox",
           "id": "use_certificate_link",
-          "label": "Use OEKO-TEX certificate file link",
+          "label": "Use OEKO-TEX verification link (from shop metafield)",
           "default": false
         }
       ]

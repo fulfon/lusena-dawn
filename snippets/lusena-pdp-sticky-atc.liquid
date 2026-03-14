@@ -8,6 +8,14 @@
 {% enddoc %}
 
 {%- liquid
+  assign sticky_show_per_night = true
+  if product != blank
+    assign mf_per_night = product.metafields.lusena.pdp_show_price_per_night
+    if mf_per_night != blank and mf_per_night.value == false
+      assign sticky_show_per_night = false
+    endif
+  endif
+
   assign sticky_price_per_night_cents = current_variant.price | divided_by: 365.0 | round
   assign sticky_price_per_night_prefix = section.settings.price_per_night_prefix | default: 'Tylko '
   assign sticky_price_per_night_suffix = section.settings.price_per_night_suffix | default: '/ noc'
@@ -98,14 +106,16 @@
         <span class="lusena-sticky-atc__price" data-lusena-sticky-price>
           {{ current_variant.price | money_without_trailing_zeros }}
         </span>
-        <span
-          class="lusena-sticky-atc__per-night"
-          data-lusena-sticky-price-per-night
-          data-prefix="{{ sticky_price_per_night_prefix | escape }}"
-          data-suffix="{{ sticky_price_per_night_suffix | escape }}"
-        >
-          {{- sticky_price_per_night_prefix | escape -}}{{- sticky_price_per_night_cents | money_without_trailing_zeros -}}{{- sticky_price_per_night_suffix | escape -}}
-        </span>
+        {%- if sticky_show_per_night -%}
+          <span
+            class="lusena-sticky-atc__per-night"
+            data-lusena-sticky-price-per-night
+            data-prefix="{{ sticky_price_per_night_prefix | escape }}"
+            data-suffix="{{ sticky_price_per_night_suffix | escape }}"
+          >
+            {{- sticky_price_per_night_prefix | escape -}}{{- sticky_price_per_night_cents | money_without_trailing_zeros -}}{{- sticky_price_per_night_suffix | escape -}}
+          </span>
+        {%- endif -%}
         <span class="lusena-sticky-atc__variant" data-lusena-sticky-variant>{{ sticky_variant_label | escape }}</span>
       </div>
 
@@ -152,14 +162,16 @@
       <span class="lusena-sticky-atc__price" data-lusena-sticky-price>
         {{ current_variant.price | money_without_trailing_zeros }}
       </span>
-      <span
-        class="lusena-sticky-atc__per-night"
-        data-lusena-sticky-price-per-night
-        data-prefix="{{ sticky_price_per_night_prefix | escape }}"
-        data-suffix="{{ sticky_price_per_night_suffix | escape }}"
-      >
-        {{- sticky_price_per_night_prefix | escape -}}{{- sticky_price_per_night_cents | money_without_trailing_zeros -}}{{- sticky_price_per_night_suffix | escape -}}
-      </span>
+      {%- if sticky_show_per_night -%}
+        <span
+          class="lusena-sticky-atc__per-night"
+          data-lusena-sticky-price-per-night
+          data-prefix="{{ sticky_price_per_night_prefix | escape }}"
+          data-suffix="{{ sticky_price_per_night_suffix | escape }}"
+        >
+          {{- sticky_price_per_night_prefix | escape -}}{{- sticky_price_per_night_cents | money_without_trailing_zeros -}}{{- sticky_price_per_night_suffix | escape -}}
+        </span>
+      {%- endif -%}
     </div>
 
     <span class="lusena-sticky-atc__divider" aria-hidden="true"></span>

@@ -14,7 +14,7 @@
   endif
 -%}
 <section
-  class="lusena-bg-surface-1 lusena-quality-origin lusena-spacing--spacious"
+  class="lusena-bg-surface-2 lusena-quality-origin lusena-spacing--spacious"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
@@ -32,6 +32,11 @@
       <div class="lusena-content-flow--tight lusena-type-body">
         {{ section.settings.origin_body }}
       </div>
+      {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+        <a href="{{ section.settings.cta_link }}" class="lusena-quality-origin__cta lusena-type-body">
+          {{ section.settings.cta_label | escape }}
+        </a>
+      {%- endif -%}
     </div>
 
     <div class="lusena-quality-origin__image-wrap{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}>
@@ -83,6 +88,18 @@
     font-style: italic;
     text-align: center;
     padding-inline: var(--lusena-space-3);
+  }
+
+  /* CTA link */
+  .lusena-quality-origin__cta {
+    color: var(--lusena-accent-2);
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.2s ease;
+  }
+
+  .lusena-quality-origin__cta:hover {
+    opacity: 0.75;
   }
 
   /* Desktop: image on left (reorder) + nowrap heading */
@@ -162,7 +179,7 @@
       "type": "richtext",
       "id": "origin_body",
       "label": "Origin body",
-      "default": "<p>Nie kupujemy od anonimowych pośredników. Nasz jedwab pochodzi bezpośrednio z Shengze (prefektura Suzhou) — miejsca płacącego jedwabiem podatki cesarzowi od czasów dynastii Ming.</p><p>To tutaj tradycja spotyka się z nowoczesną technologią. Od kokonu jedwabnika morwowego klasy 6A do gotowej poszewki.</p>"
+      "default": "<p>Nie kupujemy od anonimowych pośredników. Nasz jedwab pochodzi bezpośrednio z Shengze (prefektura Suzhou) - miejsca płacącego jedwabiem podatki cesarzowi od czasów dynastii Ming.</p><p>To tutaj tradycja spotyka się z nowoczesną technologią. Od kokonu jedwabnika morwowego klasy 6A do gotowej poszewki.</p>"
     },
     {
       "type": "image_picker",
@@ -174,6 +191,16 @@
       "id": "origin_image_placeholder",
       "label": "Origin image placeholder",
       "default": "Zdjęcie: Mapa regionu Suzhou / Manufaktura"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
     }
   ],
   "presets": [

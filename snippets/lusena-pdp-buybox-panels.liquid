@@ -72,7 +72,7 @@
   assign fallback_packaging_items = 'Jedwabny produkt LUSENA|Eleganckie pudełko prezentowe LUSENA|Karta z instrukcją pielęgnacji' | split: '|'
 
   assign care_steps = blank
-  assign fallback_care_steps = 'Prać w pralce: program delikatny, maks. 30°C|Używać detergentu do jedwabiu lub delikatnych tkanin|Suszyć na płasko — nie używać suszarki bębnowej|Nie wybielać, nie prać z chlorem|Prasować na najniższej temperaturze z lewej strony' | split: '|'
+  assign fallback_care_steps = 'Prać w pralce: program delikatny, maks. 30°C|Używać detergentu do jedwabiu lub delikatnych tkanin|Suszyć na płasko - nie używać suszarki bębnowej|Nie wybielać, nie prać z chlorem|Prasować na najniższej temperaturze z lewej strony' | split: '|'
 
   if product != blank
     assign mf_value_material = product.metafields.lusena.pdp_specs_material
@@ -134,9 +134,9 @@
     assign care_steps = fallback_care_steps
   endif
 
-  assign def_weave = 'Sposób przeplatania nitek jedwabiu. Charmeuse to splot satynowy — gładki po jednej stronie, matowy po drugiej.'
-  assign def_density = 'Momme (mm) to miara gęstości jedwabiu. Im wyższa wartość, tym grubszy i trwalszy materiał. Standard branżowy to 16–19 mm.'
-  assign def_grade = 'Grade 6A to najwyższa jakość jedwabiu morwowego — najdłuższe, najbardziej jednolite włókna, bez zanieczyszczeń.'
+  assign def_weave = 'Sposób przeplatania nitek jedwabiu. Charmeuse to splot satynowy - gładki po jednej stronie, matowy po drugiej.'
+  assign def_density = 'Momme (mm) to miara gęstości jedwabiu. Im wyższa wartość, tym grubszy i trwalszy materiał. Standard branżowy to 16-19 mm.'
+  assign def_grade = 'Grade 6A to najwyższa jakość jedwabiu morwowego - najdłuższe, najbardziej jednolite włókna, bez zanieczyszczeń.'
 -%}
 
 <div
@@ -177,80 +177,96 @@
       <div class="lusena-pdp-accordion__body">
         <table class="lusena-pdp-specs-table" data-lusena-specs-table>
           <tbody>
-            <tr class="lusena-pdp-specs-row--alt">
-              <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">{{ label_material | escape }}</td>
-              <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_material | escape }}</td>
-            </tr>
-            <tr>
-              <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">
-                <button
-                  type="button"
-                  class="lusena-pdp-specs-toggle"
-                  data-lusena-spec-def-toggle
-                  data-spec-key="weave"
-                  aria-expanded="false"
-                >
-                  Splot
-                  <span class="lusena-pdp-specs-hint">?</span>
-                </button>
-              </td>
-              <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_weave | escape }}</td>
-            </tr>
-            <tr class="lusena-pdp-specs-row--definition" data-lusena-spec-def-row data-spec-key="weave" hidden>
-              <td colspan="2" class="lusena-pdp-specs-def-cell">{{ def_weave }}</td>
-            </tr>
-            <tr class="lusena-pdp-specs-row--alt">
-              <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">
-                <button
-                  type="button"
-                  class="lusena-pdp-specs-toggle"
-                  data-lusena-spec-def-toggle
-                  data-spec-key="density"
-                  aria-expanded="false"
-                >
-                  Gęstość
-                  <span class="lusena-pdp-specs-hint">?</span>
-                </button>
-              </td>
-              <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_momme | escape }}</td>
-            </tr>
-            <tr class="lusena-pdp-specs-row--definition" data-lusena-spec-def-row data-spec-key="density" hidden>
-              <td colspan="2" class="lusena-pdp-specs-def-cell">{{ def_density }}</td>
-            </tr>
-            <tr>
-              <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">
-                <button
-                  type="button"
-                  class="lusena-pdp-specs-toggle"
-                  data-lusena-spec-def-toggle
-                  data-spec-key="grade"
-                  aria-expanded="false"
-                >
-                  Klasa
-                  <span class="lusena-pdp-specs-hint">?</span>
-                </button>
-              </td>
-              <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_grade | escape }}</td>
-            </tr>
-            <tr class="lusena-pdp-specs-row--definition" data-lusena-spec-def-row data-spec-key="grade" hidden>
-              <td colspan="2" class="lusena-pdp-specs-def-cell">{{ def_grade }}</td>
-            </tr>
-            <tr class="lusena-pdp-specs-row--alt">
-              <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">{{ label_dimensions | escape }}</td>
-              <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_dimensions | escape }}</td>
-            </tr>
-            <tr>
-              <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">{{ label_closure | escape }}</td>
-              <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_closure | escape }}</td>
-            </tr>
-            <tr class="lusena-pdp-specs-row--alt">
-              <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">{{ label_weight | escape }}</td>
-              <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_weight | escape }}</td>
-            </tr>
-            <tr>
-              <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">{{ label_certification | escape }}</td>
-              <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_certification | escape }}</td>
-            </tr>
+            {%- if value_material != blank -%}
+              <tr class="lusena-pdp-specs-row--alt">
+                <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">{{ label_material | escape }}</td>
+                <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_material | escape }}</td>
+              </tr>
+            {%- endif -%}
+            {%- if value_weave != blank -%}
+              <tr>
+                <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">
+                  <button
+                    type="button"
+                    class="lusena-pdp-specs-toggle"
+                    data-lusena-spec-def-toggle
+                    data-spec-key="weave"
+                    aria-expanded="false"
+                  >
+                    Splot
+                    <span class="lusena-pdp-specs-hint">?</span>
+                  </button>
+                </td>
+                <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_weave | escape }}</td>
+              </tr>
+              <tr class="lusena-pdp-specs-row--definition" data-lusena-spec-def-row data-spec-key="weave" hidden>
+                <td colspan="2" class="lusena-pdp-specs-def-cell">{{ def_weave }}</td>
+              </tr>
+            {%- endif -%}
+            {%- if value_momme != blank -%}
+              <tr class="lusena-pdp-specs-row--alt">
+                <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">
+                  <button
+                    type="button"
+                    class="lusena-pdp-specs-toggle"
+                    data-lusena-spec-def-toggle
+                    data-spec-key="density"
+                    aria-expanded="false"
+                  >
+                    Gęstość
+                    <span class="lusena-pdp-specs-hint">?</span>
+                  </button>
+                </td>
+                <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_momme | escape }}</td>
+              </tr>
+              <tr class="lusena-pdp-specs-row--definition" data-lusena-spec-def-row data-spec-key="density" hidden>
+                <td colspan="2" class="lusena-pdp-specs-def-cell">{{ def_density }}</td>
+              </tr>
+            {%- endif -%}
+            {%- if value_grade != blank -%}
+              <tr>
+                <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">
+                  <button
+                    type="button"
+                    class="lusena-pdp-specs-toggle"
+                    data-lusena-spec-def-toggle
+                    data-spec-key="grade"
+                    aria-expanded="false"
+                  >
+                    Klasa
+                    <span class="lusena-pdp-specs-hint">?</span>
+                  </button>
+                </td>
+                <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_grade | escape }}</td>
+              </tr>
+              <tr class="lusena-pdp-specs-row--definition" data-lusena-spec-def-row data-spec-key="grade" hidden>
+                <td colspan="2" class="lusena-pdp-specs-def-cell">{{ def_grade }}</td>
+              </tr>
+            {%- endif -%}
+            {%- if value_dimensions != blank -%}
+              <tr class="lusena-pdp-specs-row--alt">
+                <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">{{ label_dimensions | escape }}</td>
+                <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_dimensions | escape }}</td>
+              </tr>
+            {%- endif -%}
+            {%- if value_closure != blank -%}
+              <tr>
+                <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">{{ label_closure | escape }}</td>
+                <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_closure | escape }}</td>
+              </tr>
+            {%- endif -%}
+            {%- if value_weight != blank -%}
+              <tr class="lusena-pdp-specs-row--alt">
+                <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">{{ label_weight | escape }}</td>
+                <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_weight | escape }}</td>
+              </tr>
+            {%- endif -%}
+            {%- if value_certification != blank -%}
+              <tr>
+                <td class="lusena-pdp-specs-cell lusena-pdp-specs-label">{{ label_certification | escape }}</td>
+                <td class="lusena-pdp-specs-cell lusena-pdp-specs-value">{{ value_certification | escape }}</td>
+              </tr>
+            {%- endif -%}
           </tbody>
         </table>
       </div>

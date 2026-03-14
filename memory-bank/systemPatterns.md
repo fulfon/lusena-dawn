@@ -13,7 +13,9 @@
    - `lusena-header.css` — header section styles
    - `lusena-hero.css` — hero section styles
    - `lusena-footer.css` — footer section styles
-5. **Page-specific assets:** `lusena-pdp.css` (~34KB) — loaded per-page in section file
+5. **Page-specific assets** (loaded per-page/section via `<link>` in their section):
+   - `lusena-pdp.css` (~34KB) — PDP styles (loaded in lusena-main-product.liquid)
+   - `lusena-bundles.css` — bundle card grid (loaded in lusena-bundles.liquid)
 6. **Component `{% stylesheet %}` blocks** — small section-scoped CSS only (~38KB compiled, 73KB hard limit)
 
 ### compiled_assets truncation guard (MANDATORY)
@@ -101,7 +103,7 @@ Quick reference:
 - **Phase A:** Plan — read template JSON, map Tailwind → foundations, identify bugs
 - **Phase B:** Implement — replace classes, write section CSS, fix HTML bugs
 - **Phase C:** Validate — `validate_theme`, grep for remaining Tailwind, `shopify theme check`
-- **Phase D:** Visual verify — **use `/playwright-cli` skill** (NEVER Playwright MCP tools) — desktop (1280x800) + mobile (375x812)
+- **Phase D:** Visual verify — **use `/playwright-cli` skill with `-s=<name>`** (NEVER Playwright MCP tools, ALWAYS use named session) — desktop (1280x800) + mobile (375x812)
 - **Phase E:** UX audit — conversion-focused review (dead ends, readability, balance, mobile, customer journey)
 
 > Full design tokens: `memory-bank/doc/patterns/brand-tokens.md`

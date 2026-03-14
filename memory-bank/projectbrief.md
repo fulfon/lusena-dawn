@@ -39,7 +39,7 @@ LUSENA is a premium Polish silk e-commerce store built as a custom Shopify theme
 
 - **Emphasize:** 22 momme density, tested quality, origin (Suzhou/Shengze), OEKO-TEX certification, local stock & 24h shipping
 - **Avoid:** "Made in China" (use "from Suzhou"), "Factory" (use "manufactory"), medical claims, price wars
-- **Key claim:** "22 momme is 30% more silk than standard 19 momme"
+- **Key claim:** "22 momme to ponad 15% więcej jedwabiu niż standard 19 momme" (22÷19 ≈ 15.8%; qualitative alternative: "Gęstszy splot, dłuższa trwałość")
 - **CTAs (Polish):** "Sprawdź kolekcję", "Dodaj do koszyka", "Zobacz więcej"
 - **Value anchors:** "0,XX zł/noc" framing when price data is available
 

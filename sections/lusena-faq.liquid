@@ -12,10 +12,15 @@
   if section.settings.padding_bottom_mobile > 0
     assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
   endif
+
+  assign faq_bg = section.settings.bg_style | default: 'surface-1'
 -%}
 <section
-  class="lusena-bg-surface-1 lusena-faq lusena-spacing--standard"
+  class="lusena-bg-{{ faq_bg }} lusena-faq lusena-spacing--standard"
   data-lusena-faq
+  {% if section.settings.anchor_id != blank %}
+    id="{{ section.settings.anchor_id }}"
+  {% endif %}
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
@@ -34,6 +39,9 @@
       {%- for block in section.blocks -%}
         <details
           class="lusena-accordion lusena-faq__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if block.settings.is_returns_target %}
+            data-lusena-accordion-returns
+          {% endif %}
           {% if settings.animations_reveal_on_scroll %}
             data-cascade
           {% endif %}
@@ -103,6 +111,26 @@
     padding-bottom: var(--lusena-space-3);
   }
 
+  /* Normalize paragraph spacing to match line-height leading (8px) */
+  .lusena-faq__content-inner p { margin: 0 0 var(--lusena-space-1); }
+  .lusena-faq__content-inner > :first-child { margin-top: 0; }
+  .lusena-faq__content-inner > :last-child { margin-bottom: 0; }
+
+  /* All FAQ lists flush left — scannable, consistent, mobile-friendly */
+  .lusena-faq__content-inner ul { padding-left: 0; list-style-position: inside; }
+
+  /* Inline links inside FAQ answers — teal + underline, matching .lusena-richtext a */
+  .lusena-faq__content-inner a {
+    color: var(--lusena-accent-cta);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: color var(--lusena-transition-fast);
+  }
+  .lusena-faq__content-inner a:hover {
+    color: var(--lusena-accent-cta-hover);
+  }
+
   @supports (touch-action: manipulation) {
     .lusena-faq__content-inner {
       opacity: 1;
@@ -129,27 +157,27 @@
   }
 {% endstylesheet %}
 
-{% javascript %}
-  (() => {
-    const root = document.querySelector('[data-lusena-faq]');
+<script>
+  (function() {
+    var root = document.querySelector('[data-lusena-faq]');
     if (!root) return;
 
-    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
-    const items = Array.from(root.querySelectorAll('details.lusena-faq__item'));
+    var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var items = Array.from(root.querySelectorAll('details.lusena-faq__item'));
 
-    const getContent = (details) => details.querySelector('.lusena-faq__content');
-    const getInner = (content) => content.querySelector('.lusena-faq__content-inner') || content.firstElementChild;
-    const clearContentTransition = (content) => {
+    function getContent(details) { return details.querySelector('.lusena-faq__content'); }
+    function getInner(content) { return content.querySelector('.lusena-faq__content-inner') || content.firstElementChild; }
+    function clearPendingEnd(content) {
       if (typeof content._lusenaFaqOnEnd === 'function') {
         content.removeEventListener('transitionend', content._lusenaFaqOnEnd);
         content._lusenaFaqOnEnd = null;
       }
-    };
+    }
 
-    const closeItem = (details) => {
-      const content = getContent(details);
+    function closeItem(details) {
+      var content = getContent(details);
       if (!content) return;
-      clearContentTransition(content);
+      clearPendingEnd(content);
 
       if (prefersReducedMotion) {
         details.open = false;
@@ -158,15 +186,15 @@
         return;
       }
 
-      const h = content.offsetHeight;
+      var h = content.offsetHeight;
       content.style.height = h + 'px';
       details.dataset.state = 'closing';
 
-      requestAnimationFrame(() => {
+      requestAnimationFrame(function() {
         content.style.height = '0px';
       });
 
-      const onEnd = (e) => {
+      var onEnd = function(e) {
         if (e.target !== content || e.propertyName !== 'height') return;
         content.removeEventListener('transitionend', onEnd);
         content._lusenaFaqOnEnd = null;
@@ -176,15 +204,15 @@
       };
       content._lusenaFaqOnEnd = onEnd;
       content.addEventListener('transitionend', onEnd);
-    };
+    }
 
-    const openItem = (details) => {
-      const content = getContent(details);
+    function openItem(details) {
+      var content = getContent(details);
       if (!content) return;
-      clearContentTransition(content);
+      clearPendingEnd(content);
 
-      // Accordion behavior: only one open at a time.
-      items.forEach((other) => {
+      // Accordion: close all others
+      items.forEach(function(other) {
         if (other !== details && other.open) closeItem(other);
       });
 
@@ -199,26 +227,20 @@
       content.style.height = '0px';
       details.dataset.state = 'open';
 
-      const inner = getInner(content);
-      const targetH = inner ? inner.scrollHeight : content.scrollHeight;
+      var inner = getInner(content);
+      var targetH = inner ? inner.scrollHeight : content.scrollHeight;
 
-      requestAnimationFrame(() => {
+      requestAnimationFrame(function() {
         content.style.height = targetH + 'px';
       });
 
-      const onEnd = (e) => {
-        if (e.target !== content || e.propertyName !== 'height') return;
-        content.removeEventListener('transitionend', onEnd);
-        content._lusenaFaqOnEnd = null;
-        content.style.height = 'auto';
-      };
-      content._lusenaFaqOnEnd = onEnd;
-      content.addEventListener('transitionend', onEnd);
-    };
+      // No transitionend handler — keep the pixel height as-is.
+      // No snap to 'auto', so no layout jump at the end.
+    }
 
-    // Init: set all closed items to height 0, open items to auto
-    items.forEach((details) => {
-      const content = getContent(details);
+    // Init
+    items.forEach(function(details) {
+      var content = getContent(details);
       if (!content) return;
       if (details.open) {
         details.dataset.state = 'open';
@@ -229,50 +251,41 @@
       }
     });
 
-    const onFastTap = (el, callback) => {
-      let startX, startY, handled;
-      el.addEventListener(
-        'touchstart',
-        (e) => {
-          startX = e.touches[0].clientX;
-          startY = e.touches[0].clientY;
-          handled = false;
-        },
-        { passive: true }
-      );
-      el.addEventListener(
-        'touchend',
-        (e) => {
-          const t = e.changedTouches[0];
-          if (Math.abs(t.clientX - startX) < 10 && Math.abs(t.clientY - startY) < 10) {
-            handled = true;
-            e.preventDefault();
-            callback(e);
-          }
-        },
-        { passive: false }
-      );
-      el.addEventListener('click', (e) => {
+    function onFastTap(el, callback) {
+      var startX, startY, handled;
+      el.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        handled = false;
+      }, { passive: true });
+      el.addEventListener('touchend', function(e) {
+        var t = e.changedTouches[0];
+        if (Math.abs(t.clientX - startX) < 10 && Math.abs(t.clientY - startY) < 10) {
+          handled = true;
+          e.preventDefault();
+          callback(e);
+        }
+      }, { passive: false });
+      el.addEventListener('click', function(e) {
         e.preventDefault();
         if (!handled) callback(e);
         handled = false;
       });
-    };
+    }
 
-    items.forEach((details) => {
-      const summary = details.querySelector('summary');
+    items.forEach(function(details) {
+      var summary = details.querySelector('summary');
       if (!summary) return;
-
-      onFastTap(summary, () => {
+      onFastTap(summary, function() {
         if (details.open) closeItem(details);
         else openItem(details);
       });
     });
 
-    if (window.Shopify?.designMode) {
-      document.addEventListener('shopify:section:load', () => {
-        items.forEach((details) => {
-          const content = getContent(details);
+    if (window.Shopify && window.Shopify.designMode) {
+      document.addEventListener('shopify:section:load', function() {
+        items.forEach(function(details) {
+          var content = getContent(details);
           if (!content) return;
           if (details.open) {
             details.dataset.state = 'open';
@@ -285,11 +298,11 @@
       });
     }
   })();
-{% endjavascript %}
+</script>
 
 {% schema %}
 {
-  "name": "LUSENA FAQ (draft)",
+  "name": "LUSENA FAQ",
   "tag": "section",
   "settings": [
     {
@@ -337,6 +350,23 @@
       "default": 0
     },
     {
+      "type": "select",
+      "id": "bg_style",
+      "label": "Background style",
+      "options": [
+        { "value": "surface-1", "label": "White (surface-1)" },
+        { "value": "surface-2", "label": "Cream (surface-2)" },
+        { "value": "brand", "label": "Warm porcelain (brand)" }
+      ],
+      "default": "surface-1"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor ID (for deep-linking)",
+      "info": "Used as the section id attribute, e.g. 'details' to enable #details links."
+    },
+    {
       "type": "text",
       "id": "heading",
       "label": "Heading",
@@ -365,13 +395,20 @@
           "id": "answer",
           "label": "Answer",
           "default": "<p>Yes, absolutely. We use only 100% Grade 6A Mulberry Silk, 22 momme thickness. It is the highest grade available, ensuring durability and the ultimate smooth feel.</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_returns_target",
+          "label": "Returns deep-link target",
+          "info": "Opens this item when 'returns' links are clicked on the PDP.",
+          "default": false
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "LUSENA FAQ (draft)",
+      "name": "LUSENA FAQ",
       "blocks": [
         {
           "type": "item",
@@ -406,3 +443,4 @@
   ]
 }
 {% endschema %}
+

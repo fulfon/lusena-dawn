@@ -19,28 +19,70 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v2.md` (local path: 
 **Note:** The newest changelog entry might show `(current)` instead of a hash when we keep everything in a single commit (a commit can’t reliably include its own hash inside its contents). Entries under **Legacy commits** are kept for archival purposes and might reference commits that are no longer reachable from the current Git history (hashes and timestamps might be unavailable).
 
 ## Recent commits (detailed, last 8)
-### (current) — refactor(lusena): restructure docs into memory bank + compact CLAUDE.md
+
+### (current) — Footer redesign, PDP polish, quality/FAQ/trust-bar refinements, spacing audit, product setup docs
+
+**Goal:** Complete footer redesign with social/payment/newsletter UX, polish PDP buy-box spacing and content, refine quality page sections, enhance FAQ section with bg_style/anchor/deep-link features, standardize trust-bar copy and em-dashes across all pages, run quality page spacing audit, set up product catalog documentation and creative workflow skills.
+
+**What changed**
+- **Footer:** Social media links (Instagram, Facebook) via lusena-icon, payment icons bar (Visa, BLIK, PayPo, Przelewy24), legal links row, newsletter UX rebuild (arrow submit, success/error states, hCaptcha-compatible), schema renamed from "draft" to "LUSENA Footer", all Polish defaults.
+- **PDP buy-box:** Significant CSS spacing tightening (mobile + desktop), social proof reordered to slot 2, benefits list padding fix, gallery/lightbox breakpoint aligned to 768px, guarantee restructured (p not div).
+- **PDP content:** Truth table 2 new rows (hypoallergenic, durability) + lusena-icon, feature highlights bg_style + optional heading, per-product metafield overrides (headline, tagline, per-night toggle), conditional specs rendering, returns deep-link fix, final CTA added to template.
+- **Quality page:** 6A section removed (content merged into momme 4th benefit), origin CTA links, QC bg + icon system (emoji → lusena-icon with fallback), comparison table CTA + corrected values (15% not 30%), hero CTA to OEKO-TEX verification, OEKO-TEX diacritics fix.
+- **Quality page spacing audit (2026-03-10):** 3 off-grid CSS fixes in `lusena-foundations.css` (truth-table mobile cards: grid gap 12→16px, card-line margin 12→16px, card-label margin 5→8px), 1 tier upgrade in `lusena-quality-certificates.liquid` (standard→spacious).
+- **FAQ section:** bg_style setting, anchor_id for deep-linking, is_returns_target per-block, JS rewritten (var/function for compatibility), 4 blocks removed from PDP FAQ, expanded answers.
+- **Cross-site:** Trust bar canonical copy (sentence case), em-dash → hyphen standardization in all template JSON, 4 new icons (instagram, facebook, circle-check, circle-x).
+- **About page:** Hero bg set to brand, Polish-first defaults, values section kicker/heading added, final CTA with secondary link.
+- **Returns page:** Sentence case, InPost mention, simpler CTA.
+- **Documentation:** Product metafields reference, product setup checklist, product catalog docs (`memory-bank/doc/products/`), spacing audit tooling (`docs/spacing-audit/`).
+- **New skills:** lusena-customer-validation (4-persona copy evaluation), lusena-legal-check (EU/UOKiK compliance), lusena-spacing-audit (automated spacing measurement).
+
+**Key files**
+- `sections/lusena-footer.liquid`, `assets/lusena-footer.css`
+- `snippets/lusena-pdp-buybox-panels.liquid`, `snippets/lusena-pdp-summary.liquid`, `snippets/lusena-pdp-sticky-atc.liquid`
+- `assets/lusena-pdp.css`, `assets/lusena-foundations.css`
+- `sections/lusena-faq.liquid`, `sections/lusena-pdp-truth-table.liquid`, `sections/lusena-pdp-feature-highlights.liquid`
+- `sections/lusena-quality-qc.liquid`, `sections/lusena-quality-origin.liquid`, `sections/lusena-quality-momme.liquid`
+- `snippets/lusena-icon.liquid`
+- `templates/product.json`, `templates/page.nasza-jakosc.json`, `templates/page.o-nas.json`, `templates/page.zwroty.json`, `templates/index.json`
+
+### 57beec8 — feat(lusena): complete homepage UX audit — visual rhythm, value anchors, bundle fixes
+
+**Goal:** Two-session homepage audit covering section order, copy, visual rhythm, spacing, value anchors, and conversion flow.
+
+**What changed**
+- Background rhythm redesign: fixed same-color collisions, redesigned 9-section bg sequence.
+- Bundle card fixes: removed placeholder prices, fixed button centering, equalized card heights.
+- Value anchor on bestseller cards: per-night price computation via `show_value_anchor` param.
+- Newsletter removed from homepage (footer handles it), replaced by `lusena-final-cta`.
+- Reusable page-audit skill created.
+
+**Key files**
+- `templates/index.json`, `sections/lusena-bundles.liquid`, `assets/lusena-bundles.css`
+- `snippets/lusena-product-card.liquid`, `sections/lusena-bestsellers.liquid`
+
+### 29fc700 — chore(lusena): polish blog/article, trust-bar animations, breadcrumb fixes + repo cleanup
+
+### cbeba1a — feat(lusena): migrate system pages (Batch 2) + polish blog/article (Batch 6)
+
+### 160e283 — feat(lusena): migrate blog + article pages (Batch 6)
+
+### a874dde — feat(lusena): migrate search page (Batch 5) + cart page (Batch 1) + Batch 4 cleanup
+
+### 652d4ba — refactor(lusena): complete CSS foundations migration — Phase 2 + Phase 3
+
+### 6e02637 — refactor(lusena): complete Phase 1 CSS migration — homepage sections + bug fixes
+
+### 41e8ccc — refactor(lusena): restructure docs into memory bank + compact CLAUDE.md
 
 **Goal:** Reduce per-session context overhead (~19k tokens freed) by extracting generic reference material from CLAUDE.md into layered documentation, and create a persistent memory bank for cross-session project continuity.
 
 **What changed**
-- Rewrote CLAUDE.md from 1,541 lines (~52KB) to 105 lines (~5KB): now contains only memory bank instructions, project identity, key conventions, and reference doc pointers.
-- Created `memory-bank/` with 18 files: 6 core context files (projectbrief, productContext, systemPatterns, techContext, activeContext, progress), 8 feature docs (homepage, PDP, collection, quality, returns, about + 2 migration backlogs), 3 pattern docs (brand-tokens, spacing-system, css-architecture), and 1 changelog (moved from docs/).
-- Extracted 4 reference docs into `docs/reference/` from old CLAUDE.md content: liquid-syntax, theme-architecture, translation-standards, code-examples.
-- Updated 3 skills (lusena-theme-changelog, lusena-v2-page-migration, lusena-draftshop-fragment-parity) with new paths; mirrored to .agent/ and .codex/.
+- Rewrote CLAUDE.md from 1,541 lines (~52KB) to 105 lines (~5KB).
+- Created `memory-bank/` with 18 files.
+- Extracted 4 reference docs into `docs/reference/`.
+- Updated 3 skills with new paths; mirrored to .agent/ and .codex/.
 - Added git pre-commit hook to auto-sync CLAUDE.md → AGENTS.md + copilot-instructions.md.
-- Updated .shopifyignore with memory-bank/* and scripts/*.
-
-**Key files**
-- `CLAUDE.md` (rewritten)
-- `AGENTS.md`, `copilot-instructions.md` (synced copies)
-- `memory-bank/` (18 new files)
-- `docs/reference/` (4 new files)
-- `.claude/skills/lusena-theme-changelog/SKILL.md`
-- `.claude/skills/lusena-v2-page-migration/SKILL.md`
-- `.claude/skills/lusena-draftshop-fragment-parity/SKILL.md`
-- `scripts/pre-commit`, `scripts/install-hooks.sh`
-- `.shopifyignore`
 
 ### 7087015 — feat(lusena): migrate quality/about/returns pages and extend PDP v2 proof blocks
 
@@ -237,7 +279,17 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v2.md` (local path: 
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-02-28 — (current) — refactor(lusena): restructure docs into memory bank + compact CLAUDE.md
+- 2026-03-09 — (current) — Footer redesign, PDP polish, quality/FAQ/trust-bar refinements
+- 2026-03-08 — 57beec8 — feat(lusena): complete homepage UX audit — visual rhythm, value anchors, bundle fixes
+- 2026-03-06 — 29fc700 — chore(lusena): polish blog/article, trust-bar animations, breadcrumb fixes + repo cleanup
+- 2026-03-06 — cbeba1a — feat(lusena): migrate system pages (Batch 2) + polish blog/article (Batch 6)
+- 2026-03-06 — 160e283 — feat(lusena): migrate blog + article pages (Batch 6)
+- 2026-03-05 — a874dde — feat(lusena): migrate search page (Batch 5) + cart page (Batch 1) + Batch 4 cleanup
+- 2026-03-04 — 652d4ba — refactor(lusena): complete CSS foundations migration — Phase 2 + Phase 3
+- 2026-03-04 — 6e02637 — refactor(lusena): complete Phase 1 CSS migration — homepage sections + bug fixes
+- 2026-03-03 — e979668 — docs: update memory bank and CLAUDE.md for CSS foundations migration
+- 2026-03-03 — e26bee2 — feat(lusena): add CSS foundations file and designer brief
+- 2026-02-28 — 41e8ccc — refactor(lusena): restructure docs into memory bank + compact CLAUDE.md
 - 2026-02-28T09:33:32+01:00 — 7087015 — feat(lusena): migrate quality/about/returns pages and extend PDP v2 proof blocks
 - 2026-02-22T17:01:40+01:00 — 9def2eb — feat(lusena): migrate homepage v2 copy and add newsletter capture
 - 2026-02-22T14:43:58+01:00 — 567ef16 — feat(lusena): refine spacing system and refresh PDP + brandbook docs

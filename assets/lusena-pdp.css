@@ -35,21 +35,21 @@
 
 .lusena-pdp .lusena-pdp-buy-box__atc {
   order: 5;
-  margin-top: 2rem;
+  margin-top: 1.6rem;
 }
 
 .lusena-pdp .lusena-pdp-buy-box__guarantee {
   order: 6;
-  margin-top: 1.2rem;
+  margin-top: 0.8rem;
 }
 
 .lusena-pdp .lusena-pdp-buy-box__payment {
   order: 7;
-  margin-top: 1.2rem;
+  margin-top: 0.8rem;
 }
 
 .lusena-pdp .lusena-pdp-buy-box__proof {
-  order: 8;
+  order: 2;
   margin-top: 1.6rem;
 }
 
@@ -62,6 +62,11 @@
   margin-top: 2.4rem;
   border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
   padding-top: 2rem;
+}
+
+.lusena-pdp .lusena-pdp-buy-box__benefits-list {
+  padding-left: 0;
+  list-style: none;
 }
 
 .lusena-pdp .lusena-pdp-buy-box__benefits-list > :not([hidden]) ~ :not([hidden]) {
@@ -148,7 +153,7 @@
   color: var(--lusena-text-2);
   opacity: 1;
   transform: translateY(0);
-  padding-bottom: 1.6rem;
+  padding-bottom: var(--lusena-space-3);
   padding-top: 0;
 }
 
@@ -173,6 +178,9 @@
     transform: none !important;
   }
 }
+
+.lusena-pdp-accordion__body > :first-child { margin-top: 0; }
+.lusena-pdp-accordion__body > :last-child { margin-bottom: 0; }
 
 .lusena-pdp-accordion__body p {
   margin: 0;
@@ -207,6 +215,7 @@
 
 .lusena-pdp .lusena-pdp-summary__title {
   margin-top: 0.4rem;
+  margin-bottom: 0;
   font-size: 2.4rem;
   line-height: 3.2rem;
 }
@@ -221,12 +230,12 @@
 
 /* Summary price-wrap gap: replaces mt-3 md:mt-6 */
 .lusena-pdp .lusena-pdp-buy-box__summary [data-lusena-price-wrap] {
-  margin-top: 1.2rem;
+  margin-top: 0.8rem;
 }
 
 /* Summary delivery gap: replaces mt-4 md:mt-5 */
 .lusena-pdp .lusena-pdp-summary__delivery {
-  margin-top: 1.6rem;
+  margin-top: 0.8rem;
   display: flex;
   justify-content: flex-start;
 }
@@ -236,6 +245,7 @@
   align-items: center;
   justify-content: flex-start;
   gap: 0.8rem;
+  margin: 0;
   width: 100%;
   max-width: 100%;
   text-align: left;
@@ -420,7 +430,7 @@
 
   .lusena-pdp .lusena-pdp-buy-box__proof {
     order: 4;
-    margin-top: 2rem;
+    margin-top: 1.6rem;
   }
 
   .lusena-pdp .lusena-pdp-buy-box__desktop-divider {
@@ -428,17 +438,17 @@
     order: 5;
     height: 1px;
     background: color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
-    margin-top: 2rem;
+    margin-top: 1.6rem;
   }
 
   .lusena-pdp .lusena-pdp-buy-box__variant {
     order: 6;
-    margin-top: 2rem;
+    margin-top: 1.6rem;
   }
 
   .lusena-pdp .lusena-pdp-buy-box__atc {
     order: 7;
-    margin-top: 2rem;
+    margin-top: 1.6rem;
   }
 
   .lusena-pdp .lusena-pdp-buy-box__guarantee {
@@ -471,17 +481,18 @@
 
   .lusena-pdp .lusena-pdp-summary__title {
     margin-top: 0.8rem;
+    margin-bottom: 0;
     font-size: 4rem;
     line-height: 4.8rem;
   }
 
-  /* Desktop summary spacing: price-wrap mt-6 → 2.4rem, delivery mt-5 → 2rem */
+  /* Desktop summary spacing: price-wrap + delivery tightened for conversion focus */
   .lusena-pdp .lusena-pdp-buy-box__summary [data-lusena-price-wrap] {
-    margin-top: 2.4rem;
+    margin-top: 1.6rem;
   }
 
   .lusena-pdp .lusena-pdp-summary__delivery {
-    margin-top: 2rem;
+    margin-top: 0.8rem;
   }
 }
 
@@ -515,7 +526,7 @@
   display: block;
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (min-width: 768px) {
   .lusena-pdp .lusena-gallery__desktop {
     display: block;
   }
@@ -995,7 +1006,7 @@
   display: inline;
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (min-width: 768px) {
   .lusena-lightbox.is-over-image .lusena-lightbox__viewport {
     cursor: zoom-in;
   }
@@ -1064,6 +1075,7 @@
 
 .lusena-pdp .lusena-pdp-summary__tagline {
   display: none;
+  margin: 0;
   color: var(--lusena-text-2);
   font-size: 1.4rem;
   line-height: 2rem;
@@ -1248,6 +1260,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.8rem;
+  margin: 0;
   padding: 0.8rem 1.2rem;
   background: color-mix(in srgb, var(--lusena-brand-bg) 50%, transparent);
   border: 1px solid var(--lusena-brand-bg);
@@ -1261,12 +1274,8 @@
   flex-shrink: 0;
 }
 
-.lusena-pdp .lusena-pdp-guarantee__icon svg {
-  width: 1.6rem;
-  height: 1.6rem;
-}
-
 .lusena-pdp .lusena-pdp-guarantee__text {
+  margin: 0;
   font-size: 1.2rem;
   line-height: 1.6rem;
   color: var(--lusena-text-2);
@@ -1297,6 +1306,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.8rem;
+  margin-top: 0.8rem;
   font-size: 1.2rem;
   line-height: 1.6rem;
   color: var(--lusena-text-2);
@@ -1324,6 +1334,11 @@
 /* ── Buybox accordion visual styles (1h) ── */
 .lusena-pdp .lusena-pdp-accordion__item {
   border-bottom: 1px solid var(--lusena-color-n200);
+}
+
+.lusena-pdp .lusena-pdp-accordion__item:last-child {
+  border-bottom: 1px solid var(--lusena-color-n200);
+  margin-bottom: var(--lusena-space-4);
 }
 
 .lusena-pdp .lusena-pdp-accordion__trigger {
@@ -1417,6 +1432,8 @@
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  padding-left: 0;
+  list-style: none;
   color: color-mix(in srgb, var(--lusena-text-2) 80%, transparent);
 }
 

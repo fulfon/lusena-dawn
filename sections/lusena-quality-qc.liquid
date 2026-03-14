@@ -1,3 +1,5 @@
+{%- assign known_icons = 'sparkles,shield-check,package,truck,layers,star,clock' | split: ',' -%}
+
 {%- liquid
   assign override_style = ''
   if section.settings.padding_top > 0
@@ -14,7 +16,7 @@
   endif
 -%}
 <section
-  class="lusena-bg-brand lusena-text-center lusena-quality-qc lusena-spacing--standard"
+  class="lusena-bg-surface-2 lusena-text-center lusena-quality-qc lusena-spacing--standard"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
@@ -34,7 +36,13 @@
                   {{ section.settings.qc_highlight_badge | escape }}
                 </div>
               {%- endif -%}
-              <div class="lusena-quality-qc__icon">{{ block.settings.icon }}</div>
+              <div class="lusena-quality-qc__icon">
+                {%- if known_icons contains block.settings.icon -%}
+                  {% render 'lusena-icon', name: block.settings.icon, class: 'lusena-quality-qc__icon-svg', stroke_width: 1.5 %}
+                {%- else -%}
+                  <span class="lusena-quality-qc__icon-fallback" aria-hidden="true">{{ block.settings.icon }}</span>
+                {%- endif -%}
+              </div>
               <h3 class="lusena-quality-qc__title">{{ block.settings.title | escape }}</h3>
               <p class="lusena-quality-qc__text">{{ block.settings.text | escape }}</p>
             </div>
@@ -97,12 +105,29 @@
   /* Icon */
   .lusena-quality-qc__icon {
     font-size: 3.6rem;
+    line-height: 1;
+  }
+
+  .lusena-quality-qc__icon-svg {
+    width: 3.2rem;
+    height: 3.2rem;
+    color: var(--lusena-accent-2);
+  }
+
+  .lusena-quality-qc__icon-fallback {
+    display: block;
   }
 
   /* Card title */
   .lusena-quality-qc__title {
     font-family: var(--lusena-font-brand);
     font-size: 2.0rem;
+    margin-bottom: 0;
+  }
+
+  /* Prevent badge (position:absolute) from affecting content-flow :first-child */
+  .lusena-quality-qc .lusena-quality-qc__card--highlight > .lusena-quality-qc__icon {
+    margin-top: 0;
   }
 
   /* Card description text */
@@ -183,8 +208,8 @@
         {
           "type": "text",
           "id": "icon",
-          "label": "Icon (emoji)",
-          "default": "🇨🇳"
+          "label": "Icon name or emoji",
+          "default": "sparkles"
         },
         {
           "type": "text",
@@ -214,7 +239,7 @@
         {
           "type": "qc_step",
           "settings": {
-            "icon": "🇨🇳",
+            "icon": "sparkles",
             "title": "Produkcja",
             "text": "Precyzyjne szycie w specjalistycznej manufakturze w Suzhou.",
             "highlight": false
@@ -223,7 +248,7 @@
         {
           "type": "qc_step",
           "settings": {
-            "icon": "🇵🇱",
+            "icon": "shield-check",
             "title": "Kontrola w Polsce",
             "text": "Każda sztuka jest ręcznie sprawdzana i prasowana w naszym magazynie pod Warszawą.",
             "highlight": true
@@ -232,9 +257,9 @@
         {
           "type": "qc_step",
           "settings": {
-            "icon": "📦",
+            "icon": "package",
             "title": "Wysyłka 24h",
-            "text": "Estetyczne pakowanie \"prezentowe\" i natychmiastowa wysyłka do Ciebie.",
+            "text": "Estetyczne, prezentowe pakowanie i natychmiastowa wysyłka do Ciebie.",
             "highlight": false
           }
         }

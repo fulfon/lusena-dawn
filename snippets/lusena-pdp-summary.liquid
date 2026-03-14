@@ -5,12 +5,43 @@
   @param {variant} current_variant
   @param {section} section
   @param {number} price_per_night_cents
+
+  Per-product metafield overrides (fallback to section settings):
+  - product.metafields.lusena.pdp_emotional_headline
+  - product.metafields.lusena.pdp_tagline
+  - product.metafields.lusena.pdp_show_price_per_night (boolean, default true)
 {% enddoc %}
 
+{%- liquid
+  assign resolved_headline = section.settings.emotional_headline
+  if product != blank
+    assign mf_headline = product.metafields.lusena.pdp_emotional_headline
+    if mf_headline != blank and mf_headline.value != blank
+      assign resolved_headline = mf_headline.value
+    endif
+  endif
+
+  assign resolved_tagline = section.settings.tagline
+  if product != blank
+    assign mf_tagline = product.metafields.lusena.pdp_tagline
+    if mf_tagline != blank and mf_tagline.value != blank
+      assign resolved_tagline = mf_tagline.value
+    endif
+  endif
+
+  assign show_per_night = true
+  if product != blank
+    assign mf_per_night = product.metafields.lusena.pdp_show_price_per_night
+    if mf_per_night != blank and mf_per_night.value == false
+      assign show_per_night = false
+    endif
+  endif
+-%}
+
 <div class="lusena-pdp-summary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-  {%- if section.settings.emotional_headline != blank -%}
+  {%- if resolved_headline != blank -%}
     <span class="lusena-pdp-summary__eyebrow">
-      {{ section.settings.emotional_headline | escape }}
+      {{ resolved_headline | escape }}
     </span>
   {%- endif -%}
 
@@ -18,9 +49,9 @@
     {{ product.title | escape }}
   </h1>
 
-  {%- if section.settings.tagline != blank -%}
+  {%- if resolved_tagline != blank -%}
     <p class="lusena-pdp-summary__tagline">
-      {{ section.settings.tagline | escape }}
+      {{ resolved_tagline | escape }}
     </p>
   {%- endif -%}
 
@@ -37,16 +68,18 @@
         <span class="lusena-pdp-summary__compare-at hidden" data-lusena-compare-at></span>
       {%- endif -%}
     </div>
-    <span
-      class="lusena-pdp-summary__per-night"
-      data-lusena-price-per-night
-      data-prefix="{{ section.settings.price_per_night_prefix | escape }}"
-      data-suffix="{{ section.settings.price_per_night_suffix | escape }}"
-    >
-      {{ section.settings.price_per_night_prefix | escape }}
-      {{ price_per_night_cents | money_without_trailing_zeros }}
-      {{ section.settings.price_per_night_suffix | escape }}
-    </span>
+    {%- if show_per_night -%}
+      <span
+        class="lusena-pdp-summary__per-night"
+        data-lusena-price-per-night
+        data-prefix="{{ section.settings.price_per_night_prefix | escape }}"
+        data-suffix="{{ section.settings.price_per_night_suffix | escape }}"
+      >
+        {{ section.settings.price_per_night_prefix | escape }}
+        {{ price_per_night_cents | money_without_trailing_zeros }}
+        {{ section.settings.price_per_night_suffix | escape }}
+      </span>
+    {%- endif -%}
   </div>
 
   {%- liquid

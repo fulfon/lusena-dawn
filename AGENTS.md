@@ -13,6 +13,8 @@ Your memory resets every session. This project uses a persistent memory bank for
 - `memory-bank/productContext.md` — store pages, customer journey, UX goals
 - `memory-bank/systemPatterns.md` — CSS architecture, spacing, naming conventions
 - `memory-bank/techContext.md` — file paths, dev tools, skills, known warnings
+- `memory-bank/doc/products/README.md` — product catalog index, store-wide settings (currency, tax, shipping)
+- `memory-bank/doc/products/{handle}.md` — per-product Shopify admin data (metafields, pricing, variants, SEO, status)
 
 **After completing substantial work, update:**
 - `memory-bank/activeContext.md` — what changed, new decisions, shifted next steps
@@ -40,6 +42,8 @@ Dawn's original sections remain in the repo but are NOT used on the live storefr
 - **Spacing system:** `memory-bank/doc/patterns/spacing-system.md`
 - **CSS architecture:** `memory-bank/doc/patterns/css-architecture.md`
 - **Migration lessons (read before migrating pages):** `memory-bank/doc/patterns/migration-lessons.md`
+- **Product catalog (Shopify admin data):** `memory-bank/doc/products/` — per-product metafields, pricing, variants, SEO
+- **Product setup checklist:** `docs/product-setup-checklist.md` — metafield definitions, example values per product type
 
 ### CSS architecture
 
@@ -101,6 +105,7 @@ The `/playwright-cli` skill is the **only** way to interact with the browser. Us
 
 **CRITICAL RULES:**
 - **ALWAYS use the `/playwright-cli` skill** — NEVER use Playwright MCP browser tools directly (`browser_navigate`, `browser_snapshot`, `browser_click`, etc.). The MCP tools bypass the project workflow.
+- **ALWAYS use a named session** with `-s=<unique-name>` to isolate your browser from other concurrent Claude Code instances. Multiple instances share the default browser and will navigate each other's pages, causing failures. **Each instance MUST pick a DIFFERENT name** — use the specific page or feature you're working on (e.g., `-s=pdp-fix`, `-s=homepage-check`, `-s=about-migrate`, `-s=cart-debug`). NEVER use generic names like `-s=audit` or `-s=test` — another instance will pick the same name. Example: `playwright-cli -s=quality-spacing open http://...`
 - When not sure about a UI/layout issue, use `/playwright-cli` — don't guess.
 - Dev server: `http://127.0.0.1:9292/` (start with `shopify theme dev` if not running).
 

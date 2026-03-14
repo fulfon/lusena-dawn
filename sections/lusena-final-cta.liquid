@@ -19,7 +19,7 @@
   endif
 -%}
 <section
-  class="{% unless section.settings.transparent_bg %}lusena-bg-brand {% endunless %}lusena-final-cta lusena-spacing--standard"
+  class="{% unless section.settings.transparent_bg %}lusena-bg-brand {% endunless %}lusena-final-cta lusena-spacing--spacious"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
@@ -66,12 +66,6 @@
     gap: var(--lusena-space-2);
   }
 
-  @media (min-width: 768px) {
-    .lusena-final-cta__actions {
-      flex-direction: row;
-      justify-content: center;
-    }
-  }
 
   /* Secondary link */
   .lusena-final-cta__secondary-link {

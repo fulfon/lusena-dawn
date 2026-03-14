@@ -12,7 +12,7 @@
         "subheading": {
           "type": "subheading",
           "settings": {
-            "text": "8 godzin jedwabnej pielęgnacji — każdej nocy. Obudź się piękniejsza."
+            "text": "8 godzin jedwabnej pielęgnacji - każdej nocy. Obudź się piękniejsza."
           }
         },
         "buttons": {
@@ -55,7 +55,7 @@
           "settings": {
             "icon": "layers",
             "title": "22 momme jedwab",
-            "subtitle": "Gęstszy splot, dłuższa trwałość"
+            "subtitle": "Gęstszy i trwalszy"
           }
         },
         "item-1": {
@@ -98,7 +98,7 @@
           "type": "problem_item",
           "settings": {
             "title": "Tarcie tworzy zagniecenia",
-            "text": "Włókna bawełny działają jak rzep na poziomie mikro — ciągną delikatną skórę twarzy i tworzą odciski senne."
+            "text": "Włókna bawełny działają jak rzep na poziomie mikro - ciągną delikatną skórę twarzy i tworzą odciski senne."
           }
         },
         "problem-1": {
@@ -119,7 +119,7 @@
           "type": "solution_item",
           "settings": {
             "title": "Zatrzymuje nawilżenie",
-            "text": "Białka jedwabiu są podobne do ludzkiej skóry. Odpychają roztocza i utrzymują nawilżenie tam, gdzie jego miejsce — w Twojej skórze."
+            "text": "Białka jedwabiu są podobne do ludzkiej skóry. Odpychają roztocza i utrzymują nawilżenie tam, gdzie jego miejsce - w Twojej skórze."
           }
         }
       },
@@ -170,7 +170,7 @@
           "type": "review",
           "settings": {
             "author": "Karolina P.",
-            "quote": "Piękne opakowanie — kupiłam dla siebie i od razu zamówiłam dwa kolejne na prezent dla sióstr."
+            "quote": "Piękne opakowanie - kupiłam dla siebie i od razu zamówiłam dwa kolejne na prezent dla sióstr."
           }
         }
       },
@@ -253,7 +253,7 @@
           "settings": {
             "icon": "package",
             "title": "Bezpośrednia współpraca",
-            "subtitle": "Od manufaktury do Twojej sypialni — bez pośredników"
+            "subtitle": "Od manufaktury do Twojej sypialni - bez pośredników"
           }
         },
         "tile-2": {
@@ -271,7 +271,7 @@
         "tile-2"
       ],
       "settings": {
-        "heading": "Z Suzhou — Stolicy Jedwabiu od XV wieku",
+        "heading": "Z Suzhou - Stolicy Jedwabiu od XV wieku",
         "button_label": "Poznaj naszą historię →",
         "button_link": "shopify://pages/o-nas"
       }
@@ -283,14 +283,14 @@
           "type": "item",
           "settings": {
             "question": "Czy to prawdziwy jedwab?",
-            "answer": "<p>Tak. Używamy wyłącznie 100% jedwabiu morwowego klasy 6A o gramaturze 22 momme. To najwyższa dostępna klasa, gwarantująca trwałość i wyjątkową gładkość w dotyku.</p>"
+            "answer": "<p>Tak. Używamy wyłącznie 100% jedwabiu morwowego klasy 6A o gramaturze 22 momme. To najwyższa dostępna klasa, gwarantująca trwałość i wyjątkową gładkość w dotyku.</p><p><a href=\"/pages/nasza-jakosc\">Zobacz dowody jakości →</a></p>"
           }
         },
         "item-1": {
           "type": "item",
           "settings": {
             "question": "Dlaczego jedwab z Chin?",
-            "answer": "<p>Nasz jedwab pochodzi z Shengze w prowincji Jiangsu — jednej z Czterech Wielkich Stolic Jedwabiu Chin, gdzie tradycja tkacka sięga dynastii Ming (XV wiek). Współpracujemy bezpośrednio z manufakturą, a każda partia przechodzi polską kontrolę jakości przed wysyłką.</p>"
+            "answer": "<p>Nasz jedwab pochodzi z Shengze w prowincji Jiangsu - jednej z Czterech Wielkich Stolic Jedwabiu Chin, gdzie tradycja tkacka sięga dynastii Ming (XV wiek). Współpracujemy bezpośrednio z manufakturą, a każda partia przechodzi polską kontrolę jakości przed wysyłką.</p><p><a href=\"/pages/o-nas\">Poznaj naszą historię →</a></p>"
           }
         },
         "item-2": {
@@ -304,14 +304,14 @@
           "type": "item",
           "settings": {
             "question": "Czy 60 dni gwarancji to serio?",
-            "answer": "<p>Jak najbardziej. Oferujemy 60 nocy testu — śpij na jedwabiu przez dwa miesiące. Jeśli nie poczujesz różnicy na skórze i włosach, zwróć produkt, nawet używany. Oddajemy pieniądze bez zbędnych pytań.</p>"
+            "answer": "<p>Jak najbardziej. Oferujemy 60 nocy testu - śpij na jedwabiu przez dwa miesiące. Jeśli nie poczujesz różnicy na skórze i włosach, zwróć produkt, nawet używany. Oddajemy pieniądze bez zbędnych pytań.</p><p><a href=\"/pages/zwroty\">Szczegóły zwrotów →</a></p>"
           }
         },
         "item-4": {
           "type": "item",
           "settings": {
             "question": "Od czego zacząć swoją rutynę?",
-            "answer": "<p>Większość klientek zaczyna od jedwabnej poszewki — to fundament nocnej rutyny. Następnie dodają jedwabny czepek na noc (bonnet) do ochrony włosów i jedwabną gumkę (scrunchie) na dzień. Każdy produkt możesz kupić osobno lub w zestawie.</p>"
+            "answer": "<p>Większość klientek zaczyna od jedwabnej poszewki - to fundament nocnej rutyny. Następnie dodają jedwabny czepek na noc (bonnet) do ochrony włosów i jedwabną gumkę (scrunchie) na dzień. Każdy produkt możesz kupić osobno lub w zestawie.</p>"
           }
         }
       },

@@ -302,7 +302,7 @@
       "note": "Specjalne instrukcje do zamówienia",
       "checkout": "Realizuj zakup",
       "empty": "Twój koszyk jest pusty",
-      "cart_error": "Nie udało się zaktualizować koszyka. Twoje produkty są bezpieczne — spróbuj ponownie.",
+      "cart_error": "Nie udało się zaktualizować koszyka. Twoje produkty są bezpieczne - spróbuj ponownie.",
       "cart_quantity_error_html": "Możesz dodać do koszyka tylko {{ quantity }} sztuk(i) tej pozycji.",
       "update": "Aktualizuj",
       "headings": {

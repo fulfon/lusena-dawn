@@ -19,7 +19,7 @@
     style="{{ override_style }}"
   {% endif %}
 >
-  <div class="lusena-container lusena-returns-final-cta__container lusena-content-flow">
+  <div class="lusena-container lusena-returns-final-cta__container lusena-content-flow--relaxed">
     <div class="lusena-returns-final-cta__icon-wrap{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
       {% render 'lusena-icon', name: 'clock', class: 'lusena-returns-final-cta__icon', stroke_width: 1.5 %}
     </div>
@@ -109,12 +109,6 @@
     gap: 1.6rem;
   }
 
-  @media (min-width: 640px) {
-    .lusena-returns-final-cta__actions {
-      flex-direction: row;
-    }
-  }
-
   /* Primary button — inverted: white bg, teal text */
   .lusena-returns-final-cta .lusena-returns-final-cta__primary {
     background-color: #fff;
@@ -126,21 +120,21 @@
     background-color: rgb(255 255 255 / 0.9);
   }
 
-  /* Secondary link — white translucent */
+  /* Secondary link — white, underlined */
   .lusena-returns-final-cta__secondary-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.2rem 2.4rem;
     font-size: 1.4rem;
-    font-weight: 400;
-    color: rgb(255 255 255 / 0.8);
-    border-radius: var(--lusena-btn-radius);
+    font-weight: 500;
+    color: rgb(255 255 255 / 0.85);
+    text-decoration: underline;
+    text-underline-offset: 0.4rem;
     transition: color var(--lusena-transition-med);
   }
 
-  .lusena-returns-final-cta__secondary-link:hover {
-    color: #fff;
+  @media (hover: hover) {
+    .lusena-returns-final-cta__secondary-link:hover {
+      color: #fff;
+      text-decoration: none;
+    }
   }
 {% endstylesheet %}
 
@@ -209,7 +203,7 @@
       "type": "textarea",
       "id": "body",
       "label": "Body",
-      "default": "Dołącz do tysięcy kobiet, które obudziły się piękniejsze. Bez ryzyka, bez zobowiązań — jedynie piękniejsze poranki."
+      "default": "Dołącz do tysięcy kobiet, które obudziły się piękniejsze. Bez ryzyka, bez zobowiązań - jedynie piękniejsze poranki."
     },
     {
       "type": "text",

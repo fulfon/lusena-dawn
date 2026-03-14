@@ -45,13 +45,13 @@ Utility classes: `.lusena-bg-brand`, `.lusena-bg-surface-1`, `.lusena-bg-surface
 
 **Semantic type classes (from `lusena-foundations.css`):**
 
-| Class | Mobile | Desktop | Usage |
+| Class | Mobile (size / line) | Desktop (size / line) | Usage |
 |-------|--------|---------|-------|
-| `.lusena-type-hero` | 4.8rem / 4.8rem | 9.6rem / 9.6rem | Hero headlines |
-| `.lusena-type-h1` | 3.2rem / 4rem | 4.8rem / 5.6rem | Page/section headings |
-| `.lusena-type-h2` | 2.4rem / 3.2rem | 3.2rem / 4rem | Subheadings |
+| `.lusena-type-hero` | 4.0rem / 4.8rem | 5.6rem / 6.4rem | Hero headlines |
+| `.lusena-type-h1` | 3.2rem / 4.0rem | 4.0rem / 4.8rem | Page/section headings |
+| `.lusena-type-h2` | 2.0rem / 2.4rem | 2.4rem / 3.2rem | Subheadings |
 | `.lusena-type-body` | 1.6rem / 2.4rem | 1.6rem / 2.4rem | Body text |
-| `.lusena-type-small` | 1.4rem / 2rem | 1.4rem / 2rem | Captions, metadata |
+| `.lusena-type-caption` | 1.2rem / 1.6rem | 1.2rem / 1.6rem | Captions, metadata |
 
 **Rule:** Use `lusena-type-*` classes for all typography. All values follow the 8px baseline grid.
 

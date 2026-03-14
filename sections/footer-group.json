@@ -6,12 +6,14 @@
       "type": "lusena-footer",
       "settings": {
         "brand_heading": "LUSENA",
-        "brand_text": "<p>22 momme silk from Suzhou. Certified OEKO-TEX 100.<br>Sleep better, wake up beautiful.</p>",
-        "shop_heading": "Shop",
-        "help_heading": "Help",
-        "newsletter_heading": "Newsletter",
-        "newsletter_text": "Join the circle for early access and care tips.",
-        "newsletter_button_label": "Sign up"
+        "brand_text": "<p>Jedwab 22 momme z Suzhou.<br>Certyfikat OEKO-TEX 100.<br><em>Lepszy sen, piękniejszy poranek.</em></p>",
+        "shop_heading": "Sklep",
+        "help_heading": "Pomoc",
+        "newsletter_heading": "-10% na start",
+        "newsletter_text": "Zapisz się i odbierz kod rabatowy na pierwsze zamówienie.",
+        "newsletter_button_label": "Zapisz się",
+        "newsletter_success": "Dziękujemy! Sprawdź swoją skrzynkę email.",
+        "show_payment_icons": true
       }
     }
   },

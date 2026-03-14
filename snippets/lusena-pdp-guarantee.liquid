@@ -4,11 +4,13 @@
   @param {section} section
 {% enddoc %}
 
-        <div class="lusena-pdp-guarantee__box{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-          <span class="lusena-pdp-guarantee__icon">
-            {% render 'lusena-icon', name: 'shield-check', stroke_width: 1.5 %}
-          </span>
-          <p class="lusena-pdp-guarantee__text">
+        <p class="lusena-pdp-guarantee__box{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {% render 'lusena-icon',
+            name: 'shield-check',
+            class: 'lusena-pdp-guarantee__icon',
+            stroke_width: 1.5
+          %}
+          <span class="lusena-pdp-guarantee__text">
             <span class="lusena-pdp-guarantee__heading">{{ section.settings.guarantee_heading | escape }}</span>
             &middot;
             <a
@@ -18,5 +20,5 @@
             >
               {{ section.settings.guarantee_link_label | escape }}
             </a>
-          </p>
-        </div>
+          </span>
+        </p>

@@ -1,0 +1,52 @@
+{
+  "$schema": "../spec-schema.md",
+  "page": "o-nas",
+  "url": "/pages/o-nas",
+  "viewport": { "width": 390, "height": 844 },
+  "tolerancePx": 4,
+  "notes": "Mobile about page spec. Hero uses snug-top modifier (32px top, 80px bottom). Split layout stacks vertically with 32px gap.",
+
+  "sectionGaps": [
+    { "between": ["about_hero", "trust"], "expectedGapPx": 0 },
+    { "between": ["trust", "about_story"], "expectedGapPx": 0 },
+    { "between": ["about_story", "about_values"], "expectedGapPx": 0 },
+    { "between": ["about_values", "final_cta"], "expectedGapPx": 0 }
+  ],
+
+  "sections": {
+    "about_hero": {
+      "matchClass": "lusena-about-hero",
+      "expectedPaddingTop": 32,
+      "expectedPaddingBottom": 80,
+      "note": "lusena-spacing--hero + lusena-spacing--snug-top mobile: 32px top, 80px bottom"
+    },
+
+    "trust": {
+      "matchClass": "lusena-section-gap-different",
+      "expectedPaddingTop": 0,
+      "expectedPaddingBottom": 0,
+      "note": "Trust bar — internal padding only"
+    },
+
+    "about_story": {
+      "matchClass": "lusena-about-story",
+      "expectedPaddingTop": 64,
+      "expectedPaddingBottom": 64,
+      "note": "lusena-spacing--spacious mobile: 64px top/bottom"
+    },
+
+    "about_values": {
+      "matchClass": "lusena-about-values",
+      "expectedPaddingTop": 48,
+      "expectedPaddingBottom": 48,
+      "note": "lusena-spacing--standard mobile: 48px top/bottom"
+    },
+
+    "final_cta": {
+      "matchClass": "lusena-final-cta",
+      "expectedPaddingTop": 64,
+      "expectedPaddingBottom": 64,
+      "note": "lusena-spacing--spacious mobile: 64px top/bottom"
+    }
+  }
+}

@@ -110,6 +110,14 @@
         {{ footer_note | escape }}
       </p>
     {%- endif -%}
+
+    {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+      <div class="lusena-text-center lusena-gap-cta-top{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <a href="{{ section.settings.cta_link }}" class="lusena-btn lusena-btn--primary lusena-btn--size-default">
+          {{ section.settings.cta_label | escape }}
+        </a>
+      </div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -254,15 +262,15 @@
           "type": "row",
           "settings": {
             "metric": "Gramatura",
-            "lusena_value": "22 momme — splot gęstszy o 30%",
-            "others_value": "16–19 momme lub brak danych"
+            "lusena_value": "22 momme - splot gęstszy o 30%",
+            "others_value": "16-19 momme lub brak danych"
           }
         },
         {
           "type": "row",
           "settings": {
             "metric": "Klasa włókna",
-            "lusena_value": "6A — najwyższa klasyfikacja",
+            "lusena_value": "6A - najwyższa klasyfikacja",
             "others_value": "Nieokreślona"
           }
         },
@@ -278,8 +286,8 @@
           "type": "row",
           "settings": {
             "metric": "Magazyn i wysyłka",
-            "lusena_value": "Polska — wysyłka 24h",
-            "others_value": "Import 14–30 dni"
+            "lusena_value": "Polska - wysyłka 24h",
+            "others_value": "Import 14-30 dni"
           }
         },
         {

@@ -17,17 +17,13 @@
 
 ### 1. Bundles section — full product-card redesign
 
-- [ ] **What:** Convert `lusena-bundles` from single image+text gift layout to a 2–3 product card grid showing Phase 1 bundles (Nocna Rutyna, Starter Kit, Scrunchie Trio) with crossed-out prices, savings badges, and tier-based priority ordering.
+- [x] **Done (2026-03-07).** Rebuilt as 3-card grid with bundle image, name, CTA. Standalone CSS extracted to `assets/lusena-bundles.css`. Price display deferred until real bundle products are configured in Shopify admin.
 - **Ref:** `LUSENA_BrandBook_v2.md:1245` (homepage item 7), `LUSENA_BrandBook_v2.md:1687` (Phase 1 bundle table).
-- **Why deferred:** Requires new card component, pricing logic, and possibly collection/product setup in Shopify admin. Scope too large for initial content pass.
-- **Acceptance:** 2–3 bundle cards rendered with: bundle image, name, original price (crossed), bundle price, savings badge ("Oszczędzasz X zł"), primary CTA. Priority order: Nocna Rutyna > Starter Kit > Scrunchie Trio.
 
 ### 2. Bestsellers — price anchors under product cards
 
-- [ ] **What:** Add value anchor text under each product card (e.g. "0,XX zł/noc" for pillowcase, "od XX zł/szt. w zestawie" for scrunchie, crossed-out + bundle price for bundles).
+- [x] **Done (2026-03-08).** Added `show_value_anchor` parameter to `lusena-product-card.liquid`. Computes per-night price (price ÷ 365), displayed in teal. Currently homepage bestsellers only.
 - **Ref:** `LUSENA_BrandBook_v2.md:1245` (homepage item 4, "kotwica wartości").
-- **Why deferred:** Requires `lusena-product-card.liquid` modification + per-product metafield or tag-based logic to show the right anchor text per product type.
-- **Acceptance:** Each bestseller card shows a small secondary line below price with the value anchor copy.
 
 ### 3. Bestsellers — tier-based display ordering
 

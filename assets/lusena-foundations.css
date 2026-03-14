@@ -304,7 +304,7 @@ textarea:focus-visible {
   }
   .lusena-spacing--hero {
     padding-top: max(var(--lusena-section-padding-top-desktop, var(--lusena-space-16)), var(--lusena-min-gap, 0rem));
-    padding-bottom: var(--lusena-section-padding-bottom-desktop, var(--lusena-space-16));
+    padding-bottom: var(--lusena-section-padding-bottom-desktop, var(--lusena-space-12));
   }
   .lusena-spacing--full-bleed {
     padding-top: max(var(--lusena-section-padding-top-desktop, 0rem), var(--lusena-min-gap, 0rem));
@@ -716,11 +716,11 @@ textarea:focus-visible {
 .lusena-truth-table__cards {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.2rem;
+  gap: 1.6rem;
 }
 
 .lusena-truth-table__card {
-  background: var(--lusena-color-n50, rgba(0, 0, 0, 0.02));
+  background: var(--lusena-surface-2);
   border-radius: 0.2rem;
   padding: 2rem;
 }
@@ -744,12 +744,12 @@ textarea:focus-visible {
 }
 
 .lusena-truth-table__card-line + .lusena-truth-table__card-line {
-  margin-top: 1.2rem;
+  margin-top: 1.6rem;
 }
 
 .lusena-truth-table__card-label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
   font-family: var(--lusena-font-ui);
   font-size: 1.4rem;
   line-height: 1.3;

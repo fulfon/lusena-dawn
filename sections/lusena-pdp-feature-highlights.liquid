@@ -25,12 +25,17 @@
     endif
   -%}
   <section
-    class="lusena-pdp-feature-highlights lusena-spacing--standard"
+    class="lusena-pdp-feature-highlights lusena-bg-{{ section.settings.bg_style | default: 'surface-1' }} lusena-spacing--standard"
     {% if override_style != blank %}
       style="{{ override_style }}"
     {% endif %}
   >
     <div class="lusena-container">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="lusena-pdp-feature-highlights__heading{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+          {{ section.settings.heading | escape }}
+        </h2>
+      {%- endif -%}
       <div
         class="lusena-pdp-feature-highlights__grid"
         {% if settings.animations_reveal_on_scroll %}
@@ -106,7 +111,23 @@
 
 {% stylesheet %}
   .lusena-pdp-feature-highlights {
-    border-top: 1px solid var(--lusena-brand-bg);
+    border-top: none;
+  }
+
+  .lusena-pdp-feature-highlights__heading {
+    margin: 0 0 var(--lusena-space-4);
+    font-family: var(--lusena-font-brand);
+    font-size: 24px;
+    line-height: 32px;
+    color: var(--lusena-text-1);
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .lusena-pdp-feature-highlights__heading {
+      font-size: 28px;
+      line-height: 36px;
+    }
   }
 
   /* Mobile-first: stacked rows with icon-left layout */
@@ -139,7 +160,7 @@
     height: 4rem;
     min-width: 4rem;
     border-radius: 9999px;
-    background-color: var(--lusena-surface-2);
+    background-color: var(--lusena-surface-1);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -181,7 +202,7 @@
     .lusena-pdp-feature-highlights__card {
       flex-direction: column;
       align-items: flex-start;
-      gap: 1.2rem;
+      gap: 1.6rem;
       text-align: left;
       padding: 0;
       border-bottom: 0;
@@ -199,7 +220,7 @@
     }
 
     .lusena-pdp-feature-highlights__description {
-      margin-top: 0;
+      margin-top: 0.4rem;
     }
   }
 
@@ -219,6 +240,23 @@
   "class": "section",
   "max_blocks": 6,
   "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Co zyskujesz"
+    },
+    {
+      "type": "select",
+      "id": "bg_style",
+      "label": "Background",
+      "default": "surface-1",
+      "options": [
+        { "value": "surface-1", "label": "White" },
+        { "value": "surface-2", "label": "Cream" },
+        { "value": "brand", "label": "Warm porcelain" }
+      ]
+    },
     {
       "type": "header",
       "content": "Spacing overrides (0 = use global default)"

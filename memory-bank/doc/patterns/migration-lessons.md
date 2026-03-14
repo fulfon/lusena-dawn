@@ -335,7 +335,7 @@ Shopify compiles ALL `{% stylesheet %}` blocks into one `compiled_assets/styles.
 
 ## 31. Browser interactions: `/playwright-cli` skill is the only tool
 
-This is a **general project rule** (documented in `CLAUDE.md` under "Browser Interactions"), not migration-specific. But it's critical during migration Phase D (visual verification): always use the `/playwright-cli` skill for ALL browser tasks. Never use Playwright MCP tools directly.
+This is a **general project rule** (documented in `CLAUDE.md` under "Browser Interactions"), not migration-specific. But it's critical during migration Phase D (visual verification): always use the `/playwright-cli` skill for ALL browser tasks. Never use Playwright MCP tools directly. **Always use `-s=<name>`** (e.g., `-s=migrate`) to isolate your browser from other concurrent Claude Code instances.
 
 ---
 
@@ -487,3 +487,35 @@ main:has(.lusena-contact-form) > .shopify-section:has(.lusena-contact-form) {
 }
 .lusena-contact-form { flex: 1; }
 ```
+
+---
+
+## Lessons from Homepage UX Audit + Cross-site Polish (2026-03-08 / 2026-03-09)
+
+## 49. Em-dash to hyphen standardization in JSON content
+
+Polish typographic convention uses em-dashes (—) for parenthetical dashes. However, Shopify JSON template values render the em-dash literally, creating inconsistency when some content uses hyphens and some uses em-dashes. Standardize all template JSON content to use a regular hyphen (-) surrounded by spaces.
+
+**Scope:** All template JSON files (`index.json`, `product.json`, `page.nasza-jakosc.json`, `page.o-nas.json`, `page.zwroty.json`). Search pattern: ` — ` (space-emdash-space) → ` - `.
+
+## 50. FAQ JS: use `var`/`function` for broadest compatibility
+
+Shopify's `{% javascript %}` blocks compile into a shared bundle where arrow functions and `const`/`let` can conflict with older browsers or strict concatenation. When JS is moved from `{% javascript %}` to inline `<script>`, use `var` and `function` declarations for maximum compatibility.
+
+**Applied:** `lusena-faq.liquid` JS rewrite (arrow functions → function expressions, `const`/`let` → `var`, optional chaining removed).
+
+## 51. Icon system: prefer lusena-icon over inline SVG and emoji
+
+When sections use inline SVG for check/x/social icons or emoji for decorative icons, centralize them in `snippets/lusena-icon.liquid`. Benefits: single source of truth, consistent sizing/stroke, easy theme-wide icon updates. Use a `known_icons` allowlist with emoji fallback for merchant-configured icon fields.
+
+**Applied:** `lusena-pdp-truth-table` (circle-check, circle-x), `lusena-quality-qc` (icon name with fallback), `lusena-footer` (instagram, facebook).
+
+## 52. Trust bar copy: sentence case and canonical across pages
+
+Trust bar blocks appear on homepage, about, and quality pages. When updating copy (like fixing "30%"), update ALL instances in their respective template JSON files. Use sentence case for subtitles ("Gęstszy i trwalszy" not "30% gęstszy splot").
+
+## 53. Returns deep-link: click `<summary>`, not set `.open` attribute
+
+Setting `details.open = true` programmatically does not trigger the transition animation and can leave the `<details>` element in an inconsistent state. Instead, dispatch a click event on the `<summary>` element, which triggers the normal open/close flow including animations.
+
+**Applied:** `lusena-pdp-scripts.liquid` returns link handler.

@@ -1673,7 +1673,12 @@
 
       if (returnsAccordion instanceof HTMLElement) {
         if (returnsAccordion instanceof HTMLDetailsElement) {
-          returnsAccordion.open = true;
+          // Trigger the FAQ section's own open logic (which manages height animation)
+          // by clicking the summary, rather than setting .open directly.
+          if (!returnsAccordion.open) {
+            const summary = returnsAccordion.querySelector('summary');
+            if (summary) summary.click();
+          }
         } else {
           const returnsRoot = returnsAccordion.closest('[data-lusena-accordion-root]');
           if (returnsRoot instanceof HTMLElement && returnsRoot.hasAttribute('data-lusena-accordion-single')) {

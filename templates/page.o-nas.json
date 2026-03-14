@@ -15,7 +15,7 @@
         "hero_kicker": "O nas",
         "hero_heading_line_1": "Kompletna nocna rutyna",
         "hero_heading_line_2": "z jedwabiu 22 momme",
-        "hero_body": "<p>Każda noc na bawełnie to 8 godzin tarcia – dla Twojej skóry i włosów. LUSENA to poszewki, gumki i czepki, które chronią Cię podczas snu.</p><p>Jedwab sprowadzamy bezpośrednio z Shengze, a każda partia przechodzi polską kontrolę jakości.</p>",
+        "hero_body": "<p>Każda noc na bawełnie to 8 godzin tarcia - dla Twojej skóry i włosów. LUSENA to poszewki, gumki i czepki, które chronią Cię podczas snu.</p><p>Jedwab sprowadzamy bezpośrednio z Shengze, a każda partia przechodzi polską kontrolę jakości.</p>",
         "hero_cta_label": "Zobacz kolekcję",
         "hero_cta_link": "/collections/all"
       }
@@ -27,8 +27,8 @@
           "type": "item",
           "settings": {
             "icon": "layers",
-            "title": "22 momme",
-            "subtitle": "30% gęstszy splot"
+            "title": "22 momme jedwab",
+            "subtitle": "Gęstszy i trwalszy"
           }
         },
         "item-1": {
@@ -36,23 +36,23 @@
           "settings": {
             "icon": "shield-check",
             "title": "OEKO-TEX® 100",
-            "subtitle": "bezpieczne dla skóry"
+            "subtitle": "Bezpieczny dla skóry"
           }
         },
         "item-2": {
           "type": "item",
           "settings": {
             "icon": "truck",
-            "title": "Wysyłka 24h",
-            "subtitle": "z magazynu w Polsce"
+            "title": "Wysyłka w 24h",
+            "subtitle": "Z magazynu w Polsce"
           }
         },
         "item-3": {
           "type": "item",
           "settings": {
             "icon": "clock",
-            "title": "60 dni testu",
-            "subtitle": "zwrot bez stresu"
+            "title": "60 dni na test",
+            "subtitle": "Zwrot bez stresu"
           }
         }
       },
@@ -68,7 +68,7 @@
       "type": "lusena-about-story",
       "settings": {
         "story_heading": "Nasza Historia",
-        "story_body": "<p>LUSENA powstała z przekonania, że pielęgnacja skóry i włosów nie kończy się wieczorem – dlatego stworzyliśmy kompletną nocną rutynę piękna z jedwabiu 22 momme. Od poszewki, która chroni skórę przed zagnieceniami, po gumki i czepki, które chronią włosy przed plątaniem i puszeniem.</p><p>Nasz jedwab pochodzi z Shengze w prowincji Jiangsu, gdzie tkają od czasów dynastii Ming. Współpracujemy bezpośrednio z manufakturą, eliminując pośredników. Każda partia posiada certyfikat OEKO-TEX Standard 100 i przechodzi kontrolę w Polsce. Minimalistyczne wzornictwo, opakowania gotowe na prezent i 60-dniowa gwarancja satysfakcji.</p>",
+        "story_body": "<p>LUSENA powstała z przekonania, że pielęgnacja skóry i włosów nie kończy się wieczorem - dlatego stworzyliśmy kompletną nocną rutynę piękna z jedwabiu 22 momme. Od poszewki, która chroni skórę przed zagnieceniami, po gumki i czepki, które chronią włosy przed plątaniem i puszeniem.</p><p>Nasz jedwab pochodzi z Shengze w prowincji Jiangsu, gdzie tkają od czasów dynastii Ming. Współpracujemy bezpośrednio z manufakturą, eliminując pośredników. Każda partia posiada certyfikat OEKO-TEX Standard 100 i przechodzi kontrolę w Polsce. Minimalistyczne wzornictwo, opakowania gotowe na prezent i 60-dniowa gwarancja satysfakcji.</p>",
         "cta_label": "Poznaj naszą jakość",
         "cta_link": "shopify://pages/nasza-jakosc"
       }
@@ -118,15 +118,20 @@
         }
       },
       "block_order": ["value-0", "value-1", "value-2", "value-3", "value-4"],
-      "settings": {}
+      "settings": {
+        "values_kicker": "Wartości",
+        "values_heading": "Czym się kierujemy?"
+      }
     },
     "final_cta": {
       "type": "lusena-final-cta",
       "settings": {
         "heading": "Przekonaj się sama",
         "body": "Wybierz produkt i poczuj różnicę już pierwszej nocy.",
-        "cta_label": "Zobacz kolekcję",
-        "cta_link": "/collections/all"
+        "cta_label": "Rozpocznij swoją rutynę",
+        "cta_link": "/collections/all",
+        "secondary_label": "Masz pytania? Napisz do nas",
+        "secondary_link": "shopify://pages/contact"
       }
     }
   },

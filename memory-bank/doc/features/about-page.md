@@ -10,6 +10,7 @@
 | 2 | `lusena-trust-bar` | compact | Done (shared) |
 | 3 | `lusena-about-story` | spacious | Done |
 | 4 | `lusena-about-values` | standard | Done |
+| 5 | `lusena-final-cta` (shared) | spacious | Done |
 
 ## Pending work
 

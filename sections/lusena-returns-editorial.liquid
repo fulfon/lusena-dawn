@@ -100,7 +100,12 @@
     color: var(--lusena-text-1);
   }
 
-  /* Link style */
+  /* Fix: reset <p> margins inside richtext body divs to prevent margin collapse-through */
+  .lusena-returns-editorial .lusena-returns-editorial__body p { margin: 0; }
+
+  /* Link style — 32px CTA gap (was 40px from p margin + content-flow) */
+  .lusena-returns-editorial .lusena-returns-editorial__link { margin-top: var(--lusena-space-4); }
+
   .lusena-returns-editorial__link {
     display: inline-flex;
     align-items: center;

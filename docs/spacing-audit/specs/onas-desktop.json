@@ -1,0 +1,174 @@
+{
+  "$schema": "../spec-schema.md",
+  "page": "o-nas",
+  "url": "/pages/o-nas",
+  "viewport": { "width": 1440, "height": 900 },
+  "tolerancePx": 4,
+  "notes": "Desktop about page spec. Hero uses snug-top modifier (48px top instead of 128px). Kicker-to-heading gap measured at 18-19px due to inline bounding box variance on <span> — expected 16px from content-flow--tight.",
+
+  "sectionGaps": [
+    { "between": ["about_hero", "trust"], "expectedGapPx": 0 },
+    { "between": ["trust", "about_story"], "expectedGapPx": 0 },
+    { "between": ["about_story", "about_values"], "expectedGapPx": 0 },
+    { "between": ["about_values", "final_cta"], "expectedGapPx": 0 }
+  ],
+
+  "sections": {
+    "about_hero": {
+      "matchClass": "lusena-about-hero",
+      "expectedPaddingTop": 48,
+      "expectedPaddingBottom": 96,
+      "note": "lusena-spacing--hero + lusena-spacing--snug-top: desktop top=48px, bottom=96px (not standard hero 128px)",
+      "containers": {
+        ".lusena-container": [
+          {
+            "matchClass": "lusena-content-flow",
+            "note": "Hero text column (split layout — image is sibling but horizontal, not measured)",
+            "children": [
+              {
+                "matchClass": "lusena-content-flow--tight",
+                "expectedGapToNext": 24,
+                "note": "lusena-content-flow gap (24px) to body text",
+                "children": [
+                  {
+                    "matchClass": "lusena-kicker",
+                    "expectedGapToNext": 16,
+                    "tolerancePx": 4,
+                    "note": "Inline <span> bounding box adds ~2-3px variance. Measured 18px, expected 16px from content-flow--tight."
+                  },
+                  {
+                    "matchClass": "lusena-type-hero",
+                    "note": "Hero heading"
+                  }
+                ]
+              },
+              {
+                "matchClass": "lusena-type-body",
+                "expectedGapToNext": 24,
+                "note": "lusena-content-flow gap (24px) to CTA wrapper",
+                "children": [
+                  {
+                    "matchClass": "",
+                    "expectedGapToNext": 24,
+                    "note": "P-to-P gap inside richtext body. Margin collapse: 16px mb + 24px mt = 24px"
+                  }
+                ]
+              },
+              {
+                "matchClass": "lusena-gap-cta-top",
+                "note": "CTA button wrapper"
+              }
+            ]
+          }
+        ]
+      }
+    },
+
+    "trust": {
+      "matchClass": "lusena-section-gap-different",
+      "expectedPaddingTop": 0,
+      "expectedPaddingBottom": 0,
+      "note": "Trust bar has internal padding via .lusena-trust-bar ul, no section-level padding"
+    },
+
+    "about_story": {
+      "matchClass": "lusena-about-story",
+      "expectedPaddingTop": 96,
+      "expectedPaddingBottom": 96,
+      "note": "lusena-spacing--spacious desktop: 96px top/bottom",
+      "containers": {
+        ".lusena-container--narrow": [
+          {
+            "matchClass": "lusena-type-h1",
+            "expectedGapToNext": 24,
+            "note": "lusena-content-flow gap (24px) — heading to body"
+          },
+          {
+            "matchClass": "lusena-type-body",
+            "expectedGapToNext": 24,
+            "note": "lusena-content-flow gap (24px) — body to CTA",
+            "children": [
+              {
+                "matchClass": "",
+                "expectedGapToNext": 24,
+                "note": "P-to-P gap inside richtext. Margin collapse: 16px mb + 24px mt = 24px"
+              }
+            ]
+          },
+          {
+            "matchClass": "lusena-gap-cta-top",
+            "note": "CTA button wrapper"
+          }
+        ]
+      }
+    },
+
+    "about_values": {
+      "matchClass": "lusena-about-values",
+      "expectedPaddingTop": 64,
+      "expectedPaddingBottom": 64,
+      "note": "lusena-spacing--standard desktop: 64px top/bottom",
+      "containers": {
+        ".lusena-container": [
+          {
+            "matchClass": "lusena-text-center",
+            "expectedGapToNext": 32,
+            "note": "lusena-gap-section-intro (32px margin-bottom) — intro block to values grid",
+            "children": [
+              {
+                "matchClass": "lusena-type-caption",
+                "expectedGapToNext": 16,
+                "tolerancePx": 4,
+                "note": "Kicker <span> inline bounding box adds ~3px. Measured 19px, expected 16px from content-flow--tight."
+              },
+              {
+                "matchClass": "lusena-type-h1",
+                "note": "Section heading"
+              }
+            ]
+          },
+          {
+            "matchClass": "lusena-about-values__grid",
+            "note": "Value cards grid — flex-wrap, gap: 32px"
+          }
+        ]
+      }
+    },
+
+    "final_cta": {
+      "matchClass": "lusena-final-cta",
+      "expectedPaddingTop": 96,
+      "expectedPaddingBottom": 96,
+      "note": "lusena-spacing--spacious desktop: 96px top/bottom",
+      "containers": {
+        ".lusena-container--narrow": [
+          {
+            "matchClass": "lusena-type-h1",
+            "expectedGapToNext": 24,
+            "note": "lusena-content-flow gap (24px)"
+          },
+          {
+            "matchClass": "lusena-type-body",
+            "expectedGapToNext": 24,
+            "note": "lusena-content-flow gap (24px)"
+          },
+          {
+            "matchClass": "lusena-gap-cta-top",
+            "note": "CTA button + secondary link (flex column, gap: 16px)",
+            "children": [
+              {
+                "matchClass": "lusena-btn",
+                "expectedGapToNext": 16,
+                "note": "Flex gap 16px between primary CTA and secondary link"
+              },
+              {
+                "matchClass": "lusena-final-cta__secondary-link",
+                "note": "Secondary text link"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

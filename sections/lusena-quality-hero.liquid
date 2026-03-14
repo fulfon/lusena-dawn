@@ -57,6 +57,10 @@
       {%- if section.settings.hero_cta_link != blank -%}
         <a
           href="{{ section.settings.hero_cta_link }}"
+          {% if section.settings.hero_cta_link contains 'http' %}
+            target="_blank"
+            rel="noopener"
+          {% endif %}
           class="lusena-btn lusena-btn--primary lusena-btn--size-default"
         >
           {{ section.settings.hero_cta_label | escape }}
@@ -99,14 +103,17 @@
 
   .lusena-quality-hero__cert-link {
     font-size: 1.4rem;
-    color: var(--lusena-text-2);
+    color: var(--lusena-accent-cta);
     text-decoration: underline;
     text-underline-offset: 0.3rem;
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
   }
 
-  .lusena-quality-hero__cert-link:hover {
-    color: var(--lusena-text-1);
+  @media (hover: hover) {
+    .lusena-quality-hero__cert-link:hover {
+      color: var(--lusena-accent-cta-hover);
+      text-decoration: none;
+    }
   }
 {% endstylesheet %}
 

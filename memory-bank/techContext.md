@@ -28,6 +28,7 @@
 
 ### Translations
 - `locales/en.default.json` — **Polish strings override English defaults** (store is PL-first). Search-related keys (`templates.search.*`, `accessibility.search.*`, `accessibility.loading`) translated to Polish. Polish quotation marks „..." use Unicode `\u201E` + `\u201D` (not ASCII `"`) to avoid breaking JSON.
+- `locales/pl.json` — Polish locale override file. Currently minimal (mostly mirrors en.default). Prefer editing `en.default.json` for translations (see lesson #43 in migration-lessons.md).
 
 ### Global components
 - `snippets/lusena-button-system.liquid` — Button primitives
@@ -45,11 +46,12 @@
 - `assets/lusena-hero.css` — Hero section styles (extracted from section {% stylesheet %})
 - `assets/lusena-footer.css` — Footer section styles (extracted from section {% stylesheet %})
 - `assets/lusena-pdp.css` — All PDP-specific CSS (~34KB), loaded per-page
+- `assets/lusena-bundles.css` — Bundle card grid styles (loaded per-section in lusena-bundles.liquid)
 - `assets/base.css` — Dawn foundation (3,641 lines)
 
 ### CSS loading architecture
 - **Global assets in `theme.liquid`:** `lusena-foundations.css` → `lusena-button-system.css` → `lusena-header.css` → `lusena-hero.css` → `lusena-footer.css`
-- **Page-specific assets:** `lusena-pdp.css` loaded via `{{ 'lusena-pdp.css' | asset_url | stylesheet_tag }}` in `lusena-main-product.liquid`
+- **Page-specific assets:** `lusena-pdp.css` loaded in `lusena-main-product.liquid`, `lusena-bundles.css` loaded in `lusena-bundles.liquid`
 - **`{% stylesheet %}` compiled_assets truncation:** All `{% stylesheet %}` blocks compile into `compiled_assets/styles.css` (~38KB after extraction, 73KB hard limit). Rules after limit silently dropped. **MANDATORY:** check size stays under 55KB after adding section CSS. See `memory-bank/doc/patterns/css-architecture.md`.
 - **Preflight resets in foundations:** `button`, `a`, `img`, `video` resets (replacing old Tailwind preflight). SVG intentionally excluded — SVGs expand without explicit dimensions.
 
@@ -57,18 +59,22 @@
 
 - **Shopify CLI:** `shopify theme dev` → `http://127.0.0.1:9292/`
 - **Theme check:** `shopify theme check` (only known baseline warnings should remain)
-- **Playwright CLI (`/playwright-cli` skill):** The **only** way to interact with the browser. Use for ALL browser tasks: screenshots, debugging CSS, checking network resources, testing interactions, comparing before/after, anything that needs a live page. **CRITICAL: NEVER use Playwright MCP browser tools directly** (`browser_navigate`, `browser_snapshot`, `browser_click`, etc.) — they bypass the project workflow. The `/playwright-cli` skill handles correct dev server URL, viewport sizes, and screenshot naming.
+- **Playwright CLI (`/playwright-cli` skill):** The **only** way to interact with the browser. Use for ALL browser tasks: screenshots, debugging CSS, checking network resources, testing interactions, comparing before/after, anything that needs a live page. **CRITICAL: NEVER use Playwright MCP browser tools directly** (`browser_navigate`, `browser_snapshot`, `browser_click`, etc.) — they bypass the project workflow. **ALWAYS use `-s=<unique-name>`** to isolate your browser session from other concurrent Claude Code instances (e.g., `playwright-cli -s=pdp-fix open http://...`). Each instance MUST pick a DIFFERENT name — never use generic names like `-s=audit` or `-s=test`. Without a named session, all instances share the default browser and will navigate each other's pages.
 - **Shopify Dev MCP:** MUST call `learn_shopify_api` with `api: "liquid"` before editing Liquid
 
 ## Skills inventory
 
-9 skills mirrored in `.claude/`, `.agent/`, `.codex/`:
+13 skills in `.claude/` (subset mirrored in `.agent/`, `.codex/`):
 
 | Skill | Purpose |
 |-------|---------|
 | `lusena-update-memory-bank` | Post-work memory bank update |
 | `lusena-v2-page-migration` | Page migration to brandbook v2 |
 | `lusena-draftshop-fragment-parity` | Copy UI from React prototype to theme |
+| `lusena-page-audit` | Reusable page UX audit checklist |
+| `lusena-customer-validation` | 4-persona copy evaluation (Polish) |
+| `lusena-legal-check` | EU/UOKiK compliance check for marketing claims |
+| `lusena-spacing-audit` | Automated spacing measurement + validation |
 | `shopify-dev-mcp` | Shopify Dev MCP tool usage |
 | `shopify-expert` | Shopify theme development |
 | `frontend-design` | Production-grade frontend UI |
@@ -86,6 +92,13 @@
 - `sections/main-product.liquid`: UnusedAssign `seo_media`
 - `sections/main-product.liquid`: UndefinedObject `continue`
 - `sections/main-search.liquid`: UnusedAssign `product_settings`
+
+## Product catalog documentation
+
+- **Product catalog index:** `memory-bank/doc/products/README.md` — store-wide settings, product status table
+- **Per-product data:** `memory-bank/doc/products/{handle}.md` — metafields, pricing, variants, SEO, status
+- **Metafields reference:** `docs/product-metafields-reference.md` — what each field does, where it renders, creative process
+- **Setup checklist:** `docs/product-setup-checklist.md` — metafield definitions, example values per product type
 
 ## React prototype status
 

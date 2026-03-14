@@ -159,7 +159,14 @@
   /* Kicker color — 0-2-0 */
   .lusena-returns-steps .lusena-returns-steps__kicker {
     color: var(--lusena-accent-2);
+    display: block; /* Fix: eliminate inline bounding-box variance (19px → 16px) */
   }
+
+  /* Fix: reset browser-default H3 margin (was creating 36px double-margin in flex context) */
+  .lusena-returns-steps__card-title { margin: 0; }
+
+  /* 24px hierarchy break between title and body text (vs 16px for decorative elements) */
+  .lusena-returns-steps__card .lusena-type-body { margin-top: var(--lusena-space-3); }
 
   /* Connector dashed line (desktop only) */
   .lusena-returns-steps__connector {

@@ -5,9 +5,9 @@
       "settings": {
         "hero_kicker": "Nasza jakość",
         "hero_heading": "Nie wierz nam na słowo.\nSprawdź.",
-        "hero_body": "Każda poszewka LUSENA przechodzi kontrolę jakości. Oto dowody.",
-        "hero_cta_label": "Zobacz kolekcję",
-        "hero_cta_link": "/collections/all",
+        "hero_body": "Każdy produkt LUSENA przechodzi kontrolę jakości. Oto dowody.",
+        "hero_cta_label": "Zweryfikuj certyfikat OEKO-TEX →",
+        "hero_cta_link": "https://www.oeko-tex.com/en/detail/?number=25.HCN.22386",
         "hero_button_label": "Pobierz certyfikat OEKO-TEX (PDF)",
         "hero_button_link": "#certificates"
       }
@@ -18,28 +18,34 @@
         "momme-0": {
           "type": "momme_benefit",
           "settings": {
-            "text": "Wyższą trwałość — znosi pranie znacznie lepiej niż cieńsze odpowiedniki."
+            "text": "Wyższą trwałość - znosi pranie znacznie lepiej niż cieńsze odpowiedniki."
           }
         },
         "momme-1": {
           "type": "momme_benefit",
           "settings": {
-            "text": "Gładszą fakturę — mniejsze tarcie dla Twojej skóry i włosów."
+            "text": "Gładszą fakturę - mniejsze tarcie dla Twojej skóry i włosów."
           }
         },
         "momme-2": {
           "type": "momme_benefit",
           "settings": {
-            "text": "Lepszą termoregulację — chłodzi latem, grzeje zimą."
+            "text": "Lepszą termoregulację - chłodzi latem, grzeje zimą."
+          }
+        },
+        "momme-3": {
+          "type": "momme_benefit",
+          "settings": {
+            "text": "Klasę 6A jedwabiu morwowego - najdłuższe, najbardziej jednorodne włókna o najwyższym połysku."
           }
         }
       },
-      "block_order": ["momme-0", "momme-1", "momme-2"],
+      "block_order": ["momme-0", "momme-1", "momme-2", "momme-3"],
       "settings": {
         "momme_image": "shopify://shop_images/STANDARD_19_MOMME.jpg",
         "momme_image_placeholder": "Zdjęcie mikroskopowe: 19 vs 22 momme",
         "momme_heading": "Dlaczego 22 momme?",
-        "momme_body": "<p>Standard rynkowy to 19 momme. Dla nas to za mało.</p><p>LUSENA używa wyłącznie jedwabiu o gramaturze <strong>22 momme</strong>. Jest to splot o 30% gęstszy, co przekłada się na:</p>"
+        "momme_body": "<p>Standard rynkowy to 19 momme. Dla nas to za mało.</p><p>LUSENA używa wyłącznie jedwabiu o gramaturze <strong>22 momme</strong>, klasy <strong>6A</strong> - ponad 15% więcej jedwabiu niż w standardowych 19 momme. Gęstszy splot przekłada się na:</p>"
       }
     },
     "quality_fire": {
@@ -47,7 +53,7 @@
       "settings": {
         "fire_heading": "Test Ognia",
         "fire_video_placeholder": "Wideo: test spalania (jedwab vs poliester)",
-        "fire_body": "Jedwab pali się jak włos i zamienia w sypki popiół. Poliester topi się w twardą kulkę. Test Ognia pokazujemy w formie wideo na stronie (kontrolowane warunki)."
+        "fire_body": "Prawdziwy jedwab pali się jak włos - zamienia się w sypki popiół. Poliester topi się w twardą, plastikową kulkę. Różnicę widać od pierwszej sekundy."
       }
     },
     "quality_origin": {
@@ -55,8 +61,10 @@
       "settings": {
         "origin_kicker": "Pochodzenie",
         "origin_heading": "Suzhou: Stolica Jedwabiu od 1430 roku",
-        "origin_body": "<p>Nie kupujemy od anonimowych pośredników. Nasz jedwab pochodzi bezpośrednio z Shengze (prefektura Suzhou) — miejsca płacącego jedwabiem podatki cesarzowi od czasów dynastii Ming.</p><p>To tutaj tradycja spotyka się z nowoczesną technologią. Od kokonu jedwabnika morwowego klasy 6A do gotowej poszewki.</p>",
-        "origin_image_placeholder": "Zdjęcie: Mapa regionu Suzhou / Manufaktura"
+        "origin_body": "<p>Nie kupujemy od anonimowych pośredników. Nasz jedwab pochodzi bezpośrednio z Shengze (prefektura Suzhou) - miejsca płacącego jedwabiem podatki cesarzowi od czasów dynastii Ming.</p><p>To tutaj tradycja spotyka się z nowoczesną technologią. Od kokonu jedwabnika morwowego klasy 6A do gotowego produktu.</p>",
+        "origin_image_placeholder": "Zdjęcie: Mapa regionu Suzhou / Manufaktura",
+        "cta_label": "",
+        "cta_link": ""
       }
     },
     "quality_qc": {
@@ -65,7 +73,7 @@
         "qc-0": {
           "type": "qc_step",
           "settings": {
-            "icon": "🇨🇳",
+            "icon": "sparkles",
             "title": "Produkcja",
             "text": "Precyzyjne szycie w specjalistycznej manufakturze w Suzhou.",
             "highlight": false
@@ -74,7 +82,7 @@
         "qc-1": {
           "type": "qc_step",
           "settings": {
-            "icon": "🇵🇱",
+            "icon": "shield-check",
             "title": "Kontrola w Polsce",
             "text": "Każda sztuka jest ręcznie sprawdzana i prasowana w naszym magazynie pod Warszawą.",
             "highlight": true
@@ -83,9 +91,9 @@
         "qc-2": {
           "type": "qc_step",
           "settings": {
-            "icon": "📦",
+            "icon": "package",
             "title": "Wysyłka 24h",
-            "text": "Estetyczne pakowanie \"prezentowe\" i natychmiastowa wysyłka do Ciebie.",
+            "text": "Estetyczne, prezentowe pakowanie i natychmiastowa wysyłka do Ciebie.",
             "highlight": false
           }
         }
@@ -100,7 +108,7 @@
       "type": "lusena-quality-certificates",
       "settings": {
         "cert_heading": "Certyfikat OEKO-TEX® Standard 100",
-        "cert_body": "<p>Twoja skóra dotyka poduszki przez wiele godzin. Dlatego pokazujemy dowód: niezależny certyfikat <strong>OEKO-TEX® Standard 100</strong> (Klasa I — bezpieczne nawet dla niemowląt).</p>",
+        "cert_body": "<p>Jedwab LUSENA dotyka Twojej skóry przez wiele godzin. Dlatego pokazujemy dowód: niezależny certyfikat <strong>OEKO-TEX® Standard 100</strong> (Klasa I - bezpieczne nawet dla niemowląt).</p>",
         "oeko_number": "25.HCN.22386",
         "oeko_verify_label": "Zweryfikuj certyfikat online",
         "oeko_verify_url": "",
@@ -110,36 +118,6 @@
         "cert_logo_1_placeholder": "Logo OEKO-TEX®",
         "cert_logo_2": "shopify://shop_images/Generated_Image_January_31_2026_-_12_44PM.jpg",
         "cert_logo_2_placeholder": "Logo 6A Grade"
-      }
-    },
-    "quality_6a": {
-      "type": "lusena-quality-6a",
-      "blocks": {
-        "benefit-0": {
-          "type": "benefit",
-          "settings": {
-            "text": "Wyższa selekcja włókien i powtarzalna jakość partii."
-          }
-        },
-        "benefit-1": {
-          "type": "benefit",
-          "settings": {
-            "text": "Dłuższe, bardziej jednorodne włókna oraz stabilne wykończenie."
-          }
-        },
-        "benefit-2": {
-          "type": "benefit",
-          "settings": {
-            "text": "Gładkość i delikatny połysk, który czuć w dotyku."
-          }
-        }
-      },
-      "block_order": ["benefit-0", "benefit-1", "benefit-2"],
-      "settings": {
-        "kicker": "Klasa jedwabiu",
-        "heading": "Klasa 6A",
-        "body": "<p>Klasa 6A to najwyższa klasyfikacja jedwabiu morwowego. Oznacza dłuższe, bardziej jednorodne włókna oraz stabilną jakość partii.</p>",
-        "image_placeholder": "Infografika: skala klas jedwabiu (3A → 6A)"
       }
     },
     "quality_comparison": {
@@ -157,15 +135,15 @@
           "type": "row",
           "settings": {
             "metric": "Gramatura",
-            "lusena_value": "22 momme — splot gęstszy o 30%",
-            "others_value": "16–19 momme lub brak danych"
+            "lusena_value": "22 momme - ponad 15% gęstszy splot",
+            "others_value": "16-19 momme lub brak danych"
           }
         },
         "row-2": {
           "type": "row",
           "settings": {
             "metric": "Klasa włókna",
-            "lusena_value": "6A — najwyższa klasyfikacja",
+            "lusena_value": "6A - najwyższa klasyfikacja",
             "others_value": "Nieokreślona"
           }
         },
@@ -181,14 +159,14 @@
           "type": "row",
           "settings": {
             "metric": "Magazyn i wysyłka",
-            "lusena_value": "Polska — wysyłka 24h",
-            "others_value": "Import 14–30 dni"
+            "lusena_value": "Polska - wysyłka 24h",
+            "others_value": "Import 14-30 dni"
           }
         },
         "row-5": {
           "type": "row",
           "settings": {
-            "metric": "Gwarancja",
+            "metric": "Zwrot",
             "lusena_value": "60 dni testu, nawet po użyciu",
             "others_value": "14 dni (prawo konsumenta)"
           }
@@ -201,8 +179,8 @@
         "metric_label": "Porównanie",
         "lusena_label": "LUSENA",
         "others_label": "Typowe oferty",
-        "cta_label": "",
-        "cta_link": "",
+        "cta_label": "Zobacz kolekcję",
+        "cta_link": "/collections/all",
         "footer_note": ""
       }
     },
@@ -227,28 +205,29 @@
           "type": "item",
           "settings": {
             "question": "Dlaczego jedwab jest z Suzhou?",
-            "answer": "<p>Suzhou to historyczne centrum jedwabiu morwowego. My kontrolujemy jakość w Polsce i wysyłamy z magazynu w 24h.</p>"
+            "answer": "<p>Suzhou (prefektura Shengze) to historyczne centrum jedwabiu morwowego - jedwab tkają tu od XV wieku. Wybraliśmy ten region, bo nikt nie dorównuje im w jakości włókna morwowego klasy 6A. Każda partia trafia do naszego magazynu w Polsce, gdzie przechodzi ręczną kontrolę przed wysyłką w 24h.</p>"
           }
         },
         "item-3": {
           "type": "item",
           "settings": {
             "question": "Jak wygląda zwrot?",
-            "answer": "<p>Masz 60 dni na test. Jeśli produkt nie spełni oczekiwań, możesz go zwrócić bez stresu.</p>"
+            "answer": "<p>Masz 60 dni na test. Jeśli produkt nie spełni oczekiwań, możesz go zwrócić bez stresu.</p><p><a href=\"/pages/zwroty\">Pełne zasady zwrotów →</a></p>"
           }
         }
       },
       "block_order": ["item-0", "item-1", "item-2", "item-3"],
       "settings": {
         "heading": "Najczęstsze pytania",
-        "subheading": ""
+        "subheading": "",
+        "bg_style": "surface-2"
       }
     },
     "quality_final_cta": {
       "type": "lusena-final-cta",
       "settings": {
-        "heading": "Sprawdź kolekcję",
-        "body": "Poznaj produkty LUSENA i wybierz element nocnej rutyny.",
+        "heading": "Przekonaj się sama",
+        "body": "Masz dowody. Czas poczuć różnicę.",
         "cta_label": "Zobacz kolekcję",
         "cta_link": "/collections/all",
         "secondary_label": "",
@@ -262,8 +241,8 @@
           "type": "item",
           "settings": {
             "icon": "layers",
-            "title": "22 momme",
-            "subtitle": "30% gęstszy splot"
+            "title": "22 momme jedwab",
+            "subtitle": "Gęstszy i trwalszy"
           }
         },
         "item-1": {
@@ -271,23 +250,23 @@
           "settings": {
             "icon": "shield-check",
             "title": "OEKO-TEX® 100",
-            "subtitle": "bezpieczne dla skóry"
+            "subtitle": "Bezpieczny dla skóry"
           }
         },
         "item-2": {
           "type": "item",
           "settings": {
             "icon": "truck",
-            "title": "Wysyłka 24h",
-            "subtitle": "z magazynu w Polsce"
+            "title": "Wysyłka w 24h",
+            "subtitle": "Z magazynu w Polsce"
           }
         },
         "item-3": {
           "type": "item",
           "settings": {
             "icon": "clock",
-            "title": "60 dni testu",
-            "subtitle": "zwrot bez stresu"
+            "title": "60 dni na test",
+            "subtitle": "Zwrot bez stresu"
           }
         }
       },
@@ -307,7 +286,6 @@
     "quality_momme",
     "quality_cert",
     "quality_fire",
-    "quality_6a",
     "quality_qc",
     "quality_comparison",
     "quality_faq",

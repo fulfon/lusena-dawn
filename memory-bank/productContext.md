@@ -50,5 +50,5 @@ Problem/solution   → Testimonials        → Comparison tables  → Sticky ATC
 
 - `lusena-trust-bar` — appears on homepage, quality page, about page
 - `lusena-faq` — appears on homepage, quality page, returns page, and PDP
-- `lusena-final-cta` — appears on about page, quality page, returns page (has `transparent_bg` option)
-- `lusena-newsletter` — appears on homepage, article page (with optional secondary link on article)
+- `lusena-final-cta` — appears on homepage, about page, quality page, returns page, PDP (has `transparent_bg` option)
+- `lusena-newsletter` — appears on article page, contact page (with optional secondary link on article). Removed from homepage on 2026-03-08 (footer handles newsletter).

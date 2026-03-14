@@ -1,12 +1,41 @@
 <footer class="lusena-footer">
-  <div class="lusena-container lusena-footer__grid">
+  <div class="lusena-container lusena-footer__grid{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+    {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
+  >
+    {%- comment -%} Column 1: Brand {%- endcomment -%}
     <div class="lusena-footer__col">
       <div class="lusena-footer__brand">{{ section.settings.brand_heading | escape }}</div>
       <div class="lusena-footer__brand-text">
         {{ section.settings.brand_text }}
       </div>
+
+      {%- liquid
+        assign ig_url = section.settings.instagram_url | default: 'https://instagram.com/'
+        assign fb_url = section.settings.facebook_url | default: 'https://facebook.com/'
+      -%}
+      <div class="lusena-footer__socials">
+        <a
+          href="{{ ig_url }}"
+          class="lusena-footer__social-link"
+          target="_blank"
+          rel="noopener"
+          aria-label="Instagram"
+        >
+          {%- render 'lusena-icon', name: 'instagram', class: 'lusena-footer__social-icon', stroke_width: 1.5 -%}
+        </a>
+        <a
+          href="{{ fb_url }}"
+          class="lusena-footer__social-link"
+          target="_blank"
+          rel="noopener"
+          aria-label="Facebook"
+        >
+          {%- render 'lusena-icon', name: 'facebook', class: 'lusena-footer__social-icon', stroke_width: 1.5 -%}
+        </a>
+      </div>
     </div>
 
+    {%- comment -%} Column 2: Shop menu {%- endcomment -%}
     <div>
       <h4 class="lusena-footer__heading">{{ section.settings.shop_heading | escape }}</h4>
       {%- if section.settings.shop_menu != blank -%}
@@ -20,6 +49,7 @@
       {%- endif -%}
     </div>
 
+    {%- comment -%} Column 3: Help menu {%- endcomment -%}
     <div>
       <h4 class="lusena-footer__heading">{{ section.settings.help_heading | escape }}</h4>
       {%- if section.settings.help_menu != blank -%}
@@ -33,31 +63,105 @@
       {%- endif -%}
     </div>
 
+    {%- comment -%} Column 4: Newsletter with -10% hook {%- endcomment -%}
     <div>
       <h4 class="lusena-footer__heading">{{ section.settings.newsletter_heading | escape }}</h4>
       <div class="lusena-footer__newsletter">
-        <p class="lusena-footer__newsletter-text">{{ section.settings.newsletter_text | escape }}</p>
         {%- form 'customer', id: 'LusenaFooterNewsletter', class: 'lusena-footer__newsletter-form' -%}
           <input type="hidden" name="contact[tags]" value="newsletter">
-          <label class="lusena-visually-hidden" for="LusenaFooterNewsletterEmail">{{ 'newsletter.label' | t }}</label>
-          <input
-            id="LusenaFooterNewsletterEmail"
-            type="email"
-            name="contact[email]"
-            autocomplete="email"
-            placeholder="{{ 'newsletter.label' | t }}"
-            class="lusena-footer__input"
-            required
-          >
-          <button type="submit" class="lusena-visually-hidden">{{ section.settings.newsletter_button_label | escape }}</button>
+
+          {%- if form.posted_successfully? -%}
+            <div class="lusena-form-msg lusena-form-msg--success lusena-footer__form-msg" role="status">
+              {{ section.settings.newsletter_success | escape }}
+            </div>
+          {%- else -%}
+            {%- if form.errors -%}
+              <div class="lusena-form-msg lusena-form-msg--error lusena-footer__form-msg" role="alert" id="LusenaFooterNewsletter-error">
+                {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+              </div>
+            {%- endif -%}
+
+            <p class="lusena-footer__newsletter-text">{{ section.settings.newsletter_text | escape }}</p>
+
+            <label class="lusena-visually-hidden" for="LusenaFooterNewsletterEmail">{{ 'newsletter.label' | t }}</label>
+            <div class="lusena-footer__newsletter-field">
+              <input
+                id="LusenaFooterNewsletterEmail"
+                type="email"
+                name="contact[email]"
+                autocomplete="email"
+                autocorrect="off"
+                autocapitalize="off"
+                placeholder="{{ 'newsletter.label' | t }}"
+                class="lusena-footer__input"
+                required
+                {% if form.errors %}
+                  autofocus
+                  aria-invalid="true"
+                  aria-describedby="LusenaFooterNewsletter-error"
+                {% endif %}
+              >
+              <button type="submit" class="lusena-footer__submit" aria-label="{{ section.settings.newsletter_button_label | escape }}">
+                {%- render 'lusena-icon', name: 'arrow-right', class: 'lusena-footer__submit-icon', stroke_width: 2 -%}
+              </button>
+            </div>
+          {%- endif -%}
         {%- endform -%}
       </div>
     </div>
   </div>
 
+  {%- comment -%} Bottom bar {%- endcomment -%}
   <div class="lusena-container lusena-footer__bottom">
-    © {{ 'now' | date: '%Y' }}
-    {{ section.settings.brand_heading | escape }}. All rights reserved.
+    {%- if section.settings.show_payment_icons -%}
+      <div class="lusena-footer__payments">
+        {%- assign payment_methods = 'Visa|BLIK|PayPo|Przelewy24' | split: '|' -%}
+        {%- for method in payment_methods -%}
+          {%- assign payment_asset = blank -%}
+          {%- assign icon_w = 0 -%}
+          {%- assign icon_h = 0 -%}
+          {%- if method == 'Visa' -%}
+            {%- assign payment_asset = 'lusena-payment-visa.svg' -%}
+            {%- assign icon_w = 68 -%}
+            {%- assign icon_h = 23 -%}
+          {%- elsif method == 'BLIK' -%}
+            {%- assign payment_asset = 'lusena-payment-blik.svg' -%}
+            {%- assign icon_w = 106 -%}
+            {%- assign icon_h = 50 -%}
+          {%- elsif method == 'PayPo' -%}
+            {%- assign payment_asset = 'lusena-payment-paypo.svg' -%}
+            {%- assign icon_w = 107 -%}
+            {%- assign icon_h = 32 -%}
+          {%- elsif method == 'Przelewy24' -%}
+            {%- assign payment_asset = 'lusena-payment-przelewy24.svg' -%}
+            {%- assign icon_w = 96 -%}
+            {%- assign icon_h = 34 -%}
+          {%- endif -%}
+          {%- if payment_asset != blank -%}
+            <span class="lusena-footer__payment-badge">
+              <img
+                src="{{ payment_asset | asset_url }}"
+                alt="{{ method | escape }}"
+                class="lusena-footer__payment-icon"
+                width="{{ icon_w }}"
+                height="{{ icon_h }}"
+                loading="lazy"
+              >
+            </span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="lusena-footer__legal">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ section.settings.brand_heading | escape }}. Wszelkie prawa zastrzeżone.</span>
+      {%- if section.settings.legal_menu != blank -%}
+        {%- for link in section.settings.legal_menu.links -%}
+          <span class="lusena-footer__legal-sep">&middot;</span>
+          <a href="{{ link.url }}" class="lusena-footer__legal-link">{{ link.title | escape }}</a>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
   </div>
 </footer>
 
@@ -67,12 +171,12 @@
 
 {% schema %}
 {
-  "name": "LUSENA footer (draft)",
+  "name": "LUSENA footer",
   "tag": "section",
   "settings": [
     {
       "type": "header",
-      "content": "Brand"
+      "content": "Marka"
     },
     {
       "type": "text",
@@ -84,17 +188,31 @@
       "type": "richtext",
       "id": "brand_text",
       "label": "Brand text",
-      "default": "<p>22 momme silk from Suzhou. Certified OEKO-TEX 100.<br>Sleep better, wake up beautiful.</p>"
+      "default": "<p>Jedwab 22 momme z Suzhou.<br>Certyfikat OEKO-TEX 100.<br><em>Lepszy sen, piękniejszy poranek.</em></p>"
     },
     {
       "type": "header",
-      "content": "Menus"
+      "content": "Social media"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "header",
+      "content": "Menu"
     },
     {
       "type": "text",
       "id": "shop_heading",
       "label": "Shop heading",
-      "default": "Shop"
+      "default": "Sklep"
     },
     {
       "type": "link_list",
@@ -105,7 +223,7 @@
       "type": "text",
       "id": "help_heading",
       "label": "Help heading",
-      "default": "Help"
+      "default": "Pomoc"
     },
     {
       "type": "link_list",
@@ -120,24 +238,45 @@
       "type": "text",
       "id": "newsletter_heading",
       "label": "Newsletter heading",
-      "default": "Newsletter"
+      "default": "-10% na start"
     },
     {
       "type": "text",
       "id": "newsletter_text",
       "label": "Newsletter text",
-      "default": "Join the circle for early access and care tips."
+      "default": "Zapisz si\u0119 i odbierz kod rabatowy na pierwsze zam\u00f3wienie."
     },
     {
       "type": "text",
       "id": "newsletter_button_label",
       "label": "Newsletter button label",
-      "default": "Sign up"
+      "default": "Zapisz si\u0119"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_success",
+      "label": "Newsletter success message",
+      "default": "Dzi\u0119kujemy! Sprawd\u017a swoj\u0105 skrzynk\u0119 email."
+    },
+    {
+      "type": "header",
+      "content": "Dolny pasek"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    },
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "Legal links menu"
     }
   ],
   "presets": [
     {
-      "name": "LUSENA footer (draft)"
+      "name": "LUSENA footer"
     }
   ]
 }
