@@ -40,7 +40,8 @@
       "Bash(playwright-cli eval \"JSON.stringify\\(window.__lusenaSpacingAudit\\)\")",
       "Read(//tmp/**)",
       "Bash(npx playwright-cli:*)",
-      "Bash(cd \"C:\\\\Users\\\\Karol\\\\Documents\\\\BusinessIdeas\\\\SilkStore\\\\sklepOnline\\\\shopify-lusena-dev\\\\lusena-dawn\" && rm -f footer-mobile-375.png footer-mobile-320.png footer-mobile-320-top.png footer-desktop-1440.png footer-mobile-375-after.png footer-mobile-320-after.png footer-desktop-1440-after.png)"
+      "Bash(cd \"C:\\\\Users\\\\Karol\\\\Documents\\\\BusinessIdeas\\\\SilkStore\\\\sklepOnline\\\\shopify-lusena-dev\\\\lusena-dawn\" && rm -f footer-mobile-375.png footer-mobile-320.png footer-mobile-320-top.png footer-desktop-1440.png footer-mobile-375-after.png footer-mobile-320-after.png footer-desktop-1440-after.png)",
+      "Bash(cd:*)"
     ]
   }
 }

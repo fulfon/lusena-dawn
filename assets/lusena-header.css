@@ -8,7 +8,7 @@
 [data-lusena-header].lusena-header {
   position: fixed;
   left: 0;
-  right: 0;
+  right: var(--scrollbar-width, 0px);
   background-color: rgba(247, 245, 242, 0.95);
   padding-block: var(--lusena-space-2);
   color: var(--lusena-text-1);

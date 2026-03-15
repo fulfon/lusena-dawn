@@ -88,7 +88,8 @@ Modifier: `lusena-spacing--snug-top` — reduces top to 32/48px for heroes shari
 ## Component systems
 
 - **Buttons:** `assets/lusena-button-system.css` + `snippets/lusena-button-system.liquid` — primary, outline, ghost, text, link variants (CSS in standalone asset, Liquid renders markup)
-- **Icons:** `snippets/lusena-icon.liquid` — centralized SVG rendering
+- **Icons (static):** `snippets/lusena-icon.liquid` — centralized SVG rendering
+- **Icons (animated):** `snippets/lusena-icon-animated.liquid` + `assets/lusena-icon-animations.css` — 8 animated SVG icons (heart, layers, droplets, wind, shield-check, sparkles, gift, clock). Each icon has CSS animation classes on sub-elements. Stagger via `--lusena-anim-stagger` custom property. `prefers-reduced-motion` disables all animations. Falls back to static `lusena-icon` for unknown names. Loaded per-section (currently only in `lusena-pdp-feature-highlights`). Animation specs per product documented in `memory-bank/doc/products/{handle}.md`.
 - **Product cards:** `snippets/lusena-product-card.liquid`
 - **Breadcrumbs:** `snippets/lusena-breadcrumbs.liquid`
 - **Final CTA:** `sections/lusena-final-cta.liquid` — generic reusable section (replaces per-page copies)

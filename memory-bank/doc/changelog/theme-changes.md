@@ -20,7 +20,29 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v2.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
-### (current) — Footer redesign, PDP polish, quality/FAQ/trust-bar refinements, spacing audit, product setup docs
+### (current) — Product copy sessions, bundle strategy, animated icons, percentage claim cleanup, pre-commit sync
+
+**Goal:** Finalize all 5 individual product copy sessions (creative workflow: research → draft → legal check → customer validation → finalize), define research-backed bundle architecture, build animated icon system for PDP feature highlights, clean up percentage-based momme claims site-wide, replace theme-changelog skill with pre-commit-sync.
+
+**What changed**
+- **5 product copy sessions complete:** silk-scrunchie, silk-bonnet (title research: "czepek" > "bonnet", 239 zł), jedwabna-maska-3d (169 zł, highest validation scores), heatless-curlers (material correction: 22 momme 6A confirmed, title: "Jedwabny wałek do loków"), poszewka-jedwabna updates. Each went through legal check (EU/UOKiK) + 1-2 customer validation runs with 4 Polish personas.
+- **Bundle strategy:** Research-backed architecture in `memory-bank/doc/bundle-strategy.md`. 3 Phase 1 bundles (Nocna Rutyna 399 zł, Piękny Sen 349 zł, Scrunchie Trio 139 zł). PDP cross-sell checkbox replaces Starter Kit (Presenter's Paradox). Free shipping threshold 299 zł. Original brandbook plan (§ 5.8) partially superseded.
+- **Animated icon system:** New `snippets/lusena-icon-animated.liquid` (8 icons with CSS animation classes) + `assets/lusena-icon-animations.css` (keyframes, stagger delays, prefers-reduced-motion). `lusena-pdp-feature-highlights.liquid` loads animation CSS and renders animated icons. Animation specs documented per product.
+- **Percentage claim cleanup:** All "30%", "15%" momme claims removed from brandbook, sections, templates, memory bank. Replaced with "gęstszy i trwalszy niż standard". Brandbook rule added.
+- **Product documentation:** 4 new product docs, expanded metafields reference, setup checklist, CSV import/export tooling.
+- **Skills:** `lusena-theme-changelog` deleted → replaced by `lusena-pre-commit-sync`. `lusena-customer-validation` expanded.
+- **Minor section fixes:** ~20 Liquid sections touched (percentage claim cleanup, small CSS/content adjustments).
+
+**Key files**
+- `snippets/lusena-icon-animated.liquid`, `assets/lusena-icon-animations.css`
+- `sections/lusena-pdp-feature-highlights.liquid`, `sections/lusena-pdp-quality-evidence.liquid`
+- `memory-bank/doc/bundle-strategy.md`
+- `memory-bank/doc/products/silk-bonnet.md`, `silk-scrunchie.md`, `jedwabna-maska-3d.md`, `heatless-curlers.md`
+- `docs/product-metafields-reference.md`, `docs/product-setup-checklist.md`
+- `docs/LUSENA_BrandBook_v2.md`
+- `.claude/skills/lusena-pre-commit-sync/`, `.claude/skills/lusena-customer-validation/`
+
+### 1be3e57 — Footer redesign, PDP polish, quality/FAQ/trust-bar refinements, spacing audit, product setup docs
 
 **Goal:** Complete footer redesign with social/payment/newsletter UX, polish PDP buy-box spacing and content, refine quality page sections, enhance FAQ section with bg_style/anchor/deep-link features, standardize trust-bar copy and em-dashes across all pages, run quality page spacing audit, set up product catalog documentation and creative workflow skills.
 
@@ -279,7 +301,8 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v2.md` (local path: 
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-03-09 — (current) — Footer redesign, PDP polish, quality/FAQ/trust-bar refinements
+- 2026-03-15 — (current) — Product copy sessions, bundle strategy, animated icons, percentage cleanup
+- 2026-03-09 — 1be3e57 — feat(lusena): footer redesign, PDP/quality polish, spacing audit, product setup docs
 - 2026-03-08 — 57beec8 — feat(lusena): complete homepage UX audit — visual rhythm, value anchors, bundle fixes
 - 2026-03-06 — 29fc700 — chore(lusena): polish blog/article, trust-bar animations, breadcrumb fixes + repo cleanup
 - 2026-03-06 — cbeba1a — feat(lusena): migrate system pages (Batch 2) + polish blog/article (Batch 6)

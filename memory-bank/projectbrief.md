@@ -19,7 +19,7 @@ LUSENA is a premium Polish silk e-commerce store built as a custom Shopify theme
 | 1 (flagship) | Poszewka jedwabna 50x60 | silk pillowcase |
 | 2 | Scrunchie jedwabny | silk scrunchie |
 | 2 | Bonnet jedwabny | silk bonnet |
-| 2 | Opaska na oczy | silk eye mask |
+| 3 | Jedwabna maska 3D do spania | jedwabna-maska-3d |
 | 3 | Lokówki jedwabne | heatless curlers |
 | 3 | Bundle: Nocna Rutyna | night routine bundle |
 | 3 | Bundle: Starter Kit | starter kit bundle |
@@ -39,7 +39,7 @@ LUSENA is a premium Polish silk e-commerce store built as a custom Shopify theme
 
 - **Emphasize:** 22 momme density, tested quality, origin (Suzhou/Shengze), OEKO-TEX certification, local stock & 24h shipping
 - **Avoid:** "Made in China" (use "from Suzhou"), "Factory" (use "manufactory"), medical claims, price wars
-- **Key claim:** "22 momme to ponad 15% więcej jedwabiu niż standard 19 momme" (22÷19 ≈ 15.8%; qualitative alternative: "Gęstszy splot, dłuższa trwałość")
+- **Key claim:** "22 momme — gęstszy i trwalszy niż typowe 16–19 momme na rynku" (qualitative only — percentage claims dropped to avoid legal risk without own test documentation)
 - **CTAs (Polish):** "Sprawdź kolekcję", "Dodaj do koszyka", "Zobacz więcej"
 - **Value anchors:** "0,XX zł/noc" framing when price data is available
 

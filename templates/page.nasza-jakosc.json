@@ -45,7 +45,7 @@
         "momme_image": "shopify://shop_images/STANDARD_19_MOMME.jpg",
         "momme_image_placeholder": "Zdjęcie mikroskopowe: 19 vs 22 momme",
         "momme_heading": "Dlaczego 22 momme?",
-        "momme_body": "<p>Standard rynkowy to 19 momme. Dla nas to za mało.</p><p>LUSENA używa wyłącznie jedwabiu o gramaturze <strong>22 momme</strong>, klasy <strong>6A</strong> - ponad 15% więcej jedwabiu niż w standardowych 19 momme. Gęstszy splot przekłada się na:</p>"
+        "momme_body": "<p>Standard rynkowy to 16-19 momme. Dla nas to za mało.</p><p>LUSENA używa wyłącznie jedwabiu o gramaturze <strong>22 momme</strong>, klasy <strong>6A</strong> - gęstszego i trwalszego niż cokolwiek, co znajdziesz w tej cenie. Gęstszy splot przekłada się na:</p>"
       }
     },
     "quality_fire": {
@@ -135,7 +135,7 @@
           "type": "row",
           "settings": {
             "metric": "Gramatura",
-            "lusena_value": "22 momme - ponad 15% gęstszy splot",
+            "lusena_value": "22 momme - gęstszy i trwalszy splot",
             "others_value": "16-19 momme lub brak danych"
           }
         },

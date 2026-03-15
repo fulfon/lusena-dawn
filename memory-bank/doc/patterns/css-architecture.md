@@ -64,7 +64,7 @@ After adding or expanding CSS in any `{% stylesheet %}` block:
 3. Add `{{ 'lusena-{section-name}.css' | asset_url | stylesheet_tag }}` to `theme.liquid` (global sections) or the section file itself (page-specific sections)
 4. Verify the page visually — CSS is identical, just loaded differently
 
-### Current inventory of standalone assets (2026-03-09)
+### Current inventory of standalone assets (2026-03-15)
 
 | File | Scope | Loaded in |
 |------|-------|-----------|
@@ -75,6 +75,7 @@ After adding or expanding CSS in any `{% stylesheet %}` block:
 | `lusena-footer.css` | Footer section | theme.liquid |
 | `lusena-pdp.css` | PDP page | lusena-main-product.liquid |
 | `lusena-bundles.css` | Bundle card grid | lusena-bundles.liquid (per-section) |
+| `lusena-icon-animations.css` | Animated icon keyframes | lusena-pdp-feature-highlights.liquid (per-section) |
 
 ## Naming conventions
 

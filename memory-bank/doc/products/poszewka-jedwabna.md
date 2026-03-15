@@ -7,7 +7,7 @@
 | Field | Value | Status |
 |-------|-------|--------|
 | Title | Poszewka jedwabna 50×60 | Done |
-| Description | (empty — PDP uses metafields) | Done |
+| Description | (empty - PDP uses metafields) | Done |
 | Category | Pillowcases & Shams in Bedding | Done |
 | Type | Poszewka jedwabna | Done |
 | Vendor | LUSENA | Done |
@@ -21,20 +21,20 @@
 |-------|-------|--------|
 | Price | 269 zł (VAT inclusive) | Done |
 | Compare-at price | (none) | Skipped |
-| Cost per item | — | **PENDING** (fill when import cost is known) |
+| Cost per item | - | **PENDING** (fill when import cost is known) |
 | Charge tax | Yes (23% VAT, tax-inclusive) | Done |
 
 ## Variants
 
 | Option | Values | Status |
 |--------|--------|--------|
-| Color | Gray, Gold, Pink | Done (tentative — may change) |
+| Color | Gray, Gold, Pink | Done (tentative - may change) |
 
 | Variant | SKU | Barcode | Status |
 |---------|-----|---------|--------|
-| Gray | — | — | **PENDING** (after colors finalized) |
-| Gold | — | — | **PENDING** |
-| Pink | — | — | **PENDING** |
+| Gray | - | - | **PENDING** (after colors finalized) |
+| Gold | - | - | **PENDING** |
+| Pink | - | - | **PENDING** |
 
 Suggested SKU format: `LUS-PIL-{3-letter color code}` (e.g., `LUS-PIL-GRY`)
 
@@ -60,8 +60,8 @@ Suggested SKU format: `LUS-PIL-{3-letter color code}` (e.g., `LUS-PIL-GRY`)
 
 | Field | Value | Status |
 |-------|-------|--------|
-| Page title | Jedwabna poszewka 50×60 na poduszkę — 22 momme · LUSENA | Done |
-| Meta description | 100% jedwab morwowy z Suzhou. 22 momme, certyfikat OEKO-TEX®. Mniej zmarszczek, gładsze włosy — od pierwszej nocy. | Done |
+| Page title | Jedwabna poszewka 50×60 na poduszkę - 22 momme · LUSENA | Done |
+| Meta description | 100% jedwab morwowy z Suzhou. 22 momme, certyfikat OEKO-TEX®. Mniej zmarszczek, gładsze włosy - od pierwszej nocy. | Done |
 | URL handle | poszewka-jedwabna | Done |
 
 ## Category metafields (Shopify standard)
@@ -69,28 +69,32 @@ Suggested SKU format: `LUS-PIL-{3-letter color code}` (e.g., `LUS-PIL-GRY`)
 | Field | Value | Status |
 |-------|-------|--------|
 | Color | (per variant, after colors finalized) | **PENDING** |
-| Bedding size | (skipped — non-standard size) | Skipped |
+| Bedding size | (skipped - non-standard size) | Skipped |
 | Closure style | Other (envelope) | Done |
 | Care instructions | Machine washable, Hand wash | Done |
 | Fabric | Silk | Done |
 
 ## LUSENA metafields
 
+> **UNIVERSAL FIELDS - DO NOT MODIFY.** Fields marked "Pre-filled (universal)" are shared
+> across ALL LUSENA silk products. They were validated once and must not be rewritten or
+> "improved" during creative sessions. See `docs/product-metafields-reference.md` → "Universal fields".
+
 ### Buybox content
 
 | Metafield | Value | Status |
 |-----------|-------|--------|
-| `lusena.pdp_emotional_headline` | Obudź się bez zagnieceń — od pierwszej nocy. | Done |
-| `lusena.pdp_tagline` | Bawełna chłonie wilgoć i gniecie skórę przez 8 godzin snu. Ta poszewka z jedwabiu morwowego 22 momme, Grade 6A z Suzhou, z certyfikatem OEKO-TEX® Standard 100 — zmienia to od pierwszej nocy. | Done |
+| `lusena.pdp_emotional_headline` | Obudź się bez zagnieceń - od pierwszej nocy. | Done |
+| `lusena.pdp_tagline` | Bawełna chłonie wilgoć i gniecie skórę przez 8 godzin snu. Ta - z jedwabiu morwowego najwyższej klasy (22 momme, Grade 6A) prosto z Suzhou, z certyfikatem OEKO-TEX® Standard 100 - ogranicza tarcie i pomaga zachować nawilżenie. | Done |
 | `lusena.pdp_show_price_per_night` | true | Done |
 
 ### Benefit bullets
 
 | Metafield | Value | Status |
 |-----------|-------|--------|
-| `lusena.pdp_benefit_1` | Budzisz się bez odcisków poduszki — jedwab nie gniecie skóry jak bawełna | Done |
-| `lusena.pdp_benefit_2` | Nie wchłania kremów i serum — pielęgnacja zostaje na skórze, nie na poszewce | Done |
-| `lusena.pdp_benefit_3` | Budzisz się bez plątaniny i puszenia — fryzura przetrwa noc bez wysiłku | Done |
+| `lusena.pdp_benefit_1` | Budzisz się bez odcisków poduszki - jedwab nie gniecie skóry jak bawełna | Done |
+| `lusena.pdp_benefit_2` | Wchłania znacznie mniej kremów i serum - pielęgnacja zostaje na skórze, nie na poszewce | Done |
+| `lusena.pdp_benefit_3` | Włosy bez plątaniny i puszenia - fryzura przetrwa noc bez wysiłku | Done |
 
 ### Specs table
 
@@ -115,14 +119,93 @@ Suggested SKU format: `LUS-PIL-{3-letter color code}` (e.g., `LUS-PIL-GRY`)
 
 | Metafield | Value | Status |
 |-----------|-------|--------|
-| `lusena.pdp_care_steps` | (empty — theme defaults used) | Done |
+| `lusena.pdp_care_steps` | (empty - theme defaults used) | Done |
 | `lusena.badge_bestseller` | true | Done |
 
 ### Feature highlights (6 cards)
 
 | Metafield | Value | Status |
 |-----------|-------|--------|
-| `lusena.pdp_feature_1_*` through `lusena.pdp_feature_6_*` | (empty — theme defaults used) | **OPTIONAL** (can customize later) |
+| `lusena.pdp_feature_1_icon` | heart | Done |
+| `lusena.pdp_feature_1_title` | Mniej tarcia, mniej zmarszczek sennych | Done |
+| `lusena.pdp_feature_1_description` | Zmarszczki senne (sleep wrinkles) to efekt mechanicznego gniecenia skóry przez poduszkę - każdej nocy, godzina po godzinie. Gładka powierzchnia jedwabiu morwowego sprzyja redukcji tego tarcia. Efekt widać rano w lustrze. | Done |
+| `lusena.pdp_feature_2_icon` | layers | Pre-filled (universal) |
+| `lusena.pdp_feature_2_title` | Dlaczego 22 momme? | Pre-filled (universal) |
+| `lusena.pdp_feature_2_description` | Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy. | Pre-filled (universal) |
+| `lusena.pdp_feature_3_icon` | wind | Done |
+| `lusena.pdp_feature_3_title` | Chłodna strona poduszki — przez całą noc | Done |
+| `lusena.pdp_feature_3_description` | Jedwab pomaga naturalnie regulować temperaturę — włókna białka jedwabnego odprowadzają wilgoć i oddychają. Latem utrzymuje chłód, zimą nie wychładza. Koniec z obracaniem poduszki w poszukiwaniu zimnej strony. | Done |
+| `lusena.pdp_feature_4_icon` | shield-check | Pre-filled (universal) |
+| `lusena.pdp_feature_4_title` | Jedwab, nie satyna z poliestru | Pre-filled (universal) |
+| `lusena.pdp_feature_4_description` | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. | Pre-filled (universal) |
+| `lusena.pdp_feature_5_icon` | sparkles | Pre-filled (universal) |
+| `lusena.pdp_feature_5_title` | Certyfikat OEKO-TEX® Standard 100 | Pre-filled (universal) |
+| `lusena.pdp_feature_5_description` | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. | Pre-filled (universal) |
+| `lusena.pdp_feature_6_icon` | gift | Pre-filled (universal) |
+| `lusena.pdp_feature_6_title` | Gotowa do wręczenia | Pre-filled (universal) |
+| `lusena.pdp_feature_6_description` | Każda poszewka LUSENA przychodzi w eleganckim pudełku prezentowym - idealny upominek, który robi wrażenie. Bez dodatkowego pakowania. | Pre-filled (universal) |
+
+### Icon animation specs (for SVG coding agent)
+
+> For each feature card, describe the icon animation for the SVG agent. See constraints in `docs/product-metafields-reference.md`.
+
+| Card | Icon | Animation spec |
+|------|------|---------------|
+| 1 | heart | Heart shape with a very slow, gentle scale pulse (1.0→1.02→1.0) over 7 seconds. The heart seems to "breathe" - calm, protective feeling toward skin. Easing: ease-in-out. Barely perceptible - viewer should feel "polished" without consciously noticing. |
+| 2 | layers | 3 stacked horizontal layers. Bottom layer gently shifts down 1px then back, middle stays still, top shifts up 1px then back - a slow "breathing" of the stack over 8 seconds. Reinforces the feeling of density and substance. Easing: ease-in-out. |
+| 3 | wind | Two curved air-current lines flowing gently across the icon. Lines alternate opacity (0.5→1→0.5) in sequence with a slight horizontal drift (translateX 0→1px→0). 7-second full cycle. Easing: ease-in-out. Evokes a cool, calm breeze — refreshing and effortless. |
+| 4 | shield-check | Shield outline with a checkmark inside. Checkmark draws itself once via stroke-dashoffset animation over 1.5s on first viewport entry, then stays static permanently. Reinforces "verified, authentic" feeling. No looping. |
+| 5 | sparkles | 3 small diamond-shaped stars in a cluster. Stars gently twinkle in sequence (opacity 0.4→1→0.4), one star at a time, left to right. 7-second full cycle. Easing: ease-in-out. Subtle shimmer of quality and certification. |
+| 6 | gift | Gift box with ribbon on top. Very subtle "unwrap" motion - lid shifts up 1px then back down over 6 seconds. The ribbon bow has a tiny wiggle (rotate ±1°). Playful but restrained. Reinforces the excitement of receiving a beautifully wrapped gift. |
+
+## Validation results
+
+### Legal check
+- **Date:** 2026-03-14 (original), 2026-03-15 (card 3 update)
+- **Verdict:** PASS (1 fix applied in original; card 3 replacement PASS with 1 advisory hedge applied)
+- **Notes:** "Nie wchłania" (absolute) in benefit 2 → fixed to "Wchłania znacznie mniej" (consistent with scrunchie precedent). All beauty-effect claims use approved hedging ("sprzyja redukcji", "pomaga zachować"). No medical claims, no fabricated social proof. Card 1 "Efekt widać rano w lustrze" flagged as advisory - pre-approved by brandbook section 2.1 rule 2 for poszewka category.
+- **Card 3 update (2026-03-15):** Replaced care/washing card with temperature regulation card. "reguluje temperaturę" hedged to "pomaga naturalnie regulować temperaturę" (advisory). "Koniec z obracaniem poduszki" flagged as advisory — vivid metaphor, standard industry language, low risk. All claims are physical textile properties, no beauty-effect hedging required.
+
+### Customer validation
+- **Date:** 2026-03-14
+- **Runs:** 3 + composite assembly
+
+**Run 1 scores (full evaluation):**
+
+| Criteria | Kasia (34) | Ewa (47) | Zuzia (23) | Maja (38) | Average |
+|----------|-----------|---------|-----------|---------|---------|
+| Trust | 6/10 | 7/10 | 5/10 | 8/10 | 6.5/10 |
+| Purchase intent | 5/10 | 5/10 | 3/10 | 7/10 | 5.0/10 |
+| Premium feel | 7/10 | 4/10 | 6/10 | 7.5/10 | 6.1/10 |
+
+**Run 2 scores (after tagline softening + card 3 replacement + benefit 1 "Rano"):**
+
+| Criteria | Kasia (34) | Ewa (47) | Zuzia (23) | Maja (38) | Average |
+|----------|-----------|---------|-----------|---------|---------|
+| Trust | 7/10 | 8/10 | 6/10 | 7/10 | 7.0/10 |
+| Purchase intent | 6.5/10 | 8/10 | 4/10 | 7/10 | 6.4/10 |
+| Premium feel | 7.5/10 | 8/10 | 6/10 | 7/10 | 7.1/10 |
+
+**Run 3 scores (after reverting "Bawełna" + "Budzisz się"):**
+
+| Criteria | Kasia (34) | Ewa (47) | Zuzia (23) | Maja (38) | Average |
+|----------|-----------|---------|-----------|---------|---------|
+| Trust | 8/10 | 8/10 | 7/10 | 7/10 | 7.5/10 |
+| Purchase intent | 7/10 | 7/10 | 6/10 | 6/10 | 6.5/10 |
+| Premium feel | 8/10 | 8/10 | 8/10 | 5/10 | 7.25/10 |
+
+**Composite assembly (final):**
+- Tagline: Run 3 hybrid - "Bawełna" (specific, 3/4 prefer) + hedged ending (credible, no overpromise)
+- Benefit 1: "Budzisz się" (vivid, 3/4 prefer)
+- Benefit 3: "Włosy" instead of "Budzisz się" (resolves repetition that hurt Maja's premium score)
+- All other elements: Run 2/3 (unchanged - card 1 sleep wrinkles, card 3 care, headline, benefit 2)
+
+- **Key feedback across all runs:** Benefit 2 (cream retention) unanimously strongest element (Kasia, Zuzia). Card 1 (sleep wrinkles) best-written element (Maja). Card 3 (care) addressed real purchase barrier (all 4). "Bawełna" preferred over "zwykła poszewka" for specificity (3/4). "Budzisz się" preferred over "Rano" for vividness (3/4). "Budzisz się" repetition hurt Maja's premium perception - resolved via benefit 3 adjustment.
+- **Strongest elements (LOCKED):** Headline, benefit 2 (cream retention), card 1 (sleep wrinkles), SEO title
+- **Card 3 replaced (2026-03-15):** Care/washing card → temperature regulation card. Decision based on: (1) care info already in buybox accordion (redundant), (2) temperature is #5 purchase driver per competitor research, (3) all major silk brands (Blissy, Mayfairsilk, Mulberry Park) feature thermoregulation prominently, (4) persona validation: Option A scored 6.9 avg (highest), ranked 1st by 2/4 personas (Ewa, Maja), never ranked last by anyone. Option B (durability) scored 5.0, Option C (allergens) scored 6.0.
+- **Core tension:** Kasia/Ewa/Zuzia prefer direct, vivid language (bawełna, budzisz się). Maja prefers restrained, premium tone. Composite favors 3/4 majority with targeted fix for Maja's repetition concern.
+- **Site-level improvements flagged by personas:** reviews/social proof (4/4 critical), product photos (3/4), return policy visibility (3/4), comparison with cheaper alternatives (2/4), color/variant info (2/4)
+- **Final decision:** Copy finalized via composite assembly. Trust (7.5) and premium (7.25) above threshold. Purchase intent (6.5) limited by price sensitivity and site-level factors (no reviews, no photos, no return policy). Copy optimized to the limit of what text alone can achieve.
 
 ## Media
 
@@ -131,16 +214,23 @@ Suggested SKU format: `LUS-PIL-{3-letter color code}` (e.g., `LUS-PIL-GRY`)
 | Product photos | **PENDING** (no physical product yet) |
 | Lifestyle photos | **PENDING** |
 | Video | **PENDING** |
+| Packaging/unboxing photos | **PENDING** (critical for gift buyers per Ewa) |
 
 ## Collections
 
-Not assigned yet — to set up when more products exist.
+Not assigned yet - to set up when more products exist.
 
 ## Remaining action items
 
-1. **Cost per item** — fill when import cost is calculated
-2. **Variant colors** — finalize color names, then add SKUs and Color category metafield
-3. **Media** — upload product photos when available
-4. **Feature highlights** — optionally customize the 6 cards per product (theme defaults exist)
-5. **Collections** — assign when collections are created
-6. **VAT registration** — replace dummy PL0000000000 with real NIP before going live
+1. **Cost per item** - fill when import cost is calculated
+2. **Variant colors** - finalize color names, then add SKUs and Color category metafield
+3. **Media** - upload product photos when available; include:
+   - Packaging/unboxing shots (critical per Ewa's feedback)
+   - Close-up texture shots (critical per Maja's feedback)
+   - Product on pillow/in bedroom context (Maja's feedback)
+4. **Reviews system** - enable product reviews before launch (critical - all 4 personas flagged this)
+5. **Return policy** - ensure 60-day guarantee is visible on PDP (Kasia, Zuzia, Maja flagged absence)
+6. **Comparison section** - add Allegro/market comparison table (Kasia, Zuzia requested)
+7. **Collections** - assign when collections are created
+8. **VAT registration** - replace dummy PL0000000000 with real NIP before going live
+9. **OEKO-TEX certificate number** - add to specs or product page when documentation is ready

@@ -58,7 +58,7 @@ Każda noc na bawełnie to 8 godzin tarcia – dla Twojej skóry i włosów. LUS
 | Sytuacja | **Mów** (PL) | **Rób** | **Nie mów** |
 | :--- | :--- | :--- | :--- |
 | **Pochodzenie (Origin)** | **„Jedwab z Suzhou – Stolicy Jedwabiu od XV wieku."** Podkreślaj: „Shengze to centrum jedwabiu od czasów dynastii Ming. My kontrolujemy jakość w Polsce i wysyłamy w 24h." | **Praktyka:** Na PDP badge: 🇵🇱 „Wysyłka z Polski w 24h". Na etykietach: „Jedwab z Suzhou • Importer: LUSENA, [adres]". Na stronie „Nasza Jakość" – mapa z zaznaczonym Suzhou, zdjęcia manufaktury, certyfikat OEKO-TEX. W stopce: „Jedwab z Suzhou • Wysyłka z Polski 24h" | **NIE używaj:** ❌ „Made in China" / „Wyprodukowano w Chinach" (nie jest wymagane prawnie, brzmi negatywnie). ❌ „Zaprojektowano w UE/Polsce" (sugeruje lokalne pochodzenie). ❌ „Fabryka" – używaj „manufaktura" lub „pracownia". **ZAWSZE:** Pochodzenie = „Jedwab z Suzhou" (region, nie kraj). |
-| **Parametry techniczne** | „22 momme, klasa 6A – gęstość, którą poczujesz.” | Pokaż makro zdjęcia splotu i certyfikat wagi. Użyj porównania: „30% więcej jedwabiu niż w standardowych 19 momme”. | „Najlepszy na świecie” (ogólnik bez dowodu). |
+| **Parametry techniczne** | „22 momme, klasa 6A – gęstość, którą poczujesz.” | Pokaż makro zdjęcia splotu i certyfikat wagi. Użyj porównania: „22 momme — gęstszy i trwalszy niż typowe 16–19 momme na rynku”. | „Najlepszy na świecie” (ogólnik bez dowodu). |
 | **Efekty Beauty** | **„Obudź się bez odgnieceń. Gładkość zamiast tarcia.”** | Używaj języka korzyści (efekt rano w lustrze), ale zachowaj „pomaga/sprzyja” przy opisach medycznych. | „Leczy trądzik / Usuwa zmarszczki” (nielegalny claim medyczny). |
 | **Cena** | „Płacisz za czysty surowiec, nie za pośredników.” | Pokaż tabelę porównawczą (My vs Inni). Uzasadnij cenę gramaturą i brakiem marży importera tkanin. | „Taniej niż…” (wojna cenowa) lub przepraszanie za cenę. |
 | **Prezent** | „Gotowe do wręczenia. Pudełko, które robi wrażenie.” | Pokaż wideo z rozpakowywania (unboxing) z dźwiękiem szeleszczącej bibuły i klikiem magnesu. | „Najtańszy prezent premium” lub pokazywanie produktu w foliowym worku. |
@@ -156,9 +156,10 @@ Każda noc na bawełnie to 8 godzin tarcia – dla Twojej skóry i włosów. LUS
    * **Użycie:** Strona "Nasza Historia", karta w opakowaniu, CS playbook
 
 3. **Materiał i parametry:**
-   * **Claim:** „Jedwab morwowy 22 momme – o 30% gęstszy niż standardowe 19 momme"
-   * **Dowód:** COA/specyfikacja dostawcy, raport pomiaru gramatury
+   * **Claim:** „Jedwab morwowy 22 momme – gęstszy i trwalszy niż typowe 16–19 momme na rynku"
+   * **Dowód:** COA/specyfikacja dostawcy (potwierdza gramaturę 22 momme)
    * **Użycie:** PDP (nad ceną), Tabela Porównawcza, reklamy produktowe
+   * **Uwaga:** NIE używaj procentów (np. „30% gęstszy") — wymagają osobnej dokumentacji testowej. Samo podanie momme (22 vs 16–19) wystarczy jako porównanie; klient widzi różnicę liczbową.
 
 4. **Klasa włókna:**
    * **Claim:** „Klasa 6A – najwyższa klasyfikacja włókna jedwabnego"
@@ -204,7 +205,7 @@ Każda noc na bawełnie to 8 godzin tarcia – dla Twojej skóry i włosów. LUS
 **Badge'e PDP:**
 * „✓ Certyfikat OEKO-TEX 100"
 * „✓ Jedwab z Suzhou (600 lat tradycji)"  
-* „✓ 22 momme (30% gęstszy niż standard)"
+* „✓ 22 momme (gęstszy i trwalszy niż standard)"
 * „✓ 60 dni na test i zwrot"
 
 **Sekcja "Dlaczego Suzhou?":**
@@ -1148,7 +1149,7 @@ Welcome Flow konwertuje leady w klientów. Post-Purchase Flow zamienia jednorazo
    - Infografika/animacja: porównanie gęstości 16/19/22 momme
    - Tekst: „Momme to jednostka wagi jedwabiu. Im wyższa, tym gęstszy 
      i trwalszy materiał. Standard rynkowy to 19 momme. 
-     LUSENA to 22 momme – o 30% więcej jedwabiu w każdej poszewce."
+     LUSENA to 22 momme – gęstszy i trwalszy niż typowe 16–19 momme na rynku."
    - Zdjęcie makro: porównanie gęstości splotu
 
 4. SEKCJA: CERTYFIKAT OEKO-TEX 100
@@ -1362,7 +1363,7 @@ Welcome Flow konwertuje leady w klientów. Post-Purchase Flow zamienia jednorazo
 ├─────────────────────────────────────────────────────────────────┤
 │ [7] MINI-PORÓWNANIE (3 punkty, ikony ✓/✗)                      │
 │                                                                 │
-│ ✓ 22 momme (30% gęstszy niż standard)                          │
+│ ✓ 22 momme (gęstszy i trwalszy niż standard)                    │
 │ ✓ Magazyn w Polsce – wysyłka 24h                               │
 │ ✓ 60 dni testu (nawet używany)                                 │
 │                                                                 │
@@ -1398,7 +1399,7 @@ Welcome Flow konwertuje leady w klientów. Post-Purchase Flow zamienia jednorazo
 
 1. **Opis materiału** (konkrety: 22 momme, kontrola jakości).
 2. **Moduł: Tabela Prawdy (LUSENA vs. Inni).** Wizualne zestawienie (Checkmark vs. X):
-  *   **Gramatura:** **LUSENA (22 momme – splot gęstszy o 30%)** vs. Inni (19 momme – standardowa/cienka).
+  *   **Gramatura:** **LUSENA (22 momme – splot gęstszy i trwalszy)** vs. Inni (19 momme – standardowa/cienka).
   *   **Magazyn:** **Polska (Wysyłka 24h)** vs. Inni (Azja/Dropshipping – czas nieznany).
   *   **Pochodzenie:** **100% Jedwab Morwowy Klasy 6A** vs. Inni (Satyna poliestrowa lub mieszanki).
   *   **Ryzyko:** **60 dni testu (nawet po użyciu)** vs. Inni (Zwrot tylko oryginalnie zapakowany).
@@ -1882,17 +1883,16 @@ Scrunchie to na starcie **produkt derivatywny** — kupowany przy okazji poszewk
 
 ## 7.2 Alokacja pierwszego zamówienia
 
-**Budżet: $4 000–4 500 USD | MOQ-adjusted**
+**Budżet: ~$4 600 USD | MOQ-adjusted**
 
 | Produkt | Tier | Kolory | Sztuki | Koszt | ≈ % Budżetu | ≈ % Sztuk | Rola strategiczna |
 |---------|------|--------|--------|-------|-------------|-----------|-------------------|
-| Poszewka 50×60 | 1 – Filar | 3 (A, B, **C — limitka**) | 120 | $2 064 | 49% | 31% | Kotwica premium, AOV, brand building |
-| Scrunchie | 1 – Filar | 3 (A, B, C) | 150 | $435 | 10% | 38% | Entry point, cross-sell, repeat, gratis progowy |
-| Bonnet | 2 – Wzrost | 2 (A, B) | 60 | $1 044 | 25% | 15% | Narracja hair care, bundling z poszewką |
-| Hair Curler | 2 – Wzrost | 1 | 30 | $375 | 9% | 8% | Content hero, UGC |
-| Maska 3D | 3 – Uzupełnienie | 1 (A) | 30 | $306 | 7% | 8% | Bundle addon, upsell |
-| **RAZEM produkt** | | | **390** | **$4 224** | **100%** | **100%** | |
-| Bufor (przy budżecie $4 500) | | — | — | ~$276 | — | — | Szybki restock bestsellerów |
+| Poszewka 50×60 | 1 – Filar | 3 (A, B, **C — limitka**) | 120 | $2 064 | 45% | 29% | Kotwica premium, AOV, brand building |
+| Scrunchie | 1 – Filar | 3 (A, B, C) | 150 | $435 | 10% | 36% | Entry point, cross-sell, repeat, gratis progowy |
+| Bonnet | 2 – Wzrost | 2 (A, B) | 60 | $1 044 | 23% | 14% | Narracja hair care, bundling z poszewką |
+| Hair Curler | 2 – Wzrost | 1 | 50 | $625 | 14% | 12% | Content hero, UGC |
+| Maska 3D | 3 – Uzupełnienie | 1 (A) | 40 | $408 | 9% | 10% | Bundle addon, upsell |
+| **RAZEM produkt** | | | **420** | **$4 576** | **100%** | **100%** | |
 
 **Dlaczego poszewka na ~49%:**
 Poszewka to jedyny produkt z jednocyfrowym kosztem-za-noc (kotwica cenowa „0,XX zł/noc"), najwyższym AOV i najwyższym potencjałem marżowym. 3. kolor pozycjonowany jako „limitka" tworzy efekt FOMO i testuje preferencje kolorystyczne bez ryzyka — bo nawet jeśli sprzeda się wolniej, 40 szt. w cenie premium to akceptowalne zamrożenie vs potencjał budowania marki.
@@ -2095,7 +2095,7 @@ Poszewka 50×60 (top kolor) > Scrunchie (top kolor) > Bonnet > Poszewka (remaini
 
 ### Przed zamówieniem
 - [ ] Kolory A, B, C ustalone i zatwierdzone (paleta spójna cross-product)
-- [ ] Zamówienie Fazy 1 złożone wg alokacji z tabeli 7.2 (390 szt., 5 kategorii)
+- [ ] Zamówienie Fazy 1 złożone wg alokacji z tabeli 7.2 (420 szt., 5 kategorii)
 - [ ] Lead time dostawcy potwierdzony (3–5 tygodni)
 
 ### Konfiguracja sklepu
@@ -2197,7 +2197,7 @@ Spójne, przeszkolone odpowiedzi zespołu Customer Service na 10 najczęstszych/
 **Odpowiedź:**
 „To świetne pytanie – różnica w cenie wynika z materiału. Większość poszewek za 50-100 zł to satyna poliestrowa lub bardzo cienki jedwab 16 momme.
 
-LUSENA to 100% jedwab morwowy 22 momme – czyli o 30% więcej materiału niż standard. Do tego mamy certyfikat OEKO-TEX 100 i 60-dniową gwarancję testu.
+LUSENA to 100% jedwab morwowy 22 momme – gęstszy i trwalszy niż typowe 16–19 momme na rynku. Do tego mamy certyfikat OEKO-TEX 100 i 60-dniową gwarancję testu.
 
 Jeśli rozłożysz cenę na rok użytkowania, wychodzi około 0,68 zł za noc – czyli mniej niż kubek kawy. Czy chciałaby Pani, żebym wysłała porównanie parametrów?"
 

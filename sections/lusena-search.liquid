@@ -1,6 +1,6 @@
 <script src="{{ 'main-search.js' | asset_url }}" defer="defer"></script>
 <script>
-  /* Override Dawn's scrollIntoView-on-focus — field is already visible */
+  /* Override Dawn's scrollIntoView-on-focus - field is already visible */
   customElements.whenDefined('main-search').then(() => {
     const el = document.querySelector('.lusena-search-page main-search');
     if (el) el.scrollIntoView = () => {};
@@ -157,7 +157,7 @@
             </div>
           {%- endif -%}
 
-          {%- comment -%} Pagination — "Load more" pattern {%- endcomment -%}
+          {%- comment -%} Pagination - "Load more" pattern {%- endcomment -%}
           {%- if paginate.pages > 1 -%}
             <div class="lusena-search-page__pagination lusena-text-center{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
               {%- if paginate.next -%}
@@ -210,7 +210,7 @@
 {%- endpaginate -%}
 
 {% stylesheet %}
-  /* Push footer below fold — min-height on main, not flex stretch */
+  /* Push footer below fold - min-height on main, not flex stretch */
   main:has(.lusena-search-page) {
     display: flex;
     flex-direction: column;
@@ -241,7 +241,7 @@
     flex-direction: column;
   }
 
-  /* Header — centered search form */
+  /* Header - centered search form */
   .lusena-search-page .lusena-search-page__header {
     display: flex;
     flex-direction: column;
@@ -274,7 +274,7 @@
   .lusena-search__reset:hover { color: var(--lusena-text-1); }
   .lusena-search__reset-icon { width: 1.8rem; height: 1.8rem; }
 
-  /* Product grid — 2 / 3 / 4 columns (matches collection page) */
+  /* Product grid - 2 / 3 / 4 columns (matches collection page) */
   .lusena-search-page .lusena-search-page__grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -331,14 +331,14 @@
     letter-spacing: 0.05em;
   }
 
-  /* Soften search input focus — teal outline only, no black border */
+  /* Soften search input focus - teal outline only, no black border */
   .lusena-search-page .lusena-search__input:focus {
     border-color: var(--lusena-accent-cta);
     outline: none;
     box-shadow: 0 0 0 2px rgba(14, 94, 90, 0.15);
   }
 
-  /* Empty state — minimal padding, content flows tightly */
+  /* Empty state - minimal padding, content flows tightly */
   .lusena-search-page .lusena-empty {
     padding: var(--lusena-space-2) 0 var(--lusena-space-2);
   }

@@ -7,7 +7,7 @@
 | Field | Value | Status |
 |-------|-------|--------|
 | Title | {Product title in Polish} | |
-| Description | (empty — PDP uses metafields) | |
+| Description | (empty - PDP uses metafields) | |
 | Category | {Shopify standard taxonomy category} | |
 | Type | {Product type in Polish} | |
 | Vendor | LUSENA | |
@@ -21,7 +21,7 @@
 |-------|-------|--------|
 | Price | {price} zł (VAT inclusive) | |
 | Compare-at price | {price or "none"} | |
-| Cost per item | {cost or "—"} | |
+| Cost per item | {cost or "-"} | |
 | Charge tax | Yes (23% VAT, tax-inclusive) | |
 
 ## Variants
@@ -32,8 +32,8 @@
 
 | Variant | SKU | Barcode | Status |
 |---------|-----|---------|--------|
-| {Variant 1} | {SKU or "—"} | — | |
-| {Variant 2} | {SKU or "—"} | — | |
+| {Variant 1} | {SKU or "-"} | - | |
+| {Variant 2} | {SKU or "-"} | - | |
 
 SKU format: `LUS-{3-letter product}-{3-letter variant}` (e.g., `LUS-PIL-GRY`)
 
@@ -52,15 +52,15 @@ SKU format: `LUS-{3-letter product}-{3-letter variant}` (e.g., `LUS-PIL-GRY`)
 | Physical product | Yes | |
 | Product weight | {weight} g | |
 | Country of origin | China | |
-| HS code | {code — see product-setup-checklist.md} | |
+| HS code | {code - see product-setup-checklist.md} | |
 | Package | Store default | |
 
 ## SEO
 
 | Field | Value | Status |
 |-------|-------|--------|
-| Page title | {max 70 chars — product name + key differentiator + LUSENA} | |
-| Meta description | {max 160 chars — benefit + key specs} | |
+| Page title | {max 70 chars - product name + key differentiator + LUSENA} | |
+| Meta description | {max 160 chars - benefit + key specs} | |
 | URL handle | {url-friendly-handle} | |
 
 ## Category metafields (Shopify standard)
@@ -76,7 +76,12 @@ SKU format: `LUS-{3-letter product}-{3-letter variant}` (e.g., `LUS-PIL-GRY`)
 
 > For what each field does and how to write great copy, see `docs/product-metafields-reference.md`
 
-### Buybox content (REQUIRES CREATIVE SESSION — do not copy from other products)
+> **UNIVERSAL FIELDS - DO NOT MODIFY.** Fields marked "Pre-filled (universal)" are shared
+> across ALL LUSENA silk products. They were validated once and must not be rewritten or
+> "improved" during creative sessions. See the "Universal fields" section in
+> `docs/product-metafields-reference.md` for the canonical list and rationale.
+
+### Buybox content (REQUIRES CREATIVE SESSION - do not copy from other products)
 
 > These fields are the primary conversion drivers. Each product needs original copy crafted through
 > research, brandbook alignment, and legal review. See `docs/product-metafields-reference.md` for
@@ -88,7 +93,7 @@ SKU format: `LUS-{3-letter product}-{3-letter variant}` (e.g., `LUS-PIL-GRY`)
 | `lusena.pdp_tagline` | {craft in creative session} | |
 | `lusena.pdp_show_price_per_night` | {true for nightly products, false for daytime} | |
 
-### Benefit bullets (REQUIRES CREATIVE SESSION — do not copy from other products)
+### Benefit bullets (REQUIRES CREATIVE SESSION - do not copy from other products)
 
 | Metafield | Value | Status |
 |-----------|-------|--------|
@@ -101,13 +106,13 @@ SKU format: `LUS-{3-letter product}-{3-letter variant}` (e.g., `LUS-PIL-GRY`)
 | Metafield | Value | Status |
 |-----------|-------|--------|
 | `lusena.pdp_specs_material` | {e.g., 100% jedwab morwowy (Mulberry Silk)} | |
-| `lusena.pdp_specs_weave` | {e.g., Charmeuse (splot satynowy) — or leave blank} | |
-| `lusena.pdp_specs_momme` | {e.g., 22 momme — or leave blank} | |
-| `lusena.pdp_specs_grade` | {e.g., 6A (najwyższa) — or leave blank} | |
+| `lusena.pdp_specs_weave` | {e.g., Charmeuse (splot satynowy) - or leave blank} | |
+| `lusena.pdp_specs_momme` | {e.g., 22 momme - or leave blank} | |
+| `lusena.pdp_specs_grade` | {e.g., 6A (najwyższa) - or leave blank} | |
 | `lusena.pdp_specs_dimensions` | {e.g., 50 × 60 cm} | |
-| `lusena.pdp_specs_closure` | {e.g., Koperta — or leave blank} | |
-| `lusena.pdp_specs_weight` | {e.g., 85 g — or leave blank} | |
-| `lusena.pdp_specs_certification` | {e.g., OEKO-TEX® Standard 100 — or leave blank} | |
+| `lusena.pdp_specs_closure` | {e.g., Koperta - or leave blank} | |
+| `lusena.pdp_specs_weight` | {e.g., 85 g - or leave blank} | |
+| `lusena.pdp_specs_certification` | {e.g., OEKO-TEX® Standard 100 - or leave blank} | |
 
 ### Packaging
 
@@ -119,14 +124,27 @@ SKU format: `LUS-{3-letter product}-{3-letter variant}` (e.g., `LUS-PIL-GRY`)
 
 | Metafield | Value | Status |
 |-----------|-------|--------|
-| `lusena.pdp_care_steps` | {leave empty for default silk care — only fill if different} | |
+| `lusena.pdp_care_steps` | {leave empty for default silk care - only fill if different} | |
 | `lusena.badge_bestseller` | {true or false} | |
 
-### Feature highlights (6 cards) — optional
+### Feature highlights (6 cards) - optional
 
 | Metafield | Value | Status |
 |-----------|-------|--------|
-| `lusena.pdp_feature_1-6_*` | {leave empty for theme defaults — only customize if product needs different cards} | |
+| `lusena.pdp_feature_1-6_*` | {leave empty for theme defaults - only customize if product needs different cards} | |
+
+### Icon animation specs (for SVG coding agent)
+
+> For each feature card, describe the icon animation for the SVG agent. See constraints in `docs/product-metafields-reference.md`.
+
+| Card | Icon | Animation spec |
+|------|------|---------------|
+| 1 | {icon name} | {what it looks like + how it moves + what emotion it reinforces} |
+| 2 | {icon name} | {animation spec} |
+| 3 | {icon name} | {animation spec} |
+| 4 | {icon name} | {animation spec} |
+| 5 | {icon name} | {animation spec} |
+| 6 | {icon name} | {animation spec} |
 
 ## Validation results
 

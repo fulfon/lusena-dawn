@@ -99,7 +99,7 @@
     gap: var(--lusena-space-2);
   }
 
-  /* Image variant (no border-radius — editorial) */
+  /* Image variant (no border-radius - editorial) */
   .lusena-heritage__tile-image {
     width: 100%;
     aspect-ratio: 4 / 3;
@@ -112,8 +112,9 @@
     object-fit: cover;
   }
 
-  /* Icon circle accent color override */
-  .lusena-heritage__icon-circle {
+  /* Icon circle accent color override - double-class selector beats
+     .lusena-icon-circle in foundations.css which loads later */
+  .lusena-heritage .lusena-icon-circle {
     color: var(--lusena-accent-cta);
   }
 
@@ -259,7 +260,7 @@
           "type": "text",
           "id": "subtitle",
           "label": "Subtitle",
-          "default": "30% więcej jedwabiu niż standard 19 momme"
+          "default": "Gęstszy i trwalszy niż standard 16-19 momme"
         }
       ]
     }
@@ -294,7 +295,7 @@
           "settings": {
             "icon": "layers",
             "title": "22 momme • Klasa 6A",
-            "subtitle": "30% więcej jedwabiu niż standard 19 momme"
+            "subtitle": "Gęstszy i trwalszy niż standard 16-19 momme"
           }
         }
       ]

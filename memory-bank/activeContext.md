@@ -1,128 +1,82 @@
 # Active Context
 
-*Last updated: 2026-03-14*
+*Last updated: 2026-03-15*
 
 ## Current focus
 
-**Ready for commit.** All uncommitted theme work (57 files, ~1400 insertions) reviewed, memory bank updated. Product setup in Shopify admin partially complete (first product configured, store-wide settings done). Documentation and creative workflow skills created.
+**All product copy + bundle strategy COMPLETE.** 5 individual products finalized (creative sessions with legal checks + customer validation). Research-backed bundle architecture approved with 3 Phase 1 bundles. Animated icon system built for PDP feature highlights.
 
-Previous focus: Footer redesign + PDP UX audit + quality/FAQ refinements + cross-site standardization + quality page spacing audit + product setup docs + creative workflow skills.
+**Next:** Bundle creative sessions (headline, tagline, 3 benefits per bundle) → enter all products + bundles into Shopify admin → upload media when physical products arrive.
 
 ## Recent completed work
 
-### Footer redesign (2026-03-09)
-- Social media links (Instagram, Facebook) using lusena-icon
-- Payment icons bar (Visa, BLIK, PayPo, Przelewy24 SVGs)
-- Legal links row with configurable `legal_menu` link list
-- Newsletter UX rebuild: arrow submit button, success/error states, hCaptcha-compatible (position: relative fix)
-- Schema renamed from "LUSENA footer (draft)" to "LUSENA footer"
-- All Polish defaults in schema and footer-group.json
+### Bundle strategy (2026-03-15)
+- Research-backed bundle architecture in `memory-bank/doc/bundle-strategy.md`
+- 3 Phase 1 bundles: Nocna Rutyna (399 zł, 21.5%), Piękny Sen (349 zł, 20.3%), Scrunchie Trio (139 zł, 21.5%)
+- PDP cross-sell checkbox (scrunchie at 39 zł) replaces old Starter Kit — Presenter's Paradox research
+- Free shipping threshold set to 299 zł
+- Original brandbook bundle plan (§ 5.8) partially superseded with research basis documented
 
-### PDP buy-box spacing overhaul (2026-03-09)
-- Significant CSS tightening in `lusena-pdp.css` (margins reduced throughout mobile + desktop)
-- Social proof reordered from slot 8 → slot 2 in buybox panels
-- Benefits list styling fix (padding-left: 0, list-style: none)
-- Gallery/lightbox breakpoint aligned to 768px (was 750px)
-- Guarantee restructured (p instead of div, no nested p tags)
-- Summary title margin-bottom: 0, delivery margin tightened
+### Heatless curlers copy finalization (2026-03-15)
+- Material correction: confirmed 22 momme 6A silk (was previously uncertain)
+- Title changed: "Lokówki jedwabne" → "Jedwabny wałek do loków" (market research: "wałek" is universal in PL)
+- Custom care instructions (PP cotton filling requires different handling)
+- Legal check PASS, customer validation finalized (1 run — no copy-level improvements possible)
+- Full doc: `memory-bank/doc/products/heatless-curlers.md`
 
-### PDP UX audit (2026-03-09)
-**Visual rhythm** — alternating section backgrounds:
-1. Main Product → surface-1 (white)
-2. Feature Highlights → surface-2 (cream) — white icon circles, teal icons
-3. Quality Evidence → brand-bg (porcelain) — white cards (surface-1), cream icon circles (surface-2), no hover effect
-4. Truth Table → surface-1 (white) — cream mobile cards (surface-2)
-5. FAQ → surface-2 (cream) — text accordions
-6. Final CTA → brand-bg (porcelain) — "Sprawdź kolekcję" → /collections/all
+### Animated icon system for PDP (2026-03-15)
+- New `snippets/lusena-icon-animated.liquid` — 8 animated SVG icons (heart, layers, droplets, wind, shield-check, sparkles, gift, clock)
+- New `assets/lusena-icon-animations.css` — CSS keyframes, stagger delays via `--lusena-anim-stagger`, `prefers-reduced-motion` fallback
+- `sections/lusena-pdp-feature-highlights.liquid` updated to load animation CSS and render animated icons
+- Icon animation specs documented per product in `memory-bank/doc/products/{handle}.md`
 
-**Content changes:**
-- Feature highlights: heading "Co zyskujesz" added, bg_style=surface-2, border-top removed, icon-wrap white on cream
-- Quality evidence: cards white (surface-1) on porcelain, icon-wrap cream (surface-2), accordion JS rewritten with scrollHeight (no fixed max-height), hover removed to avoid icon-circle blending
-- Truth table: bg changed from brand to surface-1, subheading rewritten ("Większość tanich poszewek 'satynowych' to poliester. Porównaj fakty."), 3 existing rows rewritten with legally safe copy (Polish UOKiK compliant), 2 new rows (Hipoalergenność, Trwałość) — 5 rows total, inline SVGs → lusena-icon (circle-check, circle-x)
-- Truth table mobile cards: background changed from transparent to surface-2 in `lusena-foundations.css`
-- FAQ: consolidated from 10 to 6 items (removed: authenticity, oeko, origin, silk-vs-satin — redundant with earlier PDP sections)
-- Final CTA: "Przekonaj się sama" / "Sprawdź kolekcję" → /collections/all
-- Quality evidence: funnel-leaking CTAs removed from evidence-1 and evidence-2 (kept OEKO-TEX certificate link as it opens in new tab)
-- Media diacritics: fixed Polish characters in OEKO-TEX proof tile (both desktop and mobile)
+### Product copy sessions complete (2026-03-14)
+- **Silk scrunchie** — copy finalized (legal PASS, 2 validation runs, trust 7.4, premium 7.0)
+- **Silk bonnet** — copy finalized (title research: "czepek" > "bonnet", pricing: 239 zł, legal PASS, 2 validation runs)
+- **Jedwabna maska 3D** — copy finalized (2 validation runs, trust 7.75, premium 7.9 — highest scores)
+- **Poszewka jedwabna** — additional metafield data entered
+- All product docs: `memory-bank/doc/products/{handle}.md`
 
-### PDP quality evidence content rewrite + fixes (2026-03-09, post-audit)
-**Content rewrite — "Dlaczego LUSENA?" section reframed from "why silk?" → "why this brand?":**
-- Card 1 (evidence-0): "Certyfikat OEKO-TEX® - sprawdź sama" — transparency/verification angle, `use_certificate_link: true`, CTA "Zweryfikuj na oeko-tex.com →"
-- Card 2 (evidence-1): "Bezpośrednio z manufaktury - bez pośredników" — value proposition (direct import, no middlemen), legally safe ("przystępna cena" not "uczciwa cena", qualified superlatives)
-- Card 3 (evidence-2): "Polska kontrola jakości i wysyłka tego samego dnia" — operations angle ("w dni robocze" qualifier added)
-- Card 4 (evidence-3): NEW guarantee card replacing old 22 momme card — "60 nocy na test - zwrot bez pytań", icon `rotate-ccw`, concrete return process (email → free InPost label → 3-5 days refund)
-- All copy vetted against Polish consumer law (UOKiK, Ustawa o prawach konsumenta, nieuczciwych praktykach rynkowych)
+### Cross-site percentage claim cleanup (2026-03-14)
+- All "30%", "15%" momme claims removed from brandbook, sections, templates, docs
+- Replaced with qualitative "gęstszy i trwalszy niż standard"
+- Rule added to brandbook: never use percentages for momme comparison without own test documentation
 
-**Certificate link fix:** Changed from fetching PDF file (`shop.metafields.lusena.oeko_tex_certificate`) to building OEKO-TEX verification URL from certificate number metafield (`shop.metafields.lusena.oeko_tex_certificate_number`) — consistent with quality page. Fallback → `/pages/nasza-jakosc`.
+### Product documentation infrastructure (2026-03-14)
+- Expanded `docs/product-metafields-reference.md` — universal fields marked, creative workflow documented
+- Refined `docs/product-setup-checklist.md` — metafield definitions per product type
+- 4 new product docs + CSV export/import tooling (`memory-bank/doc/products/exports/`, `imports/`)
+- Updated product template and README
 
-**Buybox accordion fix:** Removed bottom border on last accordion item (`.lusena-pdp-accordion__item:last-child { border-bottom: 0; }`) — was touching the next section background.
+### Skills infrastructure (2026-03-15)
+- `lusena-theme-changelog` deleted (replaced by `lusena-pre-commit-sync`)
+- `lusena-pre-commit-sync` created across `.agent/`, `.claude/`, `.codex/`, `.opencode/`
+- `lusena-customer-validation` skill expanded (Polish personas, aggregated scoring)
 
-**Panel text alignment fix:** Updated `.lusena-pdp-quality-evidence__panel-inner` padding-left from hardcoded 72px to calculated values: 76px mobile (20px padding + 40px icon + 16px gap), 80px desktop (24px + 40px + 16px). Collapsed header and expanded detail text now align perfectly.
-
-### PDP content updates (2026-03-09, pre-audit)
-- Per-product metafield overrides: `pdp_emotional_headline`, `pdp_tagline`, `pdp_show_price_per_night`
-- Conditional specs rendering (blank rows hidden via `{%- if value_X != blank -%}`)
-- Returns deep-link fixed (clicks `<summary>` instead of setting `.open` attribute)
-- Sticky ATC per-night toggle via `pdp_show_price_per_night` metafield
-
-### Quality page refinements (2026-03-09)
-- 6A section removed from template (content merged into momme section's 4th benefit block)
-- Background rhythm: origin → surface-2, qc → surface-2
-- Icon system: emoji → lusena-icon names with fallback (`known_icons` allowlist)
-- CTA links added to origin section
-- Comparison table: CTA button added, row values updated ("30%" → "ponad 15% gęstszy splot")
-- Hero CTA → direct OEKO-TEX verification link (https://www.oeko-tex.com/...)
-- Momme: 4th benefit block added (6A grade content), body text updated
-
-### Quality page spacing audit (2026-03-10)
-- **Full spacing audit** completed on both viewports (desktop 1440x900, mobile 375x812)
-- **3 off-grid fixes** in `assets/lusena-foundations.css` (truth-table mobile cards): grid gap 12→16px, card-line margin 12→16px, card-label margin 5→8px. Affects Quality + PDP mobile.
-- **1 tier upgrade** in `sections/lusena-quality-certificates.liquid`: standard → spacious (64→96px desktop, 48→64px mobile). Creates "3-act structure" page rhythm.
-- **Verification**: Desktop 0 bugs; Mobile 5 false positives (inline bounding-box variance, `<strong>` overlap, hero snug-top values).
-
-### FAQ section improvements (2026-03-09)
-- `bg_style` setting (white/cream/brand backgrounds)
-- `anchor_id` setting for deep-linking (e.g., `#details` on PDP)
-- `is_returns_target` per-block checkbox (enables deep-link from guarantee link)
-- JS rewritten: `{% javascript %}` → inline `<script>`, arrow functions → function expressions, const/let → var
-- PDP FAQ: 4 blocks removed (authenticity, oeko, origin, silk-vs-satin), remaining answers expanded
-
-### Cross-site standardization (2026-03-09)
-- Trust bar: canonical copy (sentence case, "Gęstszy i trwalszy") across homepage, about, quality
-- Em-dash → hyphen standardization in all template JSON files and locales/pl.json
-- 4 new icons in lusena-icon.liquid: instagram, facebook, circle-check, circle-x
-- About hero: bg changed to brand, Polish-first defaults, values section kicker/heading added
-- Returns final CTA: sentence case, InPost mention, simpler CTA, secondary link restyled as plain underlined text
-- Testimonials: em-dash → hyphen in author attribution
-
-### Previous sessions (already committed)
-- Homepage UX audit (57beec8, 2026-03-08): bg rhythm, bundle cards, value anchors, newsletter removed
+### Previous sessions (already committed as 1be3e57)
+- Footer redesign, PDP/quality polish, spacing audit, product setup docs (2026-03-09/10)
+- Homepage UX audit (57beec8, 2026-03-08)
 - Blog/article + system pages migration (29fc700, cbeba1a, 160e283, 2026-03-06)
 - Search + cart migration (a874dde, 2026-03-05)
 - CSS foundations migration (652d4ba, 6e02637, 2026-03-04)
 
 ## Next steps
 
-1. **Commit uncommitted work** (57 files, ~1400 insertions) — READY
-2. **Finish pillowcase product setup** — see `memory-bank/doc/products/poszewka-jedwabna.md` for remaining items:
-   - Cost per item (when import cost known)
-   - Finalize variant colors + add SKUs
-   - Upload product media (photos/videos)
-   - Optionally customize feature highlights (6 cards)
-   - Assign to collections
-3. **Add remaining products** to Shopify admin (scrunchie, bonnet, eye mask, heatless curlers)
-4. **Replace dummy VAT registration** (PL0000000000) with real NIP before going live
-5. **Configure footer settings** in Shopify admin: real Instagram/Facebook URLs, legal menu, test hCaptcha newsletter flow
-6. PDP migration backlog items (see `memory-bank/doc/features/pdp-migration-backlog.md`)
-7. Homepage migration backlog remaining items (see `memory-bank/doc/features/homepage-migration-backlog.md`)
+1. **Bundle creative sessions** — headline, tagline, 3 benefits per bundle (Nocna Rutyna, Piękny Sen, Scrunchie Trio)
+2. **Enter all products into Shopify admin** — owner copies metafield values from `memory-bank/doc/products/*.md`; CSV imports available in `memory-bank/doc/products/imports/`
+3. **Create Phase 1 bundles** in Shopify admin using Shopify Bundles app (free)
+4. **Upload product media** when physical products arrive (photos, videos — critical per all 4 validation personas)
+5. **Replace dummy VAT registration** (PL0000000000) with real NIP before going live
+6. **Configure footer settings** in Shopify admin: real Instagram/Facebook URLs, legal menu, test hCaptcha newsletter flow
+7. **PDP cross-sell checkbox** — implement scrunchie upsell at 39 zł (see `pdp-migration-backlog.md` item 1)
+8. **Set free shipping threshold** to 299 zł in Shopify admin
+9. PDP migration backlog items (see `memory-bank/doc/features/pdp-migration-backlog.md`)
+10. Homepage migration backlog remaining items (see `memory-bank/doc/features/homepage-migration-backlog.md`)
 
 ## Pending to-do items
 
-### Cross-site "30%" claim cleanup — MOSTLY COMPLETE
-Fixed on: homepage trust bar, quality page (momme body, comparison table, trust bar), about page trust bar, returns trust bar, PDP quality evidence (old evidence-2 with "o 30% grubszy i trwalszy" replaced by guarantee card). **One remaining instance:** PDP `templates/product.json` feature-1 block title still says "22 momme - o 30% gęstszy niż standard" — must be corrected to qualitative alternative.
-
 ### Bonnet naming convention
-Decided: "bonnet" stays as the product name, but customer-facing copy must introduce it with Polish description on first mention: "jedwabny czepek na noc (bonnet)". Applied on homepage FAQ. **Must apply to:**
+Decided: Shopify title is "Jedwabny czepek do spania" (market-optimized). Customer-facing copy introduces with Polish description on first mention: "jedwabny czepek na noc (bonnet)". Applied on homepage FAQ. **Must apply to:**
 - PDP product descriptions
 - About page (if mentioned)
 - Quality page (if mentioned)
@@ -152,7 +106,6 @@ This tells a story: protect your face → protect your hair at night → protect
 - `main-product.liquid` (100KB) is dead code alongside `lusena-main-product.liquid`
 - `snippets/lusena-pdp-styles.liquid` is a doc-only stub (CSS moved to `assets/lusena-pdp.css`)
 - **DEV-ONLY in cart upsell:** Hardcoded fallback product (`all_products['the-compare-at-price-snowboard']`) in both `lusena-cart-items.liquid` and `cart-drawer.liquid`. Hardcoded color label (`'Beżowy'`) in both files. Must be replaced with real product data before production.
-- **PDP feature highlight "30%" claim:** `templates/product.json` feature-1 block title still says "22 momme - o 30% gęstszy niż standard". Must be corrected.
 
 ## Shopify-managed pages (not in theme — configured via admin)
 
@@ -183,10 +136,11 @@ CSS loads in this order via `layout/theme.liquid`:
 7. `lusena-footer.css` — footer section styles
 8. `lusena-pdp.css` — PDP styles (loaded per-page in section file)
 9. `lusena-bundles.css` — Bundles card grid (loaded per-section)
-10. `compiled_assets/styles.css` — remaining small `{% stylesheet %}` blocks (~38KB, limit 73KB)
+10. `lusena-icon-animations.css` — Animated icon keyframes (loaded per-section in feature highlights)
+11. `compiled_assets/styles.css` — remaining small `{% stylesheet %}` blocks (~38KB, limit 73KB)
 
 **MANDATORY:** After adding CSS to any `{% stylesheet %}` block, check compiled_assets size in DevTools — must stay under 55KB. See `memory-bank/doc/patterns/css-architecture.md` for full pattern.
 
 Shared components in foundations: `.lusena-split`, `.lusena-accordion`, `.lusena-trust-bar`, `.lusena-testimonial`, `.lusena-content-card`, `.lusena-newsletter`, `.lusena-truth-table`.
 
-Shared sections (reusable across pages): `lusena-faq` (homepage, quality, returns, PDP), `lusena-trust-bar` (homepage, about, quality), `lusena-final-cta` (homepage, about, quality, returns), `lusena-newsletter` (article, contact — with optional secondary link on article; removed from homepage 2026-03-08).
+Shared sections (reusable across pages): `lusena-faq` (homepage, quality, returns, PDP), `lusena-trust-bar` (homepage, about, quality), `lusena-final-cta` (homepage, about, quality, returns, PDP), `lusena-newsletter` (article, contact — with optional secondary link on article; removed from homepage 2026-03-08).

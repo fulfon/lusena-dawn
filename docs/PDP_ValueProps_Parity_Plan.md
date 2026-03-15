@@ -8,7 +8,7 @@ Port the PDP fragment containing:
 
 1) The 6 “feature highlight” cards:
 - “Mniej zmarszczek, więcej blasku…”
-- “22 momme — o 30% gęstszy niż standard…”
+- “22 momme — gęstszy i trwalszy niż standard…”
 - “OEKO-TEX® Standard 100…”
 - “Gotowe na prezent…”
 - “Proste pranie w pralce…”

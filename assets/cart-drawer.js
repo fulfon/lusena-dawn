@@ -55,6 +55,9 @@ class CartDrawer extends HTMLElement {
       { once: true }
     );
 
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.documentElement.style.setProperty('--scrollbar-width', scrollbarWidth + 'px');
+    document.body.style.paddingRight = scrollbarWidth + 'px';
     document.body.classList.add('overflow-hidden');
     if (!wasOpen) this.pushHistoryEntry();
   }
@@ -69,6 +72,8 @@ class CartDrawer extends HTMLElement {
     }
     this.shouldRestoreFocus = true;
     document.body.classList.remove('overflow-hidden');
+    document.body.style.paddingRight = '';
+    document.documentElement.style.removeProperty('--scrollbar-width');
 
     if (this.historyEntryActive && this.pushedHistoryEntry && !this.isClosingFromHistory) {
       this.historyEntryActive = false;

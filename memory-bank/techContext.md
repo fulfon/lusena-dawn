@@ -33,6 +33,7 @@
 ### Global components
 - `snippets/lusena-button-system.liquid` — Button primitives
 - `snippets/lusena-icon.liquid` — SVG icon system (includes `share` icon)
+- `snippets/lusena-icon-animated.liquid` — Animated SVG icon system (heart, layers, droplets, wind, shield-check, sparkles, gift, clock) with CSS class hooks and stagger delay support. Falls back to static `lusena-icon` for unknown icon names.
 - `snippets/lusena-section-gap-detector.liquid` — Same-bg section gap detection (JS)
 - `snippets/lusena-breadcrumbs.liquid` — Breadcrumbs (supports: product, collection, blog, article, page). Has `breadcrumb_label` param to override `page.title` (e.g., "Kontakt" instead of English "Contact")
 - `snippets/lusena-article-card.liquid` — Blog listing card (16:9 image, hover zoom, date, excerpt)
@@ -47,11 +48,12 @@
 - `assets/lusena-footer.css` — Footer section styles (extracted from section {% stylesheet %})
 - `assets/lusena-pdp.css` — All PDP-specific CSS (~34KB), loaded per-page
 - `assets/lusena-bundles.css` — Bundle card grid styles (loaded per-section in lusena-bundles.liquid)
+- `assets/lusena-icon-animations.css` — Animated icon CSS keyframes + prefers-reduced-motion (loaded per-section in lusena-pdp-feature-highlights.liquid)
 - `assets/base.css` — Dawn foundation (3,641 lines)
 
 ### CSS loading architecture
 - **Global assets in `theme.liquid`:** `lusena-foundations.css` → `lusena-button-system.css` → `lusena-header.css` → `lusena-hero.css` → `lusena-footer.css`
-- **Page-specific assets:** `lusena-pdp.css` loaded in `lusena-main-product.liquid`, `lusena-bundles.css` loaded in `lusena-bundles.liquid`
+- **Page-specific assets:** `lusena-pdp.css` loaded in `lusena-main-product.liquid`, `lusena-bundles.css` loaded in `lusena-bundles.liquid`, `lusena-icon-animations.css` loaded in `lusena-pdp-feature-highlights.liquid`
 - **`{% stylesheet %}` compiled_assets truncation:** All `{% stylesheet %}` blocks compile into `compiled_assets/styles.css` (~38KB after extraction, 73KB hard limit). Rules after limit silently dropped. **MANDATORY:** check size stays under 55KB after adding section CSS. See `memory-bank/doc/patterns/css-architecture.md`.
 - **Preflight resets in foundations:** `button`, `a`, `img`, `video` resets (replacing old Tailwind preflight). SVG intentionally excluded — SVGs expand without explicit dimensions.
 
@@ -64,11 +66,12 @@
 
 ## Skills inventory
 
-13 skills in `.claude/` (subset mirrored in `.agent/`, `.codex/`):
+14 skills in `.claude/` (subset mirrored in `.agent/`, `.codex/`, `.opencode/`):
 
 | Skill | Purpose |
 |-------|---------|
 | `lusena-update-memory-bank` | Post-work memory bank update |
+| `lusena-pre-commit-sync` | Pre-commit documentation sync (replaces lusena-theme-changelog) |
 | `lusena-v2-page-migration` | Page migration to brandbook v2 |
 | `lusena-draftshop-fragment-parity` | Copy UI from React prototype to theme |
 | `lusena-page-audit` | Reusable page UX audit checklist |

@@ -9,6 +9,7 @@
 -%}
 
 {%- if has_feature_blocks -%}
+  {{ 'lusena-icon-animations.css' | asset_url | stylesheet_tag }}
   {%- liquid
     assign override_style = ''
     if section.settings.padding_top > 0
@@ -80,6 +81,8 @@
               if feature_icon == blank
                 assign feature_icon = 'sparkles'
               endif
+
+              assign anim_stagger = forloop.index0 | times: 0.8
             -%}
 
             <div
@@ -87,10 +90,11 @@
               {{ block.shopify_attributes }}
             >
               <div class="lusena-pdp-feature-highlights__icon-wrap">
-                {% render 'lusena-icon',
+                {% render 'lusena-icon-animated',
                   name: feature_icon,
                   class: 'lusena-pdp-feature-highlights__icon-svg',
-                  stroke_width: 1.5
+                  stroke_width: 1.5,
+                  stagger: anim_stagger
                 %}
               </div>
               <div class="lusena-pdp-feature-highlights__text">
@@ -328,13 +332,13 @@
           "type": "text",
           "id": "title",
           "label": "Title",
-          "default": "Mniej zmarszczek, wiÄ™cej blasku"
+          "default": "Mniej zmarszczek, więcej blasku"
         },
         {
           "type": "textarea",
           "id": "description",
           "label": "Description",
-          "default": "Jedwab nie wchĹ‚ania wilgoci â€” TwĂłj krem nocny zostaje na skĂłrze, a nie na poduszce. Rano budzisz siÄ™ z nawilĹĽonÄ…, wygĹ‚adzonÄ… cerÄ…."
+          "default": "Jedwab nie wchłania wilgoci - Twój krem nocny zostaje na skórze, a nie na poduszce. Rano budzisz się z nawilżoną, wygładzoną cerą."
         }
       ]
     }
@@ -347,24 +351,24 @@
           "type": "feature",
           "settings": {
             "icon": "sparkles",
-            "title": "Mniej zmarszczek, wiÄ™cej blasku",
-            "description": "Jedwab nie wchĹ‚ania wilgoci â€” TwĂłj krem nocny zostaje na skĂłrze, a nie na poduszce. Rano budzisz siÄ™ z nawilĹĽonÄ…, wygĹ‚adzonÄ… cerÄ…."
+            "title": "Mniej zmarszczek, więcej blasku",
+            "description": "Jedwab nie wchłania wilgoci - Twój krem nocny zostaje na skórze, a nie na poduszce. Rano budzisz się z nawilżoną, wygładzoną cerą."
           }
         },
         {
           "type": "feature",
           "settings": {
             "icon": "wind",
-            "title": "22 momme â€” o 30% gÄ™stszy niĹĽ standard",
-            "description": "WiÄ™kszoĹ›Ä‡ poszewek to 16â€“19 momme. Nasze 22 momme to optymalny balans â€” jedwab jest gÄ™sty, trwaĹ‚y i przyjemnie chĹ‚odzÄ…cy."
+            "title": "22 momme - gęstszy i trwalszy niż standard",
+            "description": "Większość poszewek to 16-19 momme. Nasze 22 momme to optymalny balans - jedwab jest gęsty, trwały i przyjemnie chłodzący."
           }
         },
         {
           "type": "feature",
           "settings": {
             "icon": "shield-check",
-            "title": "OEKO-TEXÂ® Standard 100",
-            "description": "Certyfikat potwierdza brak substancji szkodliwych. Bezpieczne dla skĂłry wraĹĽliwej i alergikĂłw."
+            "title": "OEKO-TEX® Standard 100",
+            "description": "Certyfikat potwierdza brak substancji szkodliwych. Bezpieczne dla skóry wrażliwej i alergików."
           }
         },
         {
@@ -372,7 +376,7 @@
           "settings": {
             "icon": "gift",
             "title": "Gotowe na prezent",
-            "description": "KaĹĽda poszewka pakowana w eleganckie pudeĹ‚ko. Idealny prezent â€” bez potrzeby dodatkowego pakowania."
+            "description": "Każda poszewka pakowana w eleganckie pudełko. Idealny prezent - bez potrzeby dodatkowego pakowania."
           }
         },
         {
@@ -380,15 +384,15 @@
           "settings": {
             "icon": "droplets",
             "title": "Proste pranie w pralce",
-            "description": "Program delikatny, zimna woda, woreczek ochronny. Jedwab zachowuje wĹ‚aĹ›ciwoĹ›ci przez setki praĹ„."
+            "description": "Program delikatny, zimna woda, woreczek ochronny. Jedwab zachowuje właściwości przez setki prań."
           }
         },
         {
           "type": "feature",
           "settings": {
             "icon": "heart",
-            "title": "WĹ‚osy bez puszenia i Ĺ‚amania",
-            "description": "GĹ‚adka powierzchnia jedwabiu zmniejsza tarcie o 43% w porĂłwnaniu do baweĹ‚ny. Mniej supĹ‚Ăłw, wiÄ™cej blasku."
+            "title": "Włosy bez puszenia i łamania",
+            "description": "Gładka powierzchnia jedwabiu zmniejsza tarcie o 43% w porównaniu do bawełny. Mniej supłów, więcej blasku."
           }
         }
       ]

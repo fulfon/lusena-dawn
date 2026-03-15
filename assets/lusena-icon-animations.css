@@ -1,0 +1,207 @@
+/* ==========================================================================
+   LUSENA Animated Icon Styles
+   Used by:   snippets/lusena-icon-animated.liquid
+   Loaded in: sections/lusena-pdp-feature-highlights.liquid
+   ========================================================================== */
+
+/* ---------- Keyframes ---------- */
+
+@keyframes lusena-heart-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+@keyframes lusena-layers-top {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1px); }
+}
+
+@keyframes lusena-layers-bottom {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(1px); }
+}
+
+@keyframes lusena-droplets-fall {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(2px); }
+}
+
+@keyframes lusena-droplets-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes lusena-wind-wave {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(2px); }
+}
+
+@keyframes lusena-shield-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes lusena-sparkles-twinkle {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes lusena-gift-lid-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1px); }
+}
+
+@keyframes lusena-gift-bow-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(1deg); }
+  75% { transform: rotate(-1deg); }
+}
+
+@keyframes lusena-clock-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- Common: transform-box for all animated SVG elements ---------- */
+
+.lusena-anim-heart,
+.lusena-anim-layers-top,
+.lusena-anim-layers-bottom,
+.lusena-anim-droplets-small,
+.lusena-anim-droplets-large,
+.lusena-anim-wind-1,
+.lusena-anim-wind-2,
+.lusena-anim-wind-3,
+.lusena-anim-sparkles-1,
+.lusena-anim-sparkles-2,
+.lusena-anim-sparkles-3,
+.lusena-anim-gift-lid,
+.lusena-anim-gift-bow {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Clock hands rotate around the clock center (12,12 in 24x24 viewBox) */
+.lusena-anim-clock-hands {
+  transform-origin: 12px 12px;
+}
+
+/* ---------- Heart: gentle scale pulse, 7s ---------- */
+
+.lusena-anim-heart {
+  animation: lusena-heart-breathe 7s ease-in-out infinite;
+  animation-delay: var(--lusena-anim-stagger, 0s);
+}
+
+/* ---------- Layers: top/bottom breathing, 8s ---------- */
+
+.lusena-anim-layers-top {
+  animation: lusena-layers-top 8s ease-in-out infinite;
+  animation-delay: var(--lusena-anim-stagger, 0s);
+}
+
+.lusena-anim-layers-bottom {
+  animation: lusena-layers-bottom 8s ease-in-out infinite;
+  animation-delay: var(--lusena-anim-stagger, 0s);
+}
+
+/* ---------- Droplets: small falls, large pulses opacity, 7s ---------- */
+
+.lusena-anim-droplets-small {
+  animation: lusena-droplets-fall 7s ease-in-out infinite;
+  animation-delay: var(--lusena-anim-stagger, 0s);
+}
+
+.lusena-anim-droplets-large {
+  animation: lusena-droplets-pulse 7s ease-in-out infinite;
+  animation-delay: calc(var(--lusena-anim-stagger, 0s) + 1.5s);
+}
+
+/* ---------- Wind: staggered wave across 3 lines, 7s ---------- */
+
+.lusena-anim-wind-1 {
+  animation: lusena-wind-wave 7s ease-in-out infinite;
+  animation-delay: var(--lusena-anim-stagger, 0s);
+}
+
+.lusena-anim-wind-2 {
+  animation: lusena-wind-wave 7s ease-in-out infinite;
+  animation-delay: calc(var(--lusena-anim-stagger, 0s) + 0.7s);
+}
+
+.lusena-anim-wind-3 {
+  animation: lusena-wind-wave 7s ease-in-out infinite;
+  animation-delay: calc(var(--lusena-anim-stagger, 0s) + 1.4s);
+}
+
+/* ---------- Shield-check: one-time checkmark draw, 1.5s ---------- */
+
+.lusena-anim-shield-draw {
+  stroke-dasharray: 10;
+  stroke-dashoffset: 10;
+  animation: lusena-shield-draw 1.5s ease-out forwards;
+  animation-delay: calc(var(--lusena-anim-stagger, 0s) + 0.5s);
+}
+
+/* ---------- Sparkles: sequential twinkle across 3 elements, 7s ---------- */
+
+.lusena-anim-sparkles-1 {
+  animation: lusena-sparkles-twinkle 7s ease-in-out infinite;
+  animation-delay: var(--lusena-anim-stagger, 0s);
+}
+
+.lusena-anim-sparkles-2 {
+  animation: lusena-sparkles-twinkle 7s ease-in-out infinite;
+  animation-delay: calc(var(--lusena-anim-stagger, 0s) + 2.3s);
+}
+
+.lusena-anim-sparkles-3 {
+  animation: lusena-sparkles-twinkle 7s ease-in-out infinite;
+  animation-delay: calc(var(--lusena-anim-stagger, 0s) + 4.6s);
+}
+
+/* ---------- Gift: lid floats + bow wiggles, 6s ---------- */
+
+.lusena-anim-gift-lid {
+  animation: lusena-gift-lid-float 6s ease-in-out infinite;
+  animation-delay: var(--lusena-anim-stagger, 0s);
+}
+
+.lusena-anim-gift-bow {
+  animation: lusena-gift-bow-wiggle 6s ease-in-out infinite;
+  animation-delay: calc(var(--lusena-anim-stagger, 0s) + 0.3s);
+}
+
+/* ---------- Clock: continuous hand rotation, 8s ---------- */
+
+.lusena-anim-clock-hands {
+  animation: lusena-clock-spin 8s linear infinite;
+  animation-delay: var(--lusena-anim-stagger, 0s);
+}
+
+/* ---------- Reduced motion: disable all animations ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .lusena-anim-heart,
+  .lusena-anim-layers-top,
+  .lusena-anim-layers-bottom,
+  .lusena-anim-droplets-small,
+  .lusena-anim-droplets-large,
+  .lusena-anim-wind-1,
+  .lusena-anim-wind-2,
+  .lusena-anim-wind-3,
+  .lusena-anim-sparkles-1,
+  .lusena-anim-sparkles-2,
+  .lusena-anim-sparkles-3,
+  .lusena-anim-gift-lid,
+  .lusena-anim-gift-bow,
+  .lusena-anim-clock-hands {
+    animation: none !important;
+  }
+
+  /* Shield-check: show checkmark statically */
+  .lusena-anim-shield-draw {
+    animation: none !important;
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
+}

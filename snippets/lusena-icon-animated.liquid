@@ -1,0 +1,124 @@
+{% doc %}
+  Renders an animated Lucide-style inline SVG icon.
+  Same paths as lusena-icon.liquid but with CSS animation classes on sub-elements.
+  Requires: assets/lusena-icon-animations.css loaded on the page.
+
+  For icons not in the animated set, falls back to the static lusena-icon snippet.
+
+  @param {string} name - Icon name (heart, layers, droplets, wind, shield-check, sparkles, gift, clock)
+  @param {string} [class] - Optional CSS classes applied to the <svg>
+  @param {number} [stroke_width] - Optional stroke width (default: 1.5)
+  @param {string} [aria_label] - Optional accessible label; when blank, icon is aria-hidden
+  @param {number} [stagger] - Stagger delay in seconds for desynchronizing multiple icons (default: 0)
+{% enddoc %}
+
+{%- liquid
+  assign icon_name = name | default: ''
+  assign icon_class = class | default: ''
+  assign icon_stroke_width = stroke_width | default: 1.5
+  assign icon_aria_label = aria_label | default: ''
+  assign icon_stagger = stagger | default: 0
+
+  assign animated_icons = ',heart,layers,droplets,wind,shield-check,sparkles,gift,clock,'
+  assign check_name = ',' | append: icon_name | append: ','
+-%}
+
+{%- if animated_icons contains check_name -%}
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="{{ icon_stroke_width }}"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="{{ icon_class }}"
+    style="--lusena-anim-stagger: {{ icon_stagger }}s"
+    {%- if icon_aria_label != blank -%}
+      role="img"
+      aria-label="{{ icon_aria_label | escape }}"
+    {%- else -%}
+      aria-hidden="true"
+      focusable="false"
+    {%- endif -%}
+  >
+    {%- case icon_name -%}
+
+      {%- when 'heart' -%}
+        <g class="lusena-anim-heart">
+          <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"></path>
+        </g>
+
+      {%- when 'layers' -%}
+        <g class="lusena-anim-layers-top">
+          <path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.84l8.58 3.9a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.84z"></path>
+        </g>
+        <path d="M2 12l9.17 4.17a2 2 0 0 0 1.66 0L22 12"></path>
+        <g class="lusena-anim-layers-bottom">
+          <path d="M2 16l9.17 4.17a2 2 0 0 0 1.66 0L22 16"></path>
+        </g>
+
+      {%- when 'droplets' -%}
+        <g class="lusena-anim-droplets-small">
+          <path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"></path>
+        </g>
+        <g class="lusena-anim-droplets-large">
+          <path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"></path>
+        </g>
+
+      {%- when 'wind' -%}
+        <g class="lusena-anim-wind-1">
+          <path d="M12.8 19.6A2 2 0 1 0 14 16H2"></path>
+        </g>
+        <g class="lusena-anim-wind-2">
+          <path d="M17.5 8a2.5 2.5 0 1 1 2 4H2"></path>
+        </g>
+        <g class="lusena-anim-wind-3">
+          <path d="M9.8 4.4A2 2 0 1 1 11 8H2"></path>
+        </g>
+
+      {%- when 'shield-check' -%}
+        <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
+        <path class="lusena-anim-shield-draw" d="m9 12 2 2 4-4"></path>
+
+      {%- when 'sparkles' -%}
+        <g class="lusena-anim-sparkles-1">
+          <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path>
+        </g>
+        <g class="lusena-anim-sparkles-2">
+          <path d="M20 2v4"></path>
+          <path d="M22 4h-4"></path>
+        </g>
+        <g class="lusena-anim-sparkles-3">
+          <circle cx="4" cy="20" r="2"></circle>
+        </g>
+
+      {%- when 'gift' -%}
+        <g class="lusena-anim-gift-lid">
+          <rect x="3" y="8" width="18" height="4" rx="1"></rect>
+        </g>
+        <path d="M12 8v13"></path>
+        <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path>
+        <g class="lusena-anim-gift-bow">
+          <path d="M12 8H7.5a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8z"></path>
+          <path d="M12 8h4.5a2.5 2.5 0 0 0 0-5C14 3 12 8 12 8z"></path>
+        </g>
+
+      {%- when 'clock' -%}
+        <circle cx="12" cy="12" r="10"></circle>
+        <g class="lusena-anim-clock-hands">
+          <path d="M12 6v6l4 2"></path>
+        </g>
+
+    {%- endcase -%}
+  </svg>
+
+{%- else -%}
+  {%- comment -%} Not an animated icon - render static fallback {%- endcomment -%}
+  {% render 'lusena-icon',
+    name: icon_name,
+    class: icon_class,
+    stroke_width: icon_stroke_width,
+    aria_label: icon_aria_label
+  %}
+{%- endif -%}

@@ -18,7 +18,7 @@
 | # | Section | Background | Spacing tier | Status |
 |---|---------|-----------|-------------|--------|
 | 1 | `lusena-main-product` | surface-1 | custom (inline overrides) | Done |
-| 2 | `lusena-pdp-feature-highlights` | surface-2 | standard | Done (heading "Co zyskujesz", bg_style, white icon-wrap, border-top removed) |
+| 2 | `lusena-pdp-feature-highlights` | surface-2 | standard | Done (heading "Co zyskujesz", bg_style, white icon-wrap, border-top removed, animated icons via `lusena-icon-animated` + `lusena-icon-animations.css` 2026-03-15) |
 | 3 | `lusena-pdp-quality-evidence` | brand-bg | standard | Done (white cards, cream icon circles, no hover, scrollHeight accordion, funnel CTAs removed, content rewritten "why LUSENA?" angle, certificate verification URL from metafield, panel text alignment fix 76/80px, `rotate-ccw` icon added) |
 | 4 | `lusena-pdp-truth-table` | surface-1 | standard | Done (5 rows, legally safe copy, lusena-icon, cream mobile cards) |
 | 5 | `lusena-faq` (shared) | surface-2 | standard | Done (6 items, anchor_id=details, is_returns_target) |

@@ -1,13 +1,13 @@
 # Progress
 
-*Last updated: 2026-03-14*
+*Last updated: 2026-03-15*
 
 ## LUSENA-styled pages (13 of ~21 total)
 
 - [x] **Homepage** (`index.json`) — 9 sections: hero, trust bar, problem/solution, bestsellers, testimonials, bundles (card grid), heritage, FAQ, final CTA. Full UX audit completed 2026-03-08 (copy, flow, visual rhythm, value anchors, spacing). Newsletter removed (footer handles it).
-- [x] **Product page** (`product.json`) — 6 sections: main-product, feature highlights, quality evidence, truth table, FAQ (shared `lusena-faq`), final CTA (shared `lusena-final-cta`). Full UX audit completed 2026-03-09 (visual rhythm, content rewrite, legal compliance, FAQ consolidation, conversion CTA). Per-product metafield overrides for headline/tagline/per-night. Returns deep-link. PDP buy-box spacing overhauled.
+- [x] **Product page** (`product.json`) — 6 sections: main-product, feature highlights (animated icons), quality evidence, truth table, FAQ (shared `lusena-faq`), final CTA (shared `lusena-final-cta`). Full UX audit completed 2026-03-09 (visual rhythm, content rewrite, legal compliance, FAQ consolidation, conversion CTA). Per-product metafield overrides for headline/tagline/per-night. Returns deep-link. PDP buy-box spacing overhauled. Animated icons added 2026-03-15.
 - [x] **Collection page** (`collection.json`) — 1 section: main-collection + product card snippet
-- [x] **Quality page** (`page.nasza-jakosc.json`) — 10 sections: hero, trust bar, origin, momme, certificates, fire test, qc, comparison table, FAQ, final CTA. 6A section removed (content merged into momme). "30%" corrected to "15%". Spacing audit completed 2026-03-10 (3 off-grid fixes + 1 tier upgrade).
+- [x] **Quality page** (`page.nasza-jakosc.json`) — 10 sections: hero, trust bar, origin, momme, certificates, fire test, qc, comparison table, FAQ, final CTA. 6A section removed (content merged into momme). Spacing audit completed 2026-03-10 (3 off-grid fixes + 1 tier upgrade).
 - [x] **Returns page** (`page.zwroty.json`) — 5 sections: hero, steps, editorial, FAQ, final CTA
 - [x] **About page** (`page.o-nas.json`) — 5 sections: hero, trust bar, story, values, final CTA
 - [x] **Cart page** (`cart.json`) — 2 sections: cart-items (with upsell), cart-footer (totals, shipping bar, CTA, trust row)
@@ -41,6 +41,7 @@ Full plan: `memory-bank/doc/features/dawn-pages-migration-plan.md`
 - [x] Hero standalone CSS (`assets/lusena-hero.css`) — extracted from section {% stylesheet %} (2026-03-05)
 - [x] Footer standalone CSS (`assets/lusena-footer.css`) — extracted from section {% stylesheet %} (2026-03-05)
 - [x] Icon system (`snippets/lusena-icon.liquid`)
+- [x] Animated icon system (`snippets/lusena-icon-animated.liquid` + `assets/lusena-icon-animations.css`) — 8 animated SVG icons with CSS keyframes, stagger delays, prefers-reduced-motion fallback (2026-03-15)
 - [x] Section gap detector (`snippets/lusena-section-gap-detector.liquid`)
 - [x] Header (`sections/lusena-header.liquid`) — migrated to foundations
 - [x] Footer (`sections/lusena-footer.liquid`) — migrated to foundations (2026-03-04)
@@ -51,12 +52,15 @@ Full plan: `memory-bank/doc/features/dawn-pages-migration-plan.md`
 - [x] Generic final CTA (`sections/lusena-final-cta.liquid`) — reusable across all pages
 - [x] Bundles standalone CSS (`assets/lusena-bundles.css`) — bundle card grid styles (loaded per-section) (2026-03-07)
 - [x] Reusable page audit skill (`.claude/skills/lusena-page-audit/`) — standardized UX audit checklist (2026-03-08)
-- [x] Customer validation skill (`.claude/skills/lusena-customer-validation/`) — 4-persona copy evaluation (2026-03-14)
+- [x] Customer validation skill (`.claude/skills/lusena-customer-validation/`) — 4-persona copy evaluation (2026-03-14, expanded 2026-03-15)
 - [x] Legal check skill (`.claude/skills/lusena-legal-check/`) — EU/UOKiK compliance check (2026-03-14)
 - [x] Spacing audit skill (`.claude/skills/lusena-spacing-audit/`) — automated spacing measurement + validation (2026-03-10)
+- [x] Pre-commit sync skill (`.claude/skills/lusena-pre-commit-sync/`) — memory bank documentation sync before commits (2026-03-15)
 - [x] Product metafields reference (`docs/product-metafields-reference.md`) — field-by-field PDP mapping + creative process (2026-03-14)
 - [x] Product setup checklist (`docs/product-setup-checklist.md`) — metafield definitions + example values (2026-03-14)
 - [x] Product catalog docs (`memory-bank/doc/products/`) — per-product admin data tracking (2026-03-14)
+- [x] Product CSV import/export tooling (`memory-bank/doc/products/imports/`, `exports/`) — Shopify CSV import files + generator script (2026-03-15)
+- [x] Bundle strategy (`memory-bank/doc/bundle-strategy.md`) — research-backed bundle architecture, economics, decision triggers (2026-03-15)
 - [x] Spacing audit tooling (`docs/spacing-audit/`) — measurement JS scripts + spec schemas (2026-03-10)
 - [x] Preflight resets in foundations — button, anchor, img/video (2026-03-05)
 - [x] compiled_assets truncation guard pattern documented (2026-03-05)
@@ -130,10 +134,26 @@ Body/main Tailwind classes moved to `lusena-foundations.css` global rules (body 
 
 **Products:**
 - [~] **Poszewka jedwabna 50×60** — basic info, pricing (269 zł), shipping, SEO, most metafields done. Pending: cost per item, final colors/SKUs, media, feature highlights, collections. Full status: `memory-bank/doc/products/poszewka-jedwabna.md`
-- [ ] Scrunchie jedwabny — not started
-- [ ] Bonnet jedwabny — not started
-- [ ] Opaska na oczy — not started
-- [ ] Lokówki jedwabne — not started
+- [x] **Scrunchie jedwabny** — Copy finalized (2026-03-14). Full status: `memory-bank/doc/products/silk-scrunchie.md`
+- [x] **Bonnet jedwabny (czepek do spania)** — Copy finalized (2026-03-14). Price: 239 zł. Full creative session completed (research → craft → legal check PASS → 2 validation runs → finalize). Full status: `memory-bank/doc/products/silk-bonnet.md`
+- [x] **Jedwabna maska 3D do spania** — Copy finalized (2026-03-14). Price: 169 zł. Full creative session completed (research → craft → legal check PASS → 2 validation runs → finalize). Full status: `memory-bank/doc/products/jedwabna-maska-3d.md`
+- [x] **Heatless curlers (Jedwabny wałek do loków)** — Copy finalized (2026-03-15). Price: 219 zł. Material correction applied (22 momme 6A silk confirmed). Title changed from "Lokówki" to "Wałek". Full status: `memory-bank/doc/products/heatless-curlers.md`
+
+## Bundle Strategy (approved 2026-03-15)
+
+Full strategy: `memory-bank/doc/bundle-strategy.md`
+
+**Phase 1 (launch):**
+- [x] Bundle architecture defined (research-backed, brandbook partially superseded)
+- [ ] **Nocna Rutyna** (poszewka + bonnet = 399 zł, 21.5% off) — creative session pending
+- [ ] **Piękny Sen** (poszewka + maska = 349 zł, 20.3% off) — creative session pending
+- [ ] **Scrunchie Trio** (3× scrunchie = 139 zł, 21.5% off) — creative session pending
+- [ ] PDP cross-sell checkbox (scrunchie at 39 zł) — needs dev implementation
+- [ ] Free shipping threshold set to 299 zł
+
+**Phase 2 (data-gated, after 8-12 weeks):**
+- [ ] Kompletna Nocna Rutyna (poszewka + bonnet + maska = 499 zł)
+- [ ] Duo dla Pary (2× poszewka = 429 zł, seasonal)
 
 ## Active migration backlogs
 
@@ -143,7 +163,7 @@ Body/main Tailwind classes moved to `lusena-foundations.css` global rules (body 
 ## UX backlog (evaluate during polish phase)
 
 - **Mobile header icons** — Currently only cart icon visible on mobile. Consider adding search icon and account/login icon to the mobile header for better discoverability.
-- **Cross-site "30%" claim cleanup** — MOSTLY DONE. Fixed on: homepage trust bar, quality page (momme, comparison, trust bar), about page trust bar, returns trust bar, PDP quality evidence (old card replaced by guarantee card). One remaining instance: PDP `product.json` feature-1 block title still says "22 momme - o 30% gęstszy niż standard".
+- **Cross-site percentage claim cleanup** — COMPLETE (2026-03-14). All percentage-based momme claims (30%, 15%) removed site-wide, from brandbook, and from all docs. Replaced with qualitative "gęstszy i trwalszy niż standard". Rule added to brandbook: never use percentages for momme without own test documentation.
 - **Bonnet naming** — Apply Polish-first naming ("jedwabny czepek na noc (bonnet)") on all customer-facing pages. Homepage done, other pages pending.
 - **Value anchors expansion** — Homepage bestsellers done (`lusena-product-card__per-night`, `show_value_anchor` param). Expand to collection/search pages when ready.
 

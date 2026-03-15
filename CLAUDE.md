@@ -44,6 +44,7 @@ Dawn's original sections remain in the repo but are NOT used on the live storefr
 - **Migration lessons (read before migrating pages):** `memory-bank/doc/patterns/migration-lessons.md`
 - **Product catalog (Shopify admin data):** `memory-bank/doc/products/` — per-product metafields, pricing, variants, SEO
 - **Product setup checklist:** `docs/product-setup-checklist.md` — metafield definitions, example values per product type
+- **Bundle strategy (pricing, phases, research):** `memory-bank/doc/bundle-strategy.md` — complete bundle architecture, economics, and decision triggers
 
 ### CSS architecture
 
@@ -59,6 +60,10 @@ Shopify compiles all `{% stylesheet %}` blocks into one `compiled_assets/styles.
 - **>50 lines or shared CSS** → must go in a standalone `assets/lusena-*.css` file
 - **After adding CSS to any `{% stylesheet %}` block:** check compiled_assets size in DevTools Network tab — it must stay **under 55KB**
 - If over 55KB: extract the largest block into a standalone asset (see `memory-bank/doc/patterns/css-architecture.md` for the extraction steps)
+
+### Product metafields
+
+Before creating or modifying product metafields, read `docs/product-metafields-reference.md` — it contains **universal fields** (specs, feature cards 2/4/5/6, care) that are shared across ALL products and must NOT be modified per product. Only fields marked "REQUIRES CREATIVE SESSION" in the product file should be crafted. Never use percentage claims for momme comparisons (e.g., "30% gęstszy") — use qualitative language only.
 
 ## Key Conventions
 

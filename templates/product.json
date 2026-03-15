@@ -81,9 +81,9 @@
         "feature-1": {
           "type": "feature",
           "settings": {
-            "icon": "wind",
-            "title": "22 momme - o 30% gęstszy niż standard",
-            "description": "Większość poszewek to 16-19 momme. Nasze 22 momme to optymalny balans - jedwab jest gęsty, trwały i przyjemnie chłodzący."
+            "icon": "layers",
+            "title": "Dlaczego 22 momme?",
+            "description": "Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy."
           }
         },
         "feature-2": {
@@ -213,7 +213,7 @@
           "type": "row",
           "settings": {
             "metric": "Oddychalność",
-            "lusena_value": "Termoregulacyjny — skóra oddycha całą noc.",
+            "lusena_value": "Termoregulacyjny - skóra oddycha całą noc.",
             "others_value": "Zatrzymuje ciepło i wilgoć, sprzyja poceniu."
           }
         },
@@ -229,7 +229,7 @@
           "type": "row",
           "settings": {
             "metric": "Hipoalergenność",
-            "lusena_value": "Naturalnie hipoalergiczny — nie gromadzi roztoczy i bakterii tak łatwo.",
+            "lusena_value": "Naturalnie hipoalergiczny - nie gromadzi roztoczy i bakterii tak łatwo.",
             "others_value": "Może sprzyjać namnażaniu bakterii i powstawaniu nieprzyjemnego zapachu."
           }
         },
@@ -279,7 +279,7 @@
           "type": "item",
           "settings": {
             "question": "Czy jedwab LUSENA jest odpowiedni dla alergików i cery trądzikowej?",
-            "answer": "<p>Tak. Jedwab morwowy jest naturalnie hipoalergiczny — nie gromadzi roztoczy, kurzu ani bakterii tak łatwo jak bawełna czy syntetyki. To materiał, który <strong>oddycha i nie wchłania wilgoci ze skóry</strong>, co sprzyja komfortowi cery wrażliwej i skłonnej do podrażnień.</p><p>Każdy produkt LUSENA jest certyfikowany OEKO-TEX® Standard 100 — niezależne laboratorium potwierdza brak substancji szkodliwych. Bezpieczny kontakt ze skórą, nawet najwrażliwszą.</p>"
+            "answer": "<p>Tak. Jedwab morwowy jest naturalnie hipoalergiczny - nie gromadzi roztoczy, kurzu ani bakterii tak łatwo jak bawełna czy syntetyki. To materiał, który <strong>oddycha i nie wchłania wilgoci ze skóry</strong>, co sprzyja komfortowi cery wrażliwej i skłonnej do podrażnień.</p><p>Każdy produkt LUSENA jest certyfikowany OEKO-TEX® Standard 100 - niezależne laboratorium potwierdza brak substancji szkodliwych. Bezpieczny kontakt ze skórą, nawet najwrażliwszą.</p>"
           }
         },
         "faq-care": {
@@ -300,7 +300,7 @@
           "type": "item",
           "settings": {
             "question": "Kiedy zauważę pierwsze efekty?",
-            "answer": "<p>Różnicę w dotyku i komforcie poczujesz od pierwszego użycia — jedwab 22 momme jest wyraźnie gładszy i chłodniejszy niż bawełna czy syntetyki.</p><p>Konkretne korzyści zależą od produktu:</p><ul><li><strong>Poszewka</strong> — mniej zagnieceń na skórze rano, włosy mniej splątane po nocy. Długoterminowo jedwab sprzyja zachowaniu nawilżenia skóry (2-4 tygodnie).</li><li><strong>Bonnet</strong> — fryzura utrzymana na miejscu, mniej puszenia i łamania po przebudzeniu.</li><li><strong>Scrunchie</strong> — brak śladu po gumce, mniej łamania i elektryzowania włosów.</li><li><strong>Opaska na oczy</strong> — głębszy sen dzięki pełnemu zaciemnieniu, brak odcisków na skórze wokół oczu.</li><li><strong>Lokówki</strong> — naturalnie wymodelowane fale po jednej nocy. Efekt zależy od typu i długości włosów.</li></ul><p>Gwarancja 60 dni pozwala Ci przetestować produkt w spokoju — jeśli nie poczujesz różnicy, zwróć bez pytań.</p>"
+            "answer": "<p>Różnicę w dotyku i komforcie poczujesz od pierwszego użycia - jedwab 22 momme jest wyraźnie gładszy i chłodniejszy niż bawełna czy syntetyki.</p><p>Konkretne korzyści zależą od produktu:</p><ul><li><strong>Poszewka</strong> - mniej zagnieceń na skórze rano, włosy mniej splątane po nocy. Długoterminowo jedwab sprzyja zachowaniu nawilżenia skóry (2-4 tygodnie).</li><li><strong>Bonnet</strong> - fryzura utrzymana na miejscu, mniej puszenia i łamania po przebudzeniu.</li><li><strong>Scrunchie</strong> - brak śladu po gumce, mniej łamania i elektryzowania włosów.</li><li><strong>Opaska na oczy</strong> - głębszy sen dzięki pełnemu zaciemnieniu, brak odcisków na skórze wokół oczu.</li><li><strong>Lokówki</strong> - naturalnie wymodelowane fale po jednej nocy. Efekt zależy od typu i długości włosów.</li></ul><p>Gwarancja 60 dni pozwala Ci przetestować produkt w spokoju - jeśli nie poczujesz różnicy, zwróć bez pytań.</p>"
           }
         }
       },
@@ -324,7 +324,7 @@
       "settings": {
         "transparent_bg": false,
         "heading": "Przekonaj się sama",
-        "body": "Przetestuj przez 60 nocy. Jeśli nie poczujesz różnicy — zwrócimy pieniądze.",
+        "body": "Przetestuj przez 60 nocy. Jeśli nie poczujesz różnicy - zwrócimy pieniądze.",
         "cta_label": "Sprawdź kolekcję",
         "cta_link": "/collections/all"
       }

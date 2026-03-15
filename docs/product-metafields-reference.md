@@ -4,6 +4,12 @@ How each metafield connects to the PDP (Product Detail Page), what it does, and 
 
 ## Creative session process (follow for every product)
 
+### The goal
+
+Every metafield value must maximize the chance of the customer buying the product. The copy should create an emotional experience - the customer must FEEL the benefit of owning this product, FEAR the alternative (cotton, cheap polyester), and TRUST that LUSENA delivers real quality. The PDP is not a spec sheet - it's a conversation that transforms a browser into a buyer while maintaining LUSENA's premium, calm, expert tone. Research the best possible copy, validate it, and never settle for "good enough."
+
+### The process
+
 Creative copy fields (headline, tagline, benefits) must NOT be copy-pasted from other products. Each product deserves original copy crafted through this process:
 
 ```
@@ -13,11 +19,19 @@ Creative copy fields (headline, tagline, benefits) must NOT be copy-pasted from 
    - Research how top competitors position this product type
    - Identify EU/Polish legal constraints for the claims you want to make
 
-2. CRAFT COPY
-   - For each creative field: generate 2-3 options
-   - Compare pros/cons of each option
-   - Pick the best combination (headline + tagline + benefits must work as a SYSTEM)
-   - Present options to the owner — let them pick or adjust
+2. CRAFT COPY (product-specific fields ONLY)
+   IMPORTANT: Check the "Universal fields" section below FIRST. Cards 2, 4, 5, 6
+   and all specs/care are pre-filled and must NOT be modified. Only craft:
+   a. Buybox: emotional headline, tagline, 3 benefits (5 fields)
+   b. Feature highlights: cards 1 and 3 ONLY - icon + title + description (6 fields)
+   c. Icon animation specs: 6 briefs for SVG agent (6 specs)
+   d. SEO: page title (max 70 chars), meta description (max 160 chars) (2 fields)
+
+   For each creative field: generate 2-3 options
+   Compare pros/cons of each option
+   Pick the best combination - all fields must work as a SYSTEM
+   SEO note: page title and meta description are the FIRST touchpoint (Google search results).
+   Write them to maximize click-through: benefit + key differentiator + brand name.
 
 3. LEGAL CHECK → invoke /lusena-legal-check
    - Verify all claims against approved/forbidden lists
@@ -28,29 +42,82 @@ Creative copy fields (headline, tagline, benefits) must NOT be copy-pasted from 
 4. CUSTOMER VALIDATION RUN 1 → invoke /lusena-customer-validation
    - 4 persona agents evaluate the copy independently (in Polish)
    - Aggregate feedback: scores, objections, weak/strong elements
-   - Identify what needs fixing
+   - Per-element tracking: mark each element as LOCK (praised by 3+) or REFINE (criticized by 2+)
+   - If all averages ≥ 7.0 → skip to step 8
 
-5. REFINE
-   - Address flagged objections and weak elements
+5. REFINE (lock + refine pattern)
+   - Do NOT change LOCKED elements (prevents regression)
+   - Only refine elements marked REFINE
    - Stay within legal boundaries established in step 3
    - If refinement introduces NEW claims → quick legal re-check on new claims only
 
 6. CUSTOMER VALIDATION RUN 2 → invoke /lusena-customer-validation (focused)
    - Only re-evaluate changed elements
-   - Confirm fixes worked, no regressions
+   - Update per-element tracking (lock/refine)
+   - If all averages ≥ 7.0 → skip to step 8
+   - If still mixed → one more targeted refinement + Run 3
 
-7. FINALIZE OR ESCALATE
-   - If Run 2 is clean → done, enter values into product file
-   - If still issues → present to owner for human decision
-   - NEVER offer Run 3 — real validation happens with actual customers
+6b. CUSTOMER VALIDATION RUN 3 (if needed) → final validation
+   - If all averages ≥ 7.0 → finalize
+   - If still mixed → composite step (see below)
+
+7. COMPOSITE STEP (only if Run 3 is still mixed)
+   - Compare all 3 versions element by element
+   - Pick the best-scoring version of each element based on its primary dimension:
+     headline → trust+premium, tagline → trust, benefits → intent
+   - Assemble composite, save to product file as the expert recommendation
+   - Hard cap: 3 runs + 1 composite. NEVER exceed this.
 
 8. COMPLETE THE PRODUCT FILE
-   - Fill all remaining fields: SEO (page title, meta description), factual specs, packaging, badge, price-per-night
-   - For SEO: apply the same benefit-driven approach (page title = product + key differentiator + brand, meta description = benefit + specs in 160 chars)
-   - For feature highlights: check if theme defaults are appropriate for this product type. If the product is significantly different from the pillowcase (e.g., heatless curlers), customize the 6 cards.
+   - Fill all remaining fields: factual specs, packaging, badge, price-per-night
    - Record validation scores in the product file (see Validation section in template)
-   - Present the complete product file to the owner for final review
+   - Present the complete product file to the owner for confirmation
 ```
+
+## Universal fields (DO NOT MODIFY during creative sessions)
+
+These metafields are **identical across all LUSENA silk products** (pillowcase, scrunchie, bonnet, 3D eye mask). They were validated once and must be copy-pasted as-is. **Do not rewrite, "improve", or customize them** - they are shared defaults, not creative fields.
+
+**Exception:** Heatless curlers use the same 22 momme 6A silk but have a PP cotton filling inside. All 4 universal cards apply. Care steps need custom values due to the filling. See `memory-bank/doc/products/heatless-curlers.md` for details.
+
+### Universal specs (same for all standard silk products)
+
+| Metafield | Value |
+|-----------|-------|
+| `lusena.pdp_specs_material` | 100% jedwab morwowy (Mulberry Silk) |
+| `lusena.pdp_specs_weave` | Charmeuse (splot satynowy) |
+| `lusena.pdp_specs_momme` | 22 momme |
+| `lusena.pdp_specs_grade` | 6A (najwyższa) |
+| `lusena.pdp_specs_certification` | OEKO-TEX® Standard 100 |
+| `lusena.pdp_care_steps` | (leave empty - theme defaults apply) |
+
+### Universal feature cards (positions 2, 4, 5, 6)
+
+| Position | Icon | Title | Description |
+|----------|------|-------|-------------|
+| **2** | `layers` | Dlaczego 22 momme? | Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy. |
+| **4** | `shield-check` | Jedwab, nie satyna z poliestru | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. |
+| **5** | `sparkles` | Certyfikat OEKO-TEX® Standard 100 | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. |
+| **6** | `gift` | Gotowa do wręczenia | *(swap product name per product - see product file)* |
+
+Feature card positions **1** and **3** are product-specific and REQUIRE a creative session.
+
+### What the creative session SHOULD craft (per product)
+
+| Field | Why it's product-specific |
+|-------|--------------------------|
+| `pdp_emotional_headline` | Different benefit angle per product type |
+| `pdp_tagline` | Different problem/solution per product type |
+| `pdp_benefit_1-3` | Different purchase motivations per product type |
+| `pdp_feature_1_*` | Product-specific primary benefit card |
+| `pdp_feature_3_*` | Product-specific secondary benefit card |
+| SEO (page title, meta description) | Different keywords and benefit hooks per product |
+
+### Legal rule: no percentage claims for momme
+
+Never use percentage comparisons for momme (e.g., "30% gęstszy", "15% więcej"). These require dedicated test documentation we don't own. Use qualitative language instead: "gęstszy i trwalszy niż typowe 16-19 momme na rynku". The raw numbers (22 vs 16-19) speak for themselves.
+
+---
 
 ## PDP Visual Layout (top to bottom)
 
@@ -102,11 +169,11 @@ Creative copy fields (headline, tagline, benefits) must NOT be copy-pasted from 
 | **Visual style** | Small, uppercase-ish caption text. First thing the customer reads after seeing the gallery image. |
 | **Fallback if blank** | Falls back to theme editor setting (`section.settings.emotional_headline`). If that is also blank, nothing renders. |
 | **Source file** | `snippets/lusena-pdp-summary.liquid` (line 42-46) |
-| **Conversion role** | **The hook.** This is the #1 emotional trigger. It must make the customer feel the BENEFIT of owning this product — not describe it. It should hit vanity, aspiration, or fear of the alternative. |
+| **Conversion role** | **The hook.** This is the #1 emotional trigger. It must make the customer feel the BENEFIT of owning this product - not describe it. It should hit vanity, aspiration, or fear of the alternative. |
 | **Copy guidelines** | One short sentence. Sentence case, no exclamation marks. Benefit-driven, not feature-driven. Must create a vivid mental image (e.g., waking up, looking in the mirror). |
 | **Legal notes** | Use approved hedging language for beauty claims: "sprzyja redukcji", "pomaga zachować". Never claim medical effects ("leczy", "usuwa zmarszczki"). Mechanical/physical claims (creases, friction) are safe. |
-| **Good example** | "Obudź się bez zagnieceń — od pierwszej nocy." |
-| **Bad example** | "Poszewka z jedwabiu 22 momme" (feature, not benefit — boring) |
+| **Good example** | "Obudź się bez zagnieceń - od pierwszej nocy." |
+| **Bad example** | "Poszewka z jedwabiu 22 momme" (feature, not benefit - boring) |
 
 ---
 
@@ -119,10 +186,10 @@ Creative copy fields (headline, tagline, benefits) must NOT be copy-pasted from 
 | **Visual style** | Secondary body text, muted color. 2-3 sentences max. |
 | **Fallback if blank** | Falls back to theme editor setting (`section.settings.tagline`). If that is also blank, nothing renders. |
 | **Source file** | `snippets/lusena-pdp-summary.liquid` (line 52-56) |
-| **Conversion role** | **The proof.** After the emotional headline hooks them, the tagline delivers the WHY — key specs, origin, certification. It should combine problem awareness (cotton = bad) with proof (22 momme, Grade 6A, OEKO-TEX). |
-| **Copy guidelines** | PAS structure works best: Problem → Agitate → Solve. Lead with the cotton problem, then present your product as the solution with proof points. Keep it scannable — max 2-3 sentences. |
+| **Conversion role** | **The proof.** After the emotional headline hooks them, the tagline delivers the WHY - key specs, origin, certification. It should combine problem awareness (cotton = bad) with proof (22 momme, Grade 6A, OEKO-TEX). |
+| **Copy guidelines** | PAS structure works best: Problem → Agitate → Solve. Lead with the cotton problem, then present your product as the solution with proof points. Keep it scannable - max 2-3 sentences. |
 | **Legal notes** | All claims must be substantiable. "22 momme" and "Grade 6A" need supplier documentation. "OEKO-TEX Standard 100" needs the actual certificate. Origin claims ("z Suzhou") need supplier records. |
-| **Good example** | "Bawełna chłonie wilgoć i gniecie skórę przez 8 godzin snu. Ta poszewka z jedwabiu morwowego 22 momme, Grade 6A z Suzhou, z certyfikatem OEKO-TEX® Standard 100 — zmienia to od pierwszej nocy." |
+| **Good example** | "Bawełna chłonie wilgoć i gniecie skórę przez 8 godzin snu. Ta poszewka z jedwabiu morwowego 22 momme, Grade 6A z Suzhou, z certyfikatem OEKO-TEX® Standard 100 - zmienia to od pierwszej nocy." |
 | **Bad example** | "Najlepsza poszewka na rynku. Kup teraz!" (no proof, aggressive, superlative without evidence) |
 
 ---
@@ -137,7 +204,7 @@ Creative copy fields (headline, tagline, benefits) must NOT be copy-pasted from 
 | **Fallback if blank** | Defaults to `true` (shows per-night price). Only set to `false` for products where per-night doesn't make sense (scrunchies, heatless curlers). |
 | **Source file** | `snippets/lusena-pdp-summary.liquid` (line 32-38) |
 | **Conversion role** | **Price objection killer.** "269 zł" feels expensive. "0,74 zł/noc" feels like nothing. This reframing is one of the most powerful conversion tools in the buybox. |
-| **When to use** | `true` for products used nightly (pillowcase, bonnet, eye mask). `false` for daytime/occasional products (scrunchie, heatless curlers). |
+| **When to use** | `true` for products used nightly (pillowcase, bonnet, 3D mask). `false` for daytime/occasional products (scrunchie, heatless curlers). |
 
 ---
 
@@ -151,10 +218,10 @@ Creative copy fields (headline, tagline, benefits) must NOT be copy-pasted from 
 | **Fallback if blank** | Falls back to "benefit" blocks defined in the theme editor. If those are also blank, the entire benefits section is hidden. |
 | **Source file** | `sections/lusena-main-product.liquid` (lines 70-160) |
 | **Conversion role** | **The final push.** These are the last content elements the customer reads before deciding to click "Add to cart." They must address the TOP 3 purchase motivations. Together they should tell a complete story. |
-| **Copy guidelines** | Each bullet = one benefit angle. Use a consistent structure: "[Result] — [mechanism/contrast]" or "[You experience X] — [because Y]". The 3 bullets should cover different angles (don't repeat the same point). Recommended trinity: skin + product retention + hair. |
-| **Legal notes** | Same as headline — use "sprzyja redukcji" not "usuwa". Physical/mechanical claims (friction, creases, absorption) are safe. Specific percentages (e.g., "43% less friction") need test documentation. |
-| **Good set** | 1: "Budzisz się bez odcisków poduszki — jedwab nie gniecie skóry jak bawełna" / 2: "Nie wchłania kremów i serum — pielęgnacja zostaje na skórze, nie na poszewce" / 3: "Budzisz się bez plątaniny i puszenia — fryzura przetrwa noc bez wysiłku" |
-| **Bad set** | 1: "Wysokiej jakości jedwab" / 2: "Premium materiał" / 3: "Luksusowy produkt" (all say the same thing — features, no benefits) |
+| **Copy guidelines** | Each bullet = one benefit angle. Use a consistent structure: "[Result] - [mechanism/contrast]" or "[You experience X] - [because Y]". The 3 bullets should cover different angles (don't repeat the same point). Recommended trinity: skin + product retention + hair. |
+| **Legal notes** | Same as headline - use "sprzyja redukcji" not "usuwa". Physical/mechanical claims (friction, creases, absorption) are safe. Specific percentages (e.g., "43% less friction") need test documentation. |
+| **Good set** | 1: "Budzisz się bez odcisków poduszki - jedwab nie gniecie skóry jak bawełna" / 2: "Nie wchłania kremów i serum - pielęgnacja zostaje na skórze, nie na poszewce" / 3: "Budzisz się bez plątaniny i puszenia - fryzura przetrwa noc bez wysiłku" |
+| **Bad set** | 1: "Wysokiej jakości jedwab" / 2: "Premium materiał" / 3: "Luksusowy produkt" (all say the same thing - features, no benefits) |
 
 ---
 
@@ -179,7 +246,7 @@ Creative copy fields (headline, tagline, benefits) must NOT be copy-pasted from 
 | **Fallback if blank** | Each row with a blank value is automatically hidden. No empty rows are ever shown. |
 | **Source file** | `snippets/lusena-pdp-buybox-panels.liquid` (lines 62-269) |
 | **Conversion role** | **The evidence.** For the detail-oriented buyer ("Seeks quality for years" segment), this is where they verify the product is real, premium, and worth the price. The expandable tooltips educate without overwhelming. |
-| **Copy guidelines** | Factual, precise values. No marketing language — this is the spec sheet. Use the international term in parentheses where helpful: "100% jedwab morwowy (Mulberry Silk)". |
+| **Copy guidelines** | Factual, precise values. No marketing language - this is the spec sheet. Use the international term in parentheses where helpful: "100% jedwab morwowy (Mulberry Silk)". |
 | **Legal notes** | All values must match supplier documentation exactly. "22 momme" must be verified by COA. "6A (najwyższa)" must be confirmed per batch. "OEKO-TEX® Standard 100" requires the actual certificate number on file. |
 
 ---
@@ -193,8 +260,8 @@ Creative copy fields (headline, tagline, benefits) must NOT be copy-pasted from 
 | **Visual style** | Bulleted list with automatic icons: item 1 gets `sparkles`, item 2 gets `gift`, item 3+ gets `file-text`. |
 | **Fallback if blank** | Shows default: "Jedwabny produkt LUSENA", "Eleganckie pudełko prezentowe LUSENA", "Karta z instrukcją pielęgnacji". |
 | **Source file** | `snippets/lusena-pdp-buybox-panels.liquid` (lines 71-72, 118-121, 303-319) |
-| **Conversion role** | **Gift appeal.** For the "Perfect gift" segment, this confirms the product comes beautifully packaged. Seeing "elegant gift box" removes the need to buy separate wrapping. Also signals premium positioning — cheap products don't come in presentation boxes. |
-| **Copy guidelines** | Keep the order consistent: product first, box second, extras after. The icon assignment depends on item position. Short, noun-phrase items — no full sentences. |
+| **Conversion role** | **Gift appeal.** For the "Perfect gift" segment, this confirms the product comes beautifully packaged. Seeing "elegant gift box" removes the need to buy separate wrapping. Also signals premium positioning - cheap products don't come in presentation boxes. |
+| **Copy guidelines** | Keep the order consistent: product first, box second, extras after. The icon assignment depends on item position. Short, noun-phrase items - no full sentences. |
 | **Important:** | Icons are assigned by **position**, not by content. Item 1 always gets `sparkles`, item 2 always gets `gift`, item 3+ always gets `file-text`. Keep the product item first and the box item second. |
 
 ---
@@ -208,9 +275,9 @@ Creative copy fields (headline, tagline, benefits) must NOT be copy-pasted from 
 | **Visual style** | Simple bulleted list (no icons). |
 | **Fallback if blank** | Shows 5 default silk care steps: gentle machine wash 30°C, silk detergent, flat dry (no tumble dryer), no bleach, low-temp iron on reverse side. |
 | **Source file** | `snippets/lusena-pdp-buybox-panels.liquid` (lines 74-75, 123-126, 352-359) |
-| **Conversion role** | **Objection removal.** Many customers worry silk is hard to care for. Seeing "machine washable, gentle cycle" removes that barrier. The defaults work for all silk products — only override if a product has genuinely different care needs. |
+| **Conversion role** | **Objection removal.** Many customers worry silk is hard to care for. Seeing "machine washable, gentle cycle" removes that barrier. The defaults work for all silk products - only override if a product has genuinely different care needs. |
 | **Copy guidelines** | Short imperative sentences. Start each with a verb. Practical, not promotional. |
-| **Recommendation** | Leave blank for all standard silk products — the defaults are well-crafted and consistent. Only fill for non-standard products (e.g., heatless curlers with foam filling might need different care). |
+| **Recommendation** | Leave blank for all standard silk products - the defaults are well-crafted and consistent. Only fill for non-standard products (e.g., heatless curlers with foam filling might need different care). |
 
 ---
 
@@ -224,7 +291,7 @@ Creative copy fields (headline, tagline, benefits) must NOT be copy-pasted from 
 | **Fallback if blank** | No badge shown. Same as `false`. |
 | **Source file** | `snippets/lusena-pdp-media.liquid` (lines 19-27) |
 | **Conversion role** | **Social proof signal.** "Bestseller" implies other people have bought and validated this product. Powerful for the hesitant buyer. |
-| **When to use** | Only for genuinely top-selling products. The brandbook strictly forbids fabricating social proof — don't mark everything as bestseller. For launch, mark the pillowcase as bestseller (flagship product). |
+| **When to use** | Only for genuinely top-selling products. The brandbook strictly forbids fabricating social proof - don't mark everything as bestseller. For launch, mark the pillowcase as bestseller (flagship product). |
 
 ---
 
@@ -238,9 +305,23 @@ Creative copy fields (headline, tagline, benefits) must NOT be copy-pasted from 
 | **Fallback if blank** | Falls back to the block settings configured in the theme editor. The current defaults cover: skin/cream retention, 22 momme density, OEKO-TEX certification, gift packaging, machine washing, hair protection. |
 | **Source file** | `sections/lusena-pdp-feature-highlights.liquid` (lines 47-78) |
 | **Conversion role** | **Secondary benefits.** The buybox covers the top 3 reasons to buy (benefit bullets). The feature cards expand to 6 deeper angles: temperature regulation, hypoallergenic properties, origin story, durability, care ease, gift readiness. These catch buyers who scroll past the buybox wanting more detail. |
-| **Copy guidelines** | Title: short benefit statement (sentence case, no exclamation marks). Description: 1-2 sentences expanding on the title with proof or vivid detail. Each card should cover a DIFFERENT angle — no overlap with each other or with the 3 benefit bullets. |
+| **Copy guidelines** | Title: short benefit statement (sentence case, no exclamation marks). Description: 1-2 sentences expanding on the title with proof or vivid detail. Each card should cover a DIFFERENT angle - no overlap with each other or with the 3 benefit bullets. |
 | **Available icons** | `sparkles`, `wind`, `shield-check`, `gift`, `droplets`, `heart`, `map-pin`, `layers`, `package`, `truck`, `clock`, `file-text` |
 | **When to customize** | Leave blank to use theme defaults (good enough for all standard silk products). Fill only when a product has unique features that differ significantly from the pillowcase defaults (e.g., heatless curlers don't need "machine washable silk" card). |
+| **Icon animation spec** | For each feature card, write an animation brief describing how the icon should subtly animate. This spec is provided to the SVG coding agent who creates the animated icon. Include: what the icon visually represents, what motion it should have, and what emotion it should reinforce. |
+
+**Icon animation constraints (for SVG agent briefs):**
+- Each icon has a **unique** animation matching its meaning (never generic pulse/rotate)
+- **5-8 second** loop cycle minimum - anything faster feels anxious
+- **Barely perceptible** movement - the customer should feel "this is polished" without consciously noticing the animation
+- **Stagger start times** across the 6 icons to prevent synchronized blinking
+- Must include `prefers-reduced-motion` fallback (static)
+- Animation only active inside the feature highlights section - icons elsewhere on the page stay static
+
+**Example animation spec (for SVG agent):**
+> Icon: `sparkles` - Feature: "Mniej zmarszczek, więcej blasku"
+> Visual: 3 small diamond-shaped stars arranged in a cluster.
+> Animation: Stars gently twinkle in sequence (opacity 0.4→1→0.4), one at a time, left to right. 6-second full cycle. Easing: ease-in-out. The effect should feel like a gentle shimmer, not a disco light.
 
 ## Metafield priority (what to fill first)
 
