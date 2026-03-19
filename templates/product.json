@@ -49,10 +49,11 @@
         "delivery_free_fallback_label": "Darmowa dostawa InPost od 199 zł",
         "delivery_eta_label": "Dostawa: 1-2 dni robocze",
         "delivery_returns_link_label": "60 dni na zwrot",
-        "price_per_night_prefix": "Tylko ",
-        "price_per_night_suffix": " / noc (przy rocznym użytkowaniu)",
+        "price_per_night_prefix": "Tylko",
+        "price_per_night_suffix": "/ noc (przy rocznym użytkowaniu)",
         "select_color_label": "Wybierz kolor",
         "add_to_cart_label": "Dodaj do koszyka - wysyłka dziś",
+        "add_to_cart_loading_label": "Dodaję...",
         "buy_now_label": "Kup teraz",
         "buy_now_loading_label": "Przekierowuję...",
         "sticky_add_to_cart_label": "Dodaj do koszyka",
@@ -65,6 +66,28 @@
         "secure_payment_label": "Bezpieczna płatność",
         "video_placeholder": "Video Preview",
         "cross_sell_heading": "Pasuje do"
+      }
+    },
+    "17739496097255ea88": {
+      "type": "apps",
+      "blocks": {
+        "simple_bundles_kits_infinite_options_selector_3TnMew": {
+          "type": "shopify://apps/simple-bundles-kits/blocks/infinite-options-selector/e553276b-36b2-446d-b80a-aa47fe5f96ac",
+          "settings": {
+            "select_placeholder": "Please select an option",
+            "disable_oos_options": false,
+            "show_price_variance": true,
+            "rank_options_by_price_diff": true,
+            "custom_css": "",
+            "custom_js": ""
+          }
+        }
+      },
+      "block_order": [
+        "simple_bundles_kits_infinite_options_selector_3TnMew"
+      ],
+      "settings": {
+        "include_margins": true
       }
     },
     "pdp_feature_highlights": {
@@ -129,7 +152,11 @@
       ],
       "settings": {
         "heading": "Co zyskujesz",
-        "bg_style": "surface-2"
+        "bg_style": "surface-2",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
       }
     },
     "pdp_quality_evidence": {
@@ -250,11 +277,16 @@
         "row_durability"
       ],
       "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
         "heading": "Jedwab vs satyna",
         "subheading": "Większość tanich poszewek 'satynowych' to poliester. Porównaj fakty.",
         "metric_label": "Cecha",
         "lusena_label": "Jedwab LUSENA",
-        "others_label": "Satyna (Poliester)"
+        "others_label": "Satyna (Poliester)",
+        "footer_note": ""
       }
     },
     "pdp_details_questions": {
@@ -264,7 +296,8 @@
           "type": "item",
           "settings": {
             "question": "Wysyłka i dostawa",
-            "answer": "<p>Wysyłamy z naszego magazynu w Polsce. Zamówienia złożone do godziny 14:00 wysyłamy jeszcze tego samego dnia. Dostawa InPost/kurier zajmuje zazwyczaj 1-2 dni robocze. Darmowa dostawa od 199 zł.</p>"
+            "answer": "<p>Wysyłamy z naszego magazynu w Polsce. Zamówienia złożone do godziny 14:00 wysyłamy jeszcze tego samego dnia. Dostawa InPost/kurier zajmuje zazwyczaj 1-2 dni robocze. Darmowa dostawa od 199 zł.</p>",
+            "is_returns_target": false
           }
         },
         "faq-returns": {
@@ -279,28 +312,32 @@
           "type": "item",
           "settings": {
             "question": "Czy jedwab LUSENA jest odpowiedni dla alergików i cery trądzikowej?",
-            "answer": "<p>Tak. Jedwab morwowy jest naturalnie hipoalergiczny - nie gromadzi roztoczy, kurzu ani bakterii tak łatwo jak bawełna czy syntetyki. To materiał, który <strong>oddycha i nie wchłania wilgoci ze skóry</strong>, co sprzyja komfortowi cery wrażliwej i skłonnej do podrażnień.</p><p>Każdy produkt LUSENA jest certyfikowany OEKO-TEX® Standard 100 - niezależne laboratorium potwierdza brak substancji szkodliwych. Bezpieczny kontakt ze skórą, nawet najwrażliwszą.</p>"
+            "answer": "<p>Tak. Jedwab morwowy jest naturalnie hipoalergiczny - nie gromadzi roztoczy, kurzu ani bakterii tak łatwo jak bawełna czy syntetyki. To materiał, który <strong>oddycha i nie wchłania wilgoci ze skóry</strong>, co sprzyja komfortowi cery wrażliwej i skłonnej do podrażnień.</p><p>Każdy produkt LUSENA jest certyfikowany OEKO-TEX® Standard 100 - niezależne laboratorium potwierdza brak substancji szkodliwych. Bezpieczny kontakt ze skórą, nawet najwrażliwszą.</p>",
+            "is_returns_target": false
           }
         },
         "faq-care": {
           "type": "item",
           "settings": {
             "question": "Jak prać i pielęgnować jedwab?",
-            "answer": "<ul><li>Prać w pralce: program delikatny, maks. 30°C</li><li>Używać detergentu do jedwabiu lub delikatnych tkanin</li><li>Suszyć na płasko - nie używać suszarki bębnowej</li><li>Nie wybielać, nie prać z chlorem</li><li>Prasować na najniższej temperaturze z lewej strony</li></ul>"
+            "answer": "<ul><li>Prać w pralce: program delikatny, maks. 30°C</li><li>Używać detergentu do jedwabiu lub delikatnych tkanin</li><li>Suszyć na płasko - nie używać suszarki bębnowej</li><li>Nie wybielać, nie prać z chlorem</li><li>Prasować na najniższej temperaturze z lewej strony</li></ul>",
+            "is_returns_target": false
           }
         },
         "faq-price": {
           "type": "item",
           "settings": {
             "question": "Dlaczego prawdziwy jedwab tyle kosztuje?",
-            "answer": "<p>Produkcja jedwabiu to proces wymagający ogromnej precyzji i czasu. Do stworzenia jednej poszewki LUSENA potrzeba tysięcy kokonów jedwabnika morwowego.</p><p>Używamy wyłącznie jedwabiu o gęstości <strong>22 momme</strong> (idealny balans między miękkością a trwałością) oraz najwyższej <strong>klasy 6A</strong> (najdłuższe, nieskazitelne włókna). To inwestycja w produkt, który przy odpowiedniej pielęgnacji posłuży Ci przez lata.</p>"
+            "answer": "<p>Produkcja jedwabiu to proces wymagający ogromnej precyzji i czasu. Do stworzenia jednej poszewki LUSENA potrzeba tysięcy kokonów jedwabnika morwowego.</p><p>Używamy wyłącznie jedwabiu o gęstości <strong>22 momme</strong> (idealny balans między miękkością a trwałością) oraz najwyższej <strong>klasy 6A</strong> (najdłuższe, nieskazitelne włókna). To inwestycja w produkt, który przy odpowiedniej pielęgnacji posłuży Ci przez lata.</p>",
+            "is_returns_target": false
           }
         },
         "faq-effects": {
           "type": "item",
           "settings": {
             "question": "Kiedy zauważę pierwsze efekty?",
-            "answer": "<p>Różnicę w dotyku i komforcie poczujesz od pierwszego użycia - jedwab 22 momme jest wyraźnie gładszy i chłodniejszy niż bawełna czy syntetyki.</p><p>Konkretne korzyści zależą od produktu:</p><ul><li><strong>Poszewka</strong> - mniej zagnieceń na skórze rano, włosy mniej splątane po nocy. Długoterminowo jedwab sprzyja zachowaniu nawilżenia skóry (2-4 tygodnie).</li><li><strong>Bonnet</strong> - fryzura utrzymana na miejscu, mniej puszenia i łamania po przebudzeniu.</li><li><strong>Scrunchie</strong> - brak śladu po gumce, mniej łamania i elektryzowania włosów.</li><li><strong>Opaska na oczy</strong> - głębszy sen dzięki pełnemu zaciemnieniu, brak odcisków na skórze wokół oczu.</li><li><strong>Lokówki</strong> - naturalnie wymodelowane fale po jednej nocy. Efekt zależy od typu i długości włosów.</li></ul><p>Gwarancja 60 dni pozwala Ci przetestować produkt w spokoju - jeśli nie poczujesz różnicy, zwróć bez pytań.</p>"
+            "answer": "<p>Różnicę w dotyku i komforcie poczujesz od pierwszego użycia - jedwab 22 momme jest wyraźnie gładszy i chłodniejszy niż bawełna czy syntetyki.</p><p>Konkretne korzyści zależą od produktu:</p><ul><li><strong>Poszewka</strong> - mniej zagnieceń na skórze rano, włosy mniej splątane po nocy. Długoterminowo jedwab sprzyja zachowaniu nawilżenia skóry (2-4 tygodnie).</li><li><strong>Bonnet</strong> - fryzura utrzymana na miejscu, mniej puszenia i łamania po przebudzeniu.</li><li><strong>Scrunchie</strong> - brak śladu po gumce, mniej łamania i elektryzowania włosów.</li><li><strong>Opaska na oczy</strong> - głębszy sen dzięki pełnemu zaciemnieniu, brak odcisków na skórze wokół oczu.</li><li><strong>Lokówki</strong> - naturalnie wymodelowane fale po jednej nocy. Efekt zależy od typu i długości włosów.</li></ul><p>Gwarancja 60 dni pozwala Ci przetestować produkt w spokoju - jeśli nie poczujesz różnicy, zwróć bez pytań.</p>",
+            "is_returns_target": false
           }
         }
       },
@@ -313,25 +350,37 @@
         "faq-effects"
       ],
       "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "bg_style": "surface-2",
         "anchor_id": "details",
         "heading": "Szczegóły i pytania",
-        "subheading": "",
-        "bg_style": "surface-2"
+        "subheading": ""
       }
     },
     "pdp_final_cta": {
       "type": "lusena-final-cta",
       "settings": {
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
         "transparent_bg": false,
         "heading": "Przekonaj się sama",
         "body": "Przetestuj przez 60 nocy. Jeśli nie poczujesz różnicy - zwrócimy pieniądze.",
         "cta_label": "Sprawdź kolekcję",
-        "cta_link": "/collections/all"
+        "cta_collection": "",
+        "cta_link": "/collections/all",
+        "secondary_label": "",
+        "secondary_link": ""
       }
     }
   },
   "order": [
     "main",
+    "17739496097255ea88",
     "pdp_feature_highlights",
     "pdp_quality_evidence",
     "pdp_truth_table",
