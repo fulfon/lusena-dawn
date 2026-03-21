@@ -50,6 +50,11 @@ Creative copy fields (headline, tagline, benefits) must NOT be copy-pasted from 
    - Only refine elements marked REFINE
    - Stay within legal boundaries established in step 3
    - If refinement introduces NEW claims → quick legal re-check on new claims only
+   - REALITY CHECK: Persona suggestions optimize for tone, not truth.
+     Before adopting any persona-suggested wording, verify it matches how
+     real customers actually use the product (e.g., "pranie po praniu" for
+     a scrunchie sounds elegant but women don't wash scrunchies regularly —
+     "dzień po dniu" matches the real daily-stretching wear pattern).
 
 6. CUSTOMER VALIDATION RUN 2 → invoke /lusena-customer-validation (focused)
    - Only re-evaluate changed elements
@@ -97,7 +102,7 @@ These metafields are **identical across all LUSENA silk products** (pillowcase, 
 |----------|------|-------|-------------|
 | **2** | `layers` | Dlaczego 22 momme? | Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy. |
 | **4** | `shield-check` | Jedwab, nie satyna z poliestru | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. |
-| **5** | `sparkles` | Certyfikat OEKO-TEX® Standard 100 | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. |
+| **5** | `sparkles` | Certyfikowany OEKO-TEX® 100 | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. |
 | **6** | `gift` | Gotowa do wręczenia | *(swap product name per product - see product file)* |
 
 Feature card positions **1** and **3** are product-specific and REQUIRE a creative session.
@@ -112,6 +117,18 @@ Feature card positions **1** and **3** are product-specific and REQUIRE a creati
 | `pdp_feature_1_*` | Product-specific primary benefit card |
 | `pdp_feature_3_*` | Product-specific secondary benefit card |
 | SEO (page title, meta description) | Different keywords and benefit hooks per product |
+
+### Punctuation rule: hyphens only, never em dashes
+
+All customer-facing copy uses `-` (hyphen/minus), never `—` (em dash). Em dashes look AI-generated. This applies to all metafield values: titles, descriptions, benefits, taglines.
+
+### Feature card description length rule: 150-210 characters
+
+Feature card descriptions should render to ~4 lines on desktop (target 170-185 chars). Tolerance ±1 line (130-220 chars). Hard cap 220 chars. Within each row of 3 cards, descriptions should differ by at most 1 rendered line for visual consistency.
+
+### Feature card title length rule: max 28 characters
+
+Feature card titles must fit in 1 line at the tightest breakpoint (1024px / 640px viewport = 288px column, 20px font). Max ~28 characters. Reference: "Jedwab, nie satyna z poliestru" (30 chars, 283px rendered) is the absolute maximum — aim for ≤28 to leave room for wide characters (m, w, uppercase).
 
 ### Legal rule: no percentage claims for momme
 
@@ -322,6 +339,35 @@ Never use percentage comparisons for momme (e.g., "30% gęstszy", "15% więcej")
 > Icon: `sparkles` - Feature: "Mniej zmarszczek, więcej blasku"
 > Visual: 3 small diamond-shaped stars arranged in a cluster.
 > Animation: Stars gently twinkle in sequence (opacity 0.4→1→0.4), one at a time, left to right. 6-second full cycle. Easing: ease-in-out. The effect should feel like a gentle shimmer, not a disco light.
+
+## Bundle-only metafields
+
+These metafields are only used on bundle products (assigned to `product.bundle` template). They are NOT used on individual products.
+
+### `lusena.bundle_original_price`
+
+- **Type:** `number_integer` (price in base currency units, e.g., 508 for 508 zł)
+- **Purpose:** The sum of individual product prices before bundle discount. Renders as the crossed-out reference price in the bundle summary. Also used to calculate the "Oszczędzasz X zł" savings badge.
+- **Why not `compare_at_price`:** Simple Bundles' Price Sync feature overwrites the variant's `compare_at_price` via API, clearing any value you set. Using a LUSENA metafield puts this data under our control.
+- **Where it renders:** `lusena-bundle-summary` snippet — crossed-out price + savings badge
+- **Values:**
+
+| Bundle | Value | Calculation |
+|--------|-------|-------------|
+| Nocna Rutyna | 508 | Poszewka (269) + Bonnet (239) |
+| Piękny Sen | 438 | Poszewka (269) + Maska (169) |
+| Scrunchie Trio | 177 | 3 × Scrunchie (59) |
+
+### Setup in Shopify admin
+
+1. Go to **Settings → Custom data → Products → Add definition**
+2. Name: `Bundle original price`
+3. Namespace and key: `lusena.bundle_original_price`
+4. Type: **Integer**
+5. Save the definition
+6. Go to each bundle product → set the value per the table above
+
+---
 
 ## Metafield priority (what to fill first)
 

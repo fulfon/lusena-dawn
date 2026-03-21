@@ -1,6 +1,6 @@
 # Jedwabna maska 3D do spania
 
-*Last updated: 2026-03-14*
+*Last updated: 2026-03-16*
 
 ## Basic info
 
@@ -26,11 +26,17 @@
 
 ## Variants
 
+> **Color strategy:** `memory-bank/doc/color-strategy.md` — research-backed unified capsule palette (2026-03-20)
+
 | Option | Values | Status |
 |--------|--------|--------|
-| Kolor | - | **PENDING** (finalize colors) |
+| Kolor | Czarny | **FINALIZED** (2026-03-20) |
 
-SKU format: `LUS-MSK-{3-letter color code}` (e.g., `LUS-MSK-BLK`)
+| Variant | Role | SKU | Units (initial order) | Barcode | Status |
+|---------|------|-----|-----------------------|---------|--------|
+| Czarny (Black) | A — dark base | LUS-MSK-BLK | 40 | - | **PENDING** (rename in Shopify from "Gold") |
+
+Single color (A only per §7.3): Black is the #1 eye mask color (~40-45% of global sales). Dark = functional light blocking. No choice friction.
 
 ## Inventory
 
@@ -79,7 +85,7 @@ SKU format: `LUS-MSK-{3-letter color code}` (e.g., `LUS-MSK-BLK`)
 | Metafield | Value | Status |
 |-----------|-------|--------|
 | `lusena.pdp_emotional_headline` | Śpisz w ciemności - bez nacisku na powieki i rzęsy. | Done |
-| `lusena.pdp_tagline` | Zwykłe maski uciskają powieki i przepuszczają światło przy nosie. Ta - z jedwabiu morwowego 22 momme w konstrukcji 3D - otacza oczy przestrzenią zamiast uciskiem. Jedwab z Suzhou, certyfikat OEKO-TEX® Standard 100. | Done |
+| `lusena.pdp_tagline` | Wyprofilowane miseczki 3D nie dotykają powiek - oczy odpoczywają bez nacisku. Jedwab minimalizuje tarcie wokół oczu, tam gdzie skóra jest najcieńsza na całym ciele. Profilowany mostek nosowy blokuje światło bez szczelin. | **UPDATED** (2026-03-17: benefit-oriented, removed redundant specs, self-referential mostek claim) |
 | `lusena.pdp_show_price_per_night` | true | Done |
 
 ### Benefit bullets
@@ -99,7 +105,8 @@ SKU format: `LUS-MSK-{3-letter color code}` (e.g., `LUS-MSK-BLK`)
 | `lusena.pdp_specs_momme` | 22 momme | Pre-filled (universal) |
 | `lusena.pdp_specs_grade` | 6A (najwyższa) | Pre-filled (universal) |
 | `lusena.pdp_specs_dimensions` | - | **PENDING** (verify with actual product) |
-| `lusena.pdp_specs_closure` | Regulowana gumka jedwabna | Pre-filled |
+| `lusena.pdp_specs_label_closure` | Dopasowanie | Done |
+| `lusena.pdp_specs_closure` | Gumka pokryta jedwabiem | Done |
 | `lusena.pdp_specs_weight` | - | **PENDING** (verify with actual product) |
 | `lusena.pdp_specs_certification` | OEKO-TEX® Standard 100 | Pre-filled (universal) |
 
@@ -121,19 +128,19 @@ SKU format: `LUS-MSK-{3-letter color code}` (e.g., `LUS-MSK-BLK`)
 | Metafield | Value | Status |
 |-----------|-------|--------|
 | `lusena.pdp_feature_1_icon` | heart | Done |
-| `lusena.pdp_feature_1_title` | Konstrukcja 3D - oczy nie czują maski | Done |
-| `lusena.pdp_feature_1_description` | Wyprofilowane miseczki tworzą przestrzeń wokół oczu - powieki i rzęsy nie mają kontaktu z materiałem. Jedwab charmeuse delikatnie przylega tylko wzdłuż krawędzi. Swobodne mruganie, ochrona rzęs - nawet doczepianych. | Done |
+| `lusena.pdp_feature_1_title` | 3D - oczy nie czują nacisku | Done |
+| `lusena.pdp_feature_1_description` | Wyprofilowane miseczki tworzą przestrzeń wokół oczu - powieki i rzęsy nie mają kontaktu z materiałem. Jedwab delikatnie przylega tylko wzdłuż krawędzi. Swobodne mruganie, ochrona rzęs - nawet doczepianych. | Done |
 | `lusena.pdp_feature_2_icon` | layers | Pre-filled (universal) |
 | `lusena.pdp_feature_2_title` | Dlaczego 22 momme? | Pre-filled (universal) |
 | `lusena.pdp_feature_2_description` | Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy. | Pre-filled (universal) |
 | `lusena.pdp_feature_3_icon` | wind | Done |
 | `lusena.pdp_feature_3_title` | Jedwab oddycha - syntetyki nie | Done |
-| `lusena.pdp_feature_3_description` | Maski z poliestru i pianki gromadzą ciepło wokół oczu. Jedwab morwowy oddycha naturalnie - sprzyja wentylacji i ogranicza przegrzewanie, nawet latem. Skóra wokół oczu jest najcieńsza na ciele - zasługuje na naturalny materiał. | Done |
+| `lusena.pdp_feature_3_description` | Maski z poliestru i pianki gromadzą ciepło wokół oczu. Jedwab morwowy oddycha naturalnie - ogranicza przegrzewanie, nawet latem. Najcieńsza skóra na ciele zasługuje na naturalny materiał. | Done |
 | `lusena.pdp_feature_4_icon` | shield-check | Pre-filled (universal) |
 | `lusena.pdp_feature_4_title` | Jedwab, nie satyna z poliestru | Pre-filled (universal) |
 | `lusena.pdp_feature_4_description` | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. | Pre-filled (universal) |
 | `lusena.pdp_feature_5_icon` | sparkles | Pre-filled (universal) |
-| `lusena.pdp_feature_5_title` | Certyfikat OEKO-TEX® Standard 100 | Pre-filled (universal) |
+| `lusena.pdp_feature_5_title` | Certyfikowany OEKO-TEX® 100 | Pre-filled (universal) |
 | `lusena.pdp_feature_5_description` | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. | Pre-filled (universal) |
 | `lusena.pdp_feature_6_icon` | gift | Pre-filled (universal) |
 | `lusena.pdp_feature_6_title` | Gotowa do wręczenia | Pre-filled (universal) |
@@ -210,7 +217,7 @@ Not assigned yet.
    - 3D cups/structure detail shot (Zuzia: prove 3D is real, not just "lightly convex")
 5. **Reviews system** - enable product reviews before launch (critical - all 4 personas flagged this)
 6. **Return policy** - ensure 60-day guarantee is visible on PDP (Kasia, Zuzia flagged absence)
-7. **Strap details** - add info about adjustable silk strap to specs or benefits area (Kasia, Maja flagged)
+7. **Strap details** - specs updated: fixed elastic (not adjustable), covered with silk — label "Dopasowanie", value "Gumka pokryta jedwabiem" (Done)
 8. **Product catalog README** - verified, `silk-eye-mask.md` retired (2026-03-14, only 3D mask sold)
 9. **Collections** - assign when collections are created
 10. **Product catalog README** - add this product to the catalog table

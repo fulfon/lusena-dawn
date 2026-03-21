@@ -160,6 +160,7 @@
     background-color: var(--lusena-surface-1);
     border-radius: var(--lusena-radius-sm);
     overflow: hidden;
+    cursor: pointer;
   }
 
   .lusena-pdp-quality-evidence__toggle {
@@ -200,7 +201,7 @@
   .lusena-pdp-quality-evidence__toggle-icon {
     width: 20px;
     height: 20px;
-    color: var(--lusena-accent-cta);
+    color: var(--lusena-accent-2);
   }
 
   .lusena-pdp-quality-evidence__toggle-copy {
@@ -331,10 +332,10 @@
       };
 
       items.forEach((item) => {
-        const toggle = item.querySelector('[data-lusena-quality-evidence-toggle]');
-        if (!toggle) return;
+        item.addEventListener('click', (e) => {
+          // Let CTA links work normally
+          if (e.target.closest('.lusena-pdp-quality-evidence__cta')) return;
 
-        toggle.addEventListener('click', () => {
           if (item.classList.contains('is-open')) {
             closeItem(item);
             return;

@@ -1,6 +1,6 @@
 # Jedwabny czepek do spania
 
-*Last updated: 2026-03-14*
+*Last updated: 2026-03-16*
 
 ## Basic info
 
@@ -30,11 +30,18 @@
 
 ## Variants
 
+> **Color strategy:** `memory-bank/doc/color-strategy.md` — research-backed unified capsule palette (2026-03-20)
+
 | Option | Values | Status |
 |--------|--------|--------|
-| Kolor | - | **PENDING** (finalize colors) |
+| Kolor | Czarny, Brudny róż | **FINALIZED** (2026-03-20) |
 
-SKU format: `LUS-BON-{3-letter color code}`
+| Variant | Role | SKU | Units (initial order) | Barcode | Status |
+|---------|------|-----|-----------------------|---------|--------|
+| Czarny (Black) | A — dark base | LUS-BON-BLK | 30 | - | **PENDING** (rename in Shopify from "Gold") |
+| Brudny róż (Dusty Rose) | B — hero | LUS-BON-RSE | 30 | - | **PENDING** (rename in Shopify from "Gray") |
+
+Equal split per §7.2 MOQ (60 / 2 = 30 each). Bonnet gets A+B only (§7.3) — enables matching Nocna Rutyna bundle.
 
 ## Inventory
 
@@ -61,7 +68,7 @@ SKU format: `LUS-BON-{3-letter color code}`
 | Field | Value | Status |
 |-------|-------|--------|
 | Page title | Jedwabny czepek do spania 22 momme - ochrona włosów · LUSENA | Done |
-| Meta description | Czepek z jedwabiu morwowego 22 momme, Grade 6A z Suzhou. Ściągacz pokryty jedwabiem - chroni linię włosów. Mniej tarcia, mniej plątania. OEKO-TEX® Standard 100. | Done |
+| Meta description | Jedwabny czepek z regulacją obwodu - 22 momme, Grade 6A z Suzhou. Ściągacz pokryty jedwabiem chroni linię włosów. Mniej tarcia, mniej plątania. OEKO-TEX® Standard 100. | Done |
 | URL handle | silk-bonnet | Done |
 
 ## Category metafields (Shopify standard)
@@ -85,7 +92,7 @@ SKU format: `LUS-BON-{3-letter color code}`
 | Metafield | Value | Status |
 |-----------|-------|--------|
 | `lusena.pdp_emotional_headline` | Budzisz się z fryzurą - nie z plątaniną. | Done |
-| `lusena.pdp_tagline` | Każdej nocy Twoje włosy trą o poduszkę - to puszenie, plątanie i osłabione pasma. Ten czepek z jedwabiu morwowego 22 momme, Grade 6A z Suzhou otula je gładkim jedwabiem od korzeni po końcówki, a ściągacz pokryty jedwabiem chroni linię włosów. Certyfikat OEKO-TEX® Standard 100. | Done |
+| `lusena.pdp_tagline` | Otula włosy gładkim jedwabiem ze wszystkich stron - mniej tarcia, plątania i puszenia niż na bawełnie. Regulowany ściągacz pokryty jedwabiem dopasowuje się do obwodu głowy. Chroni fryzurę od wieczora do rana - loki, fale czy prostowanie przetrwają noc. | **UPDATED** (2026-03-17: benefit-oriented, removed redundant specs) |
 | `lusena.pdp_show_price_per_night` | true | Done |
 
 ### Benefit bullets
@@ -93,7 +100,7 @@ SKU format: `LUS-BON-{3-letter color code}`
 | Metafield | Value | Status |
 |-----------|-------|--------|
 | `lusena.pdp_benefit_1` | Otula włosy gładkim jedwabiem ze wszystkich stron - mniej tarcia, plątania i puszenia niż na bawełnie | Done |
-| `lusena.pdp_benefit_2` | Ściągacz pokryty jedwabiem od wewnątrz - żadne gumowe włókno nie dotyka włosów, delikatniejszy dla linii włosów | Done |
+| `lusena.pdp_benefit_2` | Regulowany ściągacz pokryty jedwabiem - dopasujesz obwód do swojej głowy, żadne gumowe włókno nie dotyka włosów | Done |
 | `lusena.pdp_benefit_3` | Chroni fryzurę od wieczora do rana - loki, fale czy prostowanie przetrwają noc | Done |
 
 ### Specs table
@@ -104,8 +111,9 @@ SKU format: `LUS-BON-{3-letter color code}`
 | `lusena.pdp_specs_weave` | Charmeuse (splot satynowy) | Pre-filled (universal) |
 | `lusena.pdp_specs_momme` | 22 momme | Pre-filled (universal) |
 | `lusena.pdp_specs_grade` | 6A (najwyższa) | Pre-filled (universal) |
-| `lusena.pdp_specs_dimensions` | Uniwersalny (elastyczny ściągacz) | Done |
-| `lusena.pdp_specs_closure` | Elastyczny ściągacz pokryty jedwabiem | Done |
+| `lusena.pdp_specs_dimensions` | Regulowany (ściągacz z regulacją obwodu) | Done |
+| `lusena.pdp_specs_label_closure` | Dopasowanie | Done |
+| `lusena.pdp_specs_closure` | Regulowany ściągacz pokryty jedwabiem | Done |
 | `lusena.pdp_specs_weight` | - | **PENDING** (verify with actual product) |
 | `lusena.pdp_specs_certification` | OEKO-TEX® Standard 100 | Pre-filled (universal) |
 
@@ -127,19 +135,19 @@ SKU format: `LUS-BON-{3-letter color code}`
 | Metafield | Value | Status |
 |-----------|-------|--------|
 | `lusena.pdp_feature_1_icon` | heart | Done |
-| `lusena.pdp_feature_1_title` | Chroni linię włosów - od pierwszej nocy | Done |
-| `lusena.pdp_feature_1_description` | Zwykłe czepki mają odsłoniętą gumkę, która ściska i może osłabiać najdelikatniejsze pasma tuż przy czole i skroniach. W czepku LUSENA elastyczny ściągacz jest pokryty jedwabiem od wewnątrz. Pewne trzymanie, żadne gumowe włókno nie dotyka włosów. | Done |
+| `lusena.pdp_feature_1_title` | Chroni linię włosów | Done |
+| `lusena.pdp_feature_1_description` | Zwykłe czepki mają odsłoniętą gumkę, która ściska i ociera najdelikatniejsze pasma. W czepku LUSENA ściągacz jest pokryty jedwabiem od wewnątrz - gładkie włókno zamiast twardej gumy. | Done |
 | `lusena.pdp_feature_2_icon` | layers | Pre-filled (universal) |
 | `lusena.pdp_feature_2_title` | Dlaczego 22 momme? | Pre-filled (universal) |
 | `lusena.pdp_feature_2_description` | Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy. | Pre-filled (universal) |
 | `lusena.pdp_feature_3_icon` | wind | Done |
-| `lusena.pdp_feature_3_title` | Trzyma pewnie - od wieczora do rana | Done |
-| `lusena.pdp_feature_3_description` | Elastyczny ściągacz dopasowuje się do obwodu głowy, a jedwab morwowy oddycha i reguluje temperaturę - bez przegrzewania, bez ściskania. Budzisz się w czepku, nie obok niego. | Done |
+| `lusena.pdp_feature_3_title` | Trzyma pewnie całą noc | Done |
+| `lusena.pdp_feature_3_description` | Regulowany ściągacz dopasujesz dokładnie do obwodu głowy - ani za luźno, ani za ciasno. Jedwab morwowy oddycha i pomaga regulować temperaturę. Budzisz się w czepku, nie obok niego. | Done |
 | `lusena.pdp_feature_4_icon` | shield-check | Pre-filled (universal) |
 | `lusena.pdp_feature_4_title` | Jedwab, nie satyna z poliestru | Pre-filled (universal) |
 | `lusena.pdp_feature_4_description` | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. | Pre-filled (universal) |
 | `lusena.pdp_feature_5_icon` | sparkles | Pre-filled (universal) |
-| `lusena.pdp_feature_5_title` | Certyfikat OEKO-TEX® Standard 100 | Pre-filled (universal) |
+| `lusena.pdp_feature_5_title` | Certyfikowany OEKO-TEX® 100 | Pre-filled (universal) |
 | `lusena.pdp_feature_5_description` | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. | Pre-filled (universal) |
 | `lusena.pdp_feature_6_icon` | gift | Pre-filled (universal) |
 | `lusena.pdp_feature_6_title` | Gotowa do wręczenia | Pre-filled (universal) |
@@ -160,14 +168,13 @@ SKU format: `LUS-BON-{3-letter color code}`
 
 ## Validation results
 
-### Legal check
-- **Date:** 2026-03-14
-- **Verdict:** PASS (1 fix applied)
-- **Notes:** "nie osłabia" (absolute) in benefit 2 → fixed to "delikatniejszy dla linii włosów" (consistent with pillowcase precedent). All beauty-effect claims use approved hedging or physical/mechanical framing. "Chroni" approved by brandbook rule 6 for hair products. No medical claims, no fabricated social proof, no unsubstantiated percentages. Advisory: card 3 "reguluje temperaturę" is standard textile science - optionally soften to "pomaga regulować" for extra caution.
+### Legal checks
+- **Date:** 2026-03-14 — PASS (1 fix applied). "nie osłabia" (absolute) in benefit 2 → fixed to "delikatniejszy dla linii włosów". All claims use approved hedging or physical/mechanical framing. Advisory: card 3 "reguluje temperaturę" softened to "pomaga regulować" in Run 3.
+- **Date:** 2026-03-16 — PASS (0 issues, 1 warning). Adjustability claims ("regulowany ściągacz", "dopasujesz obwód") are physical/mechanical — safe. Warning: "pasuje na każdą głowę" (universality) softened to "dopasowuje się do obwodu głowy" per Option B.
 
 ### Customer validation
-- **Date:** 2026-03-14
-- **Runs:** 2 (final)
+- **Date:** 2026-03-14 to 2026-03-16
+- **Runs:** 3 (final)
 
 **Run 1 scores (full evaluation):**
 
@@ -185,11 +192,19 @@ SKU format: `LUS-BON-{3-letter color code}`
 | Purchase intent | 6.5/10 | 6/10 | 5/10 | 7.5/10 | 6.25/10 |
 | Premium feel | 8/10 | 5/10 | 7/10 | 8/10 | 7.0/10 |
 
-- **Key feedback across both runs:** Benefit 2 (silk-covered elastic) unanimously strongest element - "ten detal brzmi jak ktoś, kto naprawdę rozumie problem" (Zuzia). Headline praised by 4/4 - "dosłownie tak wygląda mój poranek" (Kasia). Old benefit 3 (absorption) unanimously weakest - "widziałam to sto razy" (Zuzia). New benefit 3 (style preservation) praised by 4/4 - "poczułam się zauważona" (Zuzia, curly hair), "schematyczność przełamana" (Maja).
-- **Strongest elements (LOCKED):** Headline, benefit 2 (silk-covered elastic), card 1 (elastic explanation), SEO title, new benefit 3 (style preservation)
-- **Core tension:** Ewa (gift buyer) found copy too technical; Kasia/Zuzia/Maja valued the concrete specs. Gift positioning is a site-level issue (needs packaging photos, bundle suggestions), not a copy issue.
-- **Site-level improvements flagged by personas:** reviews/social proof (3/4 critical), product photos incl. packaging shots (4/4), return policy visibility (2/4), comparison table vs cheaper alternatives (2/4), size/fit information (2/4), bundle suggestions with pillowcase (Ewa)
-- **Final decision:** Copy finalized via Run 2. Trust (7.1) and premium (7.0) at/above threshold. Purchase intent (6.25) limited by price sensitivity and site-level factors (no reviews, no photos, no return policy visible). All 4 personas explicitly confirmed remaining barriers are site-level, not copy. Copy optimized to the limit of what text alone can achieve.
+**Run 3 scores (after adjustability correction: fixed elastic → adjustable):**
+
+| Criteria | Kasia (34) | Ewa (47) | Zuzia (23) | Maja (38) | Average |
+|----------|-----------|---------|-----------|---------|---------|
+| Trust | 7/10 | 7/10 | 5.5/10 | 8/10 | 6.9/10 |
+| Purchase intent | 6/10 | 5/10 | 4/10 | 7/10 | 5.5/10 |
+| Premium feel | 8/10 | 5/10 | 6/10 | 8/10 | 6.75/10 |
+
+- **Run 3 analysis:** Scores essentially flat vs Run 2. Adjustability info was factually necessary (correcting an error about the product) but didn't move scores because all limiting factors are site-level. Zuzia noticed adjustability but wanted specific circumference range. Maja flagged elastic info repetition across 5 locations.
+- **Strongest elements across all 3 runs (LOCKED):** Headline (4/4 all runs), benefit 2/silk-covered elastic (4/4 → now with adjustability), card 1/elastic explanation, SEO title
+- **Core tension (consistent):** Ewa (gift buyer) finds copy too technical; Kasia/Zuzia/Maja value concrete specs. Gift positioning is a site-level issue (needs packaging photos, bundle suggestions), not a copy issue.
+- **Site-level improvements flagged by personas (4/4 consensus across all runs):** reviews/social proof (4/4 critical), product photos incl. lifestyle + packaging shots (4/4 critical), return policy / 60-day guarantee visibility (3/4), comparison table vs cheaper alternatives (2/4), elastic circumference range for size/fit (Zuzia), care/durability info ("ile prań wytrzyma?" — Kasia, Maja)
+- **Final decision:** Copy finalized with adjustability correction (Run 3). The adjustability update was a factual fix, not a creative optimization — the product genuinely has adjustable sizing. Scores remain capped by site-level factors. Further copy refinement cannot improve scores; only reviews, photos, return policy, and comparison content will move the needle.
 
 ## Media
 
@@ -220,6 +235,6 @@ Not assigned yet - to set up when collections are created.
 7. **Return policy** - ensure 60-day guarantee is visible on PDP (Kasia, Zuzia flagged absence)
 8. **Comparison section** - add comparison table vs cheaper alternatives (Kasia, Zuzia requested)
 9. **Bundle suggestion** - set up bonnet + pillowcase bundle (Ewa: "sam czepek to trochę mało na prezent")
-10. **Size/fit info** - add elastic circumference range (Kasia, Zuzia: "czy pomieści moje loki?")
+10. **Size/fit info** - add elastic adjustment range in cm to specs (Zuzia Run 3: "'regulowany' to za mało — jakie dokładne wymiary? Jaki zakres regulacji?"). Measure when physical product arrives.
 11. **OEKO-TEX certificate number** - add to specs when documentation is ready
 12. **Collections** - assign when collections are created

@@ -38,6 +38,25 @@
 - `lusena-pdp-scripts.liquid` — PDP JavaScript (returns deep-link fixed: clicks summary instead of setting .open)
 - `lusena-pdp-styles.liquid` — Doc-only stub (CSS in `assets/lusena-pdp.css`)
 
+## Bundle product page (`product.bundle.json`)
+
+Separate template for bundle products. Uses `lusena-main-bundle` section (custom buy box) + 5 shared PDP sections. Architecture decision documented in `memory-bank/doc/bundle-implementation.md`.
+
+**Bundle-specific snippets (3):**
+- `lusena-bundle-summary.liquid` — headline, title, tagline (metafield overrides), price row with savings badge, delivery
+- `lusena-bundle-contents.liquid` — "What's included" parsed from `simple_bundles.variant_options`
+- `lusena-bundle-options.liquid` — color swatch fieldsets per component product
+
+**Shared PDP snippets used by bundle (4):**
+- `lusena-pdp-media.liquid`, `lusena-pdp-proof-chips.liquid`, `lusena-pdp-guarantee.liquid`, `lusena-pdp-payment.liquid`
+
+## Recent changes (2026-03-21)
+
+- **Proof chips:** reordered ("Na prezent" first), JS row balancer added for optimal chip layout
+- **Quality evidence:** click area expanded to full item (not just toggle), icon color → gold
+- **PDP title:** desktop font-size reduced 4rem → 3.2rem
+- **Metafield checks:** simplified `mf_per_night.value == false` pattern
+
 ## Pending work
 
 See `memory-bank/doc/features/pdp-migration-backlog.md` for 4 deferred items:

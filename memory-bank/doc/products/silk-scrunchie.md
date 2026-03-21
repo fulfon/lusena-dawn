@@ -26,17 +26,21 @@
 
 ## Variants
 
+> **Color strategy:** `memory-bank/doc/color-strategy.md` — research-backed unified capsule palette (2026-03-20)
+
 | Option | Values | Status |
 |--------|--------|--------|
-| Kolor | (TBD - pending color selection) | **PENDING** |
+| Kolor | Czarny, Brudny róż, Szampan | **FINALIZED** (2026-03-20) |
 
 Brandbook notes two sizes: Mini (3 cm, thin/delicate hair) and Standard (5 cm, normal/thick hair). Decide whether to offer both as variants or launch with Standard only.
 
-| Variant | SKU | Barcode | Status |
-|---------|-----|---------|--------|
-| (TBD) | - | - | **PENDING** |
+| Variant | Role | SKU | Units (initial order) | Barcode | Status |
+|---------|------|-----|-----------------------|---------|--------|
+| Czarny (Black) | A — dark base | LUS-SCR-BLK | 50 | - | **PENDING** (rename in Shopify from "Gray") |
+| Brudny róż (Dusty Rose) | B — hero | LUS-SCR-RSE | 50 | - | **PENDING** (rename in Shopify from "Clear") |
+| Szampan (Champagne) | C — limitka | LUS-SCR-CHP | 50 | - | **PENDING** (rename in Shopify from "Gold") |
 
-SKU format: `LUS-SCR-{3-letter variant}` (e.g., `LUS-SCR-GRY`, `LUS-SCR-PNK`)
+Equal split per §7.2 MOQ (150 / 3 = 50 each). Trio bundle uses one of each (A+B+C).
 
 ## Inventory
 
@@ -85,7 +89,7 @@ SKU format: `LUS-SCR-{3-letter variant}` (e.g., `LUS-SCR-GRY`, `LUS-SCR-PNK`)
 | Metafield | Value | Status |
 |-----------|-------|--------|
 | `lusena.pdp_emotional_headline` | Zdejmujesz gumkę - włosy zostają na miejscu. | |
-| `lusena.pdp_tagline` | Zwykłe gumki ściskają i łamią włosy przez cały dzień. Ta - z jedwabiu morwowego 22 momme, Grade 6A z Suzhou - delikatnie trzyma, ogranicza tarcie i zachowuje właściwości po wielokrotnym praniu. Certyfikat OEKO-TEX® Standard 100. | |
+| `lusena.pdp_tagline` | Ogranicza tarcie i łamanie - jedwab chroni włosy lepiej niż syntetyczne gumki. Zachowuje kształt i sprężystość - dzień po dniu. Wchłania znacznie mniej olejków i kosmetyków - stylizacja zostaje na włosach, nie na gumce. | **UPDATED** (2026-03-17: benefit-oriented, removed redundant specs, no downward comparison) |
 | `lusena.pdp_show_price_per_night` | false | |
 
 ### Benefit bullets
@@ -139,7 +143,7 @@ SKU format: `LUS-SCR-{3-letter variant}` (e.g., `LUS-SCR-GRY`, `LUS-SCR-PNK`)
 | `lusena.pdp_feature_4_title` | Jedwab, nie satyna z poliestru | |
 | `lusena.pdp_feature_4_description` | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. | |
 | `lusena.pdp_feature_5_icon` | sparkles | |
-| `lusena.pdp_feature_5_title` | Certyfikat OEKO-TEX® Standard 100 | |
+| `lusena.pdp_feature_5_title` | Certyfikowany OEKO-TEX® 100 | |
 | `lusena.pdp_feature_5_description` | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. | |
 | `lusena.pdp_feature_6_icon` | gift | |
 | `lusena.pdp_feature_6_title` | Gotowa do wręczenia | |

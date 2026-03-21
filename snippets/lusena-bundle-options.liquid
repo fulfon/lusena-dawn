@@ -1,0 +1,100 @@
+{% doc %}
+  Bundle color option swatches (visual only, no JS interactivity in M2).
+  Reads Simple Bundles variant_options metafield and renders one fieldset
+  per component product. Reuses swatch CSS classes from lusena-pdp.css.
+
+  @param {variant} current_variant
+  @param {section} section
+{% enddoc %}
+
+{%- liquid
+  assign bundle_options = current_variant.metafields.simple_bundles.variant_options.value
+  assign has_options = false
+  if bundle_options != blank
+    if bundle_options.size > 0
+      assign has_options = true
+    endif
+  endif
+-%}
+
+{%- if has_options -%}
+  <div
+    class="lusena-bundle-options lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+  >
+    {%- for option in bundle_options -%}
+      {%- liquid
+        assign full_name = option.optionName
+        assign product_name = full_name | split: ' - Color' | first | split: ' - ' | first
+        assign option_values_str = option.optionValues
+        assign option_values = option_values_str | split: ', '
+        assign is_single = false
+        if option_values.size == 1
+          assign is_single = true
+        endif
+      -%}
+
+      <fieldset
+        class="lusena-bundle-options__group lusena-content-flow--tight"
+        data-lusena-bundle-option
+        data-option-index="{{ forloop.index0 }}"
+        data-option-name="{{ full_name | escape }}"
+      >
+        <legend class="lusena-pdp-variant-picker__legend">
+          {{ section.settings.select_color_label | default: 'Kolor' | escape }}
+          <span class="lusena-bundle-options__product-label">{{ product_name | escape }}</span>:
+          <span class="lusena-pdp-variant-picker__selected" data-lusena-bundle-selected>
+            {{- option_values | first | escape -}}
+          </span>
+        </legend>
+
+        <div class="lusena-pdp-variant-picker__options">
+          {%- for value in option_values -%}
+            {%- liquid
+              assign is_first = false
+              if forloop.first
+                assign is_first = true
+              endif
+              assign value_downcase = value | downcase
+              assign swatch_style = ''
+              case value_downcase
+                when 'czarny'
+                  assign swatch_style = 'background:#1A1A1A'
+                when 'brudny róż'
+                  assign swatch_style = 'background:#C9A0A0'
+                when 'szampan'
+                  assign swatch_style = 'background:#C9B99A'
+                when 'gray'
+                  assign swatch_style = 'background:#808080'
+                when 'gold'
+                  assign swatch_style = 'background:#C9B99A'
+                when 'pink'
+                  assign swatch_style = 'background:#C9A0A0'
+                when 'clear'
+                  assign swatch_style = 'background:#E5E5E5'
+                else
+                  assign swatch_style = 'background:#E5E5E5'
+              endcase
+            -%}
+
+            <label class="lusena-pdp-variant-picker__label">
+              <input
+                class="lusena-option__input visually-hidden"
+                type="radio"
+                name="bundle-option-{{ section.id }}-{{ forloop.parentloop.index0 }}"
+                value="{{ value | escape }}"
+                {% if is_first %}checked{% endif %}
+                {% if is_single %}disabled{% endif %}
+              >
+              <span
+                class="lusena-option__swatch"
+                title="{{ value | escape }}"
+                style="{{ swatch_style }}"
+              ></span>
+              <span class="visually-hidden">{{ value | escape }}</span>
+            </label>
+          {%- endfor -%}
+        </div>
+      </fieldset>
+    {%- endfor -%}
+  </div>
+{%- endif -%}

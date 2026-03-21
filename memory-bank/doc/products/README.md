@@ -18,6 +18,7 @@ products/
 │   └── products_export_3deyemask.csv    (3D mask, 2026-03-15)
 └── imports/                 ← generated CSVs to import INTO Shopify
     ├── generate_import_csv.py           (run to regenerate all import CSVs)
+    ├── poszewka-jedwabna_import.csv
     ├── silk-bonnet_import.csv
     ├── silk-scrunchie_import.csv
     ├── jedwabna-maska-3d_import.csv

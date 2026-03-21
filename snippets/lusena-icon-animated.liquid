@@ -106,8 +106,11 @@
 
       {%- when 'clock' -%}
         <circle cx="12" cy="12" r="10"></circle>
-        <g class="lusena-anim-clock-hands">
-          <path d="M12 6v6l4 2"></path>
+        <g class="lusena-anim-clock-minute">
+          <line x1="12" y1="12" x2="12" y2="6"></line>
+        </g>
+        <g class="lusena-anim-clock-hour">
+          <line x1="12" y1="12" x2="12" y2="7.5"></line>
         </g>
 
     {%- endcase -%}

@@ -24,6 +24,17 @@ Utility classes: `.lusena-bg-brand`, `.lusena-bg-surface-1`, `.lusena-bg-surface
 
 **Rule:** CTA color is always `#0E5E5A` — never changes between pages.
 
+### Icon color two-tier rule
+
+Icons use one of two accent colors depending on their purpose:
+
+| Color | Token | When to use | Examples |
+|-------|-------|-------------|---------|
+| **Teal** | `--lusena-accent-cta` | Functional/trust icons — shipping, guarantees, process steps, UI actions, user-facing benefits | Trust bar, returns steps, PDP feature highlights, proof chips, about values |
+| **Gold** | `--lusena-accent-2` | Premium/craft/quality icons — material, origin, silk grade, heritage, quality proofs | Quality QC, heritage tiles, PDP quality evidence, kickers |
+
+**Rule:** When adding icons to a new section, ask: "Is this about the product's premium qualities/origin?" → gold. "Is this about trust, process, or user benefits?" → teal.
+
 ### Color schemes (Shopify admin)
 
 | Scheme | Background | Text | Usage |

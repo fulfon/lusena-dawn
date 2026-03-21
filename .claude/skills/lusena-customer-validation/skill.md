@@ -280,6 +280,7 @@ Priority logic:
 1. **LOCK strong elements** — Any element praised by 3+ personas must NOT be changed in the next run. This prevents regression.
 2. **Only refine weak elements** — Focus changes on elements marked REFINE in the per-element tracking.
 3. **If refinement introduces NEW claims** → quick legal re-check on new claims only before next validation run.
+4. **REALITY CHECK on persona suggestions** — Persona suggestions are directional feedback on tone and positioning, NOT final copy. Before adopting any specific wording suggested by a persona, verify it matches how real customers actually use the product. Personas optimize for what sounds good, not for what's true. Example of a caught mistake: a persona suggested "pranie po praniu" (wash after wash) for a scrunchie — sounds rhythmically elegant, but women don't regularly wash scrunchies. The real wear pattern is daily stretching, so "dzień po dniu" was correct.
 
 ## Decision rules
 

@@ -56,9 +56,9 @@
   75% { transform: rotate(-1deg); }
 }
 
-@keyframes lusena-clock-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@keyframes lusena-clock-tick {
+  0%, 100% { transform: rotate(60deg); }
+  50% { transform: rotate(65deg); }
 }
 
 /* ---------- Common: transform-box for all animated SVG elements ---------- */
@@ -81,7 +81,8 @@
 }
 
 /* Clock hands rotate around the clock center (12,12 in 24x24 viewBox) */
-.lusena-anim-clock-hands {
+.lusena-anim-clock-minute,
+.lusena-anim-clock-hour {
   transform-origin: 12px 12px;
 }
 
@@ -171,11 +172,15 @@
   animation-delay: calc(var(--lusena-anim-stagger, 0s) + 0.3s);
 }
 
-/* ---------- Clock: continuous hand rotation, 8s ---------- */
+/* ---------- Clock: 10:10 pose, minute hand gentle tick-tock, hour hand static ---------- */
 
-.lusena-anim-clock-hands {
-  animation: lusena-clock-spin 8s linear infinite;
+.lusena-anim-clock-minute {
+  animation: lusena-clock-tick 7s ease-in-out infinite;
   animation-delay: var(--lusena-anim-stagger, 0s);
+}
+
+.lusena-anim-clock-hour {
+  transform: rotate(300deg);
 }
 
 /* ---------- Reduced motion: disable all animations ---------- */
@@ -194,7 +199,7 @@
   .lusena-anim-sparkles-3,
   .lusena-anim-gift-lid,
   .lusena-anim-gift-bow,
-  .lusena-anim-clock-hands {
+  .lusena-anim-clock-minute {
     animation: none !important;
   }
 

@@ -20,7 +20,30 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v2.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
-### (current) — Product copy sessions, bundle strategy, animated icons, percentage claim cleanup, pre-commit sync
+### (current) — Bundle template scaffolding, color strategy, section polish, icon/copy fixes
+
+**Goal:** Create the full visual scaffolding for the bundle product page template (`product.bundle.json`), finalize the research-backed color strategy, complete Phase A admin setup (variant renames, Simple Bundles config), M1 metafield research, polish existing sections (proof chips, quality evidence, heritage, science, clock animation), and normalize icon colors, copy, and conventions across the theme.
+
+**What changed**
+- **Bundle Phase B M2 scaffolding:** Created `templates/product.bundle.json` (6 sections), `sections/lusena-main-bundle.liquid` (full buy box with schema), 3 new snippets (`lusena-bundle-summary` with savings badge from `lusena.bundle_original_price` metafield, `lusena-bundle-contents` parsing `simple_bundles.variant_options`, `lusena-bundle-options` with color swatch fieldsets), `assets/lusena-bundle-pdp.css`. Below-fold sections reuse individual PDP configs with bundle-specific content (feature highlights, FAQ).
+- **Bundle M1 metafield research:** Documented `simple_bundles.variant_options` JSON structure, `properties[...]` ATC format, `_bundle_selection` concatenation, Scrunchie Trio duplicate `optionName` issue, `compare_at_price` clearing by Price Sync (solved with custom metafield).
+- **Color strategy finalized:** 3-color unified capsule (Czarny + Brudny róż + Szampan) backed by 4 independent research streams. Full doc: `memory-bank/doc/color-strategy.md`. Shopify admin variants renamed. Brandbook §7 updated.
+- **Upsell strategy:** New `memory-bank/doc/upsell-strategy.md`. Free shipping threshold changed 299→289 zł (bonnet+scrunchie=298 was 1 zł short). Cross-sell checkbox narrowed to poszewka PDP only.
+- **Section polish:** Proof chips reordered + JS row balancer. Quality evidence full-item click area. Heritage/problem-solution CTA spacing. Science kicker shared classes. Comparison table inline SVGs→lusena-icon. Clock animation reworked (tick-tock). PDP proof chip sizing responsive. PDP title 4rem→3.2rem desktop. Cart drawer scrollbar guard.
+- **Icon two-tier color rule:** Teal (`--lusena-accent-cta`) for functional/trust, gold (`--lusena-accent-2`) for premium/craft/quality. Applied to quality evidence, heritage, science kickers. Documented in `memory-bank/doc/patterns/brand-tokens.md`.
+- **Copy/convention fixes:** Bonnet naming ("czepek do spania"), product names in FAQ, OEKO-TEX title shortened, metafield check simplification, stroke width normalization.
+- **Docs:** Bundle implementation tracker with M1 findings. Product metafields reference expanded (bundle metafields, punctuation rules, description length rules). Brandbook color palette section updated. CLAUDE.md hyphen/title length rules.
+
+**Key files**
+- `templates/product.bundle.json`, `sections/lusena-main-bundle.liquid`
+- `snippets/lusena-bundle-summary.liquid`, `lusena-bundle-contents.liquid`, `lusena-bundle-options.liquid`
+- `assets/lusena-bundle-pdp.css`, `assets/lusena-pdp.css`
+- `memory-bank/doc/bundle-implementation.md`, `memory-bank/doc/color-strategy.md`, `memory-bank/doc/upsell-strategy.md`
+- `snippets/lusena-pdp-proof-chips.liquid`, `sections/lusena-pdp-quality-evidence.liquid`
+- `snippets/lusena-icon-animated.liquid`, `assets/lusena-icon-animations.css`
+- `docs/product-metafields-reference.md`, `docs/LUSENA_BrandBook_v2.md`
+
+### c800179 — Product copy sessions, bundle strategy, animated icons, percentage claim cleanup, pre-commit sync
 
 **Goal:** Finalize all 5 individual product copy sessions (creative workflow: research → draft → legal check → customer validation → finalize), define research-backed bundle architecture, build animated icon system for PDP feature highlights, clean up percentage-based momme claims site-wide, replace theme-changelog skill with pre-commit-sync.
 
@@ -301,7 +324,8 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v2.md` (local path: 
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-03-15 — (current) — Product copy sessions, bundle strategy, animated icons, percentage cleanup
+- 2026-03-21 — (current) — Bundle template scaffolding, color strategy, section polish, icon/copy fixes
+- 2026-03-15 — c800179 — feat(lusena): product copy sessions, bundle strategy, animated icons, percentage cleanup
 - 2026-03-09 — 1be3e57 — feat(lusena): footer redesign, PDP/quality polish, spacing audit, product setup docs
 - 2026-03-08 — 57beec8 — feat(lusena): complete homepage UX audit — visual rhythm, value anchors, bundle fixes
 - 2026-03-06 — 29fc700 — chore(lusena): polish blog/article, trust-bar animations, breadcrumb fixes + repo cleanup

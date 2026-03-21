@@ -25,7 +25,7 @@
     <div class="lusena-science__layout">
       <div class="lusena-science__text" data-lusena-science-text>
         {%- if section.settings.kicker != blank -%}
-          <span class="lusena-science__kicker lusena-animate-fade-up">{{ section.settings.kicker }}</span>
+          <span class="lusena-type-caption lusena-kicker lusena-science__kicker lusena-animate-fade-up">{{ section.settings.kicker }}</span>
         {%- endif -%}
 
         {%- if section.settings.heading != blank -%}
@@ -89,12 +89,8 @@
     gap: 1rem;
   }
 
-  .lusena-science__kicker {
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    opacity: 0.7;
+  .lusena-science .lusena-science__kicker {
+    color: var(--lusena-accent-2);
   }
 
   .lusena-science__heading {
@@ -186,10 +182,6 @@
       gap: 1.25rem;
     }
 
-    .lusena-science__kicker {
-      font-size: 0.8125rem;
-    }
-
     .lusena-science__description {
       font-size: 1.0625rem;
     }
@@ -230,7 +222,7 @@
       "type": "text",
       "id": "kicker",
       "label": "t:sections.lusena_science.settings.kicker.label",
-      "default": "The LUSENA difference"
+      "default": "Różnica LUSENA"
     },
     {
       "type": "text",

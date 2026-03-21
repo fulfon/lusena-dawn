@@ -1,0 +1,99 @@
+/* ==========================================================================
+   LUSENA Bundle PDP — bundle-specific styles
+   Loaded alongside lusena-pdp.css which provides shared PDP classes.
+   ========================================================================== */
+
+/* --- Savings badge --- */
+.lusena-bundle-savings {
+  display: inline-block;
+  margin-top: 0.4rem;
+  padding: 0.3rem 0.8rem;
+  font-family: var(--lusena-font-ui);
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--lusena-accent-2);
+  background: rgba(140, 106, 60, 0.08);
+  border-radius: var(--lusena-btn-radius);
+}
+
+/* --- "What's included" --- */
+.lusena-bundle-contents {
+  padding: var(--lusena-space-2) 0;
+}
+
+.lusena-bundle-contents__heading {
+  font-family: var(--lusena-font-ui);
+  font-size: 1.3rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--lusena-text-2);
+  margin-bottom: var(--lusena-space-1);
+}
+
+.lusena-bundle-contents__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.lusena-bundle-contents__item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--lusena-font-ui);
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: var(--lusena-text-1);
+}
+
+.lusena-bundle-contents__icon {
+  width: 1.6rem;
+  height: 1.6rem;
+  color: var(--lusena-accent-cta);
+  flex-shrink: 0;
+}
+
+/* --- Bundle options (multi-fieldset groups) --- */
+.lusena-bundle-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lusena-space-2);
+}
+
+.lusena-bundle-options__group {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lusena-bundle-options__product-label {
+  font-weight: 400;
+  color: var(--lusena-text-2);
+}
+
+/* --- Bundle ATC placeholder (M2: visual only) --- */
+.lusena-bundle-atc-placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+/* --- Buy-box order overrides for bundle --- */
+.lusena-pdp .lusena-pdp-buy-box__contents {
+  order: 3;
+}
+
+.lusena-pdp .lusena-pdp-buy-box__contents + .lusena-pdp-buy-box__desktop-divider {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .lusena-pdp .lusena-pdp-buy-box__contents {
+    order: 3;
+  }
+}

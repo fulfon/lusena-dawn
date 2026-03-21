@@ -41,7 +41,7 @@ UNIVERSAL_FEATURE_4 = {
 UNIVERSAL_FEATURE_5 = {
     'desc': 'Niezale\u017cny certyfikat potwierdza, \u017ce nasz jedwab jest bezpieczny dla sk\u00f3ry i wolny od szkodliwych substancji. Pewno\u015b\u0107, kt\u00f3r\u0105 mo\u017cesz zweryfikowa\u0107.',
     'icon': 'sparkles',
-    'title': 'Certyfikat OEKO-TEX\u00ae Standard 100',
+    'title': 'Certyfikowany OEKO-TEX\u00ae 100',
 }
 
 # --- Common base for all products ---
@@ -87,21 +87,21 @@ bonnet[5] = 'Czepek jedwabny'
 bonnet[6] = 'jedwab, czepek, czepek-jedwabny, czepek-do-spania, bonnet, 22-momme, nocna-rutyna, hair-care, ochrona-wlosow'
 bonnet[22] = '239.00'
 bonnet[35] = 'Jedwabny czepek do spania 22 momme - ochrona w\u0142os\u00f3w \u00b7 LUSENA'
-bonnet[36] = 'Czepek z jedwabiu morwowego 22 momme, Grade 6A z Suzhou. \u015aci\u0105gacz pokryty jedwabiem - chroni lini\u0119 w\u0142os\u00f3w. Mniej tarcia, mniej pl\u0105tania. OEKO-TEX\u00ae Standard 100.'
+bonnet[36] = 'Jedwabny czepek z regulacj\u0105 obwodu - 22 momme, Grade 6A z Suzhou. \u015aci\u0105gacz pokryty jedwabiem chroni lini\u0119 w\u0142os\u00f3w. Mniej tarcia, mniej pl\u0105tania. OEKO-TEX\u00ae Standard 100.'
 bonnet[37] = 'FALSE'
 bonnet[38] = 'Otula w\u0142osy g\u0142adkim jedwabiem ze wszystkich stron - mniej tarcia, pl\u0105tania i puszenia ni\u017c na bawe\u0142nie'
-bonnet[39] = '\u015aci\u0105gacz pokryty jedwabiem od wewn\u0105trz - \u017cadne gumowe w\u0142\u00f3kno nie dotyka w\u0142os\u00f3w, delikatniejszy dla linii w\u0142os\u00f3w'
+bonnet[39] = 'Regulowany \u015bci\u0105gacz pokryty jedwabiem - dopasujesz obw\u00f3d do swojej g\u0142owy, \u017cadne gumowe w\u0142\u00f3kno nie dotyka w\u0142os\u00f3w'
 bonnet[40] = 'Chroni fryzur\u0119 od wieczora do rana - loki, fale czy prostowanie przetrwaj\u0105 noc'
 bonnet[41] = ''  # care_steps empty (theme defaults)
 bonnet[42] = 'Budzisz si\u0119 z fryzur\u0105 - nie z pl\u0105tanin\u0105.'
 # Feature 1 (product-specific)
-bonnet[43] = 'Zwyk\u0142e czepki maj\u0105 ods\u0142oni\u0119t\u0105 gumk\u0119, kt\u00f3ra \u015bciska i mo\u017ce os\u0142abia\u0107 najdelikatniejsze pasma tu\u017c przy czole i skroniach. W czepku LUSENA elastyczny \u015bci\u0105gacz jest pokryty jedwabiem od wewn\u0105trz. Pewne trzymanie, \u017cadne gumowe w\u0142\u00f3kno nie dotyka w\u0142os\u00f3w.'
+bonnet[43] = 'Zwyk\u0142e czepki maj\u0105 ods\u0142oni\u0119t\u0105 gumk\u0119, kt\u00f3ra \u015bciska i ociera najdelikatniejsze pasma. W czepku LUSENA \u015bci\u0105gacz jest pokryty jedwabiem od wewn\u0105trz - g\u0142adkie w\u0142\u00f3kno zamiast twardej gumy.'
 bonnet[44] = 'heart'
-bonnet[45] = 'Chroni lini\u0119 w\u0142os\u00f3w - od pierwszej nocy'
+bonnet[45] = 'Chroni lini\u0119 w\u0142os\u00f3w'
 # Feature 3 (product-specific)
-bonnet[49] = 'Elastyczny \u015bci\u0105gacz dopasowuje si\u0119 do obwodu g\u0142owy, a jedwab morwowy oddycha i reguluje temperatur\u0119 - bez przegrzewania, bez \u015bciskania. Budzisz si\u0119 w czepku, nie obok niego.'
+bonnet[49] = 'Regulowany \u015bci\u0105gacz dopasujesz dok\u0142adnie do obwodu g\u0142owy - ani za lu\u017ano, ani za ciasno. Jedwab morwowy oddycha i pomaga regulowa\u0107 temperatur\u0119. Budzisz si\u0119 w czepku, nie obok niego.'
 bonnet[50] = 'wind'
-bonnet[51] = 'Trzyma pewnie - od wieczora do rana'
+bonnet[51] = 'Trzyma pewnie ca\u0142\u0105 noc'
 # Feature 6 (universal but product name swapped)
 bonnet[58] = 'Ka\u017cdy czepek LUSENA przychodzi w eleganckim pude\u0142ku prezentowym - idealny upominek, kt\u00f3ry robi wra\u017cenie. Bez dodatkowego pakowania.'
 bonnet[59] = 'gift'
@@ -111,15 +111,15 @@ bonnet[61] = "Jedwabny czepek LUSENA\nEleganckie pude\u0142ko prezentowe LUSENA\
 bonnet[62] = 'TRUE'  # show_price_per_night
 # Specs
 bonnet[63] = 'OEKO-TEX\u00ae Standard 100'
-bonnet[64] = 'Elastyczny \u015bci\u0105gacz pokryty jedwabiem'
-bonnet[65] = 'Uniwersalny (elastyczny \u015bci\u0105gacz)'
+bonnet[64] = 'Regulowany \u015bci\u0105gacz pokryty jedwabiem'
+bonnet[65] = 'Regulowany (\u015bci\u0105gacz z regulacj\u0105 obwodu)'
 bonnet[66] = '6A (najwy\u017csza)'
 bonnet[67] = '100% jedwab morwowy (Mulberry Silk)'
 bonnet[68] = '22 momme'
 bonnet[69] = 'Charmeuse (splot satynowy)'
 bonnet[70] = ''  # weight PENDING
-# Tagline
-bonnet[71] = 'Ka\u017cdej nocy Twoje w\u0142osy tr\u0105 o poduszk\u0119 - to puszenie, pl\u0105tanie i os\u0142abione pasma. Ten czepek z jedwabiu morwowego 22 momme, Grade 6A z Suzhou otula je g\u0142adkim jedwabiem od korzeni po ko\u0144c\u00f3wki, a \u015bci\u0105gacz pokryty jedwabiem chroni lini\u0119 w\u0142os\u00f3w. Certyfikat OEKO-TEX\u00ae Standard 100.'
+# Tagline (2026-03-17: benefit-oriented, removed redundant specs)
+bonnet[71] = 'Otula w\u0142osy g\u0142adkim jedwabiem ze wszystkich stron - mniej tarcia, pl\u0105tania i puszenia ni\u017c na bawe\u0142nie. Regulowany \u015bci\u0105gacz pokryty jedwabiem dopasowuje si\u0119 do obwodu g\u0142owy. Chroni fryzur\u0119 od wieczora do rana - loki, fale czy prostowanie przetrwaj\u0105 noc.'
 
 # ============================================================
 # Product 2: silk-scrunchie
@@ -131,7 +131,7 @@ scrunchie[5] = 'Gumka do w\u0142os\u00f3w'
 scrunchie[6] = 'jedwab, scrunchie, gumka, w\u0142osy, 22-momme, ochrona-w\u0142os\u00f3w'
 scrunchie[22] = '59.00'
 scrunchie[35] = 'Jedwabny scrunchie 22 momme - mniej \u0142amania w\u0142os\u00f3w \u00b7 LUSENA'
-scrunchie[36] = 'Scrunchie z prawdziwego jedwabiu morwowego 22 momme. Mniej tarcia, mniej \u0142amania - w\u0142osy poczu\u0105 r\u00f3\u017cnic\u0119. Certyfikat OEKO-TEX\u00ae Standard 100.'
+scrunchie[36] = 'Scrunchie z prawdziwego jedwabiu morwowego 22 momme. Mniej tarcia, mniej \u0142amania - w\u0142osy poczuj\u0105 r\u00f3\u017cnic\u0119. Certyfikat OEKO-TEX\u00ae Standard 100.'
 scrunchie[37] = 'FALSE'
 scrunchie[38] = 'Ogranicza tarcie i \u0142amanie - jedwab chroni w\u0142osy lepiej ni\u017c syntetyczne gumki'
 scrunchie[39] = 'Jedwab 22 momme nie traci kszta\u0142tu - wytrzymuje znacznie d\u0142u\u017cej ni\u017c ta\u0144sze gumki'
@@ -162,8 +162,8 @@ scrunchie[67] = '100% jedwab morwowy (Mulberry Silk)'
 scrunchie[68] = '22 momme'
 scrunchie[69] = 'Charmeuse (splot satynowy)'
 scrunchie[70] = ''  # weight PENDING
-# Tagline
-scrunchie[71] = 'Zwyk\u0142e gumki \u015bciskaj\u0105 i \u0142ami\u0105 w\u0142osy przez ca\u0142y dzie\u0144. Ta - z jedwabiu morwowego 22 momme, Grade 6A z Suzhou - delikatnie trzyma, ogranicza tarcie i zachowuje w\u0142a\u015bciwo\u015bci po wielokrotnym praniu. Certyfikat OEKO-TEX\u00ae Standard 100.'
+# Tagline (2026-03-17: benefit-oriented, no downward comparison)
+scrunchie[71] = 'Ogranicza tarcie i \u0142amanie - jedwab chroni w\u0142osy lepiej ni\u017c syntetyczne gumki. Zachowuje kszta\u0142t i spr\u0119\u017cysto\u015b\u0107 - dzie\u0144 po dniu. Wch\u0142ania znacznie mniej olejk\u00f3w i kosmetyk\u00f3w - stylizacja zostaje na w\u0142osach, nie na gumce.'
 
 # ============================================================
 # Product 3: jedwabna-maska-3d
@@ -183,11 +183,11 @@ mask[40] = 'Profilowany mostek nosowy blokuje \u015bwiat\u0142o tam, gdzie p\u01
 mask[41] = ''  # care_steps empty
 mask[42] = '\u015apisz w ciemno\u015bci - bez nacisku na powieki i rz\u0119sy.'
 # Feature 1
-mask[43] = 'Wyprofilowane miseczki tworz\u0105 przestrze\u0144 wok\u00f3\u0142 oczu - powieki i rz\u0119sy nie maj\u0105 kontaktu z materia\u0142em. Jedwab charmeuse delikatnie przylega tylko wzd\u0142u\u017c kraw\u0119dzi. Swobodne mruganie, ochrona rz\u0119s - nawet doczepianych.'
+mask[43] = 'Wyprofilowane miseczki tworz\u0105 przestrze\u0144 wok\u00f3\u0142 oczu - powieki i rz\u0119sy nie maj\u0105 kontaktu z materia\u0142em. Jedwab delikatnie przylega tylko wzd\u0142u\u017c kraw\u0119dzi. Swobodne mruganie, ochrona rz\u0119s - nawet doczepianych.'
 mask[44] = 'heart'
-mask[45] = 'Konstrukcja 3D - oczy nie czuj\u0105 maski'
+mask[45] = '3D - oczy nie czuj\u0105 nacisku'
 # Feature 3
-mask[49] = 'Maski z poliestru i pianki gromadz\u0105 ciep\u0142o wok\u00f3\u0142 oczu. Jedwab morwowy oddycha naturalnie - sprzyja wentylacji i ogranicza przegrzewanie, nawet latem. Sk\u00f3ra wok\u00f3\u0142 oczu jest najcie\u0144sza na ciele - zas\u0142uguje na naturalny materia\u0142.'
+mask[49] = 'Maski z poliestru i pianki gromadz\u0105 ciep\u0142o wok\u00f3\u0142 oczu. Jedwab morwowy oddycha naturalnie - ogranicza przegrzewanie, nawet latem. Najcie\u0144sza sk\u00f3ra na ciele zas\u0142uguje na naturalny materia\u0142.'
 mask[50] = 'wind'
 mask[51] = 'Jedwab oddycha - syntetyki nie'
 # Feature 6
@@ -199,15 +199,15 @@ mask[61] = "Jedwabna maska 3D do spania LUSENA\nEleganckie pude\u0142ko prezento
 mask[62] = 'TRUE'  # show_price_per_night
 # Specs
 mask[63] = 'OEKO-TEX\u00ae Standard 100'
-mask[64] = 'Regulowana gumka jedwabna'
+mask[64] = 'Gumka pokryta jedwabiem'
 mask[65] = ''  # dimensions PENDING
 mask[66] = '6A (najwy\u017csza)'
 mask[67] = '100% jedwab morwowy (Mulberry Silk)'
 mask[68] = '22 momme'
 mask[69] = 'Charmeuse (splot satynowy)'
 mask[70] = ''  # weight PENDING
-# Tagline
-mask[71] = 'Zwyk\u0142e maski uciskaj\u0105 powieki i przepuszczaj\u0105 \u015bwiat\u0142o przy nosie. Ta - z jedwabiu morwowego 22 momme w konstrukcji 3D - otacza oczy przestrzeni\u0105 zamiast uciskiem. Jedwab z Suzhou, certyfikat OEKO-TEX\u00ae Standard 100.'
+# Tagline (2026-03-17: benefit-oriented, self-referential mostek claim)
+mask[71] = 'Wyprofilowane miseczki 3D nie dotykaj\u0105 powiek - oczy odpoczywaj\u0105 bez nacisku. Jedwab minimalizuje tarcie wok\u00f3\u0142 oczu, tam gdzie sk\u00f3ra jest najcie\u0144sza na ca\u0142ym ciele. Profilowany mostek nosowy blokuje \u015bwiat\u0142o bez szczelin.'
 
 # ============================================================
 # Product 4: heatless-curlers (most deviations)
@@ -234,7 +234,7 @@ curlers[45] = 'Bez ciep\u0142a - bez uszkodze\u0144'
 # Feature 3 (product-specific — clock icon for "overnight")
 curlers[49] = 'Owijasz lekko wilgotne w\u0142osy wok\u00f3\u0142 wa\u0142ka, spinasz i k\u0142adziesz si\u0119 spa\u0107. Rano rozwijasz - fale lub loki gotowe. \u017badnego czekania z gor\u0105cym \u017celazkiem w r\u0119ku, \u017cadnego po\u015bpiechu przed wyj\u015bciem.'
 curlers[50] = 'clock'
-curlers[51] = 'Owijasz wieczorem - rano gotowe fale'
+curlers[51] = 'Owijasz na noc - rano loki'
 # Feature 6 (product name swapped)
 curlers[58] = 'Ka\u017cdy jedwabny wa\u0142ek LUSENA przychodzi w eleganckim pude\u0142ku prezentowym - idealny upominek, kt\u00f3ry robi wra\u017cenie. Bez dodatkowego pakowania.'
 curlers[59] = 'gift'
@@ -251,18 +251,102 @@ curlers[67] = 'Jedwab morwowy 22 momme + wype\u0142nienie z bawe\u0142ny PP'
 curlers[68] = '22 momme'
 curlers[69] = 'Charmeuse (splot satynowy)'
 curlers[70] = ''  # weight PENDING
-# Tagline
-curlers[71] = 'Lok\u00f3wki i prostownice mog\u0105 os\u0142abia\u0107 struktur\u0119 w\u0142osa przy ka\u017cdym u\u017cyciu. Ten wa\u0142ek z jedwabiu morwowego 22 momme mo\u017ce pom\u00f3c uzyska\u0107 fale i loki bez ciep\u0142a - owijasz lekko wilgotne w\u0142osy na noc, a jedwab ogranicza tarcie i wch\u0142ania znacznie mniej wilgoci z w\u0142os\u00f3w. Efekt zale\u017cy od typu i d\u0142ugo\u015bci w\u0142os\u00f3w.'
+# Tagline (2026-03-17: benefit-oriented, kept disclaimer)
+curlers[71] = 'Loki bez ciep\u0142a - w\u0142osy formuj\u0105 si\u0119 w nocy, bez ryzyka uszkodze\u0144 termicznych. Jedwab wch\u0142ania znacznie mniej olejk\u00f3w i od\u017cywek, wi\u0119c piel\u0119gnacja zostaje na w\u0142osach. G\u0142adka powierzchnia ogranicza tarcie - mniej szarpania i pl\u0105taniny przy zdejmowaniu. Efekt zale\u017cy od typu i d\u0142ugo\u015bci w\u0142os\u00f3w.'
+
+# ============================================================
+# Product 5: poszewka-jedwabna (flagship pillowcase)
+# ============================================================
+poszewka = make_base_row()
+poszewka[0] = 'poszewka-jedwabna'
+poszewka[1] = 'Poszewka jedwabna 50\u00d760'
+poszewka[5] = 'Poszewka jedwabna'
+poszewka[6] = 'jedwab, poszewka, 22-momme, nocna-rutyna, flagship'
+poszewka[8] = 'Color'  # Multi-variant by color
+poszewka[9] = 'zloty'  # Default variant
+poszewka[10] = 'product.metafields.shopify.color-pattern'
+poszewka[18] = '80.0'  # Variant Grams
+poszewka[22] = '269.00'
+poszewka[35] = 'Jedwabna poszewka 50\u00d760 na poduszk\u0119 - 22 momme \u00b7 LUSENA'
+poszewka[36] = '100% jedwab morwowy z Suzhou. 22 momme, certyfikat OEKO-TEX\u00ae. Mniej zmarszczek, g\u0142adsze w\u0142osy - od pierwszej nocy.'
+poszewka[37] = 'TRUE'  # badge_bestseller
+poszewka[38] = 'Budzisz si\u0119 bez odcisk\u00f3w poduszki - jedwab nie gniecie sk\u00f3ry jak bawe\u0142na'
+poszewka[39] = 'Wch\u0142ania znacznie mniej krem\u00f3w i serum - piel\u0119gnacja zostaje na sk\u00f3rze, nie na poszewce'
+poszewka[40] = 'W\u0142osy bez pl\u0105taniny i puszenia - fryzura przetrwa noc bez wysi\u0142ku'
+poszewka[41] = ''  # care_steps empty (theme defaults)
+poszewka[42] = 'Obud\u017a si\u0119 bez zagniece\u0144 - od pierwszej nocy.'
+# Feature 1 (product-specific)
+poszewka[43] = 'Zmarszczki senne (sleep wrinkles) to efekt gniecenia sk\u00f3ry przez poduszk\u0119 - ka\u017cdej nocy, godzina po godzinie. G\u0142adki jedwab morwowy sprzyja redukcji tego tarcia. Efekt wida\u0107 rano w lustrze.'
+poszewka[44] = 'heart'
+poszewka[45] = 'Mniej tarcia, mniej odcisk\u00f3w'
+# Feature 3 (product-specific)
+poszewka[49] = 'Jedwab pomaga naturalnie regulowa\u0107 temperatur\u0119 - w\u0142\u00f3kna bia\u0142ka jedwabnego odprowadzaj\u0105 wilgo\u0107 i oddychaj\u0105. Latem utrzymuje ch\u0142\u00f3d, zim\u0105 nie wych\u0142adza. Koniec z obracaniem poduszki w poszukiwaniu zimnej strony.'
+poszewka[50] = 'wind'
+poszewka[51] = 'Ch\u0142odna strona - ca\u0142\u0105 noc'
+# Feature 6 (universal but product name swapped)
+poszewka[58] = 'Ka\u017cda poszewka LUSENA przychodzi w eleganckim pude\u0142ku prezentowym - idealny upominek, kt\u00f3ry robi wra\u017cenie. Bez dodatkowego pakowania.'
+poszewka[59] = 'gift'
+poszewka[60] = 'Gotowa do wr\u0119czenia'
+# Packaging
+poszewka[61] = "Jedwabna poszewka LUSENA\nEleganckie pude\u0142ko prezentowe LUSENA\nKarta z instrukcj\u0105 piel\u0119gnacji"
+poszewka[62] = 'TRUE'  # show_price_per_night
+# Specs
+poszewka[63] = 'OEKO-TEX\u00ae Standard 100'
+poszewka[64] = 'Koperta'
+poszewka[65] = '50 \u00d7 60 cm'
+poszewka[66] = '6A (najwy\u017csza)'
+poszewka[67] = '100% jedwab morwowy (Mulberry Silk)'
+poszewka[68] = '22 momme'
+poszewka[69] = 'Charmeuse (splot satynowy)'
+poszewka[70] = '80 g'
+# Tagline (2026-03-17: benefit-oriented, removed redundant specs)
+poszewka[71] = 'Budzisz si\u0119 bez odcisk\u00f3w poduszki - jedwab nie gniecie sk\u00f3ry jak bawe\u0142na. Wch\u0142ania znacznie mniej krem\u00f3w i serum, wi\u0119c piel\u0119gnacja zostaje na sk\u00f3rze zamiast na poszewce. W\u0142osy bez pl\u0105taniny i puszenia - fryzura przetrwa noc bez wysi\u0142ku.'
+
+# Additional variant rows for poszewka (color variants)
+poszewka_gray = make_empty_row()
+poszewka_gray[0] = 'poszewka-jedwabna'
+poszewka_gray[9] = 'gray'
+poszewka_gray[18] = '80.0'
+poszewka_gray[19] = 'shopify'
+poszewka_gray[20] = 'continue'
+poszewka_gray[21] = 'manual'
+poszewka_gray[22] = '269.00'
+poszewka_gray[24] = 'true'
+poszewka_gray[25] = 'true'
+poszewka_gray[80] = 'g'
+
+poszewka_gold = make_empty_row()
+poszewka_gold[0] = 'poszewka-jedwabna'
+poszewka_gold[9] = 'gold'
+poszewka_gold[18] = '80.0'
+poszewka_gold[19] = 'shopify'
+poszewka_gold[20] = 'continue'
+poszewka_gold[21] = 'manual'
+poszewka_gold[22] = '269.00'
+poszewka_gold[24] = 'true'
+poszewka_gold[25] = 'true'
+poszewka_gold[80] = 'g'
+
+poszewka_pink = make_empty_row()
+poszewka_pink[0] = 'poszewka-jedwabna'
+poszewka_pink[9] = 'pink'
+poszewka_pink[18] = '80.0'
+poszewka_pink[19] = 'shopify'
+poszewka_pink[20] = 'continue'
+poszewka_pink[21] = 'manual'
+poszewka_pink[22] = '269.00'
+poszewka_pink[24] = 'true'
+poszewka_pink[25] = 'true'
+poszewka_pink[80] = 'g'
 
 # ============================================================
 # Write separate CSV per product
 # ============================================================
-products = [bonnet, scrunchie, mask, curlers]
+single_variant_products = [bonnet, scrunchie, mask, curlers]
 
-for product in products:
+for product in single_variant_products:
     handle = product[0]
     filename = f'{handle}_import.csv'
-    # Write with UTF-8 BOM and LF line endings (matching Shopify export format)
     output = io.StringIO()
     writer = csv.writer(output, quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
     writer.writerow(header)
@@ -271,3 +355,17 @@ for product in products:
         f.write(b'\xef\xbb\xbf')  # UTF-8 BOM
         f.write(output.getvalue().encode('utf-8'))
     print(f"Generated {filename} ({len(product)} columns, price={product[22]})")
+
+# Poszewka has multiple color variants — write all rows
+filename = 'poszewka-jedwabna_import.csv'
+output = io.StringIO()
+writer = csv.writer(output, quoting=csv.QUOTE_MINIMAL, lineterminator='\n')
+writer.writerow(header)
+writer.writerow(poszewka)
+writer.writerow(poszewka_gray)
+writer.writerow(poszewka_gold)
+writer.writerow(poszewka_pink)
+with open(filename, 'wb') as f:
+    f.write(b'\xef\xbb\xbf')  # UTF-8 BOM
+    f.write(output.getvalue().encode('utf-8'))
+print(f"Generated {filename} ({len(poszewka)} columns, price={poszewka[22]}, 4 variants)")

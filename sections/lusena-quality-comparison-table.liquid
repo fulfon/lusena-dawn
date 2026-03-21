@@ -48,20 +48,13 @@
                 <th scope="row">{{ block.settings.metric | escape }}</th>
                 <td>
                   <span class="lusena-truth-table__value lusena-truth-table__value--lusena">
-                    <svg class="lusena-truth-table__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <circle cx="12" cy="12" r="10"/>
-                      <path d="m9 12 2 2 4-4"/>
-                    </svg>
+                    {% render 'lusena-icon', name: 'circle-check', class: 'lusena-truth-table__icon', stroke_width: 2 %}
                     <span>{{ block.settings.lusena_value | escape }}</span>
                   </span>
                 </td>
                 <td>
                   <span class="lusena-truth-table__value lusena-truth-table__value--others">
-                    <svg class="lusena-truth-table__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <circle cx="12" cy="12" r="10"/>
-                      <path d="m15 9-6 6"/>
-                      <path d="m9 9 6 6"/>
-                    </svg>
+                    {% render 'lusena-icon', name: 'circle-x', class: 'lusena-truth-table__icon', stroke_width: 2 %}
                     <span>{{ block.settings.others_value | escape }}</span>
                   </span>
                 </td>
@@ -81,21 +74,14 @@
             <div class="lusena-truth-table__card-line lusena-truth-table__card-line--lusena">
               <span class="lusena-truth-table__card-label lusena-truth-table__card-label--lusena">{{ section.settings.lusena_label | escape }}</span>
               <span class="lusena-truth-table__value lusena-truth-table__value--lusena">
-                <svg class="lusena-truth-table__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10"/>
-                  <path d="m9 12 2 2 4-4"/>
-                </svg>
+                {% render 'lusena-icon', name: 'circle-check', class: 'lusena-truth-table__icon', stroke_width: 2 %}
                 <span>{{ block.settings.lusena_value | escape }}</span>
               </span>
             </div>
             <div class="lusena-truth-table__card-line">
               <span class="lusena-truth-table__card-label">{{ section.settings.others_label | escape }}</span>
               <span class="lusena-truth-table__value lusena-truth-table__value--others">
-                <svg class="lusena-truth-table__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10"/>
-                  <path d="m15 9-6 6"/>
-                  <path d="m9 9 6 6"/>
-                </svg>
+                {% render 'lusena-icon', name: 'circle-x', class: 'lusena-truth-table__icon', stroke_width: 2 %}
                 <span>{{ block.settings.others_value | escape }}</span>
               </span>
             </div>

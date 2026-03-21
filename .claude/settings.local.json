@@ -41,7 +41,13 @@
       "Read(//tmp/**)",
       "Bash(npx playwright-cli:*)",
       "Bash(cd \"C:\\\\Users\\\\Karol\\\\Documents\\\\BusinessIdeas\\\\SilkStore\\\\sklepOnline\\\\shopify-lusena-dev\\\\lusena-dawn\" && rm -f footer-mobile-375.png footer-mobile-320.png footer-mobile-320-top.png footer-desktop-1440.png footer-mobile-375-after.png footer-mobile-320-after.png footer-desktop-1440-after.png)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "mcp__shopify-dev-mcp__search_docs_chunks",
+      "mcp__shopify-dev-mcp__fetch_full_docs",
+      "mcp__shopify-dev-mcp__introspect_graphql_schema",
+      "Bash(1:*)",
+      "Bash(playwright-cli -s=bundle-research eval \"document.querySelector\\(''[data-debug-bundle-metafields]''\\)?.textContent\")",
+      "Bash(playwright-cli -s=bundle-m2 eval \"document.querySelector\\(''.lusena-pdp-summary__price-row''\\)?.innerHTML\")"
     ]
   }
 }

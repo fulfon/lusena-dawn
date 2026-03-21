@@ -11,7 +11,7 @@
   assign sticky_show_per_night = true
   if product != blank
     assign mf_per_night = product.metafields.lusena.pdp_show_price_per_night
-    if mf_per_night != blank and mf_per_night.value == false
+    if mf_per_night.value == false
       assign sticky_show_per_night = false
     endif
   endif

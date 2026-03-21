@@ -1,39 +1,50 @@
 {% doc %}
-  PDP right-column summary: emotional headline, title, short description, price, and delivery row.
+  Bundle PDP summary: emotional headline, title, tagline, price with savings, delivery row.
 
   @param {product} product
   @param {variant} current_variant
   @param {section} section
-  @param {number} price_per_night_cents
 
   Per-product metafield overrides (fallback to section settings):
   - product.metafields.lusena.pdp_emotional_headline
   - product.metafields.lusena.pdp_tagline
-  - product.metafields.lusena.pdp_show_price_per_night (boolean, default true)
+  - product.metafields.lusena.bundle_original_price (integer, zł — e.g. 508)
 {% enddoc %}
 
 {%- liquid
   assign resolved_headline = section.settings.emotional_headline
   if product != blank
     assign mf_headline = product.metafields.lusena.pdp_emotional_headline
-    if mf_headline != blank and mf_headline.value != blank
-      assign resolved_headline = mf_headline.value
+    if mf_headline != blank
+      if mf_headline.value != blank
+        assign resolved_headline = mf_headline.value
+      endif
     endif
   endif
 
   assign resolved_tagline = section.settings.tagline
   if product != blank
     assign mf_tagline = product.metafields.lusena.pdp_tagline
-    if mf_tagline != blank and mf_tagline.value != blank
-      assign resolved_tagline = mf_tagline.value
+    if mf_tagline != blank
+      if mf_tagline.value != blank
+        assign resolved_tagline = mf_tagline.value
+      endif
     endif
   endif
 
-  assign show_per_night = true
+  assign original_price_cents = 0
+  assign savings_cents = 0
+  assign has_savings = false
   if product != blank
-    assign mf_per_night = product.metafields.lusena.pdp_show_price_per_night
-    if mf_per_night.value == false
-      assign show_per_night = false
+    assign mf_original = product.metafields.lusena.bundle_original_price
+    if mf_original != blank
+      if mf_original.value != blank
+        assign original_price_cents = mf_original.value | times: 100
+        assign savings_cents = original_price_cents | minus: current_variant.price
+        if savings_cents > 0
+          assign has_savings = true
+        endif
+      endif
     endif
   endif
 -%}
@@ -57,27 +68,18 @@
 
   <div data-lusena-price-wrap>
     <div class="lusena-pdp-summary__price-row">
-      <span class="lusena-pdp-summary__price" data-lusena-price>
+      <span class="lusena-pdp-summary__price">
         {{ current_variant.price | money_without_trailing_zeros }}
       </span>
-      {%- if current_variant.compare_at_price and current_variant.compare_at_price > current_variant.price -%}
-        <span class="lusena-pdp-summary__compare-at" data-lusena-compare-at>
-          {{ current_variant.compare_at_price | money_without_trailing_zeros }}
+      {%- if has_savings -%}
+        <span class="lusena-pdp-summary__compare-at">
+          {{ original_price_cents | money_without_trailing_zeros }}
         </span>
-      {%- else -%}
-        <span class="lusena-pdp-summary__compare-at hidden" data-lusena-compare-at></span>
       {%- endif -%}
     </div>
-    {%- if show_per_night -%}
-      <span
-        class="lusena-pdp-summary__per-night"
-        data-lusena-price-per-night
-        data-prefix="{{ section.settings.price_per_night_prefix | escape }}"
-        data-suffix="{{ section.settings.price_per_night_suffix | escape }}"
-      >
-        {{ section.settings.price_per_night_prefix | escape }}
-        {{ price_per_night_cents | money_without_trailing_zeros }}
-        {{ section.settings.price_per_night_suffix | escape }}
+    {%- if has_savings -%}
+      <span class="lusena-bundle-savings">
+        {{ section.settings.savings_label | escape }} {{ savings_cents | money_without_trailing_zeros }}
       </span>
     {%- endif -%}
   </div>
@@ -111,7 +113,6 @@
             {%- endif -%}
             <a
               href="#details"
-              data-lusena-open-returns
               class="lusena-pdp-summary__delivery-link"
             >
               {{ section.settings.delivery_returns_link_label | escape }}

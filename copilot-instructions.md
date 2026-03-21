@@ -72,6 +72,8 @@ Before creating or modifying product metafields, read `docs/product-metafields-r
 - All custom files use `lusena-*` prefix
 - NEVER fabricate social proof (customer counts, ratings, reviews)
 - Sentence case for all headings and button labels
+- **Hyphens only, never em dashes** — all customer-facing copy uses `-` (hyphen/minus), never `—` (em dash). Em dashes look AI-generated. This applies to metafield values, section defaults, and any text visible to customers.
+- **Feature card titles: max 28 characters** — guarantees single-line rendering at the tightest breakpoint (288px column at 20px font). Reference: "Jedwab, nie satyna z poliestru" (30 chars) barely fits.
 - Conventional Commits: `feat(lusena):`, `fix(lusena):`, `docs:`, `chore:`
 
 ## Implementation Principles

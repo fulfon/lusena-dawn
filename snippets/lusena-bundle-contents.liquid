@@ -1,0 +1,63 @@
+{% doc %}
+  Bundle "What's included" list. Reads Simple Bundles variant_options metafield
+  to extract component product names.
+
+  @param {variant} current_variant
+  @param {section} section
+{% enddoc %}
+
+{%- liquid
+  assign bundle_options = current_variant.metafields.simple_bundles.variant_options.value
+  assign has_contents = false
+  if bundle_options != blank
+    if bundle_options.size > 0
+      assign has_contents = true
+    endif
+  endif
+-%}
+
+{%- if has_contents -%}
+  <div class="lusena-bundle-contents{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+    <h3 class="lusena-bundle-contents__heading">
+      {{ section.settings.contents_heading | default: 'W zestawie' | escape }}
+    </h3>
+    <ul class="lusena-bundle-contents__list">
+      {%- assign seen_products = '' -%}
+      {%- for option in bundle_options -%}
+        {%- liquid
+          assign full_name = option.optionName
+          assign product_name = full_name | split: ' - Color' | first | split: ' - ' | first
+          assign already_listed = false
+          if seen_products contains product_name
+            assign already_listed = true
+          endif
+        -%}
+        {%- unless already_listed -%}
+          {%- liquid
+            assign count = 0
+            for check_option in bundle_options
+              assign check_name = check_option.optionName | split: ' - Color' | first | split: ' - ' | first
+              if check_name == product_name
+                assign count = count | plus: 1
+              endif
+            endfor
+            assign seen_products = seen_products | append: product_name | append: '||'
+          -%}
+          <li class="lusena-bundle-contents__item">
+            {% render 'lusena-icon',
+              name: 'check',
+              class: 'lusena-bundle-contents__icon'
+            %}
+            <span>
+              {%- if count > 1 -%}
+                {{ count }}x {{ product_name | escape }}
+              {%- else -%}
+                {{ product_name | escape }}
+              {%- endif -%}
+            </span>
+          </li>
+        {%- endunless -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}

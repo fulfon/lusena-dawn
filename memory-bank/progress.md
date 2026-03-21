@@ -1,8 +1,8 @@
 # Progress
 
-*Last updated: 2026-03-15*
+*Last updated: 2026-03-21*
 
-## LUSENA-styled pages (13 of ~21 total)
+## LUSENA-styled pages (14 of ~21 total)
 
 - [x] **Homepage** (`index.json`) — 9 sections: hero, trust bar, problem/solution, bestsellers, testimonials, bundles (card grid), heritage, FAQ, final CTA. Full UX audit completed 2026-03-08 (copy, flow, visual rhythm, value anchors, spacing). Newsletter removed (footer handles it).
 - [x] **Product page** (`product.json`) — 6 sections: main-product, feature highlights (animated icons), quality evidence, truth table, FAQ (shared `lusena-faq`), final CTA (shared `lusena-final-cta`). Full UX audit completed 2026-03-09 (visual rhythm, content rewrite, legal compliance, FAQ consolidation, conversion CTA). Per-product metafield overrides for headline/tagline/per-night. Returns deep-link. PDP buy-box spacing overhauled. Animated icons added 2026-03-15.
@@ -17,6 +17,7 @@
 - [x] **404 page** (`404.json`) — 1 section: lusena-404 (centered error message, bestseller grid, viewport-fill)
 - [x] **Generic page** (`page.json`) — 1 section: lusena-main-page (breadcrumbs, title, richtext via `.lusena-richtext`, viewport-fill, compact spacing)
 - [x] **Contact page** (`page.contact.json`) — 2 sections: lusena-contact-form (breadcrumbs, heading, LUSENA form system, customer pre-fill, viewport-fill, full-width mobile button) + lusena-newsletter
+- [~] **Bundle product page** (`product.bundle.json`) — 6 sections: lusena-main-bundle (buy box with summary, contents, color swatches, ATC placeholder), feature highlights, quality evidence, truth table, FAQ, final CTA. M2 visual scaffolding created (2026-03-21). Pending: assign template in Shopify admin, M3 interactivity, M4 testing.
 
 ## Dawn → LUSENA page migration — COMPLETE (all customer-facing pages branded)
 
@@ -51,6 +52,7 @@ Full plan: `memory-bank/doc/features/dawn-pages-migration-plan.md`
 - [x] Breadcrumbs (`snippets/lusena-breadcrumbs.liquid`)
 - [x] Generic final CTA (`sections/lusena-final-cta.liquid`) — reusable across all pages
 - [x] Bundles standalone CSS (`assets/lusena-bundles.css`) — bundle card grid styles (loaded per-section) (2026-03-07)
+- [x] Bundle PDP standalone CSS (`assets/lusena-bundle-pdp.css`) — bundle buy box styles (loaded in lusena-main-bundle) (2026-03-21)
 - [x] Reusable page audit skill (`.claude/skills/lusena-page-audit/`) — standardized UX audit checklist (2026-03-08)
 - [x] Customer validation skill (`.claude/skills/lusena-customer-validation/`) — 4-persona copy evaluation (2026-03-14, expanded 2026-03-15)
 - [x] Legal check skill (`.claude/skills/lusena-legal-check/`) — EU/UOKiK compliance check (2026-03-14)
@@ -132,24 +134,47 @@ Body/main Tailwind classes moved to `lusena-foundations.css` global rules (body 
 - [x] VAT registration: dummy (PL0000000000 — replace before live)
 - [x] Metafield definitions: 35 product metafields created under `lusena.*` namespace
 
-**Products:**
-- [~] **Poszewka jedwabna 50×60** — basic info, pricing (269 zł), shipping, SEO, most metafields done. Pending: cost per item, final colors/SKUs, media, feature highlights, collections. Full status: `memory-bank/doc/products/poszewka-jedwabna.md`
-- [x] **Scrunchie jedwabny** — Copy finalized (2026-03-14). Full status: `memory-bank/doc/products/silk-scrunchie.md`
-- [x] **Bonnet jedwabny (czepek do spania)** — Copy finalized (2026-03-14). Price: 239 zł. Full creative session completed (research → craft → legal check PASS → 2 validation runs → finalize). Full status: `memory-bank/doc/products/silk-bonnet.md`
-- [x] **Jedwabna maska 3D do spania** — Copy finalized (2026-03-14). Price: 169 zł. Full creative session completed (research → craft → legal check PASS → 2 validation runs → finalize). Full status: `memory-bank/doc/products/jedwabna-maska-3d.md`
-- [x] **Heatless curlers (Jedwabny wałek do loków)** — Copy finalized (2026-03-15). Price: 219 zł. Material correction applied (22 momme 6A silk confirmed). Title changed from "Lokówki" to "Wałek". Full status: `memory-bank/doc/products/heatless-curlers.md`
+**Color strategy (completed 2026-03-20):**
+- [x] **Research-backed color palette finalized** — Black + Dusty Rose + Champagne unified capsule. Full doc: `memory-bank/doc/color-strategy.md`
+- [x] **Rename Shopify variants** — placeholder names renamed to Czarny/Brudny róż/Szampan (done 2026-03-20)
+- [x] **Update Simple Bundles option labels** — Polish color names set (done 2026-03-20, Nocna Rutyna fully updated; Piękny Sen + Scrunchie Trio still have English placeholder names in metafield — will auto-render correctly once updated in Simple Bundles admin)
 
-## Bundle Strategy (approved 2026-03-15)
+**Products:**
+- [~] **Poszewka jedwabna 50×60** — basic info, pricing (269 zł), shipping, SEO, most metafields done. Colors FINALIZED: A-Czarny (40) + B-Brudny róż (40) + C-Szampan (40). Pending: cost per item, rename Shopify variants, media, feature highlights, collections. Full status: `memory-bank/doc/products/poszewka-jedwabna.md`
+- [x] **Scrunchie jedwabny** — Copy finalized (2026-03-14). Colors FINALIZED: A-Czarny (50) + B-Brudny róż (50) + C-Szampan (50). Full status: `memory-bank/doc/products/silk-scrunchie.md`
+- [x] **Bonnet jedwabny (czepek do spania)** — Copy finalized (2026-03-14). Price: 239 zł. Colors FINALIZED: A-Czarny (30) + B-Brudny róż (30). Full status: `memory-bank/doc/products/silk-bonnet.md`
+- [x] **Jedwabna maska 3D do spania** — Copy finalized (2026-03-14). Price: 169 zł. Color FINALIZED: A-Czarny (40). Full status: `memory-bank/doc/products/jedwabna-maska-3d.md`
+- [x] **Heatless curlers (Jedwabny wałek do loków)** — Copy finalized (2026-03-15). Price: 219 zł. Color FINALIZED: B-Brudny róż (50). Full status: `memory-bank/doc/products/heatless-curlers.md`
+
+## Bundle Strategy & Implementation
 
 Full strategy: `memory-bank/doc/bundle-strategy.md`
+Full implementation tracker: `memory-bank/doc/bundle-implementation.md`
 
-**Phase 1 (launch):**
+**Phase A: Shopify admin setup (COMPLETE 2026-03-19):**
 - [x] Bundle architecture defined (research-backed, brandbook partially superseded)
-- [ ] **Nocna Rutyna** (poszewka + bonnet = 399 zł, 21.5% off) — creative session pending
-- [ ] **Piękny Sen** (poszewka + maska = 349 zł, 20.3% off) — creative session pending
-- [ ] **Scrunchie Trio** (3× scrunchie = 139 zł, 21.5% off) — creative session pending
+- [x] App selected: Simple Bundles & Kits (Infinite Options) — evaluated 10+ apps
+- [x] All 5 individual products in Shopify with color variants
+- [x] 3 bundle products created + configured in Simple Bundles
+- [x] Add-to-cart verified for all 3 bundles via Playwright
+
+**Phase B: Custom theme UI (IN PROGRESS):**
+- [x] M1: Examine Simple Bundles metafields — `variant_options` documented, ATC format understood, backend confirmed (2026-03-20)
+- [x] M2 scaffolding: `product.bundle.json` + `lusena-main-bundle` section + 3 snippets + CSS created (2026-03-21)
+- [ ] M2 gate: Assign templates in Shopify admin, validate visuals via Playwright
+- [ ] M3: Swatch interaction JS, real ATC form, cart display with selected colors
+- [ ] M4: Full test matrix, edge cases, sticky ATC mobile
+
+**Phase C: Content & polish:**
+- [ ] **Nocna Rutyna** creative session (headline, tagline, 3 benefits)
+- [ ] **Piękny Sen** creative session
+- [ ] **Scrunchie Trio** creative session
+- [ ] Fill bundle metafields in Shopify admin
+- [ ] Homepage bundles section — wire up real products
+- [ ] Bundle product media (when physical products arrive)
+
+**Phase D: Cross-sell:**
 - [ ] PDP cross-sell checkbox (scrunchie at 39 zł) — needs dev implementation
-- [ ] Free shipping threshold set to 299 zł
 
 **Phase 2 (data-gated, after 8-12 weeks):**
 - [ ] Kompletna Nocna Rutyna (poszewka + bonnet + maska = 499 zł)

@@ -21,9 +21,9 @@ LUSENA is a premium Polish silk e-commerce store built as a custom Shopify theme
 | 2 | Bonnet jedwabny | silk bonnet |
 | 3 | Jedwabna maska 3D do spania | jedwabna-maska-3d |
 | 3 | Lokówki jedwabne | heatless curlers |
-| 3 | Bundle: Nocna Rutyna | night routine bundle |
-| 3 | Bundle: Starter Kit | starter kit bundle |
-| 3 | Bundle: Scrunchie Trio | scrunchie trio bundle |
+| 3 | Bundle: Nocna Rutyna | nocna-rutyna |
+| 3 | Bundle: Piękny Sen | piekny-sen |
+| 3 | Bundle: Scrunchie Trio | scrunchie-trio |
 
 ## Brand identity
 

@@ -26,17 +26,19 @@
 
 ## Variants
 
+> **Color strategy:** `memory-bank/doc/color-strategy.md` — research-backed unified capsule palette (2026-03-20)
+
 | Option | Values | Status |
 |--------|--------|--------|
-| Color | Gray, Gold, Pink | Done (tentative - may change) |
+| Color | Brudny róż, Szampan, Czarny | **FINALIZED** (2026-03-20) |
 
-| Variant | SKU | Barcode | Status |
-|---------|-----|---------|--------|
-| Gray | - | - | **PENDING** (after colors finalized) |
-| Gold | - | - | **PENDING** |
-| Pink | - | - | **PENDING** |
+| Variant | Role | SKU | Units (initial order) | Barcode | Status |
+|---------|------|-----|-----------------------|---------|--------|
+| Czarny (Black) | A — dark base | LUS-PIL-BLK | 40 | - | **PENDING** (rename in Shopify from "Gray") |
+| Brudny róż (Dusty Rose) | B — hero | LUS-PIL-RSE | 40 | - | **PENDING** (rename in Shopify from "Pink") |
+| Szampan (Champagne) | C — limitka | LUS-PIL-CHP | 40 | - | **PENDING** (rename in Shopify from "Gold") |
 
-Suggested SKU format: `LUS-PIL-{3-letter color code}` (e.g., `LUS-PIL-GRY`)
+Equal split per §7.2 MOQ (120 / 3 = 40 each). Szampan positioned as limitka with FOMO badge per §7.3.
 
 ## Inventory
 
@@ -51,7 +53,7 @@ Suggested SKU format: `LUS-PIL-{3-letter color code}` (e.g., `LUS-PIL-GRY`)
 | Field | Value | Status |
 |-------|-------|--------|
 | Physical product | Yes | Done |
-| Product weight | 85 g | Done |
+| Product weight | 80 g | Done |
 | Country of origin | China | Done |
 | HS code | 630231 | Done |
 | Package | Store default | Done (update when shipping box dimensions known) |
@@ -85,7 +87,7 @@ Suggested SKU format: `LUS-PIL-{3-letter color code}` (e.g., `LUS-PIL-GRY`)
 | Metafield | Value | Status |
 |-----------|-------|--------|
 | `lusena.pdp_emotional_headline` | Obudź się bez zagnieceń - od pierwszej nocy. | Done |
-| `lusena.pdp_tagline` | Bawełna chłonie wilgoć i gniecie skórę przez 8 godzin snu. Ta - z jedwabiu morwowego najwyższej klasy (22 momme, Grade 6A) prosto z Suzhou, z certyfikatem OEKO-TEX® Standard 100 - ogranicza tarcie i pomaga zachować nawilżenie. | Done |
+| `lusena.pdp_tagline` | Budzisz się bez odcisków poduszki - jedwab nie gniecie skóry jak bawełna. Wchłania znacznie mniej kremów i serum, więc pielęgnacja zostaje na skórze zamiast na poszewce. Włosy bez plątaniny i puszenia - fryzura przetrwa noc bez wysiłku. | **UPDATED** (2026-03-17: benefit-oriented, removed redundant specs) |
 | `lusena.pdp_show_price_per_night` | true | Done |
 
 ### Benefit bullets
@@ -106,7 +108,7 @@ Suggested SKU format: `LUS-PIL-{3-letter color code}` (e.g., `LUS-PIL-GRY`)
 | `lusena.pdp_specs_grade` | 6A (najwyższa) | Done |
 | `lusena.pdp_specs_dimensions` | 50 × 60 cm | Done |
 | `lusena.pdp_specs_closure` | Koperta | Done |
-| `lusena.pdp_specs_weight` | 85 g | Done |
+| `lusena.pdp_specs_weight` | 80 g | Done |
 | `lusena.pdp_specs_certification` | OEKO-TEX® Standard 100 | Done |
 
 ### Packaging
@@ -127,19 +129,19 @@ Suggested SKU format: `LUS-PIL-{3-letter color code}` (e.g., `LUS-PIL-GRY`)
 | Metafield | Value | Status |
 |-----------|-------|--------|
 | `lusena.pdp_feature_1_icon` | heart | Done |
-| `lusena.pdp_feature_1_title` | Mniej tarcia, mniej zmarszczek sennych | Done |
-| `lusena.pdp_feature_1_description` | Zmarszczki senne (sleep wrinkles) to efekt mechanicznego gniecenia skóry przez poduszkę - każdej nocy, godzina po godzinie. Gładka powierzchnia jedwabiu morwowego sprzyja redukcji tego tarcia. Efekt widać rano w lustrze. | Done |
+| `lusena.pdp_feature_1_title` | Mniej tarcia, mniej odcisków | Done |
+| `lusena.pdp_feature_1_description` | Zmarszczki senne (sleep wrinkles) to efekt gniecenia skóry przez poduszkę - każdej nocy, godzina po godzinie. Gładki jedwab morwowy sprzyja redukcji tego tarcia. Efekt widać rano w lustrze. | Done |
 | `lusena.pdp_feature_2_icon` | layers | Pre-filled (universal) |
 | `lusena.pdp_feature_2_title` | Dlaczego 22 momme? | Pre-filled (universal) |
 | `lusena.pdp_feature_2_description` | Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy. | Pre-filled (universal) |
 | `lusena.pdp_feature_3_icon` | wind | Done |
-| `lusena.pdp_feature_3_title` | Chłodna strona poduszki — przez całą noc | Done |
-| `lusena.pdp_feature_3_description` | Jedwab pomaga naturalnie regulować temperaturę — włókna białka jedwabnego odprowadzają wilgoć i oddychają. Latem utrzymuje chłód, zimą nie wychładza. Koniec z obracaniem poduszki w poszukiwaniu zimnej strony. | Done |
+| `lusena.pdp_feature_3_title` | Chłodna strona - całą noc | Done |
+| `lusena.pdp_feature_3_description` | Jedwab pomaga naturalnie regulować temperaturę - włókna białka jedwabnego odprowadzają wilgoć i oddychają. Latem utrzymuje chłód, zimą nie wychładza. Koniec z obracaniem poduszki w poszukiwaniu zimnej strony. | Done |
 | `lusena.pdp_feature_4_icon` | shield-check | Pre-filled (universal) |
 | `lusena.pdp_feature_4_title` | Jedwab, nie satyna z poliestru | Pre-filled (universal) |
 | `lusena.pdp_feature_4_description` | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. | Pre-filled (universal) |
 | `lusena.pdp_feature_5_icon` | sparkles | Pre-filled (universal) |
-| `lusena.pdp_feature_5_title` | Certyfikat OEKO-TEX® Standard 100 | Pre-filled (universal) |
+| `lusena.pdp_feature_5_title` | Certyfikowany OEKO-TEX® 100 | Pre-filled (universal) |
 | `lusena.pdp_feature_5_description` | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. | Pre-filled (universal) |
 | `lusena.pdp_feature_6_icon` | gift | Pre-filled (universal) |
 | `lusena.pdp_feature_6_title` | Gotowa do wręczenia | Pre-filled (universal) |

@@ -17,6 +17,10 @@
             <span>22 momme</span>
           </span>
           <span class="lusena-pdp-proof-chip{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+            {% render 'lusena-icon', name: 'gift', class: 'lusena-pdp-proof-chip__icon', stroke_width: 1.5 %}
+            <span>Na prezent</span>
+          </span>
+          <span class="lusena-pdp-proof-chip{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
             {% render 'lusena-icon', name: 'truck', class: 'lusena-pdp-proof-chip__icon', stroke_width: 1.5 %}
             <span>Wysyłka 24h z PL</span>
           </span>
@@ -24,8 +28,88 @@
             {% render 'lusena-icon', name: 'clock', class: 'lusena-pdp-proof-chip__icon', stroke_width: 1.5 %}
             <span>60 dni na zwrot</span>
           </span>
-          <span class="lusena-pdp-proof-chip{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-            {% render 'lusena-icon', name: 'gift', class: 'lusena-pdp-proof-chip__icon', stroke_width: 1.5 %}
-            <span>Na prezent</span>
-          </span>
         </div>
+
+<script>
+/**
+ * Proof-chip row balancer
+ * Measures chip widths + container, finds the optimal CSS order so
+ * all chips fit in ≤ 2 rows. Preserves DOM (nominal) order when it
+ * already fits; only reorders when wrapping would exceed 2 rows.
+ * Uses bitmask enumeration (2^n − 2 combos, n = 5 → 30 checks).
+ */
+(function(){
+  var el = document.querySelector('.lusena-pdp-proof-chips');
+  if (!el) return;
+  var chips = [], c = el.firstElementChild;
+  while (c) { if (c.classList.contains('lusena-pdp-proof-chip')) chips.push(c); c = c.nextElementSibling; }
+  var n = chips.length;
+  if (n < 3) return;
+
+  var prevW = -1, raf = 0;
+
+  function balance() {
+    raf = 0;
+    var cw = el.offsetWidth;
+    if (Math.abs(cw - prevW) < 2) return;
+    prevW = cw;
+
+    var cs = getComputedStyle(el);
+    var gap = parseFloat(cs.columnGap) || parseFloat(cs.rowGap) || 0;
+    var w = [], i;
+    for (i = 0; i < n; i++) w.push(chips[i].offsetWidth);
+
+    /* Count rows a sequence would produce via flex-wrap */
+    function rows(seq) {
+      var r = 1, rw = 0, j;
+      for (j = 0; j < seq.length; j++) {
+        var need = rw ? w[seq[j]] + gap : w[seq[j]];
+        if (rw + need > cw - 1) { r++; rw = w[seq[j]]; } else rw += need;
+      }
+      return r;
+    }
+
+    /* Nominal order (0,1,2,...) */
+    var nom = [];
+    for (i = 0; i < n; i++) nom.push(i);
+
+    if (rows(nom) <= 2) {
+      for (i = 0; i < n; i++) chips[i].style.order = '';
+      return;
+    }
+
+    /* Enumerate all 2-group splits; pick best valid 2-row arrangement */
+    var best = null, bs = 1e9;
+    for (var m = 1; m < (1 << n) - 1; m++) {
+      var a = [], b = [];
+      for (i = 0; i < n; i++) { if (m & (1 << i)) a.push(i); else b.push(i); }
+
+      var aw = 0, bw = 0;
+      for (i = 0; i < a.length; i++) aw += w[a[i]];
+      aw += Math.max(0, a.length - 1) * gap;
+      for (i = 0; i < b.length; i++) bw += w[b[i]];
+      bw += Math.max(0, b.length - 1) * gap;
+
+      if (aw > cw - 1 || bw > cw - 1) continue;
+
+      /* Score: prefer more chips on row 1, then least positional disruption */
+      var seq = a.concat(b), d = 0;
+      for (i = 0; i < n; i++) d += Math.abs(seq[i] - i);
+      var s = (a.length < b.length ? 100 : 0) + d;
+      if (s < bs) { bs = s; best = seq; }
+    }
+
+    if (best) {
+      for (i = 0; i < n; i++) chips[best[i]].style.order = '' + i;
+    }
+  }
+
+  function schedule() { if (!raf) raf = requestAnimationFrame(balance); }
+
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(schedule).observe(el);
+  }
+  window.addEventListener('resize', schedule);
+  requestAnimationFrame(balance);
+})();
+</script>

@@ -1,15 +1,9 @@
 {%- liquid
-  assign product_form_id = 'LusenaProductForm-' | append: section.id
   assign current_variant = product.selected_or_first_available_variant
-  assign price_per_night_cents = current_variant.price | divided_by: 365.0 | round
 -%}
+
 {%- liquid
   assign override_style = ''
-  comment
-    Always emit top-padding overrides (even when 0) so the value explicitly
-    overrides the lusena-spacing--compact tier default.  This matches the
-    draft-shop layout where PDP content starts right below the header.
-  endcomment
   assign override_style = override_style | append: '--lusena-section-padding-top-desktop:' | append: section.settings.padding_top | append: 'px;'
   assign override_style = override_style | append: '--lusena-section-padding-top-mobile:' | append: section.settings.padding_top_mobile | append: 'px;'
   if section.settings.padding_bottom > 0
@@ -19,7 +13,10 @@
     assign override_style = override_style | append: '--lusena-section-padding-bottom-mobile:' | append: section.settings.padding_bottom_mobile | append: 'px;'
   endif
 -%}
+
 {{ 'lusena-pdp.css' | asset_url | stylesheet_tag }}
+{{ 'lusena-bundle-pdp.css' | asset_url | stylesheet_tag }}
+
 <section
   class="lusena-pdp lusena-spacing--compact"
   data-lusena-product-section
@@ -31,8 +28,6 @@
     {{ product | json }}
   </script>
 
-  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
-
   <div class="lusena-container">
     {% render 'lusena-breadcrumbs', page_type: 'product', product: product, collection: collection %}
 
@@ -41,21 +36,35 @@
 
       <div class="lusena-pdp-buy-box">
         <div class="lusena-pdp-buy-box__summary">
-          {% render 'lusena-pdp-summary', product: product, current_variant: current_variant, section: section, price_per_night_cents: price_per_night_cents %}
+          {% render 'lusena-bundle-summary', product: product, current_variant: current_variant, section: section %}
         </div>
 
         <div class="lusena-pdp-buy-box__proof">
-          {% render 'lusena-pdp-proof-chips', section: section %}
+          {% render 'lusena-pdp-proof-chips' %}
+        </div>
+
+        <div class="lusena-pdp-buy-box__contents">
+          {% render 'lusena-bundle-contents', current_variant: current_variant, section: section %}
         </div>
 
         <div class="lusena-pdp-buy-box__desktop-divider"></div>
 
         <div class="lusena-pdp-buy-box__variant">
-          {% render 'lusena-pdp-variant-picker', product: product, current_variant: current_variant, section: section %}
+          {% render 'lusena-bundle-options', current_variant: current_variant, section: section %}
         </div>
 
         <div class="lusena-pdp-buy-box__atc">
-          {% render 'lusena-pdp-atc', product: product, current_variant: current_variant, section: section, product_form_id: product_form_id %}
+          <div class="lusena-bundle-atc-placeholder lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+            <button
+              type="button"
+              class="lusena-btn lusena-btn--primary lusena-btn--size-pdp lusena-btn--text-base lusena-btn--full-width"
+              disabled
+            >
+              <span class="lusena-btn__content">
+                {{- section.settings.add_to_cart_label | escape -}}
+              </span>
+            </button>
+          </div>
         </div>
 
         <div class="lusena-pdp-buy-box__guarantee">
@@ -140,41 +149,38 @@
 
         {%- if has_benefit_text -%}
           <div class="lusena-pdp-buy-box__benefits-mobile">
-            <ul class="lusena-pdp-buy-box__benefits-list"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}
->
-              <li class="lusena-pdp-buy-box__benefit-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-                <span class="lusena-pdp-buy-box__benefit-dot"></span>
-                {{ benefit_1_text | escape }}
-              </li>
-              <li class="lusena-pdp-buy-box__benefit-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-                <span class="lusena-pdp-buy-box__benefit-dot"></span>
-                {{ benefit_2_text | escape }}
-              </li>
-              <li class="lusena-pdp-buy-box__benefit-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-                <span class="lusena-pdp-buy-box__benefit-dot"></span>
-                {{ benefit_3_text | escape }}
-              </li>
+            <ul class="lusena-pdp-buy-box__benefits-list"{% if settings.animations_reveal_on_scroll %} data-cascade{% endif %}>
+              {%- if benefit_1_text != blank -%}
+                <li class="lusena-pdp-buy-box__benefit-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+                  <span class="lusena-pdp-buy-box__benefit-dot"></span>
+                  {{ benefit_1_text | escape }}
+                </li>
+              {%- endif -%}
+              {%- if benefit_2_text != blank -%}
+                <li class="lusena-pdp-buy-box__benefit-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+                  <span class="lusena-pdp-buy-box__benefit-dot"></span>
+                  {{ benefit_2_text | escape }}
+                </li>
+              {%- endif -%}
+              {%- if benefit_3_text != blank -%}
+                <li class="lusena-pdp-buy-box__benefit-item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+                  <span class="lusena-pdp-buy-box__benefit-dot"></span>
+                  {{ benefit_3_text | escape }}
+                </li>
+              {%- endif -%}
             </ul>
           </div>
         {%- endif -%}
-
-        <div class="lusena-pdp-buy-box__details" data-lusena-buybox-panels>
-          {% render 'lusena-pdp-buybox-panels', product: product %}
-        </div>
       </div>
     </div>
   </div>
-
-  {% render 'lusena-pdp-cross-sell', section: section %}
-
-  {% render 'lusena-pdp-sticky-atc', product: product, current_variant: current_variant, section: section, product_form_id: product_form_id %}
 </section>
 
 {% render 'lusena-pdp-scripts' %}
 
 {% schema %}
 {
-  "name": "LUSENA product (draft)",
+  "name": "LUSENA bundle (PDP)",
   "tag": "section",
   "class": "section",
   "settings": [
@@ -223,118 +229,72 @@
       "default": 0
     },
     {
+      "type": "header",
+      "content": "Bundle summary"
+    },
+    {
       "type": "text",
       "id": "emotional_headline",
       "label": "Emotional headline",
-      "default": "G\u0142adsza sk\u00f3ra i l\u015bni\u0105ce w\u0142osy \u2014 od pierwszej nocy."
-    },
-    {
-      "type": "text",
-      "id": "trust_shipping",
-      "label": "Trust: shipping",
-      "default": "Darmowa dostawa"
-    },
-    {
-      "type": "text",
-      "id": "trust_oeko",
-      "label": "Trust: OEKO-TEX",
-      "default": "OEKO-TEX\u00ae"
+      "default": "Kompletna ochrona na noc"
     },
     {
       "type": "text",
       "id": "tagline",
       "label": "Tagline",
-      "default": "100% jedwab morwowy Grade 6A z Suzhou, 22 momme, certyfikat OEKO-TEX\u00ae Standard 100. Jedwab redukuje tarcie o 43% vs bawe\u0142na \u2014 Twoja sk\u00f3ra i w\u0142osy poczuj\u0105 r\u00f3\u017cnic\u0119."
+      "default": "Jedwab morwowy Grade 6A, 22 momme, certyfikat OEKO-TEX\u00ae Standard 100. Ka\u017cdy produkt w zestawie to ta sama jako\u015b\u0107 premium."
     },
     {
       "type": "text",
-      "id": "delivery_qualifies_label",
-      "label": "Delivery: qualifies line",
-      "default": "To zam\u00f3wienie kwalifikuje si\u0119 do darmowej dostawy"
+      "id": "savings_label",
+      "label": "Savings label",
+      "default": "Oszcz\u0119dzasz"
     },
     {
       "type": "text",
-      "id": "delivery_free_fallback_label",
-      "label": "Delivery: fallback line",
-      "default": "Darmowa dostawa InPost od 199 z\u0142"
+      "id": "contents_heading",
+      "label": "Contents heading",
+      "default": "W zestawie"
     },
     {
-      "type": "text",
-      "id": "delivery_eta_label",
-      "label": "Delivery: ETA",
-      "default": "Dostawa: 1\u20132 dni robocze"
-    },
-    {
-      "type": "text",
-      "id": "delivery_returns_link_label",
-      "label": "Delivery: returns link",
-      "default": "60 dni na zwrot"
-    },
-    {
-      "type": "text",
-      "id": "price_per_night_prefix",
-      "label": "Price-per-night prefix",
-      "default": "Tylko "
-    },
-    {
-      "type": "text",
-      "id": "price_per_night_suffix",
-      "label": "Price-per-night suffix",
-      "default": " / noc (przy rocznym u\u017cytkowaniu)"
+      "type": "header",
+      "content": "Color selector"
     },
     {
       "type": "text",
       "id": "select_color_label",
       "label": "Color selector label",
-      "default": "Wybierz kolor"
+      "default": "Kolor"
+    },
+    {
+      "type": "header",
+      "content": "Add to cart"
     },
     {
       "type": "text",
       "id": "add_to_cart_label",
       "label": "Add to cart label",
-      "default": "Dodaj do koszyka \u2013 wysy\u0142ka dzi\u015b"
-    },
-    {
-      "type": "text",
-      "id": "add_to_cart_loading_label",
-      "label": "Add to cart loading label",
-      "default": "Dodaj\u0119..."
-    },
-    {
-      "type": "text",
-      "id": "buy_now_label",
-      "label": "Buy now label",
-      "default": "Kup teraz"
-    },
-    {
-      "type": "text",
-      "id": "buy_now_loading_label",
-      "label": "Buy now loading label",
-      "default": "Przekierowuj\u0119..."
-    },
-    {
-      "type": "text",
-      "id": "sticky_add_to_cart_label",
-      "label": "Sticky add to cart label",
       "default": "Dodaj do koszyka"
     },
     {
-      "type": "text",
-      "id": "sticky_add_to_cart_loading_label",
-      "label": "Sticky add to cart loading label",
-      "default": "Dodaj\u0119..."
+      "type": "header",
+      "content": "Delivery"
     },
     {
       "type": "text",
-      "id": "in_stock_label",
-      "label": "In-stock label",
-      "default": "Na stanie, gotowe do wysy\u0142ki"
+      "id": "delivery_eta_label",
+      "label": "Delivery ETA",
+      "default": "Dostawa: 1\u20132 dni robocze"
     },
     {
       "type": "text",
-      "id": "out_of_stock_label",
-      "label": "Out-of-stock label",
-      "default": "Chwilowo niedost\u0119pne"
+      "id": "delivery_returns_link_label",
+      "label": "Returns link label",
+      "default": "60 dni na zwrot"
+    },
+    {
+      "type": "header",
+      "content": "Guarantee"
     },
     {
       "type": "text",
@@ -349,28 +309,14 @@
       "default": "Jak to dzia\u0142a?"
     },
     {
-      "type": "text",
-      "id": "guarantee_body",
-      "label": "Guarantee body",
-      "default": "Przetestuj przez 60 nocy. Je\u015bli nie poczujesz r\u00f3\u017cnicy \u2014 zwr\u00f3\u0107, nawet u\u017cywan\u0105. Pe\u0142ny zwrot bez pyta\u0144."
+      "type": "header",
+      "content": "Payment"
     },
     {
       "type": "text",
       "id": "secure_payment_label",
       "label": "Secure payment label",
       "default": "Bezpieczna p\u0142atno\u015b\u0107"
-    },
-    {
-      "type": "text",
-      "id": "video_placeholder",
-      "label": "Video placeholder",
-      "default": "Video Preview"
-    },
-    {
-      "type": "text",
-      "id": "cross_sell_heading",
-      "label": "Cross-sell heading",
-      "default": "Pasuje do"
     }
   ],
   "blocks": [
@@ -382,37 +328,31 @@
           "type": "text",
           "id": "text",
           "label": "Text",
-          "default": "Reduces sleep wrinkles and morning creases"
-        }
-      ]
-    },
-    {
-      "type": "cross_sell",
-      "name": "Cross-sell product",
-      "settings": [
-        {
-          "type": "product",
-          "id": "product",
-          "label": "Product"
+          "default": "Bundle benefit text"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "LUSENA product (draft)",
+      "name": "LUSENA bundle (PDP)",
       "blocks": [
-        { "type": "benefit" },
         {
           "type": "benefit",
           "settings": {
-            "text": "Keeps skin hydrated (doesn't absorb cream)"
+            "text": "Oszcz\u0119dzasz w por\u00f3wnaniu do zakupu osobno"
           }
         },
         {
           "type": "benefit",
           "settings": {
-            "text": "Prevents hair breakage and frizz"
+            "text": "Produkty zaprojektowane tak, by si\u0119 uzupe\u0142nia\u0107"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "text": "Darmowa dostawa - zestaw kwalifikuje si\u0119 automatycznie"
           }
         }
       ]

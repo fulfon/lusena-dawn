@@ -39,11 +39,17 @@
 
 ## Variants
 
+> **Color strategy:** `memory-bank/doc/color-strategy.md` — research-backed unified capsule palette (2026-03-20)
+
 | Option | Values | Status |
 |--------|--------|--------|
-| Kolor | - | **PENDING** (finalize colors) |
+| Kolor | Brudny róż | **FINALIZED** (2026-03-20) |
 
-SKU format: `LUS-CUR-{3-letter variant code}`
+| Variant | Role | SKU | Units (initial order) | Barcode | Status |
+|---------|------|-----|-----------------------|---------|--------|
+| Brudny róż (Dusty Rose) | B — hero | LUS-CUR-RSE | 50 | - | **PENDING** (add color variant in Shopify) |
+
+Single color (B only per §7.3): Pink/rose is the dominant #1 curler color globally (~80% of viral TikTok content features pink). B = dusty rose maps perfectly to curler category data.
 
 ## Inventory
 
@@ -96,7 +102,7 @@ SKU format: `LUS-CUR-{3-letter variant code}`
 | Metafield | Value | Status |
 |-----------|-------|--------|
 | `lusena.pdp_emotional_headline` | Zdejmujesz wałek rano - loki gotowe. | Copy finalized |
-| `lusena.pdp_tagline` | Lokówki i prostownice mogą osłabiać strukturę włosa przy każdym użyciu. Ten wałek z jedwabiu morwowego 22 momme może pomóc uzyskać fale i loki bez ciepła - owijasz lekko wilgotne włosy na noc, a jedwab ogranicza tarcie i wchłania znacznie mniej wilgoci z włosów. Efekt zależy od typu i długości włosów. | Copy finalized |
+| `lusena.pdp_tagline` | Loki bez ciepła - włosy formują się w nocy, bez ryzyka uszkodzeń termicznych. Jedwab wchłania znacznie mniej olejków i odżywek, więc pielęgnacja zostaje na włosach. Gładka powierzchnia ogranicza tarcie - mniej szarpania i plątaniny przy zdejmowaniu. Efekt zależy od typu i długości włosów. | **UPDATED** (2026-03-17: benefit-oriented, removed redundant specs, kept disclaimer) |
 | `lusena.pdp_show_price_per_night` | false | Pre-filled |
 
 ### Benefit bullets
@@ -148,13 +154,13 @@ SKU format: `LUS-CUR-{3-letter variant code}`
 | `lusena.pdp_feature_2_title` | Dlaczego 22 momme? | Pre-filled (universal) |
 | `lusena.pdp_feature_2_description` | Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy. | Pre-filled (universal) |
 | `lusena.pdp_feature_3_icon` | clock | Copy finalized |
-| `lusena.pdp_feature_3_title` | Owijasz wieczorem - rano gotowe fale | Copy finalized |
+| `lusena.pdp_feature_3_title` | Owijasz na noc - rano loki | Copy finalized |
 | `lusena.pdp_feature_3_description` | Owijasz lekko wilgotne włosy wokół wałka, spinasz i kładziesz się spać. Rano rozwijasz - fale lub loki gotowe. Żadnego czekania z gorącym żelazkiem w ręku, żadnego pośpiechu przed wyjściem. | Copy finalized |
 | `lusena.pdp_feature_4_icon` | shield-check | Pre-filled (universal) |
 | `lusena.pdp_feature_4_title` | Jedwab, nie satyna z poliestru | Pre-filled (universal) |
 | `lusena.pdp_feature_4_description` | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. | Pre-filled (universal) |
 | `lusena.pdp_feature_5_icon` | sparkles | Pre-filled (universal) |
-| `lusena.pdp_feature_5_title` | Certyfikat OEKO-TEX® Standard 100 | Pre-filled (universal) |
+| `lusena.pdp_feature_5_title` | Certyfikowany OEKO-TEX® 100 | Pre-filled (universal) |
 | `lusena.pdp_feature_5_description` | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. | Pre-filled (universal) |
 | `lusena.pdp_feature_6_icon` | gift | Pre-filled (universal) |
 | `lusena.pdp_feature_6_title` | Gotowa do wręczenia | Pre-filled (universal) |

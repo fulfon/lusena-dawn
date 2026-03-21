@@ -17,6 +17,7 @@
 - **Footer:** `sections/lusena-footer.liquid`
 - **Cart page:** `sections/lusena-cart-items.liquid` + `snippets/lusena-cart-quantity.liquid` + `sections/lusena-cart-footer.liquid`
 - **Product page:** `sections/lusena-main-product.liquid` + `snippets/lusena-pdp-*.liquid` (13 PDP snippets)
+- **Bundle product page:** `sections/lusena-main-bundle.liquid` + `snippets/lusena-bundle-*.liquid` (3 bundle snippets: summary, contents, options) — shares 4 PDP snippets (media, proof-chips, guarantee, payment)
 - **Collection:** `sections/lusena-main-collection.liquid` + `snippets/lusena-product-card.liquid`
 - **Search:** `sections/lusena-search.liquid` — predictive search, product grid, empty state with bestsellers
 - **Blog listing:** `sections/lusena-blog.liquid` — 2-col grid, pagination, rich empty state
@@ -48,12 +49,13 @@
 - `assets/lusena-footer.css` — Footer section styles (extracted from section {% stylesheet %})
 - `assets/lusena-pdp.css` — All PDP-specific CSS (~34KB), loaded per-page
 - `assets/lusena-bundles.css` — Bundle card grid styles (loaded per-section in lusena-bundles.liquid)
+- `assets/lusena-bundle-pdp.css` — Bundle PDP buy box styles (loaded in lusena-main-bundle.liquid)
 - `assets/lusena-icon-animations.css` — Animated icon CSS keyframes + prefers-reduced-motion (loaded per-section in lusena-pdp-feature-highlights.liquid)
 - `assets/base.css` — Dawn foundation (3,641 lines)
 
 ### CSS loading architecture
 - **Global assets in `theme.liquid`:** `lusena-foundations.css` → `lusena-button-system.css` → `lusena-header.css` → `lusena-hero.css` → `lusena-footer.css`
-- **Page-specific assets:** `lusena-pdp.css` loaded in `lusena-main-product.liquid`, `lusena-bundles.css` loaded in `lusena-bundles.liquid`, `lusena-icon-animations.css` loaded in `lusena-pdp-feature-highlights.liquid`
+- **Page-specific assets:** `lusena-pdp.css` loaded in `lusena-main-product.liquid` and `lusena-main-bundle.liquid`, `lusena-bundle-pdp.css` loaded in `lusena-main-bundle.liquid`, `lusena-bundles.css` loaded in `lusena-bundles.liquid`, `lusena-icon-animations.css` loaded in `lusena-pdp-feature-highlights.liquid`
 - **`{% stylesheet %}` compiled_assets truncation:** All `{% stylesheet %}` blocks compile into `compiled_assets/styles.css` (~38KB after extraction, 73KB hard limit). Rules after limit silently dropped. **MANDATORY:** check size stays under 55KB after adding section CSS. See `memory-bank/doc/patterns/css-architecture.md`.
 - **Preflight resets in foundations:** `button`, `a`, `img`, `video` resets (replacing old Tailwind preflight). SVG intentionally excluded — SVGs expand without explicit dimensions.
 

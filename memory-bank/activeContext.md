@@ -1,77 +1,66 @@
 # Active Context
 
-*Last updated: 2026-03-15*
+*Last updated: 2026-03-21*
 
 ## Current focus
 
-**All product copy + bundle strategy COMPLETE.** 5 individual products finalized (creative sessions with legal checks + customer validation). Research-backed bundle architecture approved with 3 Phase 1 bundles. Animated icon system built for PDP feature highlights.
+**Bundle Phase B — M2 visual scaffolding created, ready to assign templates in Shopify admin.** All 6 new files created: `product.bundle.json` template, `lusena-main-bundle` section, 3 new snippets (`lusena-bundle-summary`, `lusena-bundle-contents`, `lusena-bundle-options`), and `lusena-bundle-pdp.css`. M1 metafield research complete. Next: assign the 3 bundle products to `product.bundle` template in Shopify admin, then validate M2 visuals via Playwright, then M3 (JS interactivity + ATC).
 
-**Next:** Bundle creative sessions (headline, tagline, 3 benefits per bundle) → enter all products + bundles into Shopify admin → upload media when physical products arrive.
+**Full tracker:** `memory-bank/doc/bundle-implementation.md`
 
 ## Recent completed work
 
-### Bundle strategy (2026-03-15)
-- Research-backed bundle architecture in `memory-bank/doc/bundle-strategy.md`
-- 3 Phase 1 bundles: Nocna Rutyna (399 zł, 21.5%), Piękny Sen (349 zł, 20.3%), Scrunchie Trio (139 zł, 21.5%)
-- PDP cross-sell checkbox (scrunchie at 39 zł) replaces old Starter Kit — Presenter's Paradox research
-- Free shipping threshold set to 299 zł
-- Original brandbook bundle plan (§ 5.8) partially superseded with research basis documented
+### Bundle Phase B — M2 visual scaffolding (2026-03-21)
+- Created `templates/product.bundle.json` — 6 sections: main bundle buy box, feature highlights (bundle-specific content), quality evidence, truth table, FAQ (bundle-specific questions), final CTA
+- Created `sections/lusena-main-bundle.liquid` — full buy box with schema (spacing, summary, color selector, ATC, delivery, guarantee, payment settings + benefit blocks)
+- Created `snippets/lusena-bundle-summary.liquid` — emotional headline + title + tagline (metafield overrides) + price with crossed-out `lusena.bundle_original_price` + savings badge + delivery row
+- Created `snippets/lusena-bundle-contents.liquid` — "What's included" list parsed from `simple_bundles.variant_options` metafield, deduplicates repeated products (e.g., 3× Scrunchie)
+- Created `snippets/lusena-bundle-options.liquid` — color swatch fieldsets per component product, reuses shared `lusena-option__swatch` CSS, Polish/English color name mapping, single-option pre-selection
+- Created `assets/lusena-bundle-pdp.css` — savings badge, contents list, option groups, ATC placeholder, buy-box order overrides
 
-### Heatless curlers copy finalization (2026-03-15)
-- Material correction: confirmed 22 momme 6A silk (was previously uncertain)
-- Title changed: "Lokówki jedwabne" → "Jedwabny wałek do loków" (market research: "wałek" is universal in PL)
-- Custom care instructions (PP cotton filling requires different handling)
-- Legal check PASS, customer validation finalized (1 run — no copy-level improvements possible)
-- Full doc: `memory-bank/doc/products/heatless-curlers.md`
+### Section and snippet polish (2026-03-21)
+- **Proof chips:** reordered ("Na prezent" first), added JS row balancer that measures chip widths and optimizes CSS order for balanced rows
+- **Quality evidence:** click area expanded to whole item (not just toggle button), icon color → gold (`--lusena-accent-2`), cursor pointer added
+- **Heritage + problem-solution:** CTA spacing improved with `lusena-gap-cta-top` + `margin-top: var(--lusena-space-6)`
+- **Science section:** kicker uses shared `.lusena-type-caption .lusena-kicker` classes, gold color
+- **Quality comparison table:** inline SVGs replaced with `lusena-icon` renders
+- **Clock icon animation:** reworked from continuous spin to gentle tick-tock (separate hour/minute hands)
+- **PDP proof chip sizing:** tightened on mobile (gap, padding), restored on desktop via media query
+- **PDP title:** desktop font-size reduced from 4rem to 3.2rem
+- **Cart drawer JS:** scrollbar-width guard (prevents redundant recalculation)
+- **Metafield checks simplified:** `mf_per_night.value == false` instead of `mf_per_night != blank and mf_per_night.value == false`
+- **Copy fixes:** bonnet naming ("czepek do spania" in homepage FAQ), product names in product FAQ ("Czepek", "Maska 3D", "Wałek do loków"), stroke widths normalized
 
-### Animated icon system for PDP (2026-03-15)
-- New `snippets/lusena-icon-animated.liquid` — 8 animated SVG icons (heart, layers, droplets, wind, shield-check, sparkles, gift, clock)
-- New `assets/lusena-icon-animations.css` — CSS keyframes, stagger delays via `--lusena-anim-stagger`, `prefers-reduced-motion` fallback
-- `sections/lusena-pdp-feature-highlights.liquid` updated to load animation CSS and render animated icons
-- Icon animation specs documented per product in `memory-bank/doc/products/{handle}.md`
+### Color strategy finalized (2026-03-20)
+- **Full document:** `memory-bank/doc/color-strategy.md`
+- **Palette:** Black (Czarny) + Dusty Rose (Brudny róż) + Champagne (Szampan) — unified capsule across all products
+- **Research:** 4 independent streams (20+ competitor brands, color psychology, Polish market data, DTC strategy). Colors derived purely from cross-category sales data.
+- **Shopify admin done:** placeholder variants renamed in both Shopify admin and Simple Bundles option labels
 
-### Product copy sessions complete (2026-03-14)
-- **Silk scrunchie** — copy finalized (legal PASS, 2 validation runs, trust 7.4, premium 7.0)
-- **Silk bonnet** — copy finalized (title research: "czepek" > "bonnet", pricing: 239 zł, legal PASS, 2 validation runs)
-- **Jedwabna maska 3D** — copy finalized (2 validation runs, trust 7.75, premium 7.9 — highest scores)
-- **Poszewka jedwabna** — additional metafield data entered
-- All product docs: `memory-bank/doc/products/{handle}.md`
+### Bundle M1 metafield research + Phase A complete (2026-03-19 — 2026-03-20)
+- **M1 findings:** `simple_bundles.variant_options` is the working metafield (JSON array of option groups with `optionName`, `optionValues`, `defaultOptionName`). ATC uses `properties[...]` hidden inputs + `properties[_bundle_selection]` concatenated string. Backend works without widget.
+- **Phase A:** 3 bundle products created and configured in Simple Bundles, ATC tested, all working
+- **`compare_at_price` issue found:** Simple Bundles Price Sync clears it. Solution: `lusena.bundle_original_price` metafield (documented in `docs/product-metafields-reference.md`)
 
-### Cross-site percentage claim cleanup (2026-03-14)
-- All "30%", "15%" momme claims removed from brandbook, sections, templates, docs
-- Replaced with qualitative "gęstszy i trwalszy niż standard"
-- Rule added to brandbook: never use percentages for momme comparison without own test documentation
-
-### Product documentation infrastructure (2026-03-14)
-- Expanded `docs/product-metafields-reference.md` — universal fields marked, creative workflow documented
-- Refined `docs/product-setup-checklist.md` — metafield definitions per product type
-- 4 new product docs + CSV export/import tooling (`memory-bank/doc/products/exports/`, `imports/`)
-- Updated product template and README
-
-### Skills infrastructure (2026-03-15)
-- `lusena-theme-changelog` deleted (replaced by `lusena-pre-commit-sync`)
-- `lusena-pre-commit-sync` created across `.agent/`, `.claude/`, `.codex/`, `.opencode/`
-- `lusena-customer-validation` skill expanded (Polish personas, aggregated scoring)
-
-### Previous sessions (already committed as 1be3e57)
-- Footer redesign, PDP/quality polish, spacing audit, product setup docs (2026-03-09/10)
-- Homepage UX audit (57beec8, 2026-03-08)
-- Blog/article + system pages migration (29fc700, cbeba1a, 160e283, 2026-03-06)
-- Search + cart migration (a874dde, 2026-03-05)
-- CSS foundations migration (652d4ba, 6e02637, 2026-03-04)
+### Previous sessions (committed as c800179)
+- Product copy sessions (5 products), bundle strategy, animated icons, percentage cleanup, pre-commit sync skill
+- Color strategy research (4 streams, 20+ brands)
 
 ## Next steps
 
-1. **Bundle creative sessions** — headline, tagline, 3 benefits per bundle (Nocna Rutyna, Piękny Sen, Scrunchie Trio)
-2. **Enter all products into Shopify admin** — owner copies metafield values from `memory-bank/doc/products/*.md`; CSV imports available in `memory-bank/doc/products/imports/`
-3. **Create Phase 1 bundles** in Shopify admin using Shopify Bundles app (free)
-4. **Upload product media** when physical products arrive (photos, videos — critical per all 4 validation personas)
-5. **Replace dummy VAT registration** (PL0000000000) with real NIP before going live
-6. **Configure footer settings** in Shopify admin: real Instagram/Facebook URLs, legal menu, test hCaptcha newsletter flow
-7. **PDP cross-sell checkbox** — implement scrunchie upsell at 39 zł (see `pdp-migration-backlog.md` item 1)
-8. **Set free shipping threshold** to 299 zł in Shopify admin
-9. PDP migration backlog items (see `memory-bank/doc/features/pdp-migration-backlog.md`)
-10. Homepage migration backlog remaining items (see `memory-bank/doc/features/homepage-migration-backlog.md`)
+1. **Assign bundle templates in Shopify admin** — assign 3 bundle products (Nocna Rutyna, Piękny Sen, Scrunchie Trio) to `product.bundle` template. Set `lusena.bundle_original_price` metafield on each (508, 438, 177).
+2. **Bundle M2 visual validation** — Playwright screenshots of all 3 bundle URLs on desktop + mobile. Verify layout, savings badge, contents list, swatches, section order.
+3. **Bundle M3 (functionality)** — swatch interaction JS, real ATC form with `properties[...]` hidden inputs, cart line items showing selected colors. Full plan: `memory-bank/doc/bundle-implementation.md`
+4. **Bundle M4 (testing + sticky ATC)** — full test matrix, edge cases, sticky ATC mobile
+5. **Bundle creative sessions (Phase C)** — headline, tagline, 3 benefits per bundle
+6. **Homepage bundles section** — wire up real bundle products in `templates/index.json`
+7. **PDP cross-sell checkbox** — implement scrunchie upsell at 39 zł (poszewka only — see `memory-bank/doc/upsell-strategy.md`)
+8. **Upload product media** when physical products arrive
+9. **Replace dummy VAT registration** (PL0000000000) with real NIP before going live
+10. **Configure footer settings** in Shopify admin: real Instagram/Facebook URLs, legal menu, test hCaptcha newsletter flow
+11. **Set free shipping threshold** to 289 zł in Shopify admin
+12. PDP migration backlog items (see `memory-bank/doc/features/pdp-migration-backlog.md`)
+13. Homepage migration backlog remaining items (see `memory-bank/doc/features/homepage-migration-backlog.md`)
 
 ## Pending to-do items
 
@@ -106,6 +95,7 @@ This tells a story: protect your face → protect your hair at night → protect
 - `main-product.liquid` (100KB) is dead code alongside `lusena-main-product.liquid`
 - `snippets/lusena-pdp-styles.liquid` is a doc-only stub (CSS moved to `assets/lusena-pdp.css`)
 - **DEV-ONLY in cart upsell:** Hardcoded fallback product (`all_products['the-compare-at-price-snowboard']`) in both `lusena-cart-items.liquid` and `cart-drawer.liquid`. Hardcoded color label (`'Beżowy'`) in both files. Must be replaced with real product data before production.
+- **Bundle options still show old English names** for Piękny Sen and Scrunchie Trio (Gray/Gold/Pink/Clear in `simple_bundles.variant_options` metafield). Template renders whatever's in the metafield — will auto-fix when option values are updated in Simple Bundles admin.
 
 ## Shopify-managed pages (not in theme — configured via admin)
 
@@ -135,8 +125,9 @@ CSS loads in this order via `layout/theme.liquid`:
 6. `lusena-hero.css` — hero section styles
 7. `lusena-footer.css` — footer section styles
 8. `lusena-pdp.css` — PDP styles (loaded per-page in section file)
-9. `lusena-bundles.css` — Bundles card grid (loaded per-section)
-10. `lusena-icon-animations.css` — Animated icon keyframes (loaded per-section in feature highlights)
+9. `lusena-bundle-pdp.css` — Bundle PDP styles (loaded in lusena-main-bundle section)
+10. `lusena-bundles.css` — Bundles card grid (loaded per-section)
+11. `lusena-icon-animations.css` — Animated icon keyframes (loaded per-section in feature highlights)
 11. `compiled_assets/styles.css` — remaining small `{% stylesheet %}` blocks (~38KB, limit 73KB)
 
 **MANDATORY:** After adding CSS to any `{% stylesheet %}` block, check compiled_assets size in DevTools — must stay under 55KB. See `memory-bank/doc/patterns/css-architecture.md` for full pattern.

@@ -1887,11 +1887,11 @@ Scrunchie to na starcie **produkt derivatywny** — kupowany przy okazji poszewk
 
 | Produkt | Tier | Kolory | Sztuki | Koszt | ≈ % Budżetu | ≈ % Sztuk | Rola strategiczna |
 |---------|------|--------|--------|-------|-------------|-----------|-------------------|
-| Poszewka 50×60 | 1 – Filar | 3 (A, B, **C — limitka**) | 120 | $2 064 | 45% | 29% | Kotwica premium, AOV, brand building |
-| Scrunchie | 1 – Filar | 3 (A, B, C) | 150 | $435 | 10% | 36% | Entry point, cross-sell, repeat, gratis progowy |
-| Bonnet | 2 – Wzrost | 2 (A, B) | 60 | $1 044 | 23% | 14% | Narracja hair care, bundling z poszewką |
-| Hair Curler | 2 – Wzrost | 1 | 50 | $625 | 14% | 12% | Content hero, UGC |
-| Maska 3D | 3 – Uzupełnienie | 1 (A) | 40 | $408 | 9% | 10% | Bundle addon, upsell |
+| Poszewka 50×60 | 1 – Filar | 3: Czarny, Brudny róż, **Szampan (limitka)** | 120 (40+40+40) | $2 064 | 45% | 29% | Kotwica premium, AOV, brand building |
+| Scrunchie | 1 – Filar | 3: Czarny, Brudny róż, Szampan | 150 (50+50+50) | $435 | 10% | 36% | Entry point, cross-sell, repeat, gratis progowy |
+| Bonnet | 2 – Wzrost | 2: Czarny, Brudny róż | 60 (30+30) | $1 044 | 23% | 14% | Narracja hair care, bundling z poszewką |
+| Hair Curler | 2 – Wzrost | 1: Brudny róż | 50 | $625 | 14% | 12% | Content hero, UGC |
+| Maska 3D | 3 – Uzupełnienie | 1: Czarny | 40 | $408 | 9% | 10% | Bundle addon, upsell |
 | **RAZEM produkt** | | | **420** | **$4 576** | **100%** | **100%** | |
 
 **Dlaczego poszewka na ~49%:**
@@ -1904,19 +1904,37 @@ Scrunchie na starcie nowej marki jest produktem derivatywnym — sprzedaż zale�
 
 ## 7.3 Strategia kolorystyczna
 
-**Zasada bazowa:** 2 kolory uniwersalne (A — baza ciemna, B — baza jasna) jako rdzeń we WSZYSTKICH liniach produktowych. Zapewnia to spójność wizualną w zestawach i na zdjęciach.
+**Zasada bazowa:** 2 kolory uniwersalne (A — baza ciemna, B — kolor hero) jako rdzeń we WSZYSTKICH liniach produktowych. Zapewnia to spójność wizualną w zestawach i na zdjęciach.
+
+### Paleta finalna (zatwierdzona 2026-03-20)
+
+| Rola | Kolor | Nazwa PL | Zakres hex | Przy dopasowaniu do palety dostawcy |
+|------|-------|----------|------------|-------------------------------------|
+| **A — baza ciemna** | Black | Czarny | `#1A1A1A` – `#2C2C2C` | Głęboka czerń z widocznym połyskiem jedwabiu |
+| **B — kolor hero** | Dusty Rose | Brudny róż | `#C9A0A0` – `#D4A5A5` | „Brudny róż" / „Dusty Rose" / „Mauve" / „Old Rose" — wyciszony, elegancki. Unikać: hot pink, baby pink, salmon |
+| **C — limitka** | Champagne | Szampan | `#C9B99A` – `#D4C5A9` | „Szampan" / „Champagne" / „Caramel" / „Warm Beige" — widoczne złociste ciepło. Unikać: metaliczny złoty, płaski beż |
+
+**Uzasadnienie wyboru (pełna dokumentacja: `memory-bank/doc/color-strategy.md`):**
+
+Kolory wybrane na podstawie 4 niezależnych strumieni badawczych (20+ marek konkurencyjnych, dane sprzedażowe Amazon/Allegro, psychologia kolorów z *Journal of Consumer Research* 2025, trendy wnętrzarskie PL 2025-2026). Kluczowe ustalenia:
+
+- **Brudny róż** to JEDYNY kolor, który pojawia się w top 3 we WSZYSTKICH 5 kategoriach produktowych. #1 na Allegro dla poszewek, #1 globalnie dla wałków do loków, bestseller ALMANIA (Rose Gold).
+- **Czarny** dominuje w akcesoriach (#1 scrunchie, #1 bonnet, #1 maska). Silne skojarzenia z premium opakowaniem prezentowym w Polsce.
+- **Szampan** to ciepły neutral-wyróżnik — żaden polski konkurent nie prowadzi z szampanem. Najniższy wskaźnik zwrotów, najwyższa satysfakcja klientów. Pasuje do trendów Mocha Mousse 2025 / Cloud Dancer 2026.
+- **Szary odrzucony** — #4+ we wszystkich polskich kategoriach, trend wnętrzarski odchodzi od zimnych szarości.
+- **Biały odrzucony** — #1 globalnie dla poszewek, ale słaby cross-category (obawy o plamy na akcesoriach, zbyt jasny na maskę, wyższy wskaźnik zwrotów).
 
 ### Faza 1 — Launch
 
-| Produkt | Kolory | Logika |
-|---------|--------|--------|
-| Poszewka 50×60 | A, B, **C (limitka)** | 2 bazy + 1 limitka; C = test preferencji kolorystycznych i narzędzie FOMO |
-| Scrunchie | A, B, C | 2 bazy spójne z poszewką + 1 akcent; 3 kolory = idealny Scrunchie Trio (po 1 z każdego) |
-| Bonnet | A, B | 2 bazy spójne z poszewką; ułatwia bundlowanie (klientka dobiera bonnet do poszewki w tym samym kolorze) |
-| Hair Curler | B | 1 kolor neutralny jasny; niski priorytet kolorystyczny |
-| Maska 3D | A | 1 kolor ciemny; najuniwersalniejszy dla maski do spania |
+| Produkt | Kolory | Sztuki/kolor | Logika |
+|---------|--------|-------------|--------|
+| Poszewka 50×60 | A (Czarny), B (Brudny róż), **C (Szampan — limitka)** | 40 / 40 / 40 | 2 bazy + 1 limitka; C = test preferencji kolorystycznych i narzędzie FOMO |
+| Scrunchie | A (Czarny), B (Brudny róż), C (Szampan) | 50 / 50 / 50 | 2 bazy spójne z poszewką + 1 akcent; 3 kolory = idealny Scrunchie Trio (po 1 z każdego) |
+| Bonnet | A (Czarny), B (Brudny róż) | 30 / 30 | 2 bazy spójne z poszewką; matching w Nocna Rutyna |
+| Hair Curler | B (Brudny róż) | 50 | Róż/pink to #1 kolor wałków globalnie (~80% viralowych filmów TikTok) |
+| Maska 3D | A (Czarny) | 40 | Czerń = funkcjonalne blokowanie światła; #1 kolor masek (~40-45% sprzedaży) |
 
-**Uwaga:** Kolor C w poszewce i kolor C w scrunchie mogą, ale nie muszą być tożsame — do ustalenia na etapie doboru palety. Spójność koloru C między poszewką a scrunchie ułatwia fotografię zestawów i komunikację „matching set".
+**Kolor C (Szampan) jest tożsamy w poszewce i scrunchie** — spójność ułatwia fotografię zestawów, komunikację „matching set" i kompozycję Scrunchie Trio (A+B+C).
 
 ### Strategia limitki (kolor C poszewki)
 
@@ -1930,11 +1948,17 @@ Scrunchie na starcie nowej marki jest produktem derivatywnym — sprzedaż zale�
 
 | Produkt | Reguła rozszerzenia |
 |---------|---------------------|
-| Poszewka | Jeśli limitka (C) sell-through > 70% → promuj do stałej i dodaj nowy kolor D jako kolejną limitkę. Jeśli nie → wybierz inny kolor D, ponów test |
+| Poszewka | Jeśli limitka (Szampan) sell-through > 70% → promuj do stałej i dodaj nowy kolor D jako kolejną limitkę. Jeśli nie → wybierz inny kolor D, ponów test |
 | Scrunchie | Rotacja: wycofaj najsłabiej rotujący kolor i zastąp nowym; limit 3–4 aktywnych kolorów; decyzja na podstawie danych sell-through per kolor |
-| Bonnet | Dodaj kolor C (matching z poszewką), jeśli: repeat rate > 15% LUB bundle Nocna Rutyna sell-through > 60% |
+| Bonnet | Dodaj kolor C (Szampan, matching z poszewką), jeśli: repeat rate > 15% LUB bundle Nocna Rutyna sell-through > 60% |
 | Curler | Bez zmian kolorystycznych (Tier 2, niski priorytet) |
 | Maska 3D | Bez zmian (Tier 3) |
+
+**Priorytet kolejnych kolorów (research-backed, pełna dokumentacja: `memory-bank/doc/color-strategy.md`):**
+
+1. **Granatowy (Navy)** — bestseller SENSILK (HIT badge), #2 kolor masek, silne skojarzenia z zaufaniem i snem. Do: poszewka, bonnet, scrunchie.
+2. **Butelkowa zieleń (Bottle Green)** — rosnący trend (Pantone 2025-2026), obecny u wszystkich dużych PL konkurentów, pozycjonowanie nature/wellness. Do: poszewka, scrunchie.
+3. **Lawendowy (Lavender)** — trend sypialniany, silna preferencja kobiet 40-54, „future dusk" w polskiej modzie. Do: poszewka, scrunchie, bonnet.
 
 **Zasada „sezonowej limitki":** Raz na kwartał możesz wprowadzić 1 kolor limitowany w poszewce (i opcjonalnie matching scrunchie) z komunikatem scarcity — buduje FOMO i daje content do emaili/social bez ryzyka zamrożenia kapitału.
 
@@ -1995,7 +2019,7 @@ Poszewka 50×60 (top kolor) > Scrunchie (top kolor) > Bonnet > Poszewka (remaini
 
 **Zasada „scrunchie jako gratis":** Przy zamówieniach powyżej ustalonego progu (np. poszewka + bonnet) dodaj scrunchie gratis. Koszt jednostkowy scrunchie ($2,90) jest na tyle niski, że gratis podnosi postrzeganą wartość przy minimalnym koszcie. Zarezerwuj ~10–15 szt. scrunchie na gratisy w pierwszych 90 dniach.
 
-**Zasada kolorystyki zestawów:** W bundlach (Starter Kit, Nocna Rutyna) domyślnie oferuj matching kolory (poszewka A + bonnet A + scrunchie A), z opcją customizacji. Na zdjęciach zestawów pokazuj wariant w kolorze B (jasny — lepiej wygląda na zdjęciach).
+**Zasada kolorystyki zestawów:** W bundlach (Nocna Rutyna, Piękny Sen) domyślnie oferuj matching kolory (poszewka A + bonnet A lub poszewka B + bonnet B), z opcją customizacji. Na zdjęciach zestawów pokazuj wariant w kolorze B — Brudny róż (lepiej wygląda na zdjęciach niż czarny, pokazuje połysk jedwabiu).
 
 ---
 
@@ -2094,7 +2118,7 @@ Poszewka 50×60 (top kolor) > Scrunchie (top kolor) > Bonnet > Poszewka (remaini
 ## 7.11 Checklista — Strategia Zatowarowania
 
 ### Przed zamówieniem
-- [ ] Kolory A, B, C ustalone i zatwierdzone (paleta spójna cross-product)
+- [x] Kolory A, B, C ustalone i zatwierdzone (2026-03-20): A=Czarny, B=Brudny róż, C=Szampan (paleta spójna cross-product, `memory-bank/doc/color-strategy.md`)
 - [ ] Zamówienie Fazy 1 złożone wg alokacji z tabeli 7.2 (420 szt., 5 kategorii)
 - [ ] Lead time dostawcy potwierdzony (3–5 tygodni)
 

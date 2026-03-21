@@ -3,6 +3,11 @@
    Standalone CSS (loaded per-section to avoid compiled_assets truncation).
    ========================================================================== */
 
+/* Kicker color — matches gold accent used by all other section kickers */
+.lusena-bundles .lusena-kicker {
+  color: var(--lusena-accent-2);
+}
+
 /* Grid: 1-col mobile → 3-col desktop */
 .lusena-bundles__grid {
   display: grid;
