@@ -1,0 +1,124 @@
+{% doc %}
+  Bundle sticky ATC bar. Matches the regular PDP's lusena-pdp-sticky-atc
+  structure but adapted for bundles:
+  - No variant label (bundles have fixed composition)
+  - No per-night price (not applicable)
+  - Shows savings badge instead
+  - Button is type="button" — JS handles two states:
+    1. Colors incomplete → scroll to selector + highlight
+    2. Colors complete → add to cart
+
+  @param {product} product
+  @param {variant} current_variant
+  @param {section} section
+{% enddoc %}
+
+{%- liquid
+  assign original_price_cents = 0
+  assign has_savings = false
+  if product != blank
+    assign mf_original = product.metafields.lusena.bundle_original_price
+    if mf_original != blank
+      if mf_original.value != blank
+        assign original_price_cents = mf_original.value | times: 100
+        if original_price_cents > current_variant.price
+          assign has_savings = true
+        endif
+      endif
+    endif
+  endif
+-%}
+
+<div class="lusena-sticky-atc lusena-sticky-atc--hidden" data-lusena-bundle-sticky>
+
+  {%- comment -%} MOBILE (hidden at 768px+) {%- endcomment -%}
+  <div class="lusena-sticky-atc__mobile">
+    <div class="lusena-sticky-atc__trust">
+      {% render 'lusena-icon', name: 'shield-check', class: 'lusena-sticky-atc__trust-icon', stroke_width: 2 %}
+      <span class="lusena-sticky-atc__trust-text">
+        {{ section.settings.guarantee_heading | default: '60 dni gwarancji spokojnego snu' | escape }}
+      </span>
+    </div>
+    <div class="lusena-sticky-atc__row">
+      {%- if product.featured_image -%}
+        <img
+          src="{{ product.featured_image | image_url: width: 88 }}"
+          alt="{{ product.title | escape }}"
+          class="lusena-sticky-atc__image lusena-sticky-atc__image--mobile"
+          loading="lazy"
+          width="44"
+          height="44"
+        >
+      {%- endif -%}
+      <div class="lusena-sticky-atc__meta">
+        <span class="lusena-sticky-atc__price">
+          {{ current_variant.price | money_without_trailing_zeros }}
+        </span>
+        {%- if has_savings -%}
+          <span class="lusena-sticky-atc__variant">
+            {{ section.settings.savings_label | default: 'Oszczędzasz' | escape }} {{ original_price_cents | minus: current_variant.price | money_without_trailing_zeros }}
+          </span>
+        {%- endif -%}
+      </div>
+      <button
+        type="button"
+        class="lusena-sticky-atc__button lusena-btn lusena-btn--primary lusena-btn--size-sm"
+        data-lusena-bundle-sticky-btn
+      >
+        <span class="lusena-btn__content">
+          {{- section.settings.sticky_add_to_cart_label | default: 'Dodaj do koszyka' | escape -}}
+        </span>
+        <span class="loading__spinner hidden">
+          <span class="lusena-btn__loading-text">{{ section.settings.add_to_cart_loading_label | default: 'Dodaję...' | escape }}</span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  {%- comment -%} DESKTOP (shown at 768px+) {%- endcomment -%}
+  <div class="lusena-sticky-atc__desktop">
+    <div class="lusena-sticky-atc__desktop-col lusena-sticky-atc__desktop-col--product">
+      {%- if product.featured_image -%}
+        <img
+          src="{{ product.featured_image | image_url: width: 80 }}"
+          alt="{{ product.title | escape }}"
+          class="lusena-sticky-atc__image lusena-sticky-atc__image--desktop"
+          loading="lazy"
+          width="40"
+          height="40"
+        >
+      {%- endif -%}
+      <span class="lusena-sticky-atc__desktop-title">{{ product.title | escape }}</span>
+    </div>
+    <span class="lusena-sticky-atc__divider"></span>
+    <div class="lusena-sticky-atc__desktop-col lusena-sticky-atc__desktop-col--price">
+      <span class="lusena-sticky-atc__price">
+        {{ current_variant.price | money_without_trailing_zeros }}
+      </span>
+      {%- if has_savings -%}
+        <s class="lusena-sticky-atc__variant">
+          {{ original_price_cents | money_without_trailing_zeros }}
+        </s>
+      {%- endif -%}
+    </div>
+    <span class="lusena-sticky-atc__divider"></span>
+    <div class="lusena-sticky-atc__desktop-col lusena-sticky-atc__desktop-col--trust">
+      {% render 'lusena-icon', name: 'shield-check', class: 'lusena-sticky-atc__trust-icon', stroke_width: 2 %}
+      <span class="lusena-sticky-atc__trust-text">
+        {{ section.settings.delivery_returns_link_label | default: '60 dni na zwrot' | escape }}
+      </span>
+    </div>
+    <button
+      type="button"
+      class="lusena-sticky-atc__button lusena-sticky-atc__button--desktop lusena-btn lusena-btn--primary lusena-btn--size-sm"
+      data-lusena-bundle-sticky-btn
+    >
+      <span class="lusena-btn__content">
+        {{- section.settings.sticky_add_to_cart_label | default: 'Dodaj do koszyka' | escape -}}
+      </span>
+      <span class="loading__spinner hidden">
+        <span class="lusena-btn__loading-text">{{ section.settings.add_to_cart_loading_label | default: 'Dodaję...' | escape }}</span>
+      </span>
+    </button>
+  </div>
+</div>

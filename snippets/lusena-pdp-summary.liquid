@@ -75,8 +75,7 @@
         data-prefix="{{ section.settings.price_per_night_prefix | escape }}"
         data-suffix="{{ section.settings.price_per_night_suffix | escape }}"
       >
-        {{ section.settings.price_per_night_prefix | escape }}
-        {{ price_per_night_cents | money_without_trailing_zeros }}
+        {{ section.settings.price_per_night_prefix | escape }}&nbsp;{{ price_per_night_cents | money_without_trailing_zeros }}
         {{ section.settings.price_per_night_suffix | escape }}
       </span>
     {%- endif -%}

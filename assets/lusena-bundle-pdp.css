@@ -18,10 +18,6 @@
 }
 
 /* --- "What's included" --- */
-.lusena-bundle-contents {
-  padding: var(--lusena-space-2) 0;
-}
-
 .lusena-bundle-contents__heading {
   font-family: var(--lusena-font-ui);
   font-size: 1.3rem;
@@ -58,11 +54,23 @@
   flex-shrink: 0;
 }
 
-/* --- Bundle options (multi-fieldset groups) --- */
+/* ==========================================================================
+   PROGRESSIVE STEP SELECTOR
+   Animation pattern matches LUSENA accordion (lusena-pdp-scripts.liquid).
+   Height transition + content fade with translateY(-6px) signature.
+   ========================================================================== */
+
+/* --- Step container --- */
 .lusena-bundle-options {
   display: flex;
   flex-direction: column;
-  gap: var(--lusena-space-2);
+  gap: var(--lusena-space-1);
+}
+
+.lusena-bundle-step {
+  display: flex;
+  flex-direction: column;
+  transition: opacity var(--lusena-transition-med);
 }
 
 .lusena-bundle-options__group {
@@ -71,29 +79,288 @@
   margin: 0;
 }
 
-.lusena-bundle-options__product-label {
-  font-weight: 400;
+/* --- Step progress counter ("Wybierz kolory (1 z 3)") --- */
+.lusena-bundle-progress {
+  margin-bottom: var(--lusena-space-1);
+}
+
+.lusena-bundle-progress__text {
+  font-family: var(--lusena-font-ui);
+  font-size: 1.3rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--lusena-text-2);
 }
 
-/* --- Bundle ATC placeholder (M2: visual only) --- */
-.lusena-bundle-atc-placeholder {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
+[data-lusena-bundle-progress-counter] {
+  font-weight: 400;
 }
 
-/* --- Buy-box order overrides for bundle --- */
-.lusena-pdp .lusena-pdp-buy-box__contents {
-  order: 3;
+/* --- Height transition wrappers (matches PDP accordion pattern) --- */
+.lusena-bundle-step__fieldset-wrap,
+.lusena-bundle-step__chip-wrap {
+  overflow: hidden;
+  transition: height 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
+  will-change: height;
 }
 
-.lusena-pdp .lusena-pdp-buy-box__contents + .lusena-pdp-buy-box__desktop-divider {
+/* --- Content fade (LUSENA signature: translateY(-6px) on close) --- */
+.lusena-bundle-step__accent {
+  opacity: 1;
+  transform: translateY(0);
+  padding-left: 1.2rem;
+  border-left: 2px solid transparent;
+  transition: opacity 0.18s ease, transform 0.18s ease, border-left-color var(--lusena-transition-med);
+}
+
+.lusena-bundle-step__fieldset-wrap[data-state='closed'] .lusena-bundle-step__accent,
+.lusena-bundle-step__fieldset-wrap[data-state='closing'] .lusena-bundle-step__accent {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+/* Active step: teal border fades in */
+.lusena-bundle-step.is-active .lusena-bundle-step__accent {
+  border-left-color: var(--lusena-accent-cta);
+}
+
+/* Chip content fade */
+.lusena-bundle-chip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lusena-bundle-step__chip-wrap[data-state='closed'] .lusena-bundle-chip,
+.lusena-bundle-step__chip-wrap[data-state='closing'] .lusena-bundle-chip {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+/* --- Pending step (faded, no interaction) --- */
+.lusena-bundle-step.is-pending {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Pending chip: show only product name, hide dot/separator/color/chevron */
+.lusena-bundle-chip.is-pending {
+  cursor: default;
+  background: transparent;
+  border-style: dashed;
+}
+
+.lusena-bundle-chip.is-pending .lusena-bundle-chip__dot,
+.lusena-bundle-chip.is-pending .lusena-bundle-chip__sep,
+.lusena-bundle-chip.is-pending [data-lusena-chip-color],
+.lusena-bundle-chip.is-pending .lusena-bundle-chip__edit {
   display: none;
 }
 
+.lusena-bundle-chip.is-pending:hover {
+  border-color: var(--lusena-color-n200);
+}
+
+/* --- Legend (two-line: product name + instruction) --- */
+.lusena-bundle-step__legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  border: 0;
+  padding: 0;
+  margin: 0 0 var(--lusena-space-1) 0;
+}
+
+.lusena-bundle-step__product-name {
+  font-family: var(--lusena-font-ui);
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--lusena-text-1);
+}
+
+.lusena-bundle-step__instruction {
+  font-family: var(--lusena-font-ui);
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--lusena-text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* --- Chip (collapsed confirmation) --- */
+.lusena-bundle-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  background: var(--lusena-surface-2);
+  border: 1px solid var(--lusena-color-n200);
+  border-radius: var(--lusena-btn-radius);
+  font-family: var(--lusena-font-ui);
+  font-size: 1.3rem;
+  line-height: 1.4;
+  color: var(--lusena-text-1);
+  cursor: pointer;
+  transition: border-color var(--lusena-transition-fast), opacity 0.18s ease, transform 0.18s ease;
+  text-align: left;
+}
+
+.lusena-bundle-chip:hover {
+  border-color: var(--lusena-accent-cta);
+}
+
+.lusena-bundle-chip__dot {
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid var(--lusena-color-n200);
+}
+
+.lusena-bundle-chip__label {
+  flex: 1;
+  font-weight: 500;
+  display: flex;
+  align-items: baseline;
+  gap: 0.2rem;
+}
+
+.lusena-bundle-chip__sep {
+  color: var(--lusena-text-2);
+  margin: 0 0.2rem;
+}
+
+.lusena-bundle-chip__edit {
+  display: flex;
+  align-items: center;
+}
+
+.lusena-bundle-chip__edit-icon {
+  width: 1.4rem;
+  height: 1.4rem;
+  color: var(--lusena-text-2);
+  transition: transform var(--lusena-transition-fast), color var(--lusena-transition-fast);
+}
+
+.lusena-bundle-chip:hover .lusena-bundle-chip__edit-icon {
+  color: var(--lusena-accent-cta);
+}
+
+/* --- Cart drawer: bundle line item properties --- */
+.lusena-cart-drawer__item-properties {
+  margin-top: 0.4rem;
+}
+
+.lusena-cart-drawer__item-property {
+  font-size: 1.2rem;
+  line-height: 1.4;
+  color: var(--lusena-text-2);
+  margin: 0;
+}
+
+.lusena-cart-drawer__item-property-label {
+  font-weight: 500;
+  color: var(--lusena-text-1);
+}
+
+/* --- Buy-box overrides scoped to bundle template ---
+   Scoped via .lusena-pdp--bundle to avoid affecting the regular product PDP.
+   Flow: summary(1) → proof(2) → contents(3) → variant(4) → atc(5) → guarantee(6) → payment(7)
+*/
+.lusena-pdp--bundle .lusena-pdp-buy-box__proof {
+  order: 2;
+}
+
+.lusena-pdp--bundle .lusena-pdp-buy-box__contents {
+  order: 3;
+}
+
+.lusena-pdp--bundle .lusena-pdp-buy-box__contents + .lusena-pdp-buy-box__desktop-divider {
+  display: none;
+}
+
+.lusena-pdp--bundle .lusena-pdp-buy-box__variant {
+  order: 4;
+}
+
+.lusena-pdp--bundle .lusena-pdp-buy-box__atc {
+  order: 5;
+}
+
+.lusena-pdp--bundle .lusena-pdp-buy-box__guarantee {
+  order: 6;
+}
+
+.lusena-pdp--bundle .lusena-pdp-buy-box__payment {
+  order: 7;
+}
+
+.lusena-pdp--bundle .lusena-pdp-buy-box__care {
+  order: 8;
+  margin-top: 2.4rem;
+}
+
+.lusena-pdp--bundle .lusena-pdp-buy-box__benefits-mobile {
+  order: 9;
+}
+
 @media (min-width: 768px) {
-  .lusena-pdp .lusena-pdp-buy-box__contents {
+  .lusena-pdp--bundle .lusena-pdp-buy-box__proof {
+    order: 2;
+  }
+
+  .lusena-pdp--bundle .lusena-pdp-buy-box__contents {
     order: 3;
+  }
+}
+
+/* --- Sticky ATC: scroll-to-selector highlight ---
+   Triggered AFTER smooth scroll completes (600ms delay in JS).
+   GPU-only animation: transform + opacity only (no box-shadow, no background-color).
+   Sequential swatch "breathe" draws attention to the options. */
+
+@keyframes lusena-swatch-breathe {
+  0%   { transform: scale(1);    opacity: 1; }
+  40%  { transform: scale(1.06); opacity: 0.85; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+
+.lusena-bundle-step--highlight .lusena-option__swatch {
+  will-change: transform, opacity;
+  animation: lusena-swatch-breathe 0.6s ease-in-out both;
+}
+
+.lusena-bundle-step--highlight .lusena-pdp-variant-picker__label:nth-child(1) .lusena-option__swatch {
+  animation-delay: 0s;
+}
+
+.lusena-bundle-step--highlight .lusena-pdp-variant-picker__label:nth-child(2) .lusena-option__swatch {
+  animation-delay: 0.15s;
+}
+
+.lusena-bundle-step--highlight .lusena-pdp-variant-picker__label:nth-child(3) .lusena-option__swatch {
+  animation-delay: 0.3s;
+}
+
+/* --- Reduced motion: bypass all animations --- */
+@media (prefers-reduced-motion: reduce) {
+  .lusena-bundle-step__fieldset-wrap,
+  .lusena-bundle-step__chip-wrap {
+    transition: none;
+    will-change: auto;
+  }
+
+  .lusena-bundle-step__accent,
+  .lusena-bundle-chip {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .lusena-bundle-step {
+    transition: none;
   }
 }

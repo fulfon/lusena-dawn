@@ -283,15 +283,47 @@ Build the full page top-to-bottom as the customer would scroll it. Everything re
 
 Everything that was static now becomes interactive. Customer can select colors and buy.
 
-- [ ] Swatch interaction JS — clicking a swatch updates selected state, highlights active swatch, updates label text ("Kolor poszewki: Brudny róż")
-- [ ] `snippets/lusena-bundle-atc.liquid` — real `<form>` with hidden `properties[...]` inputs in Simple Bundles format. Same button classes as individual ATC.
-- [ ] Wire options → ATC: selected swatch values feed into hidden inputs on every change
-- [ ] ATC submission works — bundle appears in cart with correct price
-- [ ] Cart line items show selected colors ("Kolor poszewki: Brudny róż, Kolor czepka: Czarny")
-- [ ] Cart drawer: bundle displays correctly with color selections visible
-- [ ] Verify cart page and cart drawer both render correctly
+**Progressive disclosure (step-by-step selector):**
+- [x] JS: on page load, show only the first step's fieldset (`.is-active`), mark remaining as `.is-pending` with placeholder chips
+- [x] JS: on swatch click → collapse current step to chip (`.is-collapsed`) showing color dot + label → reveal next step (`.is-active`)
+- [x] JS: chip shows selected color name + small swatch dot + chevron edit affordance
+- [x] JS: clicking a completed chip reopens that step for editing — independent, doesn't reset later steps
+- [x] JS: clicking same color on re-edit confirms and collapses (uses `click` event, not `change`)
+- [x] Single-option steps (maska = only Czarny) auto-collapse immediately on load
+- [x] Step numbering for identical products: "Scrunchie jedwabny 1", "Scrunchie jedwabny 2", etc.
+- [x] Pending steps show as faded dashed-border placeholder chips with product name
+- [x] Step progress counter: "WYBIERZ KOLORY (1 z 3)" → "(2 z 3)" → "(✓)" — hidden for single multi-option bundles
+- [x] CSS states: `.is-collapsed`, `.is-pending`, `.is-active` (teal left border)
+- [x] Smooth animations: height transition (150ms cubic-bezier) + content fade (180ms translateY(-6px)) + 250ms stagger
+- [x] Reduced motion: instant toggle, no transitions
+- [x] Dimension stripping: "Poszewka jedwabna 50×60" → "Poszewka jedwabna"
+- [x] Two-line legend: product name heading + "WYBIERZ KOLOR" subtitle
+- [x] Chip label: "Poszewka jedwabna · Brudny róż" (middot separator)
 
-**Gate:** Can select colors on all 3 bundles, add to cart, see correct selections in cart drawer and cart page. Simple Bundles backend processes the order correctly.
+**Swatch interaction:**
+- [x] Clicking a swatch updates selected state, highlights active swatch (pure CSS `:checked`)
+- [x] No pre-selection — swatches start unselected, user must actively choose
+
+**ATC form:**
+- [x] `snippets/lusena-bundle-atc.liquid` — real `<form>` with hidden `properties[...]` inputs
+- [x] Property keys use clean display labels with step numbers ("Scrunchie jedwabny 1", not raw optionName) — fixes duplicate key issue for Scrunchie Trio
+- [x] `_bundle_selection` string unchanged (Simple Bundles backend uses this)
+- [x] ATC button disabled until all steps are completed
+- [x] ATC submission via fetch → cart drawer opens → PubSub cart update for badge
+- [x] Loading state with min/hold delay (matches PDP pattern)
+
+**Cart display:**
+- [x] Cart line items show all selected colors — "Poszewka jedwabna: Szampan", "Jedwabny czepek do spania: Czarny"
+- [x] Scrunchie Trio shows all 3: "Scrunchie jedwabny 1: Gold", "Scrunchie jedwabny 2: Gray", "Scrunchie jedwabny 3: Clear"
+- [x] `_bundle_selection` property hidden (underscore prefix filter)
+- [x] Cart drawer opens correctly after ATC
+
+**Care accordion:**
+- [x] `snippets/lusena-bundle-care.liquid` — care instructions panel in buy-box
+- [x] Same CSS classes and animation as regular PDP accordion
+- [x] Reads `pdp_care_steps` metafield, falls back to universal silk care
+
+**Gate:** ~~Can select colors on all 3 bundles via progressive disclosure, add to cart, see correct selections in cart drawer and cart page.~~ **PASSED (2026-03-21).**
 
 **Why after visual:** The visual page from M2 is stable. Now we layer JS and form logic on top of a known-good layout. If something breaks, we know it's the JS — not the HTML or CSS.
 
@@ -302,20 +334,24 @@ Everything that was static now becomes interactive. Customer can select colors a
 Production-ready. Every edge case covered, mobile enhancement added.
 
 **Testing:**
-- [ ] Full test matrix: 3 bundles × all color combinations × mobile + desktop
-- [ ] Edge case: customer tries to ATC without selecting all colors — button stays disabled or shows validation message
-- [ ] Edge case: single-option components (Piękny Sen maska = only Czarny) — pre-selected, no interaction needed
-- [ ] Inventory deduction: buy bundle → component variant stock decreases correctly
-- [ ] Price display: bundle price + crossed-out sum + savings badge renders correctly on all 3 bundles
-- [ ] Playwright end-to-end on all 3 bundle URLs: open → select colors → ATC → verify cart
+- [x] Full test matrix: 3 bundles × all flows × Playwright automated (2026-03-21)
+- [x] Edge case: ATC without all colors → scroll to selector + swatch breathe highlight (buttons never disabled)
+- [x] Edge case: single-option (Piękny Sen maska) → waits in queue as pending, customer must click to confirm
+- [x] Price display: bundle price + crossed-out sum + savings badge on all 3 bundles
+- [x] Playwright end-to-end: open → select colors → ATC → verify cart properties on all 3 bundles
+- [ ] Inventory deduction: buy bundle → component variant stock decreases (requires real purchase test)
 
-**Sticky ATC (mobile):**
-- [ ] Add sticky ATC bar for mobile (buy box scrolls off screen quickly on mobile)
-- [ ] Sticky bar shows bundle price
-- [ ] Sticky bar disabled until all color selections made
-- [ ] Sticky bar ATC submits same hidden inputs as main form
+**Sticky ATC (mobile + desktop):**
+- [x] Sticky bar for both mobile and desktop (mobile: trust row + price + button; desktop: title + price + trust + button)
+- [x] Two-state button: incomplete → `highlightActiveStep(true)` scrolls to selector + swatch breathe; complete → `submitBundleCart()`
+- [x] Main ATC + Buy Now: same two-state but `highlightActiveStep(false)` — no scroll delay, instant highlight
+- [x] Scroll visibility: rAF-based scroll polling (not IntersectionObserver — unreliable with position:sticky buy-box)
+- [x] Dynamic scroll detection: `onScrollSettled()` watches `window.scrollY` via rAF, fires callback when position stable for 6 frames (~100ms). Adapts to any scroll distance.
+- [x] Loading state syncs between main + sticky buttons via shared `submitBundleCart()`
+- [x] Swatch breathe: GPU-only `@keyframes lusena-swatch-breathe` (transform + opacity, 0.6s, staggered 150ms per swatch)
+- [x] Crossed-out price in sticky bar uses `<s>` HTML element (not markdown `~~`)
 
-**Gate:** Everything works across all bundles, all combinations, both devices. Ready for Phase C (bundle creative sessions + metafield content).
+**Gate:** ~~Everything works across all bundles, all combinations, both devices.~~ **PASSED (2026-03-21).** Ready for Phase C.
 
 ---
 
@@ -354,10 +390,35 @@ Production-ready. Every edge case covered, mobile enhancement added.
 
 - **Store URL:** https://lusena-dev.myshopify.com/
 - **Store password:** paufro
-- **Bundle product URLs:**
+- **Bundle product URLs (online):**
   - https://lusena-dev.myshopify.com/products/nocna-rutyna
   - https://lusena-dev.myshopify.com/products/piekny-sen
   - https://lusena-dev.myshopify.com/products/scrunchie-trio
+- **Local dev server (bundle template):** Add `?view=bundle` to force the bundle template:
+  - http://127.0.0.1:9292/products/nocna-rutyna?view=bundle
+  - http://127.0.0.1:9292/products/piekny-sen?view=bundle
+  - http://127.0.0.1:9292/products/scrunchie-trio?view=bundle
+  - **Why needed:** `shopify theme dev` creates a separate development theme. Template assignments made in Shopify admin apply to the published theme, not the dev theme. The `?view=bundle` parameter forces the `product.bundle.json` template regardless of assignment. On the live store, the template assignment works without this parameter.
+- **Dev server rate limits (429 errors):** Shopify's Cloudflare bot detection triggers after ~20-30 rapid requests. Playwright tests are the main cause. When "Weryfikowanie połączenia..." appears: wait 60-90 seconds (don't restart immediately). Start dev server with `shopify theme dev --store-password paufro` to reduce challenge redirects. Add delays between Playwright navigations. Known unresolved Shopify issue (GitHub cli #6416).
+
+---
+
+## Bundle swatch color sync (manual step)
+
+Bundle swatch colors are **hardcoded** in `snippets/lusena-bundle-options.liquid` via a Liquid `case` statement mapping color names to hex values. These are independent from Shopify's native swatch system used on individual product PDPs.
+
+**When to update:** After renaming color option values in Simple Bundles app config (e.g., changing "Gray" to "Czarny"), the swatch hex mappings in the snippet automatically match by name — no code change needed as long as the case statement has an entry for that name.
+
+**Current mappings:**
+| Name | Hex | Source |
+|------|-----|--------|
+| Czarny | #1A1A1A | color-strategy.md (low end of range) |
+| Brudny róż | #C9A0A0 | color-strategy.md (low end of range) |
+| Szampan | #C9B99A | color-strategy.md (low end of range) |
+
+**If adding new colors:** Add a new `when` case in `lusena-bundle-options.liquid` with the hex value from `color-strategy.md`. Do NOT try to auto-read from Shopify's swatch system — Simple Bundles metafields don't expose swatch data.
+
+**Alignment with individual PDP:** The individual PDP variant picker uses Shopify's native `value.swatch.color`. To ensure visual consistency, the hex values configured in Shopify admin for each variant swatch should match the values in the table above.
 
 ---
 

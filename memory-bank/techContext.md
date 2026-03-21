@@ -17,7 +17,7 @@
 - **Footer:** `sections/lusena-footer.liquid`
 - **Cart page:** `sections/lusena-cart-items.liquid` + `snippets/lusena-cart-quantity.liquid` + `sections/lusena-cart-footer.liquid`
 - **Product page:** `sections/lusena-main-product.liquid` + `snippets/lusena-pdp-*.liquid` (13 PDP snippets)
-- **Bundle product page:** `sections/lusena-main-bundle.liquid` + `snippets/lusena-bundle-*.liquid` (3 bundle snippets: summary, contents, options) — shares 4 PDP snippets (media, proof-chips, guarantee, payment)
+- **Bundle product page:** `sections/lusena-main-bundle.liquid` + `snippets/lusena-bundle-*.liquid` (6 bundle snippets: summary, contents, options, atc, care, scripts, sticky-atc) — shares 4 PDP snippets (media, proof-chips, guarantee, payment). Progressive disclosure color selector, sticky ATC (mobile+desktop), `assets/lusena-bundle-pdp.css`
 - **Collection:** `sections/lusena-main-collection.liquid` + `snippets/lusena-product-card.liquid`
 - **Search:** `sections/lusena-search.liquid` — predictive search, product grid, empty state with bestsellers
 - **Blog listing:** `sections/lusena-blog.liquid` — 2-col grid, pagination, rich empty state

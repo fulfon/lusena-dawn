@@ -17,7 +17,7 @@
 - [x] **404 page** (`404.json`) — 1 section: lusena-404 (centered error message, bestseller grid, viewport-fill)
 - [x] **Generic page** (`page.json`) — 1 section: lusena-main-page (breadcrumbs, title, richtext via `.lusena-richtext`, viewport-fill, compact spacing)
 - [x] **Contact page** (`page.contact.json`) — 2 sections: lusena-contact-form (breadcrumbs, heading, LUSENA form system, customer pre-fill, viewport-fill, full-width mobile button) + lusena-newsletter
-- [~] **Bundle product page** (`product.bundle.json`) — 6 sections: lusena-main-bundle (buy box with summary, contents, color swatches, ATC placeholder), feature highlights, quality evidence, truth table, FAQ, final CTA. M2 visual scaffolding created (2026-03-21). Pending: assign template in Shopify admin, M3 interactivity, M4 testing.
+- [x] **Bundle product page** (`product.bundle.json`) — 6 sections: lusena-main-bundle (progressive disclosure color selector with GPU-only animations, sticky ATC with scroll+highlight, ATC + Buy Now, care accordion, savings display), feature highlights, quality evidence, truth table, FAQ, final CTA. Phase B complete (2026-03-21). Pending: Phase C creative sessions + product media.
 
 ## Dawn → LUSENA page migration — COMPLETE (all customer-facing pages branded)
 
@@ -158,11 +158,11 @@ Full implementation tracker: `memory-bank/doc/bundle-implementation.md`
 - [x] 3 bundle products created + configured in Simple Bundles
 - [x] Add-to-cart verified for all 3 bundles via Playwright
 
-**Phase B: Custom theme UI (IN PROGRESS):**
-- [x] M1: Examine Simple Bundles metafields — `variant_options` documented, ATC format understood, backend confirmed (2026-03-20)
-- [x] M2 scaffolding: `product.bundle.json` + `lusena-main-bundle` section + 3 snippets + CSS created (2026-03-21)
-- [ ] M2 gate: Assign templates in Shopify admin, validate visuals via Playwright
-- [ ] M3: Swatch interaction JS, real ATC form, cart display with selected colors
+**Phase B: Custom theme UI (COMPLETE):**
+- [x] M1: Simple Bundles metafield research — `variant_options` documented, ATC format understood, backend confirmed (2026-03-20)
+- [x] M2: Visual page — template + section + snippets + CSS. Spacing audit passed. Below-fold sections with bundle content. (2026-03-21)
+- [x] M3: Full interactivity — progressive disclosure with GPU-only animations, swatch selection via click events, ATC + Buy Now, cart drawer + cart page showing all selected colors. Care accordion. Step progress counter. Pending placeholder chips. Independent chip re-editing. Scrunchie Trio duplicate key fix. (2026-03-21)
+- [x] M4: Full test matrix passed (all 3 bundles × all flows). Sticky ATC (mobile + desktop) with two-state behavior: incomplete → scroll to selector + swatch breathe highlight; complete → add to cart. Dynamic scroll detection via rAF polling. All buttons never disabled. Single-option steps require customer click. (2026-03-21)
 - [ ] M4: Full test matrix, edge cases, sticky ATC mobile
 
 **Phase C: Content & polish:**

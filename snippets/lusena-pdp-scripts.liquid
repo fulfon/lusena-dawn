@@ -1328,7 +1328,7 @@
 
       const perNightCents = Math.round(variant.price / 365);
       stickyPricePerNights.forEach((stickyPricePerNight) => {
-        stickyPricePerNight.textContent = `${stickyPricePerNightPrefix}${formatCurrency(perNightCents, {
+        stickyPricePerNight.textContent = `${stickyPricePerNightPrefix}\u00A0${formatCurrency(perNightCents, {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2,
         })}${stickyPricePerNightSuffix}`;
@@ -1364,7 +1364,7 @@
       }
 
       if (pricePerNightEl) {
-        pricePerNightEl.textContent = `${pricePerNightPrefix}${formatCurrency(perNightCents, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}${pricePerNightSuffix}`;
+        pricePerNightEl.textContent = `${pricePerNightPrefix}\u00A0${formatCurrency(perNightCents, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}${pricePerNightSuffix}`;
       }
 
       const available = !!variant.available;

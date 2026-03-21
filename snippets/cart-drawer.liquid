@@ -747,6 +747,31 @@
                       {%- endfor -%}
                     </p>
                   {%- endif -%}
+
+                  {%- unless item.properties == empty -%}
+                    {%- assign has_visible_properties = false -%}
+                    {%- for property in item.properties -%}
+                      {%- assign prop_first_char = property.first | slice: 0 -%}
+                      {%- unless prop_first_char == '_' -%}
+                        {%- assign has_visible_properties = true -%}
+                      {%- endunless -%}
+                    {%- endfor -%}
+                    {%- if has_visible_properties -%}
+                      <div class="lusena-cart-drawer__item-properties">
+                        {%- for property in item.properties -%}
+                          {%- assign prop_first_char = property.first | slice: 0 -%}
+                          {%- unless prop_first_char == '_' -%}
+                            <p class="lusena-cart-drawer__item-property">
+                              <span class="lusena-cart-drawer__item-property-label">
+                                {{- property.first | split: ' - ' | first | split: ' (' | first | escape -}}:
+                              </span>
+                              {{ property.last | escape }}
+                            </p>
+                          {%- endunless -%}
+                        {%- endfor -%}
+                      </div>
+                    {%- endif -%}
+                  {%- endunless -%}
                 </div>
 
                 <div class="lusena-cart-drawer__item-bottom">
@@ -1147,3 +1172,22 @@
     });
   })();
 </script>
+
+{% stylesheet %}
+  .lusena-cart-drawer .lusena-cart-drawer__item {
+    align-items: center;
+  }
+  .lusena-cart-drawer__item-properties {
+    margin-top: 0.4rem;
+  }
+  .lusena-cart-drawer__item-property {
+    font-size: 1.2rem;
+    line-height: 1.4;
+    color: var(--lusena-text-2);
+    margin: 0;
+  }
+  .lusena-cart-drawer__item-property-label {
+    font-weight: 500;
+    color: var(--lusena-text-1);
+  }
+{% endstylesheet %}

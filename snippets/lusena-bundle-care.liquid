@@ -1,0 +1,77 @@
+{% doc %}
+  Bundle care instructions accordion panel.
+  Same visual pattern as lusena-pdp-buybox-panels care section.
+  Reads product.metafields.lusena.pdp_care_steps, falls back to universal silk care.
+
+  @param {product} product
+{% enddoc %}
+
+{%- liquid
+  assign care_heading = 'Pielęgnacja'
+  assign care_steps = blank
+  assign fallback_care_steps = 'Prać w pralce: program delikatny, maks. 30°C|Używać detergentu do jedwabiu lub delikatnych tkanin|Suszyć na płasko - nie używać suszarki bębnowej|Nie wybielać, nie prać z chlorem|Prasować na najniższej temperaturze z lewej strony' | split: '|'
+
+  if product != blank
+    assign mf_care_heading = product.metafields.lusena.pdp_care_heading
+    if mf_care_heading != blank
+      if mf_care_heading.value != blank
+        assign care_heading = mf_care_heading.value
+      endif
+    endif
+
+    assign mf_care_steps = product.metafields.lusena.pdp_care_steps
+    if mf_care_steps != blank
+      if mf_care_steps.value != blank
+        assign care_steps = mf_care_steps.value
+      endif
+    endif
+  endif
+
+  if care_steps == blank
+    assign care_steps = fallback_care_steps
+  endif
+-%}
+
+<div
+  class="lusena-pdp-accordion"
+  data-lusena-accordion-root
+  data-lusena-accordion-collapsible
+>
+  <div
+    class="lusena-pdp-accordion__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+    data-lusena-accordion-item
+    data-lusena-accordion-value="care"
+  >
+    <div class="lusena-pdp-accordion__trigger-wrap">
+      <button
+        type="button"
+        class="lusena-pdp-accordion__trigger"
+        data-lusena-accordion-trigger
+        data-state="closed"
+        aria-expanded="false"
+      >
+        {{ care_heading | escape }}
+        {% render 'lusena-icon',
+          name: 'chevron-down',
+          class: 'lusena-pdp-accordion__chevron',
+          stroke_width: 2
+        %}
+      </button>
+    </div>
+    <div
+      class="lusena-pdp-accordion__content"
+      data-lusena-accordion-content
+      data-state="closed"
+    >
+      <div class="lusena-pdp-accordion__body">
+        <ul class="lusena-pdp-care-list">
+          {%- if care_steps != blank -%}
+            {%- for step in care_steps -%}
+              <li>{{ step | escape }}</li>
+            {%- endfor -%}
+          {%- endif -%}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

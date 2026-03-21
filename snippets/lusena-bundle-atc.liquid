@@ -1,0 +1,63 @@
+{% doc %}
+  Bundle add-to-cart form with hidden properties for Simple Bundles.
+  Properties are populated dynamically by lusena-bundle-scripts.liquid.
+
+  @param {product} product
+  @param {variant} current_variant
+  @param {section} section
+{% enddoc %}
+
+<div class="lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+  <form
+    action="{{ routes.cart_add_url }}"
+    method="post"
+    data-lusena-bundle-form
+    data-loading-min-ms="500"
+    data-loading-hold-ms="350"
+  >
+    <input type="hidden" name="id" value="{{ current_variant.id }}">
+    <input type="hidden" name="quantity" value="1">
+
+    <div data-lusena-bundle-properties>
+      {%- comment -%}
+        Hidden inputs populated by JS:
+        <input type="hidden" name="properties[OptionName]" value="SelectedColor">
+        <input type="hidden" name="properties[_bundle_selection]" value="Color1 <> Color2">
+      {%- endcomment -%}
+    </div>
+
+    <button
+      type="submit"
+      id="bundle-main-cta"
+      data-lusena-bundle-atc-btn
+      class="lusena-btn lusena-btn--primary lusena-btn--size-pdp lusena-btn--text-base lusena-btn--full-width"
+    >
+      <span class="lusena-btn__content" data-lusena-bundle-atc-text>
+        {{- section.settings.add_to_cart_label | escape -}}
+      </span>
+      <span class="loading__spinner hidden">
+        <span class="lusena-btn__loading-text">{{ section.settings.add_to_cart_loading_label | default: 'Dodaję...' | escape }}</span>
+      </span>
+    </button>
+
+    <button
+      type="button"
+      data-lusena-bundle-buy-now
+      class="lusena-btn lusena-btn--outline lusena-btn--size-pdp lusena-btn--text-sm lusena-btn--full-width lusena-pdp-atc__buy-now"
+    >
+      <span class="lusena-btn__content">{{ section.settings.buy_now_label | default: 'Kup teraz' | escape }}</span>
+      <span class="loading__spinner hidden">
+        <span class="lusena-btn__loading-text">{{ section.settings.buy_now_loading_label | default: 'Przekierowuję...' | escape }}</span>
+      </span>
+    </button>
+  </form>
+
+  <div class="lusena-pdp-atc__stock" data-lusena-bundle-stock>
+    <span
+      class="lusena-pdp__stock-dot lusena-pdp__stock-dot--available"
+    ></span>
+    <span>
+      {{ section.settings.in_stock_label | default: 'Na stanie, gotowe do wysyłki' | escape }}
+    </span>
+  </div>
+</div>

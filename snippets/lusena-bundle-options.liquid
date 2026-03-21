@@ -1,7 +1,10 @@
 {% doc %}
-  Bundle color option swatches (visual only, no JS interactivity in M2).
+  Bundle color option swatches with progressive disclosure and smooth animations.
   Reads Simple Bundles variant_options metafield and renders one fieldset
   per component product. Reuses swatch CSS classes from lusena-pdp.css.
+
+  Animation pattern matches LUSENA accordion (height transition + content fade).
+  JS in lusena-bundle-scripts.liquid drives the progressive flow.
 
   @param {variant} current_variant
   @param {section} section
@@ -18,9 +21,28 @@
 -%}
 
 {%- if has_options -%}
+  {%- liquid
+    comment
+      All steps require a customer click (even single-option).
+      Show progress counter when there are 2+ steps.
+    endcomment
+    assign step_count = bundle_options.size
+  -%}
+
   <div
-    class="lusena-bundle-options lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+    class="lusena-bundle-options{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+    data-lusena-bundle-options-root
+    data-total-options="{{ step_count }}"
+    data-step-count="{{ step_count }}"
   >
+    {%- if step_count > 1 -%}
+      <div class="lusena-bundle-progress" data-lusena-bundle-progress>
+        <span class="lusena-bundle-progress__text">
+          {{ section.settings.select_colors_heading | default: 'Wybierz kolory' | escape }}
+          <span data-lusena-bundle-progress-counter>(1 z {{ step_count }})</span>
+        </span>
+      </div>
+    {%- endif -%}
     {%- for option in bundle_options -%}
       {%- liquid
         assign full_name = option.optionName
@@ -31,70 +53,150 @@
         if option_values.size == 1
           assign is_single = true
         endif
+
+        comment
+          Strip dimension patterns (e.g. "50×60") from product name.
+          Iterates words and drops from the first word containing × onward.
+        endcomment
+        assign clean_name = product_name
+        assign dim_test = product_name | split: '×'
+        if dim_test.size > 1
+          assign name_words = product_name | split: ' '
+          assign clean_parts = ''
+          for word in name_words
+            assign word_has_dim = word | split: '×' | size
+            if word_has_dim > 1
+              break
+            endif
+            if clean_parts == ''
+              assign clean_parts = word
+            else
+              assign clean_parts = clean_parts | append: ' ' | append: word
+            endif
+          endfor
+          if clean_parts != ''
+            assign clean_name = clean_parts
+          endif
+        endif
+
+        comment
+          Count total occurrences and current position for step numbers.
+        endcomment
+        assign outer_idx = forloop.index
+        assign same_name_total = 0
+        assign same_name_so_far = 0
+        for check in bundle_options
+          assign check_name = check.optionName | split: ' - Color' | first | split: ' - ' | first
+          if check_name == product_name
+            assign same_name_total = same_name_total | plus: 1
+            if forloop.index <= outer_idx
+              assign same_name_so_far = same_name_so_far | plus: 1
+            endif
+          endif
+        endfor
+
+        assign needs_number = false
+        if same_name_total > 1
+          assign needs_number = true
+        endif
+
+        assign display_label = clean_name
+        if needs_number
+          assign display_label = clean_name | append: ' ' | append: same_name_so_far
+        endif
       -%}
 
-      <fieldset
-        class="lusena-bundle-options__group lusena-content-flow--tight"
-        data-lusena-bundle-option
-        data-option-index="{{ forloop.index0 }}"
-        data-option-name="{{ full_name | escape }}"
+      <div
+        class="lusena-bundle-step"
+        data-lusena-bundle-step="{{ forloop.index0 }}"
+        data-step-product="{{ product_name | escape }}"
       >
-        <legend class="lusena-pdp-variant-picker__legend">
-          {{ section.settings.select_color_label | default: 'Kolor' | escape }}
-          <span class="lusena-bundle-options__product-label">{{ product_name | escape }}</span>:
-          <span class="lusena-pdp-variant-picker__selected" data-lusena-bundle-selected>
-            {{- option_values | first | escape -}}
-          </span>
-        </legend>
-
-        <div class="lusena-pdp-variant-picker__options">
-          {%- for value in option_values -%}
-            {%- liquid
-              assign is_first = false
-              if forloop.first
-                assign is_first = true
-              endif
-              assign value_downcase = value | downcase
-              assign swatch_style = ''
-              case value_downcase
-                when 'czarny'
-                  assign swatch_style = 'background:#1A1A1A'
-                when 'brudny róż'
-                  assign swatch_style = 'background:#C9A0A0'
-                when 'szampan'
-                  assign swatch_style = 'background:#C9B99A'
-                when 'gray'
-                  assign swatch_style = 'background:#808080'
-                when 'gold'
-                  assign swatch_style = 'background:#C9B99A'
-                when 'pink'
-                  assign swatch_style = 'background:#C9A0A0'
-                when 'clear'
-                  assign swatch_style = 'background:#E5E5E5'
-                else
-                  assign swatch_style = 'background:#E5E5E5'
-              endcase
-            -%}
-
-            <label class="lusena-pdp-variant-picker__label">
-              <input
-                class="lusena-option__input visually-hidden"
-                type="radio"
-                name="bundle-option-{{ section.id }}-{{ forloop.parentloop.index0 }}"
-                value="{{ value | escape }}"
-                {% if is_first %}checked{% endif %}
-                {% if is_single %}disabled{% endif %}
-              >
-              <span
-                class="lusena-option__swatch"
-                title="{{ value | escape }}"
-                style="{{ swatch_style }}"
-              ></span>
-              <span class="visually-hidden">{{ value | escape }}</span>
-            </label>
-          {%- endfor -%}
+        {%- comment -%} Chip (collapsed confirmation) — height-animated wrapper {%- endcomment -%}
+        <div class="lusena-bundle-step__chip-wrap" data-lusena-step-chip-wrap data-state="closed" style="height:0px">
+          <button
+            type="button"
+            class="lusena-bundle-chip"
+            data-lusena-bundle-chip
+          >
+            <span class="lusena-bundle-chip__dot" data-lusena-chip-dot></span>
+            <span class="lusena-bundle-chip__label">
+              <span data-lusena-chip-name>{{ display_label | escape }}</span>
+              <span class="lusena-bundle-chip__sep" aria-hidden="true">&middot;</span>
+              <span data-lusena-chip-color>{{ option_values | first | escape }}</span>
+            </span>
+            <span class="lusena-bundle-chip__edit">
+              {% render 'lusena-icon', name: 'chevron-down', class: 'lusena-bundle-chip__edit-icon', stroke_width: 2 %}
+            </span>
+          </button>
         </div>
-      </fieldset>
+
+        {%- comment -%} Selector fieldset — height-animated wrapper {%- endcomment -%}
+        <div class="lusena-bundle-step__fieldset-wrap" data-lusena-step-fieldset-wrap data-state="open" style="height:auto">
+          <div class="lusena-bundle-step__accent">
+            <fieldset
+              class="lusena-bundle-options__group"
+              data-lusena-bundle-option
+              data-option-index="{{ forloop.index0 }}"
+              data-option-name="{{ full_name | escape }}"
+            >
+              <legend class="lusena-bundle-step__legend">
+                <span class="lusena-bundle-step__product-name">{{ display_label | escape }}</span>
+                <span class="lusena-bundle-step__instruction">{{ section.settings.select_instruction | default: 'Wybierz kolor' | escape }}</span>
+                <span class="lusena-bundle-step__selected visually-hidden" data-lusena-bundle-selected>
+                  {{- option_values | first | escape -}}
+                </span>
+              </legend>
+
+              <div class="lusena-pdp-variant-picker__options">
+                {%- for value in option_values -%}
+                  {%- liquid
+                    assign is_first = false
+                    if forloop.first
+                      assign is_first = true
+                    endif
+                    assign value_downcase = value | downcase
+                    assign swatch_style = ''
+                    case value_downcase
+                      when 'czarny'
+                        assign swatch_style = 'background:#1A1A1A'
+                      when 'brudny róż'
+                        assign swatch_style = 'background:#C9A0A0'
+                      when 'szampan'
+                        assign swatch_style = 'background:#C9B99A'
+                      when 'gray'
+                        assign swatch_style = 'background:#808080'
+                      when 'gold'
+                        assign swatch_style = 'background:#C9B99A'
+                      when 'pink'
+                        assign swatch_style = 'background:#C9A0A0'
+                      when 'clear'
+                        assign swatch_style = 'background:#E5E5E5'
+                      else
+                        assign swatch_style = 'background:#E5E5E5'
+                    endcase
+                  -%}
+
+                  <label class="lusena-pdp-variant-picker__label">
+                    <input
+                      class="lusena-option__input visually-hidden"
+                      type="radio"
+                      name="bundle-option-{{ section.id }}-{{ forloop.parentloop.index0 }}"
+                      value="{{ value | escape }}"
+                      data-swatch-color="{{ swatch_style }}"
+                    >
+                    <span
+                      class="lusena-option__swatch"
+                      title="{{ value | escape }}"
+                      style="{{ swatch_style }}"
+                    ></span>
+                    <span class="visually-hidden">{{ value | escape }}</span>
+                  </label>
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
     {%- endfor -%}
   </div>
 {%- endif -%}

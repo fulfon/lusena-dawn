@@ -1,0 +1,802 @@
+{% doc %}
+  Bundle PDP interactivity: progressive disclosure with smooth animations,
+  swatch selection, ATC form with Simple Bundles properties, cart drawer integration.
+
+  Animation pattern matches LUSENA accordion (lusena-pdp-scripts.liquid):
+  - Height transition via rAF + transitionend snap to auto
+  - Content fade: opacity + translateY(-6px)
+  - Stagger delay between collapse and reveal (250ms)
+  - Reduced motion: instant toggle
+
+  @see lusena-bundle-options.liquid for HTML structure
+  @see lusena-bundle-pdp.css for CSS animation rules
+{% enddoc %}
+
+<script>
+(function bundleScripts() {
+  'use strict';
+
+  var root = document.querySelector('[data-lusena-product-section]');
+  if (!root) return;
+
+  var optionsRoot = root.querySelector('[data-lusena-bundle-options-root]');
+  if (!optionsRoot) return;
+
+  var form = root.querySelector('[data-lusena-bundle-form]');
+  var atcBtn = root.querySelector('[data-lusena-bundle-atc-btn]');
+  var buyNowBtn = root.querySelector('[data-lusena-bundle-buy-now]');
+  var propertiesContainer = root.querySelector('[data-lusena-bundle-properties]');
+  var steps = Array.from(optionsRoot.querySelectorAll('[data-lusena-bundle-step]'));
+  var totalSteps = steps.length;
+
+  if (totalSteps === 0) return;
+
+  // --- Reduced motion detection ---
+  var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var STAGGER_MS = prefersReducedMotion ? 0 : 250;
+
+  // --- State ---
+  var selections = new Array(totalSteps).fill(null);
+  var progressCounter = root.querySelector('[data-lusena-bundle-progress-counter]');
+  var stepCount = parseInt(optionsRoot.getAttribute('data-step-count') || '0', 10);
+
+  // ==========================================================================
+  // HEIGHT TRANSITION UTILITIES
+  // Matches lusena-pdp-scripts.liquid accordion pattern exactly.
+  // ==========================================================================
+
+  function clearPendingEnd(el) {
+    if (typeof el._lusenaStepOnEnd === 'function') {
+      el.removeEventListener('transitionend', el._lusenaStepOnEnd);
+      el._lusenaStepOnEnd = null;
+    }
+  }
+
+  function openWrap(wrap) {
+    if (!wrap) return;
+    clearPendingEnd(wrap);
+
+    if (prefersReducedMotion) {
+      wrap.dataset.state = 'open';
+      wrap.style.height = 'auto';
+      wrap.style.overflow = 'visible';
+      return;
+    }
+
+    wrap.style.overflow = 'hidden';
+    wrap.style.height = '0px';
+    wrap.dataset.state = 'open';
+    var inner = wrap.firstElementChild;
+    var targetH = inner ? inner.scrollHeight : wrap.scrollHeight;
+
+    requestAnimationFrame(function() {
+      wrap.style.height = targetH + 'px';
+    });
+
+    var onEnd = function(e) {
+      if (e.target !== wrap || e.propertyName !== 'height') return;
+      wrap.removeEventListener('transitionend', onEnd);
+      wrap._lusenaStepOnEnd = null;
+      wrap.style.height = 'auto';
+      wrap.style.overflow = 'visible';
+    };
+    wrap._lusenaStepOnEnd = onEnd;
+    wrap.addEventListener('transitionend', onEnd);
+  }
+
+  function closeWrap(wrap) {
+    if (!wrap) return;
+    clearPendingEnd(wrap);
+
+    if (prefersReducedMotion) {
+      wrap.dataset.state = 'closed';
+      wrap.style.height = '0px';
+      wrap.style.overflow = 'hidden';
+      return;
+    }
+
+    wrap.style.overflow = 'hidden';
+    var h = wrap.offsetHeight;
+    wrap.style.height = h + 'px';
+    wrap.dataset.state = 'closing';
+
+    requestAnimationFrame(function() {
+      wrap.style.height = '0px';
+    });
+
+    var onEnd = function(e) {
+      if (e.target !== wrap || e.propertyName !== 'height') return;
+      wrap.removeEventListener('transitionend', onEnd);
+      wrap._lusenaStepOnEnd = null;
+      wrap.dataset.state = 'closed';
+    };
+    wrap._lusenaStepOnEnd = onEnd;
+    wrap.addEventListener('transitionend', onEnd);
+  }
+
+  // ==========================================================================
+  // PROGRESSIVE DISCLOSURE
+  // ==========================================================================
+
+  function initSteps() {
+    steps.forEach(function(step, i) {
+      var fieldsetWrap = step.querySelector('[data-lusena-step-fieldset-wrap]');
+      var chipWrap = step.querySelector('[data-lusena-step-chip-wrap]');
+      var fieldset = step.querySelector('[data-lusena-bundle-option]');
+      var optionValues = fieldset ? fieldset.querySelectorAll('input[type="radio"]') : [];
+
+      // Chip wrap starts closed (no animation)
+      if (chipWrap) {
+        chipWrap.dataset.state = 'closed';
+        chipWrap.style.height = '0px';
+        chipWrap.style.overflow = 'hidden';
+      }
+
+      // All steps start as pending or active — single-option steps
+      // auto-confirm only when it's their turn (via advanceToNextStep).
+      if (i === findFirstUnselectedStep()) {
+        // First step is active
+        if (optionValues.length === 1) {
+          // Single-option first step: auto-select and immediately advance
+          autoConfirmSingleOption(i, step, fieldsetWrap, chipWrap, optionValues);
+        } else {
+          step.classList.add('is-active');
+          if (fieldsetWrap) {
+            fieldsetWrap.dataset.state = 'open';
+            fieldsetWrap.style.height = 'auto';
+            fieldsetWrap.style.overflow = 'visible';
+          }
+        }
+      } else {
+        // Remaining steps: pending with placeholder chip
+        step.classList.add('is-pending');
+        if (fieldsetWrap) {
+          fieldsetWrap.dataset.state = 'closed';
+          fieldsetWrap.style.height = '0px';
+          fieldsetWrap.style.overflow = 'hidden';
+        }
+        // Show chip wrap with just the product name (pending style)
+        var pendingChip = step.querySelector('[data-lusena-bundle-chip]');
+        if (pendingChip) pendingChip.classList.add('is-pending');
+        if (chipWrap) {
+          chipWrap.dataset.state = 'open';
+          chipWrap.style.height = 'auto';
+          chipWrap.style.overflow = 'visible';
+        }
+      }
+    });
+
+    updateAtcState();
+  }
+
+  function findFirstUnselectedStep() {
+    for (var i = 0; i < totalSteps; i++) {
+      if (selections[i] === null) return i;
+    }
+    return -1;
+  }
+
+  function findActiveStepIndex() {
+    for (var i = 0; i < totalSteps; i++) {
+      if (steps[i].classList.contains('is-active')) return i;
+    }
+    return -1;
+  }
+
+  function autoConfirmSingleOption(i, step, fieldsetWrap, chipWrap, optionValues) {
+    selections[i] = optionValues[0].value;
+    optionValues[0].checked = true;
+    step.classList.remove('is-pending', 'is-active');
+    step.classList.add('is-collapsed');
+
+    if (fieldsetWrap) {
+      fieldsetWrap.dataset.state = 'closed';
+      fieldsetWrap.style.height = '0px';
+      fieldsetWrap.style.overflow = 'hidden';
+    }
+
+    updateChipContent(i);
+
+    if (chipWrap) {
+      chipWrap.dataset.state = 'open';
+      chipWrap.style.height = 'auto';
+      chipWrap.style.overflow = 'visible';
+    }
+
+    // Remove pending chip styling
+    var chip = step.querySelector('[data-lusena-bundle-chip]');
+    if (chip) chip.classList.remove('is-pending');
+  }
+
+  function updateChipContent(index) {
+    var step = steps[index];
+    var chip = step.querySelector('[data-lusena-bundle-chip]');
+    var fieldset = step.querySelector('[data-lusena-bundle-option]');
+    var selectedValue = selections[index];
+
+    if (!chip || !selectedValue) return;
+
+    var checkedInput = fieldset ? fieldset.querySelector('input[type="radio"]:checked') : null;
+    var swatchColor = checkedInput ? (checkedInput.getAttribute('data-swatch-color') || '') : '';
+
+    var dotEl = chip.querySelector('[data-lusena-chip-dot]');
+    var colorEl = chip.querySelector('[data-lusena-chip-color]');
+
+    if (dotEl) dotEl.style.cssText = swatchColor;
+    if (colorEl) colorEl.textContent = selectedValue;
+  }
+
+  function activateStep(index) {
+    var step = steps[index];
+    var wasPending = step.classList.contains('is-pending');
+
+    step.classList.remove('is-pending', 'is-collapsed');
+    step.classList.add('is-active');
+    step.style.opacity = '';
+    step.style.pointerEvents = '';
+
+    // Remove pending state from chip
+    var chip = step.querySelector('[data-lusena-bundle-chip]');
+    if (chip) chip.classList.remove('is-pending');
+
+    var fieldsetWrap = step.querySelector('[data-lusena-step-fieldset-wrap]');
+    var chipWrap = step.querySelector('[data-lusena-step-chip-wrap]');
+
+    if (wasPending && chipWrap && fieldsetWrap) {
+      // Seamless pending→active: swap chip for fieldset in one smooth motion.
+      // Start fieldset at the chip's old height so total step height stays
+      // constant, then expand to target. Avoids two competing animations
+      // (chip close + fieldset open) that make the same text "jump."
+      var chipH = chipWrap.offsetHeight;
+
+      // Snap step opacity (prevents compound fade with accent)
+      step.style.transition = 'none';
+      void step.offsetHeight;
+      step.style.transition = '';
+
+      // Instantly collapse chip placeholder (no animation needed)
+      clearPendingEnd(chipWrap);
+      chipWrap.style.transition = 'none';
+      chipWrap.dataset.state = 'closed';
+      chipWrap.style.height = '0px';
+      chipWrap.style.overflow = 'hidden';
+
+      // Open fieldset from chip's old height → target (single smooth expand)
+      clearPendingEnd(fieldsetWrap);
+      fieldsetWrap.style.transition = 'none';
+      fieldsetWrap.style.overflow = 'hidden';
+      fieldsetWrap.dataset.state = 'open';
+      fieldsetWrap.style.height = chipH + 'px';
+
+      var inner = fieldsetWrap.firstElementChild;
+      var targetH = inner ? inner.scrollHeight : fieldsetWrap.scrollHeight;
+
+      // Commit starting state, restore transitions, animate
+      void fieldsetWrap.offsetHeight;
+      chipWrap.style.transition = '';
+      fieldsetWrap.style.transition = '';
+      fieldsetWrap.style.height = targetH + 'px';
+
+      var onEnd = function(e) {
+        if (e.target !== fieldsetWrap || e.propertyName !== 'height') return;
+        fieldsetWrap.removeEventListener('transitionend', onEnd);
+        fieldsetWrap._lusenaStepOnEnd = null;
+        fieldsetWrap.style.height = 'auto';
+        fieldsetWrap.style.overflow = 'visible';
+      };
+      fieldsetWrap._lusenaStepOnEnd = onEnd;
+      fieldsetWrap.addEventListener('transitionend', onEnd);
+    } else {
+      // Re-edit (collapsed→active): standard two-part animation
+      if (fieldsetWrap) openWrap(fieldsetWrap);
+      if (chipWrap) closeWrap(chipWrap);
+    }
+  }
+
+  function collapseStep(index) {
+    var step = steps[index];
+    var selectedValue = selections[index];
+    if (!selectedValue) return;
+
+    updateChipContent(index);
+
+    step.classList.remove('is-active', 'is-pending');
+    step.classList.add('is-collapsed');
+
+    var fieldsetWrap = step.querySelector('[data-lusena-step-fieldset-wrap]');
+    var chipWrap = step.querySelector('[data-lusena-step-chip-wrap]');
+
+    if (fieldsetWrap) closeWrap(fieldsetWrap);
+    if (chipWrap) openWrap(chipWrap);
+  }
+
+  function advanceToNextStep(currentIndex) {
+    collapseStep(currentIndex);
+
+    var nextIndex = findFirstUnselectedStep();
+
+    if (nextIndex >= 0) {
+      var nextStep = steps[nextIndex];
+      var nextFieldset = nextStep.querySelector('[data-lusena-bundle-option]');
+      var nextOptions = nextFieldset ? nextFieldset.querySelectorAll('input[type="radio"]') : [];
+
+      // All steps require customer interaction — even single-option ones.
+      setTimeout(function() {
+        activateStep(nextIndex);
+      }, STAGGER_MS);
+    }
+
+    updateAtcState();
+  }
+
+  // ==========================================================================
+  // CHIP RE-EDIT (independent — doesn't reset later steps)
+  // ==========================================================================
+
+  steps.forEach(function(step, index) {
+    var chip = step.querySelector('[data-lusena-bundle-chip]');
+    if (!chip) return;
+
+    chip.addEventListener('click', function() {
+      // Close any currently open step first (only one fieldset open at a time)
+      var currentlyActive = findActiveStepIndex();
+      if (currentlyActive >= 0 && currentlyActive !== index) {
+        var activeStep = steps[currentlyActive];
+        if (selections[currentlyActive] !== null) {
+          // Has a selection → collapse to chip
+          collapseStep(currentlyActive);
+        } else {
+          // No selection → mark as pending with placeholder chip
+          activeStep.classList.remove('is-active');
+          activeStep.classList.add('is-pending');
+          var activeFieldsetWrap = activeStep.querySelector('[data-lusena-step-fieldset-wrap]');
+          if (activeFieldsetWrap) closeWrap(activeFieldsetWrap);
+          // Show placeholder chip
+          var activeChip = activeStep.querySelector('[data-lusena-bundle-chip]');
+          if (activeChip) activeChip.classList.add('is-pending');
+          var activeChipWrap = activeStep.querySelector('[data-lusena-step-chip-wrap]');
+          if (activeChipWrap) openWrap(activeChipWrap);
+        }
+      }
+
+      // Open this step for editing (keep selection intact)
+      activateStep(index);
+      updateAtcState();
+    });
+  });
+
+  // ==========================================================================
+  // SWATCH SELECTION
+  // Uses 'click' on swatch spans (not 'change' on radios) to handle
+  // re-confirming the same color during re-edit.
+  // ==========================================================================
+
+  optionsRoot.addEventListener('click', function(e) {
+    var swatch = e.target.closest('.lusena-option__swatch');
+    if (!swatch) return;
+
+    var label = swatch.closest('.lusena-pdp-variant-picker__label');
+    if (!label) return;
+
+    var input = label.querySelector('input[type="radio"]');
+    if (!input || input.disabled) return;
+
+    var step = swatch.closest('[data-lusena-bundle-step]');
+    if (!step) return;
+
+    // Check this radio, uncheck siblings
+    var fieldset = step.querySelector('[data-lusena-bundle-option]');
+    if (fieldset) {
+      fieldset.querySelectorAll('input[type="radio"]').forEach(function(r) {
+        r.checked = false;
+      });
+    }
+    input.checked = true;
+
+    var stepIndex = parseInt(step.getAttribute('data-lusena-bundle-step'), 10);
+    var selectedValue = input.value;
+    var wasAlreadySelected = selections[stepIndex] !== null;
+
+    selections[stepIndex] = selectedValue;
+
+    // Update screen reader text
+    var selectedSpan = step.querySelector('[data-lusena-bundle-selected]');
+    if (selectedSpan) selectedSpan.textContent = selectedValue;
+
+    if (wasAlreadySelected) {
+      // Re-edit: just collapse back, don't advance or touch other steps
+      collapseStep(stepIndex);
+      // If there's still an unselected step from the initial flow, reactivate it
+      var unselected = findFirstUnselectedStep();
+      if (unselected >= 0) {
+        setTimeout(function() {
+          activateStep(unselected);
+        }, STAGGER_MS);
+      }
+      updateAtcState();
+    } else {
+      // Initial flow: advance to next unselected step
+      advanceToNextStep(stepIndex);
+    }
+  });
+
+  // ==========================================================================
+  // ATC STATE + HIDDEN INPUTS
+  // ==========================================================================
+
+  function allSelected() {
+    for (var i = 0; i < totalSteps; i++) {
+      if (selections[i] === null) return false;
+    }
+    return true;
+  }
+
+  function updateAtcState() {
+    // Buttons are never disabled — incomplete selections trigger scroll+highlight instead.
+    updateHiddenInputs();
+    updateProgressCounter();
+  }
+
+  function updateProgressCounter() {
+    if (!progressCounter || stepCount <= 1) return;
+
+    var completed = 0;
+    for (var i = 0; i < totalSteps; i++) {
+      if (selections[i] !== null) completed++;
+    }
+
+    if (completed >= stepCount) {
+      progressCounter.textContent = '(\u2713)';
+    } else {
+      progressCounter.textContent = '(' + (completed + 1) + ' z ' + stepCount + ')';
+    }
+  }
+
+  function updateHiddenInputs() {
+    if (!propertiesContainer) return;
+    propertiesContainer.innerHTML = '';
+
+    if (!allSelected()) return;
+
+    var bundleSelectionParts = [];
+
+    steps.forEach(function(step, index) {
+      var fieldset = step.querySelector('[data-lusena-bundle-option]');
+      var value = selections[index];
+
+      if (!value || !fieldset) return;
+
+      // Use the clean display label (from chip name) as property key.
+      // This has step numbers for duplicates ("Scrunchie jedwabny 1")
+      // and stripped dimensions ("Poszewka jedwabna" not "...50×60").
+      var chipName = step.querySelector('[data-lusena-chip-name]');
+      var displayKey = chipName ? chipName.textContent.trim() : '';
+
+      // Fallback to raw optionName if chip name unavailable
+      if (!displayKey) {
+        displayKey = fieldset.getAttribute('data-option-name') || '';
+      }
+
+      var input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'properties[' + displayKey + ']';
+      input.value = value;
+      propertiesContainer.appendChild(input);
+
+      bundleSelectionParts.push(value);
+    });
+
+    var bundleInput = document.createElement('input');
+    bundleInput.type = 'hidden';
+    bundleInput.name = 'properties[_bundle_selection]';
+    bundleInput.value = bundleSelectionParts.join(' <> ');
+    propertiesContainer.appendChild(bundleInput);
+  }
+
+  // ==========================================================================
+  // SHARED: BUTTON LOADING HELPERS
+  // ==========================================================================
+
+  function setBtnLoading(btn, isLoading) {
+    if (!btn) return;
+    var spinner = btn.querySelector('.loading__spinner');
+    var content = btn.querySelector('.lusena-btn__content');
+    if (isLoading) {
+      btn.classList.add('loading');
+      btn.setAttribute('aria-disabled', 'true');
+      btn.setAttribute('aria-busy', 'true');
+      if (spinner) spinner.classList.remove('hidden');
+      if (content) content.classList.add('hidden');
+    } else {
+      btn.classList.remove('loading');
+      btn.removeAttribute('aria-disabled');
+      btn.removeAttribute('aria-busy');
+      if (spinner) spinner.classList.add('hidden');
+      if (content) content.classList.remove('hidden');
+    }
+  }
+
+  // ==========================================================================
+  // ATC FORM SUBMISSION (shared by main button + sticky button)
+  // ==========================================================================
+
+  function submitBundleCart() {
+    if (!form || !allSelected()) return;
+
+    var loadingBtns = [atcBtn].concat(stickyBtns);
+    loadingBtns.forEach(function(b) { setBtnLoading(b, true); });
+
+    var formData = new FormData(form);
+
+    var cart = document.querySelector('cart-drawer');
+    if (cart && typeof cart.getSectionsToRender === 'function') {
+      var sectionIds = cart.getSectionsToRender().map(function(s) { return s.id; });
+      formData.append('sections', sectionIds.join(','));
+      formData.append('sections_url', window.location.pathname);
+    }
+
+    var config = {
+      method: 'POST',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        Accept: 'application/javascript',
+      },
+      body: formData,
+    };
+
+    var loadingStartTime = Date.now();
+    var minMs = parseInt(form.getAttribute('data-loading-min-ms') || '500', 10);
+    var holdMs = parseInt(form.getAttribute('data-loading-hold-ms') || '350', 10);
+
+    fetch(window.routes.cart_add_url, config)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(state) {
+        if (state.status) {
+          console.error('Bundle ATC error:', state.description || state.message);
+          finalize();
+          return;
+        }
+
+        if (cart && typeof cart.renderContents === 'function') {
+          cart.renderContents(state);
+        }
+
+        if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+          publish(PUB_SUB_EVENTS.cartUpdate, {
+            source: 'product-form',
+            productVariantId: formData.get('id'),
+            cartData: state,
+          });
+        }
+
+        finalize();
+      })
+      .catch(function(err) {
+        console.error('Bundle ATC fetch error:', err);
+        finalize();
+      });
+
+    function finalize() {
+      var elapsed = Date.now() - loadingStartTime;
+      var remaining = Math.max(0, minMs - elapsed) + holdMs;
+      setTimeout(function() {
+        loadingBtns.forEach(function(b) { setBtnLoading(b, false); });
+      }, remaining);
+    }
+  }
+
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (!allSelected()) {
+        highlightActiveStep(false);
+        return;
+      }
+      submitBundleCart();
+    });
+  }
+
+  // ==========================================================================
+  // BUY NOW (add to cart + redirect to checkout)
+  // ==========================================================================
+
+  if (buyNowBtn && form) {
+    buyNowBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (!allSelected()) {
+        highlightActiveStep(false);
+        return;
+      }
+
+      setBtnLoading(buyNowBtn, true);
+
+      var formData = new FormData(form);
+      var config = {
+        method: 'POST',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          Accept: 'application/javascript',
+        },
+        body: formData,
+      };
+
+      fetch(window.routes.cart_add_url, config)
+        .then(function(r) { return r.json(); })
+        .then(function(state) {
+          if (state.status) {
+            console.error('Bundle buy-now error:', state.description || state.message);
+            setBtnLoading(buyNowBtn, false);
+            return;
+          }
+          window.location.href = window.routes.checkout_url || '/checkout';
+        })
+        .catch(function(err) {
+          console.error('Bundle buy-now fetch error:', err);
+          setBtnLoading(buyNowBtn, false);
+        });
+    });
+  }
+
+  // ==========================================================================
+  // STICKY ATC BAR
+  // IntersectionObserver on main ATC button (same pattern as regular PDP).
+  // Two-state click: incomplete → scroll to selector + highlight;
+  //                  complete → add to cart.
+  // ==========================================================================
+
+  var stickyBar = document.querySelector('[data-lusena-bundle-sticky]');
+  var stickyBtns = Array.from(document.querySelectorAll('[data-lusena-bundle-sticky-btn]'));
+  var mainCta = document.querySelector('#bundle-main-cta');
+
+  function showStickyBar() {
+    if (stickyBar) stickyBar.classList.remove('lusena-sticky-atc--hidden');
+  }
+
+  function hideStickyBar() {
+    if (stickyBar) stickyBar.classList.add('lusena-sticky-atc--hidden');
+  }
+
+  // Detect when smooth scroll finishes by watching scrollY settle.
+  // Fires callback when position hasn't changed for ~100ms (6 frames at 60fps).
+  function onScrollSettled(callback) {
+    var lastY = window.scrollY;
+    var stableFrames = 0;
+
+    function check() {
+      var currentY = window.scrollY;
+      if (currentY === lastY) {
+        stableFrames++;
+        if (stableFrames >= 6) {
+          callback();
+          return;
+        }
+      } else {
+        stableFrames = 0;
+        lastY = currentY;
+      }
+      requestAnimationFrame(check);
+    }
+
+    requestAnimationFrame(check);
+  }
+
+  function highlightActiveStep(needsScroll) {
+    var targetIndex = findFirstUnselectedStep();
+    if (targetIndex < 0) return;
+
+    var targetStep = steps[targetIndex];
+    if (!targetStep) return;
+
+    var runHighlight = function() {
+      targetStep.classList.add('lusena-bundle-step--highlight');
+      setTimeout(function() {
+        targetStep.classList.remove('lusena-bundle-step--highlight');
+      }, 1000);
+    };
+
+    if (needsScroll) {
+      targetStep.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      onScrollSettled(runHighlight);
+    } else {
+      runHighlight();
+    }
+  }
+
+  // Sticky button click — two states
+  stickyBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      if (!allSelected()) {
+        highlightActiveStep(true);
+      } else {
+        submitBundleCart();
+      }
+    });
+  });
+
+  // Show sticky bar when main ATC button scrolls above viewport.
+  // Uses scroll event (not IntersectionObserver) because the buy-box
+  // has position:sticky which causes unreliable observer behavior.
+  if (stickyBar && mainCta) {
+    var stickyTicking = false;
+    var checkStickyVisibility = function() {
+      var rect = mainCta.getBoundingClientRect();
+      if (rect.bottom <= 0) {
+        showStickyBar();
+      } else {
+        hideStickyBar();
+      }
+      stickyTicking = false;
+    };
+
+    window.addEventListener('scroll', function() {
+      if (!stickyTicking) {
+        requestAnimationFrame(checkStickyVisibility);
+        stickyTicking = true;
+      }
+    }, { passive: true });
+
+    // Initial check
+    checkStickyVisibility();
+  }
+
+  // ==========================================================================
+  // ACCORDION (care panel)
+  // Same pattern as lusena-pdp-scripts.liquid initializeAccordionRoot.
+  // ==========================================================================
+
+  function initAccordions() {
+    var accordionRoots = Array.from(root.querySelectorAll('[data-lusena-accordion-root]'));
+    accordionRoots.forEach(function(accordionRoot) {
+      var isCollapsible = accordionRoot.hasAttribute('data-lusena-accordion-collapsible');
+      var isSingle = accordionRoot.hasAttribute('data-lusena-accordion-single');
+      var items = Array.from(accordionRoot.querySelectorAll('[data-lusena-accordion-item]'));
+
+      items.forEach(function(item) {
+        var trigger = item.querySelector('[data-lusena-accordion-trigger]');
+        var content = item.querySelector('[data-lusena-accordion-content]');
+        if (!trigger || !content) return;
+
+        // Ensure closed on init
+        trigger.dataset.state = 'closed';
+        trigger.setAttribute('aria-expanded', 'false');
+        content.dataset.state = 'closed';
+        content.style.height = '0px';
+
+        trigger.addEventListener('click', function() {
+          var isOpen = trigger.dataset.state === 'open';
+
+          if (isOpen && isCollapsible) {
+            trigger.dataset.state = 'closed';
+            trigger.setAttribute('aria-expanded', 'false');
+            closeWrap(content);
+            return;
+          }
+
+          if (isSingle) {
+            items.forEach(function(sibling) {
+              if (sibling === item) return;
+              var sibTrigger = sibling.querySelector('[data-lusena-accordion-trigger]');
+              var sibContent = sibling.querySelector('[data-lusena-accordion-content]');
+              if (sibTrigger) {
+                sibTrigger.dataset.state = 'closed';
+                sibTrigger.setAttribute('aria-expanded', 'false');
+              }
+              if (sibContent) closeWrap(sibContent);
+            });
+          }
+
+          trigger.dataset.state = 'open';
+          trigger.setAttribute('aria-expanded', 'true');
+          openWrap(content);
+        });
+      });
+    });
+  }
+
+  // --- Init ---
+  initSteps();
+  initAccordions();
+})();
+</script>

@@ -113,7 +113,7 @@
             data-prefix="{{ sticky_price_per_night_prefix | escape }}"
             data-suffix="{{ sticky_price_per_night_suffix | escape }}"
           >
-            {{- sticky_price_per_night_prefix | escape -}}{{- sticky_price_per_night_cents | money_without_trailing_zeros -}}{{- sticky_price_per_night_suffix | escape -}}
+            {{- sticky_price_per_night_prefix | escape }}&nbsp;{{ sticky_price_per_night_cents | money_without_trailing_zeros -}}{{- sticky_price_per_night_suffix | escape -}}
           </span>
         {%- endif -%}
         <span class="lusena-sticky-atc__variant" data-lusena-sticky-variant>{{ sticky_variant_label | escape }}</span>
@@ -169,7 +169,7 @@
           data-prefix="{{ sticky_price_per_night_prefix | escape }}"
           data-suffix="{{ sticky_price_per_night_suffix | escape }}"
         >
-          {{- sticky_price_per_night_prefix | escape -}}{{- sticky_price_per_night_cents | money_without_trailing_zeros -}}{{- sticky_price_per_night_suffix | escape -}}
+          {{- sticky_price_per_night_prefix | escape }}&nbsp;{{ sticky_price_per_night_cents | money_without_trailing_zeros -}}{{- sticky_price_per_night_suffix | escape -}}
         </span>
       {%- endif -%}
     </div>

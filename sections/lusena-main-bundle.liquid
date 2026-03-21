@@ -18,7 +18,7 @@
 {{ 'lusena-bundle-pdp.css' | asset_url | stylesheet_tag }}
 
 <section
-  class="lusena-pdp lusena-spacing--compact"
+  class="lusena-pdp lusena-pdp--bundle lusena-spacing--compact"
   data-lusena-product-section
   {% if override_style != blank %}
     style="{{ override_style }}"
@@ -54,17 +54,7 @@
         </div>
 
         <div class="lusena-pdp-buy-box__atc">
-          <div class="lusena-bundle-atc-placeholder lusena-content-flow--tight{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-            <button
-              type="button"
-              class="lusena-btn lusena-btn--primary lusena-btn--size-pdp lusena-btn--text-base lusena-btn--full-width"
-              disabled
-            >
-              <span class="lusena-btn__content">
-                {{- section.settings.add_to_cart_label | escape -}}
-              </span>
-            </button>
-          </div>
+          {% render 'lusena-bundle-atc', product: product, current_variant: current_variant, section: section %}
         </div>
 
         <div class="lusena-pdp-buy-box__guarantee">
@@ -73,6 +63,10 @@
 
         <div class="lusena-pdp-buy-box__payment">
           {% render 'lusena-pdp-payment', section: section %}
+        </div>
+
+        <div class="lusena-pdp-buy-box__care">
+          {% render 'lusena-bundle-care', product: product %}
         </div>
 
         {%- liquid
@@ -176,7 +170,9 @@
   </div>
 </section>
 
-{% render 'lusena-pdp-scripts' %}
+{% render 'lusena-bundle-sticky-atc', product: product, current_variant: current_variant, section: section %}
+
+{% render 'lusena-bundle-scripts' %}
 
 {% schema %}
 {
@@ -262,9 +258,21 @@
     },
     {
       "type": "text",
+      "id": "select_colors_heading",
+      "label": "Step counter heading",
+      "default": "Wybierz kolory"
+    },
+    {
+      "type": "text",
       "id": "select_color_label",
       "label": "Color selector label",
       "default": "Kolor"
+    },
+    {
+      "type": "text",
+      "id": "select_instruction",
+      "label": "Color instruction subtitle",
+      "default": "Wybierz kolor"
     },
     {
       "type": "header",
@@ -275,6 +283,36 @@
       "id": "add_to_cart_label",
       "label": "Add to cart label",
       "default": "Dodaj do koszyka"
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_loading_label",
+      "label": "Add to cart loading label",
+      "default": "Dodaj\u0119..."
+    },
+    {
+      "type": "text",
+      "id": "in_stock_label",
+      "label": "In-stock label",
+      "default": "Na stanie, gotowe do wysy\u0142ki"
+    },
+    {
+      "type": "text",
+      "id": "sticky_add_to_cart_label",
+      "label": "Sticky ATC label",
+      "default": "Dodaj do koszyka"
+    },
+    {
+      "type": "text",
+      "id": "buy_now_label",
+      "label": "Buy now label",
+      "default": "Kup teraz"
+    },
+    {
+      "type": "text",
+      "id": "buy_now_loading_label",
+      "label": "Buy now loading label",
+      "default": "Przekierowuj\u0119..."
     },
     {
       "type": "header",

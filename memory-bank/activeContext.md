@@ -4,19 +4,44 @@
 
 ## Current focus
 
-**Bundle Phase B — M2 visual scaffolding created, ready to assign templates in Shopify admin.** All 6 new files created: `product.bundle.json` template, `lusena-main-bundle` section, 3 new snippets (`lusena-bundle-summary`, `lusena-bundle-contents`, `lusena-bundle-options`), and `lusena-bundle-pdp.css`. M1 metafield research complete. Next: assign the 3 bundle products to `product.bundle` template in Shopify admin, then validate M2 visuals via Playwright, then M3 (JS interactivity + ATC).
+**Bundle Phase B — M4 complete.** Full bundle template production-ready: progressive disclosure color selector with GPU-only animations, sticky ATC (mobile+desktop) with two-state behavior (scroll+highlight or add-to-cart), cart drawer + cart page showing all selected colors. All 3 bundles tested and passing. Next: Phase C (creative sessions) or commit + move on.
 
 **Full tracker:** `memory-bank/doc/bundle-implementation.md`
 
 ## Recent completed work
 
-### Bundle Phase B — M2 visual scaffolding (2026-03-21)
-- Created `templates/product.bundle.json` — 6 sections: main bundle buy box, feature highlights (bundle-specific content), quality evidence, truth table, FAQ (bundle-specific questions), final CTA
-- Created `sections/lusena-main-bundle.liquid` — full buy box with schema (spacing, summary, color selector, ATC, delivery, guarantee, payment settings + benefit blocks)
-- Created `snippets/lusena-bundle-summary.liquid` — emotional headline + title + tagline (metafield overrides) + price with crossed-out `lusena.bundle_original_price` + savings badge + delivery row
-- Created `snippets/lusena-bundle-contents.liquid` — "What's included" list parsed from `simple_bundles.variant_options` metafield, deduplicates repeated products (e.g., 3× Scrunchie)
-- Created `snippets/lusena-bundle-options.liquid` — color swatch fieldsets per component product, reuses shared `lusena-option__swatch` CSS, Polish/English color name mapping, single-option pre-selection
-- Created `assets/lusena-bundle-pdp.css` — savings badge, contents list, option groups, ATC placeholder, buy-box order overrides
+### Bundle Phase B complete — M1 through M4 (2026-03-20 — 2026-03-21)
+
+**Architecture:** Separate `product.bundle.json` template with dedicated `lusena-main-bundle` section. 8 new snippets, 1 new CSS asset, 1 template JSON. 4 shared snippets reused from regular PDP. 5 sections reused with bundle-specific content.
+
+**New files created:**
+- `templates/product.bundle.json` — 6 sections wired with bundle-specific content
+- `sections/lusena-main-bundle.liquid` — buy box with `.lusena-pdp--bundle` scoping
+- `snippets/lusena-bundle-summary.liquid` — price + crossed-out original + savings badge
+- `snippets/lusena-bundle-contents.liquid` — "W zestawie" parsed from Simple Bundles metafield
+- `snippets/lusena-bundle-options.liquid` — progressive disclosure color selector with step numbering, dimension stripping, pending placeholders, progress counter
+- `snippets/lusena-bundle-atc.liquid` — ATC + Buy Now form with properties container
+- `snippets/lusena-bundle-care.liquid` — care accordion (same CSS as regular PDP)
+- `snippets/lusena-bundle-scripts.liquid` — all bundle JS: progressive disclosure, smooth animations, two-state ATC, sticky bar, scroll detection, cart integration
+- `snippets/lusena-bundle-sticky-atc.liquid` — sticky bar (mobile + desktop layouts)
+- `assets/lusena-bundle-pdp.css` — all bundle-specific CSS
+
+**Existing files modified:**
+- `snippets/cart-drawer.liquid` — added line item properties display + CSS + image centering
+- `sections/lusena-cart-items.liquid` — fixed properties condition (`!= empty`), added space after colon, image centering
+- `docs/product-metafields-reference.md` — added `lusena.bundle_original_price` metafield docs
+
+**Key features:**
+- Progressive disclosure: one color step at a time, smooth GPU-only animations (transform+opacity), 250ms stagger
+- Chips: collapsed confirmation with color dot + middot separator + edit chevron
+- Step counter: "WYBIERZ KOLORY (1 z 3)" → "(✓)"
+- Pending placeholders: faded dashed-border chips showing upcoming steps
+- Independent chip re-editing: change one color without losing others
+- Re-confirm same color: click event (not change) allows selecting already-checked swatch
+- All buttons never disabled: incomplete → scroll+highlight swatches, complete → add to cart
+- Sticky ATC: mobile + desktop, scroll-based visibility (not IntersectionObserver due to sticky buy-box), dynamic scroll detection via rAF polling
+- Cart: unique property keys with step numbers, all colors displayed in drawer + page
+- Care accordion: same pattern as regular PDP, with bundle-specific accordion JS
 
 ### Section and snippet polish (2026-03-21)
 - **Proof chips:** reordered ("Na prezent" first), added JS row balancer that measures chip widths and optimizes CSS order for balanced rows
@@ -48,13 +73,11 @@
 
 ## Next steps
 
-1. **Assign bundle templates in Shopify admin** — assign 3 bundle products (Nocna Rutyna, Piękny Sen, Scrunchie Trio) to `product.bundle` template. Set `lusena.bundle_original_price` metafield on each (508, 438, 177).
-2. **Bundle M2 visual validation** — Playwright screenshots of all 3 bundle URLs on desktop + mobile. Verify layout, savings badge, contents list, swatches, section order.
-3. **Bundle M3 (functionality)** — swatch interaction JS, real ATC form with `properties[...]` hidden inputs, cart line items showing selected colors. Full plan: `memory-bank/doc/bundle-implementation.md`
-4. **Bundle M4 (testing + sticky ATC)** — full test matrix, edge cases, sticky ATC mobile
-5. **Bundle creative sessions (Phase C)** — headline, tagline, 3 benefits per bundle
-6. **Homepage bundles section** — wire up real bundle products in `templates/index.json`
-7. **PDP cross-sell checkbox** — implement scrunchie upsell at 39 zł (poszewka only — see `memory-bank/doc/upsell-strategy.md`)
+1. **PDP cross-sell / upsell** — scrunchie checkbox at 39 zł on poszewka PDP + bundle upgrade upsell logic (see `memory-bank/doc/upsell-strategy.md`, Phase D in `memory-bank/doc/bundle-implementation.md`)
+2. **Update Simple Bundles option names** — rename Piękny Sen and Scrunchie Trio color options to Polish (Czarny/Brudny róż/Szampan)
+3. **Bundle creative sessions (Phase C)** — headline, tagline, 3 benefits per bundle
+4. **Fill bundle metafields in Shopify admin** — pdp_emotional_headline, pdp_tagline, pdp_benefit_1-3 per bundle
+5. **Homepage bundles section** — wire up real bundle products in `templates/index.json`
 8. **Upload product media** when physical products arrive
 9. **Replace dummy VAT registration** (PL0000000000) with real NIP before going live
 10. **Configure footer settings** in Shopify admin: real Instagram/Facebook URLs, legal menu, test hCaptcha newsletter flow
