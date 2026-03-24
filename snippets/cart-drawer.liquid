@@ -789,6 +789,104 @@
     font-size: 1.2rem;
   }
 
+  /* === MOBILE COMPACT LAYOUT (≤767px width) === */
+  @media (max-width: 767px) {
+    /* Reduce zone padding on mobile */
+    .lusena-cart-drawer .lusena-cart-drawer__upsell {
+      padding: var(--lusena-space-1) var(--lusena-space-2);
+    }
+
+    /* Slightly smaller headline */
+    .lusena-upsell-card__bn-headline {
+      font-size: 1.25rem;
+      margin-bottom: var(--lusena-space-05);
+    }
+
+    /* Stack tiles vertically on mobile */
+    .lusena-upsell-card__bn-tiles {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Collapse "in cart" tile to inline row — no image */
+    .lusena-upsell-card__bn-have {
+      flex: 0 0 auto;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0 0 var(--lusena-space-05);
+      background: none;
+      border-radius: 0;
+    }
+
+    .lusena-upsell-card__bn-have-img {
+      display: none;
+    }
+
+    .lusena-upsell-card__bn-have-name {
+      font-size: 1.1rem;
+    }
+
+    .lusena-upsell-card__bn-have-name::before {
+      content: '✓';
+      color: var(--lusena-accent-cta);
+      font-weight: 600;
+      margin-right: 0.3rem;
+    }
+
+    .lusena-upsell-card__bn-have-status {
+      font-size: 0.9rem;
+    }
+
+    .lusena-upsell-card__bn-have-status::before {
+      content: '·';
+      color: #888;
+      margin-right: 0.3rem;
+    }
+
+    /* Hide "+" separator on mobile (stacked layout) */
+    .lusena-upsell-card__bn-plus {
+      display: none;
+    }
+
+    /* "Add" tile: horizontal with smaller image */
+    .lusena-upsell-card__bn-add {
+      flex-direction: row;
+      align-items: center;
+      gap: var(--lusena-space-1);
+      text-align: left;
+      padding: var(--lusena-space-1);
+    }
+
+    .lusena-upsell-card__bn-add-img {
+      width: 4rem;
+      height: 4rem;
+      flex-shrink: 0;
+      margin-bottom: 0;
+    }
+
+    .lusena-upsell-card__bn-add-name {
+      font-size: 1.15rem;
+    }
+
+    /* Tighter pricing row */
+    .lusena-upsell-card__bn-bottom {
+      margin-top: var(--lusena-space-05);
+      padding-top: var(--lusena-space-05);
+    }
+
+    /* Reduce card padding on mobile */
+    .lusena-cart-drawer .lusena-upsell-card {
+      padding: var(--lusena-space-1);
+    }
+
+    /* Cross-sell card image size */
+    .lusena-upsell-card__xs-img {
+      width: 4.4rem;
+      height: 4.4rem;
+    }
+  }
+
   /* === COMPACT LAYOUT FOR SHORT SCREENS (iPhone SE, small Androids) === */
   @media (max-height: 700px) {
     .lusena-cart-drawer .lusena-cart-drawer__header {
