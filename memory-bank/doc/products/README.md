@@ -13,16 +13,12 @@ products/
 ├── silk-scrunchie.md
 ├── jedwabna-maska-3d.md
 ├── heatless-curlers.md
-├── exports/                 ← reference CSVs exported FROM Shopify
-│   ├── products_export.csv              (poszewka, 2026-03-14)
-│   └── products_export_3deyemask.csv    (3D mask, 2026-03-15)
+├── exports/                 ← fresh CSV exported FROM Shopify (overwrite each time)
+│   └── products_export.csv              (all products — export before every update)
 └── imports/                 ← generated CSVs to import INTO Shopify
-    ├── generate_import_csv.py           (run to regenerate all import CSVs)
-    ├── poszewka-jedwabna_import.csv
-    ├── silk-bonnet_import.csv
-    ├── silk-scrunchie_import.csv
-    ├── jedwabna-maska-3d_import.csv
-    └── heatless-curlers_import.csv
+    ├── generate_import_from_export.py   (THE workflow script — reads export, patches copy, writes import)
+    ├── products_import_updated.csv      (output — ready to import into Shopify)
+    └── generate_import_csv.py           (legacy per-product generator, kept for reference)
 ```
 
 ## Key references
@@ -50,33 +46,57 @@ products/
 
 | Handle | Product | Tier | Status |
 |--------|---------|------|--------|
-| `poszewka-jedwabna` | Poszewka jedwabna 50×60 | 1 (flagship) | Copy finalized (2026-03-14) |
-| `silk-scrunchie` | Scrunchie jedwabny | 2 | Copy finalized (2026-03-14) |
-| `silk-bonnet` | Jedwabny czepek do spania | 2 | Copy finalized (2026-03-14) |
-| `jedwabna-maska-3d` | Jedwabna maska 3D do spania | 3 | Copy finalized (2026-03-14) |
-| `heatless-curlers` | Jedwabny wałek do loków | 2 | Copy finalized (2026-03-14) |
+| `poszewka-jedwabna` | Poszewka jedwabna 50×60 | 1 (flagship) | Re-evaluated 2026-03-22 |
+| `silk-scrunchie` | Scrunchie jedwabny | 2 | Re-evaluated 2026-03-22 |
+| `silk-bonnet` | Jedwabny czepek do spania | 2 | Re-evaluated 2026-03-22 |
+| `jedwabna-maska-3d` | Jedwabna maska 3D do spania | 3 | Re-evaluated 2026-03-22 |
+| `heatless-curlers` | Jedwabny wałek do loków | 2 | Re-evaluated 2026-03-22 |
+| `nocna-rutyna` | Nocna Rutyna (bundle) | - | Re-evaluated 2026-03-22 |
+| `piekny-sen` | Piękny Sen (bundle) | - | Copywriter flow 2026-03-22 |
+| `scrunchie-trio` | Scrunchie Trio (bundle) | - | Copywriter flow 2026-03-22 |
 
 ## Shopify CSV Import/Export
 
-### How to import a product
+### Updating product copy in Shopify (standard workflow)
 
-1. Go to **Shopify Admin > Products > Import**
-2. Upload the CSV from `imports/` (one product per file)
-3. Use **Preview** to check for warnings before confirming
-4. After import, manually set in Shopify admin:
-   - **Product Category** — pick from the dropdown (don't set in CSV, taxonomy strings break easily)
-   - **Shopify standard metafields** (fabric, material, care instructions) — these are category-specific, see warning below
-   - **Color variants** — add when colors are finalized
-5. Open PDP in theme preview — verify all LUSENA metafields render correctly
+Use this workflow every time product copy changes (re-evaluations, new creative sessions, wording fixes). It updates ONLY the copy/metafield columns — variants, prices, inventory, images, and bundle_original_price are preserved exactly as Shopify has them.
 
-### How to regenerate import CSVs
+**Step 1: Export from Shopify**
+1. Go to **Shopify Admin > Products > Export**
+2. Select "All products", format "CSV for Excel"
+3. Save the downloaded file as `exports/products_export.csv` (overwrite the old one)
 
+**Step 2: Generate the updated import file**
 ```bash
-cd imports/
-python generate_import_csv.py
+cd memory-bank/doc/products/imports/
+python generate_import_from_export.py
 ```
+This reads the fresh export, patches columns 35-73 (SEO + all `lusena.*` metafields) with current values from the MD product files, and writes `products_import_updated.csv`. Everything else is kept as-is from the export.
 
-This reads the header from `exports/products_export.csv` and generates one CSV per product with all LUSENA metafield values from the finalized MD files.
+**Step 3: Import into Shopify**
+1. Go to **Shopify Admin > Products > Import**
+2. Upload `imports/products_import_updated.csv`
+3. Check **"Overwrite existing products that have the same handle"**
+4. Preview and confirm
+
+**What gets updated:** SEO title, SEO description, headline, tagline, benefits, feature cards, packaging, specs, care, badges, price-per-night toggle.
+
+**What is NOT touched:** Product title, variants/colors, prices, inventory, images, bundle_original_price, Shopify category metafields, status, vendor, tags, product category.
+
+**Safety:** The import file is your exact Shopify export with only copy cells changed. Since every column is present with its current value, nothing gets blanked. Variant rows are passed through unchanged.
+
+### When the script needs updating
+
+The `generate_import_from_export.py` script has the copy values hardcoded from the MD product files. **Update the script whenever:**
+- A product's copy is re-evaluated or revised
+- A new product is added to the catalog
+- Any metafield value changes in the MD files
+
+The MD product files (`{handle}.md`) are always the source of truth. The script must match them.
+
+### First-time import (new products)
+
+For products that don't exist in Shopify yet, use the same workflow but WITHOUT the "Overwrite" checkbox. Shopify will create new products. After import, manually set Product Category and Shopify standard metafields in the admin.
 
 ### CRITICAL: Shopify category metafields (cols 72-76)
 

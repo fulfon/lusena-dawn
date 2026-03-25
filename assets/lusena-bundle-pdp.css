@@ -161,6 +161,33 @@
   border-color: var(--lusena-color-n200);
 }
 
+/* --- Next pending step (immediate next in sequence) ---
+   Distinguishes the upcoming step from later pending steps.
+   Teal dot pulse + "następny" label guide the customer through
+   the selection sequence without overwhelming the interface. */
+.lusena-bundle-step.is-next.is-pending {
+  opacity: 0.6;
+}
+
+.lusena-bundle-step.is-next .lusena-bundle-chip.is-pending .lusena-bundle-chip__dot {
+  display: block;
+  background: var(--lusena-accent-cta);
+  border-color: var(--lusena-accent-cta);
+}
+
+.lusena-bundle-step.is-next .lusena-bundle-chip.is-pending::after {
+  content: 'następny';
+  font-family: var(--lusena-font-ui);
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--lusena-accent-cta);
+  opacity: 0.7;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
 /* --- Legend (two-line: product name + instruction) --- */
 .lusena-bundle-step__legend {
   display: flex;
@@ -298,13 +325,15 @@
   order: 7;
 }
 
-.lusena-pdp--bundle .lusena-pdp-buy-box__care {
+/* Mobile flow: benefits before care — matching single product PDP where
+   benefits (order 9) precede the accordion (order 10). */
+.lusena-pdp--bundle .lusena-pdp-buy-box__benefits-mobile {
   order: 8;
-  margin-top: 2.4rem;
 }
 
-.lusena-pdp--bundle .lusena-pdp-buy-box__benefits-mobile {
+.lusena-pdp--bundle .lusena-pdp-buy-box__care {
   order: 9;
+  margin-top: 3.2rem;
 }
 
 @media (min-width: 768px) {
@@ -319,18 +348,21 @@
 
 /* --- Sticky ATC: scroll-to-selector highlight ---
    Triggered AFTER smooth scroll completes (600ms delay in JS).
-   GPU-only animation: transform + opacity only (no box-shadow, no background-color).
-   Sequential swatch "breathe" draws attention to the options. */
+   Soft teal glow + gentle scale — visible but not aggressive.
+   Tighter blur (8px) + 2px spread gives the glow a defined inner edge
+   while still fading softly. 60% keyframe lingers before dissolving. */
 
 @keyframes lusena-swatch-breathe {
-  0%   { transform: scale(1);    opacity: 1; }
-  40%  { transform: scale(1.06); opacity: 0.85; }
-  100% { transform: scale(1);    opacity: 1; }
+  0%   { transform: scale(1);    box-shadow: 0 0 0 0 rgba(14,94,90,0); }
+  25%  {                          box-shadow: 0 0 4px 2px rgba(14,94,90,0.5); }
+  40%  { transform: scale(1.06); box-shadow: 0 0 5px 2px rgba(14,94,90,0.85); }
+  60%  {                          box-shadow: 0 0 4px 1px rgba(14,94,90,0.5); }
+  100% { transform: scale(1);    box-shadow: 0 0 0 0 rgba(14,94,90,0); }
 }
 
 .lusena-bundle-step--highlight .lusena-option__swatch {
-  will-change: transform, opacity;
-  animation: lusena-swatch-breathe 0.6s ease-in-out both;
+  will-change: transform;
+  animation: lusena-swatch-breathe 0.75s ease-in-out both;
 }
 
 .lusena-bundle-step--highlight .lusena-pdp-variant-picker__label:nth-child(1) .lusena-option__swatch {
@@ -338,11 +370,11 @@
 }
 
 .lusena-bundle-step--highlight .lusena-pdp-variant-picker__label:nth-child(2) .lusena-option__swatch {
-  animation-delay: 0.15s;
+  animation-delay: 0.2s;
 }
 
 .lusena-bundle-step--highlight .lusena-pdp-variant-picker__label:nth-child(3) .lusena-option__swatch {
-  animation-delay: 0.3s;
+  animation-delay: 0.4s;
 }
 
 /* --- Reduced motion: bypass all animations --- */
@@ -363,4 +395,5 @@
   .lusena-bundle-step {
     transition: none;
   }
+
 }

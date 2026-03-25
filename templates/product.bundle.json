@@ -6,19 +6,19 @@
         "benefit-0": {
           "type": "benefit",
           "settings": {
-            "text": "Oszcz\u0119dzasz w por\u00f3wnaniu do zakupu osobno"
+            "text": "Zasypiasz w jedwabiu - ca\u0142a rutyna zamkni\u0119ta w jednym zestawie"
           }
         },
         "benefit-1": {
           "type": "benefit",
           "settings": {
-            "text": "Produkty zaprojektowane tak, by si\u0119 uzupe\u0142nia\u0107"
+            "text": "Jedwab wch\u0142ania znacznie mniej ni\u017c bawe\u0142na - Twoja piel\u0119gnacja zostaje na sk\u00f3rze i w\u0142osach"
           }
         },
         "benefit-2": {
           "type": "benefit",
           "settings": {
-            "text": "Darmowa dostawa - zestaw kwalifikuje si\u0119 automatycznie"
+            "text": "Mniej tarcia od pierwszej nocy - jedwab chroni sk\u00f3r\u0119 i w\u0142osy jednocze\u015bnie"
           }
         }
       },
@@ -32,8 +32,8 @@
         "padding_bottom": 0,
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 0,
-        "emotional_headline": "Kompletna ochrona na noc",
-        "tagline": "Jedwab morwowy Grade 6A, 22 momme, certyfikat OEKO-TEX\u00ae Standard 100. Ka\u017cdy produkt w zestawie to ta sama jako\u015b\u0107 premium.",
+        "emotional_headline": "Jedwabny zestaw na ka\u017cd\u0105 noc",
+        "tagline": "Produkty LUSENA zaprojektowane tak, by si\u0119 uzupe\u0142nia\u0107 - razem tworz\u0105 kompletn\u0105 rutyn\u0119 piel\u0119gnacji od wieczora do rana.",
         "savings_label": "Oszcz\u0119dzasz",
         "contents_heading": "W zestawie",
         "select_color_label": "Kolor",
@@ -51,49 +51,49 @@
         "feature-0": {
           "type": "feature",
           "settings": {
-            "icon": "sparkles",
-            "title": "Zestaw stworzony z my\u015bl\u0105 o Tobie",
-            "description": "Produkty LUSENA zosta\u0142y zaprojektowane tak, by si\u0119 uzupe\u0142nia\u0107. W zestawie tworz\u0105 sp\u00f3jn\u0105 rutyn\u0119 piel\u0119gnacji - jedwab od wieczora do rana."
+            "icon": "heart",
+            "title": "Inna ochrona, ten sam jedwab",
+            "description": "Poszewka k\u0142adzie g\u0142adk\u0105 powierzchni\u0119 pod twarz - mniej tarcia, mniej zagniece\u0144. Czepek otula w\u0142osy ze wszystkich stron - mniej pl\u0105tania, mniej puszenia. Dwie metody, jeden materia\u0142, pe\u0142na rutyna."
           }
         },
         "feature-1": {
           "type": "feature",
           "settings": {
             "icon": "layers",
-            "title": "22 momme w ka\u017cdym produkcie",
-            "description": "Ka\u017cdy produkt w zestawie to ten sam jedwab morwowy Grade 6A, 22 momme. G\u0119stszy splot, kt\u00f3ry lepiej trzyma kszta\u0142t i d\u0142u\u017cej s\u0142u\u017cy."
+            "title": "Dlaczego 22 momme?",
+            "description": "Momme to g\u0119sto\u015b\u0107 jedwabiu - im wy\u017csze, tym grubszy i trwalszy materia\u0142. Standard rynkowy to 16-19 momme. Nasze 22 momme to g\u0119stszy splot, kt\u00f3ry lepiej trzyma kszta\u0142t i d\u0142u\u017cej s\u0142u\u017cy."
           }
         },
         "feature-2": {
           "type": "feature",
           "settings": {
-            "icon": "shield-check",
-            "title": "OEKO-TEX\u00ae Standard 100",
-            "description": "Certyfikat potwierdza brak substancji szkodliwych. Bezpieczne dla sk\u00f3ry wra\u017cliwej i alergik\u00f3w."
+            "icon": "clock",
+            "title": "Rutyna na ka\u017cd\u0105 noc",
+            "description": "Nie jest to produkt na okazje - ten zestaw u\u017cywasz ka\u017cdej nocy. Mniej tarcia na sk\u00f3rze i w\u0142osach przez 8 godzin, noc po nocy. Regularne u\u017cytkowanie sprzyja widocznym efektom."
           }
         },
         "feature-3": {
           "type": "feature",
           "settings": {
-            "icon": "gift",
-            "title": "Gotowe na prezent",
-            "description": "Zestaw pakowany w eleganckie pude\u0142ko LUSENA. Idealny prezent - bez potrzeby dodatkowego pakowania."
+            "icon": "shield-check",
+            "title": "Jedwab, nie satyna z poliestru",
+            "description": "Satyna to nazwa splotu, nie materia\u0142u - najcz\u0119\u015bciej kryje si\u0119 za ni\u0105 poliester. LUSENA to 100% jedwab morwowy: naturalne w\u0142\u00f3kno bia\u0142kowe, kt\u00f3re oddycha i nie elektryzuje."
           }
         },
         "feature-4": {
           "type": "feature",
           "settings": {
-            "icon": "droplets",
-            "title": "Jedno pranie, ca\u0142y zestaw",
-            "description": "Wszystkie produkty z jedwabiu pierze si\u0119 tak samo: program delikatny, zimna woda, woreczek ochronny. Jedna rutyna piel\u0119gnacji."
+            "icon": "sparkles",
+            "title": "Certyfikowany OEKO-TEX\u00ae 100",
+            "description": "Niezale\u017cny certyfikat potwierdza, \u017ce nasz jedwab jest bezpieczny dla sk\u00f3ry i wolny od szkodliwych substancji. Pewno\u015b\u0107, kt\u00f3r\u0105 mo\u017cesz zweryfikowa\u0107."
           }
         },
         "feature-5": {
           "type": "feature",
           "settings": {
-            "icon": "heart",
-            "title": "Dopasuj kolory do siebie",
-            "description": "Wybierz kolor dla ka\u017cdego produktu w zestawie. Czarny, brudny r\u00f3\u017c lub szampan - Twoja nocna rutyna, Tw\u00f3j styl."
+            "icon": "gift",
+            "title": "Gotowe do wr\u0119czenia",
+            "description": "Ka\u017cdy zestaw LUSENA przychodzi w eleganckim opakowaniu prezentowym - idealny upominek, kt\u00f3ry robi wra\u017cenie. Bez dodatkowego pakowania."
           }
         }
       },

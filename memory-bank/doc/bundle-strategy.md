@@ -440,13 +440,13 @@ Each bundle needs a creative session (lighter than individual products - primari
 
 | Bundle | Creative session status |
 |--------|----------------------|
-| Nocna Rutyna | **PENDING** |
-| Piękny Sen | **PENDING** |
-| Scrunchie Trio | **PENDING** |
+| Nocna Rutyna | **COMPLETE** (2026-03-22) — `memory-bank/doc/products/nocna-rutyna.md` |
+| Piękny Sen | **COMPLETE** (2026-03-22) — `memory-bank/doc/products/piekny-sen.md` |
+| Scrunchie Trio | **COMPLETE** (2026-03-22) — `memory-bank/doc/products/scrunchie-trio.md` |
 | Kompletna Nocna Rutyna | Not yet (Phase 2) |
 | Duo dla Pary | Not yet (Phase 2) |
 
-The creative sessions should follow the same workflow as individual products: draft → legal check → customer validation → finalize. However, bundles share most universal metafields with component products, so the unique copy is mainly:
+The creative sessions follow the same workflow as individual products (see `docs/product-metafields-reference.md`) with additional bundle-specific guards documented in the "Bundle addendum" section of that file. Key rules: routine/set framing (not savings-first), exclusion list applies (no spec dumps in buybox), tagline must answer "why the SET" not "why silk." Unique copy per bundle:
 - `lusena.pdp_emotional_headline` - bundle-specific headline
 - `lusena.pdp_tagline` - bundle-specific tagline
 - `lusena.pdp_benefit_1-3` - bundle-specific benefits (why buy the SET, not the individual items)

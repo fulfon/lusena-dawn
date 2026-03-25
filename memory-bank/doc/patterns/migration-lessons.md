@@ -519,3 +519,13 @@ Trust bar blocks appear on homepage, about, and quality pages. When updating cop
 Setting `details.open = true` programmatically does not trigger the transition animation and can leave the `<details>` element in an inconsistent state. Instead, dispatch a click event on the `<summary>` element, which triggers the normal open/close flow including animations.
 
 **Applied:** `lusena-pdp-scripts.liquid` returns link handler.
+
+## 54. Dawn's `div:empty { display: none }` hides empty placeholder divs
+
+Dawn's `base.css` (line 473) has a global rule: `a:empty, ul:empty, dl:empty, div:empty, section:empty, article:empty, p:empty, h1:empty, ... { display: none; }`. This silently hides ANY empty div — including image placeholder containers that intentionally have no `<img>` child (e.g., when a product has no featured image).
+
+**Specificity trap:** `div:empty` has specificity `(0,1,1)` — one pseudo-class + one element. A single class selector like `.my-img-wrapper` has only `(0,1,0)` and LOSES. Adding `display: block` to the class rule doesn't work.
+
+**Fix:** Use `.my-img-wrapper:empty { display: block; }` — specificity `(0,2,0)` beats `div:empty` `(0,1,1)`.
+
+**Applied:** `.lusena-upsell-card__bn-add-img:empty`, `.lusena-upsell-card__xs-img:empty` in both `cart-drawer.liquid` and `lusena-cart-items.liquid`.

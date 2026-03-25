@@ -20,7 +20,32 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v2.md` (local path: 
 
 ## Recent commits (detailed, last 8)
 
-### (current) — Complete bundle PDP template (Phase B M1-M4), color strategy, section polish
+### (current) — Bundle creative sessions, cart upsell UI redesign, product docs overhaul
+
+**Goal:** Complete all 3 bundle creative sessions (Phase C), redesign cart upsell UI for both drawer and cart page, overhaul product metafields reference with orchestrator+copywriter architecture, modernize product CSV tooling, polish bundle PDP CSS.
+
+**What changed**
+- **Bundle Phase C complete:** All 3 bundle creative sessions finished (Nocna Rutyna, Piekny Sen, Scrunchie Trio). Each went through orchestrator + Polish copywriter flow, legal check, 2-3 customer validation runs. New product docs created. Metafields filled via CSV import + manual upsell metafield setup.
+- **Cart upsell UI redesign (5 commits 228fb6d-47ebbb8 + uncommitted polish):** Unified `.lusena-upsell-card` system for cart drawer and cart page. Two card types: bundle nudge (two-tile with gain-framed headlines, real product titles/images) and cross-sell (bottom-row layout). `bundle_nudge_map` restructured from flat strings to objects (`{label, handle, tile_label?}`). Real product data resolved via `all_products[handle]`. Shared `assets/lusena-bundle-swap.js` for add+remove cart API. Image placeholder fix for Dawn's `div:empty { display: none }`. Upsell moved inside scrollable body (no fixed positioning). Compact layout for small screens.
+- **Product metafields reference overhaul:** Creative workflow redesigned: orchestrator+copywriter architecture (lesson from Piekny Sen session). Added bundle addendum, info architecture guard, exclusion list, buybox-level exclusion, tagline/benefits rendering context (desktop vs mobile alternative views), review presentation format. Tagline and benefit field specs rewritten.
+- **Product CSV tooling:** Old per-product `generate_import_csv.py` + 5 individual CSVs deleted. Replaced by unified `generate_import_from_export.py` that patches copy/metafield columns from MD product files. CLAUDE.md updated with sync workflow.
+- **Bundle PDP CSS polish:** Next-step pending indicators (`is-next.is-pending` with teal dot pulse + "nastepny" label), swatch breathe animation rework (teal glow via box-shadow instead of opacity), mobile flow reorder (benefits before care), reduced motion improvements.
+- **Customer validation skill:** Added page context (buybox UI elements, below-fold content), repetition detection question #10 for all 4 personas, repetition report section in aggregation template.
+- **Product setup checklist:** Added section D (upsell configuration) with per-product upsell metafields and bundle-only metafields including `bundle_nudge_map` JSON schema.
+
+**Key files**
+- `snippets/cart-drawer.liquid`, `sections/lusena-cart-items.liquid` — unified upsell card HTML + CSS
+- `assets/lusena-bundle-swap.js` (NEW) — shared bundle swap cart API
+- `assets/lusena-bundle-pdp.css` — next-step indicators, breathe animation, mobile ordering
+- `docs/product-metafields-reference.md` — creative workflow overhaul + bundle addendum
+- `docs/product-setup-checklist.md` — upsell metafield definitions
+- `memory-bank/doc/products/nocna-rutyna.md`, `piekny-sen.md`, `scrunchie-trio.md` (NEW) — bundle product docs
+- `.claude/skills/lusena-customer-validation/skill.md` — page context + repetition question
+- `memory-bank/doc/products/imports/generate_import_from_export.py` (NEW) — unified CSV import script
+- `snippets/lusena-bundle-options.liquid`, `snippets/lusena-bundle-scripts.liquid` — minor fixes
+- `templates/product.bundle.json`, `templates/product.json` — template updates
+
+### ff53459 — Complete bundle PDP template (Phase B M1-M4), color strategy, section polish
 
 **Goal:** Build the full bundle product page from research through production-ready: metafield research, visual scaffolding, progressive disclosure color selector, ATC/Buy Now integration with Simple Bundles, sticky ATC bar, cart integration, and all polish passes. Also: finalize color strategy, complete Phase A admin setup, polish existing sections.
 
@@ -321,7 +346,16 @@ Source of truth for brand direction: `docs/LUSENA_BrandBook_v2.md` (local path: 
 ---
 
 ## All commits (summary, dateTime-desc)
-- 2026-03-21 — (current) — Bundle template scaffolding, color strategy, section polish, icon/copy fixes
+- 2026-03-25 — (current) — Bundle creative sessions, cart upsell UI redesign, product docs overhaul
+- 2026-03-25 — 47ebbb8 — feat(lusena): mobile compact layout for bundle nudge card in drawer
+- 2026-03-25 — 0559049 — chore(lusena): delete lusena-bundle-nudge snippet and foundations CSS
+- 2026-03-24 — b476fa9 — feat(lusena): unified upsell card in cart page - complete HTML and CSS
+- 2026-03-24 — 835182c — fix(lusena): cart drawer upsell - opacity cascade fix + compact padding
+- 2026-03-24 — 228fb6d — feat(lusena): unified upsell card in cart drawer - two-tile bundle, gain-framed copy
+- 2026-03-21 — ff53459 — feat(lusena): complete bundle PDP template — progressive disclosure, sticky ATC, cart integration
+- 2026-03-21 — 8499891 — merge: resolve product.json conflict — keep Polish product names + Shopify admin additions
+- 2026-03-21 — abf08a9 — feat(lusena): bundle template scaffolding, color strategy, section polish
+- 2026-03-21 — 847c0b0 — Update from Shopify for theme lusena-dawn/main
 - 2026-03-15 — c800179 — feat(lusena): product copy sessions, bundle strategy, animated icons, percentage cleanup
 - 2026-03-09 — 1be3e57 — feat(lusena): footer redesign, PDP/quality polish, spacing audit, product setup docs
 - 2026-03-08 — 57beec8 — feat(lusena): complete homepage UX audit — visual rhythm, value anchors, bundle fixes

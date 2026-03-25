@@ -38,16 +38,35 @@ Footer blocks render in HTML as: shipping bar → subtotal → buttons. CSS `ord
 - Footer: NO `border-top` on `.lusena-cart-footer__inner` — upsell tinted background edge provides separation
 - Totals: `border-top` on `.lusena-cart-totals` (right-aligned within footer blocks)
 
-## Upsell cross-sell
+## Upsell system (unified `.lusena-upsell-card`)
 
-Same waterfall logic as cart drawer:
-1. Check global enable toggle + distinct-product suppression (threshold setting)
-2. Find trigger product (hero role metafield → first item)
-3. Resolve candidate: primary metafield → secondary → global fallback → DEV hardcoded fallback
+*Updated: 2026-03-25*
 
-**DEV-ONLY:** Hardcoded `all_products['the-compare-at-price-snowboard']` as last resort + hardcoded `'Beżowy'` color label. Must be replaced before production.
+Cart page and cart drawer share a unified upsell card system (`.lusena-upsell-card`). Two card types:
 
-Custom JS on ATC button avoids opening the cart drawer (uses direct `/cart/add.js` fetch + page reload).
+### Bundle nudge (two-tile)
+Triggered when a bundle component product is in the cart. Uses `lusena.bundle_nudge_map` metafield (JSON: `{trigger-handle: {label, handle, tile_label?}}`).
+- Gain-framed headline: "Dodaj {label} i zaoszczedz {X} zl"
+- Two tiles: "have" tile (checkmark badge, product image) + "add" tile (plus sign, component image via `all_products[handle]`)
+- Real product titles resolved via `all_products[nudge_entry.handle].title`
+- Real product images via `added_component.featured_image`
+- Swap via `LusenaBundle.swap()` in `assets/lusena-bundle-swap.js` (add bundle + remove individual)
+
+### Cross-sell (single product)
+Triggered for products with `lusena.upsell_primary` metafield. Fallback chain: primary → secondary → global setting.
+- Product image + info + price in top row
+- ATC button in full-width bottom row (`__xs-bottom`) — matches bundle card's `__bn-bottom` rhythm
+- Cart page: direct `/cart/add.js` fetch + page reload (avoids opening drawer)
+
+### Layout
+- Cart drawer: upsell inside scrollable `.lusena-cart-drawer__body` (scrolls with items)
+- Cart page: inside `.js-contents`, right-aligned at `max-width: 42rem` on desktop
+- Compact layout for small screens (max-height: 700px): reduced padding, smaller images
+- Image placeholders: `:empty { display: block }` overrides Dawn's `div:empty { display: none }`
+
+### CSS placement
+- Cart drawer: `<style>` tag in `snippets/cart-drawer.liquid` (~150 lines, not in compiled_assets)
+- Cart page: `{% stylesheet %}` in `sections/lusena-cart-items.liquid` (compiled_assets — **currently truncated at 85KB, extraction pending**)
 
 ## Cart footer features
 

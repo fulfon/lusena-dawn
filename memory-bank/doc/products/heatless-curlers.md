@@ -1,7 +1,8 @@
 # Jedwabny wałek do loków (Heatless Curlers)
 
-*Last updated: 2026-03-15*
+*Last updated: 2026-03-22*
 *Copy finalized: 2026-03-15 (creative session complete - material correction: 22 momme 6A silk confirmed)*
+*Re-evaluated: 2026-03-22 (orchestrator + Polish copywriter flow - 2 fields updated, scores unchanged)*
 
 > **Note:** This product uses the same 22 momme, 6A grade mulberry silk as all other LUSENA
 > products, but has a PP cotton filling inside. It needs custom care instructions due to
@@ -74,7 +75,7 @@ Single color (B only per §7.3): Pink/rose is the dominant #1 curler color globa
 | Field | Value | Status |
 |-------|-------|--------|
 | Page title | Jedwabny wałek do loków 22 momme - loki bez ciepła · LUSENA | Copy finalized |
-| Meta description | Jedwabny wałek do loków LUSENA z jedwabiu morwowego 22 momme. Owijasz wilgotne włosy na noc - rano gotowe fale i loki. Jedwab ogranicza tarcie i wchłania znacznie mniej wilgoci z włosów. | Copy finalized |
+| Meta description | Jedwabny wałek do loków LUSENA 22 momme. Owijasz wilgotne włosy na noc - rano gotowe loki. Jedwab ogranicza tarcie i chroni pielęgnację. | **UPDATED** (2026-03-22: trimmed from ~186 to ~136 chars, within 160 limit) |
 | URL handle | heatless-curlers | |
 
 ## Category metafields (Shopify standard)
@@ -110,7 +111,7 @@ Single color (B only per §7.3): Pink/rose is the dominant #1 curler color globa
 | Metafield | Value | Status |
 |-----------|-------|--------|
 | `lusena.pdp_benefit_1` | Loki bez ciepła - włosy formują się w nocy, bez ryzyka uszkodzeń termicznych | Copy finalized |
-| `lusena.pdp_benefit_2` | Jedwab morwowy 22 momme wchłania znacznie mniej olejków i odżywek - pielęgnacja zostaje na włosach | Copy finalized |
+| `lusena.pdp_benefit_2` | Olejek i odżywka zostają na włosach - jedwab wchłania znacznie mniej niż syntetyczne wałki | **UPDATED** (2026-03-22: removed "22 momme" exclusion list violation, reframed experientially) |
 | `lusena.pdp_benefit_3` | Gładka powierzchnia jedwabiu ogranicza tarcie - mniej szarpania i plątaniny przy zdejmowaniu | Copy finalized |
 
 ### Specs table
@@ -232,7 +233,40 @@ Single color (B only per §7.3): Pink/rose is the dominant #1 curler color globa
 - **LOCKED elements:** Headline, tagline, card 1 (heat science), card 4 (silk vs satin), honest hedging throughout
 - **Final decision:** Finalized (Run 1 sufficient - no copy-level improvements possible, all gaps are site-level)
 
-### Site-level improvements flagged by previous validation (still relevant)
+### Re-evaluation (2026-03-22)
+
+Re-evaluated using orchestrator + Polish copywriter flow. Checked all creative fields against current rules (exclusion list, buybox-level exclusion, experiential benefits, char limits, overlap).
+
+**Audit findings:**
+- B2 contained "22 momme" — exclusion list violation (rule added 2026-03-21, after original session)
+- Meta description was ~186 chars (exceeds 160 max)
+- All other fields passed all rules
+
+**Changes made:**
+- B2: "Jedwab morwowy 22 momme wchłania znacznie mniej olejków i odżywek - pielęgnacja zostaje na włosach" → "Olejek i odżywka zostają na włosach - jedwab wchłania znacznie mniej niż syntetyczne wałki" (removed exclusion list violation, reframed experientially)
+- Meta description: trimmed from ~186 to ~136 chars
+
+**Legal check (2026-03-22):** PASS (0 issues, 2 advisories — B2 comparative claim substantiable via textile science, meta "rano gotowe loki" same advisory as original)
+
+**Customer validation (2026-03-22):**
+
+| Criteria | Kasia (34) | Ewa (47) | Zuzia (23) | Maja (38) | Average |
+|----------|-----------|---------|-----------|---------|---------|
+| Trust | 7/10 | 7/10 | 6/10 | 7.5/10 | 6.88/10 |
+| Purchase intent | 6/10 | 5/10 | 4/10 | 6/10 | 5.25/10 |
+| Premium feel | 7.5/10 | 5/10 | 6/10 | 7/10 | 6.38/10 |
+
+**Comparison with original (2026-03-15):** All averages identical (Trust 6.88, Intent 5.25, Premium 6.38). B2 change did no harm. Individual shifts: Kasia intent +1, Ewa intent -1 (net zero).
+
+**Key persona findings (re-eval):**
+- Headline: LOCK (4/4 praised — "najsilniejszy element" for Ewa and Maja)
+- Honest hedging ("Efekt zależy od typu..."): LOCK (4/4 praised — Kasia, Zuzia, Maja called it strongest element)
+- B2 new version: Zuzia praised product retention angle; Maja flagged "syntetyczne wałki" comparison as slightly non-premium in buybox context — acceptable given scores are unchanged
+- All objections remain site-level (photos, reviews, hair type guide, usage video, price justification vs Allegro) — same as original validation
+
+**Verdict:** UPDATED — 2 fields adjusted (B2 exclusion list fix + meta description trim). Copy confirmed with changes. Product file updated.
+
+### Site-level improvements flagged by validation (still relevant)
 
 1. **Reviews/social proof** - enable product reviews before launch (4/4 flagged)
 2. **Product photos + before/after results** - critical for a result-oriented product (4/4 flagged)

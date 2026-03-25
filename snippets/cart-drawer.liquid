@@ -401,11 +401,14 @@
   .lusena-upsell-card__xs-img {
     width: 5.6rem;
     height: 5.6rem;
-    background-color: var(--lusena-surface-2);
+    background: var(--lusena-surface-2);
+    border: 1px dashed color-mix(in srgb, var(--lusena-text-2) 20%, transparent);
     border-radius: var(--lusena-radius-sm);
     overflow: hidden;
     flex-shrink: 0;
   }
+
+  .lusena-upsell-card__xs-img:empty { display: block; } /* override Dawn base.css div:empty { display:none } */
 
   .lusena-upsell-card__xs-img img {
     width: 100%;
@@ -452,18 +455,18 @@
     font-weight: 500;
   }
 
-  .lusena-upsell-card__xs-aside {
+  .lusena-upsell-card__xs-bottom {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
-    flex-shrink: 0;
     gap: var(--lusena-space-1);
+    margin-top: var(--lusena-space-1);
+    padding-top: var(--lusena-space-1);
+    border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 5%, transparent);
   }
 
   .lusena-upsell-card__xs-price {
-    font-size: 1.35rem;
-    line-height: 1.4;
+    font-size: 1.4rem;
     font-weight: 500;
     color: var(--lusena-text-1);
     font-variant-numeric: tabular-nums;
@@ -489,6 +492,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
     padding: var(--lusena-space-1) var(--lusena-space-05);
     border-radius: var(--lusena-radius-sm);
@@ -499,9 +503,12 @@
     width: 3.8rem;
     height: 3.8rem;
     border-radius: 0.4rem;
-    overflow: hidden;
+    overflow: visible;
+    margin-top: 0.7rem; /* compensate for check badge overhang so justify-content:center aligns visually */
     margin-bottom: 0.5rem;
     position: relative;
+    background: var(--lusena-surface-2);
+    border: 1px dashed color-mix(in srgb, var(--lusena-text-2) 20%, transparent);
   }
 
   .lusena-upsell-card__bn-have-img img {
@@ -509,12 +516,13 @@
     height: 100%;
     object-fit: cover;
     opacity: 0.75;
+    border-radius: 0.4rem;
   }
 
   .lusena-upsell-card__bn-check {
     position: absolute;
-    top: -0.3rem;
-    right: -0.3rem;
+    top: -0.7rem;
+    right: -0.7rem;
     width: 1.4rem;
     height: 1.4rem;
     background: var(--lusena-accent-cta);
@@ -547,8 +555,8 @@
 
   .lusena-upsell-card__bn-plus {
     font-size: 1.6rem;
-    color: var(--lusena-color-n300);
-    font-weight: 300;
+    color: var(--lusena-text-2);
+    font-weight: 400;
     flex-shrink: 0;
     align-self: center;
   }
@@ -558,6 +566,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
     padding: var(--lusena-space-1);
     border-radius: var(--lusena-radius-sm);
@@ -571,6 +580,14 @@
     border-radius: var(--lusena-radius-sm);
     overflow: hidden;
     margin-bottom: 0.6rem;
+    background: var(--lusena-surface-2);
+    border: 1px dashed color-mix(in srgb, var(--lusena-text-2) 20%, transparent);
+  }
+
+  /* Override Dawn base.css "div:empty { display:none }" (specificity 0,1,1).
+     A class alone (0,1,0) loses. Adding :empty bumps to (0,2,0) and wins. */
+  .lusena-upsell-card__bn-add-img:empty {
+    display: block;
   }
 
   .lusena-upsell-card__bn-add-img img {
@@ -611,20 +628,9 @@
   }
 
   .lusena-upsell-card__bn-was {
-    font-size: 1.1rem;
-    color: var(--lusena-color-n300);
+    font-size: 1.4rem;
+    color: var(--lusena-text-2);
     text-decoration: line-through;
-  }
-
-  .lusena-upsell-card__bn-savings {
-    display: inline-flex;
-    background: rgba(140, 106, 60, 0.08);
-    color: var(--lusena-accent-2);
-    font-family: var(--lusena-font-ui);
-    font-size: 1.15rem;
-    font-weight: 500;
-    padding: 0.3rem 0.8rem;
-    border-radius: var(--lusena-btn-radius);
   }
 
   /* === UPSELL SUCCESS === */
@@ -812,6 +818,7 @@
     .lusena-upsell-card__bn-have {
       flex: 0 0 auto;
       flex-direction: row;
+      justify-content: flex-start;
       align-items: center;
       gap: 0.4rem;
       padding: 0 0 var(--lusena-space-05);
@@ -852,6 +859,7 @@
     /* "Add" tile: horizontal with smaller image */
     .lusena-upsell-card__bn-add {
       flex-direction: row;
+      justify-content: flex-start;
       align-items: center;
       gap: var(--lusena-space-1);
       text-align: left;
@@ -861,6 +869,8 @@
     .lusena-upsell-card__bn-add-img {
       width: 4rem;
       height: 4rem;
+      min-width: 4rem;
+      min-height: 4rem;
       flex-shrink: 0;
       margin-bottom: 0;
     }
@@ -1099,7 +1109,6 @@
             </div>
           {%- endfor -%}
 
-        </div>
         {%- if upsell_product_1 != blank -%}
           {%- assign upsell_is_bundle = false -%}
           {%- if upsell_product_1.metafields.lusena.bundle_original_price != blank -%}
@@ -1199,7 +1208,9 @@
             {%- if upsell_is_bundle -%}
               {%- comment -%} Bundle two-tile card {%- endcomment -%}
               {%- assign nudge_map = upsell_product_1.metafields.lusena.bundle_nudge_map.value -%}
-              {%- assign added_label = nudge_map[trigger_product.handle] -%}
+              {%- assign nudge_entry = nudge_map[trigger_product.handle] -%}
+              {%- assign added_label = nudge_entry.label | default: nudge_entry -%}
+              {%- assign added_component = all_products[nudge_entry.handle] -%}
               {%- assign bundle_price_cents = upsell_variant_1.price -%}
               {%- assign original_total_cents = upsell_product_1.metafields.lusena.bundle_original_price.value | times: 100 -%}
               {%- assign savings_cents = original_total_cents | minus: bundle_price_cents -%}
@@ -1297,24 +1308,25 @@
                   <span class="lusena-upsell-card__bn-plus" aria-hidden="true">+</span>
                   <div class="lusena-upsell-card__bn-add">
                     <div class="lusena-upsell-card__bn-add-img">
-                      {%- if upsell_product_1.featured_image -%}
+                      {%- assign add_tile_image = added_component.featured_image | default: upsell_product_1.featured_image -%}
+                      {%- if add_tile_image -%}
                         <img
-                          src="{{ upsell_product_1.featured_image | image_url: width: 240 }}"
-                          alt="{{ upsell_product_1.featured_image.alt | escape }}"
+                          src="{{ add_tile_image | image_url: width: 240 }}"
+                          alt="{{ add_tile_image.alt | escape }}"
                           loading="lazy"
                           width="56"
-                          height="{{ 56 | divided_by: upsell_product_1.featured_image.aspect_ratio | ceil }}"
+                          height="{{ 56 | divided_by: add_tile_image.aspect_ratio | ceil }}"
                         >
                       {%- endif -%}
                     </div>
-                    <p class="lusena-upsell-card__bn-add-name">{{ added_label | escape }}</p>
+                    {%- assign tile_label = nudge_entry.tile_label | default: added_component.title | default: added_label -%}
+                    <p class="lusena-upsell-card__bn-add-name">{{ tile_label | escape }}</p>
                   </div>
                 </div>
                 <div class="lusena-upsell-card__bn-bottom">
                   <div class="lusena-upsell-card__bn-pricing">
                     <span class="lusena-upsell-card__bn-price">{{ bundle_price_cents | money_without_trailing_zeros }}</span>
                     <span class="lusena-upsell-card__bn-was">{{ original_total_cents | money_without_trailing_zeros }}</span>
-                    <span class="lusena-upsell-card__bn-savings">Oszczedzasz {{ savings_cents | money_without_trailing_zeros }}</span>
                   </div>
                   <button type="button"
                           class="lusena-btn lusena-btn--outline lusena-btn--size-xs"
@@ -1353,28 +1365,28 @@
                       </p>
                     {%- endif -%}
                   </div>
-                  <div class="lusena-upsell-card__xs-aside">
-                    <p class="lusena-upsell-card__xs-price">{{ upsell_display_price | escape }}</p>
-                    <product-form class="product-form" data-hide-errors="true" data-cart-upsell>
-                      {%- form 'product',
-                        upsell_product_1,
-                        id: 'CartDrawer-Upsell-Form-1',
-                        class: 'form',
-                        novalidate: 'novalidate',
-                        data-type: 'add-to-cart-form'
-                      -%}
-                        <input type="hidden" name="id" value="{{ upsell_variant_1.id }}">
-                        <button type="submit" class="lusena-btn lusena-btn--outline lusena-btn--size-xs">
-                          <span class="lusena-btn__content">Dodaj</span>
-                          <span class="loading__spinner hidden">
-                            <span class="lusena-btn__loading-dots" aria-hidden="true">
-                              <span></span><span></span><span></span>
-                            </span>
+                </div>
+                <div class="lusena-upsell-card__xs-bottom">
+                  <p class="lusena-upsell-card__xs-price">{{ upsell_display_price | escape }}</p>
+                  <product-form class="product-form" data-hide-errors="true" data-cart-upsell>
+                    {%- form 'product',
+                      upsell_product_1,
+                      id: 'CartDrawer-Upsell-Form-1',
+                      class: 'form',
+                      novalidate: 'novalidate',
+                      data-type: 'add-to-cart-form'
+                    -%}
+                      <input type="hidden" name="id" value="{{ upsell_variant_1.id }}">
+                      <button type="submit" class="lusena-btn lusena-btn--outline lusena-btn--size-xs">
+                        <span class="lusena-btn__content">Dodaj</span>
+                        <span class="loading__spinner hidden">
+                          <span class="lusena-btn__loading-dots" aria-hidden="true">
+                            <span></span><span></span><span></span>
                           </span>
-                        </button>
-                      {%- endform -%}
-                    </product-form>
-                  </div>
+                        </span>
+                      </button>
+                    {%- endform -%}
+                  </product-form>
                 </div>
               </div>
             {%- endif -%}
@@ -1388,6 +1400,8 @@
         >
           {% render 'lusena-icon', name: 'check', class: 'lusena-icon-md', stroke_width: 2 %}
           <span class="lusena-cart-drawer__upsell-success-text">Dodano do koszyka</span>
+        </div>
+
         </div>
       {%- endif -%}
 
@@ -1432,14 +1446,6 @@
             {% render 'lusena-icon', name: 'shield-check', class: 'lusena-icon-sm lusena-shrink-0', stroke_width: 2 %}
             <span class="lusena-cart-drawer__trust-text">60 dni na zwrot &middot; Bezpieczna p&#322;atno&#347;&#263;</span>
           </div>
-          <button
-            type="button"
-            onclick="this.closest('cart-drawer').close()"
-            class="lusena-btn lusena-btn--text-secondary lusena-btn--full-width lusena-cart-drawer__empty-close"
-            data-cart-continue
-          >
-            Kontynuuj zakupy
-          </button>
         </div>
       {%- endif -%}
     </div>

@@ -94,6 +94,7 @@ Modifier: `lusena-spacing--snug-top` — reduces top to 32/48px for heroes shari
 - **Product cards:** `snippets/lusena-product-card.liquid`
 - **Breadcrumbs:** `snippets/lusena-breadcrumbs.liquid`
 - **Final CTA:** `sections/lusena-final-cta.liquid` — generic reusable section (replaces per-page copies)
+- **Upsell cards:** `.lusena-upsell-card` — unified container for cross-sell (`__xs-row`, `__xs-img`, `__xs-info`, `__xs-bottom`, `__xs-price`) and bundle two-tile (`__bn-headline`, `__bn-tiles`, `__bn-have`, `__bn-add`, `__bn-bottom`, `__bn-pricing`). CSS in `<style>` tag (cart drawer) and `{% stylesheet %}` (cart page). Gain-framed headlines, real product titles/images via `bundle_nudge_map` handles. Image placeholders use `:empty { display: block }` to override Dawn's `div:empty { display: none }` rule.
 
 ## Page migration workflow
 

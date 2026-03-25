@@ -230,7 +230,7 @@
     var step = steps[index];
     var wasPending = step.classList.contains('is-pending');
 
-    step.classList.remove('is-pending', 'is-collapsed');
+    step.classList.remove('is-pending', 'is-collapsed', 'is-next');
     step.classList.add('is-active');
     step.style.opacity = '';
     step.style.pointerEvents = '';
@@ -291,6 +291,8 @@
       if (fieldsetWrap) openWrap(fieldsetWrap);
       if (chipWrap) closeWrap(chipWrap);
     }
+
+    updateNextIndicator();
   }
 
   function collapseStep(index) {
@@ -435,6 +437,7 @@
     // Buttons are never disabled — incomplete selections trigger scroll+highlight instead.
     updateHiddenInputs();
     updateProgressCounter();
+    updateNextIndicator();
   }
 
   function updateProgressCounter() {
@@ -448,7 +451,19 @@
     if (completed >= stepCount) {
       progressCounter.textContent = '(\u2713)';
     } else {
-      progressCounter.textContent = '(' + (completed + 1) + ' z ' + stepCount + ')';
+      progressCounter.textContent = '(krok ' + (completed + 1) + ' z ' + stepCount + ')';
+    }
+  }
+
+  function updateNextIndicator() {
+    for (var i = 0; i < totalSteps; i++) {
+      steps[i].classList.remove('is-next');
+    }
+    for (var i = 0; i < totalSteps; i++) {
+      if (steps[i].classList.contains('is-pending')) {
+        steps[i].classList.add('is-next');
+        break;
+      }
     }
   }
 
@@ -506,13 +521,11 @@
       btn.setAttribute('aria-disabled', 'true');
       btn.setAttribute('aria-busy', 'true');
       if (spinner) spinner.classList.remove('hidden');
-      if (content) content.classList.add('hidden');
     } else {
       btn.classList.remove('loading');
       btn.removeAttribute('aria-disabled');
       btn.removeAttribute('aria-busy');
       if (spinner) spinner.classList.add('hidden');
-      if (content) content.classList.remove('hidden');
     }
   }
 
@@ -682,17 +695,24 @@
     requestAnimationFrame(check);
   }
 
+  var highlightBusy = false;
+
   function highlightActiveStep(needsScroll) {
+    if (highlightBusy) return;
+
     var targetIndex = findFirstUnselectedStep();
     if (targetIndex < 0) return;
 
     var targetStep = steps[targetIndex];
     if (!targetStep) return;
 
+    highlightBusy = true;
+
     var runHighlight = function() {
       targetStep.classList.add('lusena-bundle-step--highlight');
       setTimeout(function() {
         targetStep.classList.remove('lusena-bundle-step--highlight');
+        highlightBusy = false;
       }, 1000);
     };
 

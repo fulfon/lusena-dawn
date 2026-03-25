@@ -1,6 +1,6 @@
 # Progress
 
-*Last updated: 2026-03-21*
+*Last updated: 2026-03-25*
 
 ## LUSENA-styled pages (14 of ~21 total)
 
@@ -53,6 +53,9 @@ Full plan: `memory-bank/doc/features/dawn-pages-migration-plan.md`
 - [x] Generic final CTA (`sections/lusena-final-cta.liquid`) — reusable across all pages
 - [x] Bundles standalone CSS (`assets/lusena-bundles.css`) — bundle card grid styles (loaded per-section) (2026-03-07)
 - [x] Bundle PDP standalone CSS (`assets/lusena-bundle-pdp.css`) — bundle buy box styles (loaded in lusena-main-bundle) (2026-03-21)
+- [x] Bundle swap JS (`assets/lusena-bundle-swap.js`) — shared `LusenaBundle.swap()` for add bundle + remove individual (2026-03-24)
+- [x] Unified upsell card system (`.lusena-upsell-card`) — cross-sell + bundle two-tile layout, gain-framed copy, real product titles/images via `bundle_nudge_map` handles, scrollable positioning, cross-sell bottom-row layout matching bundle pattern. CSS in `<style>` tag (drawer) and `{% stylesheet %}` (cart page). Desktop cart page: card right-aligned at max-width 42rem. (2026-03-24, polished 2026-03-25)
+- [x] Cart upsell UI redesign spec (`docs/superpowers/specs/2026-03-24-cart-upsell-ui-redesign.md`) — research-backed design spec with Thaler/Zeigarnik/Prospect Theory citations (2026-03-24)
 - [x] Reusable page audit skill (`.claude/skills/lusena-page-audit/`) — standardized UX audit checklist (2026-03-08)
 - [x] Customer validation skill (`.claude/skills/lusena-customer-validation/`) — 4-persona copy evaluation (2026-03-14, expanded 2026-03-15)
 - [x] Legal check skill (`.claude/skills/lusena-legal-check/`) — EU/UOKiK compliance check (2026-03-14)
@@ -163,15 +166,30 @@ Full implementation tracker: `memory-bank/doc/bundle-implementation.md`
 - [x] M2: Visual page — template + section + snippets + CSS. Spacing audit passed. Below-fold sections with bundle content. (2026-03-21)
 - [x] M3: Full interactivity — progressive disclosure with GPU-only animations, swatch selection via click events, ATC + Buy Now, cart drawer + cart page showing all selected colors. Care accordion. Step progress counter. Pending placeholder chips. Independent chip re-editing. Scrunchie Trio duplicate key fix. (2026-03-21)
 - [x] M4: Full test matrix passed (all 3 bundles × all flows). Sticky ATC (mobile + desktop) with two-state behavior: incomplete → scroll to selector + swatch breathe highlight; complete → add to cart. Dynamic scroll detection via rAF polling. All buttons never disabled. Single-option steps require customer click. (2026-03-21)
-- [ ] M4: Full test matrix, edge cases, sticky ATC mobile
+- [x] M4: Full test matrix passed — all 3 bundles × all flows, sticky ATC mobile+desktop (2026-03-21)
 
-**Phase C: Content & polish:**
-- [ ] **Nocna Rutyna** creative session (headline, tagline, 3 benefits)
-- [ ] **Piękny Sen** creative session
-- [ ] **Scrunchie Trio** creative session
-- [ ] Fill bundle metafields in Shopify admin
+**Phase C: Content & polish (COMPLETE):**
+- [x] **Nocna Rutyna** creative session — COMPLETE (2026-03-22). Product doc: `memory-bank/doc/products/nocna-rutyna.md`
+- [x] **Piękny Sen** creative session — COMPLETE (2026-03-22). Product doc: `memory-bank/doc/products/piekny-sen.md`
+- [x] **Scrunchie Trio** creative session — COMPLETE (2026-03-22). Product doc: `memory-bank/doc/products/scrunchie-trio.md`
+- [x] Fill bundle metafields in Shopify admin — CSV imported + upsell metafields set manually (2026-03-24)
 - [ ] Homepage bundles section — wire up real products
 - [ ] Bundle product media (when physical products arrive)
+
+**Phase 2A: Bundle upgrade upsell (COMPLETE 2026-03-24):**
+- [x] Cart upsell cleanup — removed DEV-ONLY hardcoded fallback (snowboard + 'Bezowy')
+- [x] Color-matched variant selection — trigger color auto-matched to upsell variant, highest-inventory fallback
+- [x] Smart suppress — 2+ distinct items only blocks non-bundle upsells, bundle nudges pass through
+- [x] Bundle nudge card — `snippets/lusena-bundle-nudge.liquid` with specific added product name, pricing comparison, incremental cost button
+- [x] Shared swap JS — `assets/lusena-bundle-swap.js` (`LusenaBundle.swap()`) with FormData sections for re-render
+- [x] Cart properties — auto-matched colors via `simple_bundles.variant_options`, step numbering for multi-packs, multi-pack color distribution
+- [x] Bundle detection — uses `bundle_original_price != blank` (separates nudge from suppress)
+- [x] All 3 bundles tested: Nocna Rutyna, Piekny Sen, Scrunchie Trio — all directions working
+- [x] Upsell metafields configured: role, message (via CSV), primary/secondary (manual), bundle_nudge_map (JSON)
+
+**Phase 2A remaining (not yet built):**
+- [ ] #13 Cart merge — detect both bundle components in cart, suggest "Zamien na zestaw"
+- [ ] #12 PDP bundle detection banner — "Masz poszewke w koszyku?"
 
 **Phase D: Cross-sell:**
 - [ ] PDP cross-sell checkbox (scrunchie at 39 zł) — needs dev implementation

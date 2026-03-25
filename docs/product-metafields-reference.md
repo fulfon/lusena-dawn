@@ -10,74 +10,261 @@ Every metafield value must maximize the chance of the customer buying the produc
 
 ### The process
 
-Creative copy fields (headline, tagline, benefits) must NOT be copy-pasted from other products. Each product deserves original copy crafted through this process:
+Creative copy fields (headline, tagline, benefits) must NOT be copy-pasted from other products. Each product deserves original copy crafted through this process.
+
+**Architecture: Orchestrator + Polish Copywriter**
+
+The orchestrator (main Claude instance) NEVER writes customer-facing Polish text directly.
+All Polish copy is crafted by a dedicated **Polish e-commerce copywriter agent** — a
+specialist in premium beauty/lifestyle brands who writes native-sounding, conversion-optimized
+Polish. The orchestrator handles research, rules validation, and routing between specialists.
+
+**Why:** The orchestrator juggles many concerns (exclusion lists, overlap rules, legal,
+bundle-specificity) which produces "technically correct but unnatural" Polish. Separating
+the text-writing from the rules-checking produces copy that sounds human AND passes all
+constraints. Lesson learned during the Piekny Sen session (2026-03-22).
 
 ```
-1. RESEARCH
+1. RESEARCH (orchestrator)
    - Read brandbook: sections 1.3 (audience), 1.7 (proof points), 2.1 (voice rules)
    - Research this product's scientifically-backed benefits (internet search)
    - Research how top competitors position this product type
    - Identify EU/Polish legal constraints for the claims you want to make
+   - Read completed product files for reference (copy, scores, lessons learned)
 
-2. CRAFT COPY (product-specific fields ONLY)
+2. BRIEF THE POLISH COPYWRITER (orchestrator → copywriter agent)
    IMPORTANT: Check the "Universal fields" section below FIRST. Cards 2, 4, 5, 6
-   and all specs/care are pre-filled and must NOT be modified. Only craft:
+   and all specs/care are pre-filled and must NOT be modified. Only brief for:
    a. Buybox: emotional headline, tagline, 3 benefits (5 fields)
    b. Feature highlights: cards 1 and 3 ONLY - icon + title + description (6 fields)
    c. Icon animation specs: 6 briefs for SVG agent (6 specs)
    d. SEO: page title (max 70 chars), meta description (max 160 chars) (2 fields)
 
-   For each creative field: generate 2-3 options
-   Compare pros/cons of each option
-   Pick the best combination - all fields must work as a SYSTEM
-   SEO note: page title and meta description are the FIRST touchpoint (Google search results).
-   Write them to maximize click-through: benefit + key differentiator + brand name.
+   The brief to the copywriter MUST include:
+   - Product info: what it is, price, contents, target customer
+   - Competitor research findings (from step 1)
+   - Approved copy from other completed products (for tone reference)
+   - ALL constraints listed below (info architecture guard, exclusion list, etc.)
+   - Character limits per field
+   - For bundles: the bundle addendum rules (see below)
+   - Instruction: generate 2-3 options per field, recommend the best system
 
-3. LEGAL CHECK → invoke /lusena-legal-check
+   POLISH COPYWRITER AGENT SPEC:
+   "You are a senior Polish e-commerce copywriter specializing in premium beauty
+   and lifestyle brands. You write in Polish natively and have a perfect ear for
+   natural, elegant Polish phrasing. Your goal: maximize customers' chance of
+   buying while providing a premium feeling and emotions.
+   Rules: hyphens only (never em dashes), no exclamation marks, sentence case,
+   premium calm tone, everyday language (no technical/clinical terms).
+   For each field: propose 2-3 options, explain what makes each natural or
+   awkward in Polish, recommend the best combination as a system."
+
+3. RULES CHECK (orchestrator)
+   After receiving copy from the copywriter, validate against ALL constraints:
+
+   INFORMATION ARCHITECTURE GUARD (mandatory):
+   The PDP has multiple content layers. The buybox (headline, tagline, benefits)
+   is the FIRST layer the customer reads. Below the fold, the customer sees:
+   - 6 feature cards (cards 2/4/5/6 are universal - see below)
+   - Specs accordion (material, 22 momme, Grade 6A, OEKO-TEX, dimensions)
+   - Quality evidence section ("Dlaczego LUSENA?")
+   - Truth table ("Jedwab vs satyna")
+   - FAQ
+
+   DO NOT repeat below-fold content in the buybox. The buybox must focus on
+   EXPERIENTIAL benefits the customer FEELS (waking up without creases, hair
+   without tangles, skin that looks different). The below-fold sections handle
+   MATERIAL proof (what the silk is, why it's certified, how it compares).
+
+   BUYBOX-LEVEL EXCLUSION (applies to ALL products, not just bundles):
+   The buybox itself contains visible elements NEXT TO the benefit bullets:
+   - Guarantee box ("60 dni gwarancji spokojnego snu" + "Jak to działa?")
+   - Delivery row ("1-2 dni robocze" + "60 dni na zwrot")
+   - Payment methods row
+   - Care accordion (washing instructions)
+   - For bundles: savings badge (crossed-out price + "Oszczędzasz X zł")
+   Benefits must NOT repeat these — the customer already sees them.
+   Use benefit slots for EXPERIENTIAL content only.
+
+   EXCLUSION LIST - these topics MUST NOT appear in headline, tagline, or
+   benefit bullets because they are already covered elsewhere on the PDP:
+   x "22 momme" / momme density -> feature card 2 + specs accordion
+   x "OEKO-TEX" / certification -> feature card 5 + specs accordion
+   x Silk vs polyester/satin distinction -> feature card 4 + truth table
+   x Gift packaging/box -> feature card 6 + packaging accordion
+   x "Grade 6A" / silk grade -> specs accordion
+   x "z Suzhou" / origin -> quality evidence section
+
+   TAGLINE <-> BENEFITS - rendering context:
+   The tagline renders on DESKTOP as a short product description below the title.
+   The 3 benefit bullets render on MOBILE as an alternative to the tagline.
+   The customer sees ONE OR THE OTHER, never both at the same time.
+
+   Because they are alternative views for different viewports, similar or even
+   identical content between tagline and benefits is EXPECTED and CORRECT.
+   The tagline is essentially the benefits reformulated as flowing prose for
+   desktop, while the benefits are the same angles as scannable bullet points
+   for mobile.
+
+   OVERLAP RULES (what still applies):
+   - No two benefits may cover the same angle (benefits must differ from EACH OTHER)
+   - Benefits must not repeat below-fold content (exclusion list above still applies)
+   - Benefits must not repeat buybox UI elements (buybox-level exclusion above still applies)
+
+   What does NOT count as overlap:
+   - Tagline ≈ benefits (they are alternative views, not stacked content)
+
+   SEO note: page title and meta description are the FIRST touchpoint (Google
+   search results). Write them to maximize click-through: benefit + key
+   differentiator + brand name.
+
+   If any rule fails → send specific feedback back to the copywriter agent
+   with the constraint that was violated and ask for a targeted fix.
+
+4. LEGAL CHECK → invoke /lusena-legal-check
    - Verify all claims against approved/forbidden lists
    - Check EU Regulation 655/2013 compliance
    - Check Polish UOKiK consumer protection rules
-   - If issues found → adjust copy, preserving conversion intent
+   - If issues found → send back to copywriter with legal constraints
 
-4. CUSTOMER VALIDATION RUN 1 → invoke /lusena-customer-validation
+5. CUSTOMER VALIDATION RUN 1 → invoke /lusena-customer-validation
    - 4 persona agents evaluate the copy independently (in Polish)
    - Aggregate feedback: scores, objections, weak/strong elements
    - Per-element tracking: mark each element as LOCK (praised by 3+) or REFINE (criticized by 2+)
-   - If all averages ≥ 7.0 → skip to step 8
+   - If all averages ≥ 7.0 → skip to step 9
 
-5. REFINE (lock + refine pattern)
+6. REFINE (orchestrator → copywriter agent)
    - Do NOT change LOCKED elements (prevents regression)
-   - Only refine elements marked REFINE
-   - Stay within legal boundaries established in step 3
+   - Send REFINE elements back to the Polish copywriter agent with:
+     * The specific persona feedback for each REFINE element
+     * Which elements are LOCKED (must not change)
+     * Legal boundaries from step 4
+   - The COPYWRITER rewrites — the orchestrator never self-edits Polish text
+   - REALITY CHECK (orchestrator): Persona suggestions optimize for tone, not truth.
+     Before accepting copywriter rewrites based on persona feedback, verify they
+     match how real customers actually use the product.
    - If refinement introduces NEW claims → quick legal re-check on new claims only
-   - REALITY CHECK: Persona suggestions optimize for tone, not truth.
-     Before adopting any persona-suggested wording, verify it matches how
-     real customers actually use the product (e.g., "pranie po praniu" for
-     a scrunchie sounds elegant but women don't wash scrunchies regularly —
-     "dzień po dniu" matches the real daily-stretching wear pattern).
 
-6. CUSTOMER VALIDATION RUN 2 → invoke /lusena-customer-validation (focused)
+7. CUSTOMER VALIDATION RUN 2 → invoke /lusena-customer-validation (focused)
    - Only re-evaluate changed elements
    - Update per-element tracking (lock/refine)
-   - If all averages ≥ 7.0 → skip to step 8
-   - If still mixed → one more targeted refinement + Run 3
+   - If all averages ≥ 7.0 → skip to step 9
+   - If still mixed → one more targeted refinement (step 6 again) + Run 3
 
-6b. CUSTOMER VALIDATION RUN 3 (if needed) → final validation
+7b. CUSTOMER VALIDATION RUN 3 (if needed) → final validation
    - If all averages ≥ 7.0 → finalize
    - If still mixed → composite step (see below)
 
-7. COMPOSITE STEP (only if Run 3 is still mixed)
+8. COMPOSITE STEP (only if Run 3 is still mixed)
    - Compare all 3 versions element by element
    - Pick the best-scoring version of each element based on its primary dimension:
      headline → trust+premium, tagline → trust, benefits → intent
-   - Assemble composite, save to product file as the expert recommendation
+   - Assemble composite → send to copywriter for FINAL POLISH PASS
+   - The copywriter reviews the assembled composite for natural Polish flow,
+     fixes any preposition issues, unnatural collocations, or register mismatches
    - Hard cap: 3 runs + 1 composite. NEVER exceed this.
 
-8. COMPLETE THE PRODUCT FILE
+9. COMPLETE THE PRODUCT FILE
    - Fill all remaining fields: factual specs, packaging, badge, price-per-night
    - Record validation scores in the product file (see Validation section in template)
-   - Present the complete product file to the owner for confirmation
+   - Present to the owner for review using this format:
+
+   REVIEW PRESENTATION (show all of this to the owner):
+   a. CREATIVE COPY — all fields produced in this session, clearly labeled
+      (show FULL text for every field including card descriptions)
+   b. REPETITION CHECK — show creative copy side-by-side with the universal
+      cards and below-fold content it must NOT overlap:
+      - List each universal card title + first sentence of description
+      - Note any potential proximity (even if not a direct repeat)
+   c. OVERLAP MATRIX — tagline vs benefit 1/2/3: confirm each covers a
+      different angle (one-line summary per field)
+   d. VALIDATION SCORES — final scores table + key persona feedback
+   e. REPETITION FINDINGS — what personas flagged in question 10
+      (if nothing flagged, state "No repetition detected by personas")
+   f. LEGAL STATUS — pass/fail + any advisories
+   g. For bundles: show which feature cards are universal (locked) vs
+      per-bundle (created in this session)
+   h. BENEFIT CHECKS — confirm each benefit passes: experiential +
+      bundle-specific + everyday language + not repeating buybox UI
 ```
+
+### Bundle addendum (additional rules for bundle products)
+
+When running the creative session for a **bundle** product, all the rules above apply (including the exclusion list and zero-overlap rule) PLUS these additional constraints:
+
+**Framing: routine/set story, never savings-first**
+- Individual products sell "what this silk does for you"
+- Bundles sell "why these items TOGETHER create something greater"
+- Lead with the combined experience/routine, savings amount shown but always secondary
+- NEVER show percentage discounts ("21% taniej") - use absolute zloty: "Oszczędzasz 109 zł"
+- NEVER attribute the discount to the flagship (poszewka) - the savings come from buying together
+
+**Tagline must answer "why buy the SET?"**
+- NOT "why buy silk?" - that's on the individual product PDPs + universal feature cards
+- Focus on: the synergy between items, the convenience of one order, the complete routine
+- The component products' individual benefits are already on their own PDPs - don't restate them
+
+**Benefits must be EXPERIENTIAL, never operational:**
+- Benefits must answer: "what will my life feel like with this set?"
+- Bad: "Jedwab nie gniecie skóry" (individual product benefit - belongs on its PDP)
+- Bad: "60 dni na test" (already in guarantee box visible alongside benefits)
+- Bad: "Oszczędzasz 109 zł" (already in savings badge visible alongside benefits)
+- Bad: "Darmowa dostawa" (already in delivery row visible alongside benefits)
+- Good: "Zasypiasz w jedwabiu - twarz na gładkiej poszewce, włosy pod lekkim czepkiem" (sensory, experiential)
+- Good: "Jedwab wchłania znacznie mniej niż bawełna - krem zostaje na skórze, olejek na włosach" (product retention, bundle-specific)
+- Each benefit should answer: "what do I gain from buying TOGETHER that I wouldn't get buying separately?"
+
+**BUNDLE-SPECIFIC TEST (mandatory — run on each benefit before finalizing):**
+For each benefit, ask: "Would this sentence work unchanged on an individual product PDP?"
+If yes → it's not bundle-specific. Add the second product's dimension.
+- Failed test: "Jedwab ogranicza tarcie od pierwszej nocy" (true for poszewka alone)
+- Passed after fix: "Mniej tarcia od pierwszej nocy - na twarzy i we włosach jednocześnie" (requires both products)
+Pattern: use the silk property as the MECHANISM, but land on a BUNDLE outcome (both items working).
+
+**BUYBOX UI EXCLUSION (bundle-specific additions):**
+The bundle buybox already displays these elements NEXT TO the benefit bullets:
+- Savings badge: crossed-out original price + "Oszczędzasz X zł"
+- Guarantee box: "60 dni gwarancji spokojnego snu" + "Jak to działa?"
+- Delivery row: "1-2 dni robocze" + "60 dni na zwrot"
+- Care accordion: washing instructions in FAQ
+
+Benefits MUST NOT repeat any of these. They are visible in the same viewport.
+The customer sees them already - repeating in benefits wastes a slot and undermines
+premium tone (Nocna Rutyna session: 3/4 personas flagged savings language as
+"zniżkowy, nie premium"; 4/4 confirmed guarantee/savings are fine in their UI elements).
+
+**When providing context to validation personas:**
+Include a note listing the buybox UI elements visible alongside benefits, so personas
+don't over-value operational information (guarantee, savings) that's already displayed.
+
+**Headline angle per bundle** (from `memory-bank/doc/bundle-strategy.md`):
+- Nocna Rutyna (399 zł): complete night protection - face + hair in one set
+- Piękny Sen (349 zł): sleep beauty - face + eyes, wake up refreshed
+- Scrunchie Trio (139 zł): gifting + color variety - 3 colors, 1 set
+
+**Feature cards for bundles:**
+- Universal cards 2, 4, 5, 6 still apply (silk quality story is shared)
+- Cards 1 and 3: bundle-specific angles (why together > separately, complementary mechanisms, nightly ritual)
+- Do not repeat individual product-specific card content from component PDPs
+- Cards must be CONVERSION-WORTHY for the price point — FAQ-level details (washing instructions, color selection) are too weak for premium bundles. Ask: "Would this card make someone spend 399 zł?" If not, find a stronger angle.
+
+**Metafields that do NOT apply to bundles:**
+- `pdp_packaging_items` — skip. Bundle has no packaging accordion. "W zestawie" lists products, card 6 covers gift packaging, FAQ covers packaging details, gallery photos will provide visual proof. Adding a packaging accordion would repeat "W zestawie" content (50% overlap).
+- `pdp_specs_*` — skip. Bundle has no specs accordion. Reason: (1) shared specs (momme, grade, cert) are better covered by universal feature cards 2/4/5 which explain WHY they matter, not just state values; (2) product-specific specs (dimensions, closure) differ per component and create a messy split table; (3) bundle buybox is already long (W zestawie + color selector + ATC + guarantee + benefits + care) — adding specs adds friction before ATC; (4) no competitor (Slip, Brooklinen, Spadiora) has spec accordions on bundle pages.
+- `pdp_show_price_per_night` — set to `false`. Savings badge serves the same reframing purpose.
+
+**Bundle buybox accordion structure:**
+Individual products have 3 accordion panels: Specs → Packaging → Care.
+Bundles have 1 accordion panel: Care ONLY.
+- Specs: handled by universal feature cards (education > raw values for bundle context)
+- Packaging: handled by "W zestawie" + card 6 + FAQ + gallery photos
+- Care: KEPT — removes "is silk hard to wash?" objection, not redundant with any other buybox element
+
+**SEO for bundles:**
+- Page title: bundle name + key differentiator + LUSENA (max 70 chars)
+- Meta description: what's in the set + savings amount + experiential benefit (max 160 chars)
+
+Full bundle strategy, pricing, and economics: `memory-bank/doc/bundle-strategy.md`
 
 ## Universal fields (DO NOT MODIFY during creative sessions)
 
@@ -199,15 +386,15 @@ Never use percentage comparisons for momme (e.g., "30% gęstszy", "15% więcej")
 | Property | Value |
 |----------|-------|
 | **Type** | Multi-line text |
-| **Where it renders** | Below the product title, above the price. Paragraph text in the buybox. |
+| **Where it renders** | Below the product title, above the price. Paragraph text in the buybox. **Desktop only** — on mobile, this is replaced by the 3 benefit bullets. Customer sees one or the other, never both. |
 | **Visual style** | Secondary body text, muted color. 2-3 sentences max. |
 | **Fallback if blank** | Falls back to theme editor setting (`section.settings.tagline`). If that is also blank, nothing renders. |
 | **Source file** | `snippets/lusena-pdp-summary.liquid` (line 52-56) |
-| **Conversion role** | **The proof.** After the emotional headline hooks them, the tagline delivers the WHY - key specs, origin, certification. It should combine problem awareness (cotton = bad) with proof (22 momme, Grade 6A, OEKO-TEX). |
-| **Copy guidelines** | PAS structure works best: Problem → Agitate → Solve. Lead with the cotton problem, then present your product as the solution with proof points. Keep it scannable - max 2-3 sentences. |
-| **Legal notes** | All claims must be substantiable. "22 momme" and "Grade 6A" need supplier documentation. "OEKO-TEX Standard 100" needs the actual certificate. Origin claims ("z Suzhou") need supplier records. |
-| **Good example** | "Bawełna chłonie wilgoć i gniecie skórę przez 8 godzin snu. Ta poszewka z jedwabiu morwowego 22 momme, Grade 6A z Suzhou, z certyfikatem OEKO-TEX® Standard 100 - zmienia to od pierwszej nocy." |
-| **Bad example** | "Najlepsza poszewka na rynku. Kup teraz!" (no proof, aggressive, superlative without evidence) |
+| **Conversion role** | **The bridge.** After the emotional headline hooks them, the tagline bridges to WHY this product delivers that benefit. Focus on the experiential difference - what changes when you switch from cotton/polyester to silk. Material specs (22 momme, OEKO-TEX, Grade 6A) are covered by the specs accordion and feature cards below - do not repeat them here. See the exclusion list in step 2. |
+| **Copy guidelines** | PAS structure works best: Problem → Agitate → Solve. Lead with the everyday problem (cotton absorbs, creases, tangles), then present the experiential solution (what the customer feels/sees after switching). Max 2-3 sentences. The tagline and benefits are **alternative views** (desktop vs mobile) — similar or identical content between them is expected and correct. The tagline reformulates the benefit angles as flowing prose for desktop. |
+| **Legal notes** | All claims must be substantiable. Use approved hedging for beauty claims ("sprzyja redukcji", "pomaga zachować"). Physical/mechanical claims (friction, creases, absorption) are safe. Do not reference specs (22 momme, Grade 6A, OEKO-TEX) in the tagline - those are covered elsewhere on the page. |
+| **Good example** | "Zwykła bawełna chłonie wilgoć i gniecie skórę przez 8 godzin snu. Ta poszewka z jedwabiu morwowego zmienia to od pierwszej nocy." (short, experiential, no spec dump - specs are in the accordion and feature cards below) |
+| **Bad example** | "Najlepsza poszewka na rynku. Kup teraz!" (no proof, aggressive, superlative without evidence). Also bad: "Jedwab 22 momme, Grade 6A z Suzhou, certyfikat OEKO-TEX" (spec dump - these are covered by feature cards + specs accordion below, see exclusion list). |
 
 ---
 
@@ -230,14 +417,14 @@ Never use percentage comparisons for momme (e.g., "30% gęstszy", "15% więcej")
 | Property | Value |
 |----------|-------|
 | **Type** | Single-line text (each) |
-| **Where it renders** | Three bullet points with dot markers, in the buybox below the payment methods row and guarantee box. Visible on both mobile and desktop. |
+| **Where it renders** | Three bullet points with dot markers, in the buybox below the payment methods row and guarantee box. **Mobile alternative to the tagline** — on desktop the tagline shows as prose; on mobile the benefits replace it as scannable bullets. Customer sees one or the other, never both. |
 | **Visual style** | List items with teal dots. Short, scannable lines. |
 | **Fallback if blank** | Falls back to "benefit" blocks defined in the theme editor. If those are also blank, the entire benefits section is hidden. |
 | **Source file** | `sections/lusena-main-product.liquid` (lines 70-160) |
 | **Conversion role** | **The final push.** These are the last content elements the customer reads before deciding to click "Add to cart." They must address the TOP 3 purchase motivations. Together they should tell a complete story. |
-| **Copy guidelines** | Each bullet = one benefit angle. Use a consistent structure: "[Result] - [mechanism/contrast]" or "[You experience X] - [because Y]". The 3 bullets should cover different angles (don't repeat the same point). Recommended trinity: skin + product retention + hair. |
+| **Copy guidelines** | Each bullet = one benefit angle. Use a consistent structure: "[Result] - [mechanism/contrast]" or "[You experience X] - [because Y]". The 3 bullets must cover DIFFERENT angles (no overlap with each other). The tagline and benefits are **alternative views** (desktop vs mobile) — the benefits are the tagline's angles reformulated as scannable bullet points, so similar content between them is expected. Do not reference specs on the exclusion list (22 momme, OEKO-TEX, Grade 6A, etc.) - see step 2. Example trinity for poszewka: skin + product retention + hair. For bundles: synergy + convenience + experience. **Experiential only:** benefits must describe what the customer FEELS or EXPERIENCES, never operational info (guarantee, delivery, washing, savings) that's already visible in the buybox UI — see step 2 BUYBOX-LEVEL EXCLUSION. **Tone:** use everyday language the customer uses. Avoid technical/clinical terms ("ochrona mechaniczna", "regularne użytkowanie sprzyja") — these sound like product spec sheets, not premium copy. |
 | **Legal notes** | Same as headline - use "sprzyja redukcji" not "usuwa". Physical/mechanical claims (friction, creases, absorption) are safe. Specific percentages (e.g., "43% less friction") need test documentation. |
-| **Good set** | 1: "Budzisz się bez odcisków poduszki - jedwab nie gniecie skóry jak bawełna" / 2: "Nie wchłania kremów i serum - pielęgnacja zostaje na skórze, nie na poszewce" / 3: "Budzisz się bez plątaniny i puszenia - fryzura przetrwa noc bez wysiłku" |
+| **Good set** | 1: "Budzisz się bez odcisków poduszki - jedwab nie gniecie skóry jak bawełna" / 2: "Wchłania znacznie mniej kremów i serum - pielęgnacja zostaje na skórze, nie na poszewce" / 3: "Włosy bez plątaniny i puszenia - fryzura przetrwa noc bez wysiłku" (3 different angles: skin, product retention, hair - no overlap with each other or with the tagline) |
 | **Bad set** | 1: "Wysokiej jakości jedwab" / 2: "Premium materiał" / 3: "Luksusowy produkt" (all say the same thing - features, no benefits) |
 
 ---
@@ -278,6 +465,7 @@ Never use percentage comparisons for momme (e.g., "30% gęstszy", "15% więcej")
 | **Fallback if blank** | Shows default: "Jedwabny produkt LUSENA", "Eleganckie pudełko prezentowe LUSENA", "Karta z instrukcją pielęgnacji". |
 | **Source file** | `snippets/lusena-pdp-buybox-panels.liquid` (lines 71-72, 118-121, 303-319) |
 | **Conversion role** | **Gift appeal.** For the "Perfect gift" segment, this confirms the product comes beautifully packaged. Seeing "elegant gift box" removes the need to buy separate wrapping. Also signals premium positioning - cheap products don't come in presentation boxes. |
+| **Bundles** | **N/A — skip for bundle products.** Bundle template (`lusena-main-bundle`) does not have a packaging accordion. "W zestawie" section lists the products, card 6 covers gift packaging, FAQ covers packaging details. Packaging photos in the gallery will handle the visual proof. |
 | **Copy guidelines** | Keep the order consistent: product first, box second, extras after. The icon assignment depends on item position. Short, noun-phrase items - no full sentences. |
 | **Important:** | Icons are assigned by **position**, not by content. Item 1 always gets `sparkles`, item 2 always gets `gift`, item 3+ always gets `file-text`. Keep the product item first and the box item second. |
 
@@ -366,6 +554,33 @@ These metafields are only used on bundle products (assigned to `product.bundle` 
 4. Type: **Integer**
 5. Save the definition
 6. Go to each bundle product → set the value per the table above
+
+### `lusena.bundle_nudge_map`
+
+- **Type:** `json`
+- **Purpose:** Maps trigger product handles to cart upsell data. When a component product is in the cart, this metafield provides the headline label (accusative case), the component product handle (for resolving real title + image via `all_products`), and an optional tile label override.
+- **Structure:** Each key is a trigger product handle. Each value is an object with:
+  - `label` (required) — accusative case name for the headline "Dodaj {label} i zaoszczedz..."
+  - `handle` (required) — Shopify handle of the component product being added. Used to resolve `all_products[handle].title` and `.featured_image` for the upsell tile.
+  - `tile_label` (optional) — overrides the tile display name. Used when the product title isn't descriptive enough (e.g., Scrunchie Trio shows "2x Scrunchie jedwabny" instead of the product title).
+- **Backward compatibility:** Liquid code uses `nudge_entry.label | default: nudge_entry` — if the value is still a flat string (old format), it falls back gracefully.
+- **Where it renders:** `snippets/cart-drawer.liquid` and `sections/lusena-cart-items.liquid` — bundle upsell card headline + "add" tile name + "add" tile image
+- **Values:**
+
+| Bundle | JSON value |
+|--------|-----------|
+| Nocna Rutyna | `{"poszewka-jedwabna":{"label":"czepek jedwabny","handle":"silk-bonnet"},"silk-bonnet":{"label":"poszewke jedwabna","handle":"poszewka-jedwabna"}}` |
+| Piekny Sen | `{"poszewka-jedwabna":{"label":"maske 3D","handle":"jedwabna-maska-3d"},"jedwabna-maska-3d":{"label":"poszewke jedwabna","handle":"poszewka-jedwabna"}}` |
+| Scrunchie Trio | `{"silk-scrunchie":{"label":"dwie kolejne jedwabne gumki","handle":"silk-scrunchie","tile_label":"2x Scrunchie jedwabny"}}` |
+
+### Setup in Shopify admin
+
+1. Go to **Settings → Custom data → Products → Add definition**
+2. Name: `Bundle nudge map`
+3. Namespace and key: `lusena.bundle_nudge_map`
+4. Type: **JSON**
+5. Save the definition
+6. Go to each bundle product → paste the JSON value from the table above (single line, no newlines)
 
 ---
 

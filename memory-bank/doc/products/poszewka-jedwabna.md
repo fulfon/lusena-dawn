@@ -1,6 +1,6 @@
 # Poszewka jedwabna 50×60 (Flagship Pillowcase)
 
-*Last updated: 2026-03-14*
+*Last updated: 2026-03-22*
 
 ## Basic info
 
@@ -87,7 +87,7 @@ Equal split per §7.2 MOQ (120 / 3 = 40 each). Szampan positioned as limitka wit
 | Metafield | Value | Status |
 |-----------|-------|--------|
 | `lusena.pdp_emotional_headline` | Obudź się bez zagnieceń - od pierwszej nocy. | Done |
-| `lusena.pdp_tagline` | Budzisz się bez odcisków poduszki - jedwab nie gniecie skóry jak bawełna. Wchłania znacznie mniej kremów i serum, więc pielęgnacja zostaje na skórze zamiast na poszewce. Włosy bez plątaniny i puszenia - fryzura przetrwa noc bez wysiłku. | **UPDATED** (2026-03-17: benefit-oriented, removed redundant specs) |
+| `lusena.pdp_tagline` | Budzisz się bez odcisków poduszki - jedwab nie gniecie skóry jak bawełna. Wchłania znacznie mniej kremów i serum, więc pielęgnacja zostaje na skórze, nie na poszewce. Włosy bez splątań i puszenia - fryzura przetrwa noc bez wysiłku. | **UPDATED** (2026-03-22: Polish phrasing polish - "zamiast" → ", nie" for rhythm, "plątaniny" → "splątań" for natural collocation) |
 | `lusena.pdp_show_price_per_night` | true | Done |
 
 ### Benefit bullets
@@ -96,7 +96,7 @@ Equal split per §7.2 MOQ (120 / 3 = 40 each). Szampan positioned as limitka wit
 |-----------|-------|--------|
 | `lusena.pdp_benefit_1` | Budzisz się bez odcisków poduszki - jedwab nie gniecie skóry jak bawełna | Done |
 | `lusena.pdp_benefit_2` | Wchłania znacznie mniej kremów i serum - pielęgnacja zostaje na skórze, nie na poszewce | Done |
-| `lusena.pdp_benefit_3` | Włosy bez plątaniny i puszenia - fryzura przetrwa noc bez wysiłku | Done |
+| `lusena.pdp_benefit_3` | Włosy bez splątań i puszenia - fryzura przetrwa noc bez wysiłku | **UPDATED** (2026-03-22: "plątaniny" → "splątań" - more natural Polish collocation for hair) |
 
 ### Specs table
 
@@ -130,13 +130,13 @@ Equal split per §7.2 MOQ (120 / 3 = 40 each). Szampan positioned as limitka wit
 |-----------|-------|--------|
 | `lusena.pdp_feature_1_icon` | heart | Done |
 | `lusena.pdp_feature_1_title` | Mniej tarcia, mniej odcisków | Done |
-| `lusena.pdp_feature_1_description` | Zmarszczki senne (sleep wrinkles) to efekt gniecenia skóry przez poduszkę - każdej nocy, godzina po godzinie. Gładki jedwab morwowy sprzyja redukcji tego tarcia. Efekt widać rano w lustrze. | Done |
+| `lusena.pdp_feature_1_description` | Zmarszczki senne (sleep wrinkles) to efekt gniecenia skóry przez poduszkę - każdej nocy, godzina po godzinie. Gładki jedwab morwowy zmniejsza to tarcie. Efekt widać rano w lustrze. | **UPDATED** (2026-03-22: "sprzyja redukcji tego tarcia" → "zmniejsza to tarcie" - removes corporate-speak, friction is physical textile property) |
 | `lusena.pdp_feature_2_icon` | layers | Pre-filled (universal) |
 | `lusena.pdp_feature_2_title` | Dlaczego 22 momme? | Pre-filled (universal) |
 | `lusena.pdp_feature_2_description` | Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy. | Pre-filled (universal) |
 | `lusena.pdp_feature_3_icon` | wind | Done |
 | `lusena.pdp_feature_3_title` | Chłodna strona - całą noc | Done |
-| `lusena.pdp_feature_3_description` | Jedwab pomaga naturalnie regulować temperaturę - włókna białka jedwabnego odprowadzają wilgoć i oddychają. Latem utrzymuje chłód, zimą nie wychładza. Koniec z obracaniem poduszki w poszukiwaniu zimnej strony. | Done |
+| `lusena.pdp_feature_3_description` | Jedwab pomaga naturalnie regulować temperaturę - włókna jedwabiu odprowadzają wilgoć i oddychają. Latem utrzymuje chłód, zimą nie wychładza. Koniec z obracaniem poduszki w poszukiwaniu zimnej strony. | **UPDATED** (2026-03-22: "białka jedwabnego" → "jedwabiu" - removes technical jargon from consumer copy) |
 | `lusena.pdp_feature_4_icon` | shield-check | Pre-filled (universal) |
 | `lusena.pdp_feature_4_title` | Jedwab, nie satyna z poliestru | Pre-filled (universal) |
 | `lusena.pdp_feature_4_description` | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. | Pre-filled (universal) |
@@ -163,10 +163,11 @@ Equal split per §7.2 MOQ (120 / 3 = 40 each). Szampan positioned as limitka wit
 ## Validation results
 
 ### Legal check
-- **Date:** 2026-03-14 (original), 2026-03-15 (card 3 update)
+- **Date:** 2026-03-14 (original), 2026-03-15 (card 3 update), 2026-03-22 (re-evaluation)
 - **Verdict:** PASS (1 fix applied in original; card 3 replacement PASS with 1 advisory hedge applied)
 - **Notes:** "Nie wchłania" (absolute) in benefit 2 → fixed to "Wchłania znacznie mniej" (consistent with scrunchie precedent). All beauty-effect claims use approved hedging ("sprzyja redukcji", "pomaga zachować"). No medical claims, no fabricated social proof. Card 1 "Efekt widać rano w lustrze" flagged as advisory - pre-approved by brandbook section 2.1 rule 2 for poszewka category.
 - **Card 3 update (2026-03-15):** Replaced care/washing card with temperature regulation card. "reguluje temperaturę" hedged to "pomaga naturalnie regulować temperaturę" (advisory). "Koniec z obracaniem poduszki" flagged as advisory — vivid metaphor, standard industry language, low risk. All claims are physical textile properties, no beauty-effect hedging required.
+- **Re-evaluation (2026-03-22):** 4 minor wording fixes checked. PASS (0 issues, 1 advisory). "Zmniejsza to tarcie" (Card 1, replacing "sprzyja redukcji tego tarcia") — friction is a physical textile property, legally safe. Advisory: "znacząco" qualifier dropped per legal recommendation, final wording "zmniejsza to tarcie". All other changes are punctuation/lexical swaps with no legal implications.
 
 ### Customer validation
 - **Date:** 2026-03-14
@@ -208,6 +209,15 @@ Equal split per §7.2 MOQ (120 / 3 = 40 each). Szampan positioned as limitka wit
 - **Core tension:** Kasia/Ewa/Zuzia prefer direct, vivid language (bawełna, budzisz się). Maja prefers restrained, premium tone. Composite favors 3/4 majority with targeted fix for Maja's repetition concern.
 - **Site-level improvements flagged by personas:** reviews/social proof (4/4 critical), product photos (3/4), return policy visibility (3/4), comparison with cheaper alternatives (2/4), color/variant info (2/4)
 - **Final decision:** Copy finalized via composite assembly. Trust (7.5) and premium (7.25) above threshold. Purchase intent (6.5) limited by price sensitivity and site-level factors (no reviews, no photos, no return policy). Copy optimized to the limit of what text alone can achieve.
+
+### Re-evaluation (2026-03-22)
+- **Flow:** Orchestrator + Polish e-commerce copywriter agent (introduced after original session)
+- **Audit:** All fields pass all current rules — no exclusion list violations, no buybox UI overlap, no benefit-to-benefit overlap, hyphens only, sentence case, experiential benefits. SEO within limits.
+- **Copywriter verdict:** POPRAWKI — 4 minor linguistic fixes (no structural/strategic changes)
+- **Changes applied:** (1) Tagline: "zamiast na poszewce" → ", nie na poszewce" (rhythm), (2) Tagline + B3: "plątaniny" → "splątań" (natural hair collocation), (3) Card 1: "sprzyja redukcji tego tarcia" → "zmniejsza to tarcie" (removes corporate-speak), (4) Card 3: "białka jedwabnego" → "jedwabiu" (removes jargon)
+- **Legal re-check:** PASS (0 issues, 1 advisory on Card 1 — "zmniejsza" accepted for physical textile property)
+- **Customer validation:** Not re-run (minor wording fixes that preserve meaning — per process rules, validation not needed for MINOR changes)
+- **Verdict:** UPDATED — 4 fields adjusted for natural Polish phrasing. Original validation scores (Trust 7.5, Intent 6.5, Premium 7.25) remain valid.
 
 ## Media
 

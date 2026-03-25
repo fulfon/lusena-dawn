@@ -69,6 +69,31 @@ KORZYŚCI (3 punkty pod przyciskiem "Dodaj do koszyka"):
 1. "{benefit_1}"
 2. "{benefit_2}"
 3. "{benefit_3}"
+
+--- ELEMENTY WIDOCZNE OBOK KORZYŚCI (w tej samej sekcji zakupowej) ---
+
+W sekcji zakupowej, OBOK korzyści, klientka widzi:
+- Cenę produktu (z przekreśloną ceną i etykietą oszczędności, jeśli dotyczy)
+- Box gwarancji "60 dni gwarancji spokojnego snu" z linkiem "Jak to działa?"
+- Wiersz dostawy "1-2 dni robocze" + "60 dni na zwrot"
+- Metody płatności
+- Akordeon z instrukcją prania
+
+Te informacje są WIDOCZNE na tej samej stronie co korzyści - nie oceniaj ich powtórzenia w korzyściach jako "nową wartość".
+
+--- KONTEKST STRONY (to też jest na stronie, poniżej sekcji zakupowej) ---
+
+Poniżej klientka widzi jeszcze:
+- Akordeon ze specyfikacją (materiał, gęstość 22 momme, klasa 6A, certyfikat OEKO-TEX)
+- Akordeon z zawartością opakowania (produkt + pudełko prezentowe + karta pielęgnacji)
+- 6 kart "Co zyskujesz" (w tym: dlaczego 22 momme, jedwab vs satyna z poliestru, certyfikat OEKO-TEX, gotowe do wręczenia)
+- Sekcja "Dlaczego LUSENA?" z dowodami jakości
+- Tabela porównawcza "Jedwab vs satyna"
+- FAQ z najczęstszymi pytaniami
+
+--- INFORMACJE O SKLEPIE (będą dostępne w pełnej wersji) ---
+
+Sklep będzie miał: profesjonalne zdjęcia produktów, recenzje klientek, widoczną politykę 14-dniowych zwrotów, link do certyfikatu OEKO-TEX, bezpieczne płatności online. Oceniaj TYLKO tekst powyżej - nie obniżaj ocen za brak elementów, które pojawią się przed startem sklepu.
 ```
 
 ### Step 2: Spawn 4 agents in parallel
@@ -117,6 +142,7 @@ Odpowiedz szczerze na każde pytanie. Pisz tak, jak naprawdę myślisz — nie b
 7. NAJSILNIEJSZY ELEMENT: Który fragment tekstu najbardziej do ciebie przemówił i dlaczego?
 8. NAJSŁABSZY ELEMENT: Który fragment jest najsłabszy lub nieprzekonujący?
 9. BRAKUJĄCY ELEMENT: Czego brakuje? Jaką informację chciałabyś zobaczyć, której tu nie ma?
+10. POWTÓRZENIA: Przejrzyj "KONTEKST STRONY" powyżej. Czy tekst w sekcji zakupowej (nagłówek, opis, korzyści) powtarza informacje, które i tak zobaczysz niżej na stronie? Jeśli tak - które fragmenty są zbędne, bo pojawiają się podwójnie?
 
 Odpowiadaj po polsku. Bądź konkretna i szczera.
 ```
@@ -147,6 +173,7 @@ Odpowiedz szczerze na każde pytanie. Pisz tak, jak naprawdę myślisz — oceni
 7. NAJSILNIEJSZY ELEMENT: Który fragment tekstu najbardziej do ciebie przemówił i dlaczego?
 8. NAJSŁABSZY ELEMENT: Który fragment jest najsłabszy lub niezrozumiały? (Pamiętaj — nie znasz się na jedwabiu)
 9. BRAKUJĄCY ELEMENT: Czego brakuje? Jaką informację chciałabyś zobaczyć, żeby podjąć decyzję?
+10. POWTÓRZENIA: Przejrzyj "KONTEKST STRONY" powyżej. Czy tekst w sekcji zakupowej (nagłówek, opis, korzyści) powtarza informacje, które i tak zobaczysz niżej na stronie? Jeśli tak - które fragmenty są zbędne, bo pojawiają się podwójnie?
 
 Odpowiadaj po polsku. Bądź szczera — mów jak kobieta, która szuka prezentu, a nie jak ekspertka od jedwabiu.
 ```
@@ -179,6 +206,7 @@ Odpowiedz szczerze na każde pytanie. Bądź krytyczna — wiesz, że influencer
 7. NAJSILNIEJSZY ELEMENT: Który fragment najbardziej do ciebie przemówił i dlaczego?
 8. NAJSŁABSZY ELEMENT: Który fragment brzmi jak pusty marketing lub jest nieprzekonujący?
 9. BRAKUJĄCY ELEMENT: Czego brakuje? Co chciałabyś wiedzieć, żeby wydać te pieniądze?
+10. POWTÓRZENIA: Przejrzyj "KONTEKST STRONY" powyżej. Czy tekst w sekcji zakupowej (nagłówek, opis, korzyści) powtarza informacje, które i tak zobaczysz niżej na stronie? Jeśli tak - które fragmenty są zbędne, bo pojawiają się podwójnie?
 
 Odpowiadaj po polsku. Bądź szczera i krytyczna — pisz jak studentka, która ciężko pracuje na swoje pieniądze.
 ```
@@ -211,6 +239,7 @@ Odpowiedz szczerze na każde pytanie. Oceniaj nie tylko treść, ale też ton i 
 7. NAJSILNIEJSZY ELEMENT: Który fragment jest najbardziej elegancki lub inteligentny?
 8. NAJSŁABSZY ELEMENT: Który fragment jest zbyt agresywny, tandetny lub niepasujący do marki premium?
 9. BRAKUJĄCY ELEMENT: Czego brakuje, żeby poczuć się pewnie z zakupem?
+10. POWTÓRZENIA: Przejrzyj "KONTEKST STRONY" powyżej. Czy tekst w sekcji zakupowej (nagłówek, opis, korzyści) powtarza informacje, które i tak zobaczysz niżej na stronie? Jeśli tak - które fragmenty są zbędne, bo pojawiają się podwójnie?
 
 Odpowiadaj po polsku. Bądź wybredna — masz wysokie standardy i nie tolerujesz bylejakości.
 ```
@@ -269,6 +298,14 @@ Priority logic:
 
 ### Brakujące elementy
 {Information personas wanted but didn't find in the copy}
+
+### Powtórzenia (z pytania 10)
+{Summarize what personas flagged as repeated between buybox copy and below-fold content.
+If no persona flagged repetition, state: "Żadna persona nie wykryła powtórzeń."}
+
+| Element | Kto zgłosił | Powtarza się z... |
+|---------|-------------|-------------------|
+| {copy fragment} | {persona names} | {which below-fold section} |
 
 ### Rekomendacja
 

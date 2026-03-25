@@ -1,6 +1,6 @@
 # Jedwabny czepek do spania
 
-*Last updated: 2026-03-16*
+*Last updated: 2026-03-22*
 
 ## Basic info
 
@@ -68,7 +68,7 @@ Equal split per §7.2 MOQ (60 / 2 = 30 each). Bonnet gets A+B only (§7.3) — e
 | Field | Value | Status |
 |-------|-------|--------|
 | Page title | Jedwabny czepek do spania 22 momme - ochrona włosów · LUSENA | Done |
-| Meta description | Jedwabny czepek z regulacją obwodu - 22 momme, Grade 6A z Suzhou. Ściągacz pokryty jedwabiem chroni linię włosów. Mniej tarcia, mniej plątania. OEKO-TEX® Standard 100. | Done |
+| Meta description | Jedwabny czepek z regulacją obwodu - 22 momme, Grade 6A z Suzhou. Ściągacz pokryty jedwabiem chroni linię włosów. Mniej tarcia, mniej plątania. OEKO-TEX®. | **UPDATED** (2026-03-22: trimmed "Standard 100" — 167→154 chars, under 160 limit) |
 | URL handle | silk-bonnet | Done |
 
 ## Category metafields (Shopify standard)
@@ -92,7 +92,7 @@ Equal split per §7.2 MOQ (60 / 2 = 30 each). Bonnet gets A+B only (§7.3) — e
 | Metafield | Value | Status |
 |-----------|-------|--------|
 | `lusena.pdp_emotional_headline` | Budzisz się z fryzurą - nie z plątaniną. | Done |
-| `lusena.pdp_tagline` | Otula włosy gładkim jedwabiem ze wszystkich stron - mniej tarcia, plątania i puszenia niż na bawełnie. Regulowany ściągacz pokryty jedwabiem dopasowuje się do obwodu głowy. Chroni fryzurę od wieczora do rana - loki, fale czy prostowanie przetrwają noc. | **UPDATED** (2026-03-17: benefit-oriented, removed redundant specs) |
+| `lusena.pdp_tagline` | Otula włosy gładkim jedwabiem ze wszystkich stron - mniej tarcia, plątania i puszenia niż na bawełnie. Regulowany ściągacz pokryty jedwabiem dopasowuje się do kształtu głowy. Chroni fryzurę od wieczora do rana - loki, fale czy prostowanie przetrwają noc. | **UPDATED** (2026-03-22: "do obwodu głowy" → "do kształtu głowy" — more natural Polish, legal-safe) |
 | `lusena.pdp_show_price_per_night` | true | Done |
 
 ### Benefit bullets
@@ -100,7 +100,7 @@ Equal split per §7.2 MOQ (60 / 2 = 30 each). Bonnet gets A+B only (§7.3) — e
 | Metafield | Value | Status |
 |-----------|-------|--------|
 | `lusena.pdp_benefit_1` | Otula włosy gładkim jedwabiem ze wszystkich stron - mniej tarcia, plątania i puszenia niż na bawełnie | Done |
-| `lusena.pdp_benefit_2` | Regulowany ściągacz pokryty jedwabiem - dopasujesz obwód do swojej głowy, żadne gumowe włókno nie dotyka włosów | Done |
+| `lusena.pdp_benefit_2` | Regulowany ściągacz pokryty jedwabiem - dopasujesz go do swojej głowy, żadne gumowe włókno nie dotyka włosów | **UPDATED** (2026-03-22: "dopasujesz obwód" → "dopasujesz go" — more natural Polish collocation) |
 | `lusena.pdp_benefit_3` | Chroni fryzurę od wieczora do rana - loki, fale czy prostowanie przetrwają noc | Done |
 
 ### Specs table
@@ -142,7 +142,7 @@ Equal split per §7.2 MOQ (60 / 2 = 30 each). Bonnet gets A+B only (§7.3) — e
 | `lusena.pdp_feature_2_description` | Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy. | Pre-filled (universal) |
 | `lusena.pdp_feature_3_icon` | wind | Done |
 | `lusena.pdp_feature_3_title` | Trzyma pewnie całą noc | Done |
-| `lusena.pdp_feature_3_description` | Regulowany ściągacz dopasujesz dokładnie do obwodu głowy - ani za luźno, ani za ciasno. Jedwab morwowy oddycha i pomaga regulować temperaturę. Budzisz się w czepku, nie obok niego. | Done |
+| `lusena.pdp_feature_3_description` | Regulowany ściągacz dopasujesz dokładnie do swojej głowy - ani za luźno, ani za ciasno. Jedwab morwowy oddycha i pomaga regulować temperaturę. Budzisz się w czepku, nie obok niego. | **UPDATED** (2026-03-22: "do obwodu głowy" → "do swojej głowy" — natural Polish) |
 | `lusena.pdp_feature_4_icon` | shield-check | Pre-filled (universal) |
 | `lusena.pdp_feature_4_title` | Jedwab, nie satyna z poliestru | Pre-filled (universal) |
 | `lusena.pdp_feature_4_description` | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. | Pre-filled (universal) |
@@ -171,6 +171,7 @@ Equal split per §7.2 MOQ (60 / 2 = 30 each). Bonnet gets A+B only (§7.3) — e
 ### Legal checks
 - **Date:** 2026-03-14 — PASS (1 fix applied). "nie osłabia" (absolute) in benefit 2 → fixed to "delikatniejszy dla linii włosów". All claims use approved hedging or physical/mechanical framing. Advisory: card 3 "reguluje temperaturę" softened to "pomaga regulować" in Run 3.
 - **Date:** 2026-03-16 — PASS (0 issues, 1 warning). Adjustability claims ("regulowany ściągacz", "dopasujesz obwód") are physical/mechanical — safe. Warning: "pasuje na każdą głowę" (universality) softened to "dopasowuje się do obwodu głowy" per Option B.
+- **Date:** 2026-03-22 — PASS (0 issues, 1 advisory). Re-evaluation: "do obwodu głowy" → "do kształtu/swojej głowy" changes are linguistic only, no change in claim strength. Universality guard preserved (no "każdą"). "OEKO-TEX®" without "Standard 100" remains a valid trademark reference.
 
 ### Customer validation
 - **Date:** 2026-03-14 to 2026-03-16
@@ -205,6 +206,15 @@ Equal split per §7.2 MOQ (60 / 2 = 30 each). Bonnet gets A+B only (§7.3) — e
 - **Core tension (consistent):** Ewa (gift buyer) finds copy too technical; Kasia/Zuzia/Maja value concrete specs. Gift positioning is a site-level issue (needs packaging photos, bundle suggestions), not a copy issue.
 - **Site-level improvements flagged by personas (4/4 consensus across all runs):** reviews/social proof (4/4 critical), product photos incl. lifestyle + packaging shots (4/4 critical), return policy / 60-day guarantee visibility (3/4), comparison table vs cheaper alternatives (2/4), elastic circumference range for size/fit (Zuzia), care/durability info ("ile prań wytrzyma?" — Kasia, Maja)
 - **Final decision:** Copy finalized with adjustability correction (Run 3). The adjustability update was a factual fix, not a creative optimization — the product genuinely has adjustable sizing. Scores remain capped by site-level factors. Further copy refinement cannot improve scores; only reviews, photos, return policy, and comparison content will move the needle.
+
+### Re-evaluation (2026-03-22)
+- **Process:** Orchestrator + Polish e-commerce copywriter architecture (introduced after original session)
+- **Audit:** All creative fields checked against current rules (exclusion list, buybox-level exclusion, overlap, character limits, hyphens, sentence case). No exclusion list violations. No buybox UI repetition. All character limits pass.
+- **Copywriter verdict:** POPRAWKI — 3 minor fixes, all the same pattern: "do obwodu głowy" sounds technical/tailor-like in 3 locations (tagline, B2, Card 3). Proposed minimal substitutions: "do kształtu głowy" (tagline), "dopasujesz go" (B2), "do swojej głowy" (Card 3).
+- **SEO meta:** 167 chars (over 160 limit by 7). Trimmed "Standard 100" → "OEKO-TEX®." (154 chars). Consistent with other LUSENA product meta descriptions.
+- **Legal re-check:** PASS (0 issues, 1 advisory). Changes are linguistic only, universality guard preserved.
+- **Customer validation:** Not re-run (minor phrasing fixes do not warrant re-validation; original scores remain valid).
+- **Overall verdict:** UPDATED — 4 fields adjusted for natural Polish and SEO compliance. No structural changes to copy strategy.
 
 ## Media
 

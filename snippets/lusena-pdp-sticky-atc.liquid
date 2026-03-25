@@ -188,7 +188,7 @@
       form="{{ product_form_id }}"
       {% unless current_variant.available %}disabled{% endunless %}
     >
-      <span class="lusena-btn__content">{{ section.settings.add_to_cart_label | default: section.settings.sticky_add_to_cart_label | escape }}</span>
+      <span class="lusena-btn__content">{{ section.settings.sticky_add_to_cart_label | default: section.settings.add_to_cart_label | escape }}</span>
       <span
         class="loading__spinner hidden"
       >

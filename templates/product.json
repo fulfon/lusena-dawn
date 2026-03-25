@@ -52,7 +52,7 @@
         "price_per_night_prefix": "Tylko",
         "price_per_night_suffix": "/ noc (przy rocznym użytkowaniu)",
         "select_color_label": "Wybierz kolor",
-        "add_to_cart_label": "Dodaj do koszyka - wysyłka dziś",
+        "add_to_cart_label": "Dodaj do koszyka",
         "add_to_cart_loading_label": "Dodaję...",
         "buy_now_label": "Kup teraz",
         "buy_now_loading_label": "Przekierowuję...",

@@ -45,6 +45,18 @@ Dawn's original sections remain in the repo but are NOT used on the live storefr
 - **Product catalog (Shopify admin data):** `memory-bank/doc/products/` — per-product metafields, pricing, variants, SEO
 - **Product setup checklist:** `docs/product-setup-checklist.md` — metafield definitions, example values per product type
 - **Bundle strategy (pricing, phases, research):** `memory-bank/doc/bundle-strategy.md` — complete bundle architecture, economics, and decision triggers
+- **Shopify CSV update workflow:** `memory-bank/doc/products/README.md` § "Updating product copy in Shopify" — export from Shopify, run `generate_import_from_export.py`, import back. Full instructions there.
+
+### Shopify product copy sync
+
+When the owner asks to update product copy in Shopify or generate import files:
+1. Ask them to export current products from Shopify admin and save as `memory-bank/doc/products/exports/products_export.csv`
+2. Run `cd memory-bank/doc/products/imports && python generate_import_from_export.py`
+3. The output `products_import_updated.csv` is ready to import with "Overwrite existing products" checked
+4. The script patches ONLY copy/metafield columns (35-73) — variants, prices, inventory untouched
+5. If any MD product file has been updated since the script was last modified, update the script's hardcoded values first
+
+Full docs: `memory-bank/doc/products/README.md`
 
 ### CSS architecture
 

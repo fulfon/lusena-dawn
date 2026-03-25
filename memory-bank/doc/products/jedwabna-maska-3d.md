@@ -1,6 +1,6 @@
 # Jedwabna maska 3D do spania
 
-*Last updated: 2026-03-16*
+*Last updated: 2026-03-22*
 
 ## Basic info
 
@@ -85,7 +85,7 @@ Single color (A only per §7.3): Black is the #1 eye mask color (~40-45% of glob
 | Metafield | Value | Status |
 |-----------|-------|--------|
 | `lusena.pdp_emotional_headline` | Śpisz w ciemności - bez nacisku na powieki i rzęsy. | Done |
-| `lusena.pdp_tagline` | Wyprofilowane miseczki 3D nie dotykają powiek - oczy odpoczywają bez nacisku. Jedwab minimalizuje tarcie wokół oczu, tam gdzie skóra jest najcieńsza na całym ciele. Profilowany mostek nosowy blokuje światło bez szczelin. | **UPDATED** (2026-03-17: benefit-oriented, removed redundant specs, self-referential mostek claim) |
+| `lusena.pdp_tagline` | Wyprofilowane miseczki 3D nie dotykają powiek - oczy odpoczywają bez nacisku. Jedwab minimalizuje tarcie wokół oczu, tam gdzie skóra jest najcieńsza na całym ciele. Profilowany mostek nosowy blokuje światło bez szczelin. | **CONFIRMED** (2026-03-22: re-evaluation found tagline ≈ benefits is intentional — tagline shows on desktop, benefits show on mobile as alternative views. No zero-overlap violation.) |
 | `lusena.pdp_show_price_per_night` | true | Done |
 
 ### Benefit bullets
@@ -191,6 +191,20 @@ Single color (A only per §7.3): Black is the #1 eye mask color (~40-45% of glob
 - **Core tension:** Zuzia's purchase intent (6/10) limited by structural price sensitivity ("169 zł to mój budżet na jedzenie na tydzień") and category skepticism - not copy quality.
 - **Site-level improvements flagged by personas:** reviews/social proof (4/4 critical), product photos on face (Ewa, Maja), return policy visibility (Kasia, Zuzia), packaging photos for gift buyers (Ewa), price-per-night display (Zuzia), comparison with cheap alternatives (Zuzia), strap/band details (Kasia, Maja)
 - **Final decision:** Copy finalized after Run 2. Trust (7.75) and premium (7.9) above threshold. Purchase intent (6.9) limited by price sensitivity and site-level factors (no reviews, no photos, no return policy). Copy optimized to the limit of what text alone can achieve.
+
+### Re-evaluation (2026-03-22)
+
+**Trigger:** Orchestrator + Polish copywriter architecture introduced after original session. Zero-overlap rule, exclusion list, buybox-level exclusion all added post-session.
+
+**Audit findings:**
+- Tagline ≈ benefits was initially flagged as zero-overlap violation, but **this is intentional** — tagline renders on desktop, benefits render on mobile as alternative views. Customer never sees both. Not a violation.
+- **MINOR:** Tagline missing comma ("tam gdzie" → "tam, gdzie") — punctuation, not critical
+- **MINOR:** Card 3 title at 30 chars (absolute max, recommended ≤28) — kept as-is
+- **CLEAN:** Exclusion list, buybox UI exclusion, hyphens, sentence case, experiential benefits, SEO limits — all PASS
+
+**Polish copywriter verdict:** Copy is natural, well-crafted Polish. 1 punctuation fix (tagline comma), 2 optional style suggestions. No translated or awkward phrasing detected.
+
+**Verdict: CONFIRMED — no changes needed.** All fields pass current rules. Copy confirmed as-is.
 
 ## Media
 

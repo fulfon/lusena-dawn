@@ -358,7 +358,9 @@
               {%- if upsell_is_bundle -%}
                 {%- comment -%} Bundle two-tile card {%- endcomment -%}
                 {%- assign nudge_map = upsell_product.metafields.lusena.bundle_nudge_map.value -%}
-                {%- assign added_label = nudge_map[trigger_product.handle] -%}
+                {%- assign nudge_entry = nudge_map[trigger_product.handle] -%}
+                {%- assign added_label = nudge_entry.label | default: nudge_entry -%}
+                {%- assign added_component = all_products[nudge_entry.handle] -%}
                 {%- assign bundle_price_cents = upsell_variant.price -%}
                 {%- assign original_total_cents = upsell_product.metafields.lusena.bundle_original_price.value | times: 100 -%}
                 {%- assign savings_cents = original_total_cents | minus: bundle_price_cents -%}
@@ -457,23 +459,24 @@
                       <span class="lusena-upsell-card__bn-plus" aria-hidden="true">+</span>
                       <div class="lusena-upsell-card__bn-add">
                         <div class="lusena-upsell-card__bn-add-img">
-                          {%- if upsell_product.featured_image -%}
+                          {%- assign add_tile_image = added_component.featured_image | default: upsell_product.featured_image -%}
+                          {%- if add_tile_image -%}
                             <img
-                              src="{{ upsell_product.featured_image | image_url: width: 240 }}"
-                              alt="{{ upsell_product.featured_image.alt | escape }}"
+                              src="{{ add_tile_image | image_url: width: 240 }}"
+                              alt="{{ add_tile_image.alt | escape }}"
                               loading="lazy" width="56"
-                              height="{{ 56 | divided_by: upsell_product.featured_image.aspect_ratio | ceil }}"
+                              height="{{ 56 | divided_by: add_tile_image.aspect_ratio | ceil }}"
                             >
                           {%- endif -%}
                         </div>
-                        <p class="lusena-upsell-card__bn-add-name">{{ added_label | escape }}</p>
+                        {%- assign tile_label = nudge_entry.tile_label | default: added_component.title | default: added_label -%}
+                        <p class="lusena-upsell-card__bn-add-name">{{ tile_label | escape }}</p>
                       </div>
                     </div>
                     <div class="lusena-upsell-card__bn-bottom">
                       <div class="lusena-upsell-card__bn-pricing">
                         <span class="lusena-upsell-card__bn-price">{{ bundle_price_cents | money_without_trailing_zeros }}</span>
                         <span class="lusena-upsell-card__bn-was">{{ original_total_cents | money_without_trailing_zeros }}</span>
-                        <span class="lusena-upsell-card__bn-savings">Oszczedzasz {{ savings_cents | money_without_trailing_zeros }}</span>
                       </div>
                       <button type="button"
                               class="lusena-btn lusena-btn--outline lusena-btn--size-xs"
@@ -516,20 +519,20 @@
                           </p>
                         {%- endif -%}
                       </div>
-                      <div class="lusena-upsell-card__xs-aside">
-                        <p class="lusena-upsell-card__xs-price">{{ upsell_display_price | escape }}</p>
-                        <button
-                          type="button"
-                          class="lusena-btn lusena-btn--outline lusena-btn--size-xs"
-                          data-cart-page-upsell-add
-                          data-variant-id="{{ upsell_variant.id }}"
-                        >
-                          <span class="lusena-btn__content" data-upsell-btn-text>Dodaj</span>
-                          <span class="lusena-upsell-card__dots hidden" data-upsell-loading aria-hidden="true">
-                            <span></span><span></span><span></span>
-                          </span>
-                        </button>
-                      </div>
+                    </div>
+                    <div class="lusena-upsell-card__xs-bottom">
+                      <p class="lusena-upsell-card__xs-price">{{ upsell_display_price | escape }}</p>
+                      <button
+                        type="button"
+                        class="lusena-btn lusena-btn--outline lusena-btn--size-xs"
+                        data-cart-page-upsell-add
+                        data-variant-id="{{ upsell_variant.id }}"
+                      >
+                        <span class="lusena-btn__content" data-upsell-btn-text>Dodaj</span>
+                        <span class="lusena-upsell-card__dots hidden" data-upsell-loading aria-hidden="true">
+                          <span></span><span></span><span></span>
+                        </span>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -917,36 +920,37 @@
 
   /* --- Cross-sell card (horizontal) --- */
   .lusena-upsell-card__xs-row { display: flex; gap: 1.2rem; align-items: center; }
-  .lusena-upsell-card__xs-img { width: 5.6rem; height: 5.6rem; background-color: var(--lusena-surface-2); border-radius: var(--lusena-radius-sm); overflow: hidden; flex-shrink: 0; }
+  .lusena-upsell-card__xs-img { width: 5.6rem; height: 5.6rem; background: var(--lusena-surface-2); border: 1px dashed color-mix(in srgb, var(--lusena-text-2) 20%, transparent); border-radius: var(--lusena-radius-sm); overflow: hidden; flex-shrink: 0; }
+  .lusena-upsell-card__xs-img:empty { display: block; } /* override Dawn base.css div:empty { display:none } */
   .lusena-upsell-card__xs-img img { width: 100%; height: 100%; object-fit: cover; }
   .lusena-upsell-card__xs-info { flex: 1; min-width: 0; }
   .lusena-upsell-card__xs-title { font-size: 1.3rem; font-weight: 500; color: var(--lusena-text-1); line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .lusena-upsell-card__xs-msg { font-size: 1.15rem; color: var(--lusena-text-2); margin-top: var(--lusena-space-05); line-height: 1.375; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .lusena-upsell-card__xs-color { font-size: 1.05rem; line-height: 1.5; color: color-mix(in srgb, var(--lusena-text-2) 70%, transparent); margin-top: var(--lusena-space-05); }
   .lusena-upsell-card__xs-color span { color: var(--lusena-text-1); font-weight: 500; }
-  .lusena-upsell-card__xs-aside { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; flex-shrink: 0; gap: var(--lusena-space-1); }
-  .lusena-upsell-card__xs-price { font-size: 1.35rem; line-height: 1.4; font-weight: 500; color: var(--lusena-text-1); font-variant-numeric: tabular-nums; }
+  .lusena-upsell-card__xs-bottom { display: flex; align-items: center; justify-content: space-between; gap: var(--lusena-space-1); margin-top: var(--lusena-space-1); padding-top: var(--lusena-space-1); border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 5%, transparent); }
+  .lusena-upsell-card__xs-price { font-size: 1.4rem; font-weight: 500; color: var(--lusena-text-1); font-variant-numeric: tabular-nums; }
 
   /* --- Bundle card (two-tile) --- */
   .lusena-upsell-card__bn-headline { font-size: 1.35rem; font-weight: 500; color: var(--lusena-text-1); line-height: 1.35; margin-bottom: var(--lusena-space-1); }
   .lusena-upsell-card__bn-tiles { display: flex; gap: var(--lusena-space-1); align-items: stretch; }
-  .lusena-upsell-card__bn-have { flex: 0 0 30%; display: flex; flex-direction: column; align-items: center; text-align: center; padding: var(--lusena-space-1) var(--lusena-space-05); border-radius: var(--lusena-radius-sm); background: color-mix(in srgb, var(--lusena-surface-2) 40%, transparent); }
-  .lusena-upsell-card__bn-have-img { width: 3.8rem; height: 3.8rem; border-radius: 0.4rem; overflow: hidden; margin-bottom: 0.5rem; position: relative; }
-  .lusena-upsell-card__bn-have-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.75; }
-  .lusena-upsell-card__bn-check { position: absolute; top: -0.3rem; right: -0.3rem; width: 1.4rem; height: 1.4rem; background: var(--lusena-accent-cta); border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 1; }
+  .lusena-upsell-card__bn-have { flex: 0 0 30%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--lusena-space-1) var(--lusena-space-05); border-radius: var(--lusena-radius-sm); background: color-mix(in srgb, var(--lusena-surface-2) 40%, transparent); }
+  .lusena-upsell-card__bn-have-img { width: 3.8rem; height: 3.8rem; border-radius: 0.4rem; overflow: visible; margin-top: 0.7rem; margin-bottom: 0.5rem; position: relative; background: var(--lusena-surface-2); border: 1px dashed color-mix(in srgb, var(--lusena-text-2) 20%, transparent); }
+  .lusena-upsell-card__bn-have-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.75; border-radius: 0.4rem; }
+  .lusena-upsell-card__bn-check { position: absolute; top: -0.7rem; right: -0.7rem; width: 1.4rem; height: 1.4rem; background: var(--lusena-accent-cta); border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 1; }
   .lusena-upsell-card__bn-check svg { width: 0.8rem; height: 0.8rem; color: #fff; }
   .lusena-upsell-card__bn-have-name { font-size: 1rem; font-weight: 500; color: #888; line-height: 1.2; }
   .lusena-upsell-card__bn-have-status { font-size: 0.9rem; color: var(--lusena-accent-cta); margin-top: 0.2rem; font-weight: 500; }
-  .lusena-upsell-card__bn-plus { font-size: 1.6rem; color: var(--lusena-color-n300); font-weight: 300; flex-shrink: 0; align-self: center; }
-  .lusena-upsell-card__bn-add { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; padding: var(--lusena-space-1); border-radius: var(--lusena-radius-sm); background: color-mix(in srgb, var(--lusena-surface-2) 50%, transparent); border: 1px solid color-mix(in srgb, var(--lusena-text-2) 6%, transparent); }
-  .lusena-upsell-card__bn-add-img { width: 5.6rem; height: 5.6rem; border-radius: var(--lusena-radius-sm); overflow: hidden; margin-bottom: 0.6rem; }
+  .lusena-upsell-card__bn-plus { font-size: 1.6rem; color: var(--lusena-text-2); font-weight: 400; flex-shrink: 0; align-self: center; }
+  .lusena-upsell-card__bn-add { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--lusena-space-1); border-radius: var(--lusena-radius-sm); background: color-mix(in srgb, var(--lusena-surface-2) 50%, transparent); border: 1px solid color-mix(in srgb, var(--lusena-text-2) 6%, transparent); }
+  .lusena-upsell-card__bn-add-img { width: 5.6rem; height: 5.6rem; border-radius: var(--lusena-radius-sm); overflow: hidden; margin-bottom: 0.6rem; background: var(--lusena-surface-2); border: 1px dashed color-mix(in srgb, var(--lusena-text-2) 20%, transparent); }
+  .lusena-upsell-card__bn-add-img:empty { display: block; } /* override Dawn base.css div:empty { display:none } */
   .lusena-upsell-card__bn-add-img img { width: 100%; height: 100%; object-fit: cover; }
   .lusena-upsell-card__bn-add-name { font-size: 1.2rem; font-weight: 500; color: var(--lusena-text-1); line-height: 1.25; }
   .lusena-upsell-card__bn-bottom { display: flex; align-items: center; justify-content: space-between; gap: var(--lusena-space-1); margin-top: var(--lusena-space-1); padding-top: var(--lusena-space-1); border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 5%, transparent); }
   .lusena-upsell-card__bn-pricing { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
   .lusena-upsell-card__bn-price { font-size: 1.4rem; font-weight: 500; color: var(--lusena-text-1); font-variant-numeric: tabular-nums; }
-  .lusena-upsell-card__bn-was { font-size: 1.1rem; color: var(--lusena-color-n300); text-decoration: line-through; }
-  .lusena-upsell-card__bn-savings { display: inline-flex; background: rgba(140, 106, 60, 0.08); color: var(--lusena-accent-2); font-family: var(--lusena-font-ui); font-size: 1.15rem; font-weight: 500; padding: 0.3rem 0.8rem; border-radius: var(--lusena-btn-radius); }
+  .lusena-upsell-card__bn-was { font-size: 1.4rem; color: var(--lusena-text-2); text-decoration: line-through; }
 
   /* --- Cross-sell loading dots (cart page specific) --- */
   .lusena-upsell-card__dots { display: inline-flex; gap: 0.3rem; align-items: center; justify-content: center; }
@@ -963,6 +967,9 @@
   @media (min-width: 768px) {
     .lusena-cart-header__title { font-size: 3.2rem; }
     .lusena-cart-item__media { width: 10rem; height: 12rem; }
+    /* Constrain card + label width, right-align, remove accent border */
+    .lusena-cart-upsell .lusena-cart-upsell__label { max-width: 42rem; margin-left: auto; }
+    .lusena-cart-upsell .lusena-upsell-card { max-width: 42rem; margin-left: auto; border-left: none; }
   }
 {% endstylesheet %}
 
