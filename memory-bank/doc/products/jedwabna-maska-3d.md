@@ -74,11 +74,11 @@ Single color (A only per §7.3): Black is the #1 eye mask color (~40-45% of glob
 
 ## LUSENA metafields
 
-> For what each field does and how to write great copy, see `docs/product-metafields-reference.md`
+> For what each field does and how to write great copy, see `memory-bank/doc/products/product-metafields-reference.md`
 >
 > **UNIVERSAL FIELDS - DO NOT MODIFY.** Fields marked "Pre-filled (universal)" are shared
 > across ALL LUSENA silk products. They were validated once and must not be rewritten or
-> "improved" during creative sessions. See `docs/product-metafields-reference.md` → "Universal fields".
+> "improved" during creative sessions. See `memory-bank/doc/products/product-metafields-reference.md` → "Universal fields".
 
 ### Buybox content
 
@@ -148,7 +148,7 @@ Single color (A only per §7.3): Black is the #1 eye mask color (~40-45% of glob
 
 ### Icon animation specs (for SVG coding agent)
 
-> For each feature card, describe the icon animation for the SVG agent. See constraints in `docs/product-metafields-reference.md`.
+> For each feature card, describe the icon animation for the SVG agent. See constraints in `memory-bank/doc/products/product-metafields-reference.md`.
 
 | Card | Icon | Animation spec |
 |------|------|---------------|

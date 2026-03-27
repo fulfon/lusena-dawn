@@ -1,0 +1,634 @@
+/* =====================================================================
+   LUSENA Cart Page CSS
+   Extracted from {% stylesheet %} blocks in:
+   - sections/lusena-cart-items.liquid
+   - sections/lusena-cart-footer.liquid
+   - snippets/lusena-cart-quantity.liquid
+   Loaded via stylesheet_tag in lusena-cart-items.liquid
+   ===================================================================== */
+
+/* =======================================================================
+   1. CART ITEMS  (from sections/lusena-cart-items.liquid)
+   ======================================================================= */
+
+/* --- Section spacing - kill compact-tier bottom pad so footer bg creates the break --- */
+cart-items.lusena-spacing--compact {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+/* Make <main> a flex column so cart content fills viewport and pushes
+   the site footer below the fold on every screen size. */
+main:has(cart-items) {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+/* Mobile: grow the cart-items section so upsell sticks to footer bottom.
+   Desktop: cart stays compact at top; remaining space is empty background. */
+@media (max-width: 767px) {
+  main:has(cart-items) > .shopify-section:has(cart-items) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  cart-items.lusena-spacing--compact {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  cart-items.lusena-spacing--compact > .lusena-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  cart-items.lusena-spacing--compact .lusena-cart-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  cart-items.lusena-spacing--compact #main-cart-items {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  cart-items.lusena-spacing--compact .js-contents {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .lusena-cart-upsell {
+    margin-top: auto;
+  }
+}
+
+/* --- Kill Dawn .cart__items border + padding (component-cart.css) --- */
+#main-cart-items.cart__items {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* --- Cart header --- */
+.lusena-cart-header {
+  padding-top: var(--lusena-space-2);
+  padding-bottom: var(--lusena-space-2);
+}
+/* Mobile: tinted header zone matching drawer's header background */
+@media (max-width: 767px) {
+  .lusena-cart-header {
+    background-color: color-mix(in srgb, var(--lusena-surface-1) 50%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
+    margin-left: calc(-1 * var(--lusena-space-2));
+    margin-right: calc(-1 * var(--lusena-space-2));
+    padding-left: var(--lusena-space-2);
+    padding-right: var(--lusena-space-2);
+  }
+}
+@media (min-width: 768px) {
+  .lusena-cart-header { padding-top: var(--lusena-space-4); }
+}
+.lusena-cart-header__title {
+  font-family: var(--lusena-font-brand);
+  font-size: 2rem;
+  line-height: 1.2;
+  color: var(--lusena-text-1);
+  margin: 0;
+}
+
+/* --- Empty state --- */
+cart-items:not(.is-empty) .lusena-cart-empty { display: none; }
+cart-items.is-empty .lusena-cart-form { display: none; }
+.lusena-cart-empty__login { margin-top: var(--lusena-space-4); }
+
+/* --- Item list --- */
+.lusena-cart-list {
+  border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
+}
+/* Mobile: header border-bottom already provides the separator */
+@media (max-width: 767px) {
+  .lusena-cart-list { border-top: none; }
+}
+
+/* --- Item row (flex, matches drawer) --- */
+/* Double-class to override Dawn's component-cart-items.css (.cart-item { display: table-row/grid }) */
+.lusena-cart-item.cart-item {
+  display: flex;
+  align-items: center;
+  gap: var(--lusena-space-2);
+  padding: var(--lusena-space-3) 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
+}
+.lusena-cart-item.cart-item:last-child { border-bottom: 0; }
+
+/* --- Item image --- */
+.lusena-cart-item__media {
+  display: block;
+  width: 8rem;
+  height: 9.6rem;
+  background-color: var(--lusena-surface-2);
+  border-radius: var(--lusena-radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.lusena-cart-item__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- Item info column --- */
+.lusena-cart-item__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+/* --- Top: name + price --- */
+.lusena-cart-item__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--lusena-space-1);
+}
+.lusena-cart-item__name-wrap { min-width: 0; }
+.lusena-cart-item__vendor {
+  font-size: 1.2rem;
+  color: var(--lusena-text-2);
+  margin: 0 0 var(--lusena-space-05);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.lusena-cart-item__title {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--lusena-text-1);
+  line-height: 1.25;
+  text-decoration: none;
+  display: block;
+}
+.lusena-cart-item__title:hover { color: var(--lusena-accent-cta); }
+
+/* --- Prices (right side of top row) --- */
+.lusena-cart-item__prices {
+  text-align: right;
+  flex-shrink: 0;
+}
+.lusena-cart-item__price {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--lusena-text-1);
+  line-height: 1.25;
+}
+.lusena-cart-item__compare-price {
+  display: block;
+  font-size: 1.2rem;
+  color: var(--lusena-text-2);
+  text-decoration: line-through;
+}
+
+/* --- Options (value-only, slash-separated) --- */
+.lusena-cart-item__options {
+  font-size: 1.3rem;
+  color: var(--lusena-text-2);
+  margin: var(--lusena-space-05) 0 0;
+}
+
+/* --- Properties --- */
+.lusena-cart-item__properties {
+  margin-top: 0.4rem;
+}
+.lusena-cart-item__property {
+  font-size: 1.2rem;
+  line-height: 1.4;
+  color: var(--lusena-text-2);
+  margin: 0;
+}
+.lusena-cart-item__property-label {
+  font-weight: 500;
+  color: var(--lusena-text-1);
+}
+.lusena-cart-item__upload-link {
+  color: var(--lusena-accent-cta);
+  text-decoration: underline;
+}
+
+/* --- Discounts --- */
+.lusena-cart-item__discounts {
+  list-style: none;
+  padding: 0;
+  margin: var(--lusena-space-1) 0 0;
+}
+.lusena-cart-item__discount {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1.2rem;
+  color: var(--lusena-accent-cta);
+  font-weight: 500;
+}
+.lusena-cart-item__discount-icon { display: flex; width: 1.4rem; height: 1.4rem; }
+.lusena-cart-item__discount-icon svg { width: 100%; height: 100%; }
+
+/* --- Bottom row (qty + remove) - handled by lusena-cart-quantity snippet --- */
+.lusena-cart-item__bottom {
+  margin-top: var(--lusena-space-1);
+}
+.lusena-cart-item__bottom quantity-popover {
+  display: block;
+}
+.lusena-cart-item__bottom .lusena-cart-qty {
+  justify-content: space-between;
+}
+
+/* --- Loading state (scoped to cart-items to avoid bleed into cart drawer) --- */
+cart-items .cart__items--disabled { pointer-events: none; opacity: 0.5; }
+cart-items .loading__spinner { display: flex; align-items: center; justify-content: center; }
+cart-items .loading__spinner.hidden { display: none; }
+cart-items .loading__spinner svg { width: 2rem; height: 2rem; animation: lusena-spin 600ms linear infinite; }
+@keyframes lusena-spin { to { transform: rotate(360deg); } }
+
+/* === UPSELL ZONE (cart page) === */
+.lusena-cart-upsell :where(p) { margin: 0; }
+.lusena-cart-upsell .lusena-btn--size-xs { min-height: auto; }
+
+.lusena-cart-upsell {
+  padding: var(--lusena-space-2);
+  border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
+  background-color: color-mix(in srgb, var(--lusena-surface-2) 50%, transparent);
+  margin-left: calc(-1 * var(--lusena-space-2));
+  margin-right: calc(-1 * var(--lusena-space-2));
+}
+@media (min-width: 768px) {
+  .lusena-cart-upsell {
+    margin-left: calc(-1 * var(--lusena-space-4));
+    margin-right: calc(-1 * var(--lusena-space-4));
+    padding-left: var(--lusena-space-4);
+    padding-right: var(--lusena-space-4);
+  }
+}
+
+.lusena-cart-upsell__label {
+  font-family: var(--lusena-font-brand);
+  font-size: 1.2rem;
+  line-height: 1.4;
+  color: var(--lusena-text-2);
+  margin: 0 0 1rem;
+}
+
+/* --- Unified card container (scoped to cart page — prevents bleed into cart drawer) --- */
+.lusena-cart-upsell .lusena-upsell-card {
+  padding: var(--lusena-space-2);
+  background: var(--lusena-color-n0);
+  border-radius: var(--lusena-btn-radius);
+  border: 1px solid color-mix(in srgb, var(--lusena-text-2) 5%, transparent);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  border-left: 0.25rem solid color-mix(in srgb, var(--lusena-accent-cta) 40%, transparent);
+}
+
+/* --- Cross-sell card (horizontal) --- */
+.lusena-cart-upsell .lusena-upsell-card__xs-row { display: flex; gap: 1.2rem; align-items: center; }
+.lusena-cart-upsell .lusena-upsell-card__xs-img { width: 5.6rem; height: 5.6rem; background: var(--lusena-surface-2); border: 1px dashed color-mix(in srgb, var(--lusena-text-2) 20%, transparent); border-radius: var(--lusena-radius-sm); overflow: hidden; flex-shrink: 0; }
+.lusena-cart-upsell .lusena-upsell-card__xs-img:empty { display: block; } /* override Dawn base.css div:empty { display:none } */
+.lusena-cart-upsell .lusena-upsell-card__xs-img img { width: 100%; height: 100%; object-fit: cover; }
+.lusena-cart-upsell .lusena-upsell-card__xs-info { flex: 1; min-width: 0; }
+.lusena-cart-upsell .lusena-upsell-card__xs-title { font-size: 1.3rem; font-weight: 500; color: var(--lusena-text-1); line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.lusena-cart-upsell .lusena-upsell-card__xs-msg { font-size: 1.15rem; color: var(--lusena-text-2); margin-top: var(--lusena-space-05); line-height: 1.375; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.lusena-cart-upsell .lusena-upsell-card__xs-color { font-size: 1.05rem; line-height: 1.5; color: color-mix(in srgb, var(--lusena-text-2) 70%, transparent); margin-top: var(--lusena-space-05); }
+.lusena-cart-upsell .lusena-upsell-card__xs-color span { color: var(--lusena-text-1); font-weight: 500; }
+.lusena-cart-upsell .lusena-upsell-card__xs-bottom { display: flex; align-items: center; justify-content: space-between; gap: var(--lusena-space-1); margin-top: var(--lusena-space-1); padding-top: var(--lusena-space-1); border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 5%, transparent); }
+.lusena-cart-upsell .lusena-upsell-card__xs-price { font-size: 1.4rem; font-weight: 500; color: var(--lusena-text-1); font-variant-numeric: tabular-nums; }
+
+/* --- Bundle card (two-tile) --- */
+.lusena-cart-upsell .lusena-upsell-card__bn-headline { font-size: 1.35rem; font-weight: 500; color: var(--lusena-text-1); line-height: 1.35; margin-bottom: var(--lusena-space-1); }
+.lusena-cart-upsell .lusena-upsell-card__bn-tiles { display: flex; gap: var(--lusena-space-1); align-items: stretch; }
+.lusena-cart-upsell .lusena-upsell-card__bn-have { flex: 0 0 30%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--lusena-space-1) var(--lusena-space-05); border-radius: var(--lusena-radius-sm); background: color-mix(in srgb, var(--lusena-surface-2) 40%, transparent); }
+.lusena-cart-upsell .lusena-upsell-card__bn-have-img { width: 3.8rem; height: 3.8rem; border-radius: 0.4rem; overflow: visible; margin-top: 0.7rem; margin-bottom: 0.5rem; position: relative; background: var(--lusena-surface-2); border: 1px dashed color-mix(in srgb, var(--lusena-text-2) 20%, transparent); }
+.lusena-cart-upsell .lusena-upsell-card__bn-have-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.75; border-radius: 0.4rem; }
+.lusena-cart-upsell .lusena-upsell-card__bn-check { position: absolute; top: -0.7rem; right: -0.7rem; width: 1.4rem; height: 1.4rem; background: var(--lusena-accent-cta); border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 1; }
+.lusena-cart-upsell .lusena-upsell-card__bn-check svg { width: 0.8rem; height: 0.8rem; color: #fff; }
+.lusena-cart-upsell .lusena-upsell-card__bn-have-name { font-size: 1rem; font-weight: 500; color: #888; line-height: 1.2; }
+.lusena-cart-upsell .lusena-upsell-card__bn-have-status { font-size: 0.9rem; color: var(--lusena-accent-cta); margin-top: 0.2rem; font-weight: 500; }
+.lusena-cart-upsell .lusena-upsell-card__bn-plus { font-size: 1.6rem; color: var(--lusena-text-2); font-weight: 400; flex-shrink: 0; align-self: center; }
+.lusena-cart-upsell .lusena-upsell-card__bn-add { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: var(--lusena-space-1); border-radius: var(--lusena-radius-sm); background: color-mix(in srgb, var(--lusena-surface-2) 50%, transparent); border: 1px solid color-mix(in srgb, var(--lusena-text-2) 6%, transparent); }
+.lusena-cart-upsell .lusena-upsell-card__bn-add-img { width: 5.6rem; height: 5.6rem; border-radius: var(--lusena-radius-sm); overflow: hidden; margin-bottom: 0.6rem; background: var(--lusena-surface-2); border: 1px dashed color-mix(in srgb, var(--lusena-text-2) 20%, transparent); }
+.lusena-cart-upsell .lusena-upsell-card__bn-add-img:empty { display: block; } /* override Dawn base.css div:empty { display:none } */
+.lusena-cart-upsell .lusena-upsell-card__bn-add-img img { width: 100%; height: 100%; object-fit: cover; }
+.lusena-cart-upsell .lusena-upsell-card__bn-add-name { font-size: 1.2rem; font-weight: 500; color: var(--lusena-text-1); line-height: 1.25; }
+.lusena-cart-upsell .lusena-upsell-card__bn-bottom { display: flex; align-items: center; justify-content: space-between; gap: var(--lusena-space-1); margin-top: var(--lusena-space-1); padding-top: var(--lusena-space-1); border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 5%, transparent); }
+.lusena-cart-upsell .lusena-upsell-card__bn-pricing { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+.lusena-cart-upsell .lusena-upsell-card__bn-price { font-size: 1.4rem; font-weight: 500; color: var(--lusena-text-1); font-variant-numeric: tabular-nums; }
+.lusena-cart-upsell .lusena-upsell-card__bn-was { font-size: 1.4rem; color: var(--lusena-text-2); text-decoration: line-through; }
+
+/* --- Cross-sell loading dots (cart page specific) --- */
+.lusena-cart-upsell .lusena-upsell-card__dots { display: inline-flex; gap: 0.3rem; align-items: center; justify-content: center; }
+.lusena-cart-upsell .lusena-upsell-card__dots.hidden { display: none; }
+.lusena-cart-upsell .lusena-upsell-card__dots span { width: 0.4rem; height: 0.4rem; border-radius: 50%; background: currentColor; animation: lusena-dot-pulse 1.2s infinite ease-in-out; }
+.lusena-cart-upsell .lusena-upsell-card__dots span:nth-child(2) { animation-delay: 0.2s; }
+.lusena-cart-upsell .lusena-upsell-card__dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes lusena-dot-pulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+/* --- Responsive - desktop image larger for page proportions --- */
+@media (min-width: 768px) {
+  .lusena-cart-header__title { font-size: 3.2rem; }
+  .lusena-cart-item__media { width: 10rem; height: 12rem; }
+  /* Constrain card + label width, right-align, remove accent border */
+  .lusena-cart-upsell .lusena-cart-upsell__label { max-width: 42rem; margin-left: auto; }
+  .lusena-cart-upsell .lusena-upsell-card { max-width: 42rem; margin-left: auto; border-left: none; }
+}
+
+
+/* =======================================================================
+   2. CART FOOTER  (from sections/lusena-cart-footer.liquid)
+   ======================================================================= */
+
+/* --- Footer layout --- */
+.lusena-cart-footer.is-empty { display: none; }
+.lusena-cart-footer__inner {
+  padding: var(--lusena-space-3) 0;
+}
+/* Block reorder: Totals → Shipping → CTA (HTML has Shipping first) */
+.lusena-cart-footer__blocks .js-contents { order: -2; }
+.lusena-cart-footer__blocks .lusena-cart-meta { order: -1; }
+/* Mobile: match drawer footer background */
+@media (max-width: 767px) {
+  .lusena-cart-footer-wrapper {
+    background-color: var(--lusena-color-n0);
+  }
+}
+/* Desktop: no border - upsell tinted bg provides separation; totals border-top handles the rest */
+.lusena-cart-footer__blocks {
+  display: grid;
+  gap: var(--lusena-space-3);
+  max-width: 48rem;
+  margin-left: auto;
+}
+
+/* --- Gift note accordion --- */
+.lusena-cart-gift { margin-bottom: var(--lusena-space-3); }
+.lusena-cart-gift .lusena-accordion__icon svg { width: 1.2rem; height: 1.2rem; }
+
+/* --- Cart note --- */
+.lusena-cart-note { margin-bottom: var(--lusena-space-3); }
+
+/* --- Meta section (free shipping) --- */
+.lusena-cart-meta { display: grid; gap: var(--lusena-space-2); }
+
+/* --- Free shipping bar (matches drawer pill style) --- */
+.lusena-free-shipping > * + * { margin-top: var(--lusena-space-1); }
+.lusena-free-shipping__msg {
+  display: flex;
+  align-items: center;
+  gap: var(--lusena-space-1);
+  justify-content: center;
+}
+.lusena-free-shipping__text {
+  font-size: 1.3rem;
+  color: var(--lusena-text-2);
+  line-height: 1.375;
+}
+.lusena-free-shipping__text--qualified {
+  color: var(--lusena-status-success);
+  font-weight: 500;
+}
+.lusena-free-shipping__amount {
+  font-weight: 500;
+  color: var(--lusena-text-1);
+  font-variant-numeric: tabular-nums;
+}
+.lusena-free-shipping__track {
+  width: 100%;
+  height: 0.6rem;
+  border-radius: 9999px;
+  overflow: hidden;
+  background: var(--lusena-surface-2);
+}
+.lusena-free-shipping__fill {
+  display: block;
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 500ms ease-in-out, background-color 250ms ease;
+  background: var(--lusena-accent-cta);
+}
+.lusena-free-shipping__fill--qualified {
+  background: var(--lusena-status-success);
+}
+
+/* --- Cart-level discounts --- */
+.lusena-cart-discounts {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--lusena-space-2);
+}
+.lusena-cart-discounts__item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1.4rem;
+  color: var(--lusena-accent-cta);
+  font-weight: 500;
+  padding: var(--lusena-space-1) 0;
+}
+.lusena-cart-discounts__icon { display: flex; width: 1.6rem; height: 1.6rem; }
+.lusena-cart-discounts__icon svg { width: 100%; height: 100%; }
+
+/* --- Totals (matches drawer: label left, value right) --- */
+.lusena-cart-totals {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--lusena-space-2) 0;
+  border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 10%, transparent);
+}
+.lusena-cart-totals__label {
+  font-size: 1.4rem;
+  color: var(--lusena-text-2);
+  margin: 0;
+}
+.lusena-cart-totals__value {
+  font-family: var(--lusena-font-brand);
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--lusena-text-1);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+
+/* --- Tax note (hidden - totals + shipping bar are sufficient) --- */
+.lusena-cart-tax { display: none; }
+
+/* Mobile: match drawer footer spacing (16px gaps, no totals border/padding) */
+@media (max-width: 767px) {
+  .lusena-cart-footer__blocks { gap: var(--lusena-space-2); }
+  .lusena-cart-totals { border-top: none; padding: 0; }
+}
+
+/* --- CTA block (matches drawer) --- */
+.lusena-cart-ctas { display: grid; gap: var(--lusena-space-2); }
+.lusena-cart-ctas__trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lusena-space-1);
+  padding-top: var(--lusena-space-05);
+}
+.lusena-cart-ctas__trust-text {
+  font-size: 1.3rem;
+  color: var(--lusena-text-2);
+}
+
+/* --- Continue shopping link --- */
+.lusena-cart-ctas__continue {
+  text-align: center;
+}
+.lusena-cart-ctas__continue-link {
+  font-size: 1.4rem;
+  color: var(--lusena-text-2);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: color var(--lusena-transition-fast);
+}
+.lusena-cart-ctas__continue-link:hover { color: var(--lusena-accent-cta); }
+
+/* --- Dynamic checkout buttons --- */
+.lusena-cart-dynamic-checkout { margin-top: var(--lusena-space-2); }
+
+
+/* =======================================================================
+   3. CART QUANTITY  (from snippets/lusena-cart-quantity.liquid)
+   ======================================================================= */
+
+/* --- Qty row: stepper + remove side by side --- */
+.lusena-cart-qty {
+  display: flex;
+  align-items: center;
+  gap: var(--lusena-space-2);
+}
+
+/* --- Fix: Dawn's global.js checks event.target.name on qty buttons.
+       Our lusena-icon renders bare SVG (no .svg-wrapper), so clicks on the icon
+       make event.target the SVG, not the button. pointer-events: none forces
+       clicks through to the button element. --- */
+.lusena-cart-qty__group .quantity__button > * {
+  pointer-events: none;
+}
+
+/* --- Stepper bordered group - double-class to override Dawn .quantity --- */
+.lusena-cart-qty__group.quantity {
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  min-height: 0;
+  border: 1px solid color-mix(in srgb, var(--lusena-text-2) 20%, transparent);
+  border-radius: var(--lusena-btn-radius);
+  color: inherit;
+  position: relative;
+}
+/* Kill Dawn .quantity::before/::after border overlay */
+.lusena-cart-qty__group.quantity::before,
+.lusena-cart-qty__group.quantity::after { display: none; }
+.lusena-cart-qty__group .lusena-icon-button { border-radius: 0; }
+.lusena-cart-qty__group .lusena-icon-button:first-child {
+  border-radius: var(--lusena-btn-radius) 0 0 var(--lusena-btn-radius);
+}
+.lusena-cart-qty__group .lusena-icon-button:last-child {
+  border-radius: 0 var(--lusena-btn-radius) var(--lusena-btn-radius) 0;
+}
+
+/* --- Qty display - double-class to override Dawn base.css .quantity__input --- */
+.lusena-cart-qty__group .lusena-cart-qty__display {
+  width: 2.8rem;
+  flex-grow: 0;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--lusena-font-ui);
+  color: var(--lusena-text-1);
+  opacity: 1;
+  border: none;
+  background: transparent;
+  padding: 0;
+  -moz-appearance: textfield;
+}
+.lusena-cart-qty__group .lusena-cart-qty__display::-webkit-outer-spin-button,
+.lusena-cart-qty__group .lusena-cart-qty__display::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* --- Remove button (text "Usuń", matches drawer) --- */
+.lusena-cart-qty__remove {
+  font-size: 1.3rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--lusena-space-05) var(--lusena-space-1);
+  color: var(--lusena-text-2);
+  text-decoration: none;
+  transition: color var(--lusena-transition-fast);
+}
+@media (hover: hover) {
+  .lusena-cart-qty__remove:hover {
+    color: var(--lusena-status-error);
+  }
+}
+
+/* --- Info button (qty rules / volume pricing) --- */
+.lusena-cart-qty__stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--lusena-space-05);
+}
+.lusena-cart-qty__info,
+.lusena-cart-qty__info-mobile {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: none;
+  color: var(--lusena-text-2);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: var(--lusena-space-05);
+}
+.lusena-cart-qty__info svg,
+.lusena-cart-qty__info-mobile svg { width: 1.6rem; height: 1.6rem; }
+.lusena-cart-qty__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--lusena-space-05);
+}
+.lusena-cart-qty__close svg { width: 1.6rem; height: 1.6rem; }
+
+/* --- Volume pricing list --- */
+.lusena-cart-qty__vol-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--lusena-space-1) 0 0;
+  font-size: 1.2rem;
+}
+.lusena-cart-qty__vol-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--lusena-space-05) 0;
+  border-bottom: 1px solid var(--lusena-color-n100);
+}
+
+/* --- Error styling - hidden by default, visible when JS injects text --- */
+.cart-item__error-text:empty { display: none; }
+.cart-item__error-text:empty + .svg-wrapper { display: none; }
+.cart-item__error:not(:has(.cart-item__error-text:not(:empty))) { display: none; }
+.cart-item__error { margin-top: var(--lusena-space-1); }
+.cart-item__error-text {
+  color: var(--lusena-status-error);
+  font-size: 1.2rem;
+  line-height: 1.4;
+}

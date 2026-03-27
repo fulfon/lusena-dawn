@@ -139,7 +139,7 @@ Decision question template (copy/paste and adapt):
 
 Create a plan file in `/docs` that can be used as an implementation contract.
 
-Use `docs/_Parity_Plan_Template.md` as the required base structure:
+Use `memory-bank/doc/patterns/_Parity_Plan_Template.md` as the required base structure:
 
 1. Copy the template to a new plan file for the fragment (for example `docs/PDP_[Fragment]_Parity_Plan.md`).
 2. Fill every section in the copied template (do not leave placeholder fields unresolved).
@@ -162,7 +162,7 @@ Minimum required sections:
 - Verification checklist (computed-style checks + manual/user + optional Playwright).
 - Risks/edge cases.
 
-Example of expected detail/structure: `docs/PDP_Gallery_Parity_Plan.md`.
+For expected detail/structure, follow the template: `memory-bank/doc/patterns/_Parity_Plan_Template.md`.
 
 ### 4.5. Confirmation gate (mandatory)
 

@@ -28,10 +28,12 @@
    └── lusena-footer.css — footer section (dark bg, grid, newsletter, bottom bar)
 
 5. Page-specific assets (loaded per-page via <link> in their section)
-   └── lusena-pdp.css (~34KB) — PDP + sticky ATC styles (loaded in lusena-main-product.liquid)
+   ├── lusena-pdp.css (~34KB) — PDP + sticky ATC styles (loaded in lusena-main-product.liquid)
+   ├── lusena-cart-page.css — cart items + footer + quantity styles (loaded in lusena-cart-items.liquid)
+   └── lusena-search.css — search page styles (loaded in lusena-search.liquid)
 
 6. Component {% stylesheet %} blocks (small, section-scoped CSS only)
-   └── Compiled into compiled_assets/styles.css (~38KB after extraction, ~73KB hard limit)
+   └── Compiled into compiled_assets/styles.css (~59KB after 2026-03-26 extraction, ~73KB hard limit)
 ```
 
 ## compiled_assets truncation — CRITICAL pattern
@@ -64,7 +66,7 @@ After adding or expanding CSS in any `{% stylesheet %}` block:
 3. Add `{{ 'lusena-{section-name}.css' | asset_url | stylesheet_tag }}` to `theme.liquid` (global sections) or the section file itself (page-specific sections)
 4. Verify the page visually — CSS is identical, just loaded differently
 
-### Current inventory of standalone assets (2026-03-15)
+### Current inventory of standalone assets (2026-03-26)
 
 | File | Scope | Loaded in |
 |------|-------|-----------|
@@ -74,6 +76,8 @@ After adding or expanding CSS in any `{% stylesheet %}` block:
 | `lusena-hero.css` | Hero section | theme.liquid |
 | `lusena-footer.css` | Footer section | theme.liquid |
 | `lusena-pdp.css` | PDP page | lusena-main-product.liquid |
+| `lusena-cart-page.css` | Cart page (items + footer + qty) | lusena-cart-items.liquid |
+| `lusena-search.css` | Search page | lusena-search.liquid |
 | `lusena-bundles.css` | Bundle card grid | lusena-bundles.liquid (per-section) |
 | `lusena-icon-animations.css` | Animated icon keyframes | lusena-pdp-feature-highlights.liquid (per-section) |
 
@@ -104,6 +108,37 @@ Dawn adds `margin-top: var(--spacing-sections-desktop)` between `.section` wrapp
   margin-top: 0;
 }
 ```
+
+## CSS selector scoping — MANDATORY for shared class names
+
+### The problem
+
+The cart drawer loads its inline `<style>` on **every page**. Page-specific CSS files (e.g., `lusena-cart-page.css`) load only on their page. If both define rules for the same class name (e.g., `.lusena-upsell-card`), the styles collide on that page — the drawer looks different depending on which page you're on.
+
+### The rule
+
+**Every `.lusena-upsell-card__*` selector (or any shared component class) MUST be scoped under its surface's wrapper:**
+
+| Surface | Wrapper scope | Example |
+|---------|--------------|---------|
+| Cart drawer | `.lusena-cart-drawer__upsell` | `.lusena-cart-drawer__upsell .lusena-upsell-card__bn-headline { ... }` |
+| Cart page | `.lusena-cart-upsell` | `.lusena-cart-upsell .lusena-upsell-card__bn-headline { ... }` |
+| Future PDP upsell | `.lusena-pdp-upsell` (or similar) | `.lusena-pdp-upsell .lusena-upsell-card__bn-headline { ... }` |
+
+### Why this matters
+
+The upsell card HTML uses shared class names (`.lusena-upsell-card__*`) across multiple surfaces. Each surface styles the card differently (the drawer uses compact mobile layout, the cart page uses wider desktop layout). Without scoping:
+
+- Drawer CSS fires on every page (inline `<style>` is global) and would style any future PDP upsell widget
+- Page-specific CSS fires only on that page, making the drawer look inconsistent
+
+### When writing new component CSS
+
+1. **Before writing any selector**, ask: "Does another surface use this class name?"
+2. If yes (or if it might in the future), **always scope** under the surface's wrapper element
+3. Never use bare `.lusena-upsell-card__*`, `.loading__spinner`, or other shared selectors — always prefix with the surface wrapper
+
+This was learned the hard way on 2026-03-26 when extracting cart CSS to a standalone file exposed pre-existing bleed between the cart page and cart drawer.
 
 ## Key constraints
 

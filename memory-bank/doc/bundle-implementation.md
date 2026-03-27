@@ -237,7 +237,7 @@ Simple Bundles operates entirely server-side via Cart Transform (V2) or Order Ed
 
 1. **Simple Bundles option values:** Nocna Rutyna updated to Polish names (Czarny/Brudny róż/Szampan) ✓. Piękny Sen and Scrunchie Trio still have old placeholder names (Gray/Gold/Pink/Clear) — will be updated later. Template renders whatever's in the metafield, so no code dependency on specific names.
 
-2. **`compare_at_price` cleared by Simple Bundles Price Sync** (confirmed 2026-03-20). The app's API call overwrites the variant and doesn't include `compareAtPrice`, resetting it to null. **Solution: use `lusena.bundle_original_price` metafield instead.** See `docs/product-metafields-reference.md` → "Bundle-only metafields" for setup instructions. Values: Nocna Rutyna = 508, Piękny Sen = 438, Scrunchie Trio = 177.
+2. **`compare_at_price` cleared by Simple Bundles Price Sync** (confirmed 2026-03-20). The app's API call overwrites the variant and doesn't include `compareAtPrice`, resetting it to null. **Solution: use `lusena.bundle_original_price` metafield instead.** See `memory-bank/doc/products/product-metafields-reference.md` → "Bundle-only metafields" for setup instructions. Values: Nocna Rutyna = 508, Piękny Sen = 438, Scrunchie Trio = 177.
 
 ---
 

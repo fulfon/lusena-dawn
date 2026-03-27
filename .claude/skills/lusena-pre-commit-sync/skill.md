@@ -61,9 +61,6 @@ Read ALL of these files (use parallel reads where possible):
 **Pattern docs (read all):**
 - `memory-bank/doc/patterns/*.md`
 
-**Changelog:**
-- `memory-bank/doc/changelog/theme-changes.md`
-
 **Product docs (read only if product-related changes detected):**
 - `memory-bank/doc/products/*.md`
 
@@ -84,8 +81,6 @@ Files to update:
   - memory-bank/activeContext.md — update current focus and recent work
   - memory-bank/progress.md — check off completed milestones
   - memory-bank/doc/features/pdp.md — new section added
-  - memory-bank/doc/changelog/theme-changes.md — new entry
-
 Files to create:
   - memory-bank/doc/features/contact-page.md — new page not yet documented
 
@@ -131,21 +126,6 @@ Execute all updates. Follow these rules per file:
 
 #### Product docs `doc/products/*.md` (update if product data changed)
 - Metafields, pricing, variants, SEO
-
-#### Changelog `doc/changelog/theme-changes.md` (always update)
-
-**Before editing**, fix stale `(current)` markers:
-- If the top entry says `### (current) — ...` but `git log -1` shows a different subject, replace `(current)` with the actual hash and move it to the summary list if needed.
-
-**Add new entry** as `### (current) — <descriptive title>`:
-- `**Goal:**` — 1-2 sentences
-- `**What changed**` — bullets covering all significant changes
-- `**Key files**` — high-signal file list
-
-**Maintain the rolling summary list** at the bottom:
-- Add `(current)` entry to the top of "All commits" list
-- Keep only the **latest 8** detailed entries; older ones become summary lines
-- Format: `<date> — <hash> — <subject>` (descending by date)
 
 ### Phase 5 — Summary
 

@@ -413,4 +413,4 @@ Before Task 6 verification, the owner must create the `lusena.bundle_nudge_map` 
 {"silk-scrunchie": "dwie kolejne jedwabne gumki"}
 ```
 
-After setting metafields, update `docs/product-metafields-reference.md` with the new `lusena.bundle_nudge_map` definition (type: json, purpose: maps trigger product handle to added item label for nudge card).
+After setting metafields, update `memory-bank/doc/products/product-metafields-reference.md` with the new `lusena.bundle_nudge_map` definition (type: json, purpose: maps trigger product handle to added item label for nudge card).

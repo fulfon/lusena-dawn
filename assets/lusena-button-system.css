@@ -196,26 +196,29 @@
   transition: opacity 150ms ease;
 }
 
+/* Spinner: always positioned absolutely, hidden via opacity (enables cross-fade) */
 .lusena-btn > .loading__spinner {
-  display: none;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-}
-
-.lusena-btn.loading > .loading__spinner {
   position: absolute;
   inset: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  opacity: 0;
   z-index: 2;
   pointer-events: none;
+  transition: opacity 150ms ease;
 }
 
-.lusena-btn.loading > .loading__spinner.hidden {
-  display: none;
+/* Override global .hidden {display:none!important} — opacity handles visibility */
+.lusena-btn > .loading__spinner.hidden {
+  display: inline-flex !important;
+}
+
+.lusena-btn.loading > .loading__spinner {
+  opacity: 1;
 }
 
 .lusena-btn.loading .lusena-btn__content {
@@ -354,6 +357,7 @@
 @media (prefers-reduced-motion: reduce) {
   .lusena-btn,
   .lusena-btn__content,
+  .lusena-btn > .loading__spinner,
   .lusena-icon-button {
     transition-duration: 0.15s !important;
   }

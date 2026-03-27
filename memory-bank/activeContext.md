@@ -1,68 +1,71 @@
 # Active Context
 
-*Last updated: 2026-03-25*
+*Last updated: 2026-03-27*
 
 ## Current focus
 
-**Cart upsell UI — cart drawer and cart page fully polished, ready for end-to-end testing.** Both surfaces share unified design: gain-framed headlines, real product titles/images via restructured `bundle_nudge_map`, scrollable upsell positioning, consistent cross-sell bottom-row layout. compiled_assets truncation at 85KB needs extraction in next session.
+**Cart system fully polished — AJAX re-rendering, bidirectional sync, CSS extraction complete.** Cart page and drawer share unified upsell design with real product data. No more full-page reloads. compiled_assets truncation resolved (~59KB, well under 73KB limit). Documentation reorganized (30+ obsolete docs/ files deleted, key references moved to memory-bank/doc/).
 
 ## Recent completed work
 
-### Cart upsell UI polish — cart drawer + cart page (2026-03-25)
+### Cart AJAX re-rendering + CSS extraction + polish (2026-03-26/27)
 
-**Bug fixes:**
-- **Image placeholder 0x0 root cause found:** Dawn's `base.css` line 473 has `div:empty { display: none }` — hides ALL empty divs. Fixed with `.lusena-upsell-card__bn-add-img:empty { display: block }` (specificity `0,2,0` beats `div:empty` `0,1,1`). Same fix applied to cross-sell image (`.lusena-upsell-card__xs-img:empty`)
-- **HTML nesting error:** Moving upsell inside scrollable body broke `<cart-drawer>` nesting — body `</div>` was placed outside `{%- endif -%}`. Fixed and verified via `shopify theme check` (0 errors)
+**CSS extraction (compiled_assets truncation fix):**
+- Extracted cart items/footer/quantity CSS from `{% stylesheet %}` → `assets/lusena-cart-page.css` (634 lines)
+- Extracted search page CSS from `{% stylesheet %}` → `assets/lusena-search.css` (156 lines)
+- compiled_assets reduced from ~85KB (truncated) to ~59KB (safe margin)
+- All original `{% stylesheet %}` blocks replaced with `/* CSS extracted to ... */` comments
 
-**Cart drawer changes:**
-- Removed redundant savings chip ("Oszczedzasz X zl") — headline already communicates savings
-- Removed "Kontynuuj zakupy" button — redundant with X close button
-- "Was" price: bigger (1.4rem) and darker (`--lusena-text-2`) — now visible as discount anchor
-- Image placeholders: dashed border + background on all empty image containers (bundle have/add tiles + cross-sell)
-- Check mark badge: repositioned to top-right corner (`top: -0.7rem; right: -0.7rem`), parent `overflow: visible`, img gets own `border-radius`
-- Plus sign: darker color (`--lusena-text-2`), heavier weight (400)
-- Tiles vertically centered: `justify-content: center` on both tiles, `margin-top: 0.7rem` on have-img to compensate for badge overhang
-- Mobile `justify-content` reset to `flex-start` (prevents horizontal centering in row direction)
-- **Upsell moved inside scrollable body** — no longer fixed between body and footer. Scrolls naturally with cart items on all screen sizes. Eliminated all height-threshold media queries.
-- Cross-sell card restructured: price + button moved to bottom row (matches bundle card's `bn-bottom` pattern)
+**Cart page AJAX section re-rendering (replaces full-page reloads):**
+- Added `reRenderSections()` with `getSectionConfigs()` and `getSectionNames()` helpers
+- Bundle swap and cross-sell add now use Shopify section rendering API (`sections` param)
+- Override of `cart-items.onCartUpdate()` for full re-render: items + footer + empty state toggle
+- Cart page publishes `PUB_SUB_EVENTS.cartUpdate` for bidirectional sync with drawer
 
-**Data architecture:**
-- `bundle_nudge_map` metafield restructured from flat strings to objects: `{"label": "accusative name", "handle": "product-handle", "tile_label": "optional override"}`
-- Real product titles resolved via `all_products[nudge_entry.handle]` — tile shows actual product name (nominative) while headline keeps accusative form
-- Real product images resolved via `added_component.featured_image` — shows component product's image instead of bundle's empty image
-- `tile_label` field for Scrunchie Trio: "2x Scrunchie jedwabny"
-- Fallback chain: `nudge_entry.label | default: nudge_entry` for backward compatibility with old flat string format
+**Cart drawer → section promotion:**
+- `theme.liquid`: changed `render 'cart-drawer'` to `section 'cart-drawer'` — enables section rendering API
 
-**Cart page changes (lusena-cart-items.liquid):**
-- All drawer changes mirrored: nudge_map restructure, real titles/images, no savings chip, visible "was" price, placeholder styling, check mark repositioning, plus sign visibility, tile centering, cross-sell bottom-row layout
-- Desktop: upsell card constrained to `max-width: 42rem`, right-aligned (`margin-left: auto`), accent `border-left` removed
-- Desktop: label aligned with card (same `max-width` + `margin-left: auto`)
-- Full-width separator line preserved (`.lusena-cart-upsell` border-top spans full content width)
+**Cart drawer improvements:**
+- Per-item loading state: `.lusena-cart-drawer__item--loading` with opacity fade during qty changes
+- `enableItemLoading()` / `disableItemLoading()` helpers with button disable/enable
+- Bidirectional sync: drawer re-renders when cart page changes cart (pubsub subscriber)
+- Fixed `pubsub.js` race condition — wrapped subscribers in `DOMContentLoaded` handler
+- Scoped all upsell CSS selectors to `.lusena-cart-drawer__upsell` (prevents bleed to cart page)
+- CSS refinements: item info `justify-content: flex-start`, item name font-family/letter-spacing, price `display: block`/`line-height`, remove button `min-height: auto`, shipping bar selector specificity
 
-**Compact layout (max-height: 700px):**
-- Kept for iPhone SE and small Androids: reduced header/footer padding, smaller upsell zone padding, smaller image sizes
+**Cart item properties enhancement:**
+- Properties wrapped in `.lusena-cart-item__properties` container with pre-check for visibility
+- Property labels cleaned up: split on ` - ` and ` (` to remove bundle suffixes
+- Values escaped for XSS safety
 
-**Metafield values set in Shopify admin:**
-- Nocna Rutyna: `{"poszewka-jedwabna":{"label":"czepek jedwabny","handle":"silk-bonnet"},"silk-bonnet":{"label":"poszewke jedwabna","handle":"poszewka-jedwabna"}}`
-- Piekny Sen: `{"poszewka-jedwabna":{"label":"maske 3D","handle":"jedwabna-maska-3d"},"jedwabna-maska-3d":{"label":"poszewke jedwabna","handle":"poszewka-jedwabna"}}`
-- Scrunchie Trio: `{"silk-scrunchie":{"label":"dwie kolejne jedwabne gumki","handle":"silk-scrunchie","tile_label":"2x Scrunchie jedwabny"}}`
+**Money filter & copy normalization:**
+- `money`/`money_with_currency` → `money_without_trailing_zeros` across cart (footer, items)
+- Price-per-night suffix: `" / noc"` → `"/noc"` (PDP section, sticky ATC, product card, product.json)
+- Typo fix: "zaoszczedz" → "zaoszczędź" (proper Polish ę) in cart drawer and cart items
 
-### Previous session summary (2026-03-24)
+**PDP fixes:**
+- Removed scroll-trigger animation from payment badges (should render statically)
+- Proof chips: `requestAnimationFrame(balance)` → `balance()` (synchronous)
 
-Cart upsell UI redesign — brainstorming + initial implementation. 5 commits. See `docs/superpowers/specs/2026-03-24-cart-upsell-ui-redesign.md` for spec.
+**Button system & animations:**
+- Spinner uses opacity cross-fade instead of display toggle; overrides Dawn's `.hidden {display:none!important}`
+- `animations.js`: children of `[data-cascade]` containers get stagger order via `closest()` check
+
+**Documentation reorganization:**
+- 30+ files deleted from `docs/` (completed parity plans, old references, migration plans)
+- Key docs relocated: brand → `memory-bank/doc/brand/`, product refs → `memory-bank/doc/products/`, templates → `memory-bank/doc/patterns/`
+- Changelog deleted: `memory-bank/doc/changelog/theme-changes.md`
+- Path references updated in CLAUDE.md, AGENTS.md, copilot-instructions.md, all skill files
 
 ## Next steps
 
-1. **CRITICAL: Extract cart page CSS to standalone asset** — `compiled_assets/styles.css` is 85KB, truncated at ~73KB. `lusena-cart-items.liquid` `{% stylesheet %}` block is a prime candidate for extraction to `assets/lusena-cart-page.css`. Last CSS rules are being silently dropped.
-2. **End-to-end testing** — cross-sell (all products), all 3 bundle swaps (Nocna Rutyna, Piekny Sen, Scrunchie Trio), cart page + cart drawer
-3. **Commit** all current changes
-4. **#13 Cart merge** — detect when both bundle components are in cart separately, suggest "Zamien na zestaw"
-6. **#12 PDP bundle detection banner** — "Masz poszewke w koszyku?" when cart has complement
-7. **Phase 1B: PDP cross-sell checkbox** — scrunchie at 39 zl on poszewka PDP
+1. **End-to-end testing** — cross-sell (all products), all 3 bundle swaps (Nocna Rutyna, Piekny Sen, Scrunchie Trio), cart page + cart drawer, AJAX re-rendering
+2. **#13 Cart merge** — detect when both bundle components are in cart separately, suggest "Zamien na zestaw"
+3. **#12 PDP bundle detection banner** — "Masz poszewke w koszyku?" when cart has complement
+4. **Phase 1B: PDP cross-sell checkbox** — scrunchie at 39 zl on poszewka PDP
 
 ## Known issues
 
-- **compiled_assets truncation (CRITICAL):** File is 85KB, silently truncated at ~73KB. Last rules in file are cut off mid-property. Cart page `{% stylesheet %}` block needs extraction to standalone CSS asset. Confirmed via Playwright: file ends mid-rule (`font-size: 1.2rem;` without closing brace).
 - `main-product.liquid` (100KB) is dead code alongside `lusena-main-product.liquid`
 - `snippets/lusena-pdp-styles.liquid` is a doc-only stub (CSS moved to `assets/lusena-pdp.css`)
 - **Swap race condition:** If `/cart/add.js` succeeds but `/cart/change.js` fails, customer has both items in cart. #13 (cart merge) will handle this.
@@ -71,14 +74,14 @@ Cart upsell UI redesign — brainstorming + initial implementation. 5 commits. S
 
 ## Architecture note
 
-**Upsell card CSS placement:**
-- Cart drawer: `<style>` tag inside `snippets/cart-drawer.liquid` (~150 lines). Not in compiled_assets.
-- Cart page: `{% stylesheet %}` block in `sections/lusena-cart-items.liquid`. Compiles into `compiled_assets/styles.css`. **Currently truncated — needs extraction.**
+**Cart drawer is now a section** (not a snippet render). `theme.liquid` uses `{%- section 'cart-drawer' -%}`. This enables Shopify's section rendering API for AJAX updates.
 
-**Upsell HTML position:**
-- Cart drawer: upsell zone is INSIDE the scrollable `.lusena-cart-drawer__body` div (after cart items, before body close). Scrolls with items on all screen sizes.
-- Cart page: upsell is inside `.js-contents` div, after cart items list.
+**Upsell card CSS scoping:**
+- Cart drawer: `<style>` tag in `snippets/cart-drawer.liquid`. All upsell selectors scoped under `.lusena-cart-drawer__upsell`.
+- Cart page: `assets/lusena-cart-page.css` (standalone file). Upsell selectors scoped under `.lusena-cart-upsell`.
+- This prevents CSS bleed between drawer (loads on every page) and cart page (loads only on /cart).
 
-**Cross-sell card layout change:** Price + button moved from right-side column (`xs-aside`) to full-width bottom row (`xs-bottom`). Same visual rhythm as bundle card's `bn-bottom`. Applied to both drawer and cart page.
-
-CSS load order unchanged. compiled_assets is now 85KB (was ~38KB noted previously — growth from cart page and other section stylesheets).
+**Bidirectional cart sync:**
+- Cart page → drawer: publishes `PUB_SUB_EVENTS.cartUpdate`, drawer subscriber fetches fresh section HTML
+- Drawer → cart page: publishes `PUB_SUB_EVENTS.cartUpdate`, cart page `onCartUpdate()` override fetches sections
+- Both use `DOMParser` to swap inner HTML of target containers

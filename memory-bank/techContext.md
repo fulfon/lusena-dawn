@@ -48,6 +48,8 @@
 - `assets/lusena-hero.css` — Hero section styles (extracted from section {% stylesheet %})
 - `assets/lusena-footer.css` — Footer section styles (extracted from section {% stylesheet %})
 - `assets/lusena-pdp.css` — All PDP-specific CSS (~34KB), loaded per-page
+- `assets/lusena-cart-page.css` — Cart page styles: items, footer, quantity stepper, upsell (634 lines, extracted from `{% stylesheet %}` blocks 2026-03-26)
+- `assets/lusena-search.css` — Search page styles: layout, grid, empty state (156 lines, extracted from `{% stylesheet %}` block 2026-03-26)
 - `assets/lusena-bundles.css` — Bundle card grid styles (loaded per-section in lusena-bundles.liquid)
 - `assets/lusena-bundle-pdp.css` — Bundle PDP buy box styles (loaded in lusena-main-bundle.liquid)
 - `assets/lusena-icon-animations.css` — Animated icon CSS keyframes + prefers-reduced-motion (loaded per-section in lusena-pdp-feature-highlights.liquid)
@@ -55,9 +57,9 @@
 
 ### CSS loading architecture
 - **Global assets in `theme.liquid`:** `lusena-foundations.css` → `lusena-button-system.css` → `lusena-header.css` → `lusena-hero.css` → `lusena-footer.css`
-- **Page-specific assets:** `lusena-pdp.css` loaded in `lusena-main-product.liquid` and `lusena-main-bundle.liquid`, `lusena-bundle-pdp.css` loaded in `lusena-main-bundle.liquid`, `lusena-bundles.css` loaded in `lusena-bundles.liquid`, `lusena-icon-animations.css` loaded in `lusena-pdp-feature-highlights.liquid`
-- **`{% stylesheet %}` compiled_assets truncation:** All `{% stylesheet %}` blocks compile into `compiled_assets/styles.css` (73KB hard limit). **CRITICAL: Currently 85KB and actively truncated** — last rules are cut off mid-property. Primary contributor: `lusena-cart-items.liquid` stylesheet block. Extraction to standalone `assets/lusena-cart-page.css` is the next priority. See `memory-bank/doc/patterns/css-architecture.md`.
-- **Cart drawer CSS:** Lives in `<style>` tag inside `snippets/cart-drawer.liquid` (~150 lines). Not in compiled_assets.
+- **Page-specific assets:** `lusena-pdp.css` loaded in `lusena-main-product.liquid` and `lusena-main-bundle.liquid`, `lusena-cart-page.css` loaded in `lusena-cart-items.liquid`, `lusena-search.css` loaded in `lusena-search.liquid`, `lusena-bundle-pdp.css` loaded in `lusena-main-bundle.liquid`, `lusena-bundles.css` loaded in `lusena-bundles.liquid`, `lusena-icon-animations.css` loaded in `lusena-pdp-feature-highlights.liquid`
+- **`{% stylesheet %}` compiled_assets:** All `{% stylesheet %}` blocks compile into `compiled_assets/styles.css` (73KB hard limit). Currently ~59KB after 2026-03-26 extraction (cart page + search CSS moved to standalone files). Safe margin maintained.
+- **Cart drawer:** Promoted from snippet render to section (`{%- section 'cart-drawer' -%}` in theme.liquid). CSS lives in `<style>` tag inside `snippets/cart-drawer.liquid` (~150 lines, not in compiled_assets). Upsell CSS selectors scoped under `.lusena-cart-drawer__upsell`.
 - **Bundle swap JS:** `assets/lusena-bundle-swap.js` — shared `LusenaBundle.swap()` for bundle add + individual remove.
 - **Preflight resets in foundations:** `button`, `a`, `img`, `video` resets (replacing old Tailwind preflight). SVG intentionally excluded — SVGs expand without explicit dimensions.
 
@@ -104,8 +106,8 @@
 
 - **Product catalog index:** `memory-bank/doc/products/README.md` — store-wide settings, product status table
 - **Per-product data:** `memory-bank/doc/products/{handle}.md` — metafields, pricing, variants, SEO, status
-- **Metafields reference:** `docs/product-metafields-reference.md` — what each field does, where it renders, creative process
-- **Setup checklist:** `docs/product-setup-checklist.md` — metafield definitions, example values per product type
+- **Metafields reference:** `memory-bank/doc/products/product-metafields-reference.md` — what each field does, where it renders, creative process
+- **Setup checklist:** `memory-bank/doc/products/product-setup-checklist.md` — metafield definitions, example values per product type
 
 ## React prototype status
 

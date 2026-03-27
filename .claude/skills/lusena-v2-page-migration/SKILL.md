@@ -13,9 +13,9 @@ Systematically migrate any page in the LUSENA Shopify theme from v1 to v2 of the
 
 ## Prerequisites — read before ANY work
 
-1. **Read the brandbook v2 changelog** — `docs/lusena_brandbook_update_changelog_v1_to_v2.md` — to understand what changed globally (positioning, copy tone, product hierarchy, etc.).
-2. **Read brandbook v2** — `docs/LUSENA_BrandBook_v2.md` — find the specific page's section specs, copy, and UX guidance.
-3. **Read the UI/UX implementation guide** — `docs/theme-brandbook-uiux.md` — to understand current design tokens, spacing tiers, component inventory, and section ordering conventions.
+1. **Read the brandbook v2 changelog** — `memory-bank/doc/brand/lusena_brandbook_update_changelog_v1_to_v2.md` — to understand what changed globally (positioning, copy tone, product hierarchy, etc.).
+2. **Read brandbook v2** — `memory-bank/doc/brand/LUSENA_BrandBook_v2.md` — find the specific page's section specs, copy, and UX guidance.
+3. **Read design tokens & patterns** — `memory-bank/doc/patterns/brand-tokens.md`, `memory-bank/doc/patterns/spacing-system.md`, `memory-bank/doc/patterns/css-architecture.md` — for current design tokens, spacing tiers, and CSS conventions.
 4. **Call `learn_shopify_api`** (Shopify Dev MCP) once before editing any Liquid files.
 
 ---
@@ -88,23 +88,7 @@ For each section that needs structural changes:
 #### Step 4: Update section order in template
 
 - Ensure the `order` array in the template JSON matches v2's recommended flow.
-- Cross-reference `docs/theme-brandbook-uiux.md` § 5.1 for ordering conventions.
-
-#### Step 5: Update `docs/theme-brandbook-uiux.md`
-
-After all edits, update the implementation guide:
-
-- **Homepage surface table** (§1) — if a new section was added to the page, add it.
-- **Component inventory** (§ component table) — add any new `lusena-*` section/snippet.
-- **Background alternation pattern** (§ bg alternation) — add new sections to the pattern.
-- **Section ordering conventions** (§5.1) — update the page's ordering row.
-
-**⚠️ ENCODING WARNING:** This file has mojibake arrow characters (`→` stored as `â†'`). The `replace_string_in_file` tool often fails on these lines. Use PowerShell line-based insertion/replacement instead:
-```powershell
-$lines = [System.Collections.ArrayList]@(Get-Content "docs\theme-brandbook-uiux.md")
-$lines.Insert($targetLineIndex, "NewSection   â†' bg-surface-X")
-$lines | Set-Content "docs\theme-brandbook-uiux.md" -Encoding UTF8
-```
+- Cross-reference `memory-bank/doc/patterns/brand-tokens.md` for design conventions.
 
 ### Phase 4: Validation
 
@@ -166,9 +150,7 @@ These rules apply to ALL copy written during migration:
    - The template JSON file (`templates/*.json`) — this is what the live page uses.
    - The schema `default` values in the section `.liquid` file — this is what new instances get.
 
-4. **Encoding in theme-brandbook-uiux.md** — Arrow characters are double-encoded. Use PowerShell for edits to that file (see Phase 3, Step 5).
-
-5. **Don't touch Dawn base files** — If a `lusena-*` version exists, always edit that. Dawn's originals (`header.liquid`, `footer.liquid`, `main-product.liquid`) are NOT used on the live store.
+4. **Don't touch Dawn base files** — If a `lusena-*` version exists, always edit that. Dawn's originals (`header.liquid`, `footer.liquid`, `main-product.liquid`) are NOT used on the live store.
 
 6. **Spacing classes not inline styles** — Use `lusena-spacing--standard` etc., not `padding: 64px 0`. See `memory-bank/doc/patterns/spacing-system.md` for the full system.
 
@@ -182,7 +164,6 @@ After every page migration, confirm these are done:
 - [ ] Template JSON updated with PL copy + v2 content
 - [ ] Section files created/redesigned as needed
 - [ ] Section order matches v2 spec
-- [ ] `docs/theme-brandbook-uiux.md` updated (surface table, component inventory, bg pattern, ordering)
 - [ ] No compile/lint errors in edited files
 - [ ] Page loads on dev server without errors
 - [ ] User has visually verified the result (or Playwright screenshot taken)

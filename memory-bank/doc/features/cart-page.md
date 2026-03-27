@@ -1,22 +1,36 @@
 # Cart Page
 
-*Migrated: 2026-03-05*
+*Migrated: 2026-03-05 | AJAX re-rendering: 2026-03-26*
 
 ## Overview
 
-Full-page cart (`/cart`) with visual parity to the cart drawer. Two LUSENA sections replace Dawn's `main-cart-items` and `main-cart-footer`.
+Full-page cart (`/cart`) with visual parity to the cart drawer. Two LUSENA sections replace Dawn's `main-cart-items` and `main-cart-footer`. Uses AJAX section re-rendering for all cart mutations (no full-page reloads). Bidirectional sync with cart drawer via pubsub.
 
 ## Files
 
 | File | Purpose |
 |------|---------|
-| `sections/lusena-cart-items.liquid` | Items list, upsell cross-sell zone, cart header, empty state |
+| `sections/lusena-cart-items.liquid` | Items list, upsell cross-sell zone, cart header, empty state, AJAX re-render JS |
 | `snippets/lusena-cart-quantity.liquid` | Quantity stepper (bordered group, icon buttons, "Usuń" text remove) |
 | `sections/lusena-cart-footer.liquid` | Totals, free shipping bar, CTA, trust row, continue shopping |
+| `assets/lusena-cart-page.css` | All cart page CSS (634 lines — extracted from `{% stylesheet %}` blocks 2026-03-26) |
 | `templates/cart.json` | Wires the two sections; block order: `["subtotal", "buttons"]` |
 
-## JS compatibility
+## JS architecture
 
+### AJAX section re-rendering (2026-03-26)
+All cart mutations (bundle swap, cross-sell add, qty change) use Shopify's section rendering API instead of full-page reloads. Key functions in `lusena-cart-items.liquid`:
+- `getSectionNames()` — returns array of section IDs to re-fetch (`cart-items`, `cart-icon-bubble`, `cart-live-region-text`, `cart-footer`)
+- `getSectionConfigs()` — maps section IDs to DOM element IDs and selectors for innerHTML swap
+- `reRenderSections(state)` — parses section HTML via DOMParser, swaps target element contents, toggles `.is-empty`
+- `cart-items.onCartUpdate()` override — overrides Dawn's default to do full re-render including footer and empty state
+
+### Bidirectional cart ↔ drawer sync
+- Cart page publishes `PUB_SUB_EVENTS.cartUpdate` after mutations → drawer subscriber fetches fresh section HTML
+- Drawer publishes `PUB_SUB_EVENTS.cartUpdate` after line changes → cart page `onCartUpdate()` re-renders
+- Both use DOMParser to swap innerHTML of target containers
+
+### JS compatibility
 Cart.js does NOT query table/tr/td — safe to use div-based flex layout. Preserved IDs, classes, and web components:
 - **IDs:** `main-cart-items`, `CartItem-{N}`, `Quantity-{N}`, `Remove-{N}`, `Line-item-error-{N}`, `cart`, `checkout`
 - **Classes:** `.js-contents`, `.cart-item`, `.cart__items--disabled`, `.loading__spinner`, `.cart-item__error-text`, `.cart-item__name`, `.is-empty`
@@ -46,7 +60,7 @@ Cart page and cart drawer share a unified upsell card system (`.lusena-upsell-ca
 
 ### Bundle nudge (two-tile)
 Triggered when a bundle component product is in the cart. Uses `lusena.bundle_nudge_map` metafield (JSON: `{trigger-handle: {label, handle, tile_label?}}`).
-- Gain-framed headline: "Dodaj {label} i zaoszczedz {X} zl"
+- Gain-framed headline: "Dodaj {label} i zaoszczędź {X} zł"
 - Two tiles: "have" tile (checkmark badge, product image) + "add" tile (plus sign, component image via `all_products[handle]`)
 - Real product titles resolved via `all_products[nudge_entry.handle].title`
 - Real product images via `added_component.featured_image`
@@ -56,7 +70,7 @@ Triggered when a bundle component product is in the cart. Uses `lusena.bundle_nu
 Triggered for products with `lusena.upsell_primary` metafield. Fallback chain: primary → secondary → global setting.
 - Product image + info + price in top row
 - ATC button in full-width bottom row (`__xs-bottom`) — matches bundle card's `__bn-bottom` rhythm
-- Cart page: direct `/cart/add.js` fetch + page reload (avoids opening drawer)
+- Cart page: direct `/cart/add.js` fetch + AJAX section re-render (avoids opening drawer)
 
 ### Layout
 - Cart drawer: upsell inside scrollable `.lusena-cart-drawer__body` (scrolls with items)
@@ -65,8 +79,8 @@ Triggered for products with `lusena.upsell_primary` metafield. Fallback chain: p
 - Image placeholders: `:empty { display: block }` overrides Dawn's `div:empty { display: none }`
 
 ### CSS placement
-- Cart drawer: `<style>` tag in `snippets/cart-drawer.liquid` (~150 lines, not in compiled_assets)
-- Cart page: `{% stylesheet %}` in `sections/lusena-cart-items.liquid` (compiled_assets — **currently truncated at 85KB, extraction pending**)
+- Cart drawer: `<style>` tag in `snippets/cart-drawer.liquid` (~150 lines, not in compiled_assets). Selectors scoped under `.lusena-cart-drawer__upsell`.
+- Cart page: `assets/lusena-cart-page.css` (standalone file, 634 lines — extracted 2026-03-26). Selectors scoped under `.lusena-cart-upsell`.
 
 ## Cart footer features
 

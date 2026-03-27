@@ -9,9 +9,9 @@ This document defines the complete LUSENA bundle architecture across all busines
 
 **Key references:**
 - Individual product data: `memory-bank/doc/products/{handle}.md`
-- Product metafield reference: `docs/product-metafields-reference.md`
-- Brandbook bundle section (original, partially superseded): `docs/LUSENA_BrandBook_v2.md` § 5.8, 7.6
-- Initial order allocation: `docs/LUSENA_BrandBook_v2.md` § 7.2
+- Product metafield reference: `memory-bank/doc/products/product-metafields-reference.md`
+- Brandbook bundle section (original, partially superseded): `memory-bank/doc/brand/LUSENA_BrandBook_v2.md` § 5.8, 7.6
+- Initial order allocation: `memory-bank/doc/brand/LUSENA_BrandBook_v2.md` § 7.2
 
 ---
 
@@ -446,7 +446,7 @@ Each bundle needs a creative session (lighter than individual products - primari
 | Kompletna Nocna Rutyna | Not yet (Phase 2) |
 | Duo dla Pary | Not yet (Phase 2) |
 
-The creative sessions follow the same workflow as individual products (see `docs/product-metafields-reference.md`) with additional bundle-specific guards documented in the "Bundle addendum" section of that file. Key rules: routine/set framing (not savings-first), exclusion list applies (no spec dumps in buybox), tagline must answer "why the SET" not "why silk." Unique copy per bundle:
+The creative sessions follow the same workflow as individual products (see `memory-bank/doc/products/product-metafields-reference.md`) with additional bundle-specific guards documented in the "Bundle addendum" section of that file. Key rules: routine/set framing (not savings-first), exclusion list applies (no spec dumps in buybox), tagline must answer "why the SET" not "why silk." Unique copy per bundle:
 - `lusena.pdp_emotional_headline` - bundle-specific headline
 - `lusena.pdp_tagline` - bundle-specific tagline
 - `lusena.pdp_benefit_1-3` - bundle-specific benefits (why buy the SET, not the individual items)

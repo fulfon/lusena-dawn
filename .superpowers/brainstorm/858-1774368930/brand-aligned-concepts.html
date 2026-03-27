@@ -1,0 +1,439 @@
+<h2>Brand-aligned upsell concepts</h2>
+<p class="subtitle">Routine framing, not savings framing. Subtly luxurious, calm, expert. Savings visible but secondary.</p>
+
+<style>
+  * { box-sizing: border-box; }
+  .lusena { font-family: 'Inter', -apple-system, sans-serif; color: #111; -webkit-font-smoothing: antialiased; }
+
+  /* Context frames */
+  .ctx-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #8C6A3C; font-weight: 600; margin: 0 0 8px; }
+  .drawer-frame { width: 375px; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border: 1px solid rgba(0,0,0,0.04); }
+  .page-frame { width: 100%; max-width: 580px; background: #F7F5F2; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border: 1px solid rgba(0,0,0,0.04); }
+  .frame-header { background: #fff; padding: 14px 20px; border-bottom: 1px solid rgba(74,74,74,0.06); display: flex; justify-content: space-between; align-items: center; }
+  .frame-header h4 { margin: 0; font-family: 'Source Serif 4', Georgia, serif; font-size: 17px; color: #111; font-weight: 500; }
+  .frame-header .close { font-size: 20px; color: #bbb; }
+
+  /* Cart item */
+  .ci { display: flex; gap: 12px; padding: 14px 20px; background: #fff; }
+  .ci-img { width: 60px; height: 60px; background: linear-gradient(145deg, #e8e0d4, #f2ece4); border-radius: 6px; flex-shrink: 0; }
+  .ci-info { flex: 1; }
+  .ci-title { font-size: 13.5px; font-weight: 500; color: #111; margin: 0; line-height: 1.3; }
+  .ci-meta { font-size: 11.5px; color: #666; margin: 3px 0 0; }
+  .ci-right { text-align: right; flex-shrink: 0; }
+  .ci-price { font-size: 13.5px; font-weight: 500; color: #111; margin: 0; }
+  .ci-qty { font-size: 11px; color: #999; margin: 3px 0 0; }
+
+  /* Footer */
+  .dr-footer { border-top: 1px solid rgba(74,74,74,0.06); padding: 16px 20px; background: #fff; }
+  .dr-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .dr-total-l { font-size: 13px; color: #666; }
+  .dr-total-v { font-family: 'Source Serif 4', Georgia, serif; font-size: 17px; font-weight: 500; }
+  .btn-cta { font-family: 'Inter', sans-serif; font-size: 14.5px; padding: 13px; background: rgba(14,94,90,0.92); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; width: 100%; letter-spacing: 0.01em; }
+
+  .concept-row { display: flex; gap: 28px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 12px; }
+  .concept-divider { margin: 52px 0; border: none; border-top: 2px dashed #ddd; }
+  .type-label { font-size: 11.5px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin: 24px 0 12px; }
+  .type-label:first-of-type { margin-top: 0; }
+
+  /* ======================== */
+  /* CONCEPT A: Narrative card */
+  /* ======================== */
+  .a-zone { background: rgba(240,238,235,0.45); padding: 14px 20px 16px; border-top: 1px solid rgba(74,74,74,0.06); }
+  .a-heading { font-family: 'Source Serif 4', Georgia, serif; font-size: 12px; color: #666; margin: 0 0 10px; letter-spacing: 0.01em; }
+  .a-card { display: flex; gap: 12px; padding: 12px; background: #fff; border-radius: 6px; border: 1px solid rgba(74,74,74,0.04); box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .a-img { width: 56px; height: 56px; background: linear-gradient(145deg, #e8e0d4, #f2ece4); border-radius: 5px; flex-shrink: 0; }
+  .a-info { flex: 1; min-width: 0; }
+  .a-title { font-size: 13px; font-weight: 500; color: #111; margin: 0; line-height: 1.3; }
+  .a-narrative { font-size: 11.5px; color: #666; margin: 3px 0 0; line-height: 1.4; }
+  .a-color { font-size: 10.5px; color: #999; margin: 3px 0 0; }
+  .a-color b { color: #555; font-weight: 500; }
+  .a-aside { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; flex-shrink: 0; gap: 6px; }
+  .a-price { font-size: 13.5px; font-weight: 500; color: #111; margin: 0; font-variant-numeric: tabular-nums; }
+  .a-btn-add { font-family: 'Inter', sans-serif; font-size: 12px; padding: 7px 16px; background: rgba(14,94,90,0.04); color: #0E5E5A; border: 1px solid rgba(14,94,90,0.2); border-radius: 6px; cursor: pointer; font-weight: 500; white-space: nowrap; transition: all 150ms ease; }
+  .a-btn-add:hover { background: rgba(14,94,90,0.08); border-color: rgba(14,94,90,0.35); }
+
+  /* Bundle variant of concept A */
+  .a-card--bundle { border-left: 2.5px solid rgba(14,94,90,0.5); }
+  .a-bundle-pricing { display: flex; align-items: baseline; gap: 6px; margin: 4px 0 0; }
+  .a-bundle-price { font-size: 13px; font-weight: 500; color: #111; }
+  .a-bundle-was { font-size: 11px; color: #aaa; text-decoration: line-through; }
+  .a-btn-upgrade { font-family: 'Inter', sans-serif; font-size: 12px; padding: 7px 14px; background: rgba(14,94,90,0.92); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; white-space: nowrap; transition: all 150ms ease; }
+  .a-btn-upgrade:hover { background: rgba(14,94,90,1); }
+
+  /* ======================== */
+  /* CONCEPT B: Expanded card  */
+  /* ======================== */
+  .b-zone { background: rgba(240,238,235,0.45); padding: 14px 20px 16px; border-top: 1px solid rgba(74,74,74,0.06); }
+  .b-heading { font-family: 'Source Serif 4', Georgia, serif; font-size: 12px; color: #666; margin: 0 0 10px; }
+  .b-card { padding: 12px; background: #fff; border-radius: 6px; border: 1px solid rgba(74,74,74,0.04); box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .b-top { display: flex; gap: 12px; }
+  .b-img { width: 56px; height: 56px; background: linear-gradient(145deg, #e8e0d4, #f2ece4); border-radius: 5px; flex-shrink: 0; }
+  .b-info { flex: 1; min-width: 0; }
+  .b-title { font-size: 13px; font-weight: 500; color: #111; margin: 0; line-height: 1.3; }
+  .b-narrative { font-size: 11.5px; color: #666; margin: 3px 0 0; line-height: 1.4; }
+  .b-color { font-size: 10.5px; color: #999; margin: 3px 0 0; }
+  .b-color b { color: #555; font-weight: 500; }
+  .b-aside { display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0; }
+  .b-price { font-size: 13.5px; font-weight: 500; color: #111; margin: 0; }
+  .b-btn-add { font-family: 'Inter', sans-serif; font-size: 12px; padding: 7px 16px; background: rgba(14,94,90,0.04); color: #0E5E5A; border: 1px solid rgba(14,94,90,0.2); border-radius: 6px; cursor: pointer; font-weight: 500; white-space: nowrap; margin-top: 8px; }
+
+  /* Bundle upgrade footer row */
+  .b-upgrade { display: flex; align-items: center; gap: 12px; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(74,74,74,0.05); }
+  .b-upgrade-left { flex: 1; min-width: 0; }
+  .b-upgrade-narrative { font-size: 12px; font-weight: 500; color: #111; margin: 0; line-height: 1.35; }
+  .b-upgrade-meta { font-size: 11px; color: #888; margin: 3px 0 0; }
+  .b-upgrade-meta strong { color: #111; font-weight: 500; }
+  .b-upgrade-meta .was { text-decoration: line-through; opacity: 0.55; }
+  .b-btn-upgrade { font-family: 'Inter', sans-serif; font-size: 12px; padding: 8px 14px; background: rgba(14,94,90,0.92); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+
+  .page-upsell { padding: 14px 28px 16px; border-top: 1px solid rgba(74,74,74,0.06); background: rgba(240,238,235,0.45); }
+
+  .note-box { margin-top: 16px; padding: 14px 18px; background: rgba(14,94,90,0.04); border-radius: 8px; border-left: 3px solid rgba(14,94,90,0.3); font-size: 13px; color: #444; line-height: 1.6; }
+  .note-box strong { color: #111; }
+</style>
+
+<!-- ==================== CONCEPT A ==================== -->
+<div class="option" data-choice="concept-a" onclick="toggleSelect(this)">
+  <div class="letter">A</div>
+  <div class="content" style="width: 100%;">
+    <h3 style="margin: 0 0 4px;">Unified card with narrative subtext</h3>
+    <p style="font-size: 13px; color: #666; margin: 0 0 6px;">Same card layout for both. Bundle gets a subtle teal left border and primary CTA. The message leads with the routine ("Kompletna ochrona na noc"), not the savings. Pricing shows bundle price + crossed-out original as a quiet anchor - no savings badge or callout.</p>
+
+    <div class="note-box">
+      <strong>Brand alignment:</strong> Routine framing per bundle strategy principle #4. Savings visible only as a quiet crossed-out price - the customer discovers the value, we don't shout it. "Subtelnie luksusowa, spokojna."
+    </div>
+
+    <!-- CROSS-SELL -->
+    <p class="type-label">Cross-sell: Poszewka in cart, suggest Scrunchie</p>
+    <div class="concept-row">
+      <div>
+        <p class="ctx-label">Drawer</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Czarny / 50&times;70</p></div>
+            <div class="ci-right"><p class="ci-price">169 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="a-zone">
+            <p class="a-heading">Pasuje do</p>
+            <div class="a-card">
+              <div class="a-img"></div>
+              <div class="a-info">
+                <p class="a-title">Scrunchie jedwabny</p>
+                <p class="a-narrative">Ochrona wlosow z tego samego jedwabiu</p>
+                <p class="a-color">Kolor: <b>Czarny</b></p>
+              </div>
+              <div class="a-aside">
+                <p class="a-price">39 zl</p>
+                <button class="a-btn-add">Dodaj</button>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">169 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+      <div style="flex: 1; min-width: 260px;">
+        <p class="ctx-label">Cart page</p>
+        <div class="page-frame lusena">
+          <div style="padding: 20px 28px;">
+            <h4 style="font-family: 'Source Serif 4', Georgia, serif; font-size: 19px; margin: 0 0 14px; font-weight: 500;">Koszyk</h4>
+            <div class="ci" style="padding: 12px 0; background: none; border-bottom: 1px solid rgba(74,74,74,0.06);">
+              <div class="ci-img" style="width: 72px; height: 72px;"></div>
+              <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Czarny / 50&times;70</p></div>
+              <div class="ci-right"><p class="ci-price">169 zl</p></div>
+            </div>
+          </div>
+          <div class="page-upsell">
+            <p class="a-heading">Pasuje do</p>
+            <div class="a-card">
+              <div class="a-img"></div>
+              <div class="a-info">
+                <p class="a-title">Scrunchie jedwabny</p>
+                <p class="a-narrative">Ochrona wlosow z tego samego jedwabiu</p>
+                <p class="a-color">Kolor: <b>Czarny</b></p>
+              </div>
+              <div class="a-aside">
+                <p class="a-price">39 zl</p>
+                <button class="a-btn-add">Dodaj</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUNDLE -->
+    <p class="type-label">Bundle: Czepek in cart, suggest Nocna Rutyna upgrade</p>
+    <div class="concept-row">
+      <div>
+        <p class="ctx-label">Drawer</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Jedwabny czepek do spania</p><p class="ci-meta">Czarny</p></div>
+            <div class="ci-right"><p class="ci-price">139 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="a-zone">
+            <p class="a-heading">Uzupelnij do zestawu</p>
+            <div class="a-card a-card--bundle">
+              <div class="a-img"></div>
+              <div class="a-info">
+                <p class="a-title">Nocna Rutyna</p>
+                <p class="a-narrative">Kompletna ochrona na noc - twarz i wlosy</p>
+                <div class="a-bundle-pricing">
+                  <span class="a-bundle-price">399 zl</span>
+                  <span class="a-bundle-was">508 zl</span>
+                </div>
+              </div>
+              <div class="a-aside" style="justify-content: flex-end;">
+                <button class="a-btn-upgrade">+ 260 zl</button>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">139 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+      <div style="flex: 1; min-width: 260px;">
+        <p class="ctx-label">Cart page</p>
+        <div class="page-frame lusena">
+          <div style="padding: 20px 28px;">
+            <h4 style="font-family: 'Source Serif 4', Georgia, serif; font-size: 19px; margin: 0 0 14px; font-weight: 500;">Koszyk</h4>
+            <div class="ci" style="padding: 12px 0; background: none; border-bottom: 1px solid rgba(74,74,74,0.06);">
+              <div class="ci-img" style="width: 72px; height: 72px;"></div>
+              <div class="ci-info"><p class="ci-title">Jedwabny czepek do spania</p><p class="ci-meta">Czarny</p></div>
+              <div class="ci-right"><p class="ci-price">139 zl</p></div>
+            </div>
+          </div>
+          <div class="page-upsell">
+            <p class="a-heading">Uzupelnij do zestawu</p>
+            <div class="a-card a-card--bundle">
+              <div class="a-img"></div>
+              <div class="a-info">
+                <p class="a-title">Nocna Rutyna</p>
+                <p class="a-narrative">Kompletna ochrona na noc - twarz i wlosy</p>
+                <div class="a-bundle-pricing">
+                  <span class="a-bundle-price">399 zl</span>
+                  <span class="a-bundle-was">508 zl</span>
+                </div>
+              </div>
+              <div class="a-aside" style="justify-content: flex-end;">
+                <button class="a-btn-upgrade">+ 260 zl</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pros-cons" style="margin-top: 16px;">
+      <div class="pros"><h4>Strengths</h4><ul>
+        <li>Most compact - minimal vertical footprint in drawer</li>
+        <li>Visually unified - same card, same rhythm for both types</li>
+        <li>Teal border is subtle enough for premium positioning</li>
+        <li>Routine narrative leads, pricing secondary</li>
+      </ul></div>
+      <div class="cons"><h4>Trade-offs</h4><ul>
+        <li>"+ 260 zl" button is small and might feel abrupt</li>
+        <li>The upgrade action (swap) isn't clearly communicated</li>
+        <li>Bundle pricing squeezed into the info column</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<hr class="concept-divider">
+
+<!-- ==================== CONCEPT B ==================== -->
+<div class="option" data-choice="concept-b" onclick="toggleSelect(this)">
+  <div class="letter">B</div>
+  <div class="content" style="width: 100%;">
+    <h3 style="margin: 0 0 4px;">Two-row card - product top, upgrade bottom</h3>
+    <p style="font-size: 13px; color: #666; margin: 0 0 6px;">Cross-sell stays compact (identical to A). Bundle card extends with a quiet upgrade row below a hairline. The top shows the product (image, name, narrative). The bottom row has the action: narrative CTA label + price + button. Premium, unhurried, gives the customer room to process.</p>
+
+    <div class="note-box">
+      <strong>Brand alignment:</strong> The two-row layout mirrors premium fashion e-commerce (Net-a-Porter, Cuyana) where upgrade options sit below the product line, separated by whitespace. The customer processes what the bundle IS first, then considers the action. No urgency, no pressure - "spokojna."
+    </div>
+
+    <!-- CROSS-SELL -->
+    <p class="type-label">Cross-sell: Poszewka in cart, suggest Scrunchie</p>
+    <div class="concept-row">
+      <div>
+        <p class="ctx-label">Drawer</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Czarny / 50&times;70</p></div>
+            <div class="ci-right"><p class="ci-price">169 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="b-zone">
+            <p class="b-heading">Pasuje do</p>
+            <div class="b-card">
+              <div class="b-top">
+                <div class="b-img"></div>
+                <div class="b-info">
+                  <p class="b-title">Scrunchie jedwabny</p>
+                  <p class="b-narrative">Ochrona wlosow z tego samego jedwabiu</p>
+                  <p class="b-color">Kolor: <b>Czarny</b></p>
+                </div>
+                <div class="b-aside">
+                  <p class="b-price">39 zl</p>
+                  <button class="b-btn-add">Dodaj</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">169 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+      <div style="flex: 1; min-width: 260px;">
+        <p class="ctx-label">Cart page</p>
+        <div class="page-frame lusena">
+          <div style="padding: 20px 28px;">
+            <h4 style="font-family: 'Source Serif 4', Georgia, serif; font-size: 19px; margin: 0 0 14px; font-weight: 500;">Koszyk</h4>
+            <div class="ci" style="padding: 12px 0; background: none; border-bottom: 1px solid rgba(74,74,74,0.06);">
+              <div class="ci-img" style="width: 72px; height: 72px;"></div>
+              <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Czarny / 50&times;70</p></div>
+              <div class="ci-right"><p class="ci-price">169 zl</p></div>
+            </div>
+          </div>
+          <div class="page-upsell">
+            <p class="b-heading">Pasuje do</p>
+            <div class="b-card">
+              <div class="b-top">
+                <div class="b-img"></div>
+                <div class="b-info">
+                  <p class="b-title">Scrunchie jedwabny</p>
+                  <p class="b-narrative">Ochrona wlosow z tego samego jedwabiu</p>
+                  <p class="b-color">Kolor: <b>Czarny</b></p>
+                </div>
+                <div class="b-aside">
+                  <p class="b-price">39 zl</p>
+                  <button class="b-btn-add">Dodaj</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUNDLE -->
+    <p class="type-label">Bundle: Czepek in cart, suggest Nocna Rutyna upgrade</p>
+    <div class="concept-row">
+      <div>
+        <p class="ctx-label">Drawer</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Jedwabny czepek do spania</p><p class="ci-meta">Czarny</p></div>
+            <div class="ci-right"><p class="ci-price">139 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="b-zone">
+            <p class="b-heading">Uzupelnij do zestawu</p>
+            <div class="b-card">
+              <div class="b-top">
+                <div class="b-img"></div>
+                <div class="b-info">
+                  <p class="b-title">Nocna Rutyna</p>
+                  <p class="b-narrative">Kompletna ochrona na noc - twarz i wlosy</p>
+                </div>
+                <div class="b-aside">
+                  <p class="b-price">399 zl</p>
+                  <p style="font-size: 10.5px; color: #aaa; text-decoration: line-through; margin: 2px 0 0;">508 zl</p>
+                </div>
+              </div>
+              <div class="b-upgrade">
+                <div class="b-upgrade-left">
+                  <p class="b-upgrade-narrative">Czepek + poszewka w zestawie</p>
+                  <p class="b-upgrade-meta">Doplata <strong>+260 zl</strong></p>
+                </div>
+                <button class="b-btn-upgrade">Zamien na zestaw</button>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">139 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+      <div style="flex: 1; min-width: 260px;">
+        <p class="ctx-label">Cart page</p>
+        <div class="page-frame lusena">
+          <div style="padding: 20px 28px;">
+            <h4 style="font-family: 'Source Serif 4', Georgia, serif; font-size: 19px; margin: 0 0 14px; font-weight: 500;">Koszyk</h4>
+            <div class="ci" style="padding: 12px 0; background: none; border-bottom: 1px solid rgba(74,74,74,0.06);">
+              <div class="ci-img" style="width: 72px; height: 72px;"></div>
+              <div class="ci-info"><p class="ci-title">Jedwabny czepek do spania</p><p class="ci-meta">Czarny</p></div>
+              <div class="ci-right"><p class="ci-price">139 zl</p></div>
+            </div>
+          </div>
+          <div class="page-upsell">
+            <p class="b-heading">Uzupelnij do zestawu</p>
+            <div class="b-card">
+              <div class="b-top">
+                <div class="b-img"></div>
+                <div class="b-info">
+                  <p class="b-title">Nocna Rutyna</p>
+                  <p class="b-narrative">Kompletna ochrona na noc - twarz i wlosy</p>
+                </div>
+                <div class="b-aside">
+                  <p class="b-price">399 zl</p>
+                  <p style="font-size: 10.5px; color: #aaa; text-decoration: line-through; margin: 2px 0 0;">508 zl</p>
+                </div>
+              </div>
+              <div class="b-upgrade">
+                <div class="b-upgrade-left">
+                  <p class="b-upgrade-narrative">Czepek + poszewka w zestawie</p>
+                  <p class="b-upgrade-meta">Doplata <strong>+260 zl</strong></p>
+                </div>
+                <button class="b-btn-upgrade">Zamien na zestaw</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pros-cons" style="margin-top: 16px;">
+      <div class="pros"><h4>Strengths</h4><ul>
+        <li>"Zamien na zestaw" clearly communicates the swap action</li>
+        <li>Customer processes product first, then action - less cognitive load</li>
+        <li>Upgrade row gives room for bundle contents + incremental price</li>
+        <li>Premium, unhurried feel - matches "spokojna" brand trait</li>
+        <li>Hairline separator is subtle, not aggressive</li>
+      </ul></div>
+      <div class="cons"><h4>Trade-offs</h4><ul>
+        <li>Taller card takes more vertical space in drawer</li>
+        <li>Two visual patterns: compact cross-sell vs expanded bundle</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- Key decisions callout -->
+<div style="margin-top: 40px; padding: 20px; background: #fff; border-radius: 8px; border: 1px solid rgba(74,74,74,0.08); box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+  <h3 style="margin: 0 0 12px; font-size: 15px;">Design decisions shared by both concepts</h3>
+  <ul style="margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.8; color: #444;">
+    <li><strong>Routine framing leads</strong> - "Kompletna ochrona na noc" not "Oszczedzasz 109 zl"</li>
+    <li><strong>Crossed-out price as quiet anchor</strong> - 508 zl in muted gray, customer discovers the value</li>
+    <li><strong>No savings badge</strong> - per bundle strategy: savings secondary, never percentage</li>
+    <li><strong>Incremental pricing</strong> - "+260 zl" not "399 zl" - the customer thinks "how much MORE" not "total price"</li>
+    <li><strong>Product image for both types</strong> - visual anchor, premium feel</li>
+    <li><strong>Same zone background</strong> - subtle off-white, contained within cart items column</li>
+    <li><strong>Cross-sell identical</strong> - both concepts treat simple adds the same way</li>
+  </ul>
+</div>

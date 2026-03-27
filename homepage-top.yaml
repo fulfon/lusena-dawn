@@ -1,0 +1,266 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - link "lusena-dev" [ref=e4] [cursor=pointer]:
+      - /url: /
+      - img "lusena-dev" [ref=e5]
+    - navigation [ref=e6]:
+      - link "SKLEP" [ref=e7] [cursor=pointer]:
+        - /url: /collections/all
+      - link "O NAS" [ref=e8] [cursor=pointer]:
+        - /url: /pages/o-nas
+      - link "DLACZEGO JEDWAB?" [ref=e9] [cursor=pointer]:
+        - /url: /pages/nasza-jakosc
+    - generic [ref=e10]:
+      - link "Search" [ref=e11] [cursor=pointer]:
+        - /url: /search
+        - img [ref=e12]
+      - link "Account" [ref=e15] [cursor=pointer]:
+        - /url: /account
+        - img [ref=e16]
+      - button "Cart" [ref=e19] [cursor=pointer]:
+        - img [ref=e20]
+  - main [ref=e23]:
+    - generic [ref=e27]:
+      - generic [ref=e29]:
+        - heading "Urodę Tworzysz w Nocy." [level=1] [ref=e30]:
+          - paragraph [ref=e31]:
+            - text: Urodę Tworzysz
+            - text: w Nocy.
+        - paragraph [ref=e32]: 8 godzin jedwabnej pielęgnacji — każdej nocy. Obudź się piękniejsza.
+      - generic [ref=e34]:
+        - link "Zacznij swoją rutynę" [ref=e35] [cursor=pointer]:
+          - /url: /collections/all
+        - link "Dlaczego jedwab?" [ref=e36] [cursor=pointer]:
+          - /url: /pages/nasza-jakosc
+    - list [ref=e40]:
+      - listitem [ref=e41]:
+        - img [ref=e42]
+        - generic [ref=e46]:
+          - generic [ref=e47]: 22 momme jedwab
+          - generic [ref=e48]: Gęstszy splot, dłuższa trwałość
+      - listitem [ref=e49]:
+        - img [ref=e50]
+        - generic [ref=e53]:
+          - generic [ref=e54]: OEKO-TEX® 100
+          - generic [ref=e55]: Bezpieczny dla skóry
+      - listitem [ref=e56]:
+        - img [ref=e57]
+        - generic [ref=e62]:
+          - generic [ref=e63]: Wysyłka w 24h
+          - generic [ref=e64]: Z magazynu w Polsce
+      - listitem [ref=e65]:
+        - img [ref=e66]
+        - generic [ref=e69]:
+          - generic [ref=e70]: 60 dni na test
+          - generic [ref=e71]: Zwrot bez stresu
+    - generic [ref=e74]:
+      - generic [ref=e75]:
+        - generic [ref=e76]:
+          - generic [ref=e77]:
+            - text: Problem
+            - heading "Bawełna chłonie. Tarcie i suchość." [level=3] [ref=e78]:
+              - text: Bawełna chłonie.
+              - text: Tarcie i suchość.
+          - generic [ref=e79]:
+            - generic [ref=e80]:
+              - img [ref=e81]
+              - generic [ref=e84]:
+                - heading "Tarcie tworzy zagniecenia" [level=4] [ref=e85]
+                - paragraph [ref=e86]: Włókna bawełny działają jak rzep na poziomie mikro — ciągną delikatną skórę twarzy i tworzą odciski senne.
+            - generic [ref=e87]:
+              - img [ref=e88]
+              - generic [ref=e91]:
+                - heading "Wchłania Twoją pielęgnację" [level=4] [ref=e92]
+                - paragraph [ref=e93]: Bawełna jest chłonna z natury. Wchłania Twój drogi krem na noc i naturalne olejki, wysuszając skórę i włosy.
+        - generic [ref=e94]:
+          - generic [ref=e95]:
+            - text: Rozwiązanie
+            - heading "Jedwab chroni. Nawilżenie i gładkość." [level=3] [ref=e96]:
+              - text: Jedwab chroni.
+              - text: Nawilżenie i gładkość.
+          - generic [ref=e97]:
+            - generic [ref=e98]:
+              - img [ref=e99]
+              - generic [ref=e101]:
+                - heading "Gładkość bez tarcia" [level=4] [ref=e102]
+                - paragraph [ref=e103]: Jedwab 22 momme LUSENA pozwala skórze i włosom ślizgać się gładko, zapobiegając łamaniu i porannym zagnieceniom.
+            - generic [ref=e104]:
+              - img [ref=e105]
+              - generic [ref=e107]:
+                - heading "Zatrzymuje nawilżenie" [level=4] [ref=e108]
+                - paragraph [ref=e109]: Białka jedwabiu są podobne do ludzkiej skóry. Odpychają roztocza i utrzymują nawilżenie tam, gdzie jego miejsce — w Twojej skórze.
+      - link "Sprawdź dowody jakości →" [ref=e111] [cursor=pointer]:
+        - /url: /pages/nasza-jakosc
+    - generic [ref=e114]:
+      - generic [ref=e115]:
+        - generic [ref=e116]:
+          - heading "Nasze bestsellery" [level=2] [ref=e117]
+          - paragraph [ref=e118]: Twoja nocna rutyna zaczyna się tutaj.
+        - link "Zobacz całą kolekcję" [ref=e119] [cursor=pointer]:
+          - /url: /collections/all
+      - generic [ref=e120]:
+        - 'link "Gift card that shows text: Generated data gift card Gift Card $10" [ref=e122] [cursor=pointer]':
+          - /url: /products/gift-card
+          - 'img "Gift card that shows text: Generated data gift card" [ref=e124]'
+          - generic [ref=e125]:
+            - heading "Gift Card" [level=3] [ref=e126]
+            - generic [ref=e128]: $10
+        - link "A bar of golden yellow wax A bar of purple wax Selling Plans Ski Wax $24.95" [ref=e130] [cursor=pointer]:
+          - /url: /products/selling-plans-ski-wax
+          - generic [ref=e131]:
+            - img "A bar of golden yellow wax" [ref=e132]
+            - img "A bar of purple wax" [ref=e133]
+          - generic [ref=e134]:
+            - heading "Selling Plans Ski Wax" [level=3] [ref=e135]
+            - generic [ref=e137]: $24.95
+        - link "Top and bottom view of a snowboard. The top view shows 7 stacked hexagons and the bottom view shows a small, centred hexagonal logo for Hydrogen. The 3p Fulfilled Snowboard $2,629.95" [ref=e139] [cursor=pointer]:
+          - /url: /products/the-3p-fulfilled-snowboard
+          - img "Top and bottom view of a snowboard. The top view shows 7 stacked hexagons and the bottom view shows a small, centred hexagonal logo for Hydrogen." [ref=e141]
+          - generic [ref=e142]:
+            - heading "The 3p Fulfilled Snowboard" [level=3] [ref=e143]
+            - generic [ref=e145]: $2,629.95
+    - generic [ref=e148]:
+      - heading "Co mówią klientki" [level=2] [ref=e150]
+      - generic [ref=e151]:
+        - generic [ref=e152]:
+          - generic [ref=e153]:
+            - img [ref=e154]
+            - img [ref=e156]
+            - img [ref=e158]
+            - img [ref=e160]
+            - img [ref=e162]
+          - blockquote [ref=e164]: "\"Nigdy nie sądziłam, że poszewka może zmienić moją skórę. Krem na noc wreszcie zostaje na twarzy, a rano zero odcisków!\""
+          - generic [ref=e165]: — Anna K.
+        - generic [ref=e166]:
+          - generic [ref=e167]:
+            - img [ref=e168]
+            - img [ref=e170]
+            - img [ref=e172]
+            - img [ref=e174]
+            - img [ref=e176]
+          - blockquote [ref=e178]: "\"Jakość nie do porównania. Próbowałam tańszego jedwabiu, ale LUSENA jest zdecydowanie gęstsza i niesamowicie gładka.\""
+          - generic [ref=e179]: — Marta W.
+        - generic [ref=e180]:
+          - generic [ref=e181]:
+            - img [ref=e182]
+            - img [ref=e184]
+            - img [ref=e186]
+            - img [ref=e188]
+            - img [ref=e190]
+          - blockquote [ref=e192]: "\"Piękne opakowanie — kupiłam dla siebie i od razu zamówiłam dwa kolejne na prezent dla sióstr.\""
+          - generic [ref=e193]: — Karolina P.
+    - generic [ref=e196]:
+      - generic [ref=e197]:
+        - text: Zestawy Premium
+        - heading "Nocna Rutyna w zestawie." [level=2] [ref=e198]:
+          - text: Nocna Rutyna
+          - text: w zestawie.
+      - paragraph [ref=e199]: Kompletna pielęgnacja snu i włosów w jednym zamówieniu. Kupując zestaw, oszczędzasz i budujesz swoją nocną rutynę.
+      - generic [ref=e200]:
+        - generic [ref=e201]:
+          - img [ref=e204]
+          - generic [ref=e209]:
+            - heading "Nocna Rutyna" [level=3] [ref=e210]
+            - paragraph [ref=e211]: Poszewka + Czepek na noc + Scrunchie
+            - generic [ref=e212]: Oszczędzasz ~15%
+            - link "Sprawdź zestaw" [ref=e213] [cursor=pointer]:
+              - /url: /collections/all
+        - generic [ref=e214]:
+          - img [ref=e217]
+          - generic [ref=e222]:
+            - heading "Starter Kit" [level=3] [ref=e223]
+            - paragraph [ref=e224]: Poszewka + Scrunchie
+            - generic [ref=e225]:
+              - generic [ref=e226]: 269 zł
+              - generic [ref=e227]: 298 zł
+            - generic [ref=e228]: Oszczędzasz 29 zł (10%)
+            - link "Sprawdź zestaw" [ref=e229] [cursor=pointer]:
+              - /url: /collections/all
+        - generic [ref=e230]:
+          - img [ref=e233]
+          - generic [ref=e238]:
+            - heading "Scrunchie Trio" [level=3] [ref=e239]
+            - paragraph [ref=e240]: 3× Scrunchie w różnych kolorach
+            - generic [ref=e241]:
+              - generic [ref=e242]: 119 zł
+              - generic [ref=e243]: 147 zł
+            - generic [ref=e244]: Oszczędzasz 28 zł (19%)
+            - link "Sprawdź zestaw" [ref=e245] [cursor=pointer]:
+              - /url: /collections/all
+    - generic [ref=e248]:
+      - heading "Z Suzhou — Stolicy Jedwabiu od XV wieku" [level=2] [ref=e250]
+      - generic [ref=e251]:
+        - generic [ref=e252]:
+          - img [ref=e254]
+          - generic [ref=e257]:
+            - heading "Manufaktura w Shengze" [level=3] [ref=e258]
+            - paragraph [ref=e259]: Region jedwabiu od dynastii Ming (XV wiek)
+        - generic [ref=e260]:
+          - img [ref=e262]
+          - generic [ref=e266]:
+            - heading "Bezpośrednia współpraca" [level=3] [ref=e267]
+            - paragraph [ref=e268]: Od manufaktury do Twojej sypialni — bez pośredników
+        - generic [ref=e269]:
+          - img [ref=e271]
+          - generic [ref=e274]:
+            - heading "Polska kontrola jakości" [level=3] [ref=e275]
+            - paragraph [ref=e276]: Każda partia sprawdzana przed wysyłką
+      - link "Poznaj naszą historię →" [ref=e278] [cursor=pointer]:
+        - /url: /pages/o-nas
+    - generic [ref=e281]:
+      - generic [ref=e282]:
+        - heading "Najczęstsze pytania" [level=2] [ref=e283]
+        - paragraph [ref=e284]: Wszystko, co musisz wiedzieć o spaniu na jedwabiu.
+      - generic [ref=e285]:
+        - group [ref=e286]:
+          - generic "Czy to prawdziwy jedwab?" [ref=e287] [cursor=pointer]:
+            - text: Czy to prawdziwy jedwab?
+            - img [ref=e288]
+        - group [ref=e290]:
+          - generic "Dlaczego jedwab z Chin?" [ref=e291] [cursor=pointer]:
+            - text: Dlaczego jedwab z Chin?
+            - img [ref=e292]
+        - group [ref=e294]:
+          - generic "Jak prać jedwab?" [ref=e295] [cursor=pointer]:
+            - text: Jak prać jedwab?
+            - img [ref=e296]
+        - group [ref=e298]:
+          - generic "Czy 60 dni gwarancji to serio?" [ref=e299] [cursor=pointer]:
+            - text: Czy 60 dni gwarancji to serio?
+            - img [ref=e300]
+        - group [ref=e302]:
+          - generic "Od czego zacząć swoją rutynę?" [ref=e303] [cursor=pointer]:
+            - text: Od czego zacząć swoją rutynę?
+            - img [ref=e304]
+    - generic [ref=e308]:
+      - heading "Gotowa na lepszy sen?" [level=2] [ref=e309]
+      - paragraph [ref=e310]: Wybierz produkt i poczuj różnicę już pierwszej nocy.
+      - link "Zacznij swoją rutynę" [ref=e312] [cursor=pointer]:
+        - /url: /collections/all
+    - generic [ref=e316]:
+      - heading "Dołącz do Klubu LUSENA" [level=2] [ref=e317]
+      - paragraph [ref=e318]: Zapisz się i odbierz kod -10% na pierwsze zamówienie.
+      - generic [ref=e319]:
+        - generic [ref=e320]: Twój adres email
+        - generic [ref=e321]:
+          - textbox "Twój adres email" [ref=e322]
+          - button "Dołącz" [ref=e323] [cursor=pointer]
+      - paragraph [ref=e324]: Bez spamu. Wypisz się w każdej chwili.
+  - generic [ref=e326]:
+    - generic [ref=e327]:
+      - generic [ref=e328]:
+        - generic [ref=e329]: LUSENA
+        - paragraph [ref=e331]:
+          - text: 22 momme silk from Suzhou. Certified OEKO-TEX 100.
+          - text: Sleep better, wake up beautiful.
+      - heading "Shop" [level=4] [ref=e333]
+      - heading "Help" [level=4] [ref=e335]
+      - generic [ref=e336]:
+        - heading "Newsletter" [level=4] [ref=e337]
+        - generic [ref=e338]:
+          - paragraph [ref=e339]: Join the circle for early access and care tips.
+          - generic [ref=e340]:
+            - generic [ref=e341]: Email
+            - textbox "Email" [ref=e342]
+            - button "Sign up" [ref=e343] [cursor=pointer]
+    - generic [ref=e344]: © 2026 LUSENA. All rights reserved.

@@ -88,11 +88,11 @@ Single color (B only per §7.3): Pink/rose is the dominant #1 curler color globa
 
 ## LUSENA metafields
 
-> For what each field does and how to write great copy, see `docs/product-metafields-reference.md`
+> For what each field does and how to write great copy, see `memory-bank/doc/products/product-metafields-reference.md`
 >
 > **UNIVERSAL FIELDS - DO NOT MODIFY.** Fields marked "Pre-filled (universal)" are shared
 > across ALL LUSENA silk products. They were validated once and must not be rewritten or
-> "improved" during creative sessions. See `docs/product-metafields-reference.md` → "Universal fields".
+> "improved" during creative sessions. See `memory-bank/doc/products/product-metafields-reference.md` → "Universal fields".
 > All 4 universal feature cards apply to this product (momme, satyna, OEKO-TEX, gift).
 
 ### Buybox content
@@ -169,7 +169,7 @@ Single color (B only per §7.3): Pink/rose is the dominant #1 curler color globa
 
 ### Icon animation specs (for SVG coding agent)
 
-> For each feature card, describe the icon animation for the SVG agent. See constraints in `docs/product-metafields-reference.md`.
+> For each feature card, describe the icon animation for the SVG agent. See constraints in `memory-bank/doc/products/product-metafields-reference.md`.
 
 | Card | Icon | Animation spec |
 |------|------|---------------|

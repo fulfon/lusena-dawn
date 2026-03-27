@@ -1,0 +1,408 @@
+<h2>Final design v3: visual weight on the "add" item</h2>
+<p class="subtitle">"In cart" tile is smaller and muted. "Add" tile is larger with a subtle warm highlight. Eye goes to the decision.</p>
+
+<style>
+  * { box-sizing: border-box; }
+  .lusena { font-family: 'Inter', -apple-system, sans-serif; color: #111; -webkit-font-smoothing: antialiased; }
+
+  .ctx-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #8C6A3C; font-weight: 600; margin: 0 0 8px; }
+  .drawer-frame { width: 375px; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border: 1px solid rgba(0,0,0,0.04); }
+  .frame-header { background: #fff; padding: 14px 20px; border-bottom: 1px solid rgba(74,74,74,0.06); display: flex; justify-content: space-between; align-items: center; }
+  .frame-header h4 { margin: 0; font-family: 'Source Serif 4', Georgia, serif; font-size: 17px; color: #111; font-weight: 500; }
+  .frame-header .close { font-size: 20px; color: #bbb; }
+
+  .ci { display: flex; gap: 12px; padding: 14px 20px; background: #fff; }
+  .ci-img { width: 60px; height: 60px; background: linear-gradient(145deg, #e8e0d4, #f2ece4); border-radius: 6px; flex-shrink: 0; }
+  .ci-info { flex: 1; }
+  .ci-title { font-size: 13.5px; font-weight: 500; color: #111; margin: 0; line-height: 1.3; }
+  .ci-meta { font-size: 11.5px; color: #666; margin: 3px 0 0; }
+  .ci-right { text-align: right; flex-shrink: 0; }
+  .ci-price { font-size: 13.5px; font-weight: 500; color: #111; margin: 0; }
+  .ci-qty { font-size: 11px; color: #999; margin: 3px 0 0; }
+
+  .dr-footer { border-top: 1px solid rgba(74,74,74,0.06); padding: 16px 20px; background: #fff; }
+  .dr-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .dr-total-l { font-size: 13px; color: #666; }
+  .dr-total-v { font-family: 'Source Serif 4', Georgia, serif; font-size: 17px; font-weight: 500; }
+  .btn-checkout { font-family: 'Inter', sans-serif; font-size: 14.5px; padding: 13px; background: rgba(14,94,90,0.92); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; width: 100%; }
+  .btn-outline { font-family: 'Inter', sans-serif; font-size: 12px; padding: 7px 16px; background: rgba(14,94,90,0.04); color: #0E5E5A; border: 1px solid rgba(14,94,90,0.2); border-radius: 6px; cursor: pointer; font-weight: 500; white-space: nowrap; }
+  .savings-chip { display: inline-flex; align-items: center; font-size: 11.5px; font-weight: 500; color: #8C6A3C; background: rgba(140, 106, 60, 0.08); padding: 3px 8px; border-radius: 4px; }
+
+  .concept-row { display: flex; gap: 28px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 12px; }
+  .type-label { font-size: 11.5px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin: 32px 0 12px; }
+  .type-label:first-of-type { margin-top: 0; }
+
+  .up-zone { background: rgba(240,238,235,0.45); padding: 14px 20px 16px; border-top: 1px solid rgba(74,74,74,0.06); }
+  .up-heading { font-family: 'Source Serif 4', Georgia, serif; font-size: 12px; color: #666; margin: 0 0 10px; letter-spacing: 0.01em; }
+  .upsell-card { padding: 14px; background: #fff; border-radius: 6px; border: 1px solid rgba(74,74,74,0.04); box-shadow: 0 1px 2px rgba(0,0,0,0.03); border-left: 2.5px solid rgba(14,94,90,0.4); }
+
+  /* Cross-sell (unchanged) */
+  .xs-row { display: flex; gap: 12px; align-items: center; }
+  .xs-img { width: 52px; height: 52px; background: linear-gradient(145deg, #e8e0d4, #f2ece4); border-radius: 5px; flex-shrink: 0; }
+  .xs-info { flex: 1; min-width: 0; }
+  .xs-title { font-size: 13px; font-weight: 500; color: #111; margin: 0; line-height: 1.3; }
+  .xs-msg { font-size: 11.5px; color: #666; margin: 3px 0 0; line-height: 1.4; }
+  .xs-color { font-size: 10.5px; color: #999; margin: 3px 0 0; }
+  .xs-color b { color: #555; font-weight: 500; }
+  .xs-aside { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; flex-shrink: 0; gap: 6px; }
+  .xs-price { font-size: 13.5px; font-weight: 500; color: #111; margin: 0; font-variant-numeric: tabular-nums; }
+
+  /* ================================== */
+  /* Bundle tiles: asymmetric weight    */
+  /* ================================== */
+  .bn-headline { font-size: 13.5px; font-weight: 500; color: #111; margin: 0 0 10px; line-height: 1.35; }
+  .bn-items { display: flex; gap: 8px; align-items: stretch; }
+
+  /* "In cart" tile: SMALL + MUTED */
+  .bn-have {
+    width: 90px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 8px 6px;
+    border-radius: 5px;
+    background: rgba(240,238,235,0.4);
+  }
+  .bn-have-img {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(145deg, #e8e0d4, #f2ece4);
+    border-radius: 4px;
+    margin-bottom: 5px;
+    position: relative;
+    opacity: 0.75;
+  }
+  .bn-have-check {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 14px;
+    height: 14px;
+    background: #0E5E5A;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+  }
+  .bn-have-check svg { width: 8px; height: 8px; color: #fff; }
+  .bn-have-name { font-size: 10px; font-weight: 500; color: #888; line-height: 1.2; margin: 0; }
+  .bn-have-status { font-size: 9px; color: #0E5E5A; margin: 2px 0 0; font-weight: 500; }
+
+  .bn-plus { font-size: 16px; color: #ccc; flex-shrink: 0; align-self: center; font-weight: 300; }
+
+  /* "Add" tile: LARGE + PROMINENT */
+  .bn-add {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    background: rgba(240,238,235,0.5);
+    border: 1px solid rgba(74,74,74,0.06);
+  }
+  .bn-add-img {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(145deg, #e8e0d4, #f2ece4);
+    border-radius: 5px;
+    margin-bottom: 6px;
+  }
+  .bn-add-name { font-size: 12px; font-weight: 500; color: #111; line-height: 1.25; margin: 0; }
+
+  .bn-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(74,74,74,0.05); }
+  .bn-pricing { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+  .bn-price-now { font-size: 14px; font-weight: 500; color: #111; }
+  .bn-price-was { font-size: 11px; color: #aaa; text-decoration: line-through; }
+</style>
+
+<!-- CROSS-SELL -->
+<p class="type-label">Cross-sell (unchanged)</p>
+<div class="concept-row">
+  <div>
+    <p class="ctx-label">Poszewka → Scrunchie</p>
+    <div class="drawer-frame lusena">
+      <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+      <div class="ci">
+        <div class="ci-img"></div>
+        <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Czarny / 50&times;70</p></div>
+        <div class="ci-right"><p class="ci-price">269 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+      </div>
+      <div class="up-zone">
+        <p class="up-heading">Pasuje do</p>
+        <div class="upsell-card">
+          <div class="xs-row">
+            <div class="xs-img"></div>
+            <div class="xs-info">
+              <p class="xs-title">Scrunchie jedwabny</p>
+              <p class="xs-msg">Ochrona wlosow z tego samego jedwabiu</p>
+              <p class="xs-color">Kolor: <b>Czarny</b></p>
+            </div>
+            <div class="xs-aside">
+              <p class="xs-price">39 zl</p>
+              <button class="btn-outline">Dodaj</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dr-footer">
+        <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">269 zl</span></div>
+        <button class="btn-checkout">Przejdz do kasy</button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <p class="ctx-label">Maska → Poszewka</p>
+    <div class="drawer-frame lusena">
+      <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+      <div class="ci">
+        <div class="ci-img"></div>
+        <div class="ci-info"><p class="ci-title">Jedwabna maska 3D</p><p class="ci-meta">Czarny</p></div>
+        <div class="ci-right"><p class="ci-price">169 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+      </div>
+      <div class="up-zone">
+        <p class="up-heading">Pasuje do</p>
+        <div class="upsell-card">
+          <div class="xs-row">
+            <div class="xs-img"></div>
+            <div class="xs-info">
+              <p class="xs-title">Poszewka jedwabna</p>
+              <p class="xs-msg">Jedwab na twarz - obudz sie bez zagniecen</p>
+              <p class="xs-color">Kolor: <b>Czarny</b></p>
+            </div>
+            <div class="xs-aside">
+              <p class="xs-price">269 zl</p>
+              <button class="btn-outline">Dodaj</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dr-footer">
+        <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">169 zl</span></div>
+        <button class="btn-checkout">Przejdz do kasy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BUNDLES -->
+<p class="type-label">Bundle: asymmetric tiles</p>
+<div class="concept-row">
+  <div>
+    <p class="ctx-label">Czepek → Nocna Rutyna</p>
+    <div class="drawer-frame lusena">
+      <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+      <div class="ci">
+        <div class="ci-img"></div>
+        <div class="ci-info"><p class="ci-title">Jedwabny czepek do spania</p><p class="ci-meta">Czarny</p></div>
+        <div class="ci-right"><p class="ci-price">239 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+      </div>
+      <div class="up-zone">
+        <p class="up-heading">Korzystniej w zestawie</p>
+        <div class="upsell-card">
+          <p class="bn-headline">Dodaj poszewke i zaoszczedz 109 zl</p>
+          <div class="bn-items">
+            <div class="bn-have">
+              <div class="bn-have-img">
+                <div class="bn-have-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+              </div>
+              <p class="bn-have-name">Czepek jedwabny</p>
+              <p class="bn-have-status">W koszyku</p>
+            </div>
+            <span class="bn-plus">+</span>
+            <div class="bn-add">
+              <div class="bn-add-img"></div>
+              <p class="bn-add-name">Poszewka jedwabna</p>
+            </div>
+          </div>
+          <div class="bn-bottom">
+            <div class="bn-pricing">
+              <span class="bn-price-now">399 zl</span>
+              <span class="bn-price-was">508 zl</span>
+              <span class="savings-chip">Oszczedzasz 109 zl</span>
+            </div>
+            <button class="btn-outline">Dodaj do zestawu</button>
+          </div>
+        </div>
+      </div>
+      <div class="dr-footer">
+        <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">239 zl</span></div>
+        <button class="btn-checkout">Przejdz do kasy</button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <p class="ctx-label">Poszewka → Nocna Rutyna</p>
+    <div class="drawer-frame lusena">
+      <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+      <div class="ci">
+        <div class="ci-img"></div>
+        <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Czarny / 50&times;70</p></div>
+        <div class="ci-right"><p class="ci-price">269 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+      </div>
+      <div class="up-zone">
+        <p class="up-heading">Korzystniej w zestawie</p>
+        <div class="upsell-card">
+          <p class="bn-headline">Dodaj czepek i zaoszczedz 109 zl</p>
+          <div class="bn-items">
+            <div class="bn-have">
+              <div class="bn-have-img">
+                <div class="bn-have-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+              </div>
+              <p class="bn-have-name">Poszewka jedwabna</p>
+              <p class="bn-have-status">W koszyku</p>
+            </div>
+            <span class="bn-plus">+</span>
+            <div class="bn-add">
+              <div class="bn-add-img"></div>
+              <p class="bn-add-name">Czepek jedwabny</p>
+            </div>
+          </div>
+          <div class="bn-bottom">
+            <div class="bn-pricing">
+              <span class="bn-price-now">399 zl</span>
+              <span class="bn-price-was">508 zl</span>
+              <span class="savings-chip">Oszczedzasz 109 zl</span>
+            </div>
+            <button class="btn-outline">Dodaj do zestawu</button>
+          </div>
+        </div>
+      </div>
+      <div class="dr-footer">
+        <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">269 zl</span></div>
+        <button class="btn-checkout">Przejdz do kasy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="type-label">More bundles</p>
+<div class="concept-row">
+  <div>
+    <p class="ctx-label">Poszewka → Piekny Sen</p>
+    <div class="drawer-frame lusena">
+      <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+      <div class="ci">
+        <div class="ci-img"></div>
+        <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Szampan / 50&times;70</p></div>
+        <div class="ci-right"><p class="ci-price">269 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+      </div>
+      <div class="up-zone">
+        <p class="up-heading">Korzystniej w zestawie</p>
+        <div class="upsell-card">
+          <p class="bn-headline">Dodaj maske 3D i zaoszczedz 89 zl</p>
+          <div class="bn-items">
+            <div class="bn-have">
+              <div class="bn-have-img">
+                <div class="bn-have-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+              </div>
+              <p class="bn-have-name">Poszewka jedwabna</p>
+              <p class="bn-have-status">W koszyku</p>
+            </div>
+            <span class="bn-plus">+</span>
+            <div class="bn-add">
+              <div class="bn-add-img"></div>
+              <p class="bn-add-name">Maska jedwabna 3D</p>
+            </div>
+          </div>
+          <div class="bn-bottom">
+            <div class="bn-pricing">
+              <span class="bn-price-now">349 zl</span>
+              <span class="bn-price-was">438 zl</span>
+              <span class="savings-chip">Oszczedzasz 89 zl</span>
+            </div>
+            <button class="btn-outline">Dodaj do zestawu</button>
+          </div>
+        </div>
+      </div>
+      <div class="dr-footer">
+        <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">269 zl</span></div>
+        <button class="btn-checkout">Przejdz do kasy</button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <p class="ctx-label">Scrunchie → Scrunchie Trio</p>
+    <div class="drawer-frame lusena">
+      <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+      <div class="ci">
+        <div class="ci-img"></div>
+        <div class="ci-info"><p class="ci-title">Scrunchie jedwabny</p><p class="ci-meta">Czarny</p></div>
+        <div class="ci-right"><p class="ci-price">59 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+      </div>
+      <div class="up-zone">
+        <p class="up-heading">Korzystniej w zestawie</p>
+        <div class="upsell-card">
+          <p class="bn-headline">Dodaj 2 scrunchie i zaoszczedz 38 zl</p>
+          <div class="bn-items">
+            <div class="bn-have">
+              <div class="bn-have-img">
+                <div class="bn-have-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+              </div>
+              <p class="bn-have-name">Scrunchie</p>
+              <p class="bn-have-status">W koszyku</p>
+            </div>
+            <span class="bn-plus">+</span>
+            <div class="bn-add">
+              <div class="bn-add-img"></div>
+              <p class="bn-add-name">2&times; Scrunchie</p>
+            </div>
+          </div>
+          <div class="bn-bottom">
+            <div class="bn-pricing">
+              <span class="bn-price-now">139 zl</span>
+              <span class="bn-price-was">177 zl</span>
+              <span class="savings-chip">Oszczedzasz 38 zl</span>
+            </div>
+            <button class="btn-outline">Dodaj do zestawu</button>
+          </div>
+        </div>
+      </div>
+      <div class="dr-footer">
+        <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">59 zl</span></div>
+        <button class="btn-checkout">Przejdz do kasy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Visual weight comparison -->
+<div style="margin-top: 40px; padding: 20px; background: #fff; border-radius: 8px; border: 1px solid rgba(74,74,74,0.08); box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+  <h3 style="margin: 0 0 12px; font-size: 15px;">Visual weight shift (v2 → v3)</h3>
+  <table style="width: 100%; font-size: 13px; border-collapse: collapse;">
+    <tr style="border-bottom: 1px solid #eee;">
+      <td style="padding: 8px 0; font-weight: 500; color: #666; width: 30%;"></td>
+      <td style="padding: 8px 0; font-weight: 500; color: #666;">"In cart" tile</td>
+      <td style="padding: 8px 0; font-weight: 500; color: #666;">"Add" tile</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #f5f5f5;">
+      <td style="padding: 6px 0; color: #888;">Width</td>
+      <td style="padding: 6px 0;">90px fixed (narrow)</td>
+      <td style="padding: 6px 0;">flex: 1 (fills remaining)</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #f5f5f5;">
+      <td style="padding: 6px 0; color: #888;">Image</td>
+      <td style="padding: 6px 0;">38px, slightly faded (opacity 0.75)</td>
+      <td style="padding: 6px 0;">56px, full opacity</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #f5f5f5;">
+      <td style="padding: 6px 0; color: #888;">Background</td>
+      <td style="padding: 6px 0;">Muted gray (no teal tint)</td>
+      <td style="padding: 6px 0;">Warm neutral + subtle border</td>
+    </tr>
+    <tr style="border-bottom: 1px solid #f5f5f5;">
+      <td style="padding: 6px 0; color: #888;">Text color</td>
+      <td style="padding: 6px 0;">#888 (secondary)</td>
+      <td style="padding: 6px 0;">#111 (primary)</td>
+    </tr>
+    <tr>
+      <td style="padding: 6px 0; color: #888;">Text size</td>
+      <td style="padding: 6px 0;">10px name, 9px status</td>
+      <td style="padding: 6px 0;">12px name</td>
+    </tr>
+  </table>
+</div>

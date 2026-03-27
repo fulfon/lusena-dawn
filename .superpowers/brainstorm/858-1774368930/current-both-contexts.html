@@ -1,0 +1,245 @@
+<h2>Current state: Cart drawer vs Cart page</h2>
+<p class="subtitle">Both upsell types shown in both contexts. Notice the layout differences and how the bundle nudge fits (or doesn't).</p>
+
+<style>
+  .ctx-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #8C6A3C; font-weight: 600; margin: 0 0 8px; }
+  .drawer-frame { width: 375px; background: #fff; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .page-frame { width: 100%; max-width: 680px; background: #F7F5F2; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .frame-header { background: #fff; padding: 12px 20px; border-bottom: 1px solid rgba(74,74,74,0.1); display: flex; justify-content: space-between; align-items: center; }
+  .frame-header h3 { margin: 0; font-family: 'Source Serif 4', Georgia, serif; font-size: 18px; color: #111; }
+  .frame-header .close { font-size: 18px; color: #4A4A4A; cursor: pointer; }
+
+  /* Cart item row */
+  .cart-item { display: flex; gap: 12px; padding: 16px 20px; background: #fff; }
+  .cart-item-img { width: 64px; height: 64px; background: linear-gradient(135deg, #d4c5b0, #e8ddd0, #c9b89e); border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #8C6A3C; }
+  .cart-item-info { flex: 1; }
+  .cart-item-title { font-size: 14px; font-weight: 500; color: #111; margin: 0; }
+  .cart-item-meta { font-size: 12px; color: #4A4A4A; margin: 4px 0 0; }
+  .cart-item-price { font-size: 14px; font-weight: 500; color: #111; text-align: right; }
+  .cart-item-qty { font-size: 12px; color: #4A4A4A; margin: 4px 0 0; text-align: right; }
+
+  /* Upsell zone */
+  .upsell-zone { background: rgba(240,238,235,0.5); padding: 16px 20px; border-top: 1px solid rgba(74,74,74,0.1); font-family: 'Inter', -apple-system, sans-serif; }
+  .upsell-label { font-family: 'Source Serif 4', Georgia, serif; font-size: 12px; color: #4A4A4A; margin: 0 0 12px; }
+  .upsell-card { display: flex; gap: 12px; padding: 12px; background: #fff; border-radius: 6px; border: 1px solid rgba(74,74,74,0.05); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+  .upsell-img { width: 56px; height: 56px; background: linear-gradient(135deg, #d4c5b0, #e8ddd0, #c9b89e); border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 9px; color: #8C6A3C; }
+  .upsell-info { flex: 1; min-width: 0; }
+  .upsell-title { font-size: 14px; font-weight: 500; color: #111; margin: 0; line-height: 1.25; }
+  .upsell-msg { font-size: 12px; color: #4A4A4A; margin: 4px 0 0; line-height: 1.375; }
+  .upsell-color { font-size: 11px; color: rgba(74,74,74,0.7); margin: 4px 0 0; }
+  .upsell-color span { color: #111; font-weight: 500; }
+  .upsell-aside { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; flex-shrink: 0; gap: 8px; }
+  .upsell-price { font-size: 14px; font-weight: 500; color: #111; margin: 0; font-variant-numeric: tabular-nums; }
+  .btn-outline { font-family: 'Inter', sans-serif; font-size: 12px; padding: 6px 14px; background: rgba(14,94,90,0.05); color: #0E5E5A; border: 1px solid rgba(14,94,90,0.3); border-radius: 6px; cursor: pointer; font-weight: 500; white-space: nowrap; }
+  .btn-primary-sm { font-family: 'Inter', sans-serif; font-size: 13px; padding: 8px 16px; background: rgba(14,94,90,0.9); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; width: 100%; }
+
+  /* Bundle nudge (current dashed style) */
+  .nudge-box { border: 1px dashed #999; border-radius: 6px; padding: 8px 12px; margin-top: 8px; }
+  .nudge-headline { font-size: 13px; font-weight: 600; color: #111; margin: 0 0 4px; }
+  .nudge-pricing { font-size: 12px; color: #4A4A4A; margin: 0 0 8px; }
+  .nudge-was { text-decoration: line-through; opacity: 0.65; }
+
+  /* Footer */
+  .drawer-footer { border-top: 1px solid rgba(74,74,74,0.1); padding: 20px; background: #fff; }
+  .footer-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .footer-total-label { font-size: 14px; color: #4A4A4A; }
+  .footer-total-value { font-family: 'Source Serif 4', Georgia, serif; font-size: 18px; font-weight: 500; color: #111; }
+  .btn-checkout { font-family: 'Inter', sans-serif; font-size: 15px; padding: 14px; background: rgba(14,94,90,0.9); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; width: 100%; }
+
+  .section-gap { margin-top: 40px; }
+  .type-tag { display: inline-block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; padding: 2px 8px; border-radius: 4px; margin-bottom: 12px; font-weight: 600; }
+  .type-tag--crosssell { background: rgba(14,94,90,0.1); color: #0E5E5A; }
+  .type-tag--bundle { background: rgba(140,106,60,0.1); color: #8C6A3C; }
+</style>
+
+<!-- ============ SECTION 1: REGULAR CROSS-SELL ============ -->
+<h3 style="margin-bottom: 4px;">1. Regular cross-sell</h3>
+<p style="font-size: 13px; color: #4A4A4A; margin: 0 0 20px;">e.g. Poszewka in cart -> upsell Scrunchie</p>
+
+<div style="display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start;">
+  <!-- DRAWER -->
+  <div>
+    <p class="ctx-label">Cart drawer (375px)</p>
+    <div class="drawer-frame">
+      <div class="frame-header">
+        <h3>Koszyk (1)</h3>
+        <span class="close">&times;</span>
+      </div>
+      <div class="cart-item">
+        <div class="cart-item-img">IMG</div>
+        <div class="cart-item-info">
+          <p class="cart-item-title">Poszewka jedwabna</p>
+          <p class="cart-item-meta">Czarny / 50x70</p>
+        </div>
+        <div>
+          <p class="cart-item-price">169 zl</p>
+          <p class="cart-item-qty">Ilosc: 1</p>
+        </div>
+      </div>
+      <div class="upsell-zone">
+        <p class="upsell-label">Pasuje do</p>
+        <div class="upsell-card">
+          <div class="upsell-img">IMG</div>
+          <div class="upsell-info">
+            <p class="upsell-title">Scrunchie jedwabny</p>
+            <p class="upsell-msg">Idealne uzupelnienie zestawu</p>
+            <p class="upsell-color">Kolor: <span>Czarny</span></p>
+          </div>
+          <div class="upsell-aside">
+            <p class="upsell-price">39 zl</p>
+            <button class="btn-outline">Dodaj</button>
+          </div>
+        </div>
+      </div>
+      <div class="drawer-footer">
+        <div class="footer-total">
+          <span class="footer-total-label">Suma</span>
+          <span class="footer-total-value">169 zl</span>
+        </div>
+        <button class="btn-checkout">Przejdz do kasy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART PAGE -->
+  <div style="flex: 1; min-width: 300px;">
+    <p class="ctx-label">Cart page (wide)</p>
+    <div class="page-frame">
+      <div style="padding: 24px 32px;">
+        <h3 style="font-family: 'Source Serif 4', Georgia, serif; font-size: 22px; color: #111; margin: 0 0 20px;">Koszyk</h3>
+        <div class="cart-item" style="padding: 16px 0; background: transparent; border-bottom: 1px solid rgba(74,74,74,0.1);">
+          <div class="cart-item-img" style="width: 80px; height: 80px;">IMG</div>
+          <div class="cart-item-info">
+            <p class="cart-item-title">Poszewka jedwabna</p>
+            <p class="cart-item-meta">Czarny / 50x70</p>
+          </div>
+          <div>
+            <p class="cart-item-price">169 zl</p>
+            <p class="cart-item-qty">Ilosc: 1</p>
+          </div>
+        </div>
+        <!-- Upsell on cart page -->
+        <div style="background: rgba(240,238,235,0.5); padding: 16px; margin: 0 -32px; padding-left: 32px; padding-right: 32px; border-top: 1px solid rgba(74,74,74,0.1);">
+          <p class="upsell-label">Pasuje do</p>
+          <div class="upsell-card">
+            <div class="upsell-img">IMG</div>
+            <div class="upsell-info">
+              <p class="upsell-title">Scrunchie jedwabny</p>
+              <p class="upsell-msg">Idealne uzupelnienie zestawu</p>
+              <p class="upsell-color">Kolor: <span>Czarny</span></p>
+            </div>
+            <div class="upsell-aside">
+              <p class="upsell-price">39 zl</p>
+              <button class="btn-outline">Dodaj</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SECTION 2: BUNDLE NUDGE ============ -->
+<div class="section-gap">
+  <h3 style="margin-bottom: 4px;">2. Bundle nudge (current)</h3>
+  <p style="font-size: 13px; color: #4A4A4A; margin: 0 0 20px;">e.g. Czepek in cart -> upgrade to Nocna Rutyna bundle</p>
+
+  <div style="display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start;">
+    <!-- DRAWER -->
+    <div>
+      <p class="ctx-label">Cart drawer (375px)</p>
+      <div class="drawer-frame">
+        <div class="frame-header">
+          <h3>Koszyk (1)</h3>
+          <span class="close">&times;</span>
+        </div>
+        <div class="cart-item">
+          <div class="cart-item-img">IMG</div>
+          <div class="cart-item-info">
+            <p class="cart-item-title">Jedwabny czepek do spania</p>
+            <p class="cart-item-meta">Czarny</p>
+          </div>
+          <div>
+            <p class="cart-item-price">139 zl</p>
+            <p class="cart-item-qty">Ilosc: 1</p>
+          </div>
+        </div>
+        <div class="upsell-zone">
+          <p class="upsell-label">Uzupelnij do zestawu</p>
+          <div class="upsell-card">
+            <div class="upsell-img">IMG</div>
+            <div class="upsell-info">
+              <p class="upsell-title">Nocna Rutyna</p>
+            </div>
+            <div class="upsell-aside">
+              <p class="upsell-price">399 zl</p>
+              <!-- Current bundle nudge jammed into aside -->
+              <div class="nudge-box">
+                <p class="nudge-headline">Dodaj czepek do zestawu</p>
+                <p class="nudge-pricing">Nocna Rutyna &middot; <strong>399 zl</strong> <span class="nudge-was">zam. 508 zl</span></p>
+                <button class="btn-primary-sm">Dodaj do zestawu &middot; +260 zl</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="drawer-footer">
+          <div class="footer-total">
+            <span class="footer-total-label">Suma</span>
+            <span class="footer-total-value">139 zl</span>
+          </div>
+          <button class="btn-checkout">Przejdz do kasy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CART PAGE -->
+    <div style="flex: 1; min-width: 300px;">
+      <p class="ctx-label">Cart page (wide)</p>
+      <div class="page-frame">
+        <div style="padding: 24px 32px;">
+          <h3 style="font-family: 'Source Serif 4', Georgia, serif; font-size: 22px; color: #111; margin: 0 0 20px;">Koszyk</h3>
+          <div class="cart-item" style="padding: 16px 0; background: transparent; border-bottom: 1px solid rgba(74,74,74,0.1);">
+            <div class="cart-item-img" style="width: 80px; height: 80px;">IMG</div>
+            <div class="cart-item-info">
+              <p class="cart-item-title">Jedwabny czepek do spania</p>
+              <p class="cart-item-meta">Czarny</p>
+            </div>
+            <div>
+              <p class="cart-item-price">139 zl</p>
+              <p class="cart-item-qty">Ilosc: 1</p>
+            </div>
+          </div>
+          <!-- Bundle nudge on cart page -->
+          <div style="background: rgba(240,238,235,0.5); padding: 16px 32px; margin: 0 -32px; border-top: 1px solid rgba(74,74,74,0.1);">
+            <p class="upsell-label">Uzupelnij do zestawu</p>
+            <div class="upsell-card">
+              <div class="upsell-img">IMG</div>
+              <div class="upsell-info">
+                <p class="upsell-title">Nocna Rutyna</p>
+              </div>
+              <div class="upsell-aside">
+                <p class="upsell-price">399 zl</p>
+                <div class="nudge-box">
+                  <p class="nudge-headline">Dodaj czepek do zestawu</p>
+                  <p class="nudge-pricing">Nocna Rutyna &middot; <strong>399 zl</strong> <span class="nudge-was">zam. 508 zl</span></p>
+                  <button class="btn-primary-sm">Dodaj do zestawu &middot; +260 zl</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 40px; padding: 20px; background: rgba(14,94,90,0.05); border-radius: 8px; border-left: 3px solid #0E5E5A;">
+  <h3 style="margin: 0 0 8px; font-size: 16px;">What we see</h3>
+  <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.8;">
+    <li><strong>Cross-sell</strong> looks clean in both contexts - balanced 3-column card</li>
+    <li><strong>Bundle nudge</strong> is crammed into the aside column - dashed box with full-width button doesn't fit the card layout</li>
+    <li><strong>Drawer constraint</strong> - only ~335px usable width, the bundle nudge overflows the aside area</li>
+    <li><strong>No savings visibility on cross-sell</strong> - bundle nudge shows "zam. 508 zl" but regular cross-sell has no value framing</li>
+    <li><strong>Different mental models</strong> - "Dodaj" (add to cart) vs "Dodaj do zestawu" (swap/upgrade) need different visual treatment but within the same design system</li>
+  </ul>
+</div>

@@ -61,7 +61,7 @@ Before adding products, create these definitions in **Settings → Custom data �
 
 > **Creative copy fields** (headline, tagline, benefits) should NOT be copy-pasted from old examples.
 > Each product deserves a dedicated creative session - research the product's unique benefits, align with brandbook tone, verify legal compliance.
-> See `docs/product-metafields-reference.md` for detailed guidance on each field's conversion role and copy guidelines.
+> See `memory-bank/doc/products/product-metafields-reference.md` for detailed guidance on each field's conversion role and copy guidelines.
 
 ### Buybox content (REQUIRES CREATIVE SESSION)
 
@@ -146,13 +146,13 @@ Replace `N` with 1-6 for each card position.
 
 `tile_label` is optional — only needed when product title isn't descriptive enough (e.g., Scrunchie Trio uses "2x Scrunchie jedwabny").
 
-See `docs/product-metafields-reference.md` for complete values per bundle.
+See `memory-bank/doc/products/product-metafields-reference.md` for complete values per bundle.
 
 ## E. Factual Specs Per Product Type
 
 > **Creative copy** (headline, tagline, benefits) is NOT included here.
 > Those fields must be crafted in a dedicated creative session for each product.
-> See `docs/product-metafields-reference.md` for how to approach each creative field.
+> See `memory-bank/doc/products/product-metafields-reference.md` for how to approach each creative field.
 > See `memory-bank/doc/products/poszewka-jedwabna.md` for a real example of finalized creative copy.
 
 ### Poszewka jedwabna (Pillowcase) - flagship

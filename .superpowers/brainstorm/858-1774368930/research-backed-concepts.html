@@ -1,0 +1,700 @@
+<h2>Research-backed concepts</h2>
+<p class="subtitle">Gain-framed, brand-aligned, backed by Thaler's Mental Accounting + Zeigarnik Effect + our PDP patterns.</p>
+
+<style>
+  * { box-sizing: border-box; }
+  .lusena { font-family: 'Inter', -apple-system, sans-serif; color: #111; -webkit-font-smoothing: antialiased; }
+
+  .ctx-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #8C6A3C; font-weight: 600; margin: 0 0 8px; }
+  .drawer-frame { width: 375px; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border: 1px solid rgba(0,0,0,0.04); }
+  .page-frame { width: 100%; max-width: 560px; background: #F7F5F2; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border: 1px solid rgba(0,0,0,0.04); }
+  .frame-header { background: #fff; padding: 14px 20px; border-bottom: 1px solid rgba(74,74,74,0.06); display: flex; justify-content: space-between; align-items: center; }
+  .frame-header h4 { margin: 0; font-family: 'Source Serif 4', Georgia, serif; font-size: 17px; color: #111; font-weight: 500; }
+  .frame-header .close { font-size: 20px; color: #bbb; }
+
+  .ci { display: flex; gap: 12px; padding: 14px 20px; background: #fff; }
+  .ci-img { width: 60px; height: 60px; background: linear-gradient(145deg, #e8e0d4, #f2ece4); border-radius: 6px; flex-shrink: 0; }
+  .ci-info { flex: 1; }
+  .ci-title { font-size: 13.5px; font-weight: 500; color: #111; margin: 0; line-height: 1.3; }
+  .ci-meta { font-size: 11.5px; color: #666; margin: 3px 0 0; }
+  .ci-right { text-align: right; flex-shrink: 0; }
+  .ci-price { font-size: 13.5px; font-weight: 500; color: #111; margin: 0; }
+  .ci-qty { font-size: 11px; color: #999; margin: 3px 0 0; }
+
+  .dr-footer { border-top: 1px solid rgba(74,74,74,0.06); padding: 16px 20px; background: #fff; }
+  .dr-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .dr-total-l { font-size: 13px; color: #666; }
+  .dr-total-v { font-family: 'Source Serif 4', Georgia, serif; font-size: 17px; font-weight: 500; }
+  .btn-cta { font-family: 'Inter', sans-serif; font-size: 14.5px; padding: 13px; background: rgba(14,94,90,0.92); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; width: 100%; }
+
+  .concept-row { display: flex; gap: 28px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 12px; }
+  .concept-divider { margin: 52px 0; border: none; border-top: 2px dashed #ddd; }
+  .type-label { font-size: 11.5px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin: 24px 0 12px; }
+  .type-label:first-of-type { margin-top: 0; }
+
+  /* Gold savings chip — matches PDP exactly */
+  .savings-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: #8C6A3C;
+    background: rgba(140, 106, 60, 0.08);
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.01em;
+  }
+
+  .note-box { margin-top: 16px; padding: 14px 18px; background: rgba(14,94,90,0.04); border-radius: 8px; border-left: 3px solid rgba(14,94,90,0.3); font-size: 13px; color: #444; line-height: 1.6; }
+  .note-box strong { color: #111; }
+  .note-box ul { margin: 6px 0 0; padding-left: 16px; }
+  .note-box li { margin-bottom: 3px; }
+
+  /* ========================= */
+  /* SHARED: Cross-sell card   */
+  /* ========================= */
+  .up-zone { background: rgba(240,238,235,0.45); padding: 14px 20px 16px; border-top: 1px solid rgba(74,74,74,0.06); }
+  .up-heading { font-family: 'Source Serif 4', Georgia, serif; font-size: 12px; color: #666; margin: 0 0 10px; }
+  .up-card { display: flex; gap: 12px; padding: 12px; background: #fff; border-radius: 6px; border: 1px solid rgba(74,74,74,0.04); box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .up-img { width: 56px; height: 56px; background: linear-gradient(145deg, #e8e0d4, #f2ece4); border-radius: 5px; flex-shrink: 0; }
+  .up-info { flex: 1; min-width: 0; }
+  .up-title { font-size: 13px; font-weight: 500; color: #111; margin: 0; line-height: 1.3; }
+  .up-msg { font-size: 11.5px; color: #666; margin: 3px 0 0; line-height: 1.4; }
+  .up-color { font-size: 10.5px; color: #999; margin: 3px 0 0; }
+  .up-color b { color: #555; font-weight: 500; }
+  .up-aside { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; flex-shrink: 0; gap: 6px; }
+  .up-price { font-size: 13.5px; font-weight: 500; color: #111; margin: 0; }
+  .up-btn-add { font-family: 'Inter', sans-serif; font-size: 12px; padding: 7px 16px; background: rgba(14,94,90,0.04); color: #0E5E5A; border: 1px solid rgba(14,94,90,0.2); border-radius: 6px; cursor: pointer; font-weight: 500; white-space: nowrap; }
+
+  /* ========================= */
+  /* CONCEPT A: Gain card       */
+  /* ========================= */
+  .ga-card { padding: 14px; background: #fff; border-radius: 6px; border: 1px solid rgba(74,74,74,0.04); box-shadow: 0 1px 2px rgba(0,0,0,0.03); border-left: 2.5px solid rgba(14,94,90,0.4); }
+  .ga-headline { font-size: 13.5px; font-weight: 500; color: #111; margin: 0 0 2px; line-height: 1.35; }
+  .ga-benefit { font-size: 11.5px; color: #666; margin: 0 0 10px; line-height: 1.4; }
+  .ga-row { display: flex; align-items: center; gap: 12px; }
+  .ga-img { width: 52px; height: 52px; background: linear-gradient(145deg, #e8e0d4, #f2ece4); border-radius: 5px; flex-shrink: 0; }
+  .ga-details { flex: 1; min-width: 0; }
+  .ga-set-name { font-size: 12px; font-weight: 500; color: #111; margin: 0; }
+  .ga-pricing { display: flex; align-items: baseline; gap: 6px; margin: 2px 0 0; }
+  .ga-price-now { font-size: 13.5px; font-weight: 500; color: #111; }
+  .ga-price-was { font-size: 11px; color: #aaa; text-decoration: line-through; }
+  .ga-btn { font-family: 'Inter', sans-serif; font-size: 12.5px; padding: 8px 16px; background: rgba(14,94,90,0.92); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+  .ga-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+
+  /* ========================= */
+  /* CONCEPT B: Two-item card   */
+  /* ========================= */
+  .tb-card { padding: 14px; background: #fff; border-radius: 6px; border: 1px solid rgba(74,74,74,0.04); box-shadow: 0 1px 2px rgba(0,0,0,0.03); border-left: 2.5px solid rgba(14,94,90,0.4); }
+  .tb-headline { font-size: 13.5px; font-weight: 500; color: #111; margin: 0 0 10px; line-height: 1.35; }
+  .tb-items { display: flex; gap: 10px; align-items: center; }
+  .tb-item { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
+  .tb-item-img { width: 44px; height: 44px; background: linear-gradient(145deg, #e8e0d4, #f2ece4); border-radius: 5px; flex-shrink: 0; position: relative; }
+  .tb-item-check { position: absolute; top: -4px; right: -4px; width: 16px; height: 16px; background: #0E5E5A; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .tb-item-check svg { width: 10px; height: 10px; color: #fff; }
+  .tb-item-name { font-size: 11.5px; color: #111; font-weight: 500; line-height: 1.3; }
+  .tb-item-meta { font-size: 10px; color: #999; margin-top: 1px; }
+  .tb-plus { font-size: 16px; color: #ccc; flex-shrink: 0; font-weight: 300; }
+  .tb-bottom { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(74,74,74,0.05); }
+  .tb-pricing-block { flex: 1; }
+  .tb-set-label { font-size: 11px; color: #666; margin: 0; }
+  .tb-pricing { display: flex; align-items: baseline; gap: 6px; margin: 2px 0 0; }
+  .tb-price-now { font-size: 14px; font-weight: 500; color: #111; }
+  .tb-price-was { font-size: 11px; color: #aaa; text-decoration: line-through; }
+  .tb-btn { font-family: 'Inter', sans-serif; font-size: 12.5px; padding: 8px 16px; background: rgba(14,94,90,0.92); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+
+  .page-upsell { padding: 14px 28px 16px; border-top: 1px solid rgba(74,74,74,0.06); background: rgba(240,238,235,0.45); }
+</style>
+
+<!-- ==================== CONCEPT A ==================== -->
+<div class="option" data-choice="concept-a" onclick="toggleSelect(this)">
+  <div class="letter">A</div>
+  <div class="content" style="width: 100%;">
+    <h3 style="margin: 0 0 4px;">Gain-framed value card</h3>
+    <p style="font-size: 13px; color: #666; margin: 0 0 6px;">Leads with what the customer GAINS: "Dodaj poszewke i zaoszczedz 109 zl." Shows the bundle image, name, savings chip (matching PDP), and price with crossed-out anchor. CTA says "Dodaj do zestawu" - the customer adds the missing piece, not pays extra.</p>
+
+    <div class="note-box">
+      <strong>Research basis:</strong>
+      <ul>
+        <li><strong>Prospect Theory</strong> - gain framing ("zaoszczedz 109 zl") is 2x more motivating than loss framing ("+260 zl")</li>
+        <li><strong>Gold savings chip</strong> - matches PDP pattern exactly (same color, same format)</li>
+        <li><strong>Specific product name</strong> - "Dodaj poszewke" not vague "uzupelnij zestaw"</li>
+        <li><strong>"Complete" framing</strong> - Zeigarnik Effect: the customer feels they're finishing something</li>
+      </ul>
+    </div>
+
+    <!-- CROSS-SELL -->
+    <p class="type-label">Cross-sell (same as before - this part works)</p>
+    <div class="concept-row">
+      <div>
+        <p class="ctx-label">Drawer</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Czarny / 50&times;70</p></div>
+            <div class="ci-right"><p class="ci-price">269 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="up-zone">
+            <p class="up-heading">Pasuje do</p>
+            <div class="up-card">
+              <div class="up-img"></div>
+              <div class="up-info">
+                <p class="up-title">Scrunchie jedwabny</p>
+                <p class="up-msg">Ochrona wlosow z tego samego jedwabiu</p>
+                <p class="up-color">Kolor: <b>Czarny</b></p>
+              </div>
+              <div class="up-aside">
+                <p class="up-price">39 zl</p>
+                <button class="up-btn-add">Dodaj</button>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">269 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+      <div style="flex: 1; min-width: 260px;">
+        <p class="ctx-label">Cart page</p>
+        <div class="page-frame lusena">
+          <div style="padding: 20px 28px;">
+            <h4 style="font-family: 'Source Serif 4', Georgia, serif; font-size: 19px; margin: 0 0 14px; font-weight: 500;">Koszyk</h4>
+            <div class="ci" style="padding: 12px 0; background: none; border-bottom: 1px solid rgba(74,74,74,0.06);">
+              <div class="ci-img" style="width: 72px; height: 72px;"></div>
+              <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Czarny / 50&times;70</p></div>
+              <div class="ci-right"><p class="ci-price">269 zl</p></div>
+            </div>
+          </div>
+          <div class="page-upsell">
+            <p class="up-heading">Pasuje do</p>
+            <div class="up-card">
+              <div class="up-img"></div>
+              <div class="up-info">
+                <p class="up-title">Scrunchie jedwabny</p>
+                <p class="up-msg">Ochrona wlosow z tego samego jedwabiu</p>
+                <p class="up-color">Kolor: <b>Czarny</b></p>
+              </div>
+              <div class="up-aside">
+                <p class="up-price">39 zl</p>
+                <button class="up-btn-add">Dodaj</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUNDLE: CZEPEK IN CART -->
+    <p class="type-label">Bundle: Czepek in cart → suggest Nocna Rutyna</p>
+    <div class="concept-row">
+      <div>
+        <p class="ctx-label">Drawer</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Jedwabny czepek do spania</p><p class="ci-meta">Czarny</p></div>
+            <div class="ci-right"><p class="ci-price">239 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="up-zone">
+            <p class="up-heading">Korzystniej w zestawie</p>
+            <div class="ga-card">
+              <p class="ga-headline">Dodaj poszewke jedwabna i zaoszczedz 109 zl</p>
+              <p class="ga-benefit">Ochrona twarzy i wlosow - kompletny jedwabny zestaw na noc</p>
+              <div class="ga-row">
+                <div class="ga-img"></div>
+                <div class="ga-details">
+                  <p class="ga-set-name">Nocna Rutyna</p>
+                  <div class="ga-pricing">
+                    <span class="ga-price-now">399 zl</span>
+                    <span class="ga-price-was">508 zl</span>
+                  </div>
+                  <div style="margin-top: 4px;">
+                    <span class="savings-chip">Oszczedzasz 109 zl</span>
+                  </div>
+                </div>
+              </div>
+              <div class="ga-bottom">
+                <span style="font-size: 11px; color: #888;">Czepek + poszewka jedwabna</span>
+                <button class="ga-btn">Dodaj do zestawu</button>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">239 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+      <div style="flex: 1; min-width: 260px;">
+        <p class="ctx-label">Cart page</p>
+        <div class="page-frame lusena">
+          <div style="padding: 20px 28px;">
+            <h4 style="font-family: 'Source Serif 4', Georgia, serif; font-size: 19px; margin: 0 0 14px; font-weight: 500;">Koszyk</h4>
+            <div class="ci" style="padding: 12px 0; background: none; border-bottom: 1px solid rgba(74,74,74,0.06);">
+              <div class="ci-img" style="width: 72px; height: 72px;"></div>
+              <div class="ci-info"><p class="ci-title">Jedwabny czepek do spania</p><p class="ci-meta">Czarny</p></div>
+              <div class="ci-right"><p class="ci-price">239 zl</p></div>
+            </div>
+          </div>
+          <div class="page-upsell">
+            <p class="up-heading">Korzystniej w zestawie</p>
+            <div class="ga-card">
+              <p class="ga-headline">Dodaj poszewke jedwabna i zaoszczedz 109 zl</p>
+              <p class="ga-benefit">Ochrona twarzy i wlosow - kompletny jedwabny zestaw na noc</p>
+              <div class="ga-row">
+                <div class="ga-img"></div>
+                <div class="ga-details">
+                  <p class="ga-set-name">Nocna Rutyna</p>
+                  <div class="ga-pricing">
+                    <span class="ga-price-now">399 zl</span>
+                    <span class="ga-price-was">508 zl</span>
+                  </div>
+                  <div style="margin-top: 4px;">
+                    <span class="savings-chip">Oszczedzasz 109 zl</span>
+                  </div>
+                </div>
+              </div>
+              <div class="ga-bottom">
+                <span style="font-size: 11px; color: #888;">Czepek + poszewka jedwabna</span>
+                <button class="ga-btn">Dodaj do zestawu</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUNDLE: POSZEWKA IN CART (shows the reverse scenario) -->
+    <p class="type-label">Bundle: Poszewka in cart → suggest Nocna Rutyna</p>
+    <div class="concept-row">
+      <div>
+        <p class="ctx-label">Drawer</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Czarny / 50&times;70</p></div>
+            <div class="ci-right"><p class="ci-price">269 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="up-zone">
+            <p class="up-heading">Korzystniej w zestawie</p>
+            <div class="ga-card">
+              <p class="ga-headline">Dodaj czepek jedwabny i zaoszczedz 109 zl</p>
+              <p class="ga-benefit">Poszewka chroni twarz, czepek chroni wlosy - kompletna ochrona na noc</p>
+              <div class="ga-row">
+                <div class="ga-img"></div>
+                <div class="ga-details">
+                  <p class="ga-set-name">Nocna Rutyna</p>
+                  <div class="ga-pricing">
+                    <span class="ga-price-now">399 zl</span>
+                    <span class="ga-price-was">508 zl</span>
+                  </div>
+                  <div style="margin-top: 4px;">
+                    <span class="savings-chip">Oszczedzasz 109 zl</span>
+                  </div>
+                </div>
+              </div>
+              <div class="ga-bottom">
+                <span style="font-size: 11px; color: #888;">Poszewka + czepek jedwabny</span>
+                <button class="ga-btn">Dodaj do zestawu</button>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">269 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+      <div style="flex: 1; min-width: 260px;">
+        <p class="ctx-label">Also works for Piekny Sen</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Szampan / 50&times;70</p></div>
+            <div class="ci-right"><p class="ci-price">269 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="up-zone">
+            <p class="up-heading">Korzystniej w zestawie</p>
+            <div class="ga-card">
+              <p class="ga-headline">Dodaj maske 3D i zaoszczedz 89 zl</p>
+              <p class="ga-benefit">Jedwabna ochrona twarzy i oczu - obudz sie wypoczeta</p>
+              <div class="ga-row">
+                <div class="ga-img"></div>
+                <div class="ga-details">
+                  <p class="ga-set-name">Piekny Sen</p>
+                  <div class="ga-pricing">
+                    <span class="ga-price-now">349 zl</span>
+                    <span class="ga-price-was">438 zl</span>
+                  </div>
+                  <div style="margin-top: 4px;">
+                    <span class="savings-chip">Oszczedzasz 89 zl</span>
+                  </div>
+                </div>
+              </div>
+              <div class="ga-bottom">
+                <span style="font-size: 11px; color: #888;">Poszewka + maska jedwabna 3D</span>
+                <button class="ga-btn">Dodaj do zestawu</button>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">269 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pros-cons" style="margin-top: 16px;">
+      <div class="pros"><h4>Strengths</h4><ul>
+        <li>Headline names the specific item they ADD - immediately clear</li>
+        <li>Savings stated as a GAIN ("zaoszczedz"), not a COST ("+260 zl")</li>
+        <li>Gold chip matches PDP exactly - consistent store experience</li>
+        <li>Benefit line explains WHY (face + hair protection)</li>
+        <li>Bundle contents listed at bottom for transparency</li>
+        <li>"Korzystniej w zestawie" = value framing without being discount-y</li>
+      </ul></div>
+      <div class="cons"><h4>Trade-offs</h4><ul>
+        <li>Taller card than cross-sell - more vertical space in drawer</li>
+        <li>Headline is information-dense - could feel busy at 375px</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<hr class="concept-divider">
+
+<!-- ==================== CONCEPT B ==================== -->
+<div class="option" data-choice="concept-b" onclick="toggleSelect(this)">
+  <div class="letter">B</div>
+  <div class="content" style="width: 100%;">
+    <h3 style="margin: 0 0 4px;">Two-item "complete the set" card</h3>
+    <p style="font-size: 13px; color: #666; margin: 0 0 6px;">Shows BOTH items visually: what they already have (with a check mark) and what they'd add. Applies Thaler's "fragment rewards" - they SEE both products and understand the set. Bottom row has pricing + savings chip + CTA. The customer processes the set composition FIRST, then considers the price.</p>
+
+    <div class="note-box">
+      <strong>Research basis:</strong>
+      <ul>
+        <li><strong>Thaler's Mental Accounting</strong> - fragment rewards: showing both items separately maximizes perceived value (64% prefer seeing individual components)</li>
+        <li><strong>Zeigarnik Effect</strong> - check mark on item they have + empty slot creates "incomplete set" tension</li>
+        <li><strong>Anchoring</strong> - crossed-out 508 zl creates the reference; 399 zl feels like a smart decision</li>
+        <li><strong>Brooklinen pattern</strong> - "everything you need" framing reduces cognitive load</li>
+      </ul>
+    </div>
+
+    <!-- CROSS-SELL (same) -->
+    <p class="type-label">Cross-sell (identical to Concept A)</p>
+    <div class="concept-row">
+      <div>
+        <p class="ctx-label">Drawer</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Czarny / 50&times;70</p></div>
+            <div class="ci-right"><p class="ci-price">269 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="up-zone">
+            <p class="up-heading">Pasuje do</p>
+            <div class="up-card">
+              <div class="up-img"></div>
+              <div class="up-info">
+                <p class="up-title">Scrunchie jedwabny</p>
+                <p class="up-msg">Ochrona wlosow z tego samego jedwabiu</p>
+                <p class="up-color">Kolor: <b>Czarny</b></p>
+              </div>
+              <div class="up-aside">
+                <p class="up-price">39 zl</p>
+                <button class="up-btn-add">Dodaj</button>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">269 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+      <div style="flex: 1; min-width: 260px;">
+        <p class="ctx-label">Cart page</p>
+        <div class="page-frame lusena">
+          <div style="padding: 20px 28px;">
+            <h4 style="font-family: 'Source Serif 4', Georgia, serif; font-size: 19px; margin: 0 0 14px; font-weight: 500;">Koszyk</h4>
+            <div class="ci" style="padding: 12px 0; background: none; border-bottom: 1px solid rgba(74,74,74,0.06);">
+              <div class="ci-img" style="width: 72px; height: 72px;"></div>
+              <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Czarny / 50&times;70</p></div>
+              <div class="ci-right"><p class="ci-price">269 zl</p></div>
+            </div>
+          </div>
+          <div class="page-upsell">
+            <p class="up-heading">Pasuje do</p>
+            <div class="up-card">
+              <div class="up-img"></div>
+              <div class="up-info">
+                <p class="up-title">Scrunchie jedwabny</p>
+                <p class="up-msg">Ochrona wlosow z tego samego jedwabiu</p>
+                <p class="up-color">Kolor: <b>Czarny</b></p>
+              </div>
+              <div class="up-aside">
+                <p class="up-price">39 zl</p>
+                <button class="up-btn-add">Dodaj</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUNDLE: CZEPEK IN CART -->
+    <p class="type-label">Bundle: Czepek in cart → suggest Nocna Rutyna</p>
+    <div class="concept-row">
+      <div>
+        <p class="ctx-label">Drawer</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Jedwabny czepek do spania</p><p class="ci-meta">Czarny</p></div>
+            <div class="ci-right"><p class="ci-price">239 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="up-zone">
+            <p class="up-heading">Korzystniej w zestawie</p>
+            <div class="tb-card">
+              <p class="tb-headline">Dodaj poszewke i zaoszczedz 109 zl na zestawie</p>
+              <div class="tb-items">
+                <div class="tb-item">
+                  <div class="tb-item-img" style="position: relative;">
+                    <div class="tb-item-check">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                  </div>
+                  <div>
+                    <p class="tb-item-name">Czepek jedwabny</p>
+                    <p class="tb-item-meta">Juz w koszyku</p>
+                  </div>
+                </div>
+                <span class="tb-plus">+</span>
+                <div class="tb-item">
+                  <div class="tb-item-img"></div>
+                  <div>
+                    <p class="tb-item-name">Poszewka jedwabna</p>
+                    <p class="tb-item-meta">Dopasowany kolor</p>
+                  </div>
+                </div>
+              </div>
+              <div class="tb-bottom">
+                <div class="tb-pricing-block">
+                  <div class="tb-pricing">
+                    <span class="tb-price-now">399 zl</span>
+                    <span class="tb-price-was">508 zl</span>
+                    <span class="savings-chip">-109 zl</span>
+                  </div>
+                </div>
+                <button class="tb-btn">Dodaj do zestawu</button>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">239 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+      <div style="flex: 1; min-width: 260px;">
+        <p class="ctx-label">Cart page</p>
+        <div class="page-frame lusena">
+          <div style="padding: 20px 28px;">
+            <h4 style="font-family: 'Source Serif 4', Georgia, serif; font-size: 19px; margin: 0 0 14px; font-weight: 500;">Koszyk</h4>
+            <div class="ci" style="padding: 12px 0; background: none; border-bottom: 1px solid rgba(74,74,74,0.06);">
+              <div class="ci-img" style="width: 72px; height: 72px;"></div>
+              <div class="ci-info"><p class="ci-title">Jedwabny czepek do spania</p><p class="ci-meta">Czarny</p></div>
+              <div class="ci-right"><p class="ci-price">239 zl</p></div>
+            </div>
+          </div>
+          <div class="page-upsell">
+            <p class="up-heading">Korzystniej w zestawie</p>
+            <div class="tb-card">
+              <p class="tb-headline">Dodaj poszewke i zaoszczedz 109 zl na zestawie</p>
+              <div class="tb-items">
+                <div class="tb-item">
+                  <div class="tb-item-img" style="position: relative;">
+                    <div class="tb-item-check">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                  </div>
+                  <div>
+                    <p class="tb-item-name">Czepek jedwabny</p>
+                    <p class="tb-item-meta">Juz w koszyku</p>
+                  </div>
+                </div>
+                <span class="tb-plus">+</span>
+                <div class="tb-item">
+                  <div class="tb-item-img"></div>
+                  <div>
+                    <p class="tb-item-name">Poszewka jedwabna</p>
+                    <p class="tb-item-meta">Dopasowany kolor</p>
+                  </div>
+                </div>
+              </div>
+              <div class="tb-bottom">
+                <div class="tb-pricing-block">
+                  <div class="tb-pricing">
+                    <span class="tb-price-now">399 zl</span>
+                    <span class="tb-price-was">508 zl</span>
+                    <span class="savings-chip">-109 zl</span>
+                  </div>
+                </div>
+                <button class="tb-btn">Dodaj do zestawu</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUNDLE: POSZEWKA IN CART -->
+    <p class="type-label">Bundle: Poszewka in cart → suggest Nocna Rutyna</p>
+    <div class="concept-row">
+      <div>
+        <p class="ctx-label">Drawer</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Szampan / 50&times;70</p></div>
+            <div class="ci-right"><p class="ci-price">269 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="up-zone">
+            <p class="up-heading">Korzystniej w zestawie</p>
+            <div class="tb-card">
+              <p class="tb-headline">Dodaj maske 3D i zaoszczedz 89 zl na zestawie</p>
+              <div class="tb-items">
+                <div class="tb-item">
+                  <div class="tb-item-img" style="position: relative;">
+                    <div class="tb-item-check">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                  </div>
+                  <div>
+                    <p class="tb-item-name">Poszewka jedwabna</p>
+                    <p class="tb-item-meta">Juz w koszyku</p>
+                  </div>
+                </div>
+                <span class="tb-plus">+</span>
+                <div class="tb-item">
+                  <div class="tb-item-img"></div>
+                  <div>
+                    <p class="tb-item-name">Maska jedwabna 3D</p>
+                    <p class="tb-item-meta">Dopasowany kolor</p>
+                  </div>
+                </div>
+              </div>
+              <div class="tb-bottom">
+                <div class="tb-pricing-block">
+                  <div class="tb-pricing">
+                    <span class="tb-price-now">349 zl</span>
+                    <span class="tb-price-was">438 zl</span>
+                    <span class="savings-chip">-89 zl</span>
+                  </div>
+                </div>
+                <button class="tb-btn">Dodaj do zestawu</button>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">269 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+      <div style="flex: 1; min-width: 260px;">
+        <p class="ctx-label">Also: Scrunchie Trio</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Scrunchie jedwabny</p><p class="ci-meta">Czarny</p></div>
+            <div class="ci-right"><p class="ci-price">59 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="up-zone">
+            <p class="up-heading">Korzystniej w zestawie</p>
+            <div class="tb-card">
+              <p class="tb-headline">Dodaj 2 scrunchie i zaoszczedz 38 zl</p>
+              <div class="tb-items">
+                <div class="tb-item">
+                  <div class="tb-item-img" style="position: relative;">
+                    <div class="tb-item-check">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </div>
+                  </div>
+                  <div>
+                    <p class="tb-item-name">Scrunchie</p>
+                    <p class="tb-item-meta">Juz w koszyku</p>
+                  </div>
+                </div>
+                <span class="tb-plus">+</span>
+                <div class="tb-item">
+                  <div class="tb-item-img"></div>
+                  <div>
+                    <p class="tb-item-name">2&times; Scrunchie</p>
+                    <p class="tb-item-meta">3 kolory, 1 zestaw</p>
+                  </div>
+                </div>
+              </div>
+              <div class="tb-bottom">
+                <div class="tb-pricing-block">
+                  <div class="tb-pricing">
+                    <span class="tb-price-now">139 zl</span>
+                    <span class="tb-price-was">177 zl</span>
+                    <span class="savings-chip">-38 zl</span>
+                  </div>
+                </div>
+                <button class="tb-btn">Dodaj do zestawu</button>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">59 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pros-cons" style="margin-top: 16px;">
+      <div class="pros"><h4>Strengths</h4><ul>
+        <li>Both items visible - customer understands the set composition instantly</li>
+        <li>Check mark creates "almost there" psychology (Zeigarnik)</li>
+        <li>"Juz w koszyku" + "Dopasowany kolor" - reduces friction and uncertainty</li>
+        <li>Thaler's reward fragmentation - seeing both items maximizes perceived value</li>
+        <li>Works for all 3 bundles including Scrunchie Trio</li>
+        <li>Same CTA and savings chip as Concept A - gain-framed</li>
+      </ul></div>
+      <div class="cons"><h4>Trade-offs</h4><ul>
+        <li>Tallest card option - more vertical space in drawer</li>
+        <li>Two product images side by side are small at 375px</li>
+        <li>More complex to implement (needs to identify the missing component dynamically)</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- Summary -->
+<div style="margin-top: 40px; padding: 20px; background: #fff; border-radius: 8px; border: 1px solid rgba(74,74,74,0.08); box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+  <h3 style="margin: 0 0 12px; font-size: 15px;">What changed vs previous mockups</h3>
+  <ul style="margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.8; color: #444;">
+    <li><strong>"+260 zl" eliminated</strong> - replaced with "zaoszczedz 109 zl" (gain, not cost)</li>
+    <li><strong>Specific product names</strong> - "Dodaj poszewke jedwabna" not "uzupelnij zestaw"</li>
+    <li><strong>Gold savings chip from PDP</strong> - consistent visual language across store</li>
+    <li><strong>Benefit line explains WHY</strong> - face + hair protection, not vague "nocna rutyna"</li>
+    <li><strong>Bundle contents visible</strong> - "Czepek + poszewka jedwabna" at bottom (Thaler: fragment rewards)</li>
+    <li><strong>"Korzystniej w zestawie"</strong> - value framing without being discount-y or vague</li>
+    <li><strong>"Dodaj do zestawu"</strong> CTA - the customer adds, not pays</li>
+    <li><strong>Multiple bundle scenarios</strong> - shows Nocna Rutyna, Piekny Sen, AND Scrunchie Trio</li>
+  </ul>
+</div>

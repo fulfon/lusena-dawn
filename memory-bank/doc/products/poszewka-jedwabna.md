@@ -80,7 +80,7 @@ Equal split per §7.2 MOQ (120 / 3 = 40 each). Szampan positioned as limitka wit
 
 > **UNIVERSAL FIELDS - DO NOT MODIFY.** Fields marked "Pre-filled (universal)" are shared
 > across ALL LUSENA silk products. They were validated once and must not be rewritten or
-> "improved" during creative sessions. See `docs/product-metafields-reference.md` → "Universal fields".
+> "improved" during creative sessions. See `memory-bank/doc/products/product-metafields-reference.md` → "Universal fields".
 
 ### Buybox content
 
@@ -149,7 +149,7 @@ Equal split per §7.2 MOQ (120 / 3 = 40 each). Szampan positioned as limitka wit
 
 ### Icon animation specs (for SVG coding agent)
 
-> For each feature card, describe the icon animation for the SVG agent. See constraints in `docs/product-metafields-reference.md`.
+> For each feature card, describe the icon animation for the SVG agent. See constraints in `memory-bank/doc/products/product-metafields-reference.md`.
 
 | Card | Icon | Animation spec |
 |------|------|---------------|

@@ -185,6 +185,13 @@
     align-items: stretch;
   }
 
+  /* === Item loading state (remove / qty change) === */
+  .lusena-cart-drawer__item--loading {
+    opacity: 0.45;
+    pointer-events: none;
+    transition: opacity 150ms ease;
+  }
+
   /* === Icon button touch fix === */
   .lusena-cart-drawer__icon-button {
     -webkit-tap-highlight-color: transparent;
@@ -268,7 +275,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
   }
 
   .lusena-cart-drawer .lusena-cart-drawer__item-top {
@@ -279,10 +286,12 @@
   }
 
   .lusena-cart-drawer .lusena-cart-drawer__item-name {
+    font-family: var(--lusena-font-ui);
     font-size: 1.4rem;
     font-weight: 500;
     color: var(--lusena-text-1);
     line-height: 1.25;
+    letter-spacing: normal;
     margin: 0;
   }
 
@@ -303,10 +312,12 @@
   }
 
   .lusena-cart-drawer .lusena-cart-drawer__item-price {
+    display: block;
     font-size: 1.4rem;
     font-weight: 500;
     font-variant-numeric: tabular-nums;
     color: var(--lusena-text-1);
+    line-height: 1.25;
   }
 
   .lusena-cart-drawer .lusena-cart-drawer__item-compare {
@@ -320,7 +331,7 @@
   .lusena-cart-drawer .lusena-cart-drawer__item-options {
     font-size: 1.3rem;
     color: var(--lusena-text-2);
-    margin-top: var(--lusena-space-05);
+    margin: var(--lusena-space-05) 0 0;
   }
 
   .lusena-cart-drawer .lusena-cart-drawer__item-bottom {
@@ -356,6 +367,7 @@
     padding: var(--lusena-space-05) var(--lusena-space-1);
     color: var(--lusena-text-2);
     transition: color var(--lusena-transition-fast);
+    min-height: auto;
   }
   @media (hover: hover) {
     .lusena-cart-drawer .lusena-cart-drawer__remove:hover {
@@ -391,14 +403,14 @@
     border-left: 0.25rem solid color-mix(in srgb, var(--lusena-accent-cta) 40%, transparent);
   }
 
-  /* --- Cross-sell card (horizontal layout) --- */
-  .lusena-upsell-card__xs-row {
+  /* --- Cross-sell card (horizontal layout, scoped to drawer upsell zone) --- */
+  .lusena-cart-drawer__upsell .lusena-upsell-card__xs-row {
     display: flex;
     gap: 1.2rem;
     align-items: center;
   }
 
-  .lusena-upsell-card__xs-img {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__xs-img {
     width: 5.6rem;
     height: 5.6rem;
     background: var(--lusena-surface-2);
@@ -408,20 +420,20 @@
     flex-shrink: 0;
   }
 
-  .lusena-upsell-card__xs-img:empty { display: block; } /* override Dawn base.css div:empty { display:none } */
+  .lusena-cart-drawer__upsell .lusena-upsell-card__xs-img:empty { display: block; } /* override Dawn base.css div:empty { display:none } */
 
-  .lusena-upsell-card__xs-img img {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__xs-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  .lusena-upsell-card__xs-info {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__xs-info {
     flex: 1;
     min-width: 0;
   }
 
-  .lusena-upsell-card__xs-title {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__xs-title {
     font-size: 1.3rem;
     font-weight: 500;
     color: var(--lusena-text-1);
@@ -432,7 +444,7 @@
     overflow: hidden;
   }
 
-  .lusena-upsell-card__xs-msg {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__xs-msg {
     font-size: 1.15rem;
     color: var(--lusena-text-2);
     margin-top: var(--lusena-space-05);
@@ -443,19 +455,19 @@
     overflow: hidden;
   }
 
-  .lusena-upsell-card__xs-color {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__xs-color {
     font-size: 1.05rem;
     line-height: 1.5;
     color: color-mix(in srgb, var(--lusena-text-2) 70%, transparent);
     margin-top: var(--lusena-space-05);
   }
 
-  .lusena-upsell-card__xs-color span {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__xs-color span {
     color: var(--lusena-text-1);
     font-weight: 500;
   }
 
-  .lusena-upsell-card__xs-bottom {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__xs-bottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -465,15 +477,15 @@
     border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 5%, transparent);
   }
 
-  .lusena-upsell-card__xs-price {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__xs-price {
     font-size: 1.4rem;
     font-weight: 500;
     color: var(--lusena-text-1);
     font-variant-numeric: tabular-nums;
   }
 
-  /* --- Bundle card (two-tile layout) --- */
-  .lusena-upsell-card__bn-headline {
+  /* --- Bundle card (two-tile layout, scoped to drawer upsell zone) --- */
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-headline {
     font-size: 1.35rem;
     font-weight: 500;
     color: var(--lusena-text-1);
@@ -481,13 +493,13 @@
     margin-bottom: var(--lusena-space-1);
   }
 
-  .lusena-upsell-card__bn-tiles {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-tiles {
     display: flex;
     gap: var(--lusena-space-1);
     align-items: stretch;
   }
 
-  .lusena-upsell-card__bn-have {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-have {
     flex: 0 0 30%;
     display: flex;
     flex-direction: column;
@@ -499,7 +511,7 @@
     background: color-mix(in srgb, var(--lusena-surface-2) 40%, transparent);
   }
 
-  .lusena-upsell-card__bn-have-img {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-have-img {
     width: 3.8rem;
     height: 3.8rem;
     border-radius: 0.4rem;
@@ -511,7 +523,7 @@
     border: 1px dashed color-mix(in srgb, var(--lusena-text-2) 20%, transparent);
   }
 
-  .lusena-upsell-card__bn-have-img img {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-have-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -519,7 +531,7 @@
     border-radius: 0.4rem;
   }
 
-  .lusena-upsell-card__bn-check {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-check {
     position: absolute;
     top: -0.7rem;
     right: -0.7rem;
@@ -533,27 +545,27 @@
     opacity: 1;
   }
 
-  .lusena-upsell-card__bn-check svg {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-check svg {
     width: 0.8rem;
     height: 0.8rem;
     color: #fff;
   }
 
-  .lusena-upsell-card__bn-have-name {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-have-name {
     font-size: 1rem;
     font-weight: 500;
     color: #888;
     line-height: 1.2;
   }
 
-  .lusena-upsell-card__bn-have-status {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-have-status {
     font-size: 0.9rem;
     color: var(--lusena-accent-cta);
     margin-top: 0.2rem;
     font-weight: 500;
   }
 
-  .lusena-upsell-card__bn-plus {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-plus {
     font-size: 1.6rem;
     color: var(--lusena-text-2);
     font-weight: 400;
@@ -561,7 +573,7 @@
     align-self: center;
   }
 
-  .lusena-upsell-card__bn-add {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-add {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -574,7 +586,7 @@
     border: 1px solid color-mix(in srgb, var(--lusena-text-2) 6%, transparent);
   }
 
-  .lusena-upsell-card__bn-add-img {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-add-img {
     width: 5.6rem;
     height: 5.6rem;
     border-radius: var(--lusena-radius-sm);
@@ -586,24 +598,24 @@
 
   /* Override Dawn base.css "div:empty { display:none }" (specificity 0,1,1).
      A class alone (0,1,0) loses. Adding :empty bumps to (0,2,0) and wins. */
-  .lusena-upsell-card__bn-add-img:empty {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-add-img:empty {
     display: block;
   }
 
-  .lusena-upsell-card__bn-add-img img {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-add-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  .lusena-upsell-card__bn-add-name {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-add-name {
     font-size: 1.2rem;
     font-weight: 500;
     color: var(--lusena-text-1);
     line-height: 1.25;
   }
 
-  .lusena-upsell-card__bn-bottom {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-bottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -613,21 +625,21 @@
     border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 5%, transparent);
   }
 
-  .lusena-upsell-card__bn-pricing {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-pricing {
     display: flex;
     align-items: baseline;
     gap: 0.6rem;
     flex-wrap: wrap;
   }
 
-  .lusena-upsell-card__bn-price {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-price {
     font-size: 1.4rem;
     font-weight: 500;
     color: var(--lusena-text-1);
     font-variant-numeric: tabular-nums;
   }
 
-  .lusena-upsell-card__bn-was {
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-was {
     font-size: 1.4rem;
     color: var(--lusena-text-2);
     text-decoration: line-through;
@@ -709,7 +721,7 @@
     font-variant-numeric: tabular-nums;
   }
 
-  .lusena-cart-drawer__shipping-track {
+  .lusena-cart-drawer .lusena-cart-drawer__shipping-track {
     width: 100%;
     height: 0.6rem;
     border-radius: 9999px;
@@ -717,7 +729,7 @@
     background: var(--lusena-surface-2);
   }
 
-  .lusena-cart-drawer__shipping-fill {
+  .lusena-cart-drawer .lusena-cart-drawer__shipping-fill {
     display: block;
     height: 100%;
     border-radius: 9999px;
@@ -725,7 +737,7 @@
     background: var(--lusena-accent-cta);
   }
 
-  .lusena-cart-drawer__shipping-fill--qualified {
+  .lusena-cart-drawer .lusena-cart-drawer__shipping-fill--qualified {
     background: var(--lusena-status-success);
   }
 
@@ -803,19 +815,19 @@
     }
 
     /* Slightly smaller headline */
-    .lusena-upsell-card__bn-headline {
+    .lusena-cart-drawer__upsell .lusena-upsell-card__bn-headline {
       font-size: 1.25rem;
       margin-bottom: var(--lusena-space-05);
     }
 
     /* Stack tiles vertically on mobile */
-    .lusena-upsell-card__bn-tiles {
+    .lusena-cart-drawer__upsell .lusena-upsell-card__bn-tiles {
       flex-direction: column;
       gap: 0;
     }
 
     /* Collapse "in cart" tile to inline row — no image */
-    .lusena-upsell-card__bn-have {
+    .lusena-cart-drawer__upsell .lusena-upsell-card__bn-have {
       flex: 0 0 auto;
       flex-direction: row;
       justify-content: flex-start;
@@ -826,38 +838,38 @@
       border-radius: 0;
     }
 
-    .lusena-upsell-card__bn-have-img {
+    .lusena-cart-drawer__upsell .lusena-upsell-card__bn-have-img {
       display: none;
     }
 
-    .lusena-upsell-card__bn-have-name {
+    .lusena-cart-drawer__upsell .lusena-upsell-card__bn-have-name {
       font-size: 1.1rem;
     }
 
-    .lusena-upsell-card__bn-have-name::before {
+    .lusena-cart-drawer__upsell .lusena-upsell-card__bn-have-name::before {
       content: '✓';
       color: var(--lusena-accent-cta);
       font-weight: 600;
       margin-right: 0.3rem;
     }
 
-    .lusena-upsell-card__bn-have-status {
+    .lusena-cart-drawer__upsell .lusena-upsell-card__bn-have-status {
       font-size: 0.9rem;
     }
 
-    .lusena-upsell-card__bn-have-status::before {
+    .lusena-cart-drawer__upsell .lusena-upsell-card__bn-have-status::before {
       content: '·';
       color: #888;
       margin-right: 0.3rem;
     }
 
     /* Hide "+" separator on mobile (stacked layout) */
-    .lusena-upsell-card__bn-plus {
+    .lusena-cart-drawer__upsell .lusena-upsell-card__bn-plus {
       display: none;
     }
 
     /* "Add" tile: horizontal with smaller image */
-    .lusena-upsell-card__bn-add {
+    .lusena-cart-drawer__upsell .lusena-upsell-card__bn-add {
       flex-direction: row;
       justify-content: flex-start;
       align-items: center;
@@ -866,7 +878,7 @@
       padding: var(--lusena-space-1);
     }
 
-    .lusena-upsell-card__bn-add-img {
+    .lusena-cart-drawer__upsell .lusena-upsell-card__bn-add-img {
       width: 4rem;
       height: 4rem;
       min-width: 4rem;
@@ -875,12 +887,12 @@
       margin-bottom: 0;
     }
 
-    .lusena-upsell-card__bn-add-name {
+    .lusena-cart-drawer__upsell .lusena-upsell-card__bn-add-name {
       font-size: 1.15rem;
     }
 
     /* Tighter pricing row */
-    .lusena-upsell-card__bn-bottom {
+    .lusena-cart-drawer__upsell .lusena-upsell-card__bn-bottom {
       margin-top: var(--lusena-space-05);
       padding-top: var(--lusena-space-05);
     }
@@ -891,7 +903,7 @@
     }
 
     /* Cross-sell card image size */
-    .lusena-upsell-card__xs-img {
+    .lusena-cart-drawer__upsell .lusena-upsell-card__xs-img {
       width: 4.4rem;
       height: 4.4rem;
     }
@@ -916,9 +928,9 @@
       font-size: 1.1rem;
     }
 
-    .lusena-upsell-card__bn-have-img { width: 3rem; height: 3rem; }
-    .lusena-upsell-card__bn-add-img { width: 4.4rem; height: 4.4rem; }
-    .lusena-upsell-card__xs-img { width: 4rem; height: 4rem; }
+    .lusena-cart-drawer__upsell .lusena-upsell-card__bn-have-img { width: 3rem; height: 3rem; }
+    .lusena-cart-drawer__upsell .lusena-upsell-card__bn-add-img { width: 4.4rem; height: 4.4rem; }
+    .lusena-cart-drawer__upsell .lusena-upsell-card__xs-img { width: 4rem; height: 4rem; }
 
     .lusena-cart-drawer .lusena-upsell-card {
       padding: var(--lusena-space-1);
@@ -1284,7 +1296,7 @@
                    {%- if nudge_prop_map != blank %} data-property-map="{{ nudge_prop_map | escape }}"{% endif -%}
                    aria-label="Propozycja zestawu">
                 <p class="lusena-upsell-card__bn-headline">
-                  Dodaj {{ added_label }} i zaoszczedz {{ savings_cents | money_without_trailing_zeros }}
+                  Dodaj {{ added_label }} i zaoszczędź {{ savings_cents | money_without_trailing_zeros }}
                 </p>
                 <div class="lusena-upsell-card__bn-tiles">
                   <div class="lusena-upsell-card__bn-have">
@@ -1530,9 +1542,30 @@
       }, upsellPendingTimeoutMs);
     };
 
+    const enableItemLoading = (triggerEl) => {
+      const itemEl = triggerEl ? triggerEl.closest('[data-cart-item]') : null;
+      if (!itemEl) return null;
+      itemEl.classList.add('lusena-cart-drawer__item--loading');
+      itemEl.querySelectorAll('button').forEach(b => { b.disabled = true; });
+      return itemEl;
+    };
+
+    const disableItemLoading = (itemEl) => {
+      if (!itemEl) return;
+      itemEl.classList.remove('lusena-cart-drawer__item--loading');
+      itemEl.querySelectorAll('button').forEach(b => { b.disabled = false; });
+      const minusBtn = itemEl.querySelector('[data-cart-delta="-1"]');
+      const qtyEl = itemEl.querySelector('[data-cart-qty]');
+      if (minusBtn && qtyEl && parseInt(qtyEl.textContent || '1', 10) <= 1) {
+        minusBtn.disabled = true;
+      }
+    };
+
     const updateLine = async (triggerEl, key, quantity) => {
       if (!window.fetch || !window.routes?.cart_change_url) return;
       if (typeof fetchConfig !== 'function') return;
+
+      const itemEl = enableItemLoading(triggerEl);
 
       const formData = new FormData();
       formData.append('id', key);
@@ -1555,18 +1588,30 @@
       delete config.headers['Content-Type'];
       config.body = formData;
 
-      const response = await fetch(window.routes.cart_change_url, config);
-      const state = await response.json();
+      try {
+        const response = await fetch(window.routes.cart_change_url, config);
+        const state = await response.json();
 
-      if (typeof drawer.renderContents === 'function') {
-        drawer.renderContents(state);
-        flushUpsellSuccess();
+        if (typeof drawer.renderContents === 'function') {
+          drawer.renderContents(state);
+          flushUpsellSuccess();
+        }
+        // Notify cart page (and any other subscriber) that the cart changed
+        if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+          publish(PUB_SUB_EVENTS.cartUpdate, { source: 'cart-drawer', cartData: state });
+        }
+      } catch (err) {
+        disableItemLoading(itemEl);
       }
     };
 
     flushUpsellSuccess();
 
-    if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+    // pubsub.js is loaded with defer — not available yet during inline script execution.
+    // Wait for DOMContentLoaded so all deferred scripts (pubsub.js, constants.js) have run.
+    const registerSubscribers = () => {
+      if (typeof subscribe !== 'function' || typeof PUB_SUB_EVENTS === 'undefined') return;
+
       subscribe(PUB_SUB_EVENTS.cartUpdate, (event) => {
         if (!event || event.source !== 'product-form') return;
         if (pendingUpsellVariantId === '') return;
@@ -1591,6 +1636,29 @@
         clearPendingUpsell();
         clearUpsellAddedFlag();
       });
+
+      // Sync: re-render drawer when cart page (or any non-drawer source) changes the cart
+      subscribe(PUB_SUB_EVENTS.cartUpdate, (event) => {
+        if (!event || event.source === 'cart-drawer') return;
+        if (event.source === 'product-form') return;
+
+        fetch(`${routes.cart_url}?section_id=cart-drawer`)
+          .then((r) => r.text())
+          .then((html) => {
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            const fresh = doc.querySelector('#CartDrawer');
+            const current = document.getElementById('CartDrawer');
+            if (fresh && current) current.innerHTML = fresh.innerHTML;
+            drawer.classList.toggle('is-empty', !doc.querySelector('[data-cart-item]'));
+          })
+          .catch(() => {});
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', registerSubscribers);
+    } else {
+      registerSubscribers();
     }
 
     drawer.addEventListener('submit', (event) => {
@@ -1663,6 +1731,9 @@
       LusenaBundle.swap(nudge.dataset.bundleVariantId, [nudge.dataset.replaceKey], swapOpts)
         .then(function(state) {
           drawer.renderContents(state);
+          if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+            publish(PUB_SUB_EVENTS.cartUpdate, { source: 'cart-drawer', cartData: state });
+          }
         })
         .catch(function(err) {
           console.error('Bundle swap failed:', err);

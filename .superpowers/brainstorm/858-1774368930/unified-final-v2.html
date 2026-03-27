@@ -1,0 +1,362 @@
+<h2>Final design v2: unified buttons + clean tiles</h2>
+<p class="subtitle">All upsell buttons outline teal (subordinate to checkout). No meta text on "add" tiles - just product names.</p>
+
+<style>
+  * { box-sizing: border-box; }
+  .lusena { font-family: 'Inter', -apple-system, sans-serif; color: #111; -webkit-font-smoothing: antialiased; }
+
+  .ctx-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #8C6A3C; font-weight: 600; margin: 0 0 8px; }
+  .drawer-frame { width: 375px; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border: 1px solid rgba(0,0,0,0.04); }
+  .frame-header { background: #fff; padding: 14px 20px; border-bottom: 1px solid rgba(74,74,74,0.06); display: flex; justify-content: space-between; align-items: center; }
+  .frame-header h4 { margin: 0; font-family: 'Source Serif 4', Georgia, serif; font-size: 17px; color: #111; font-weight: 500; }
+  .frame-header .close { font-size: 20px; color: #bbb; }
+
+  .ci { display: flex; gap: 12px; padding: 14px 20px; background: #fff; }
+  .ci-img { width: 60px; height: 60px; background: linear-gradient(145deg, #e8e0d4, #f2ece4); border-radius: 6px; flex-shrink: 0; }
+  .ci-info { flex: 1; }
+  .ci-title { font-size: 13.5px; font-weight: 500; color: #111; margin: 0; line-height: 1.3; }
+  .ci-meta { font-size: 11.5px; color: #666; margin: 3px 0 0; }
+  .ci-right { text-align: right; flex-shrink: 0; }
+  .ci-price { font-size: 13.5px; font-weight: 500; color: #111; margin: 0; }
+  .ci-qty { font-size: 11px; color: #999; margin: 3px 0 0; }
+
+  .dr-footer { border-top: 1px solid rgba(74,74,74,0.06); padding: 16px 20px; background: #fff; }
+  .dr-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .dr-total-l { font-size: 13px; color: #666; }
+  .dr-total-v { font-family: 'Source Serif 4', Georgia, serif; font-size: 17px; font-weight: 500; }
+
+  /* PRIMARY = checkout only */
+  .btn-checkout { font-family: 'Inter', sans-serif; font-size: 14.5px; padding: 13px; background: rgba(14,94,90,0.92); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; width: 100%; }
+
+  /* OUTLINE = all upsell actions */
+  .btn-outline { font-family: 'Inter', sans-serif; font-size: 12px; padding: 7px 16px; background: rgba(14,94,90,0.04); color: #0E5E5A; border: 1px solid rgba(14,94,90,0.2); border-radius: 6px; cursor: pointer; font-weight: 500; white-space: nowrap; }
+  .btn-outline:hover { background: rgba(14,94,90,0.08); border-color: rgba(14,94,90,0.35); }
+
+  .savings-chip { display: inline-flex; align-items: center; font-size: 11.5px; font-weight: 500; color: #8C6A3C; background: rgba(140, 106, 60, 0.08); padding: 3px 8px; border-radius: 4px; }
+
+  .concept-row { display: flex; gap: 28px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 12px; }
+  .type-label { font-size: 11.5px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin: 32px 0 12px; }
+  .type-label:first-of-type { margin-top: 0; }
+
+  /* Shared upsell zone */
+  .up-zone { background: rgba(240,238,235,0.45); padding: 14px 20px 16px; border-top: 1px solid rgba(74,74,74,0.06); }
+  .up-heading { font-family: 'Source Serif 4', Georgia, serif; font-size: 12px; color: #666; margin: 0 0 10px; letter-spacing: 0.01em; }
+
+  /* Shared card container */
+  .upsell-card {
+    padding: 14px;
+    background: #fff;
+    border-radius: 6px;
+    border: 1px solid rgba(74,74,74,0.04);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    border-left: 2.5px solid rgba(14,94,90,0.4);
+  }
+
+  /* Cross-sell horizontal */
+  .xs-row { display: flex; gap: 12px; align-items: center; }
+  .xs-img { width: 52px; height: 52px; background: linear-gradient(145deg, #e8e0d4, #f2ece4); border-radius: 5px; flex-shrink: 0; }
+  .xs-info { flex: 1; min-width: 0; }
+  .xs-title { font-size: 13px; font-weight: 500; color: #111; margin: 0; line-height: 1.3; }
+  .xs-msg { font-size: 11.5px; color: #666; margin: 3px 0 0; line-height: 1.4; }
+  .xs-color { font-size: 10.5px; color: #999; margin: 3px 0 0; }
+  .xs-color b { color: #555; font-weight: 500; }
+  .xs-aside { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; flex-shrink: 0; gap: 6px; }
+  .xs-price { font-size: 13.5px; font-weight: 500; color: #111; margin: 0; font-variant-numeric: tabular-nums; }
+
+  /* Bundle 2A tiles */
+  .bn-headline { font-size: 13.5px; font-weight: 500; color: #111; margin: 0 0 10px; line-height: 1.35; }
+  .bn-items { display: flex; gap: 8px; align-items: stretch; }
+  .bn-item { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 8px; border-radius: 5px; background: rgba(240,238,235,0.35); }
+  .bn-item--have { background: rgba(14,94,90,0.04); }
+  .bn-item-img { width: 48px; height: 48px; background: linear-gradient(145deg, #e8e0d4, #f2ece4); border-radius: 5px; margin-bottom: 6px; position: relative; flex-shrink: 0; }
+  .bn-item-check { position: absolute; top: -3px; right: -3px; width: 15px; height: 15px; background: #0E5E5A; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .bn-item-check svg { width: 9px; height: 9px; color: #fff; }
+  .bn-item-name { font-size: 11px; font-weight: 500; color: #111; line-height: 1.25; margin: 0; }
+  .bn-item-status { font-size: 9.5px; color: #0E5E5A; margin: 2px 0 0; font-weight: 500; }
+  .bn-plus { font-size: 16px; color: #ccc; flex-shrink: 0; align-self: center; font-weight: 300; }
+  .bn-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(74,74,74,0.05); }
+  .bn-pricing { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+  .bn-price-now { font-size: 14px; font-weight: 500; color: #111; }
+  .bn-price-was { font-size: 11px; color: #aaa; text-decoration: line-through; }
+</style>
+
+<!-- CROSS-SELL -->
+<p class="type-label">Cross-sell: single item upsell</p>
+<div class="concept-row">
+  <div>
+    <p class="ctx-label">Poszewka → Scrunchie</p>
+    <div class="drawer-frame lusena">
+      <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+      <div class="ci">
+        <div class="ci-img"></div>
+        <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Czarny / 50&times;70</p></div>
+        <div class="ci-right"><p class="ci-price">269 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+      </div>
+      <div class="up-zone">
+        <p class="up-heading">Pasuje do</p>
+        <div class="upsell-card">
+          <div class="xs-row">
+            <div class="xs-img"></div>
+            <div class="xs-info">
+              <p class="xs-title">Scrunchie jedwabny</p>
+              <p class="xs-msg">Ochrona wlosow z tego samego jedwabiu</p>
+              <p class="xs-color">Kolor: <b>Czarny</b></p>
+            </div>
+            <div class="xs-aside">
+              <p class="xs-price">39 zl</p>
+              <button class="btn-outline">Dodaj</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dr-footer">
+        <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">269 zl</span></div>
+        <button class="btn-checkout">Przejdz do kasy</button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <p class="ctx-label">Czepek → Poszewka</p>
+    <div class="drawer-frame lusena">
+      <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+      <div class="ci">
+        <div class="ci-img"></div>
+        <div class="ci-info"><p class="ci-title">Jedwabny czepek do spania</p><p class="ci-meta">Czarny</p></div>
+        <div class="ci-right"><p class="ci-price">239 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+      </div>
+      <div class="up-zone">
+        <p class="up-heading">Pasuje do</p>
+        <div class="upsell-card">
+          <div class="xs-row">
+            <div class="xs-img"></div>
+            <div class="xs-info">
+              <p class="xs-title">Poszewka jedwabna</p>
+              <p class="xs-msg">Jedwab na twarz - obudz sie bez zagniecen</p>
+              <p class="xs-color">Kolor: <b>Czarny</b></p>
+            </div>
+            <div class="xs-aside">
+              <p class="xs-price">269 zl</p>
+              <button class="btn-outline">Dodaj</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dr-footer">
+        <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">239 zl</span></div>
+        <button class="btn-checkout">Przejdz do kasy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BUNDLES -->
+<p class="type-label">Bundle: upgrade to set</p>
+<div class="concept-row">
+  <div>
+    <p class="ctx-label">Czepek → Nocna Rutyna</p>
+    <div class="drawer-frame lusena">
+      <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+      <div class="ci">
+        <div class="ci-img"></div>
+        <div class="ci-info"><p class="ci-title">Jedwabny czepek do spania</p><p class="ci-meta">Czarny</p></div>
+        <div class="ci-right"><p class="ci-price">239 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+      </div>
+      <div class="up-zone">
+        <p class="up-heading">Korzystniej w zestawie</p>
+        <div class="upsell-card">
+          <p class="bn-headline">Dodaj poszewke i zaoszczedz 109 zl</p>
+          <div class="bn-items">
+            <div class="bn-item bn-item--have">
+              <div class="bn-item-img">
+                <div class="bn-item-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+              </div>
+              <p class="bn-item-name">Czepek jedwabny</p>
+              <p class="bn-item-status">W koszyku</p>
+            </div>
+            <span class="bn-plus">+</span>
+            <div class="bn-item">
+              <div class="bn-item-img"></div>
+              <p class="bn-item-name">Poszewka jedwabna</p>
+            </div>
+          </div>
+          <div class="bn-bottom">
+            <div class="bn-pricing">
+              <span class="bn-price-now">399 zl</span>
+              <span class="bn-price-was">508 zl</span>
+              <span class="savings-chip">Oszczedzasz 109 zl</span>
+            </div>
+            <button class="btn-outline">Dodaj do zestawu</button>
+          </div>
+        </div>
+      </div>
+      <div class="dr-footer">
+        <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">239 zl</span></div>
+        <button class="btn-checkout">Przejdz do kasy</button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <p class="ctx-label">Poszewka → Nocna Rutyna</p>
+    <div class="drawer-frame lusena">
+      <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+      <div class="ci">
+        <div class="ci-img"></div>
+        <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Czarny / 50&times;70</p></div>
+        <div class="ci-right"><p class="ci-price">269 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+      </div>
+      <div class="up-zone">
+        <p class="up-heading">Korzystniej w zestawie</p>
+        <div class="upsell-card">
+          <p class="bn-headline">Dodaj czepek i zaoszczedz 109 zl</p>
+          <div class="bn-items">
+            <div class="bn-item bn-item--have">
+              <div class="bn-item-img">
+                <div class="bn-item-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+              </div>
+              <p class="bn-item-name">Poszewka jedwabna</p>
+              <p class="bn-item-status">W koszyku</p>
+            </div>
+            <span class="bn-plus">+</span>
+            <div class="bn-item">
+              <div class="bn-item-img"></div>
+              <p class="bn-item-name">Czepek jedwabny</p>
+            </div>
+          </div>
+          <div class="bn-bottom">
+            <div class="bn-pricing">
+              <span class="bn-price-now">399 zl</span>
+              <span class="bn-price-was">508 zl</span>
+              <span class="savings-chip">Oszczedzasz 109 zl</span>
+            </div>
+            <button class="btn-outline">Dodaj do zestawu</button>
+          </div>
+        </div>
+      </div>
+      <div class="dr-footer">
+        <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">269 zl</span></div>
+        <button class="btn-checkout">Przejdz do kasy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="type-label">More bundles</p>
+<div class="concept-row">
+  <div>
+    <p class="ctx-label">Poszewka → Piekny Sen</p>
+    <div class="drawer-frame lusena">
+      <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+      <div class="ci">
+        <div class="ci-img"></div>
+        <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Szampan / 50&times;70</p></div>
+        <div class="ci-right"><p class="ci-price">269 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+      </div>
+      <div class="up-zone">
+        <p class="up-heading">Korzystniej w zestawie</p>
+        <div class="upsell-card">
+          <p class="bn-headline">Dodaj maske 3D i zaoszczedz 89 zl</p>
+          <div class="bn-items">
+            <div class="bn-item bn-item--have">
+              <div class="bn-item-img">
+                <div class="bn-item-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+              </div>
+              <p class="bn-item-name">Poszewka jedwabna</p>
+              <p class="bn-item-status">W koszyku</p>
+            </div>
+            <span class="bn-plus">+</span>
+            <div class="bn-item">
+              <div class="bn-item-img"></div>
+              <p class="bn-item-name">Maska jedwabna 3D</p>
+            </div>
+          </div>
+          <div class="bn-bottom">
+            <div class="bn-pricing">
+              <span class="bn-price-now">349 zl</span>
+              <span class="bn-price-was">438 zl</span>
+              <span class="savings-chip">Oszczedzasz 89 zl</span>
+            </div>
+            <button class="btn-outline">Dodaj do zestawu</button>
+          </div>
+        </div>
+      </div>
+      <div class="dr-footer">
+        <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">269 zl</span></div>
+        <button class="btn-checkout">Przejdz do kasy</button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <p class="ctx-label">Scrunchie → Scrunchie Trio</p>
+    <div class="drawer-frame lusena">
+      <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+      <div class="ci">
+        <div class="ci-img"></div>
+        <div class="ci-info"><p class="ci-title">Scrunchie jedwabny</p><p class="ci-meta">Czarny</p></div>
+        <div class="ci-right"><p class="ci-price">59 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+      </div>
+      <div class="up-zone">
+        <p class="up-heading">Korzystniej w zestawie</p>
+        <div class="upsell-card">
+          <p class="bn-headline">Dodaj 2 scrunchie i zaoszczedz 38 zl</p>
+          <div class="bn-items">
+            <div class="bn-item bn-item--have">
+              <div class="bn-item-img">
+                <div class="bn-item-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+              </div>
+              <p class="bn-item-name">Scrunchie</p>
+              <p class="bn-item-status">W koszyku</p>
+            </div>
+            <span class="bn-plus">+</span>
+            <div class="bn-item">
+              <div class="bn-item-img"></div>
+              <p class="bn-item-name">2&times; Scrunchie</p>
+            </div>
+          </div>
+          <div class="bn-bottom">
+            <div class="bn-pricing">
+              <span class="bn-price-now">139 zl</span>
+              <span class="bn-price-was">177 zl</span>
+              <span class="savings-chip">Oszczedzasz 38 zl</span>
+            </div>
+            <button class="btn-outline">Dodaj do zestawu</button>
+          </div>
+        </div>
+      </div>
+      <div class="dr-footer">
+        <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">59 zl</span></div>
+        <button class="btn-checkout">Przejdz do kasy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Button hierarchy callout -->
+<div style="margin-top: 40px; padding: 20px; background: #fff; border-radius: 8px; border: 1px solid rgba(74,74,74,0.08); box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+  <h3 style="margin: 0 0 16px; font-size: 15px;">Button hierarchy</h3>
+  <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+    <div style="text-align: center;">
+      <button class="btn-checkout" style="width: auto; padding: 13px 32px;">Przejdz do kasy</button>
+      <p style="font-size: 11px; color: #888; margin: 6px 0 0;">Primary (filled) - leave cart</p>
+    </div>
+    <div style="text-align: center;">
+      <button class="btn-outline">Dodaj do zestawu</button>
+      <p style="font-size: 11px; color: #888; margin: 6px 0 0;">Secondary (outline) - bundle</p>
+    </div>
+    <div style="text-align: center;">
+      <button class="btn-outline">Dodaj</button>
+      <p style="font-size: 11px; color: #888; margin: 6px 0 0;">Secondary (outline) - cross-sell</p>
+    </div>
+  </div>
+  <p style="font-size: 13px; color: #666; margin: 16px 0 0; line-height: 1.6;"><strong>Rule:</strong> Filled teal = leave the cart. Outline teal = stay and add something. Text differentiates the action.</p>
+</div>
+
+<!-- Changes summary -->
+<div style="margin-top: 20px; padding: 20px; background: rgba(14,94,90,0.04); border-radius: 8px; border-left: 3px solid rgba(14,94,90,0.3);">
+  <h3 style="margin: 0 0 8px; font-size: 15px;">Changes in v2</h3>
+  <ul style="margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.8; color: #444;">
+    <li><strong>Bundle CTA → outline teal</strong> (was filled). Now subordinate to checkout.</li>
+    <li><strong>"Add" tile meta text removed</strong>. Just the product name - clean, no competing text sizes.</li>
+    <li><strong>"In cart" tile keeps "W koszyku"</strong> status. Functional asymmetry: settled item vs action item.</li>
+    <li><strong>Consistent button component</strong>. Same outline style, different text: "Dodaj" vs "Dodaj do zestawu".</li>
+  </ul>
+</div>

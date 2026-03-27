@@ -39,7 +39,7 @@
             {%- endif -%}
           {%- endif -%}
         {%- endif -%}
-        <span class="lusena-pdp-payment-badge{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <span class="lusena-pdp-payment-badge">
           {%- if payment_asset != blank -%}
             {%- assign icon_class = 'lusena-pdp-payment-icon' -%}
             {%- if method == 'Visa' -%}
@@ -94,7 +94,7 @@
             {%- endif -%}
           {%- endif -%}
         {%- endif -%}
-        <span class="lusena-pdp-payment-badge lusena-pdp-payment-badge--mobile{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <span class="lusena-pdp-payment-badge lusena-pdp-payment-badge--mobile">
           {%- if payment_asset != blank -%}
             {%- assign icon_class = 'lusena-pdp-payment-icon' -%}
             {%- if method == 'Visa' -%}

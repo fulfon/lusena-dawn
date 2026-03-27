@@ -89,7 +89,12 @@
       "Bash(claude plugin:*)",
       "Bash(python -c \":*)",
       "Bash(playwright-cli -s=nudge-verify run-code \"async page => { await page.evaluate\\(\\(\\) => fetch\\(''''/cart/clear.js'''', { method: ''''POST'''' }\\)\\); }\")",
-      "Bash(bash scripts/start-server.sh --project-dir \"C:\\\\Users\\\\Karol\\\\Documents\\\\BusinessIdeas\\\\SilkStore\\\\sklepOnline\\\\shopify-lusena-dev\\\\lusena-dawn\")"
+      "Bash(bash scripts/start-server.sh --project-dir \"C:\\\\Users\\\\Karol\\\\Documents\\\\BusinessIdeas\\\\SilkStore\\\\sklepOnline\\\\shopify-lusena-dev\\\\lusena-dawn\")",
+      "Bash(mv docs/LUSENA_BrandBook_v2.md memory-bank/doc/brand/)",
+      "Bash(mv docs/lusena_brandbook_update_changelog_v1_to_v2.md memory-bank/doc/brand/)",
+      "Bash(mv docs/product-metafields-reference.md memory-bank/doc/products/)",
+      "Bash(mv docs/PDP_VARIANT_GALLERY.md memory-bank/doc/products/)",
+      "Bash(mv docs/_Parity_Plan_Template.md memory-bank/doc/patterns/)"
     ]
   }
 }

@@ -23,10 +23,10 @@ products/
 
 ## Key references
 
-- **Metafield reference (what each field does, where it renders, how to write great copy):** `docs/product-metafields-reference.md`
-- **Product setup checklist (how to create definitions + example values per product type):** `docs/product-setup-checklist.md`
+- **Metafield reference (what each field does, where it renders, how to write great copy):** `memory-bank/doc/products/product-metafields-reference.md`
+- **Product setup checklist (how to create definitions + example values per product type):** `memory-bank/doc/products/product-setup-checklist.md`
 - **Bundle strategy (pricing, composition, research, phases):** `memory-bank/doc/bundle-strategy.md`
-- **Brand direction (tone, voice, legal rules):** `docs/LUSENA_BrandBook_v2.md`
+- **Brand direction (tone, voice, legal rules):** `memory-bank/doc/brand/LUSENA_BrandBook_v2.md`
 - **Blank template for new products:** `_template.md`
 - **Flagship product (reference for real values):** `poszewka-jedwabna.md`
 
@@ -37,8 +37,8 @@ products/
 ## How to add a new product
 
 1. Copy `_template.md` and rename to `{handle}.md`
-2. Read `docs/product-metafields-reference.md` to understand each field's purpose and conversion role
-3. Fill in values - refer to `poszewka-jedwabna.md` as a real-world example, and `docs/product-setup-checklist.md` section D for suggested values per product type
+2. Read `memory-bank/doc/products/product-metafields-reference.md` to understand each field's purpose and conversion role
+3. Fill in values - refer to `poszewka-jedwabna.md` as a real-world example, and `memory-bank/doc/products/product-setup-checklist.md` section D for suggested values per product type
 4. The owner reviews and adjusts the values in the MD file first, then manually copies them into Shopify admin
 5. Update the "Status" column in each table as fields are entered in Shopify
 

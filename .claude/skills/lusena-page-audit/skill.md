@@ -42,9 +42,9 @@ Read these files to build understanding:
 5. All section files referenced by the template — use an Explore agent to read ALL section files in full and extract: HTML structure, CSS approach, content/copy, mobile vs desktop behavior, CTAs, and rough edges
 
 **On-demand (read when relevant to the page being audited):**
-6. `docs/LUSENA_BrandBook_v2.md` — for page-specific copy guidance, product tiers, hero specs
+6. `memory-bank/doc/brand/LUSENA_BrandBook_v2.md` — for page-specific copy guidance, product tiers, hero specs
 7. `memory-bank/doc/patterns/spacing-system.md` — for spacing/rhythm evaluation
-8. `docs/theme-brandbook-uiux.md` — for validated component patterns
+8. `memory-bank/doc/patterns/brand-tokens.md` — for design tokens and component patterns
 
 ### Phase 2: Section-by-Section Analysis
 
@@ -157,7 +157,7 @@ List all CTAs on the page in order and evaluate whether they compete or compleme
 
 #### 3g. Brandbook Compliance
 
-Cross-reference the page structure and copy against `docs/LUSENA_BrandBook_v2.md`:
+Cross-reference the page structure and copy against `memory-bank/doc/brand/LUSENA_BrandBook_v2.md`:
 - Does the page follow the brandbook's recommended section structure?
 - Are the right products featured in the right order?
 - Does the copy follow tone of voice rules (no exclamation marks in headings, sentence case, no medical claims)?

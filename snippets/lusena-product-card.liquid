@@ -85,7 +85,7 @@
     {%- if show_value_anchor and card_price > 0 -%}
       {%- assign per_night_cents = card_price | divided_by: 365.0 | round -%}
       <span class="lusena-product-card__per-night">
-        {{- per_night_cents | money_without_trailing_zeros }} / noc
+        {{- per_night_cents | money_without_trailing_zeros }}/noc
       </span>
     {%- endif -%}
   </div>

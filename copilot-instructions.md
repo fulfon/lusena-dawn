@@ -34,8 +34,7 @@ Dawn's original sections remain in the repo but are NOT used on the live storefr
 
 ### Key references
 
-- **UI/UX brandbook (source of truth):** `docs/theme-brandbook-uiux.md`
-- **Brand direction:** `docs/LUSENA_BrandBook_v2.md`
+- **Brand direction:** `memory-bank/doc/brand/LUSENA_BrandBook_v2.md`
 - **CSS foundations (new single CSS file):** `assets/lusena-foundations.css`
 - **CSS foundations brief (design spec):** `docs/css-foundations-brief.md`
 - **Design tokens (compact):** `memory-bank/doc/patterns/brand-tokens.md`
@@ -43,7 +42,7 @@ Dawn's original sections remain in the repo but are NOT used on the live storefr
 - **CSS architecture:** `memory-bank/doc/patterns/css-architecture.md`
 - **Migration lessons (read before migrating pages):** `memory-bank/doc/patterns/migration-lessons.md`
 - **Product catalog (Shopify admin data):** `memory-bank/doc/products/` — per-product metafields, pricing, variants, SEO
-- **Product setup checklist:** `docs/product-setup-checklist.md` — metafield definitions, example values per product type
+- **Product setup checklist:** `memory-bank/doc/products/product-setup-checklist.md` — metafield definitions, example values per product type
 - **Bundle strategy (pricing, phases, research):** `memory-bank/doc/bundle-strategy.md` — complete bundle architecture, economics, and decision triggers
 - **Shopify CSV update workflow:** `memory-bank/doc/products/README.md` § "Updating product copy in Shopify" — export from Shopify, run `generate_import_from_export.py`, import back. Full instructions there.
 
@@ -75,7 +74,7 @@ Shopify compiles all `{% stylesheet %}` blocks into one `compiled_assets/styles.
 
 ### Product metafields
 
-Before creating or modifying product metafields, read `docs/product-metafields-reference.md` — it contains **universal fields** (specs, feature cards 2/4/5/6, care) that are shared across ALL products and must NOT be modified per product. Only fields marked "REQUIRES CREATIVE SESSION" in the product file should be crafted. Never use percentage claims for momme comparisons (e.g., "30% gęstszy") — use qualitative language only.
+Before creating or modifying product metafields, read `memory-bank/doc/products/product-metafields-reference.md` — it contains **universal fields** (specs, feature cards 2/4/5/6, care) that are shared across ALL products and must NOT be modified per product. Only fields marked "REQUIRES CREATIVE SESSION" in the product file should be crafted. Never use percentage claims for momme comparisons (e.g., "30% gęstszy") — use qualitative language only.
 
 ## Key Conventions
 

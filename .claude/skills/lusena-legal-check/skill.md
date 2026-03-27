@@ -15,7 +15,7 @@ Verify that product copy (metafield values) complies with EU and Polish consumer
 - After crafting creative copy for a new product (headline, tagline, benefits)
 - After refining copy based on customer persona feedback (if new claims were introduced)
 - When unsure whether a specific claim is legally safe
-- As part of the creative session workflow (step 3 in `docs/product-metafields-reference.md`)
+- As part of the creative session workflow (step 3 in `memory-bank/doc/products/product-metafields-reference.md`)
 
 ## Inputs
 
@@ -34,7 +34,7 @@ If no copy is provided, ask the user to paste the values or point to the product
 
 Before evaluating, read these sources:
 
-1. **LUSENA brandbook legal section** — `docs/LUSENA_BrandBook_v2.md` section 1.7 "Punkty dowodowe" — contains the approved/forbidden claims lists and proof point hierarchy.
+1. **LUSENA brandbook legal section** — `memory-bank/doc/brand/LUSENA_BrandBook_v2.md` section 1.7 "Punkty dowodowe" — contains the approved/forbidden claims lists and proof point hierarchy.
 
 2. **The rules below** (embedded for quick reference):
 

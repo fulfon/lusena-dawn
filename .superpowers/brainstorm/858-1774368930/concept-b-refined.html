@@ -1,0 +1,430 @@
+<h2>Concept B refined: two variants</h2>
+<p class="subtitle">Both keep the two-item "complete the set" idea. Different balance of visual weight between the existing item and the new item.</p>
+
+<style>
+  * { box-sizing: border-box; }
+  .lusena { font-family: 'Inter', -apple-system, sans-serif; color: #111; -webkit-font-smoothing: antialiased; }
+
+  .ctx-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #8C6A3C; font-weight: 600; margin: 0 0 8px; }
+  .drawer-frame { width: 375px; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); border: 1px solid rgba(0,0,0,0.04); }
+  .frame-header { background: #fff; padding: 14px 20px; border-bottom: 1px solid rgba(74,74,74,0.06); display: flex; justify-content: space-between; align-items: center; }
+  .frame-header h4 { margin: 0; font-family: 'Source Serif 4', Georgia, serif; font-size: 17px; color: #111; font-weight: 500; }
+  .frame-header .close { font-size: 20px; color: #bbb; }
+
+  .ci { display: flex; gap: 12px; padding: 14px 20px; background: #fff; }
+  .ci-img { width: 60px; height: 60px; background: linear-gradient(145deg, #e8e0d4, #f2ece4); border-radius: 6px; flex-shrink: 0; }
+  .ci-info { flex: 1; }
+  .ci-title { font-size: 13.5px; font-weight: 500; color: #111; margin: 0; line-height: 1.3; }
+  .ci-meta { font-size: 11.5px; color: #666; margin: 3px 0 0; }
+  .ci-right { text-align: right; flex-shrink: 0; }
+  .ci-price { font-size: 13.5px; font-weight: 500; color: #111; margin: 0; }
+  .ci-qty { font-size: 11px; color: #999; margin: 3px 0 0; }
+
+  .dr-footer { border-top: 1px solid rgba(74,74,74,0.06); padding: 16px 20px; background: #fff; }
+  .dr-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .dr-total-l { font-size: 13px; color: #666; }
+  .dr-total-v { font-family: 'Source Serif 4', Georgia, serif; font-size: 17px; font-weight: 500; }
+  .btn-cta { font-family: 'Inter', sans-serif; font-size: 14.5px; padding: 13px; background: rgba(14,94,90,0.92); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; width: 100%; }
+
+  .savings-chip { display: inline-flex; align-items: center; font-size: 11.5px; font-weight: 500; color: #8C6A3C; background: rgba(140, 106, 60, 0.08); padding: 3px 8px; border-radius: 4px; }
+
+  .concept-row { display: flex; gap: 28px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 12px; }
+  .concept-divider { margin: 52px 0; border: none; border-top: 2px dashed #ddd; }
+  .type-label { font-size: 11.5px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.5px; margin: 24px 0 12px; }
+  .type-label:first-of-type { margin-top: 0; }
+  .up-zone { background: rgba(240,238,235,0.45); padding: 14px 20px 16px; border-top: 1px solid rgba(74,74,74,0.06); }
+  .up-heading { font-family: 'Source Serif 4', Georgia, serif; font-size: 12px; color: #666; margin: 0 0 10px; }
+  .note-box { margin-top: 16px; padding: 14px 18px; background: rgba(14,94,90,0.04); border-radius: 8px; border-left: 3px solid rgba(14,94,90,0.3); font-size: 13px; color: #444; line-height: 1.6; }
+  .note-box strong { color: #111; }
+  .note-box ul { margin: 6px 0 0; padding-left: 16px; }
+  .note-box li { margin-bottom: 3px; }
+
+  /* =============================== */
+  /* VARIANT 2A: Equal two-item row  */
+  /* =============================== */
+  .va-card { padding: 14px; background: #fff; border-radius: 6px; border: 1px solid rgba(74,74,74,0.04); box-shadow: 0 1px 2px rgba(0,0,0,0.03); border-left: 2.5px solid rgba(14,94,90,0.4); }
+  .va-headline { font-size: 13.5px; font-weight: 500; color: #111; margin: 0 0 10px; line-height: 1.35; }
+  .va-items { display: flex; gap: 8px; align-items: stretch; }
+  .va-item { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 8px; border-radius: 5px; background: rgba(240,238,235,0.35); position: relative; }
+  .va-item--have { background: rgba(14,94,90,0.04); }
+  .va-item-img { width: 48px; height: 48px; background: linear-gradient(145deg, #e8e0d4, #f2ece4); border-radius: 5px; margin-bottom: 6px; position: relative; flex-shrink: 0; }
+  .va-item-check { position: absolute; top: -3px; right: -3px; width: 15px; height: 15px; background: #0E5E5A; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .va-item-check svg { width: 9px; height: 9px; color: #fff; }
+  .va-item-name { font-size: 11px; font-weight: 500; color: #111; line-height: 1.25; margin: 0; }
+  .va-item-meta { font-size: 9.5px; color: #0E5E5A; margin: 2px 0 0; font-weight: 500; }
+  .va-item-meta--muted { color: #999; font-weight: 400; }
+  .va-plus { font-size: 16px; color: #ccc; flex-shrink: 0; align-self: center; font-weight: 300; }
+  .va-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(74,74,74,0.05); }
+  .va-pricing { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+  .va-price-now { font-size: 14px; font-weight: 500; color: #111; }
+  .va-price-was { font-size: 11px; color: #aaa; text-decoration: line-through; }
+  .va-btn { font-family: 'Inter', sans-serif; font-size: 12.5px; padding: 8px 14px; background: rgba(14,94,90,0.92); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+
+  /* ================================== */
+  /* VARIANT 2B: Hero new item + brief  */
+  /* ================================== */
+  .vb-card { padding: 14px; background: #fff; border-radius: 6px; border: 1px solid rgba(74,74,74,0.04); box-shadow: 0 1px 2px rgba(0,0,0,0.03); border-left: 2.5px solid rgba(14,94,90,0.4); }
+  .vb-headline { font-size: 13.5px; font-weight: 500; color: #111; margin: 0 0 3px; line-height: 1.35; }
+  .vb-have-line { font-size: 11px; color: #666; margin: 0 0 10px; display: flex; align-items: center; gap: 4px; }
+  .vb-have-check { display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 14px; background: #0E5E5A; border-radius: 50%; flex-shrink: 0; }
+  .vb-have-check svg { width: 8px; height: 8px; color: #fff; }
+  .vb-have-name { font-weight: 500; color: #444; }
+  .vb-main { display: flex; gap: 12px; }
+  .vb-img { width: 64px; height: 64px; background: linear-gradient(145deg, #e8e0d4, #f2ece4); border-radius: 6px; flex-shrink: 0; }
+  .vb-info { flex: 1; min-width: 0; }
+  .vb-title { font-size: 13px; font-weight: 500; color: #111; margin: 0; line-height: 1.3; }
+  .vb-benefit { font-size: 11.5px; color: #666; margin: 3px 0 0; line-height: 1.4; }
+  .vb-color { font-size: 10.5px; color: #999; margin: 3px 0 0; }
+  .vb-color b { color: #555; font-weight: 500; }
+  .vb-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(74,74,74,0.05); }
+  .vb-pricing { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+  .vb-set-label { font-size: 10px; color: #888; margin: 0 0 2px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .vb-price-now { font-size: 14px; font-weight: 500; color: #111; }
+  .vb-price-was { font-size: 11px; color: #aaa; text-decoration: line-through; }
+  .vb-btn { font-family: 'Inter', sans-serif; font-size: 12.5px; padding: 8px 14px; background: rgba(14,94,90,0.92); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+</style>
+
+<!-- ==================== VARIANT 2A ==================== -->
+<div class="option" data-choice="variant-2a" onclick="toggleSelect(this)">
+  <div class="letter">A</div>
+  <div class="content" style="width: 100%;">
+    <h3 style="margin: 0 0 4px;">2A: Two items shown equally</h3>
+    <p style="font-size: 13px; color: #666; margin: 0 0 6px;">Both items displayed as compact tiles side by side. The "already in cart" item has a teal tint + check mark. The "add this" item is neutral. Smaller text, tighter layout than before. Color info removed from tiles - it's auto-matched and the customer sees the confirmation after clicking.</p>
+
+    <div class="note-box">
+      <strong>Color matching decision:</strong> Skip color info inside the card. The system already auto-matches the trigger color, and showing "Dopasowany kolor" or a color name adds clutter for zero persuasive value. The customer trusts the match — they'll see the correct color in the cart after the swap. Less information = faster decision.
+    </div>
+
+    <p class="type-label">Czepek in cart → Nocna Rutyna</p>
+    <div class="concept-row">
+      <div>
+        <p class="ctx-label">Drawer</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Jedwabny czepek do spania</p><p class="ci-meta">Czarny</p></div>
+            <div class="ci-right"><p class="ci-price">239 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="up-zone">
+            <p class="up-heading">Korzystniej w zestawie</p>
+            <div class="va-card">
+              <p class="va-headline">Dodaj poszewke i zaoszczedz 109 zl</p>
+              <div class="va-items">
+                <div class="va-item va-item--have">
+                  <div class="va-item-img">
+                    <div class="va-item-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                  </div>
+                  <p class="va-item-name">Czepek jedwabny</p>
+                  <p class="va-item-meta">W koszyku</p>
+                </div>
+                <span class="va-plus">+</span>
+                <div class="va-item">
+                  <div class="va-item-img"></div>
+                  <p class="va-item-name">Poszewka jedwabna</p>
+                  <p class="va-item-meta va-item-meta--muted">50&times;70</p>
+                </div>
+              </div>
+              <div class="va-bottom">
+                <div class="va-pricing">
+                  <span class="va-price-now">399 zl</span>
+                  <span class="va-price-was">508 zl</span>
+                  <span class="savings-chip">Oszczedzasz 109 zl</span>
+                </div>
+                <button class="va-btn">Dodaj do zestawu</button>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">239 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="ctx-label">Poszewka in cart → Piekny Sen</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Szampan / 50&times;70</p></div>
+            <div class="ci-right"><p class="ci-price">269 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="up-zone">
+            <p class="up-heading">Korzystniej w zestawie</p>
+            <div class="va-card">
+              <p class="va-headline">Dodaj maske 3D i zaoszczedz 89 zl</p>
+              <div class="va-items">
+                <div class="va-item va-item--have">
+                  <div class="va-item-img">
+                    <div class="va-item-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                  </div>
+                  <p class="va-item-name">Poszewka jedwabna</p>
+                  <p class="va-item-meta">W koszyku</p>
+                </div>
+                <span class="va-plus">+</span>
+                <div class="va-item">
+                  <div class="va-item-img"></div>
+                  <p class="va-item-name">Maska jedwabna 3D</p>
+                  <p class="va-item-meta va-item-meta--muted">Do spania</p>
+                </div>
+              </div>
+              <div class="va-bottom">
+                <div class="va-pricing">
+                  <span class="va-price-now">349 zl</span>
+                  <span class="va-price-was">438 zl</span>
+                  <span class="savings-chip">Oszczedzasz 89 zl</span>
+                </div>
+                <button class="va-btn">Dodaj do zestawu</button>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">269 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pros-cons" style="margin-top: 12px;">
+      <div class="pros"><h4>Strengths</h4><ul>
+        <li>Set composition crystal clear at a glance</li>
+        <li>Teal tint on "in cart" item = instant visual distinction</li>
+        <li>No color clutter - auto-match handled silently</li>
+        <li>Compact tiles keep height reasonable</li>
+      </ul></div>
+      <div class="cons"><h4>Trade-offs</h4><ul>
+        <li>Both items get equal visual weight - the NEW item doesn't stand out</li>
+        <li>Small product images (48px) in tiles</li>
+        <li>Text under tiles still competes for attention</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<hr class="concept-divider">
+
+<!-- ==================== VARIANT 2B ==================== -->
+<div class="option" data-choice="variant-2b" onclick="toggleSelect(this)">
+  <div class="letter">B</div>
+  <div class="content" style="width: 100%;">
+    <h3 style="margin: 0 0 4px;">2B: Hero new item, brief "already have" line</h3>
+    <p style="font-size: 13px; color: #666; margin: 0 0 6px;">The item being added gets 80% of the card space: large image, name, benefit line. The item already in the cart is reduced to a single compact line with a tiny check icon: "&#10003; Czepek jedwabny juz w koszyku." This puts focus where the decision is: the NEW item.</p>
+
+    <div class="note-box">
+      <strong>Why this might be stronger:</strong> The customer already CHOSE the item in their cart — they don't need to be re-sold on it. The decision they're making is about the NEW item. By giving the new item a proper product card with image + benefit, we're actually selling them on that product. The "already have" line is just context — "you're almost there."
+    </div>
+
+    <p class="type-label">Czepek in cart → Nocna Rutyna</p>
+    <div class="concept-row">
+      <div>
+        <p class="ctx-label">Drawer</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Jedwabny czepek do spania</p><p class="ci-meta">Czarny</p></div>
+            <div class="ci-right"><p class="ci-price">239 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="up-zone">
+            <p class="up-heading">Korzystniej w zestawie</p>
+            <div class="vb-card">
+              <p class="vb-headline">Dodaj poszewke i zaoszczedz 109 zl</p>
+              <p class="vb-have-line">
+                <span class="vb-have-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                <span><span class="vb-have-name">Czepek jedwabny</span> juz w koszyku</span>
+              </p>
+              <div class="vb-main">
+                <div class="vb-img"></div>
+                <div class="vb-info">
+                  <p class="vb-title">Poszewka jedwabna</p>
+                  <p class="vb-benefit">Chroni twarz przed zagnieceniami - obudz sie bez sladow</p>
+                </div>
+              </div>
+              <div class="vb-bottom">
+                <div>
+                  <p class="vb-set-label">Zestaw Nocna Rutyna</p>
+                  <div class="vb-pricing">
+                    <span class="vb-price-now">399 zl</span>
+                    <span class="vb-price-was">508 zl</span>
+                    <span class="savings-chip">Oszczedzasz 109 zl</span>
+                  </div>
+                </div>
+                <button class="vb-btn">Dodaj do zestawu</button>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">239 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="ctx-label">Poszewka in cart → Nocna Rutyna</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Czarny / 50&times;70</p></div>
+            <div class="ci-right"><p class="ci-price">269 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="up-zone">
+            <p class="up-heading">Korzystniej w zestawie</p>
+            <div class="vb-card">
+              <p class="vb-headline">Dodaj czepek i zaoszczedz 109 zl</p>
+              <p class="vb-have-line">
+                <span class="vb-have-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                <span><span class="vb-have-name">Poszewka jedwabna</span> juz w koszyku</span>
+              </p>
+              <div class="vb-main">
+                <div class="vb-img"></div>
+                <div class="vb-info">
+                  <p class="vb-title">Jedwabny czepek do spania</p>
+                  <p class="vb-benefit">Chroni wlosy przed plataninem i puszeniem przez cala noc</p>
+                </div>
+              </div>
+              <div class="vb-bottom">
+                <div>
+                  <p class="vb-set-label">Zestaw Nocna Rutyna</p>
+                  <div class="vb-pricing">
+                    <span class="vb-price-now">399 zl</span>
+                    <span class="vb-price-was">508 zl</span>
+                    <span class="savings-chip">Oszczedzasz 109 zl</span>
+                  </div>
+                </div>
+                <button class="vb-btn">Dodaj do zestawu</button>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">269 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- More scenarios -->
+    <p class="type-label">Poszewka in cart → Piekny Sen</p>
+    <div class="concept-row">
+      <div>
+        <p class="ctx-label">Drawer</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Poszewka jedwabna</p><p class="ci-meta">Szampan / 50&times;70</p></div>
+            <div class="ci-right"><p class="ci-price">269 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="up-zone">
+            <p class="up-heading">Korzystniej w zestawie</p>
+            <div class="vb-card">
+              <p class="vb-headline">Dodaj maske 3D i zaoszczedz 89 zl</p>
+              <p class="vb-have-line">
+                <span class="vb-have-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                <span><span class="vb-have-name">Poszewka jedwabna</span> juz w koszyku</span>
+              </p>
+              <div class="vb-main">
+                <div class="vb-img"></div>
+                <div class="vb-info">
+                  <p class="vb-title">Jedwabna maska 3D</p>
+                  <p class="vb-benefit">Calkowita ciemnosc i jedwab na delikatnej skorze wokol oczu</p>
+                </div>
+              </div>
+              <div class="vb-bottom">
+                <div>
+                  <p class="vb-set-label">Zestaw Piekny Sen</p>
+                  <div class="vb-pricing">
+                    <span class="vb-price-now">349 zl</span>
+                    <span class="vb-price-was">438 zl</span>
+                    <span class="savings-chip">Oszczedzasz 89 zl</span>
+                  </div>
+                </div>
+                <button class="vb-btn">Dodaj do zestawu</button>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">269 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="ctx-label">Scrunchie in cart → Scrunchie Trio</p>
+        <div class="drawer-frame lusena">
+          <div class="frame-header"><h4>Koszyk (1)</h4><span class="close">&times;</span></div>
+          <div class="ci">
+            <div class="ci-img"></div>
+            <div class="ci-info"><p class="ci-title">Scrunchie jedwabny</p><p class="ci-meta">Czarny</p></div>
+            <div class="ci-right"><p class="ci-price">59 zl</p><p class="ci-qty">Ilosc: 1</p></div>
+          </div>
+          <div class="up-zone">
+            <p class="up-heading">Korzystniej w zestawie</p>
+            <div class="vb-card">
+              <p class="vb-headline">Dodaj 2 scrunchie i zaoszczedz 38 zl</p>
+              <p class="vb-have-line">
+                <span class="vb-have-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                <span><span class="vb-have-name">Scrunchie jedwabny</span> juz w koszyku</span>
+              </p>
+              <div class="vb-main">
+                <div class="vb-img"></div>
+                <div class="vb-info">
+                  <p class="vb-title">Scrunchie Trio</p>
+                  <p class="vb-benefit">3 kolory jedwabiu - jeden na kazdy moment</p>
+                </div>
+              </div>
+              <div class="vb-bottom">
+                <div>
+                  <p class="vb-set-label">Zestaw 3 scrunchie</p>
+                  <div class="vb-pricing">
+                    <span class="vb-price-now">139 zl</span>
+                    <span class="vb-price-was">177 zl</span>
+                    <span class="savings-chip">Oszczedzasz 38 zl</span>
+                  </div>
+                </div>
+                <button class="vb-btn">Dodaj do zestawu</button>
+              </div>
+            </div>
+          </div>
+          <div class="dr-footer">
+            <div class="dr-total"><span class="dr-total-l">Suma</span><span class="dr-total-v">59 zl</span></div>
+            <button class="btn-cta">Przejdz do kasy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pros-cons" style="margin-top: 12px;">
+      <div class="pros"><h4>Strengths</h4><ul>
+        <li>New item gets full product card treatment - image, title, benefit copy</li>
+        <li>"Already have" line is minimal — just context, not a competing element</li>
+        <li>Benefit copy actually SELLS the new item (why you want this poszewka)</li>
+        <li>Visual hierarchy is clear: headline → context → product → pricing → CTA</li>
+        <li>"Zestaw Nocna Rutyna" label anchors the set name without it being the headline</li>
+        <li>Works for all 3 bundles naturally</li>
+      </ul></div>
+      <div class="cons"><h4>Trade-offs</h4><ul>
+        <li>Slightly taller than 2A (benefit copy adds a line)</li>
+        <li>The "already have" item has no image — less Zeigarnik visual tension</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<!-- Key details -->
+<div style="margin-top: 40px; padding: 20px; background: #fff; border-radius: 8px; border: 1px solid rgba(74,74,74,0.08); box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+  <h3 style="margin: 0 0 12px; font-size: 15px;">Shared between both variants</h3>
+  <ul style="margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.8; color: #444;">
+    <li><strong>"Korzystniej w zestawie"</strong> — section label (value framing, not discount-y)</li>
+    <li><strong>"Dodaj [item] i zaoszczedz [X] zl"</strong> — gain-framed headline, names the specific product</li>
+    <li><strong>Gold savings chip</strong> — "Oszczedzasz 109 zl" matching PDP pattern exactly</li>
+    <li><strong>Price + crossed-out anchor</strong> — 399 zl / 508 zl</li>
+    <li><strong>"Dodaj do zestawu"</strong> CTA — action verb, no cost on button</li>
+    <li><strong>No color info in card</strong> — auto-matched silently, less clutter</li>
+    <li><strong>Teal check mark</strong> — brand color, indicates "done/in cart"</li>
+    <li><strong>Set name as small label</strong> — "Zestaw Nocna Rutyna" context, not headline</li>
+  </ul>
+</div>

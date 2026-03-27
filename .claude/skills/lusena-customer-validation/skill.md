@@ -13,7 +13,7 @@ Test product copy against 4 simulated customer personas to identify blind spots,
 ## When to use
 
 - After crafting creative copy AND passing the legal check (`/lusena-legal-check`)
-- As step 5 in the creative session workflow (see `docs/product-metafields-reference.md`)
+- As step 5 in the creative session workflow (see `memory-bank/doc/products/product-metafields-reference.md`)
 - Maximum 3 runs per creative session (Run 1 = baseline, Run 2 = verify fixes, Run 3 = final if needed)
 
 ## Inputs

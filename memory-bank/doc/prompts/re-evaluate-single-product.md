@@ -22,14 +22,14 @@ needs changes — make them, validate them, and present the final result.
 
 1. `memory-bank/activeContext.md` — current state
 2. `memory-bank/progress.md` — what's done
-3. `docs/product-metafields-reference.md` — the FULL creative process including:
+3. `memory-bank/doc/products/product-metafields-reference.md` — the FULL creative process including:
    - Orchestrator + Polish copywriter architecture (steps 1-9)
    - Information architecture guard + exclusion list (added 2026-03-21)
    - Tagline/benefits rendering context (tagline = desktop, benefits = mobile alternative)
    - BUYBOX-LEVEL EXCLUSION (added 2026-03-22)
    - Feature card description length rule (150-210 chars)
    - Feature card title length rule (max 28 chars)
-4. `docs/LUSENA_BrandBook_v2.md` — sections 1.3, 1.7, 2.1
+4. `memory-bank/doc/brand/LUSENA_BrandBook_v2.md` — sections 1.3, 1.7, 2.1
 5. The product file: `memory-bank/doc/products/{PRODUCT_HANDLE}.md`
 6. Read at least ONE completed product file done with the new flow for tone reference:
    - `memory-bank/doc/products/scrunchie-trio.md` (latest, best example of the new flow)

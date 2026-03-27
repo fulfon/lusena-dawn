@@ -21,7 +21,7 @@ If it needs changes — make them, validate them, and present the final result.
 
 1. `memory-bank/activeContext.md` — current state
 2. `memory-bank/progress.md` — what's done
-3. `docs/product-metafields-reference.md` — the FULL creative process including:
+3. `memory-bank/doc/products/product-metafields-reference.md` — the FULL creative process including:
    - Orchestrator + Polish copywriter architecture (steps 1-9)
    - Information architecture guard + exclusion list
    - Zero-overlap rule
@@ -37,7 +37,7 @@ If it needs changes — make them, validate them, and present the final result.
 6. Read BOTH products done with the new flow for tone reference:
    - `memory-bank/doc/products/piekny-sen.md`
    - `memory-bank/doc/products/scrunchie-trio.md`
-7. `docs/LUSENA_BrandBook_v2.md` — sections 1.3, 1.7, 2.1
+7. `memory-bank/doc/brand/LUSENA_BrandBook_v2.md` — sections 1.3, 1.7, 2.1
 
 ## KEY CONTEXT: What changed AFTER Nocna Rutyna's session
 

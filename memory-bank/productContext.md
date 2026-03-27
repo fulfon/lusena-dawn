@@ -14,7 +14,7 @@ LUSENA exists to make premium silk accessories accessible and trustworthy in the
 4. **Quality page** (`page.nasza-jakosc.json`) — Deep proof: momme, origin, certificates, fire test, comparison
 5. **Returns page** (`page.zwroty.json`) — Frictionless returns messaging, trust building
 6. **About page** (`page.o-nas.json`) — Brand story, heritage, values
-7. **Cart page** (`cart.json`) — Full drawer parity: items + upsell cross-sell + totals/shipping/CTA footer
+7. **Cart page** (`cart.json`) — Full drawer parity: items + upsell cross-sell + totals/shipping/CTA footer. AJAX section re-rendering (no full-page reloads). Bidirectional sync with cart drawer via pubsub.
 8. **Search page** (`search.json`) — Predictive search, product grid, empty state with bestsellers, Polish translations
 9. **Blog listing** (`blog.json`) — 2-col article grid, pagination, empty state with CTA
 10. **Article page** (`article.json`) — Hero image, richtext content, share button, newsletter with shop link

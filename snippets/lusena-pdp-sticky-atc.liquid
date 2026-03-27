@@ -18,7 +18,7 @@
 
   assign sticky_price_per_night_cents = current_variant.price | divided_by: 365.0 | round
   assign sticky_price_per_night_prefix = section.settings.price_per_night_prefix | default: 'Tylko '
-  assign sticky_price_per_night_suffix = section.settings.price_per_night_suffix | default: '/ noc'
+  assign sticky_price_per_night_suffix = section.settings.price_per_night_suffix | default: '/noc'
 
   if sticky_price_per_night_suffix contains '('
     assign sticky_price_per_night_suffix = sticky_price_per_night_suffix | split: '(' | first
@@ -30,7 +30,7 @@
     assign sticky_price_suffix_right = sticky_price_per_night_suffix | split: '/' | last | strip
 
     if sticky_price_suffix_left == blank
-      assign sticky_price_per_night_suffix = '/ ' | append: sticky_price_suffix_right
+      assign sticky_price_per_night_suffix = '/' | append: sticky_price_suffix_right
     else
       assign sticky_price_per_night_suffix = sticky_price_suffix_left | append: ' / ' | append: sticky_price_suffix_right
     endif
@@ -39,12 +39,12 @@
   assign sticky_price_per_night_suffix = sticky_price_per_night_suffix | strip
 
   assign sticky_price_suffix_first_char = sticky_price_per_night_suffix | slice: 0, 1
-  if sticky_price_suffix_first_char != ' '
+  if sticky_price_suffix_first_char != ' ' and sticky_price_suffix_first_char != '/'
     assign sticky_price_per_night_suffix = ' ' | append: sticky_price_per_night_suffix
   endif
 
   if sticky_price_per_night_suffix == blank
-    assign sticky_price_per_night_suffix = ' / noc'
+    assign sticky_price_per_night_suffix = '/noc'
   endif
 
   assign sticky_variant_label = current_variant.title

@@ -45,6 +45,8 @@ LUSENA is a premium Polish silk e-commerce store built as a custom Shopify theme
 
 ## Key references
 
-- Brand direction (source of truth): `docs/LUSENA_BrandBook_v2.md`
-- UI/UX implementation guide: `docs/theme-brandbook-uiux.md`
-- Brandbook v1→v2 migration log: `docs/lusena_brandbook_update_changelog_v1_to_v2.md`
+- Brand direction (source of truth): `memory-bank/doc/brand/LUSENA_BrandBook_v2.md`
+- Design tokens: `memory-bank/doc/patterns/brand-tokens.md`
+- CSS architecture: `memory-bank/doc/patterns/css-architecture.md`
+- Spacing system: `memory-bank/doc/patterns/spacing-system.md`
+- Brandbook v1→v2 migration log: `memory-bank/doc/brand/lusena_brandbook_update_changelog_v1_to_v2.md`

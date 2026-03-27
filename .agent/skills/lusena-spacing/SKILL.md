@@ -37,7 +37,7 @@ All CSS lives in **`assets/lusena-spacing.css`** (standalone asset file loaded v
 |---|---|
 | `assets/lusena-spacing.css` | **Source of truth** — all tokens, tiers, gap utilities, content-flow utilities |
 | `snippets/lusena-section-gap-detector.liquid` | JS: detects adjacent same-background sections, adds `lusena-section-gap-same` class |
-| `docs/theme-brandbook-uiux.md` (§3.3, §5.4) | Design documentation |
+| `memory-bank/doc/patterns/brand-tokens.md` | Design tokens reference |
 
 ---
 

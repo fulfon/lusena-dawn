@@ -74,17 +74,17 @@ SKU format: `LUS-{3-letter product}-{3-letter variant}` (e.g., `LUS-PIL-GRY`)
 
 ## LUSENA metafields
 
-> For what each field does and how to write great copy, see `docs/product-metafields-reference.md`
+> For what each field does and how to write great copy, see `memory-bank/doc/products/product-metafields-reference.md`
 
 > **UNIVERSAL FIELDS - DO NOT MODIFY.** Fields marked "Pre-filled (universal)" are shared
 > across ALL LUSENA silk products. They were validated once and must not be rewritten or
 > "improved" during creative sessions. See the "Universal fields" section in
-> `docs/product-metafields-reference.md` for the canonical list and rationale.
+> `memory-bank/doc/products/product-metafields-reference.md` for the canonical list and rationale.
 
 ### Buybox content (REQUIRES CREATIVE SESSION - do not copy from other products)
 
 > These fields are the primary conversion drivers. Each product needs original copy crafted through
-> research, brandbook alignment, and legal review. See `docs/product-metafields-reference.md` for
+> research, brandbook alignment, and legal review. See `memory-bank/doc/products/product-metafields-reference.md` for
 > detailed guidance on each field's purpose, copy guidelines, and good/bad examples.
 
 | Metafield | Value | Status |
@@ -135,7 +135,7 @@ SKU format: `LUS-{3-letter product}-{3-letter variant}` (e.g., `LUS-PIL-GRY`)
 
 ### Icon animation specs (for SVG coding agent)
 
-> For each feature card, describe the icon animation for the SVG agent. See constraints in `docs/product-metafields-reference.md`.
+> For each feature card, describe the icon animation for the SVG agent. See constraints in `memory-bank/doc/products/product-metafields-reference.md`.
 
 | Card | Icon | Animation spec |
 |------|------|---------------|
