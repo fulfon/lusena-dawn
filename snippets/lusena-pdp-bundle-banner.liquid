@@ -236,11 +236,22 @@
               var props = {};
               var selectionParts = [];
 
-              // Assign colors: cart item's color + current PDP color
+              // Complementary bundle: assign colors based on product identity
+              // Cart product component -> triggerColor, PDP product component -> pdpColor
+              var currentProductTitle = document.querySelector('.lusena-pdp-buy-box h1');
+              var currentProductName = currentProductTitle ? currentProductTitle.textContent.trim() : '';
+
               components.forEach(function(comp) {
                 var color;
-                // Match by product handle in the key
-                if (triggerColor && comp.values.indexOf(triggerColor) !== -1 && isCartProductComponent(comp, banner.dataset.replaceKey)) {
+                var compKeyLower = comp.key.toLowerCase();
+
+                // Check if this component matches the PDP product (the one being viewed)
+                var pdpNameWords = currentProductName.toLowerCase().split(' ').slice(0, 2).join(' ');
+                var isPdpProduct = pdpNameWords && compKeyLower.indexOf(pdpNameWords) !== -1;
+
+                if (isPdpProduct && pdpColor && comp.values.indexOf(pdpColor) !== -1) {
+                  color = pdpColor;
+                } else if (triggerColor && comp.values.indexOf(triggerColor) !== -1) {
                   color = triggerColor;
                 } else if (pdpColor && comp.values.indexOf(pdpColor) !== -1) {
                   color = pdpColor;
@@ -369,11 +380,6 @@
           components.push({ key: disambiguated, values: values, rawKey: rawKey });
         });
         return components;
-      }
-
-      function isCartProductComponent(comp, cartItemKey) {
-        // Placeholder — Task 4 replaces this with proper logic
-        return false;
       }
 
     })();
