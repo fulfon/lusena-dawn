@@ -1,0 +1,381 @@
+{%- comment -%}
+  PDP Bundle Detection Banner (#12)
+  Shows when customer's cart has a complement product for a bundle.
+  Hidden by default — JS reveals after cart check.
+
+  Required variables: product (passed from section)
+{%- endcomment -%}
+
+{%- liquid
+  comment
+    Map current product to its bundle complements.
+    Each entry: cart_handle (what must be in cart), bundle_handle (the bundle to suggest).
+    Priority: higher savings_priority wins when multiple matches exist.
+  endcomment
+
+  assign has_complements = false
+
+  case product.handle
+    when 'poszewka-jedwabna'
+      assign has_complements = true
+      assign pdp_product_label = 'poszewke jedwabna'
+      assign complement_1_cart = 'silk-bonnet'
+      assign complement_1_bundle = 'nocna-rutyna'
+      assign complement_1_priority = 1
+      assign complement_2_cart = 'jedwabna-maska-3d'
+      assign complement_2_bundle = 'piekny-sen'
+      assign complement_2_priority = 0
+      assign complement_count = 2
+
+    when 'silk-bonnet'
+      assign has_complements = true
+      assign pdp_product_label = 'czepek jedwabny'
+      assign complement_1_cart = 'poszewka-jedwabna'
+      assign complement_1_bundle = 'nocna-rutyna'
+      assign complement_1_priority = 1
+      assign complement_count = 1
+
+    when 'jedwabna-maska-3d'
+      assign has_complements = true
+      assign pdp_product_label = 'maske 3D'
+      assign complement_1_cart = 'poszewka-jedwabna'
+      assign complement_1_bundle = 'piekny-sen'
+      assign complement_1_priority = 1
+      assign complement_count = 1
+  endcase
+-%}
+
+{%- if has_complements -%}
+  {%- liquid
+    comment
+      Build a JSON array of complement entries with live bundle product data.
+      Using all_products to get real prices, images, titles, and variant info.
+    endcomment
+  -%}
+
+  <div class="lusena-pdp-bundle-banner"
+       data-pdp-bundle-banner
+       style="display:none"
+       aria-live="polite">
+
+    {%- comment -%} Render complement data as a JSON script block for JS to read {%- endcomment -%}
+    <script type="application/json" data-bundle-complements>
+      [
+        {%- assign bundle_1 = all_products[complement_1_bundle] -%}
+        {%- assign bundle_1_variant = bundle_1.selected_or_first_available_variant -%}
+        {%- assign bundle_1_original = bundle_1.metafields.lusena.bundle_original_price.value -%}
+        {%- assign bundle_1_sb_options = bundle_1_variant.metafields.simple_bundles.variant_options.value -%}
+        {
+          "cart_handle": {{ complement_1_cart | json }},
+          "bundle_handle": {{ complement_1_bundle | json }},
+          "bundle_title": {{ bundle_1.title | json }},
+          "bundle_price": {{ bundle_1_variant.price }},
+          "bundle_original_price": {{ bundle_1_original | default: 0 }},
+          "bundle_variant_id": {{ bundle_1_variant.id }},
+          "bundle_url": {{ bundle_1.url | json }},
+          "pdp_product_label": {{ pdp_product_label | json }},
+          "complement_product_title": {{ all_products[complement_1_cart].title | json }},
+          "complement_product_image": {{ all_products[complement_1_cart].featured_image | image_url: width: 120 | json }},
+          "priority": {{ complement_1_priority }},
+          "property_map": {{ bundle_1_sb_options | json }}
+        }
+        {%- if complement_count == 2 -%}
+          ,
+          {%- assign bundle_2 = all_products[complement_2_bundle] -%}
+          {%- assign bundle_2_variant = bundle_2.selected_or_first_available_variant -%}
+          {%- assign bundle_2_original = bundle_2.metafields.lusena.bundle_original_price.value -%}
+          {%- assign bundle_2_sb_options = bundle_2_variant.metafields.simple_bundles.variant_options.value -%}
+          {
+            "cart_handle": {{ complement_2_cart | json }},
+            "bundle_handle": {{ complement_2_bundle | json }},
+            "bundle_title": {{ bundle_2.title | json }},
+            "bundle_price": {{ bundle_2_variant.price }},
+            "bundle_original_price": {{ bundle_2_original | default: 0 }},
+            "bundle_variant_id": {{ bundle_2_variant.id }},
+            "bundle_url": {{ bundle_2.url | json }},
+            "pdp_product_label": {{ pdp_product_label | json }},
+            "complement_product_title": {{ all_products[complement_2_cart].title | json }},
+            "complement_product_image": {{ all_products[complement_2_cart].featured_image | image_url: width: 120 | json }},
+            "priority": {{ complement_2_priority }},
+            "property_map": {{ bundle_2_sb_options | json }}
+          }
+        {%- endif -%}
+      ]
+    </script>
+
+    {%- comment -%} Banner HTML — content populated by JS {%- endcomment -%}
+    <p class="lusena-pdp-bundle-banner__label">Korzystniej w zestawie</p>
+    <div class="lusena-pdp-bundle-banner__card">
+      <p class="lusena-pdp-bundle-banner__headline" data-banner-headline></p>
+
+      <div class="lusena-pdp-bundle-banner__have-row">
+        <div class="lusena-pdp-bundle-banner__have-img-wrap">
+          <img class="lusena-pdp-bundle-banner__have-img"
+               data-banner-have-img
+               src=""
+               alt=""
+               width="44"
+               height="44"
+               loading="lazy">
+          <span class="lusena-pdp-bundle-banner__check" aria-hidden="true">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+              <path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </div>
+        <div class="lusena-pdp-bundle-banner__have-text">
+          <span class="lusena-pdp-bundle-banner__have-name" data-banner-have-name></span>
+          <span class="lusena-pdp-bundle-banner__have-status">W koszyku</span>
+        </div>
+      </div>
+
+      <div class="lusena-pdp-bundle-banner__bottom">
+        <div class="lusena-pdp-bundle-banner__pricing">
+          <span class="lusena-pdp-bundle-banner__price" data-banner-price></span>
+          <s class="lusena-pdp-bundle-banner__was" data-banner-was></s>
+        </div>
+        <button type="button"
+                class="lusena-btn lusena-btn--outline lusena-btn--size-xs"
+                data-pdp-bundle-swap>
+          <span class="lusena-btn__content">Kup jako zestaw</span>
+          <span class="loading__spinner hidden">
+            <span class="lusena-btn__loading-dots" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var banner = document.querySelector('[data-pdp-bundle-banner]');
+      if (!banner) return;
+
+      var complementsJson = banner.querySelector('[data-bundle-complements]');
+      if (!complementsJson) return;
+
+      var complements;
+      try { complements = JSON.parse(complementsJson.textContent); }
+      catch (e) { return; }
+
+      // Fetch cart and check for complement matches
+      fetch('/cart.js', { credentials: 'same-origin' })
+        .then(function(r) { return r.json(); })
+        .then(function(cart) {
+          var match = null;
+
+          cart.items.forEach(function(item) {
+            var itemHandle = item.handle;
+            complements.forEach(function(comp) {
+              if (itemHandle === comp.cart_handle) {
+                if (!match || comp.priority > match.priority) {
+                  match = {
+                    comp: comp,
+                    cartItem: item
+                  };
+                }
+              }
+            });
+          });
+
+          if (!match) return;
+
+          // Populate banner content
+          var comp = match.comp;
+          var cartItem = match.cartItem;
+          var savings = (comp.bundle_original_price * 100) - comp.bundle_price;
+
+          banner.querySelector('[data-banner-headline]').textContent =
+            'Dodaj ' + comp.pdp_product_label + ' i zaoszczedz ' + formatMoney(savings);
+
+          banner.querySelector('[data-banner-have-name]').textContent = comp.complement_product_title;
+          var haveImg = banner.querySelector('[data-banner-have-img]');
+          haveImg.src = comp.complement_product_image;
+          haveImg.alt = comp.complement_product_title;
+
+          banner.querySelector('[data-banner-price]').textContent = formatMoney(comp.bundle_price);
+          banner.querySelector('[data-banner-was]').textContent = formatMoney(comp.bundle_original_price * 100);
+
+          // Store match data for swap handler
+          banner.dataset.bundleVariantId = comp.bundle_variant_id;
+          banner.dataset.replaceKey = cartItem.key;
+          banner.dataset.propertyMap = JSON.stringify(comp.property_map || []);
+          banner.dataset.triggerColor = getCartItemColor(cartItem);
+
+          // Reveal banner
+          banner.style.display = '';
+        })
+        .catch(function(err) {
+          console.error('Bundle banner: cart fetch failed', err);
+        });
+
+      // Swap click handler
+      banner.addEventListener('click', async function(e) {
+        var btn = e.target.closest('[data-pdp-bundle-swap]');
+        if (!btn) return;
+
+        btn.disabled = true;
+        btn.classList.add('loading');
+        var spinner = btn.querySelector('.loading__spinner');
+        if (spinner) spinner.classList.remove('hidden');
+
+        // Read current PDP color from variant picker
+        var pdpColor = getCurrentPdpColor();
+        var triggerColor = banner.dataset.triggerColor;
+
+        // Build properties for Simple Bundles
+        var swapOpts = {};
+        var propertyMapRaw = banner.dataset.propertyMap;
+        if (propertyMapRaw) {
+          try {
+            var sbOptions = JSON.parse(propertyMapRaw);
+            if (Array.isArray(sbOptions) && sbOptions.length > 0) {
+              var components = parseSbOptions(sbOptions);
+              var props = {};
+              var selectionParts = [];
+
+              // Assign colors: cart item's color + current PDP color
+              components.forEach(function(comp) {
+                var color;
+                // Match by product handle in the key
+                if (triggerColor && comp.values.indexOf(triggerColor) !== -1 && isCartProductComponent(comp, banner.dataset.replaceKey)) {
+                  color = triggerColor;
+                } else if (pdpColor && comp.values.indexOf(pdpColor) !== -1) {
+                  color = pdpColor;
+                } else {
+                  color = comp.values[0];
+                }
+                props[comp.key] = color;
+                selectionParts.push(color);
+              });
+
+              props['_bundle_selection'] = selectionParts.join(' <> ');
+              swapOpts.properties = props;
+            }
+          } catch (err) { /* ignore parse errors */ }
+        }
+
+        try {
+          // Use cart-drawer sections for re-render after swap
+          var drawerSections = ['cart-drawer', 'cart-icon-bubble'];
+          swapOpts.sections = drawerSections;
+          swapOpts.sectionsUrl = window.location.pathname;
+
+          var state = await LusenaBundle.swap(
+            banner.dataset.bundleVariantId,
+            [banner.dataset.replaceKey],
+            swapOpts
+          );
+
+          // Open cart drawer with updated content
+          var drawerEl = document.getElementById('cart-drawer');
+          if (drawerEl && state && state.sections) {
+            var html = new DOMParser().parseFromString(state.sections['cart-drawer'], 'text/html');
+            var newContent = html.querySelector('#CartDrawer');
+            if (newContent) {
+              document.getElementById('CartDrawer').innerHTML = newContent.innerHTML;
+            }
+            // Update cart icon bubble
+            if (state.sections['cart-icon-bubble']) {
+              var bubbleHtml = new DOMParser().parseFromString(state.sections['cart-icon-bubble'], 'text/html');
+              var newBubble = bubbleHtml.querySelector('.shopify-section');
+              var oldBubble = document.getElementById('cart-icon-bubble');
+              if (newBubble && oldBubble) {
+                oldBubble.innerHTML = newBubble.innerHTML;
+              }
+            }
+            // Open the drawer
+            var openBtn = document.querySelector('cart-drawer');
+            if (openBtn) {
+              var drawerWrapper = document.getElementById('CartDrawer');
+              if (drawerWrapper) {
+                drawerWrapper.classList.add('active');
+                document.body.classList.add('overflow-hidden');
+              }
+            }
+          }
+
+          // Publish cart update for any other listeners
+          if (typeof publish === 'function') {
+            publish(PUB_SUB_EVENTS.cartUpdate, { source: 'pdp-bundle-banner', cartData: state });
+          }
+
+          // Hide the banner after successful swap
+          banner.style.display = 'none';
+
+        } catch (err) {
+          console.error('PDP bundle swap failed:', err);
+          btn.disabled = false;
+          btn.classList.remove('loading');
+          if (spinner) spinner.classList.add('hidden');
+        }
+      });
+
+      // --- Helper functions ---
+
+      function formatMoney(cents) {
+        return Math.round(cents / 100) + ' zl';
+      }
+
+      function getCartItemColor(cartItem) {
+        // Read color from cart item variant options
+        if (cartItem.variant_title) return cartItem.variant_title;
+        if (cartItem.options_with_values) {
+          for (var i = 0; i < cartItem.options_with_values.length; i++) {
+            var opt = cartItem.options_with_values[i];
+            var name = opt.name.toLowerCase();
+            if (name === 'color' || name === 'colour' || name === 'kolor') {
+              return opt.value;
+            }
+          }
+        }
+        return '';
+      }
+
+      function getCurrentPdpColor() {
+        var colorFieldset = document.querySelector('[data-lusena-option][data-lusena-option-type="color"]');
+        if (!colorFieldset) return '';
+        var checked = colorFieldset.querySelector('input[type="radio"].lusena-option__input:checked');
+        return checked ? checked.value : '';
+      }
+
+      function parseSbOptions(sbOptions) {
+        // Same parsing logic as cart drawer/cart page nudge handlers
+        var components = [];
+        var keyCounts = {};
+        sbOptions.forEach(function(opt) {
+          var rawKey = opt.optionName || '';
+          // Strip " - Color (Dropdown N)" suffix
+          var key = rawKey.replace(/ - Color.*$/i, '').replace(/ - .*$/, '');
+          // Strip dimension tokens (words containing x or x)
+          key = key.replace(/\s+\S*[x\u00d7]\S*/gi, '').trim();
+
+          // Disambiguate duplicates (Scrunchie Trio)
+          if (!keyCounts[key]) keyCounts[key] = 0;
+          keyCounts[key]++;
+          var disambiguated = keyCounts[key] > 1 ? key + ' ' + keyCounts[key] : key;
+          if (keyCounts[key] === 2 && components.length > 0) {
+            for (var i = components.length - 1; i >= 0; i--) {
+              if (components[i].key === key) {
+                components[i].key = key + ' 1';
+                break;
+              }
+            }
+          }
+
+          var values = (opt.optionValues || '').split(', ').filter(Boolean);
+          components.push({ key: disambiguated, values: values, rawKey: rawKey });
+        });
+        return components;
+      }
+
+      function isCartProductComponent(comp, cartItemKey) {
+        // Placeholder — Task 4 replaces this with proper logic
+        return false;
+      }
+
+    })();
+  </script>
+{%- endif -%}
