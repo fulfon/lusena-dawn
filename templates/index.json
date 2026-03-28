@@ -47,6 +47,43 @@
         "content_offset_y_desktop": 0
       }
     },
+    "benefit_bridge": {
+      "type": "lusena-benefit-bridge",
+      "blocks": {
+        "card-skin": {
+          "type": "card",
+          "settings": {
+            "icon": "sparkles",
+            "title": "Gładka skóra o poranku",
+            "text": "Jedwab sprzyja redukcji odcisków sennych - rano widzisz w lustrze wypoczętą, gładką twarz zamiast zagnieceń."
+          }
+        },
+        "card-hair": {
+          "type": "card",
+          "settings": {
+            "icon": "star",
+            "title": "Włosy bez porannego chaosu",
+            "text": "Gładki jedwab pomaga zachować fryzurę przez noc - mniej puszenia, plątania i łamania delikatnych pasm."
+          }
+        },
+        "card-care": {
+          "type": "card",
+          "settings": {
+            "icon": "droplets",
+            "title": "Krem pracuje całą noc",
+            "text": "Jedwab nie wchłania kosmetyków tak jak bawełna - Twój krem na noc zostaje na skórze, gdzie może działać."
+          }
+        }
+      },
+      "block_order": [
+        "card-skin",
+        "card-hair",
+        "card-care"
+      ],
+      "settings": {
+        "heading": "Co zmieni się po pierwszej nocy?"
+      }
+    },
     "trust": {
       "type": "lusena-trust-bar",
       "blocks": {
@@ -98,28 +135,28 @@
           "type": "problem_item",
           "settings": {
             "title": "Tarcie tworzy zagniecenia",
-            "text": "Włókna bawełny działają jak rzep na poziomie mikro - ciągną delikatną skórę twarzy i tworzą odciski senne."
+            "text": "Włókna bawełny działają jak rzep - ciągną delikatną skórę twarzy i tworzą odciski, które z wiekiem znikają coraz wolniej."
           }
         },
         "problem-1": {
           "type": "problem_item",
           "settings": {
-            "title": "Wchłania Twoją pielęgnację",
-            "text": "Bawełna jest chłonna z natury. Wchłania Twój drogi krem na noc i naturalne olejki, wysuszając skórę i włosy."
+            "title": "Pielęgnacja znika w poduszce",
+            "text": "Bawełna chłonie kosmetyki i naturalne nawilżenie skóry przez całą noc - Twój drogi krem pracuje dla poszewki, nie dla Ciebie."
           }
         },
         "solution-0": {
           "type": "solution_item",
           "settings": {
             "title": "Gładkość bez tarcia",
-            "text": "Jedwab 22 momme LUSENA pozwala skórze i włosom ślizgać się gładko, zapobiegając łamaniu i porannym zagnieceniom."
+            "text": "Gładka powierzchnia jedwabiu 22 momme sprzyja redukcji porannych zagnieceń na twarzy i pomaga zachować fryzurę przez noc."
           }
         },
         "solution-1": {
           "type": "solution_item",
           "settings": {
-            "title": "Zatrzymuje nawilżenie",
-            "text": "Białka jedwabiu są podobne do ludzkiej skóry. Odpychają roztocza i utrzymują nawilżenie tam, gdzie jego miejsce - w Twojej skórze."
+            "title": "Twój krem wreszcie działa",
+            "text": "Jedwab pomaga zachować nawilżenie i kosmetyki na skórze zamiast w poszewce - pielęgnacja pracuje dla Ciebie, nie dla poduszki."
           }
         }
       },
@@ -340,9 +377,10 @@
   "order": [
     "hero",
     "trust",
-    "problem_solution",
+    "benefit_bridge",
     "bestsellers",
     "reviews",
+    "problem_solution",
     "gift",
     "heritage",
     "faq",
