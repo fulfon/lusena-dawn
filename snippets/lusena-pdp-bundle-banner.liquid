@@ -65,6 +65,12 @@
         {%- assign bundle_1_variant = bundle_1.selected_or_first_available_variant -%}
         {%- assign bundle_1_original = bundle_1.metafields.lusena.bundle_original_price.value -%}
         {%- assign bundle_1_sb_options = bundle_1_variant.metafields.simple_bundles.variant_options.value -%}
+        {%- assign comp_1_product = all_products[complement_1_cart] -%}
+        {%- if comp_1_product.featured_image != blank -%}
+          {%- assign comp_1_image = comp_1_product.featured_image | image_url: width: 120 -%}
+        {%- else -%}
+          {%- assign comp_1_image = '' -%}
+        {%- endif -%}
         {
           "cart_handle": {{ complement_1_cart | json }},
           "bundle_handle": {{ complement_1_bundle | json }},
@@ -74,8 +80,8 @@
           "bundle_variant_id": {{ bundle_1_variant.id }},
           "bundle_url": {{ bundle_1.url | json }},
           "pdp_product_label": {{ pdp_product_label | json }},
-          "complement_product_title": {{ all_products[complement_1_cart].title | json }},
-          "complement_product_image": {{ all_products[complement_1_cart].featured_image | image_url: width: 120 | json }},
+          "complement_product_title": {{ comp_1_product.title | json }},
+          "complement_product_image": {{ comp_1_image | json }},
           "priority": {{ complement_1_priority }},
           "property_map": {{ bundle_1_sb_options | json }}
         }
@@ -85,6 +91,12 @@
           {%- assign bundle_2_variant = bundle_2.selected_or_first_available_variant -%}
           {%- assign bundle_2_original = bundle_2.metafields.lusena.bundle_original_price.value -%}
           {%- assign bundle_2_sb_options = bundle_2_variant.metafields.simple_bundles.variant_options.value -%}
+          {%- assign comp_2_product = all_products[complement_2_cart] -%}
+          {%- if comp_2_product.featured_image != blank -%}
+            {%- assign comp_2_image = comp_2_product.featured_image | image_url: width: 120 -%}
+          {%- else -%}
+            {%- assign comp_2_image = '' -%}
+          {%- endif -%}
           {
             "cart_handle": {{ complement_2_cart | json }},
             "bundle_handle": {{ complement_2_bundle | json }},
@@ -94,8 +106,8 @@
             "bundle_variant_id": {{ bundle_2_variant.id }},
             "bundle_url": {{ bundle_2.url | json }},
             "pdp_product_label": {{ pdp_product_label | json }},
-            "complement_product_title": {{ all_products[complement_2_cart].title | json }},
-            "complement_product_image": {{ all_products[complement_2_cart].featured_image | image_url: width: 120 | json }},
+            "complement_product_title": {{ comp_2_product.title | json }},
+            "complement_product_image": {{ comp_2_image | json }},
             "priority": {{ complement_2_priority }},
             "property_map": {{ bundle_2_sb_options | json }}
           }
