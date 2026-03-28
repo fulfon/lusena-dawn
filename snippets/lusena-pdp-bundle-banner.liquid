@@ -115,34 +115,20 @@
       ]
     </script>
 
-    {%- comment -%} Banner HTML — content populated by JS {%- endcomment -%}
-    <p class="lusena-pdp-bundle-banner__label">Korzystniej w zestawie</p>
+    {%- comment -%} Banner HTML — compact inline card, no zone wrapper {%- endcomment -%}
     <div class="lusena-pdp-bundle-banner__card">
-      <p class="lusena-pdp-bundle-banner__headline" data-banner-headline></p>
-
-      <div class="lusena-pdp-bundle-banner__have-row">
-        <div class="lusena-pdp-bundle-banner__have-img-wrap">
-          {%- comment -%}theme-check-disable RemoteAsset — src populated by JS after cart check{%- endcomment -%}
-          <img class="lusena-pdp-bundle-banner__have-img"
-               data-banner-have-img
-               src=""
-               alt=""
-               width="44"
-               height="44"
-               loading="lazy">
-          {%- comment -%}theme-check-enable RemoteAsset{%- endcomment -%}
+      <div class="lusena-pdp-bundle-banner__top">
+        <div class="lusena-pdp-bundle-banner__have-indicator">
           <span class="lusena-pdp-bundle-banner__check" aria-hidden="true">
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
               <path d="M2 5l2.5 2.5L8 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </span>
-        </div>
-        <div class="lusena-pdp-bundle-banner__have-text">
           <span class="lusena-pdp-bundle-banner__have-name" data-banner-have-name></span>
-          <span class="lusena-pdp-bundle-banner__have-status">W koszyku</span>
+          <span class="lusena-pdp-bundle-banner__have-status">w koszyku</span>
         </div>
+        <p class="lusena-pdp-bundle-banner__headline" data-banner-headline></p>
       </div>
-
       <div class="lusena-pdp-bundle-banner__bottom">
         <div class="lusena-pdp-bundle-banner__pricing">
           <span class="lusena-pdp-bundle-banner__price" data-banner-price></span>
@@ -205,9 +191,6 @@
             'Dodaj ' + comp.pdp_product_label + ' i zaoszczedz ' + formatMoney(savings);
 
           banner.querySelector('[data-banner-have-name]').textContent = comp.complement_product_title;
-          var haveImg = banner.querySelector('[data-banner-have-img]');
-          haveImg.src = comp.complement_product_image;
-          haveImg.alt = comp.complement_product_title;
 
           banner.querySelector('[data-banner-price]').textContent = formatMoney(comp.bundle_price);
           banner.querySelector('[data-banner-was]').textContent = formatMoney(comp.bundle_original_price * 100);
