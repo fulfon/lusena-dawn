@@ -1954,49 +1954,60 @@
       var sections = drawer.getSectionsToRender().map(function(s) { return s.id || s.section; });
       var swapOpts = { sections: sections, sectionsUrl: window.location.pathname };
 
-      var triggerColor = nudge.dataset.triggerColor;
-      var propertyMapRaw = nudge.dataset.propertyMap;
-      if (triggerColor && propertyMapRaw) {
-        try {
-          var components = JSON.parse(propertyMapRaw);
-          var props = {};
-          var selectionParts = [];
+      // Merge path: pre-filled properties + multiple replace keys
+      var removeKeys;
+      if (nudge.dataset.replaceKeys) {
+        removeKeys = JSON.parse(nudge.dataset.replaceKeys);
+        if (nudge.dataset.properties) {
+          try { swapOpts.properties = JSON.parse(nudge.dataset.properties); } catch(e) {}
+        }
+      } else {
+        // Existing nudge path: single replace key + color matching
+        removeKeys = [nudge.dataset.replaceKey];
+        var triggerColor = nudge.dataset.triggerColor;
+        var propertyMapRaw = nudge.dataset.propertyMap;
+        if (triggerColor && propertyMapRaw) {
+          try {
+            var components = JSON.parse(propertyMapRaw);
+            var props = {};
+            var selectionParts = [];
 
-          // Detect multi-pack: all components have identical value lists
-          var isMultiPack = components.length > 1 && components.every(function(c) {
-            return c.values.join(',') === components[0].values.join(',');
-          });
-
-          if (isMultiPack) {
-            // Distribute unique colors: trigger first, then remaining unused
-            var usedColors = [];
-            components.forEach(function(comp, idx) {
-              var color;
-              if (idx === 0) {
-                color = comp.values.indexOf(triggerColor) !== -1 ? triggerColor : comp.values[0];
-              } else {
-                color = comp.values.find(function(v) { return usedColors.indexOf(v) === -1; });
-                if (!color) color = comp.values[0];
-              }
-              usedColors.push(color);
-              props[comp.key] = color;
-              selectionParts.push(color);
+            // Detect multi-pack: all components have identical value lists
+            var isMultiPack = components.length > 1 && components.every(function(c) {
+              return c.values.join(',') === components[0].values.join(',');
             });
-          } else {
-            // Complementary: match trigger color per component (fallback to first available)
-            components.forEach(function(comp) {
-              var color = comp.values.indexOf(triggerColor) !== -1 ? triggerColor : comp.values[0];
-              props[comp.key] = color;
-              selectionParts.push(color);
-            });
-          }
 
-          props['_bundle_selection'] = selectionParts.join(' <> ');
-          swapOpts.properties = props;
-        } catch (e) { /* ignore parse errors */ }
+            if (isMultiPack) {
+              // Distribute unique colors: trigger first, then remaining unused
+              var usedColors = [];
+              components.forEach(function(comp, idx) {
+                var color;
+                if (idx === 0) {
+                  color = comp.values.indexOf(triggerColor) !== -1 ? triggerColor : comp.values[0];
+                } else {
+                  color = comp.values.find(function(v) { return usedColors.indexOf(v) === -1; });
+                  if (!color) color = comp.values[0];
+                }
+                usedColors.push(color);
+                props[comp.key] = color;
+                selectionParts.push(color);
+              });
+            } else {
+              // Complementary: match trigger color per component (fallback to first available)
+              components.forEach(function(comp) {
+                var color = comp.values.indexOf(triggerColor) !== -1 ? triggerColor : comp.values[0];
+                props[comp.key] = color;
+                selectionParts.push(color);
+              });
+            }
+
+            props['_bundle_selection'] = selectionParts.join(' <> ');
+            swapOpts.properties = props;
+          } catch (e) { /* ignore parse errors */ }
+        }
       }
 
-      LusenaBundle.swap(nudge.dataset.bundleVariantId, [nudge.dataset.replaceKey], swapOpts)
+      LusenaBundle.swap(nudge.dataset.bundleVariantId, removeKeys, swapOpts)
         .then(function(state) {
           drawer.renderContents(state);
           if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
