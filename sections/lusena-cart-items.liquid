@@ -334,7 +334,9 @@
                 assign merge_bundle = all_products[merge_bundle_handle]
                 assign merge_variant = merge_bundle.selected_or_first_available_variant
 
-                comment Extract color from merge_item_1 endcomment
+                comment
+                  Extract color from merge_item_1
+                endcomment
                 assign merge_color_1 = ''
                 for option in merge_item_1.product.options_with_values
                   assign opt_down = option.name | downcase
@@ -363,7 +365,9 @@
                   endif
                 endfor
 
-                comment Extract color from merge_item_2 endcomment
+                comment
+                  Extract color from merge_item_2
+                endcomment
                 assign merge_color_2 = ''
                 for option in merge_item_2.product.options_with_values
                   assign opt_down = option.name | downcase
@@ -392,7 +396,9 @@
                   endif
                 endfor
 
-                comment Build Simple Bundles properties JSON endcomment
+                comment
+                  Build Simple Bundles properties JSON
+                endcomment
                 assign merge_props_json = ''
                 assign merge_selection_parts = ''
                 assign sb_options = merge_variant.metafields.simple_bundles.variant_options.value
@@ -433,7 +439,9 @@
                       assign opt_clean = opt_clean | append: ' ' | append: same_so_far
                     endif
 
-                    comment Match slot to cart item by title substring endcomment
+                    comment
+                      Match slot to cart item by title substring
+                    endcomment
                     assign slot_lower = opt_clean | downcase
                     assign title_1_lower = merge_item_1.product.title | downcase
                     assign this_color = merge_color_2
@@ -458,12 +466,16 @@
                   assign merge_props_json = '{' | append: merge_props_json | append: ',"_bundle_selection":"' | append: merge_selection_parts | append: '"}'
                 endif
 
-                comment Calculate pricing endcomment
+                comment
+                  Calculate pricing
+                endcomment
                 assign merge_bundle_price = merge_variant.price
                 assign merge_original_cents = merge_bundle.metafields.lusena.bundle_original_price.value | times: 100
                 assign merge_savings = merge_original_cents | minus: merge_bundle_price
 
-                comment Build replace keys JSON array endcomment
+                comment
+                  Build replace keys JSON array
+                endcomment
                 assign merge_replace_keys = '["' | append: merge_item_1.key | append: '","' | append: merge_item_2.key | append: '"]'
               -%}
               <div class="lusena-cart-upsell" aria-live="polite">
