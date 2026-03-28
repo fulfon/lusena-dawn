@@ -4,9 +4,25 @@
 
 ## Current focus
 
-**#13 Cart merge is the next task.** Detect when both bundle components are in cart separately, show a "Zamien na zestaw i zaoszczedz X zl" card using the existing cart nudge UI and `LusenaBundle.swap()`. This replaces the abandoned #12 PDP banner approach.
+**Phase 1B: PDP cross-sell checkbox** - scrunchie at 39 zl on poszewka PDP. This is the last remaining item from the bundle/upsell system.
 
 ## Recent completed work
+
+### #13 Cart merge - DONE (2026-03-28)
+
+Detects when both bundle components are in cart separately, shows "Zamien na zestaw i zaoszczedz X zl" merge card. Uses existing bundle nudge card UI and `LusenaBundle.swap()` with multiple removeKeys.
+
+**What was built:**
+- Liquid-side merge detection in both cart drawer and cart page (loops cart items for component handles)
+- Merge card HTML reusing `lusena-upsell-card__bn-*` classes with two "W koszyku" tiles
+- JS handler extended with merge path (pre-filled properties, multiple removeKeys)
+- Pre-built Simple Bundles color properties from cart items (no JS-side color matching needed)
+- Direct cross-surface sync (belt-and-suspenders alongside pubsub) for reliable drawer/page sync
+- Tiles centered with `justify-content: center` for equal "have" tile layout
+
+**Mapping:** poszewka+bonnet → Nocna Rutyna (109 zl), poszewka+maska → Piekny Sen (89 zl). Conflict: higher savings wins. Merge card shows even if bundle already in cart (customer may want multiple bundles).
+
+**Files modified:** `snippets/cart-drawer.liquid`, `sections/lusena-cart-items.liquid`, `assets/lusena-cart-page.css`
 
 ### Homepage benefit bridge + reorder (2026-03-28)
 
@@ -106,14 +122,13 @@ Full test matrix executed manually, all scenarios passing:
 
 ## Next steps
 
-1. **#13 Cart merge (NEXT TASK)** — detect when both bundle components are in cart separately (e.g., poszewka + bonnet), show "Zamien na zestaw i zaoszczedz 109 zl" card in cart drawer and cart page. Use existing cart nudge UI and `LusenaBundle.swap()`. Mapping: poszewka+bonnet → Nocna Rutyna (109 zl), poszewka+maska → Piekny Sen (89 zl). Also handles swap race condition (add succeeds, remove fails → both items in cart).
-2. **Phase 1B: PDP cross-sell checkbox** — scrunchie at 39 zl on poszewka PDP
+1. **Phase 1B: PDP cross-sell checkbox (NEXT TASK)** — scrunchie at 39 zl on poszewka PDP
 
 ## Known issues
 
 - `main-product.liquid` (100KB) is dead code alongside `lusena-main-product.liquid`
 - `snippets/lusena-pdp-styles.liquid` is a doc-only stub (CSS moved to `assets/lusena-pdp.css`)
-- **Swap race condition:** If `/cart/add.js` succeeds but `/cart/change.js` fails, customer has both items in cart. #13 (cart merge) will handle this.
+- **Swap race condition:** If `/cart/add.js` succeeds but `/cart/change.js` fails, customer has both items in cart. #13 cart merge handles this - the merge card appears on next render, offering to combine them.
 - **Trigger item quantity > 1:** Swap removes all units (quantity 0), not just 1.
 - **Cart color editing:** Bundle added via nudge auto-matches colors. Customer cannot change colors in cart — must use bundle PDP.
 
