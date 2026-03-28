@@ -45,8 +45,6 @@
   assign merge_has_poszewka = false
   assign merge_has_bonnet = false
   assign merge_has_maska = false
-  assign merge_has_nocna_rutyna = false
-  assign merge_has_piekny_sen = false
   assign merge_poszewka_item = blank
   assign merge_bonnet_item = blank
   assign merge_maska_item = blank
@@ -62,10 +60,6 @@
       when 'jedwabna-maska-3d'
         assign merge_has_maska = true
         assign merge_maska_item = item
-      when 'nocna-rutyna'
-        assign merge_has_nocna_rutyna = true
-      when 'piekny-sen'
-        assign merge_has_piekny_sen = true
     endcase
   endfor
 
@@ -75,12 +69,12 @@
   assign merge_item_2 = blank
 
   if upsell_enabled
-    if merge_has_poszewka and merge_has_bonnet and merge_has_nocna_rutyna == false
+    if merge_has_poszewka and merge_has_bonnet
       assign show_merge = true
       assign merge_bundle_handle = 'nocna-rutyna'
       assign merge_item_1 = merge_poszewka_item
       assign merge_item_2 = merge_bonnet_item
-    elsif merge_has_poszewka and merge_has_maska and merge_has_piekny_sen == false
+    elsif merge_has_poszewka and merge_has_maska
       assign show_merge = true
       assign merge_bundle_handle = 'piekny-sen'
       assign merge_item_1 = merge_poszewka_item
