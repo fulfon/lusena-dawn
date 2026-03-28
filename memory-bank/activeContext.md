@@ -1,12 +1,39 @@
 # Active Context
 
-*Last updated: 2026-03-27*
+*Last updated: 2026-03-28*
 
 ## Current focus
 
-**Cart system fully polished — AJAX re-rendering, bidirectional sync, CSS extraction complete.** Cart page and drawer share unified upsell design with real product data. No more full-page reloads. compiled_assets truncation resolved (~59KB, well under 73KB limit). Documentation reorganized (30+ obsolete docs/ files deleted, key references moved to memory-bank/doc/).
+**Homepage optimized — benefit bridge section + reorder + P/S copy refresh.** New `lusena-benefit-bridge` section at position 3 answers "why silk?" in 5 seconds with 3 outcome cards (skin, hair, skincare). Homepage reordered for optimal conversion: hero > trust > benefit bridge > bestsellers > testimonials > P/S > bundles > heritage > FAQ > CTA. P/S copy refreshed (killed roztocza, shortened to 1 sentence per item, personalized). Background alternation fixed across all 10 sections.
 
 ## Recent completed work
+
+### Homepage benefit bridge + reorder (2026-03-28)
+
+**New section: `lusena-benefit-bridge`:**
+- "Co zmieni się po pierwszej nocy?" heading + 3 benefit cards
+- Cards: "Gładka skóra o poranku" (sparkles), "Włosy bez porannego chaosu" (star), "Krem pracuje całą noc" (droplets)
+- Copy written by Polish copywriter subagent, legally checked, persona-validated
+- Standard spacing tier, brand background, teal icon circles, scroll animations
+- Mobile: stacked with separators between cards
+
+**Homepage reorder:**
+- Benefit bridge at position 3 (NEW)
+- Bestsellers stays at 4, Testimonials at 5
+- Problem/Solution moved from 3 to 6 (evaluation-mode section)
+- P/S background changed from `brand` to `surface-1` for clean alternation
+
+**P/S copy refresh (4 items rewritten):**
+- Removed "roztocza" and unsubstantiated "białka jedwabiu" claims
+- Shortened all items to 1 sentence
+- Kept "rzep" metaphor (strongest per all 4 personas) and "krem pracuje dla poduszki" reframe
+- Added proper hedging ("sprzyja redukcji", "pomaga zachować")
+
+**Research backing:**
+- 4 independent customer personas evaluated original P/S section (avg scores: persuasion 6.0, emotion 4.5, premium 5.5)
+- CRO research: social proof in positions 3-4 delivers +18-27% conversion lift
+- No successful silk brand (Slip, Blissy, Fishers Finery) leads with problem/solution after hero
+
 
 ### Cart AJAX re-rendering + CSS extraction + polish (2026-03-26/27)
 
