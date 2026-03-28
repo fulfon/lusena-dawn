@@ -966,6 +966,18 @@
       try {
         var state = await LusenaBundle.swap(nudge.dataset.bundleVariantId, removeKeys, swapOpts);
         reRenderSections(state);
+        // Direct drawer sync (belt-and-suspenders — don't rely solely on pubsub)
+        fetch(routes.cart_url + '?section_id=cart-drawer')
+          .then(function(r) { return r.text(); })
+          .then(function(html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var fresh = doc.querySelector('#CartDrawer');
+            var current = document.getElementById('CartDrawer');
+            if (fresh && current) current.innerHTML = fresh.innerHTML;
+            var drawerEl = document.querySelector('cart-drawer');
+            if (drawerEl) drawerEl.classList.toggle('is-empty', !doc.querySelector('[data-cart-item]'));
+          })
+          .catch(function() {});
       } catch (err) {
         console.error('Bundle swap failed:', err);
         btn.disabled = false;

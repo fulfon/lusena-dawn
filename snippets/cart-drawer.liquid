@@ -2026,6 +2026,11 @@
           if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
             publish(PUB_SUB_EVENTS.cartUpdate, { source: 'cart-drawer', cartData: state });
           }
+          // Direct cart page sync (belt-and-suspenders — don't rely solely on pubsub)
+          var cartItemsEl = document.querySelector('cart-items');
+          if (cartItemsEl && typeof cartItemsEl.onCartUpdate === 'function') {
+            cartItemsEl.onCartUpdate();
+          }
         })
         .catch(function(err) {
           console.error('Bundle swap failed:', err);
