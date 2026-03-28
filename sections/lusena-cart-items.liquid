@@ -38,6 +38,56 @@
     endif
   endfor
 
+  comment
+    Merge detection: flag which bundle components are in cart.
+    Checked later (before regular nudge) to offer bundle merge.
+  endcomment
+  assign merge_has_poszewka = false
+  assign merge_has_bonnet = false
+  assign merge_has_maska = false
+  assign merge_has_nocna_rutyna = false
+  assign merge_has_piekny_sen = false
+  assign merge_poszewka_item = blank
+  assign merge_bonnet_item = blank
+  assign merge_maska_item = blank
+
+  for item in cart.items
+    case item.product.handle
+      when 'poszewka-jedwabna'
+        assign merge_has_poszewka = true
+        assign merge_poszewka_item = item
+      when 'silk-bonnet'
+        assign merge_has_bonnet = true
+        assign merge_bonnet_item = item
+      when 'jedwabna-maska-3d'
+        assign merge_has_maska = true
+        assign merge_maska_item = item
+      when 'nocna-rutyna'
+        assign merge_has_nocna_rutyna = true
+      when 'piekny-sen'
+        assign merge_has_piekny_sen = true
+    endcase
+  endfor
+
+  assign show_merge = false
+  assign merge_bundle_handle = ''
+  assign merge_item_1 = blank
+  assign merge_item_2 = blank
+
+  if upsell_enabled
+    if merge_has_poszewka and merge_has_bonnet and merge_has_nocna_rutyna == false
+      assign show_merge = true
+      assign merge_bundle_handle = 'nocna-rutyna'
+      assign merge_item_1 = merge_poszewka_item
+      assign merge_item_2 = merge_bonnet_item
+    elsif merge_has_poszewka and merge_has_maska and merge_has_piekny_sen == false
+      assign show_merge = true
+      assign merge_bundle_handle = 'piekny-sen'
+      assign merge_item_1 = merge_poszewka_item
+      assign merge_item_2 = merge_maska_item
+    endif
+  endif
+
   assign trigger_product = nil
   assign trigger_item = nil
   if cart != empty and suppress_upsell == false and upsell_enabled
@@ -465,7 +515,7 @@
                             >
                           {%- endif -%}
                           <span class="lusena-upsell-card__bn-check" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            {% render 'lusena-icon', name: 'check', stroke_width: 3 %}
                           </span>
                         </div>
                         <p class="lusena-upsell-card__bn-have-name">{{ trigger_product.title | escape }}</p>
@@ -755,6 +805,7 @@
           })
           .catch(function(e) { console.error(e); });
       };
+
     }
   })();
 </script>
