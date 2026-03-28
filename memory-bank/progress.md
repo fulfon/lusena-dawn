@@ -194,9 +194,12 @@ Full implementation tracker: `memory-bank/doc/bundle-implementation.md`
 - [x] All 3 bundles tested: Nocna Rutyna, Piekny Sen, Scrunchie Trio — all directions working
 - [x] Upsell metafields configured: role, message (via CSV), primary/secondary (manual), bundle_nudge_map (JSON)
 
+**Phase 2A testing (PASSED 2026-03-28):**
+- [x] End-to-end manual test matrix — bundle nudge cards (4 triggers), regular cross-sell (walek), all 4 bundle swaps, smart suppress logic, cart page AJAX re-rendering, bidirectional cart sync
+
 **Phase 2A remaining (not yet built):**
-- [ ] #13 Cart merge — detect both bundle components in cart, suggest "Zamien na zestaw"
-- [ ] #12 PDP bundle detection banner — "Masz poszewke w koszyku?"
+- [ ] #13 Cart merge (NEXT TASK) — detect both bundle components in cart, suggest "Zamien na zestaw". Mapping: poszewka+bonnet → Nocna Rutyna (109 zl), poszewka+maska → Piekny Sen (89 zl). Use existing cart nudge UI + LusenaBundle.swap().
+- [~] #12 PDP bundle detection banner — ABANDONED (2026-03-28). Fully built and tested but doesn't fit the PDP buy-box flow (too dense). Reverted. Decision: use #13 cart merge instead. Spec/plan docs in `docs/superpowers/specs/` and `docs/superpowers/plans/` for reference.
 
 **Phase D: Cross-sell:**
 - [ ] PDP cross-sell checkbox (scrunchie at 39 zł) — needs dev implementation

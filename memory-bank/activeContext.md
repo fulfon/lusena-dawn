@@ -4,7 +4,7 @@
 
 ## Current focus
 
-**Homepage optimized — benefit bridge section + reorder + P/S copy refresh.** New `lusena-benefit-bridge` section at position 3 answers "why silk?" in 5 seconds with 3 outcome cards (skin, hair, skincare). Homepage reordered for optimal conversion: hero > trust > benefit bridge > bestsellers > testimonials > P/S > bundles > heritage > FAQ > CTA. P/S copy refreshed (killed roztocza, shortened to 1 sentence per item, personalized). Background alternation fixed across all 10 sections.
+**#13 Cart merge is the next task.** Detect when both bundle components are in cart separately, show a "Zamien na zestaw i zaoszczedz X zl" card using the existing cart nudge UI and `LusenaBundle.swap()`. This replaces the abandoned #12 PDP banner approach.
 
 ## Recent completed work
 
@@ -34,6 +34,26 @@
 - CRO research: social proof in positions 3-4 delivers +18-27% conversion lift
 - No successful silk brand (Slip, Blissy, Fishers Finery) leads with problem/solution after hero
 
+
+### #12 PDP bundle detection banner — ABANDONED (2026-03-28)
+
+**What we tried:** A banner between variant picker and ATC on the PDP buy-box that detects cart complement via `fetch('/cart.js')` and offers one-click swap to bundle. Fully implemented (snippet + CSS + JS), committed, and tested on preview theme.
+
+**Why abandoned:** The PDP buy-box is already dense (summary, chips, variant picker, ATC, guarantee, payment, benefits, accordion). Adding any element between variant picker and ATC — even a compact card without zone wrapper — disrupts the purchase flow and adds visual noise at the critical decision point. Tested both a full zone layout and a stripped-down inline card; neither fit.
+
+**Decision:** Use #13 (cart merge) instead. The cart is where the customer reviews their purchase — a "combine these into a bundle and save" message fits naturally there. The existing cart nudge card system is already proven. All code was cleanly reverted (snippet deleted, section render line removed, CSS removed). Spec and plan docs remain in `docs/superpowers/specs/` and `docs/superpowers/plans/` as decision history.
+
+**Bundle mapping (still valid for #13):** poszewka + bonnet → Nocna Rutyna (saves 109 zl), poszewka + maska → Piekny Sen (saves 89 zl). Scrunchie Trio not applicable (same-product bundle). Conflict: higher savings wins.
+
+### End-to-end manual testing — ALL PASSED (2026-03-28)
+
+Full test matrix executed manually, all scenarios passing:
+- **Bundle nudge cards:** Poszewka → Nocna Rutyna, Bonnet → Nocna Rutyna, Maska 3D → Piekny Sen, Scrunchie → Scrunchie Trio — correct pricing and savings on all
+- **Regular cross-sell:** Walek → Scrunchie at 59 zl (only product with non-bundle primary)
+- **Bundle swaps:** All 4 swap directions working (poszewka, bonnet, maska, scrunchie triggers)
+- **Smart suppress:** Nocna Rutyna/Piekny Sen in cart suppresses all upsells. Scrunchie Trio does not suppress. 2 distinct items suppresses regular cross-sell but allows bundle nudge through.
+- **Cart page AJAX:** Re-renders without full page reload for swaps, quantity changes, removes
+- **Bidirectional sync:** Cart page ↔ drawer sync working
 
 ### Cart AJAX re-rendering + CSS extraction + polish (2026-03-26/27)
 
@@ -86,10 +106,8 @@
 
 ## Next steps
 
-1. **End-to-end testing** — cross-sell (all products), all 3 bundle swaps (Nocna Rutyna, Piekny Sen, Scrunchie Trio), cart page + cart drawer, AJAX re-rendering
-2. **#13 Cart merge** — detect when both bundle components are in cart separately, suggest "Zamien na zestaw"
-3. **#12 PDP bundle detection banner** — "Masz poszewke w koszyku?" when cart has complement
-4. **Phase 1B: PDP cross-sell checkbox** — scrunchie at 39 zl on poszewka PDP
+1. **#13 Cart merge (NEXT TASK)** — detect when both bundle components are in cart separately (e.g., poszewka + bonnet), show "Zamien na zestaw i zaoszczedz 109 zl" card in cart drawer and cart page. Use existing cart nudge UI and `LusenaBundle.swap()`. Mapping: poszewka+bonnet → Nocna Rutyna (109 zl), poszewka+maska → Piekny Sen (89 zl). Also handles swap race condition (add succeeds, remove fails → both items in cart).
+2. **Phase 1B: PDP cross-sell checkbox** — scrunchie at 39 zl on poszewka PDP
 
 ## Known issues
 
