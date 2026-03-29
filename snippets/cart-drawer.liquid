@@ -1957,6 +1957,13 @@
       var spinner = btn.querySelector('.loading__spinner');
       if (spinner) spinner.classList.remove('hidden');
 
+      // Lock all cart rows to prevent concurrent mutations during swap
+      var allItems = drawer.querySelectorAll('[data-cart-item]');
+      allItems.forEach(function(el) {
+        el.classList.add('lusena-cart-drawer__item--loading');
+        el.querySelectorAll('button').forEach(function(b) { b.disabled = true; });
+      });
+
       var sections = drawer.getSectionsToRender().map(function(s) { return s.id || s.section; });
       var swapOpts = { sections: sections, sectionsUrl: window.location.pathname };
 
@@ -2027,6 +2034,10 @@
         })
         .catch(function(err) {
           console.error('Bundle swap failed:', err);
+          allItems.forEach(function(el) {
+            el.classList.remove('lusena-cart-drawer__item--loading');
+            el.querySelectorAll('button').forEach(function(b) { b.disabled = false; });
+          });
           btn.disabled = false;
           btn.classList.remove('loading');
           if (spinner) spinner.classList.add('hidden');

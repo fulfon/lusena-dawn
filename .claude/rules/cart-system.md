@@ -28,3 +28,10 @@ Both cart page and drawer use Shopify's section rendering API (`?sections=` para
 ## Bundle swap
 - `assets/lusena-bundle-swap.js` — add then remove (not atomic). Known race condition: add succeeds, change fails = both items in cart. Cart merge (#13) will handle this.
 - Preserved Dawn IDs/classes for JS compatibility (`cart-drawer`, `cart-items`).
+
+## Interaction locking during swap
+Bundle swap mutates the entire cart (add + remove), so all interactions are locked during the swap to prevent concurrent mutations:
+- **Cart page:** `cart__items--disabled` class on `#main-cart-items` (pointer-events: none, opacity 0.5). Must be explicitly removed on success (container element survives `reRenderSections` innerHTML swap).
+- **Cart drawer:** `lusena-cart-drawer__item--loading` class on ALL `[data-cart-item]` rows + all buttons disabled. Cleaned up naturally on success (full DOM replacement via `renderContents`).
+- **Cross-sell "Dodaj" button:** NOT locked during swap — single `/cart/add.js` call doesn't conflict with existing item mutations. Self-disables to prevent double-clicks.
+- **Qty/remove operations:** Cart page uses Dawn's `cart__items--disabled` (global lock). Drawer uses per-row `enableItemLoading`/`disableItemLoading` (scoped lock).

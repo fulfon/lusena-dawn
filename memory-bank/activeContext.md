@@ -80,6 +80,15 @@ Rewrote `lusena-pdp-quality-evidence.liquid` accordion JS and CSS:
 - `templates/index.json` — benefit bridge hair card icon `star` → `wind`
 - `memory-bank/doc/products/imports/generate_import_from_export.py` — all 8 products updated with card 5 values
 
+### Cart interaction locking during bundle swap (2026-03-29)
+
+Added full-cart interaction locking when "zamień na zestaw" / "dodaj do zestawu" swap is in flight:
+- **Cart page:** `cart__items--disabled` class on `#main-cart-items` — blocks all qty/remove/upsell interactions. Explicitly removed after `reRenderSections()` on success (container element survives innerHTML swap). Removed on error.
+- **Cart drawer:** `lusena-cart-drawer__item--loading` on ALL `[data-cart-item]` rows + all buttons disabled. Cleaned up naturally on success (full DOM replacement). Restored on error.
+- **Cross-sell "Dodaj":** Not locked — single add doesn't conflict with existing item mutations.
+
+Key lesson: `reRenderSections()` replaces `.js-contents` innerHTML, but the parent `#main-cart-items` element persists — classes on it must be manually cleaned up.
+
 ## Next steps
 
 1. **Phase 1B: PDP cross-sell checkbox (NEXT TASK)** — scrunchie at 39 zl on poszewka PDP

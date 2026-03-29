@@ -900,6 +900,10 @@
       var spinnerEl = btn.querySelector('.loading__spinner');
       if (spinnerEl) spinnerEl.classList.remove('hidden');
 
+      // Lock entire cart to prevent concurrent mutations during swap
+      var cartItemsEl = document.getElementById('main-cart-items');
+      if (cartItemsEl) cartItemsEl.classList.add('cart__items--disabled');
+
       var swapOpts = {
         sections: getSectionNames(),
         sectionsUrl: window.location.pathname
@@ -960,6 +964,7 @@
       try {
         var state = await LusenaBundle.swap(nudge.dataset.bundleVariantId, removeKeys, swapOpts);
         reRenderSections(state);
+        if (cartItemsEl) cartItemsEl.classList.remove('cart__items--disabled');
         // Direct drawer sync (belt-and-suspenders — don't rely solely on pubsub)
         fetch(routes.cart_url + '?section_id=cart-drawer')
           .then(function(r) { return r.text(); })
@@ -974,6 +979,7 @@
           .catch(function() {});
       } catch (err) {
         console.error('Bundle swap failed:', err);
+        if (cartItemsEl) cartItemsEl.classList.remove('cart__items--disabled');
         btn.disabled = false;
         btn.classList.remove('loading');
         if (spinnerEl) spinnerEl.classList.add('hidden');
