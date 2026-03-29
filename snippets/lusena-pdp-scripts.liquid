@@ -1441,20 +1441,24 @@
     });
 
     /* ── Cross-sell checkbox: intercept ATC to add both items ── */
-    if (addToCartFormEl) {
-      addToCartFormEl.addEventListener('submit', function(event) {
+    /* Register on parent <product-form> with capture so we fire BEFORE
+       product-form.js's listener on the <form>. At the target element,
+       capture doesn't help — listeners fire in registration order. */
+    var productFormWrapper = addToCartFormEl ? addToCartFormEl.closest('product-form') : null;
+    if (productFormWrapper) {
+      productFormWrapper.addEventListener('submit', function(event) {
         var checkbox = root.querySelector('[data-lusena-cross-sell-checkbox]');
         if (!checkbox || !checkbox.checked) return;
 
         event.preventDefault();
-        event.stopImmediatePropagation();
+        event.stopPropagation();
 
         var mainId = parseInt(variantIdInput.value);
         var crossSellId = parseInt(checkbox.dataset.variantId);
         if (!mainId || !crossSellId) return;
 
-        var productFormEl = addToCartFormEl.closest('product-form');
-        if (productFormEl) productFormEl.classList.add('loading');
+        var productFormEl = productFormWrapper;
+        productFormEl.classList.add('loading');
         setStickyLoadingState(true);
         stickyLoadingStartedAt = performance.now();
 

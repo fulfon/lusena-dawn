@@ -173,5 +173,178 @@
   </script>
 </div>
 
+<script>
+  function lusenaCrossSellInit() {
+    var row = document.querySelector('[data-lusena-cross-sell-row]');
+    if (!row) return;
+    var checkbox = row.querySelector('[data-lusena-cross-sell-checkbox]');
+    if (!checkbox) return;
+
+    var section = row.closest('[data-lusena-product-section]');
+    if (!section) return;
+    var form = section.querySelector('product-form form[data-type="add-to-cart-form"]');
+    var variantInput = section.querySelector('[data-lusena-variant-id]');
+    var productFormEl = form ? form.closest('product-form') : null;
+
+    /* ── ATC intercept: add both items when checkbox is checked ── */
+    if (productFormEl) {
+      productFormEl.addEventListener('submit', function(event) {
+        if (!checkbox.checked) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        var mainId = parseInt(variantInput.value);
+        var crossSellId = parseInt(checkbox.dataset.variantId);
+        if (!mainId || !crossSellId) return;
+
+        productFormEl.classList.add('loading');
+
+        fetch(window.routes.cart_add_url + '.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: JSON.stringify({
+            items: [
+              { id: mainId, quantity: 1 },
+              { id: crossSellId, quantity: 1 }
+            ]
+          })
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          if (data.status) {
+            productFormEl.classList.remove('loading');
+            return;
+          }
+          /* Re-render cart drawer with fresh section HTML, then open it */
+          var drawer = document.querySelector('cart-drawer');
+          if (drawer) {
+            fetch('/cart?section_id=cart-drawer')
+              .then(function(r) { return r.text(); })
+              .then(function(html) {
+                var doc = new DOMParser().parseFromString(html, 'text/html');
+                var fresh = doc.querySelector('#CartDrawer');
+                var current = document.getElementById('CartDrawer');
+                if (fresh && current) current.innerHTML = fresh.innerHTML;
+                drawer.classList.remove('is-empty');
+                drawer.open();
+              });
+            /* Update cart icon bubble count */
+            fetch('/cart?section_id=cart-icon-bubble')
+              .then(function(r) { return r.text(); })
+              .then(function(html) {
+                var doc = new DOMParser().parseFromString(html, 'text/html');
+                var fresh = doc.querySelector('.shopify-section');
+                var current = document.getElementById('cart-icon-bubble');
+                if (fresh && current) current.innerHTML = fresh.innerHTML;
+              });
+          }
+          setTimeout(function() {
+            productFormEl.classList.remove('loading');
+          }, 800);
+        })
+        .catch(function() {
+          productFormEl.classList.remove('loading');
+        });
+      }, { capture: true });
+    }
+
+    /* ── Buy Now intercept: add both items then redirect to checkout ── */
+    var buyNowBtn = section.querySelector('[data-lusena-buy-now]');
+    if (buyNowBtn) {
+      var origHandler = null;
+      buyNowBtn.addEventListener('click', function(event) {
+        if (!checkbox.checked) return;
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        var mainId = parseInt(variantInput.value);
+        var crossSellId = parseInt(checkbox.dataset.variantId);
+        if (!mainId || !crossSellId) return;
+
+        buyNowBtn.setAttribute('aria-disabled', 'true');
+
+        fetch(window.routes.cart_add_url + '.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: JSON.stringify({
+            items: [
+              { id: mainId, quantity: 1 },
+              { id: crossSellId, quantity: 1 }
+            ]
+          })
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          if (!data.status) {
+            window.location.href = window.routes.checkout_url || '/checkout';
+          } else {
+            buyNowBtn.removeAttribute('aria-disabled');
+          }
+        })
+        .catch(function() {
+          buyNowBtn.removeAttribute('aria-disabled');
+        });
+      }, { capture: true });
+    }
+
+    /* ── Variant change: update cross-sell color match ── */
+    var variantsJson = row.querySelector('[data-lusena-cross-sell-variants]');
+    if (variantsJson && section) {
+      var csVariants = JSON.parse(variantsJson.textContent);
+      var mainColorIndex = parseInt(row.dataset.mainColorIndex) || 0;
+
+      section.addEventListener('change', function(e) {
+        if (!(e.target instanceof HTMLInputElement) || e.target.type !== 'radio') return;
+
+        var selectedColor = null;
+        if (mainColorIndex > 0 && variantInput) {
+          var productJson = section.querySelector('[data-lusena-product-json]');
+          if (productJson) {
+            var product = JSON.parse(productJson.textContent);
+            var currentId = parseInt(variantInput.value);
+            for (var i = 0; i < product.variants.length; i++) {
+              if (product.variants[i].id === currentId) {
+                selectedColor = product.variants[i]['option' + mainColorIndex];
+                break;
+              }
+            }
+          }
+        }
+
+        var matched = null;
+        var highestInv = null;
+        for (var j = 0; j < csVariants.length; j++) {
+          var v = csVariants[j];
+          if (!v.available) continue;
+          if (selectedColor && v.color === selectedColor && !matched) matched = v;
+          if (!highestInv || v.inventory > highestInv.inventory) highestInv = v;
+        }
+
+        var chosen = matched || highestInv || csVariants[0];
+        if (!chosen) return;
+
+        checkbox.dataset.variantId = String(chosen.id);
+        var label = row.querySelector('[data-lusena-cross-sell-color-label]');
+        if (label) label.textContent = 'Kolor: ' + chosen.color;
+        var img = row.querySelector('[data-lusena-cross-sell-image]');
+        if (img && chosen.image) img.src = chosen.image;
+      });
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', lusenaCrossSellInit);
+  } else {
+    lusenaCrossSellInit();
+  }
+</script>
+
 {%- endif -%}
 {%- comment -%} ── End guard: cs_variant available ── {%- endcomment -%}

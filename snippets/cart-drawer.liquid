@@ -1101,7 +1101,9 @@
                     </h3>
                     <div class="lusena-cart-drawer__item-prices">
                       <span class="lusena-cart-drawer__item-price">{{ item.final_line_price | money_without_trailing_zeros }}</span>
-                      {%- if item.variant.compare_at_price != blank and item.variant.compare_at_price > item.variant.price -%}
+                      {%- if item.original_line_price > item.final_line_price -%}
+                        <span class="lusena-cart-drawer__item-compare">{{ item.original_line_price | money_without_trailing_zeros }}</span>
+                      {%- elsif item.variant.compare_at_price != blank and item.variant.compare_at_price > item.variant.price -%}
                         {%- assign item_compare_at_line = item.variant.compare_at_price | times: item.quantity -%}
                         <span class="lusena-cart-drawer__item-compare">{{ item_compare_at_line | money_without_trailing_zeros }}</span>
                       {%- endif -%}
