@@ -115,10 +115,10 @@
     {%- if cs_image -%}
       <span class="lusena-pdp-cross-sell-cb__image">
         <img
-          src="{{ cs_image | image_url: width: 96 }}"
+          src="{{ cs_image | image_url: width: 80 }}"
           alt="{{ cross_sell_product.title | escape }}"
-          width="48"
-          height="48"
+          width="40"
+          height="40"
           loading="lazy"
           data-lusena-cross-sell-image
         >
@@ -129,11 +129,7 @@
       <span class="lusena-pdp-cross-sell-cb__title">
         Dodaj {{ cross_sell_product.title | downcase }}
       </span>
-      {%- if cs_color_label != blank -%}
-        <span class="lusena-pdp-cross-sell-cb__color" data-lusena-cross-sell-color-label>
-          Kolor: {{ cs_color_label }}
-        </span>
-      {%- endif -%}
+      <span class="lusena-pdp-cross-sell-cb__hint">Taniej w komplecie</span>
     </span>
 
     <span class="lusena-pdp-cross-sell-cb__pricing">
@@ -166,7 +162,7 @@
           "available": {{ variant.available }},
           "color": {{ v_color | json }},
           "inventory": {{ variant.inventory_quantity | default: 0 }},
-          "image": {% if variant.featured_image %}{{ variant.featured_image | image_url: width: 96 | json }}{% else %}null{% endif %}
+          "image": {% if variant.featured_image %}{{ variant.featured_image | image_url: width: 80 | json }}{% else %}null{% endif %}
         }{% unless forloop.last %},{% endunless %}
       {%- endfor -%}
     ]
@@ -177,6 +173,8 @@
   function lusenaCrossSellInit() {
     var row = document.querySelector('[data-lusena-cross-sell-row]');
     if (!row) return;
+    if (row.dataset.lusenaCrossSellInit) return;
+    row.dataset.lusenaCrossSellInit = '1';
     var checkbox = row.querySelector('[data-lusena-cross-sell-checkbox]');
     if (!checkbox) return;
 
@@ -185,11 +183,29 @@
     var form = section.querySelector('product-form form[data-type="add-to-cart-form"]');
     var variantInput = section.querySelector('[data-lusena-variant-id]');
     var productFormEl = form ? form.closest('product-form') : null;
+    var atcBtn = form ? form.querySelector('[type="submit"]') : null;
+
+    /* ── Button loading state helper (mirrors product-form.js behavior) ── */
+    function setBtnLoading(btn, isLoading) {
+      if (!btn) return;
+      var spinner = btn.querySelector('.loading__spinner');
+      btn.classList.toggle('loading', isLoading);
+      if (isLoading) {
+        btn.setAttribute('aria-disabled', 'true');
+        btn.setAttribute('aria-busy', 'true');
+        if (spinner) spinner.classList.remove('hidden');
+      } else {
+        btn.removeAttribute('aria-disabled');
+        btn.removeAttribute('aria-busy');
+        if (spinner) spinner.classList.add('hidden');
+      }
+    }
 
     /* ── ATC intercept: add both items when checkbox is checked ── */
     if (productFormEl) {
       productFormEl.addEventListener('submit', function(event) {
         if (!checkbox.checked) return;
+        if (atcBtn && atcBtn.getAttribute('aria-disabled') === 'true') return;
 
         event.preventDefault();
         event.stopPropagation();
@@ -198,7 +214,7 @@
         var crossSellId = parseInt(checkbox.dataset.variantId);
         if (!mainId || !crossSellId) return;
 
-        productFormEl.classList.add('loading');
+        setBtnLoading(atcBtn, true);
 
         fetch(window.routes.cart_add_url + '.js', {
           method: 'POST',
@@ -216,7 +232,7 @@
         .then(function(res) { return res.json(); })
         .then(function(data) {
           if (data.status) {
-            productFormEl.classList.remove('loading');
+            setBtnLoading(atcBtn, false);
             return;
           }
           /* Re-render cart drawer with fresh section HTML, then open it */
@@ -243,11 +259,11 @@
               });
           }
           setTimeout(function() {
-            productFormEl.classList.remove('loading');
+            setBtnLoading(atcBtn, false);
           }, 800);
         })
         .catch(function() {
-          productFormEl.classList.remove('loading');
+          setBtnLoading(atcBtn, false);
         });
       }, { capture: true });
     }
@@ -258,6 +274,7 @@
       var origHandler = null;
       buyNowBtn.addEventListener('click', function(event) {
         if (!checkbox.checked) return;
+        if (buyNowBtn.getAttribute('aria-disabled') === 'true') return;
 
         event.preventDefault();
         event.stopImmediatePropagation();
@@ -266,7 +283,7 @@
         var crossSellId = parseInt(checkbox.dataset.variantId);
         if (!mainId || !crossSellId) return;
 
-        buyNowBtn.setAttribute('aria-disabled', 'true');
+        setBtnLoading(buyNowBtn, true);
 
         fetch(window.routes.cart_add_url + '.js', {
           method: 'POST',
@@ -286,11 +303,11 @@
           if (!data.status) {
             window.location.href = window.routes.checkout_url || '/checkout';
           } else {
-            buyNowBtn.removeAttribute('aria-disabled');
+            setBtnLoading(buyNowBtn, false);
           }
         })
         .catch(function() {
-          buyNowBtn.removeAttribute('aria-disabled');
+          setBtnLoading(buyNowBtn, false);
         });
       }, { capture: true });
     }
@@ -332,8 +349,6 @@
         if (!chosen) return;
 
         checkbox.dataset.variantId = String(chosen.id);
-        var label = row.querySelector('[data-lusena-cross-sell-color-label]');
-        if (label) label.textContent = 'Kolor: ' + chosen.color;
         var img = row.querySelector('[data-lusena-cross-sell-image]');
         if (img && chosen.image) img.src = chosen.image;
       });
