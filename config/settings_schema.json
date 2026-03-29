@@ -1469,8 +1469,8 @@
         "type": "text",
         "id": "lusena_free_shipping_threshold",
         "label": "Próg darmowej wysyłki (zł)",
-        "default": "269",
-        "info": "Wpisz kwotę w złotych (np. 269)."
+        "default": "275",
+        "info": "Wpisz kwotę w złotych (np. 275)."
       },
       {
         "type": "checkbox",
