@@ -53,6 +53,29 @@
           {% render 'lusena-bundle-options', current_variant: current_variant, section: section %}
         </div>
 
+        {%- comment -%} Cross-sell checkbox (hidden until all colors picked, revealed by JS) {%- endcomment -%}
+        {%- assign cs_handle = section.settings.cross_sell_handle -%}
+        {%- assign cs_product = all_products[cs_handle] -%}
+        {%- if section.settings.cross_sell_enabled
+              and cs_handle != blank
+              and cs_product != blank
+              and cs_product.available
+              and product.handle != cs_handle -%}
+          {%- unless product.handle contains 'scrunchie' -%}
+            <div class="lusena-pdp-buy-box__cross-sell-checkbox lusena-bundle-cross-sell--hidden"
+                 data-lusena-bundle-cross-sell-wrapper>
+              {%- render 'lusena-pdp-cross-sell-checkbox',
+                cross_sell_product: cs_product,
+                cross_sell_price: section.settings.cross_sell_price,
+                current_variant: current_variant,
+                product: product,
+                section: section,
+                skip_js: true
+              -%}
+            </div>
+          {%- endunless -%}
+        {%- endif -%}
+
         <div class="lusena-pdp-buy-box__atc">
           {% render 'lusena-bundle-atc', product: product, current_variant: current_variant, section: section %}
         </div>
@@ -355,6 +378,30 @@
       "id": "secure_payment_label",
       "label": "Secure payment label",
       "default": "Bezpieczna p\u0142atno\u015b\u0107"
+    },
+    {
+      "type": "header",
+      "content": "Cross-sell checkbox"
+    },
+    {
+      "type": "checkbox",
+      "id": "cross_sell_enabled",
+      "label": "Pokazuj checkbox cross-sell w buy-boxie",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cross_sell_handle",
+      "label": "Handle produktu cross-sell",
+      "default": "silk-scrunchie",
+      "info": "URL handle produktu (np. silk-scrunchie). Znajdziesz go w Shopify admin > Products > SEO."
+    },
+    {
+      "type": "number",
+      "id": "cross_sell_price",
+      "label": "Cena cross-sell (grosze)",
+      "default": 3900,
+      "info": "Cena wyswietlana na PDP. Musi odpowiadac rabatowi BXGY w Shopify admin (np. 3900 = 39 zl)."
     }
   ],
   "blocks": [

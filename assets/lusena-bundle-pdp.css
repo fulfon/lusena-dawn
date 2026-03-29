@@ -295,7 +295,7 @@
 
 /* --- Buy-box overrides scoped to bundle template ---
    Scoped via .lusena-pdp--bundle to avoid affecting the regular product PDP.
-   Flow: summary(1) → proof(2) → contents(3) → variant(4) → atc(5) → guarantee(6) → payment(7)
+   Flow: summary(1) → proof(2) → contents(3) → variant(4) → cross-sell(5) → atc(6) → guarantee(7) → payment(8)
 */
 .lusena-pdp--bundle .lusena-pdp-buy-box__proof {
   order: 2;
@@ -313,26 +313,42 @@
   order: 4;
 }
 
-.lusena-pdp--bundle .lusena-pdp-buy-box__atc {
+/* Cross-sell checkbox: hidden until all colors picked, then revealed with animation */
+.lusena-pdp--bundle .lusena-pdp-buy-box__cross-sell-checkbox {
   order: 5;
+  max-height: 20rem;
+  margin-top: 1.6rem;
+  overflow: hidden;
+  transition: max-height var(--lusena-transition-base), opacity var(--lusena-transition-base), margin-top var(--lusena-transition-base);
 }
 
-.lusena-pdp--bundle .lusena-pdp-buy-box__guarantee {
+.lusena-pdp--bundle .lusena-bundle-cross-sell--hidden {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  pointer-events: none;
+}
+
+.lusena-pdp--bundle .lusena-pdp-buy-box__atc {
   order: 6;
 }
 
-.lusena-pdp--bundle .lusena-pdp-buy-box__payment {
+.lusena-pdp--bundle .lusena-pdp-buy-box__guarantee {
   order: 7;
+}
+
+.lusena-pdp--bundle .lusena-pdp-buy-box__payment {
+  order: 8;
 }
 
 /* Mobile flow: benefits before care — matching single product PDP where
    benefits (order 9) precede the accordion (order 10). */
 .lusena-pdp--bundle .lusena-pdp-buy-box__benefits-mobile {
-  order: 8;
+  order: 9;
 }
 
 .lusena-pdp--bundle .lusena-pdp-buy-box__care {
-  order: 9;
+  order: 10;
   margin-top: 3.2rem;
 }
 
@@ -396,4 +412,7 @@
     transition: none;
   }
 
+  .lusena-pdp--bundle .lusena-pdp-buy-box__cross-sell-checkbox {
+    transition: none;
+  }
 }

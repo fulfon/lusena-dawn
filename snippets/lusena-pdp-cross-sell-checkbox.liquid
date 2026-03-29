@@ -169,6 +169,7 @@
   </script>
 </div>
 
+{%- unless skip_js -%}
 <script>
   function lusenaCrossSellInit() {
     var row = document.querySelector('[data-lusena-cross-sell-row]');
@@ -360,6 +361,7 @@
     lusenaCrossSellInit();
   }
 </script>
+{%- endunless -%}
 
 {%- endif -%}
 {%- comment -%} ── End guard: cs_variant available ── {%- endcomment -%}

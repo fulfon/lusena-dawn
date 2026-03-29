@@ -29,6 +29,13 @@
   var steps = Array.from(optionsRoot.querySelectorAll('[data-lusena-bundle-step]'));
   var totalSteps = steps.length;
 
+  // Cross-sell checkbox elements (populated only if bundle PDP renders the slot)
+  var csWrapper = root.querySelector('[data-lusena-bundle-cross-sell-wrapper]');
+  var csCheckbox = csWrapper ? csWrapper.querySelector('[data-lusena-cross-sell-checkbox]') : null;
+  var csVariantsEl = csWrapper ? csWrapper.querySelector('[data-lusena-cross-sell-variants]') : null;
+  var csVariants = csVariantsEl ? JSON.parse(csVariantsEl.textContent) : [];
+  var csRevealTimer = null;
+
   if (totalSteps === 0) return;
 
   // --- Reduced motion detection ---
@@ -438,6 +445,7 @@
     updateHiddenInputs();
     updateProgressCounter();
     updateNextIndicator();
+    updateCrossSellVisibility();
   }
 
   function updateProgressCounter() {
@@ -509,6 +517,158 @@
   }
 
   // ==========================================================================
+  // CROSS-SELL CHECKBOX (revealed after all colors picked)
+  // ==========================================================================
+
+  function updateCrossSellVisibility() {
+    if (!csWrapper) return;
+    if (csRevealTimer) { clearTimeout(csRevealTimer); csRevealTimer = null; }
+    if (allSelected()) {
+      updateCrossSellColor();
+      csRevealTimer = setTimeout(function() {
+        csWrapper.classList.remove('lusena-bundle-cross-sell--hidden');
+        csRevealTimer = null;
+      }, STAGGER_MS);
+    } else {
+      csWrapper.classList.add('lusena-bundle-cross-sell--hidden');
+      if (csCheckbox) csCheckbox.checked = false;
+    }
+  }
+
+  function updateCrossSellColor() {
+    if (!csCheckbox || !csVariants.length) return;
+    var lastColor = selections[totalSteps - 1];
+    var matched = null;
+    var highestInv = null;
+    for (var i = 0; i < csVariants.length; i++) {
+      var v = csVariants[i];
+      if (!v.available) continue;
+      if (lastColor && v.color === lastColor && !matched) matched = v;
+      if (!highestInv || v.inventory > highestInv.inventory) highestInv = v;
+    }
+    var chosen = matched || highestInv || csVariants[0];
+    if (!chosen) return;
+    csCheckbox.dataset.variantId = String(chosen.id);
+    var img = csWrapper.querySelector('[data-lusena-cross-sell-image]');
+    if (img && chosen.image) img.src = chosen.image;
+  }
+
+  function getBundleCartProperties() {
+    var properties = {};
+    if (!propertiesContainer) return properties;
+    var inputs = propertiesContainer.querySelectorAll('input[type="hidden"]');
+    for (var i = 0; i < inputs.length; i++) {
+      var m = inputs[i].name.match(/^properties\[(.+)\]$/);
+      if (m) properties[m[1]] = inputs[i].value;
+    }
+    return properties;
+  }
+
+  function submitBundleCartWithCrossSell() {
+    var loadingBtns = [atcBtn].concat(stickyBtns);
+    loadingBtns.forEach(function(b) { setBtnLoading(b, true); });
+
+    var loadingStartTime = Date.now();
+    var minMs = parseInt(form.getAttribute('data-loading-min-ms') || '500', 10);
+    var holdMs = parseInt(form.getAttribute('data-loading-hold-ms') || '350', 10);
+
+    var properties = getBundleCartProperties();
+    var mainId = parseInt(form.querySelector('input[name="id"]').value, 10);
+    var crossSellId = parseInt(csCheckbox.dataset.variantId, 10);
+
+    fetch(window.routes.cart_add_url + '.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      },
+      body: JSON.stringify({
+        items: [
+          { id: mainId, quantity: 1, properties: properties },
+          { id: crossSellId, quantity: 1 }
+        ]
+      })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.status) {
+        console.error('Bundle+cross-sell ATC error:', data.description || data.message);
+        finalize();
+        return;
+      }
+      var drawer = document.querySelector('cart-drawer');
+      if (drawer) {
+        fetch('/cart?section_id=cart-drawer')
+          .then(function(r) { return r.text(); })
+          .then(function(html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var fresh = doc.querySelector('#CartDrawer');
+            var current = document.getElementById('CartDrawer');
+            if (fresh && current) current.innerHTML = fresh.innerHTML;
+            drawer.classList.remove('is-empty');
+            drawer.open();
+          });
+        fetch('/cart?section_id=cart-icon-bubble')
+          .then(function(r) { return r.text(); })
+          .then(function(html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var fresh = doc.querySelector('.shopify-section');
+            var current = document.getElementById('cart-icon-bubble');
+            if (fresh && current) current.innerHTML = fresh.innerHTML;
+          });
+      }
+      finalize();
+    })
+    .catch(function(err) {
+      console.error('Bundle+cross-sell fetch error:', err);
+      finalize();
+    });
+
+    function finalize() {
+      var elapsed = Date.now() - loadingStartTime;
+      var remaining = Math.max(0, minMs - elapsed) + holdMs;
+      setTimeout(function() {
+        loadingBtns.forEach(function(b) { setBtnLoading(b, false); });
+      }, remaining);
+    }
+  }
+
+  function submitBundleBuyNowWithCrossSell() {
+    setBtnLoading(buyNowBtn, true);
+
+    var properties = getBundleCartProperties();
+    var mainId = parseInt(form.querySelector('input[name="id"]').value, 10);
+    var crossSellId = parseInt(csCheckbox.dataset.variantId, 10);
+
+    fetch(window.routes.cart_add_url + '.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      },
+      body: JSON.stringify({
+        items: [
+          { id: mainId, quantity: 1, properties: properties },
+          { id: crossSellId, quantity: 1 }
+        ]
+      })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.status) {
+        console.error('Bundle+cross-sell buy-now error:', data.description || data.message);
+        setBtnLoading(buyNowBtn, false);
+        return;
+      }
+      window.location.href = window.routes.checkout_url || '/checkout';
+    })
+    .catch(function(err) {
+      console.error('Bundle+cross-sell buy-now fetch error:', err);
+      setBtnLoading(buyNowBtn, false);
+    });
+  }
+
+  // ==========================================================================
   // SHARED: BUTTON LOADING HELPERS
   // ==========================================================================
 
@@ -535,6 +695,11 @@
 
   function submitBundleCart() {
     if (!form || !allSelected()) return;
+
+    if (csCheckbox && csCheckbox.checked) {
+      submitBundleCartWithCrossSell();
+      return;
+    }
 
     var loadingBtns = [atcBtn].concat(stickyBtns);
     loadingBtns.forEach(function(b) { setBtnLoading(b, true); });
@@ -620,6 +785,11 @@
       e.preventDefault();
       if (!allSelected()) {
         highlightActiveStep(false);
+        return;
+      }
+
+      if (csCheckbox && csCheckbox.checked) {
+        submitBundleBuyNowWithCrossSell();
         return;
       }
 
