@@ -63,7 +63,7 @@
               and product.handle != cs_handle
               and template.suffix != 'bundle'
               and cs_product.available -%}
-          <div class="lusena-pdp-buy-box__cross-sell-checkbox">
+          <div class="lusena-pdp-buy-box__cross-sell-checkbox{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
             {%- render 'lusena-pdp-cross-sell-checkbox',
               cross_sell_product: cs_product,
               cross_sell_price: section.settings.cross_sell_price,
