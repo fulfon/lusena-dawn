@@ -54,6 +54,24 @@
           {% render 'lusena-pdp-variant-picker', product: product, current_variant: current_variant, section: section %}
         </div>
 
+        {%- comment -%} Cross-sell checkbox (between variant picker and ATC) {%- endcomment -%}
+        {%- assign cs_product = section.settings.cross_sell_product -%}
+        {%- if section.settings.cross_sell_enabled
+              and cs_product != blank
+              and product.handle != cs_product.handle
+              and template.suffix != 'bundle'
+              and cs_product.available -%}
+          <div class="lusena-pdp-buy-box__cross-sell-checkbox">
+            {%- render 'lusena-pdp-cross-sell-checkbox',
+              cross_sell_product: cs_product,
+              cross_sell_price: section.settings.cross_sell_price,
+              current_variant: current_variant,
+              product: product,
+              section: section
+            -%}
+          </div>
+        {%- endif -%}
+
         <div class="lusena-pdp-buy-box__atc">
           {% render 'lusena-pdp-atc', product: product, current_variant: current_variant, section: section, product_form_id: product_form_id %}
         </div>
@@ -371,6 +389,28 @@
       "id": "cross_sell_heading",
       "label": "Cross-sell heading",
       "default": "Pasuje do"
+    },
+    {
+      "type": "header",
+      "content": "Cross-sell checkbox"
+    },
+    {
+      "type": "checkbox",
+      "id": "cross_sell_enabled",
+      "label": "Pokazuj checkbox cross-sell w buy-boxie",
+      "default": true
+    },
+    {
+      "type": "product",
+      "id": "cross_sell_product",
+      "label": "Produkt cross-sell"
+    },
+    {
+      "type": "number",
+      "id": "cross_sell_price",
+      "label": "Cena cross-sell (grosze)",
+      "default": 3900,
+      "info": "Cena wyswietlana na PDP. Musi odpowiadac rabatowi BXGY w Shopify admin (np. 3900 = 39 zl)."
     }
   ],
   "blocks": [
