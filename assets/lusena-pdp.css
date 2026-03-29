@@ -52,6 +52,7 @@
 
 .lusena-pdp .lusena-pdp-buy-box__cross-sell-checkbox {
   order: 5;
+  margin-top: 1.6rem;
 }
 
 .lusena-pdp-cross-sell-cb {
@@ -123,6 +124,8 @@
   height: 4rem;
   border-radius: var(--lusena-btn-radius);
   overflow: hidden;
+  background: var(--lusena-surface-2);
+  border: 1px dashed color-mix(in srgb, var(--lusena-text-2) 20%, transparent);
 }
 
 .lusena-pdp-cross-sell-cb__image img {
