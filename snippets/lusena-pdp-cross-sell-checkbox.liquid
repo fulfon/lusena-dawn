@@ -1,0 +1,177 @@
+{%- comment -%}
+  Cross-sell checkbox for PDP buy-box.
+  Offers a discounted cross-sell product (e.g., scrunchie at 39 zl).
+  Color-matches to the main product's selected variant.
+
+  Required variables:
+    cross_sell_product  - product object (from section setting)
+    cross_sell_price    - discounted price in cents (e.g., 3900)
+    current_variant     - selected variant of the main product
+    product             - the main product
+    section             - section object
+{%- endcomment -%}
+
+{%- comment -%} ── Find color option index on cross-sell product ── {%- endcomment -%}
+{%- assign cs_color_index = 0 -%}
+{%- for option in cross_sell_product.options_with_values -%}
+  {%- assign opt_down = option.name | downcase -%}
+  {%- if opt_down contains 'color' or opt_down contains 'colour' or opt_down contains 'kolor' -%}
+    {%- assign cs_color_index = forloop.index -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- comment -%} ── Find color option index on main product ── {%- endcomment -%}
+{%- assign main_color_index = 0 -%}
+{%- for option in product.options_with_values -%}
+  {%- assign opt_down = option.name | downcase -%}
+  {%- if opt_down contains 'color' or opt_down contains 'colour' or opt_down contains 'kolor' -%}
+    {%- assign main_color_index = forloop.index -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- comment -%} ── Get trigger color from current variant ── {%- endcomment -%}
+{%- assign trigger_color = '' -%}
+{%- if main_color_index == 1 -%}
+  {%- assign trigger_color = current_variant.option1 -%}
+{%- elsif main_color_index == 2 -%}
+  {%- assign trigger_color = current_variant.option2 -%}
+{%- elsif main_color_index == 3 -%}
+  {%- assign trigger_color = current_variant.option3 -%}
+{%- endif -%}
+
+{%- comment -%} ── Color-match: find best cross-sell variant ── {%- endcomment -%}
+{%- assign cs_variant = nil -%}
+{%- assign cs_fallback = nil -%}
+{%- assign cs_highest_inv = -1 -%}
+
+{%- for variant in cross_sell_product.variants -%}
+  {%- unless variant.available -%}{%- continue -%}{%- endunless -%}
+
+  {%- if cs_color_index == 1 -%}
+    {%- assign cs_var_color = variant.option1 -%}
+  {%- elsif cs_color_index == 2 -%}
+    {%- assign cs_var_color = variant.option2 -%}
+  {%- elsif cs_color_index == 3 -%}
+    {%- assign cs_var_color = variant.option3 -%}
+  {%- else -%}
+    {%- assign cs_var_color = '' -%}
+  {%- endif -%}
+
+  {%- if cs_var_color == trigger_color and cs_variant == nil -%}
+    {%- assign cs_variant = variant -%}
+  {%- endif -%}
+
+  {%- if variant.inventory_quantity > cs_highest_inv -%}
+    {%- assign cs_highest_inv = variant.inventory_quantity -%}
+    {%- assign cs_fallback = variant -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- unless cs_variant -%}
+  {%- if cs_fallback -%}
+    {%- assign cs_variant = cs_fallback -%}
+  {%- else -%}
+    {%- assign cs_variant = cross_sell_product.selected_or_first_available_variant -%}
+  {%- endif -%}
+{%- endunless -%}
+
+{%- comment -%} ── Guard: only render if we found an available variant ── {%- endcomment -%}
+{%- if cs_variant and cs_variant.available -%}
+
+{%- comment -%} ── Resolved color label ── {%- endcomment -%}
+{%- assign cs_color_label = '' -%}
+{%- if cs_color_index == 1 -%}
+  {%- assign cs_color_label = cs_variant.option1 -%}
+{%- elsif cs_color_index == 2 -%}
+  {%- assign cs_color_label = cs_variant.option2 -%}
+{%- elsif cs_color_index == 3 -%}
+  {%- assign cs_color_label = cs_variant.option3 -%}
+{%- endif -%}
+
+{%- comment -%} ── Image: prefer variant-specific, fall back to product ── {%- endcomment -%}
+{%- if cs_variant.featured_image -%}
+  {%- assign cs_image = cs_variant.featured_image -%}
+{%- else -%}
+  {%- assign cs_image = cross_sell_product.featured_image -%}
+{%- endif -%}
+
+{%- comment -%} ── Prices ── {%- endcomment -%}
+{%- assign cs_original_price = cs_variant.price -%}
+{%- assign cs_display_price = cross_sell_price | default: cs_original_price -%}
+
+<div class="lusena-pdp-cross-sell-cb"
+     data-lusena-cross-sell-row
+     data-main-color-index="{{ main_color_index }}">
+  <label class="lusena-pdp-cross-sell-cb__label">
+    <input
+      type="checkbox"
+      class="lusena-pdp-cross-sell-cb__input visually-hidden"
+      data-lusena-cross-sell-checkbox
+      data-variant-id="{{ cs_variant.id }}"
+      autocomplete="off"
+    >
+    <span class="lusena-pdp-cross-sell-cb__check" aria-hidden="true"></span>
+
+    {%- if cs_image -%}
+      <span class="lusena-pdp-cross-sell-cb__image">
+        <img
+          src="{{ cs_image | image_url: width: 96 }}"
+          alt="{{ cross_sell_product.title | escape }}"
+          width="48"
+          height="48"
+          loading="lazy"
+          data-lusena-cross-sell-image
+        >
+      </span>
+    {%- endif -%}
+
+    <span class="lusena-pdp-cross-sell-cb__info">
+      <span class="lusena-pdp-cross-sell-cb__title">
+        Dodaj {{ cross_sell_product.title | downcase }}
+      </span>
+      {%- if cs_color_label != blank -%}
+        <span class="lusena-pdp-cross-sell-cb__color" data-lusena-cross-sell-color-label>
+          Kolor: {{ cs_color_label }}
+        </span>
+      {%- endif -%}
+    </span>
+
+    <span class="lusena-pdp-cross-sell-cb__pricing">
+      <span class="lusena-pdp-cross-sell-cb__price">
+        {{- cs_display_price | money_without_trailing_zeros -}}
+      </span>
+      {%- if cs_original_price > cs_display_price -%}
+        <span class="lusena-pdp-cross-sell-cb__was">
+          {{- cs_original_price | money_without_trailing_zeros -}}
+        </span>
+      {%- endif -%}
+    </span>
+  </label>
+
+  {%- comment -%} ── Variant data for JS color matching on variant change ── {%- endcomment -%}
+  <script type="application/json" data-lusena-cross-sell-variants>
+    [
+      {%- for variant in cross_sell_product.variants -%}
+        {%- if cs_color_index == 1 -%}
+          {%- assign v_color = variant.option1 -%}
+        {%- elsif cs_color_index == 2 -%}
+          {%- assign v_color = variant.option2 -%}
+        {%- elsif cs_color_index == 3 -%}
+          {%- assign v_color = variant.option3 -%}
+        {%- else -%}
+          {%- assign v_color = '' -%}
+        {%- endif -%}
+        {
+          "id": {{ variant.id }},
+          "available": {{ variant.available }},
+          "color": {{ v_color | json }},
+          "inventory": {{ variant.inventory_quantity | default: 0 }},
+          "image": {% if variant.featured_image %}{{ variant.featured_image | image_url: width: 96 | json }}{% else %}null{% endif %}
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  </script>
+</div>
+
+{%- endif -%}
+{%- comment -%} ── End guard: cs_variant available ── {%- endcomment -%}
