@@ -4,9 +4,33 @@
 
 ## Current focus
 
-**Phase 1B: PDP cross-sell checkbox — IN PROGRESS (final polish + testing).** Core feature works, UI redesigned and polished. Remaining: interaction testing, scope verification, bundle PDP expansion, cart explanation label.
+**Phase 1B: PDP cross-sell checkbox — NEARLY COMPLETE.** Core feature works on all individual PDPs and bundle PDPs. UI redesigned and polished. Remaining: scrunchie PDP education (show discount info when qualifying product is in cart).
 
 ## Recent completed work
+
+### Bundle PDP cross-sell expansion (2026-03-29, session 3)
+
+Extended the cross-sell checkbox to bundle PDPs (Nocna Rutyna, Piekny Sen). Scrunchie trio excluded (handle contains 'scrunchie').
+
+**Key design decision:** Cross-sell appears AFTER all colors are picked (not immediately). Progressive disclosure: customer commits to bundle colors first, then sees the scrunchie offer as a final mini-step before ATC. This leverages sunk-cost psychology - they've invested time picking colors, so a 39 zl add feels trivial.
+
+**Implementation:**
+- Reused `lusena-pdp-cross-sell-checkbox` snippet with `skip_js: true` param (bundle scripts handle JS)
+- Hidden initially (`lusena-bundle-cross-sell--hidden` class), revealed after `allSelected()` returns true
+- 250ms stagger delay after last step collapse (matches step-to-step timing)
+- LUSENA signature `translateY(-6px)` content fade on reveal
+- JS-driven `openWrap()`/`closeWrap()` height animation (matching bundle step pattern)
+- Color-matches scrunchie to last-picked bundle item color
+- Stays visible during re-edits (only animates on initial reveal)
+- Color indicator in placeholder when no variant images exist
+- `submitBundleCartWithCrossSell()` sends JSON `items` array with bundle properties preserved
+- `submitBundleBuyNowWithCrossSell()` for Buy Now + cross-sell → checkout redirect
+- Schema: `cross_sell_enabled`, `cross_sell_handle`, `cross_sell_price` (same as single PDP)
+
+**Verification completed:**
+- Buy Now + Sticky ATC work with checkbox checked (single PDPs)
+- Scope: hidden on scrunchie PDP (`product.handle != cs_handle`) and bundle PDPs (separate section)
+- BXGY admin discount covers Nocna Rutyna + scrunchie and Piekny Sen + scrunchie
 
 ### PDP cross-sell checkbox — UI/UX redesign (2026-03-29, session 2)
 
@@ -18,6 +42,7 @@ Full visual redesign of the cross-sell card to match LUSENA's premium aesthetic:
 - **"Taniej w komplecie"** educational hint instead of "Kolor:" text
 - **Image-only color communication** — no color text label; image auto-matches when main product color changes
 - **Image placeholder** always renders (`surface-2` bg + dashed border, matching cart drawer upsell pattern)
+- **Color indicator** in placeholder shows variant color name when no image exists (hidden via `img~` sibling selector when image loads)
 - **Strikethrough price** matches cart drawer style (1.2rem, `text-2`, no opacity reduction)
 - **Scroll animation** — `scroll-trigger animate--slide-in` gated by `animations_reveal_on_scroll`
 - **Spacing** — `margin-top: 1.6rem` on wrapper, matching buy-box rhythm
@@ -44,78 +69,26 @@ Cross-sell checkbox on all individual product PDPs offering scrunchie at 39 zl (
 - ATC intercept on parent `<product-form>` element with `{ capture: true }` — at the target element, capture doesn't help
 - Cart drawer re-render via direct section fetch + `DOMParser` + `drawer.open()`
 
+### Earlier work (2026-03-29, session 1)
 
-
-### Benefit bridge redesign (2026-03-29)
-
-Major redesign of `lusena-benefit-bridge.liquid`:
-- **Kicker field** above heading ("Jedwab morwowy 22 momme")
-- **Featured card** modifier on first card (`.lusena-benefit-bridge__card--featured`)
-- **Accent bar** (teal left-border via `.lusena-benefit-bridge__accent-bar`)
-- **Transition text** below cards ("Wszystkie trzy - bez żadnej zmiany w rutynie.")
-- **CSS extraction** from `{% stylesheet %}` → standalone `assets/lusena-benefit-bridge.css`
-- **Copy refresh**: heading "Co zobaczysz rano?", rewritten card text and icons
-- Schema expanded with kicker, transition_text fields
-
-### `lusena-link-arrow` CSS component (2026-03-29)
-
-New foundation component in `lusena-foundations.css` — CSS-only chevron via SVG mask (`::after` pseudo-element), inherits `currentColor`, hover slides 2px right. Replaces all hardcoded `→` arrow characters sitewide. Applied to:
-- `lusena-heritage` (button), `lusena-problem-solution` (CTA), `lusena-quality-hero` (CTA button)
-- `lusena-pdp-quality-evidence` (accordion CTAs), `lusena-article-card` (read more)
-- `lusena-pdp-media` (certificate CTA)
-- All `→` removed from template JSON defaults and FAQ answer HTML
-
-### Bundle options initial state fix (2026-03-29)
-
-`lusena-bundle-options.liquid` — first step renders open (`is-active`, fieldset visible), subsequent steps render collapsed with pending chips (`is-pending`, `is-next` on step 2). Was: all steps rendered open initially.
-
-### Bundle PDP chip dot fix (2026-03-29)
-
-`lusena-bundle-pdp.css` — pending chip dot changed from filled (`background: var(--lusena-accent-cta)`) to transparent outline (`background: transparent; border-color: var(--lusena-accent-cta)`). Visually distinguishes pending from completed steps.
-
-### Cart cross-sell loading refactor (2026-03-29)
-
-`lusena-cart-items.liquid` — replaced custom `lusena-upsell-card__dots` (3-dot pulse animation) with standard `loading__spinner` + `lusena-btn__loading-dots` pattern. Removed 10 lines of dedicated dot CSS from `lusena-cart-page.css`. Button now uses `.loading` class toggle instead of hiding/showing separate text/dots spans.
-
-### Token compliance rule (2026-03-29)
-
-Added mandatory "Token compliance" section to `.claude/rules/css-and-assets.md`:
-- Colors: always `var(--lusena-*)`, opacity via `color-mix()`
-- Typography: use foundation type classes in Liquid
-- Icons: `lusena-icon-circle` + `lusena-icon-*` sizes
-- Spacing: `var(--lusena-space-*)` only
-- Transitions: `var(--lusena-transition-fast/base)` only
-- Radius: `var(--lusena-btn-radius)` only
-- Dawn traps: `div:empty` specificity, `blockquote` styles
-
-### No-inline-scripts rule (2026-03-29)
-
-New rule `.claude/rules/no-inline-scripts.md` — bans `node -e`, `python -c`, and multi-line Bash scripts for file analysis. Requires Grep/Glob/Read tools instead. Added to `CLAUDE.md` conventions.
-
-### Section design loop skill (2026-03-29)
-
-New skill `.claude/skills/lusena-section-design-loop/SKILL.md` — autonomous design iteration loop: prototype in React draft shop, validate with 5-agent Sonnet review panel, iterate up to 5 rounds.
-
-### Migration lessons #55-61 (2026-03-29)
-
-7 new lessons in `migration-lessons.md` from benefit bridge redesign:
-- #55 `color-mix()` for opacity variants, #56 foundation type classes in Liquid
-- #57 `lusena-icon-circle` + size classes, #58 `div:empty` trap for accent bars
-- #59 reviewer agents must not have write access, #60 forward-reference problem on mobile
-- #61 mobile card treatment (avoid merged white blocks)
-
-### Bundle feature card copy (2026-03-29)
-
-`product.bundle.json` — "Gotowe do wręczenia" → "Gotowe do wręczenia osobno" with expanded description about individual gift packaging.
+- **Benefit bridge redesign** — kicker, featured card, accent bar, transition text, standalone CSS
+- **`lusena-link-arrow` CSS component** — replaces all hardcoded `→` arrows sitewide
+- **Bundle options initial state** — first step open, others collapsed with pending chips
+- **Bundle PDP chip dot fix** — pending dot: transparent outline instead of filled
+- **Cart cross-sell loading refactor** — standard `loading__spinner` pattern
+- **Token compliance rule** — mandatory design token usage in CSS
+- **No-inline-scripts rule** — bans `node -e`/`python -c` for file analysis
+- **Section design loop skill** — autonomous design iteration with 5-agent review
+- **Migration lessons #55-61** — benefit bridge redesign lessons
 
 ## Next steps
 
-1. **Cross-sell: Buy Now + Sticky ATC testing** — verify both work with checkbox checked
-2. **Cross-sell: Scope verification** — confirm hidden on scrunchie PDP + bundle PDPs
-3. **Cross-sell: Bundle PDP expansion** — add render slot to `lusena-main-bundle.liquid` + verify BXGY admin covers bundles
-4. **Cross-sell: Cart discount explanation** — "Rabat za zakup w zestawie" label on discounted line items (option B)
-5. **Cross-sell: Scrunchie PDP education** — show discount info when qualifying product is in cart
-6. **Documentation updates** — threshold 289→275 refs in bundle-strategy.md
+1. **Cross-sell: Scrunchie PDP education** — show discount info on scrunchie PDP when qualifying product is in cart (JS reads `/cart.js`, checks for qualifying handles)
+2. **Documentation sweep** — threshold 289→275 refs across bundle-strategy.md, upsell-strategy.md, product docs (50+ references)
+
+## Decided: skip cart discount explanation
+
+Cart line-item label ("Rabat za zakup w zestawie") is unnecessary because every path into the cart already explains the discounted price: PDP checkbox, cart upsell card, and (upcoming) scrunchie PDP education. A cart label would add visual noise for zero benefit.
 
 ## Known issues
 
@@ -129,10 +102,15 @@ New skill `.claude/skills/lusena-section-design-loop/SKILL.md` — autonomous de
 
 **Cart drawer is now a section** (not a snippet render). `theme.liquid` uses `{%- section 'cart-drawer' -%}`. This enables Shopify's section rendering API for AJAX updates.
 
+**Cross-sell checkbox architecture:**
+- **Shared snippet:** `lusena-pdp-cross-sell-checkbox.liquid` renders HTML + variant data JSON for both single PDPs and bundles
+- **Single PDP JS:** inline `<script>` in the snippet (ATC intercept on `<product-form>`, variant change listener)
+- **Bundle PDP JS:** `lusena-bundle-scripts.liquid` handles everything (reveal on `allSelected()`, color match, `submitBundleCartWithCrossSell()`)
+- **`skip_js` param:** when `true`, snippet skips inline script (bundle provides its own JS)
+
 **Upsell card CSS scoping:**
 - Cart drawer: `<style>` tag in `snippets/cart-drawer.liquid`. All upsell selectors scoped under `.lusena-cart-drawer__upsell`.
 - Cart page: `assets/lusena-cart-page.css` (standalone file). Upsell selectors scoped under `.lusena-cart-upsell`.
-- This prevents CSS bleed between drawer (loads on every page) and cart page (loads only on /cart).
 
 **Bidirectional cart sync:**
 - Cart page → drawer: publishes `PUB_SUB_EVENTS.cartUpdate`, drawer subscriber fetches fresh section HTML

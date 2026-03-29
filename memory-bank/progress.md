@@ -217,8 +217,9 @@ Full implementation tracker: `memory-bank/doc/bundle-implementation.md`
 - [x] #13 Cart merge — DONE (2026-03-28). Detects both bundle components in cart, shows merge card with "W koszyku" tiles. Removes both + adds bundle via `LusenaBundle.swap()`. Mapping: poszewka+bonnet → Nocna Rutyna (109 zl), poszewka+maska → Piekny Sen (89 zl). Higher savings wins.
 - [~] #12 PDP bundle detection banner — ABANDONED (2026-03-28). Fully built and tested but doesn't fit the PDP buy-box flow (too dense). Reverted. Decision: use #13 cart merge instead.
 
-**Phase D: Cross-sell:**
-- [ ] PDP cross-sell checkbox (scrunchie at 39 zł) — needs dev implementation
+**Phase D: Cross-sell (IN PROGRESS):**
+- [x] PDP cross-sell checkbox — all individual PDPs + bundle PDPs (2026-03-29). Scrunchie at 39 zl via BXGY. UI: white card with teal accent, compact row, "Taniej w komplecie" hint, color-matched image. Bundle: progressive disclosure reveal after all colors picked, LUSENA signature slide-in animation.
+- [ ] Scrunchie PDP education — show discount info when qualifying product is in cart
 
 **Phase 2 (data-gated, after 8-12 weeks):**
 - [ ] Kompletna Nocna Rutyna (poszewka + bonnet + maska = 499 zł)

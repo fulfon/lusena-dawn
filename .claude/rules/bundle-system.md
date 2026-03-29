@@ -29,7 +29,12 @@ Bundles use `product.bundle` template. Key differences from standard PDP:
 - Color matching constraint: Nocna Rutyna = A+A or B+B only. Piekny Sen = any poszewka + Black mask.
 
 ## Cross-sell rules
-- Scrunchie at 39 zl (not 59) on pillowcase PDP only
-- Free shipping threshold: 289 zl (poszewka 269 + scrunchie 39 = 308, clears it)
+- Scrunchie at 39 zl (not 59) via BXGY automatic discount on all individual PDPs + bundle PDPs
+- **Single PDPs:** checkbox always visible between variant picker and ATC (inline `<script>` in snippet)
+- **Bundle PDPs:** checkbox hidden until all colors picked, then revealed with animation (`lusena-bundle-scripts.liquid` handles JS)
+- **Excluded:** scrunchie PDP (`product.handle != cs_handle`), scrunchie-containing bundles (`product.handle contains 'scrunchie'`)
+- Shared snippet: `lusena-pdp-cross-sell-checkbox.liquid` with `skip_js: true` for bundles
+- Free shipping threshold: 275 zl (bonnet 239 + scrunchie 39 = 278, clears it)
 - Show exactly 1 upsell product (Iyengar jam study)
 - Routine framing, never savings/discount framing
+- Color matching: single PDP matches main variant color; bundle matches last-picked step color
