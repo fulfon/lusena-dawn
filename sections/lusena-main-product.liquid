@@ -187,6 +187,8 @@
 
   {% render 'lusena-pdp-cross-sell', section: section %}
 
+  {% render 'lusena-scrunchie-education', product: product, education_price: section.settings.scrunchie_education_price %}
+
   {% render 'lusena-pdp-sticky-atc', product: product, current_variant: current_variant, section: section, product_form_id: product_form_id %}
 </section>
 
@@ -415,6 +417,17 @@
       "label": "Cena cross-sell (grosze)",
       "default": 3900,
       "info": "Cena wyswietlana na PDP. Musi odpowiadac rabatowi BXGY w Shopify admin (np. 3900 = 39 zl)."
+    },
+    {
+      "type": "header",
+      "content": "Scrunchie PDP education"
+    },
+    {
+      "type": "number",
+      "id": "scrunchie_education_price",
+      "label": "Cena edukacyjna scrunchie (grosze)",
+      "default": 3900,
+      "info": "Cena wyswietlana na PDP scrunchie gdy kwalifikujacy produkt jest w koszyku (np. 3900 = 39 zl). Musi odpowiadac rabatowi BXGY."
     }
   ],
   "blocks": [
