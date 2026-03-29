@@ -20,67 +20,66 @@
   {% endif %}
 >
   <div class="lusena-container">
-    {%- if section.settings.heading != blank -%}
+    {%- if section.settings.kicker != blank or section.settings.heading != blank -%}
       <div class="lusena-text-center lusena-gap-section-intro{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-        <h2 class="lusena-type-h1">
-          {{ section.settings.heading | escape }}
-        </h2>
+        {%- if section.settings.kicker != blank -%}
+          <p class="lusena-type-caption lusena-benefit-bridge__kicker">{{ section.settings.kicker | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="lusena-type-h1">
+            {{ section.settings.heading | escape }}
+          </h2>
+        {%- endif -%}
       </div>
     {%- endif -%}
 
     {%- if section.blocks.size > 0 -%}
       <div
-        class="lusena-grid lusena-grid--3"
+        class="lusena-benefit-bridge__cards"
         {% if settings.animations_reveal_on_scroll %}data-cascade{% endif %}
       >
         {%- for block in section.blocks -%}
+          {%- liquid
+            assign is_featured = false
+            if forloop.first
+              assign is_featured = true
+            endif
+          -%}
           <div
-            class="lusena-benefit-bridge__card{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            class="lusena-benefit-bridge__card{% if is_featured %} lusena-benefit-bridge__card--featured{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
             {{ block.shopify_attributes }}
           >
+            <div class="lusena-benefit-bridge__accent-bar"></div>
+
             {%- if block.settings.icon != blank -%}
-              <div class="lusena-icon-circle lusena-benefit-bridge__icon">
-                {% render 'lusena-icon', name: block.settings.icon, class: 'lusena-benefit-bridge__icon-svg', stroke_width: 1.5 %}
+              <div class="lusena-icon-circle lusena-benefit-bridge__icon-circle">
+                {% render 'lusena-icon', name: block.settings.icon, class: 'lusena-icon-lg', stroke_width: 1.5 %}
               </div>
             {%- endif -%}
             {%- if block.settings.title != blank -%}
-              <h3 class="lusena-type-h2">{{ block.settings.title | escape }}</h3>
+              <h3 class="lusena-type-h2">
+                {{ block.settings.title | escape }}
+              </h3>
             {%- endif -%}
             {%- if block.settings.text != blank -%}
-              <p class="lusena-type-body">{{ block.settings.text | escape }}</p>
+              <p class="lusena-type-body">
+                {{ block.settings.text | escape }}
+              </p>
             {%- endif -%}
           </div>
         {%- endfor -%}
       </div>
     {%- endif -%}
+
+    {%- if section.settings.transition_text != blank -%}
+      <p class="lusena-type-body lusena-benefit-bridge__transition{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        {{ section.settings.transition_text | escape }}
+      </p>
+    {%- endif -%}
   </div>
 </section>
 
-{% stylesheet %}
-  .lusena-benefit-bridge__card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: var(--lusena-space-2);
-  }
-
-  .lusena-benefit-bridge .lusena-icon-circle {
-    color: var(--lusena-accent-cta);
-  }
-
-  .lusena-benefit-bridge__icon-svg {
-    width: 2.4rem;
-    height: 2.4rem;
-  }
-
-  @media (max-width: 767px) {
-    .lusena-benefit-bridge .lusena-benefit-bridge__card:not(:last-child) {
-      padding-bottom: var(--lusena-space-4);
-      border-bottom: 1px solid var(--lusena-color-n200);
-    }
-  }
-{% endstylesheet %}
+{{ 'lusena-benefit-bridge.css' | asset_url | stylesheet_tag }}
 
 {% schema %}
 {
@@ -133,9 +132,21 @@
     },
     {
       "type": "text",
+      "id": "kicker",
+      "label": "Kicker (above heading)",
+      "default": "Jedwab morwowy 22 momme"
+    },
+    {
+      "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Co zmieni się po pierwszej nocy?"
+      "default": "Co zobaczysz rano?"
+    },
+    {
+      "type": "text",
+      "id": "transition_text",
+      "label": "Transition sentence (italic, below cards)",
+      "default": "Wszystkie trzy - bez żadnej zmiany w rutynie."
     }
   ],
   "blocks": [
@@ -148,7 +159,7 @@
           "id": "icon",
           "label": "Icon name",
           "default": "sparkles",
-          "info": "Available: sparkles, star, droplets, layers, shield-check, heart, gift"
+          "info": "Available: sparkles, wind, droplets, heart, moon, feather, palette, clock, star, layers, shield-check"
         },
         {
           "type": "text",
@@ -159,7 +170,7 @@
         {
           "type": "text",
           "id": "text",
-          "label": "Description (1 sentence)",
+          "label": "Description (1-2 sentences)",
           "default": "Benefit description."
         }
       ]
@@ -173,16 +184,16 @@
           "type": "card",
           "settings": {
             "icon": "sparkles",
-            "title": "Gładka skóra o poranku",
-            "text": "Jedwab sprzyja redukcji odcisków sennych - rano widzisz w lustrze wypoczętą, gładką twarz zamiast zagnieceń."
+            "title": "Skóra bez śladów nocy",
+            "text": "Rano widzisz w lustrze twarz wypoczętą - nie twarz, która dopiero musi się obudzić. Jedwab jest gładki - nie zagniata skóry tak jak bawełna."
           }
         },
         {
           "type": "card",
           "settings": {
-            "icon": "star",
+            "icon": "wind",
             "title": "Włosy bez porannego chaosu",
-            "text": "Gładki jedwab pomaga zachować fryzurę przez noc - mniej puszenia, plątania i łamania delikatnych pasm."
+            "text": "Gładki jedwab nie czepia się włosów podczas snu - mniej puszenia, plątania i łamania delikatnych pasm."
           }
         },
         {
@@ -190,7 +201,7 @@
           "settings": {
             "icon": "droplets",
             "title": "Krem pracuje całą noc",
-            "text": "Jedwab nie wchłania kosmetyków tak jak bawełna - Twój krem na noc zostaje na skórze, gdzie może działać."
+            "text": "Kosmetyki kupujesz dla skóry, nie dla pościeli. Jedwab wchłania je wolniej niż bawełna - krem zostaje tam, gdzie powinien."
           }
         }
       ]

@@ -169,7 +169,7 @@
             "title": "Certyfikat OEKO-TEX® - sprawdź sama",
             "summary": "Nie musisz nam wierzyć na słowo. Numer certyfikatu jest w każdym opakowaniu - zweryfikuj go online w 30 sekund.",
             "detail": "Nasz jedwab przeszedł niezależne badania laboratoryjne pod kątem substancji szkodliwych - od barwników po formaldehyd. Certyfikat OEKO-TEX® Standard 100 potwierdza, że spełnia najsurowsze limity bezpieczeństwa, odpowiednie nawet dla niemowląt. Kartę z numerem certyfikatu znajdziesz w pudełku.",
-            "cta_label": "Zweryfikuj na oeko-tex.com →",
+            "cta_label": "Zweryfikuj na oeko-tex.com",
             "cta_link": "",
             "use_certificate_link": true
           }
@@ -304,7 +304,7 @@
           "type": "item",
           "settings": {
             "question": "Zwroty i gwarancja 60 dni",
-            "answer": "<p>60 dni na zwrot - nawet używanego produktu. Prosty formularz online, darmowy zwrot InPost. Przetestuj przez 60 nocy. Jeśli nie poczujesz różnicy, zwróć i otrzymaj pełny zwrot. Bez pytań. <a href=\"/pages/zwroty\">Szczegóły zwrotów i gwarancji →</a></p>",
+            "answer": "<p>60 dni na zwrot - nawet używanego produktu. Prosty formularz online, darmowy zwrot InPost. Przetestuj przez 60 nocy. Jeśli nie poczujesz różnicy, zwróć i otrzymaj pełny zwrot. Bez pytań. <a href=\"/pages/zwroty\">Szczegóły zwrotów i gwarancji</a></p>",
             "is_returns_target": true
           }
         },

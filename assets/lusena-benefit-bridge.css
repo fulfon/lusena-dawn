@@ -1,0 +1,142 @@
+/* ==========================================================================
+   LUSENA Benefit Bridge
+   Standalone asset — loaded via <link> to avoid compiled_assets truncation.
+   Typography: uses lusena-type-h1, lusena-type-h2, lusena-type-body,
+   lusena-type-caption from lusena-foundations.css.
+   ========================================================================== */
+
+/* ── Card grid ── */
+.lusena-benefit-bridge__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+@media (min-width: 768px) {
+  .lusena-benefit-bridge__cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--lusena-space-4);
+  }
+}
+
+@media (min-width: 1024px) {
+  .lusena-benefit-bridge__cards {
+    gap: var(--lusena-space-5);
+  }
+}
+
+/* ── Card base ── */
+.lusena-benefit-bridge__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  border-left: 2px solid color-mix(in srgb, var(--lusena-accent-cta) 30%, transparent);
+  border-bottom: 1px solid var(--lusena-color-n200);
+  border-radius: 0;
+  padding: var(--lusena-space-3) var(--lusena-space-2) var(--lusena-space-3) var(--lusena-space-3);
+}
+
+.lusena-benefit-bridge__card:last-child {
+  border-bottom: none;
+}
+
+@media (min-width: 768px) {
+  .lusena-benefit-bridge__card {
+    background: var(--lusena-surface-1);
+    border: 1px solid var(--lusena-color-n200);
+    border-radius: var(--lusena-btn-radius);
+    padding: var(--lusena-space-5);
+    transition: border-color var(--lusena-transition-base), box-shadow var(--lusena-transition-base);
+  }
+
+  .lusena-benefit-bridge__card:last-child {
+    border-bottom: 1px solid var(--lusena-color-n200);
+  }
+}
+
+@media (min-width: 1024px) {
+  .lusena-benefit-bridge__card {
+    padding: var(--lusena-space-6);
+  }
+}
+
+/* ── Featured card (skin) — desktop only ── */
+@media (min-width: 768px) {
+  .lusena-benefit-bridge__card--featured {
+    grid-row: span 2;
+  }
+}
+
+/* ── Hover — desktop pointer devices only ── */
+@media (min-width: 768px) and (hover: hover) {
+  .lusena-benefit-bridge__card:hover {
+    border-color: color-mix(in srgb, var(--lusena-accent-cta) 20%, transparent);
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--lusena-accent-cta) 4%, transparent);
+  }
+}
+
+/* ── Accent bar (desktop only) ── */
+.lusena-benefit-bridge__accent-bar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .lusena-benefit-bridge .lusena-benefit-bridge__accent-bar {
+    display: block;
+    width: var(--lusena-space-4);
+    height: 2px;
+    background: color-mix(in srgb, var(--lusena-accent-cta) 40%, transparent);
+    margin-bottom: var(--lusena-space-4);
+  }
+}
+
+/* ── Icon circle (overrides lusena-icon-circle: teal wash bg, teal stroke) ── */
+.lusena-benefit-bridge .lusena-benefit-bridge__icon-circle {
+  background: color-mix(in srgb, var(--lusena-accent-cta) 6%, transparent);
+  border-color: transparent;
+  color: var(--lusena-accent-cta);
+  margin-bottom: var(--lusena-space-2);
+}
+
+@media (min-width: 768px) {
+  .lusena-benefit-bridge .lusena-benefit-bridge__icon-circle {
+    margin-bottom: var(--lusena-space-3);
+  }
+}
+
+/* ── Card element spacing (overrides foundation defaults) ── */
+.lusena-benefit-bridge .lusena-type-h2 {
+  margin-bottom: var(--lusena-space-1);
+}
+
+@media (min-width: 768px) {
+  .lusena-benefit-bridge .lusena-type-h2 {
+    margin-bottom: var(--lusena-space-2);
+  }
+}
+
+/* ── Kicker overrides (base: lusena-type-caption) ── */
+.lusena-benefit-bridge .lusena-benefit-bridge__kicker {
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lusena-accent-2);
+  margin-bottom: var(--lusena-space-2);
+}
+
+/* ── Transition footer ── */
+.lusena-benefit-bridge .lusena-benefit-bridge__transition {
+  font-family: var(--lusena-font-brand);
+  font-style: italic;
+  color: color-mix(in srgb, var(--lusena-text-2) 70%, transparent);
+  text-align: center;
+  margin-top: var(--lusena-space-4);
+}
+
+@media (min-width: 768px) {
+  .lusena-benefit-bridge .lusena-benefit-bridge__transition {
+    margin-top: var(--lusena-space-6);
+  }
+}

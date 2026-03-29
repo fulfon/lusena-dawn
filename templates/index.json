@@ -54,8 +54,8 @@
           "type": "card",
           "settings": {
             "icon": "sparkles",
-            "title": "Gładka skóra o poranku",
-            "text": "Jedwab sprzyja redukcji odcisków sennych - rano widzisz w lustrze wypoczętą, gładką twarz zamiast zagnieceń."
+            "title": "Skóra bez śladów nocy",
+            "text": "Rano widzisz w lustrze twarz wypoczętą - nie twarz, która dopiero musi się obudzić. Jedwab jest gładki - nie zagniata skóry tak jak bawełna."
           }
         },
         "card-hair": {
@@ -63,7 +63,7 @@
           "settings": {
             "icon": "wind",
             "title": "Włosy bez porannego chaosu",
-            "text": "Gładki jedwab pomaga zachować fryzurę przez noc - mniej puszenia, plątania i łamania delikatnych pasm."
+            "text": "Gładki jedwab nie czepia się włosów podczas snu - mniej puszenia, plątania i łamania delikatnych pasm."
           }
         },
         "card-care": {
@@ -71,7 +71,7 @@
           "settings": {
             "icon": "droplets",
             "title": "Krem pracuje całą noc",
-            "text": "Jedwab nie wchłania kosmetyków tak jak bawełna - Twój krem na noc zostaje na skórze, gdzie może działać."
+            "text": "Kosmetyki kupujesz dla skóry, nie dla pościeli. Jedwab wchłania je wolniej niż bawełna - krem zostaje tam, gdzie powinien."
           }
         }
       },
@@ -81,7 +81,9 @@
         "card-care"
       ],
       "settings": {
-        "heading": "Co zmieni się po pierwszej nocy?"
+        "kicker": "Jedwab morwowy 22 momme",
+        "heading": "Co zobaczysz rano?",
+        "transition_text": "Wszystkie trzy - bez żadnej zmiany w rutynie."
       }
     },
     "trust": {
@@ -171,7 +173,7 @@
         "problem_heading": "Bawełna chłonie.\nTarcie i suchość.",
         "solution_label": "Rozwiązanie",
         "solution_heading": "Jedwab chroni.\nNawilżenie i gładkość.",
-        "cta_label": "Sprawdź dowody jakości →",
+        "cta_label": "Sprawdź dowody jakości",
         "cta_link": "shopify://pages/nasza-jakosc"
       }
     },
@@ -309,7 +311,7 @@
       ],
       "settings": {
         "heading": "Z Suzhou - Stolicy Jedwabiu od XV wieku",
-        "button_label": "Poznaj naszą historię →",
+        "button_label": "Poznaj naszą historię",
         "button_link": "shopify://pages/o-nas"
       }
     },
@@ -320,14 +322,14 @@
           "type": "item",
           "settings": {
             "question": "Czy to prawdziwy jedwab?",
-            "answer": "<p>Tak. Używamy wyłącznie 100% jedwabiu morwowego klasy 6A o gramaturze 22 momme. To najwyższa dostępna klasa, gwarantująca trwałość i wyjątkową gładkość w dotyku.</p><p><a href=\"/pages/nasza-jakosc\">Zobacz dowody jakości →</a></p>"
+            "answer": "<p>Tak. Używamy wyłącznie 100% jedwabiu morwowego klasy 6A o gramaturze 22 momme. To najwyższa dostępna klasa, gwarantująca trwałość i wyjątkową gładkość w dotyku.</p><p><a href=\"/pages/nasza-jakosc\">Zobacz dowody jakości</a></p>"
           }
         },
         "item-1": {
           "type": "item",
           "settings": {
             "question": "Dlaczego jedwab z Chin?",
-            "answer": "<p>Nasz jedwab pochodzi z Shengze w prowincji Jiangsu - jednej z Czterech Wielkich Stolic Jedwabiu Chin, gdzie tradycja tkacka sięga dynastii Ming (XV wiek). Współpracujemy bezpośrednio z manufakturą, a każda partia przechodzi polską kontrolę jakości przed wysyłką.</p><p><a href=\"/pages/o-nas\">Poznaj naszą historię →</a></p>"
+            "answer": "<p>Nasz jedwab pochodzi z Shengze w prowincji Jiangsu - jednej z Czterech Wielkich Stolic Jedwabiu Chin, gdzie tradycja tkacka sięga dynastii Ming (XV wiek). Współpracujemy bezpośrednio z manufakturą, a każda partia przechodzi polską kontrolę jakości przed wysyłką.</p><p><a href=\"/pages/o-nas\">Poznaj naszą historię</a></p>"
           }
         },
         "item-2": {
@@ -341,7 +343,7 @@
           "type": "item",
           "settings": {
             "question": "Czy 60 dni gwarancji to serio?",
-            "answer": "<p>Jak najbardziej. Oferujemy 60 nocy testu - śpij na jedwabiu przez dwa miesiące. Jeśli nie poczujesz różnicy na skórze i włosach, zwróć produkt, nawet używany. Oddajemy pieniądze bez zbędnych pytań.</p><p><a href=\"/pages/zwroty\">Szczegóły zwrotów →</a></p>"
+            "answer": "<p>Jak najbardziej. Oferujemy 60 nocy testu - śpij na jedwabiu przez dwa miesiące. Jeśli nie poczujesz różnicy na skórze i włosach, zwróć produkt, nawet używany. Oddajemy pieniądze bez zbędnych pytań.</p><p><a href=\"/pages/zwroty\">Szczegóły zwrotów</a></p>"
           }
         },
         "item-4": {

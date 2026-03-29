@@ -81,7 +81,7 @@
     {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
       <div class="lusena-text-center lusena-gap-cta-top{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <a href="{{ section.settings.cta_link }}" class="lusena-problem-solution__cta">
-          {{ section.settings.cta_label | escape }}
+          <span class="lusena-link-arrow">{{ section.settings.cta_label | escape }}</span>
         </a>
       </div>
     {%- endif -%}
@@ -130,7 +130,7 @@
 
   /* Item title spacing below (foundations .lusena-type-h2 sets margin: 0) */
   .lusena-problem-solution__item-title {
-    margin-bottom: var(--lusena-space-1);
+    margin-bottom: var(--lusena-space-2);
   }
 
   /* Extra breathing room before CTA */

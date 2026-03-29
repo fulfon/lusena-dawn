@@ -8,86 +8,67 @@
 
 ## Recent completed work
 
-### Card 5 creative sessions — all 8 products DONE (2026-03-28)
+### Benefit bridge redesign (2026-03-29)
 
-Feature card 5 freed from universal OEKO-TEX (already covered by quality evidence section + specs accordion). Each product now has a product-specific card 5 with unique angle:
+Major redesign of `lusena-benefit-bridge.liquid`:
+- **Kicker field** above heading ("Jedwab morwowy 22 momme")
+- **Featured card** modifier on first card (`.lusena-benefit-bridge__card--featured`)
+- **Accent bar** (teal left-border via `.lusena-benefit-bridge__accent-bar`)
+- **Transition text** below cards ("Wszystkie trzy - bez żadnej zmiany w rutynie.")
+- **CSS extraction** from `{% stylesheet %}` → standalone `assets/lusena-benefit-bridge.css`
+- **Copy refresh**: heading "Co zobaczysz rano?", rewritten card text and icons
+- Schema expanded with kicker, transition_text fields
 
-| Product | Title | Icon | Angle |
-|---------|-------|------|-------|
-| Poszewka | Czysty jedwab, czysta skóra | sparkles | Material purity / 8h face contact |
-| Bonnet | Olejek zostaje we włosach | droplets | Product retention (oils/masks work overnight) |
-| Maska 3D | Nawet gumka jest jedwabna | feather | Silk-covered elastic band detail |
-| Scrunchie | Bez śladu po gumce | feather | Crease-free / no visible marks |
-| Heatless Curlers | Miękki - nie uciska w nocy | feather | Open-crown sleep comfort |
-| Nocna Rutyna | Poranek bez porannej rutyny | sparkles | Morning result of both products |
-| Piękny Sen | Nic nowego w Twojej rutynie | clock | Zero-effort material swap |
-| Scrunchie Trio | Po prostu jedwab | sparkles | Silk as new normal (1→3 shift) |
+### `lusena-link-arrow` CSS component (2026-03-29)
 
-All 8 went through full creative workflow: Polish copywriter agent → legal check → customer validation (2-3 runs each) → refinement → finalization. Detailed session logs in each product MD file.
+New foundation component in `lusena-foundations.css` — CSS-only chevron via SVG mask (`::after` pseudo-element), inherits `currentColor`, hover slides 2px right. Replaces all hardcoded `→` arrow characters sitewide. Applied to:
+- `lusena-heritage` (button), `lusena-problem-solution` (CTA), `lusena-quality-hero` (CTA button)
+- `lusena-pdp-quality-evidence` (accordion CTAs), `lusena-article-card` (read more)
+- `lusena-pdp-media` (certificate CTA)
+- All `→` removed from template JSON defaults and FAQ answer HTML
 
-**Universal cards reduced from 4 to 3:** positions 2, 4, 6 (was 2, 4, 5, 6). Updated across all product docs, metafields reference, setup checklist, import script, re-evaluation prompts, AGENTS.md, copilot-instructions.md.
+### Bundle options initial state fix (2026-03-29)
 
-### Icon consistency overhaul + 3 new animated icons (2026-03-28)
+`lusena-bundle-options.liquid` — first step renders open (`is-active`, fieldset visible), subsequent steps render collapsed with pending chips (`is-pending`, `is-next` on step 2). Was: all steps rendered open initially.
 
-**New semantic icon system** defined in `product-setup-checklist.md`:
-- `heart` = gentle on body, `wind` = cool & gentle, `droplets` = locks moisture in
-- `sparkles` = radiant & fresh, `moon` = all night/every night, `clock` = fits your routine
-- `feather` = weightless & traceless, `palette` = your colors
+### Bundle PDP chip dot fix (2026-03-29)
 
-**Icons reassigned** across products to match semantic meanings (e.g., Bonnet C3 `wind`→`moon` for "stays on all night", Scrunchie Trio C1 `droplets`→`palette` for "color variety").
+`lusena-bundle-pdp.css` — pending chip dot changed from filled (`background: var(--lusena-accent-cta)`) to transparent outline (`background: transparent; border-color: var(--lusena-accent-cta)`). Visually distinguishes pending from completed steps.
 
-**3 new animated SVGs** added to `lusena-icon-animated.liquid` + `lusena-icon-animations.css`:
-- `moon` — gentle glow pulse (scale 1→1.04→1, opacity 1→0.82→1), 8s
-- `feather` — subtle float (translateY 0→-2px→0, rotate ±1°), 8s
-- `palette` — sequential swatch opacity pulse across 3 circles, 7s
+### Cart cross-sell loading refactor (2026-03-29)
 
-All with `prefers-reduced-motion` fallback. Schema dropdown in `lusena-pdp-feature-highlights` updated.
+`lusena-cart-items.liquid` — replaced custom `lusena-upsell-card__dots` (3-dot pulse animation) with standard `loading__spinner` + `lusena-btn__loading-dots` pattern. Removed 10 lines of dedicated dot CSS from `lusena-cart-page.css`. Button now uses `.loading` class toggle instead of hiding/showing separate text/dots spans.
 
-### Quality evidence accordion rewrite (2026-03-28)
+### Token compliance rule (2026-03-29)
 
-Rewrote `lusena-pdp-quality-evidence.liquid` accordion JS and CSS:
-- **Animation:** `max-height`/opacity → explicit `height` transitions with `requestAnimationFrame` for smooth open/close
-- **State management:** `.is-open` class → `data-state` attribute (`open`/`closed`/`closing`)
-- **Accessibility:** `prefers-reduced-motion` → instant open/close (no transitions)
-- **CSS:** `contain: layout style` on items, `-webkit-tap-highlight-color: transparent`, `will-change: height`
-- **Cleanup:** Arrow functions → `function` declarations (consistent with Dawn's JS style)
+Added mandatory "Token compliance" section to `.claude/rules/css-and-assets.md`:
+- Colors: always `var(--lusena-*)`, opacity via `color-mix()`
+- Typography: use foundation type classes in Liquid
+- Icons: `lusena-icon-circle` + `lusena-icon-*` sizes
+- Spacing: `var(--lusena-space-*)` only
+- Transitions: `var(--lusena-transition-fast/base)` only
+- Radius: `var(--lusena-btn-radius)` only
+- Dawn traps: `div:empty` specificity, `blockquote` styles
 
-### Claude Code infrastructure (2026-03-28)
+### No-inline-scripts rule (2026-03-29)
 
-**Hooks** (`.claude/hooks/`, 5 scripts):
-- `guard-dawn-edit.sh` — PreToolUse: blocks editing Dawn originals when lusena-* counterpart exists
-- `session-context.sh` — SessionStart: injects activeContext.md focus/next/issues
-- `post-compact-rules.sh` — PostCompact: re-injects critical LUSENA rules after context compaction
-- `theme-check-on-edit.sh` — PostToolUse: runs `shopify theme check` on edited .liquid files
-- `task-quality-gate.sh` — TaskCompleted: runs theme check on recently modified lusena-* files
+New rule `.claude/rules/no-inline-scripts.md` — bans `node -e`, `python -c`, and multi-line Bash scripts for file analysis. Requires Grep/Glob/Read tools instead. Added to `CLAUDE.md` conventions.
 
-**Rules** (`.claude/rules/`, 6 files):
-- `animations.md`, `bundle-system.md`, `cart-system.md`, `css-and-assets.md`, `css-cascade.md`, `product-metafields.md`
-- Auto-load by file path patterns (e.g., css-cascade loads when editing `assets/*.css`)
+### Section design loop skill (2026-03-29)
 
-**Skills** (2 new):
-- `lusena-new-section` — scaffolds a new LUSENA section with correct boilerplate
-- `lusena-product-copy-session` — orchestrates full creative copy workflow
+New skill `.claude/skills/lusena-section-design-loop/SKILL.md` — autonomous design iteration loop: prototype in React draft shop, validate with 5-agent Sonnet review panel, iterate up to 5 rounds.
 
-**Settings** (`.claude/settings.json`): shared settings with all hook configurations + deny rules.
+### Migration lessons #55-61 (2026-03-29)
 
-**CLAUDE.md refactored:** CSS architecture, compiled_assets guard, product metafields, and animation rules moved to `.claude/rules/` (auto-loaded). Added Bash command restrictions ($(), backticks, grep/cat/sed).
+7 new lessons in `migration-lessons.md` from benefit bridge redesign:
+- #55 `color-mix()` for opacity variants, #56 foundation type classes in Liquid
+- #57 `lusena-icon-circle` + size classes, #58 `div:empty` trap for accent bars
+- #59 reviewer agents must not have write access, #60 forward-reference problem on mobile
+- #61 mobile card treatment (avoid merged white blocks)
 
-### Minor fixes (2026-03-28)
+### Bundle feature card copy (2026-03-29)
 
-- `assets/cart.js` — null guard on `trapFocus` when `.drawer__inner-empty` missing
-- `snippets/lusena-pdp-scripts.liquid` — `is-gesturing` class toggle on lightbox image during touch
-- `templates/index.json` — benefit bridge hair card icon `star` → `wind`
-- `memory-bank/doc/products/imports/generate_import_from_export.py` — all 8 products updated with card 5 values
-
-### Cart interaction locking during bundle swap (2026-03-29)
-
-Added full-cart interaction locking when "zamień na zestaw" / "dodaj do zestawu" swap is in flight:
-- **Cart page:** `cart__items--disabled` class on `#main-cart-items` — blocks all qty/remove/upsell interactions. Explicitly removed after `reRenderSections()` on success (container element survives innerHTML swap). Removed on error.
-- **Cart drawer:** `lusena-cart-drawer__item--loading` on ALL `[data-cart-item]` rows + all buttons disabled. Cleaned up naturally on success (full DOM replacement). Restored on error.
-- **Cross-sell "Dodaj":** Not locked — single add doesn't conflict with existing item mutations.
-
-Key lesson: `reRenderSections()` replaces `.js-contents` innerHTML, but the parent `#main-cart-items` element persists — classes on it must be manually cleaned up.
+`product.bundle.json` — "Gotowe do wręczenia" → "Gotowe do wręczenia osobno" with expanded description about individual gift packaging.
 
 ## Next steps
 

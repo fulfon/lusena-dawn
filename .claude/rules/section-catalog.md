@@ -16,7 +16,7 @@ description: Quick-reference catalog of all LUSENA sections — page, tier, CSS,
 |---------|------|-----|-------|
 | `lusena-hero` | full-bleed | - | Standalone CSS via lusena-hero.css |
 | `lusena-trust-bar` | custom padding | - | Reused on 3 pages |
-| `lusena-benefit-bridge` | standard | - | 3 benefit cards, icons |
+| `lusena-benefit-bridge` | standard | YES (lusena-benefit-bridge.css) | Kicker, 3 benefit cards (first featured), accent bar, transition text |
 | `lusena-bestsellers` | spacious | - | Uses `lusena-product-card` snippet |
 | `lusena-testimonials` | spacious | - | |
 | `lusena-problem-solution` | spacious | - | Moved to pos 6 for evaluation flow |

@@ -6,7 +6,7 @@
         "hero_kicker": "Nasza jakość",
         "hero_heading": "Nie wierz nam na słowo.\nSprawdź.",
         "hero_body": "Każdy produkt LUSENA przechodzi kontrolę jakości. Oto dowody.",
-        "hero_cta_label": "Zweryfikuj certyfikat OEKO-TEX →",
+        "hero_cta_label": "Zweryfikuj certyfikat OEKO-TEX",
         "hero_cta_link": "https://www.oeko-tex.com/en/detail/?number=25.HCN.22386",
         "hero_button_label": "Pobierz certyfikat OEKO-TEX (PDF)",
         "hero_button_link": "#certificates"
@@ -212,7 +212,7 @@
           "type": "item",
           "settings": {
             "question": "Jak wygląda zwrot?",
-            "answer": "<p>Masz 60 dni na test. Jeśli produkt nie spełni oczekiwań, możesz go zwrócić bez stresu.</p><p><a href=\"/pages/zwroty\">Pełne zasady zwrotów →</a></p>"
+            "answer": "<p>Masz 60 dni na test. Jeśli produkt nie spełni oczekiwań, możesz go zwrócić bez stresu.</p><p><a href=\"/pages/zwroty\">Pełne zasady zwrotów</a></p>"
           }
         }
       },

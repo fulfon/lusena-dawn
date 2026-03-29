@@ -1097,6 +1097,29 @@ textarea:focus-visible {
 .lusena-richtext table { width: 100%; border-collapse: collapse; margin-bottom: var(--lusena-space-4); }
 .lusena-richtext th, .lusena-richtext td { border: 1px solid currentColor; padding: var(--lusena-space-2); text-align: left; }
 
+/* Link-arrow indicator — replaces inline → character.
+   SVG mask chevron with currentColor inheritance. */
+.lusena-link-arrow::after {
+  content: '';
+  display: inline-block;
+  flex-shrink: 0;
+  width: 0.7em;
+  height: 0.7em;
+  margin-left: 0.2em;
+  vertical-align: middle;
+  background: currentColor;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5.84 2.15a.5.5 0 01.7 0l5.3 5.3a.5.5 0 010 .7l-5.3 5.3a.5.5 0 01-.7-.7L10.64 8 5.84 3.15a.5.5 0 010-.7z'/%3E%3C/svg%3E");
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M5.84 2.15a.5.5 0 01.7 0l5.3 5.3a.5.5 0 010 .7l-5.3 5.3a.5.5 0 01-.7-.7L10.64 8 5.84 3.15a.5.5 0 010-.7z'/%3E%3C/svg%3E");
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  transition: translate var(--lusena-transition-fast);
+}
+.lusena-link-arrow:hover::after {
+  translate: 2px 0;
+}
+
 /* ==========================================================================
    INVERTED SECTION LOGIC
    Uses variable reassignment so everything inherits organically.

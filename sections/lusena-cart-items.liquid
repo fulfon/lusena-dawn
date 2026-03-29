@@ -805,9 +805,11 @@
                         data-cart-page-upsell-add
                         data-variant-id="{{ upsell_variant.id }}"
                       >
-                        <span class="lusena-btn__content" data-upsell-btn-text>Dodaj</span>
-                        <span class="lusena-upsell-card__dots hidden" data-upsell-loading aria-hidden="true">
-                          <span></span><span></span><span></span>
+                        <span class="lusena-btn__content">Dodaj</span>
+                        <span class="loading__spinner hidden">
+                          <span class="lusena-btn__loading-dots" aria-hidden="true">
+                            <span></span><span></span><span></span>
+                          </span>
                         </span>
                       </button>
                     </div>
@@ -991,10 +993,9 @@
       if (!btn || btn.disabled) return;
 
       btn.disabled = true;
-      var btnText = btn.querySelector('[data-upsell-btn-text]');
-      var dots = btn.querySelector('[data-upsell-loading]');
-      if (btnText) btnText.classList.add('hidden');
-      if (dots) dots.classList.remove('hidden');
+      btn.classList.add('loading');
+      var spinnerEl = btn.querySelector('.loading__spinner');
+      if (spinnerEl) spinnerEl.classList.remove('hidden');
 
       try {
         var addRes = await fetch('/cart/add.js', {
@@ -1011,8 +1012,8 @@
         reRenderSections(state);
       } catch (err) {
         btn.disabled = false;
-        if (btnText) btnText.classList.remove('hidden');
-        if (dots) dots.classList.add('hidden');
+        btn.classList.remove('loading');
+        if (spinnerEl) spinnerEl.classList.add('hidden');
       }
     });
 

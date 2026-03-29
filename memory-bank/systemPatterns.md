@@ -15,10 +15,11 @@
    - `lusena-footer.css` — footer section styles
 5. **Page-specific assets** (loaded per-page/section via `<link>` in their section):
    - `lusena-pdp.css` (~34KB) — PDP styles (loaded in lusena-main-product.liquid and lusena-main-bundle.liquid)
-   - `lusena-cart-page.css` (634 lines) — cart items + footer + quantity styles (loaded in lusena-cart-items.liquid)
+   - `lusena-cart-page.css` (624 lines) — cart items + footer + quantity styles (loaded in lusena-cart-items.liquid)
    - `lusena-search.css` (156 lines) — search page styles (loaded in lusena-search.liquid)
    - `lusena-bundle-pdp.css` — bundle PDP buy box styles (loaded in lusena-main-bundle.liquid)
    - `lusena-bundles.css` — bundle card grid (loaded in lusena-bundles.liquid)
+   - `lusena-benefit-bridge.css` — benefit bridge section styles (loaded in lusena-benefit-bridge.liquid)
 6. **Component `{% stylesheet %}` blocks** — small section-scoped CSS only (~59KB compiled after 2026-03-26 extraction, 73KB hard limit)
 
 ### compiled_assets truncation guard (MANDATORY)
@@ -98,6 +99,7 @@ Modifier: `lusena-spacing--snug-top` — reduces top to 32/48px for heroes shari
 - **Breadcrumbs:** `snippets/lusena-breadcrumbs.liquid`
 - **Final CTA:** `sections/lusena-final-cta.liquid` — generic reusable section (replaces per-page copies)
 - **Upsell cards:** `.lusena-upsell-card` — unified container for cross-sell (`__xs-row`, `__xs-img`, `__xs-info`, `__xs-bottom`, `__xs-price`) and bundle two-tile (`__bn-headline`, `__bn-tiles`, `__bn-have`, `__bn-add`, `__bn-bottom`, `__bn-pricing`). CSS scoped per-surface: drawer selectors under `.lusena-cart-drawer__upsell` (inline `<style>`), cart page selectors under `.lusena-cart-upsell` (`assets/lusena-cart-page.css`). Gain-framed headlines, real product titles/images via `bundle_nudge_map` handles. Image placeholders use `:empty { display: block }` to override Dawn's `div:empty { display: none }` rule.
+- **Link arrows:** `.lusena-link-arrow` — CSS-only chevron via SVG mask (`::after` pseudo-element), inherits `currentColor`, hover slides 2px right. Defined in `lusena-foundations.css`. Replaces hardcoded `→` characters across all CTAs and links.
 
 ## Page migration workflow
 

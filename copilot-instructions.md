@@ -74,6 +74,7 @@ These rules are in `.claude/rules/` and load automatically when you edit relevan
 - **Feature card titles: max 28 characters** — guarantees single-line rendering at the tightest breakpoint (288px column at 20px font). Reference: "Jedwab, nie satyna z poliestru" (30 chars) barely fits.
 - **NEVER use `$()` or backticks in Bash commands** — command substitution triggers permission prompts that break auto-accept flow. Instead: read files with the Read tool first, then pass content inline. Use pipes (`echo "..." | cmd`) or temp-file approaches that don't require substitution. There is ALWAYS an alternative. No exceptions.
 - **NEVER use `grep`, `rg`, `cat`, `head`, `tail`, `sed`, or `awk` via Bash** — use the dedicated Read, Grep, Glob, and Edit tools instead. They never trigger permission prompts and provide better output.
+- **NEVER use inline scripts via Bash** (`node -e "..."`, `python -c "..."`, `ruby -e "..."`) to search, analyze, or count things in files. These multi-line scripts with `&&` separators trigger Windows security prompts that require manual approval. Use the dedicated tools instead: **Grep** for pattern searching across files, **Glob** for finding files by name, **Read** for reading file contents. If you need to aggregate results (e.g., count total CSS size), do the Grep/Read calls first, then compute in a simple Bash arithmetic expression. Subagents must follow this rule too.
 - Conventional Commits: `feat(lusena):`, `fix(lusena):`, `docs:`, `chore:`
 
 ## Implementation Principles

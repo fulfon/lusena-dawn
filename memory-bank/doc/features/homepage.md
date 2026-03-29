@@ -8,7 +8,7 @@
 |---|---------|-------------|--------|
 | 1 | `lusena-hero` | hero | Done |
 | 2 | `lusena-trust-bar` | compact | Done (reused on quality, about) |
-| 3 | `lusena-benefit-bridge` | standard | Done (NEW 2026-03-28: 3 benefit cards, brand bg, teal icon circles, scroll animations) |
+| 3 | `lusena-benefit-bridge` | standard | Done (redesigned 2026-03-29: kicker, featured card modifier, accent bar, transition text, standalone `lusena-benefit-bridge.css`, copy rewritten) |
 | 4 | `lusena-bestsellers` | standard | Done (value anchors added, tier ordering pending) |
 | 5 | `lusena-testimonials` | standard | Done (UGC photo upgrade pending) |
 | 6 | `lusena-problem-solution` | standard | Done (moved from pos 3 → 6 on 2026-03-28, bg changed brand → surface-1, copy refreshed) |

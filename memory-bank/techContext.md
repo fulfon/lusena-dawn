@@ -52,12 +52,13 @@
 - `assets/lusena-search.css` — Search page styles: layout, grid, empty state (156 lines, extracted from `{% stylesheet %}` block 2026-03-26)
 - `assets/lusena-bundles.css` — Bundle card grid styles (loaded per-section in lusena-bundles.liquid)
 - `assets/lusena-bundle-pdp.css` — Bundle PDP buy box styles (loaded in lusena-main-bundle.liquid)
+- `assets/lusena-benefit-bridge.css` — Benefit bridge section styles (loaded in lusena-benefit-bridge.liquid)
 - `assets/lusena-icon-animations.css` — Animated icon CSS keyframes + prefers-reduced-motion (loaded per-section in lusena-pdp-feature-highlights.liquid)
 - `assets/base.css` — Dawn foundation (3,641 lines)
 
 ### CSS loading architecture
 - **Global assets in `theme.liquid`:** `lusena-foundations.css` → `lusena-button-system.css` → `lusena-header.css` → `lusena-hero.css` → `lusena-footer.css`
-- **Page-specific assets:** `lusena-pdp.css` loaded in `lusena-main-product.liquid` and `lusena-main-bundle.liquid`, `lusena-cart-page.css` loaded in `lusena-cart-items.liquid`, `lusena-search.css` loaded in `lusena-search.liquid`, `lusena-bundle-pdp.css` loaded in `lusena-main-bundle.liquid`, `lusena-bundles.css` loaded in `lusena-bundles.liquid`, `lusena-icon-animations.css` loaded in `lusena-pdp-feature-highlights.liquid`
+- **Page-specific assets:** `lusena-pdp.css` loaded in `lusena-main-product.liquid` and `lusena-main-bundle.liquid`, `lusena-cart-page.css` loaded in `lusena-cart-items.liquid`, `lusena-search.css` loaded in `lusena-search.liquid`, `lusena-bundle-pdp.css` loaded in `lusena-main-bundle.liquid`, `lusena-bundles.css` loaded in `lusena-bundles.liquid`, `lusena-benefit-bridge.css` loaded in `lusena-benefit-bridge.liquid`, `lusena-icon-animations.css` loaded in `lusena-pdp-feature-highlights.liquid`
 - **`{% stylesheet %}` compiled_assets:** All `{% stylesheet %}` blocks compile into `compiled_assets/styles.css` (73KB hard limit). Currently ~59KB after 2026-03-26 extraction (cart page + search CSS moved to standalone files). Safe margin maintained.
 - **Cart drawer:** Promoted from snippet render to section (`{%- section 'cart-drawer' -%}` in theme.liquid). CSS lives in `<style>` tag inside `snippets/cart-drawer.liquid` (~150 lines, not in compiled_assets). Upsell CSS selectors scoped under `.lusena-cart-drawer__upsell`.
 - **Bundle swap JS:** `assets/lusena-bundle-swap.js` — shared `LusenaBundle.swap()` for bundle add + individual remove.
@@ -81,7 +82,7 @@
 | `theme-check-on-edit.sh` | PostToolUse (Edit\|Write) | Runs `shopify theme check` on edited .liquid files |
 | `task-quality-gate.sh` | TaskCompleted | Runs theme check on recently modified lusena-* files |
 
-**Rules** (`.claude/rules/`, 7 files — auto-load by path pattern):
+**Rules** (`.claude/rules/`, 8 files — auto-load by path pattern):
 | Rule | Triggers on |
 |------|-------------|
 | `animations.md` | `sections/*.liquid`, `snippets/*.liquid` |
@@ -89,6 +90,7 @@
 | `cart-system.md` | `sections/*cart*`, `snippets/*cart*`, `assets/*cart*` |
 | `css-and-assets.md` | `assets/*.css`, `sections/*.liquid`, `snippets/*.liquid` |
 | `css-cascade.md` | `assets/*.css`, `sections/*.liquid`, `snippets/*.liquid` |
+| `no-inline-scripts.md` | `**/*.liquid`, `**/*.css`, `**/*.js`, `assets/**`, `sections/**`, `snippets/**`, `templates/**`, `layout/**` |
 | `product-metafields.md` | `memory-bank/doc/products/**`, PDP sections/snippets |
 | `section-catalog.md` | (always loaded — no path filter) |
 
@@ -96,7 +98,7 @@
 
 ## Skills inventory
 
-16 skills in `.claude/` (subset mirrored in `.agent/`, `.codex/`, `.opencode/`):
+17 skills in `.claude/` (subset mirrored in `.agent/`, `.codex/`, `.opencode/`):
 
 | Skill | Purpose |
 |-------|---------|
@@ -104,6 +106,7 @@
 | `lusena-pre-commit-sync` | Pre-commit documentation sync (replaces lusena-theme-changelog) |
 | `lusena-new-section` | Scaffolds new LUSENA section with correct boilerplate, spacing, CSS decision, schema |
 | `lusena-product-copy-session` | Orchestrates full creative copy workflow (research → legal → validation → finalization) |
+| `lusena-section-design-loop` | Autonomous design iteration loop: prototype in React draft shop, 5-agent review panel, up to 5 rounds |
 | `lusena-v2-page-migration` | Page migration to brandbook v2 |
 | `lusena-draftshop-fragment-parity` | Copy UI from React prototype to theme |
 | `lusena-page-audit` | Reusable page UX audit checklist |

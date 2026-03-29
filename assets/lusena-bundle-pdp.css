@@ -171,7 +171,7 @@
 
 .lusena-bundle-step.is-next .lusena-bundle-chip.is-pending .lusena-bundle-chip__dot {
   display: block;
-  background: var(--lusena-accent-cta);
+  background: transparent;
   border-color: var(--lusena-accent-cta);
 }
 

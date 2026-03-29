@@ -76,7 +76,7 @@
           href="{{ section.settings.button_link }}"
           class="lusena-heritage__button"
         >
-          {{ section.settings.button_label | escape }}
+          <span class="lusena-link-arrow">{{ section.settings.button_label | escape }}</span>
         </a>
       </div>
     {%- endif -%}
@@ -229,7 +229,7 @@
       "type": "text",
       "id": "button_label",
       "label": "Button label",
-      "default": "Poznaj naszą historię →"
+      "default": "Poznaj naszą historię"
     },
     {
       "type": "url",
@@ -274,7 +274,7 @@
       "name": "LUSENA Heritage",
       "settings": {
         "heading": "Z Suzhou - Stolicy Jedwabiu od XV wieku",
-        "button_label": "Poznaj naszą historię →",
+        "button_label": "Poznaj naszą historię",
         "button_link": "shopify://pages/nasza-jakosc"
       },
       "blocks": [

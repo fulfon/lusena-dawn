@@ -529,3 +529,55 @@ Dawn's `base.css` (line 473) has a global rule: `a:empty, ul:empty, dl:empty, di
 **Fix:** Use `.my-img-wrapper:empty { display: block; }` — specificity `(0,2,0)` beats `div:empty` `(0,1,1)`.
 
 **Applied:** `.lusena-upsell-card__bn-add-img:empty`, `.lusena-upsell-card__xs-img:empty` in both `cart-drawer.liquid` and `lusena-cart-items.liquid`.
+
+---
+
+## Lessons from Benefit Bridge redesign (2026-03-29)
+
+## 55. Never use raw RGB/hex for opacity variants — use `color-mix()`
+
+When you need a token color at partial opacity, never hardcode the RGB channel values. Use `color-mix(in srgb, var(--token) N%, transparent)`. If the token changes in foundations, `color-mix()` updates automatically; raw RGB values become stale.
+
+```css
+/* BAD — raw RGB, breaks if token changes */
+background: rgb(14 94 90 / 0.06);
+
+/* GOOD — references token, auto-updates */
+background: color-mix(in srgb, var(--lusena-accent-cta) 6%, transparent);
+```
+
+**Applied:** `assets/lusena-benefit-bridge.css` — all 6 opacity values converted.
+
+## 56. Always use foundation type classes in Liquid, not custom font rules in CSS
+
+Typography should use `lusena-type-h1`, `lusena-type-h2`, `lusena-type-body`, `lusena-type-caption` in the Liquid markup. Section CSS should only contain margin/spacing overrides on those classes, never redefine font-size/line-height/font-family.
+
+**Bug found:** Benefit bridge CSS had 40 lines of custom typography (font-size, line-height, font-family, color for titles, body, featured variants) that duplicated what foundations already provides.
+
+## 57. Always use `lusena-icon-circle` + `lusena-icon-*` size classes
+
+Foundations provides `lusena-icon-circle` (4.8rem, border, transparent bg) and size classes `lusena-icon-xs` through `lusena-icon-xl`. Section CSS should only override bg/border/color on the circle, never define custom icon dimensions.
+
+**Bug found:** Benefit bridge had custom icon circle (4rem/4.4rem) and custom icon SVG sizes (1.8rem/2rem) that diverged from the standard. Fixed to use `lusena-icon-circle` + `lusena-icon-lg`.
+
+## 58. `div:empty` trap applies to decorative accent bars too
+
+Empty divs used as decorative elements (accent bars, dividers) are caught by Dawn's `div:empty { display: none }` at specificity (0,1,1). A single-class selector like `.lusena-section__accent-bar { display: block }` at (0,1,0) silently loses.
+
+**Fix:** Use 0-2-0: `.lusena-section .lusena-section__accent-bar { display: block; }`
+
+**Applied:** `lusena-benefit-bridge__accent-bar` was invisible on desktop until specificity was bumped.
+
+## 59. Reviewer agents must never have write access
+
+When using AI agents as reviewers (personas, UX designer, CRO specialist, copywriter), their prompts must explicitly state "DO NOT edit, write, or modify any files. Your job is to review and score only." Without this restriction, general-purpose agents may read the actual codebase and implement changes directly — bypassing the review loop and modifying production files without approval.
+
+**Bug found:** CRO specialist agent in the benefit bridge iteration loop read the Shopify Liquid files and implemented changes directly, modifying 17 theme files without authorization.
+
+## 60. Transition line placement: forward-reference problem on mobile
+
+A summary phrase that references "all items" (e.g., "Wszystkie trzy - bez żadnej zmiany w rutynie") cannot appear inside the first card on mobile, because the reader hasn't seen the other cards yet. On desktop where all cards are visible simultaneously, it works. Solution: place at section level below all cards on both viewports, or use responsive show/hide if desktop placement differs from mobile.
+
+## 61. Mobile card treatment: avoid merging cards into one visual block
+
+When stacking cards vertically on mobile with no gap (gap-0), white card backgrounds merge into one continuous block. Fix: either remove the white background on mobile (`background: transparent`) so cards blend into the page background, or add gap between cards. The teal left-border + bottom divider pattern provides structure without the white block effect.

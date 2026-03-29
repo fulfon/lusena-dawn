@@ -107,15 +107,15 @@
       -%}
 
       <div
-        class="lusena-bundle-step"
+        class="lusena-bundle-step{% if forloop.first %} is-active{% else %} is-pending{% if forloop.index0 == 1 %} is-next{% endif %}{% endif %}"
         data-lusena-bundle-step="{{ forloop.index0 }}"
         data-step-product="{{ product_name | escape }}"
       >
         {%- comment -%} Chip (collapsed confirmation) — height-animated wrapper {%- endcomment -%}
-        <div class="lusena-bundle-step__chip-wrap" data-lusena-step-chip-wrap data-state="closed" style="height:0px">
+        <div class="lusena-bundle-step__chip-wrap" data-lusena-step-chip-wrap{% if forloop.first %} data-state="closed" style="height:0px"{% else %} data-state="open" style="height:auto;overflow:visible"{% endif %}>
           <button
             type="button"
-            class="lusena-bundle-chip"
+            class="lusena-bundle-chip{% unless forloop.first %} is-pending{% endunless %}"
             data-lusena-bundle-chip
           >
             <span class="lusena-bundle-chip__dot" data-lusena-chip-dot></span>
@@ -131,7 +131,7 @@
         </div>
 
         {%- comment -%} Selector fieldset — height-animated wrapper {%- endcomment -%}
-        <div class="lusena-bundle-step__fieldset-wrap" data-lusena-step-fieldset-wrap data-state="open" style="height:auto">
+        <div class="lusena-bundle-step__fieldset-wrap" data-lusena-step-fieldset-wrap{% if forloop.first %} data-state="open" style="height:auto"{% else %} data-state="closed" style="height:0px"{% endif %}>
           <div class="lusena-bundle-step__accent">
             <fieldset
               class="lusena-bundle-options__group"

@@ -71,6 +71,7 @@ Triggered for products with `lusena.upsell_primary` metafield. Fallback chain: p
 - Product image + info + price in top row
 - ATC button in full-width bottom row (`__xs-bottom`) — matches bundle card's `__bn-bottom` rhythm
 - Cart page: direct `/cart/add.js` fetch + AJAX section re-render (avoids opening drawer)
+- Loading state: standard `loading__spinner` + `lusena-btn__loading-dots` pattern (refactored 2026-03-29, was custom dot-pulse animation)
 
 ### Layout
 - Cart drawer: upsell inside scrollable `.lusena-cart-drawer__body` (scrolls with items)

@@ -111,7 +111,7 @@
                     {%- if cta_url != blank -%}
                       <a
                         href="{{ cta_url }}"
-                        class="lusena-pdp-quality-evidence__cta"
+                        class="lusena-pdp-quality-evidence__cta lusena-link-arrow"
                         {% if cta_opens_new_tab %}
                           target="_blank" rel="noopener"
                         {% endif %}
@@ -119,7 +119,7 @@
                         {{ block.settings.cta_label | escape }}
                       </a>
                     {%- else -%}
-                      <span class="lusena-pdp-quality-evidence__cta">
+                      <span class="lusena-pdp-quality-evidence__cta lusena-link-arrow">
                         {{ block.settings.cta_label | escape }}
                       </span>
                     {%- endif -%}
@@ -561,7 +561,7 @@
           "type": "text",
           "id": "cta_label",
           "label": "CTA label",
-          "default": "Sprawdź certyfikat →"
+          "default": "Sprawdź certyfikat"
         },
         {
           "type": "url",
@@ -591,7 +591,7 @@
             "title": "OEKO-TEX® Standard 100",
             "summary": "Niezależny certyfikat potwierdzający brak substancji szkodliwych. Bezpieczny dla skóry wrażliwej, alergików i dzieci.",
             "detail": "Każda partia jedwabiu jest testowana przez akredytowane laboratorium. Numer certyfikatu znajdziesz na karcie dołączonej do produktu. Możesz go zweryfikować na oeko-tex.com/check.",
-            "cta_label": "Sprawdź certyfikat →",
+            "cta_label": "Sprawdź certyfikat",
             "cta_link": "/pages/nasza-jakosc",
             "use_certificate_link": true
           }
@@ -603,7 +603,7 @@
             "title": "Jedwab z Suzhou - 600 lat tradycji",
             "summary": "Nasz jedwab pochodzi z regionu Shengze w Suzhou - światowej stolicy jedwabiu od ponad 600 lat.",
             "detail": "Lokalni producenci specjalizują się w jedwabiu Grade 6A o najdłuższych włóknach. To gładszy, trwalszy i bardziej lśniący materiał niż jedwab z innych regionów. Współpracujemy bezpośrednio z certyfikowanymi manufakturami.",
-            "cta_label": "Więcej o pochodzeniu →",
+            "cta_label": "Więcej o pochodzeniu",
             "cta_link": "/pages/o-nas"
           }
         },
@@ -614,7 +614,7 @@
             "title": "22 momme - optymalny standard",
             "summary": "Momme to jednostka gęstości jedwabiu. 22 momme to gęstszy i trwalszy splot niż typowe 16-19 momme na rynku.",
             "detail": "Wyższe momme oznacza grubszy, bardziej trwały jedwab, który lepiej oddycha i zachowuje właściwości termoregulacyjne. 22 momme to optymalny balans między luksusowym dotykiem a wytrzymałością - bez nadmiernej wagi.",
-            "cta_label": "Porównaj momme →",
+            "cta_label": "Porównaj momme",
             "cta_link": "/pages/nasza-jakosc"
           }
         },
