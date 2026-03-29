@@ -1,6 +1,6 @@
 # Poszewka jedwabna 50×60 (Flagship Pillowcase)
 
-*Last updated: 2026-03-22*
+*Last updated: 2026-03-28*
 
 ## Basic info
 
@@ -140,9 +140,9 @@ Equal split per §7.2 MOQ (120 / 3 = 40 each). Szampan positioned as limitka wit
 | `lusena.pdp_feature_4_icon` | shield-check | Pre-filled (universal) |
 | `lusena.pdp_feature_4_title` | Jedwab, nie satyna z poliestru | Pre-filled (universal) |
 | `lusena.pdp_feature_4_description` | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. | Pre-filled (universal) |
-| `lusena.pdp_feature_5_icon` | sparkles | Pre-filled (universal) |
-| `lusena.pdp_feature_5_title` | Certyfikowany OEKO-TEX® 100 | Pre-filled (universal) |
-| `lusena.pdp_feature_5_description` | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. | Pre-filled (universal) |
+| `lusena.pdp_feature_5_icon` | sparkles | Done (2026-03-28) |
+| `lusena.pdp_feature_5_title` | Czysty jedwab, czysta skóra | Done (2026-03-28) |
+| `lusena.pdp_feature_5_description` | Twoja twarz spoczywa na poszewce 8 godzin każdej nocy. To powinien być najczystszy materiał w Twojej sypialni - i jest. Jedwab morwowy to czyste białko, sama natura. | Done (2026-03-28) |
 | `lusena.pdp_feature_6_icon` | gift | Pre-filled (universal) |
 | `lusena.pdp_feature_6_title` | Gotowa do wręczenia | Pre-filled (universal) |
 | `lusena.pdp_feature_6_description` | Każda poszewka LUSENA przychodzi w eleganckim pudełku prezentowym - idealny upominek, który robi wrażenie. Bez dodatkowego pakowania. | Pre-filled (universal) |
@@ -157,7 +157,7 @@ Equal split per §7.2 MOQ (120 / 3 = 40 each). Szampan positioned as limitka wit
 | 2 | layers | 3 stacked horizontal layers. Bottom layer gently shifts down 1px then back, middle stays still, top shifts up 1px then back - a slow "breathing" of the stack over 8 seconds. Reinforces the feeling of density and substance. Easing: ease-in-out. |
 | 3 | wind | Two curved air-current lines flowing gently across the icon. Lines alternate opacity (0.5→1→0.5) in sequence with a slight horizontal drift (translateX 0→1px→0). 7-second full cycle. Easing: ease-in-out. Evokes a cool, calm breeze — refreshing and effortless. |
 | 4 | shield-check | Shield outline with a checkmark inside. Checkmark draws itself once via stroke-dashoffset animation over 1.5s on first viewport entry, then stays static permanently. Reinforces "verified, authentic" feeling. No looping. |
-| 5 | sparkles | 3 small diamond-shaped stars in a cluster. Stars gently twinkle in sequence (opacity 0.4→1→0.4), one star at a time, left to right. 7-second full cycle. Easing: ease-in-out. Subtle shimmer of quality and certification. |
+| 5 | sparkles | Two small diamond sparkles with a slow, alternating opacity pulse (0.4→1.0→0.4) over 7 seconds, offset by half-cycle. Clean and minimal - reinforces "purity" without being flashy. No translation or rotation, just light appearing and fading. Evokes cleanliness, natural radiance. |
 | 6 | gift | Gift box with ribbon on top. Very subtle "unwrap" motion - lid shifts up 1px then back down over 6 seconds. The ribbon bow has a tiny wiggle (rotate ±1°). Playful but restrained. Reinforces the excitement of receiving a beautifully wrapped gift. |
 
 ## Validation results
@@ -218,6 +218,26 @@ Equal split per §7.2 MOQ (120 / 3 = 40 each). Szampan positioned as limitka wit
 - **Legal re-check:** PASS (0 issues, 1 advisory on Card 1 — "zmniejsza" accepted for physical textile property)
 - **Customer validation:** Not re-run (minor wording fixes that preserve meaning — per process rules, validation not needed for MINOR changes)
 - **Verdict:** UPDATED — 4 fields adjusted for natural Polish phrasing. Original validation scores (Trust 7.5, Intent 6.5, Premium 7.25) remain valid.
+
+### Card 5 creative session (2026-03-28)
+- **Flow:** Orchestrator + Polish e-commerce copywriter agent + 3 validation runs
+- **Angle:** Material purity / intimacy of prolonged face contact. Card 5 was freed from universal OEKO-TEX slot; OEKO-TEX excluded per brief (covered by quality evidence section + specs accordion).
+- **Icon:** sparkles (purity/cleanliness)
+- **Title:** "Czysty jedwab, czysta skóra" (27 chars) — parallelism praised by 3/4 personas
+- **Description:** "Twoja twarz spoczywa na poszewce 8 godzin każdej nocy. To powinien być najczystszy materiał w Twojej sypialni - i jest. Jedwab morwowy to czyste białko, sama natura." (166 chars)
+- **Key decisions:** (1) Removed "roztocza" (dust mites) after Run 1 — 4/4 personas rejected as breaking premium tone, (2) Changed "naturalne włókno białkowe" to "czyste białko" to avoid verbatim repetition with card 4, (3) Replaced "nic syntetycznego" (negation) with "sama natura" (positive) per Maja's feedback
+- **Legal check:** PASS (0 issues, 2 low-risk advisories: "czysta skóra" double meaning disambiguated by context; "sama natura" descriptive/poetic)
+- **Validation scores:**
+
+| Run | Trust | Intent | Premium | Key change |
+|-----|-------|--------|---------|------------|
+| 1 | 5.75 | 4.50 | 5.75 | Original (roztocza, "naturalne włókno białkowe") |
+| 2 | 7.00 | 6.25 | 7.25 | Removed roztocza, reframed as positive purity |
+| 3 | 7.00 | 6.50 | 7.75 | "nic syntetycznego" → "sama natura" |
+
+- **Intent gap (6.5 vs 7.0):** Driven by Zuzia (5/10, wants durability/mechanism card — structural mismatch) and Kasia (6/10, wants verifiable proof — OEKO-TEX excluded from this card). Both are constraint-level issues, not copywriting issues. Card optimized to ceiling.
+- **Locked elements:** "8 godzin" opener (4/4 across all runs), "najczystszy materiał w Twojej sypialni" pivot (4/4 in Runs 2-3), title parallelism (3/4)
+- **Verdict:** FINALIZED — Trust and Premium above threshold, Intent at practical ceiling given constraints.
 
 ## Media
 

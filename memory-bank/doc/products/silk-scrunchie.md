@@ -142,9 +142,9 @@ Equal split per §7.2 MOQ (150 / 3 = 50 each). Trio bundle uses one of each (A+B
 | `lusena.pdp_feature_4_icon` | shield-check | |
 | `lusena.pdp_feature_4_title` | Jedwab, nie satyna z poliestru | |
 | `lusena.pdp_feature_4_description` | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. | |
-| `lusena.pdp_feature_5_icon` | sparkles | |
-| `lusena.pdp_feature_5_title` | Certyfikowany OEKO-TEX® 100 | |
-| `lusena.pdp_feature_5_description` | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. | |
+| `lusena.pdp_feature_5_icon` | feather | **UPDATED** (icon consistency: "no crease mark" = weightless/traceless, not nighttime) |
+| `lusena.pdp_feature_5_title` | Bez śladu po gumce | **COMPLETED** (2026-03-28, 20 chars) |
+| `lusena.pdp_feature_5_description` | Jedwab rozkłada nacisk równomiernie na całą szerokość gumki - nie ściska w jednej cienkiej linii. Po całym dniu, nawet po nocy - znacznie mniejszy ślad niż po zwykłej gumce. | **COMPLETED** (2026-03-28, 175 chars) |
 | `lusena.pdp_feature_6_icon` | gift | |
 | `lusena.pdp_feature_6_title` | Gotowa do wręczenia | |
 | `lusena.pdp_feature_6_description` | Każda gumka LUSENA przychodzi w eleganckim pudełku prezentowym - idealny drobny upominek, który robi wrażenie. Bez dodatkowego pakowania. | |
@@ -159,7 +159,7 @@ Equal split per §7.2 MOQ (150 / 3 = 50 each). Trio bundle uses one of each (A+B
 | 2 | layers | 3 stacked horizontal layers. Bottom layer gently shifts down 1px then back, middle stays still, top shifts up 1px then back - a slow "breathing" of the stack over 8 seconds. Reinforces the feeling of density and substance. Easing: ease-in-out. |
 | 3 | wind | Three curved wind lines. Lines gently wave from left to right in sequence (translateX 0→2px→0), staggered start times, over 6 seconds total. Feels like a soft, barely-there breeze - calming, not chaotic. Easing: ease-in-out. |
 | 4 | shield-check | Shield outline with a checkmark inside. Checkmark draws itself once via stroke-dashoffset animation over 1.5s on first viewport entry, then stays static permanently. Reinforces "verified, authentic" feeling. No looping. |
-| 5 | sparkles | 3 small diamond-shaped stars in a cluster. Stars gently twinkle in sequence (opacity 0.4→1→0.4), one star at a time, left to right. 7-second full cycle. Easing: ease-in-out. Subtle shimmer of quality and certification. |
+| 5 | feather | Single feather shape. Very slow, gentle float - subtle vertical drift (translateY 0→-2px→0) with barely perceptible rotation (±1°) over 8 seconds. The feather seems to hover weightlessly. Easing: ease-in-out. Reinforces the scrunchie being so light it leaves no trace. |
 | 6 | gift | Gift box with ribbon on top. Very subtle "unwrap" motion - lid shifts up 1px then back down over 6 seconds. The ribbon bow has a tiny wiggle (rotate ±1°). Playful but restrained. Reinforces the excitement of receiving a beautifully wrapped gift. |
 
 ## Validation results
@@ -210,6 +210,44 @@ Equal split per §7.2 MOQ (150 / 3 = 50 each). Trio bundle uses one of each (A+B
 - **Changed element analysis:** B2 (rewritten) received zero criticism from any persona. B3 phrasing change not flagged — B3's conceptual weakness (olejki argument for scrunchie) exists in both old and new versions. Card 3 title/desc changes not flagged except 1/4 minor tone concern from Maja.
 - **Score drops attributed to:** (1) Tagline≈Benefits "repetition" detected by Q10 — a known artifact since tagline is desktop-only and benefits are mobile-only (personas see both together), (2) site-level factors (no photos 4/4, no reviews 4/4), same pattern as original session.
 - **Decision:** KEEP all changes. B2 exclusion violation is a hard rule that cannot be compromised by reverting. Score drops are caused by the stricter validation framework, not by the copy changes. Headline remains unanimously strongest element (4/4).
+
+### Card 5 creative session (2026-03-28)
+
+**Angle:** Crease-free / no visible marks after removing scrunchie. Validated by competitor research (5/6 premium brands use this angle: Slip, Blissy, Lilysilk, Drowsy, Holistic Silk). Icon `moon` ties crease-free proof to overnight use — LUSENA's strongest brand pillar.
+
+**Legal check (card 5):**
+- **Date:** 2026-03-28
+- **Verdict:** PASS (0 issues, 1 advisory)
+- **Notes:** All claims are physical/mechanical textile properties (pressure distribution). "Znacznie mniejszy ślad" is a comparative claim — no absolute promise, no medical claim. Advisory: "znacznie" is subjective but standard comparative language in textile marketing.
+
+**Customer validation Run 1 (card 5):**
+- **Date:** 2026-03-28
+- **Draft description:** "Jedwab rozkłada nacisk równomiernie na całą szerokość gumki - nie ściska w jednej cienkiej linii. Zdejmujesz po całym dniu, nawet po nocy, a włosy wyglądają jakby nigdy nie były spięte."
+
+| Criteria | Kasia (34) | Ewa (47) | Zuzia (23) | Maja (38) | Average |
+|----------|-----------|---------|-----------|---------|---------|
+| Trust | 6/10 | 6/10 | 6/10 | 5/10 | 5.75/10 |
+| Purchase intent | 7/10 | 7/10 | 7/10 | 6/10 | 6.75/10 |
+| Premium feel | 8/10 | 7/10 | 7/10 | 6/10 | 7.0/10 |
+
+- **CRITICAL (4/4):** "jakby nigdy nie były spięte" too absolute — all personas said it undermines trust.
+- **IMPORTANT (4/4):** "Zdejmujesz" appears 3x on page (headline + card 3 + card 5) — narrative repetition.
+- **LOCKED:** Title, mechanism sentence, overnight angle, moon icon — all universally praised.
+
+**Customer validation Run 2 (card 5, focused):**
+- **Date:** 2026-03-28
+- **Finalized description:** "Jedwab rozkłada nacisk równomiernie na całą szerokość gumki - nie ściska w jednej cienkiej linii. Po całym dniu, nawet po nocy - znacznie mniejszy ślad niż po zwykłej gumce."
+
+| Criteria | Kasia (34) | Ewa (47) | Zuzia (23) | Maja (38) | Average |
+|----------|-----------|---------|-----------|---------|---------|
+| Trust | 7/10 | 8/10 | 7/10 | 8/10 | 7.5/10 |
+| Purchase intent | 7/10 | 7/10 | 6/10 | 7/10 | 6.75/10 |
+| Premium feel | 6/10 | 7/10 | 6/10 | 7/10 | 6.5/10 |
+
+- **Trust +1.75** — honest comparative ("znacznie mniejszy ślad") replaced absolute ("jakby nigdy nie były spięte"). All 4 personas confirmed improvement.
+- **Intent stable** — Zuzia's 6 driven by price sensitivity (59 zł student budget) + wanting reviews/social proof. Not a copy issue.
+- **Premium -0.5** — expected trade-off: honest tone reads as less aspirational. All 4 personas explicitly said they PREFER the honest version. Kasia: "wolę wiarygodność od pustego luksusu."
+- **Decision:** FINALIZE. Remaining gaps are site-level (photos, reviews, UGC) not copy issues. Run 3 would risk regression without improvement.
 
 ## Media
 

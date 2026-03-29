@@ -59,10 +59,10 @@ never both at the same time. Therefore, similar or even identical content betwee
 tagline and benefits is EXPECTED and CORRECT — the tagline is the benefits reformulated
 as flowing prose for desktop. Do NOT flag tagline ≈ benefits as an overlap violation.
 
-**Feature cards 1 and 3 (per-product):**
+**Feature cards 1, 3, and 5 (per-product):**
 - [ ] Title: max 28 characters? Count them.
 - [ ] Description: 150-210 characters? Count them.
-- [ ] No overlap with universal cards 2/4/5/6?
+- [ ] No overlap with universal cards 2/4/6?
 - [ ] No overlap with buybox benefits?
 
 **SEO:**
@@ -210,7 +210,8 @@ and understand the full outcome without reading the detailed report.
 - This is quality assurance, not reinvention — minimize changes
 - The orchestrator NEVER writes Polish text directly — all Polish comes from the
   copywriter agent
-- Universal fields (cards 2/4/5/6, specs, care) are LOCKED — do not review them
+- Universal fields (cards 2/4/6, specs, care) are LOCKED — do not review them
+- Card 5 is product-specific — review it alongside cards 1 and 3
 - Hyphens only, never em dashes
 - Tagline ≈ benefits is NOT overlap (they are desktop/mobile alternative views)
 - DO NO HARM: if changes score lower than the original, revert

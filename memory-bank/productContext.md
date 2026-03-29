@@ -7,7 +7,7 @@ LUSENA exists to make premium silk accessories accessible and trustworthy in the
 ## Store pages (customer journey)
 
 ### Customer-facing pages (LUSENA-styled)
-1. **Homepage** (`index.json`) — Brand first impression, trust signals, hero product showcase, social proof
+1. **Homepage** (`index.json`) — Brand first impression, trust signals, benefit bridge, hero product showcase, social proof
 2. **Collection page** (`collection.json`) — Browse products, filter, tier-based ordering
 3. **Product page** (`product.json`) — Detailed evidence, proof blocks, buy flow
 3b. **Bundle product page** (`product.bundle.json`) — Separate template: progressive disclosure color selector (step-by-step, GPU-only animations, pending placeholders, progress counter), sticky ATC (mobile+desktop, two-state: guide or convert), care accordion, savings display. Shared PDP sections (feature highlights, quality evidence, truth table, FAQ, final CTA). Assigned to Nocna Rutyna, Piękny Sen, Scrunchie Trio.

@@ -140,15 +140,15 @@ Equal split per §7.2 MOQ (60 / 2 = 30 each). Bonnet gets A+B only (§7.3) — e
 | `lusena.pdp_feature_2_icon` | layers | Pre-filled (universal) |
 | `lusena.pdp_feature_2_title` | Dlaczego 22 momme? | Pre-filled (universal) |
 | `lusena.pdp_feature_2_description` | Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy. | Pre-filled (universal) |
-| `lusena.pdp_feature_3_icon` | wind | Done |
+| `lusena.pdp_feature_3_icon` | moon | **UPDATED** (icon consistency: "stays on all night" = overnight, not breathability) |
 | `lusena.pdp_feature_3_title` | Trzyma pewnie całą noc | Done |
 | `lusena.pdp_feature_3_description` | Regulowany ściągacz dopasujesz dokładnie do swojej głowy - ani za luźno, ani za ciasno. Jedwab morwowy oddycha i pomaga regulować temperaturę. Budzisz się w czepku, nie obok niego. | **UPDATED** (2026-03-22: "do obwodu głowy" → "do swojej głowy" — natural Polish) |
 | `lusena.pdp_feature_4_icon` | shield-check | Pre-filled (universal) |
 | `lusena.pdp_feature_4_title` | Jedwab, nie satyna z poliestru | Pre-filled (universal) |
 | `lusena.pdp_feature_4_description` | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. | Pre-filled (universal) |
-| `lusena.pdp_feature_5_icon` | sparkles | Pre-filled (universal) |
-| `lusena.pdp_feature_5_title` | Certyfikowany OEKO-TEX® 100 | Pre-filled (universal) |
-| `lusena.pdp_feature_5_description` | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. | Pre-filled (universal) |
+| `lusena.pdp_feature_5_icon` | droplets | Done |
+| `lusena.pdp_feature_5_title` | Olejek zostaje we włosach | Done |
+| `lusena.pdp_feature_5_description` | Nakładasz olejek albo maskę i zakładasz czepek - jedwab otacza włosy ze wszystkich stron, więc kosmetyki pracują przez całą noc zamiast wsiąkać w poduszkę. Rano efekt jest na włosach, nie na pościeli. | Done |
 | `lusena.pdp_feature_6_icon` | gift | Pre-filled (universal) |
 | `lusena.pdp_feature_6_title` | Gotowa do wręczenia | Pre-filled (universal) |
 | `lusena.pdp_feature_6_description` | Każdy czepek LUSENA przychodzi w eleganckim pudełku prezentowym - idealny upominek, który robi wrażenie. Bez dodatkowego pakowania. | Done |
@@ -161,9 +161,9 @@ Equal split per §7.2 MOQ (60 / 2 = 30 each). Bonnet gets A+B only (§7.3) — e
 |------|------|---------------|
 | 1 | heart | Heart shape with a very slow, gentle scale pulse (1.0→1.03→1.0) over 7 seconds. The heart seems to "breathe" - calm, protective feeling toward hair. Easing: ease-in-out. Reinforces the idea of gentle, all-around protection from the silk-covered elastic. |
 | 2 | layers | 3 stacked horizontal layers. Bottom layer gently shifts down 1px then back, middle stays still, top shifts up 1px then back - a slow "breathing" of the stack over 8 seconds. Reinforces the feeling of density and substance. Easing: ease-in-out. |
-| 3 | wind | Three curved wind lines. Lines gently wave from left to right in sequence (translateX 0→2px→0), staggered start times, over 7 seconds total. Feels like a soft, barely-there breeze - comforting, not chaotic. Easing: ease-in-out. Reinforces breathability and lightness of the bonnet. |
+| 3 | moon | Crescent moon with a very slow glow pulse (scale 1→1.04→1, opacity 1→0.82→1) over 8 seconds. Calm, protective nighttime feeling. Easing: ease-in-out. Reinforces that the bonnet stays on reliably all night. |
 | 4 | shield-check | Shield outline with a checkmark inside. Checkmark draws itself once via stroke-dashoffset animation over 1.5s on first viewport entry, then stays static permanently. Reinforces "verified, authentic" feeling. No looping. |
-| 5 | sparkles | 3 small diamond-shaped stars in a cluster. Stars gently twinkle in sequence (opacity 0.4→1→0.4), one star at a time, left to right. 7-second full cycle. Easing: ease-in-out. Subtle shimmer of quality and certification. |
+| 5 | droplets | Three droplets of varying sizes arranged vertically. Gentle slow drift downward then reset (translateY 0 → 2px → 0), staggered start times (largest first), over 7 seconds total. Feels like oil slowly settling into hair - calm, protective. Easing: ease-in-out. Reinforces the idea that products stay where you put them instead of being absorbed away. |
 | 6 | gift | Gift box with ribbon on top. Very subtle "unwrap" motion - lid shifts up 1px then back down over 6 seconds. The ribbon bow has a tiny wiggle (rotate ±1°). Playful but restrained. Reinforces the excitement of receiving a beautifully wrapped gift. |
 
 ## Validation results
@@ -172,6 +172,7 @@ Equal split per §7.2 MOQ (60 / 2 = 30 each). Bonnet gets A+B only (§7.3) — e
 - **Date:** 2026-03-14 — PASS (1 fix applied). "nie osłabia" (absolute) in benefit 2 → fixed to "delikatniejszy dla linii włosów". All claims use approved hedging or physical/mechanical framing. Advisory: card 3 "reguluje temperaturę" softened to "pomaga regulować" in Run 3.
 - **Date:** 2026-03-16 — PASS (0 issues, 1 warning). Adjustability claims ("regulowany ściągacz", "dopasujesz obwód") are physical/mechanical — safe. Warning: "pasuje na każdą głowę" (universality) softened to "dopasowuje się do obwodu głowy" per Option B.
 - **Date:** 2026-03-22 — PASS (0 issues, 1 advisory). Re-evaluation: "do obwodu głowy" → "do kształtu/swojej głowy" changes are linguistic only, no change in claim strength. Universality guard preserved (no "każdą"). "OEKO-TEX®" without "Standard 100" remains a valid trademark reference.
+- **Date:** 2026-03-28 — PASS (0 issues, 1 advisory). Card 5 (moisture/product retention). All claims are physical/mechanical textile properties (cotton absorption vs silk). "Pomaga zachować" hedging not used — description uses factual contrast ("chłonie" vs "nie wchłania") and observational morning outcome. Title "Olejek zostaje we włosach" is a physical property claim. Advisory: title omits hedging, but titles by convention don't require it; description provides qualified framing.
 
 ### Customer validation
 - **Date:** 2026-03-14 to 2026-03-16
@@ -215,6 +216,34 @@ Equal split per §7.2 MOQ (60 / 2 = 30 each). Bonnet gets A+B only (§7.3) — e
 - **Legal re-check:** PASS (0 issues, 1 advisory). Changes are linguistic only, universality guard preserved.
 - **Customer validation:** Not re-run (minor phrasing fixes do not warrant re-validation; original scores remain valid).
 - **Overall verdict:** UPDATED — 4 fields adjusted for natural Polish and SEO compliance. No structural changes to copy strategy.
+
+### Card 5 creative session (2026-03-28)
+- **Process:** Orchestrator + Polish copywriter + 2-run validation + composite assembly
+- **Angle:** Product retention — bonnet wraps hair so night products (oils, masks) work all night instead of soaking into the pillow
+- **Icon:** `droplets` (available in animated icon system)
+- **Run 1 scores (card 5 only, full card set for context):**
+
+| Criteria | Kasia (34) | Ewa (47) | Zuzia (23) | Maja (38) | Average |
+|----------|-----------|---------|-----------|---------|---------|
+| Trust | 7/10 | 8/10 | 7/10 | 7/10 | 7.25/10 |
+| Intent | 8/10 | 7/10 | 7/10 | 5/10 | 6.75/10 |
+| Premium | 8/10 | 8/10 | 7/10 | 7/10 | 7.50/10 |
+
+- **Run 1 feedback:** Opening ("bawełna chłonie wilgoć - olejek czy maska...") LOCKED (4/4 strongest element). Title "Nawilżenie zostaje we włosach" flagged as Rossmann-like by 3/4. Ending "pomaga zachować nawilżenie do rana" flagged as weak by 4/4.
+- **Run 2 scores (title "Bariera dla olejku i maski" + new ending):**
+
+| Criteria | Kasia (34) | Ewa (47) | Zuzia (23) | Maja (38) | Average |
+|----------|-----------|---------|-----------|---------|---------|
+| Trust | 7/10 | 6/10 | 7/10 | 7.5/10 | 6.88/10 |
+| Intent | 7/10 | 7/10 | 7/10 | 7/10 | 7.00/10 |
+| Premium | 6/10 | 5/10 | 5/10 | 7/10 | 5.75/10 |
+
+- **Run 2 feedback:** Ending "rano jest we włosach, nie w poduszce" LOCKED (4/4). Title "Bariera" killed premium (too clinical/defensive). Middle connector "zamyka pielęgnację od każdej strony" flagged as awkward by 4/4.
+- **Composite assembly:** Scores traded off between R1 and R2 (R1 better premium, R2 better intent). Assembled best elements: title "Olejek zostaje we włosach" (concrete like R2, benefit-oriented like R1, avoids both "nawilżenie" Rossmann problem and "bariera" clinical problem); ending contrast LOCKED.
+- **Post-composite reframe:** Owner flagged that comparing silk to cotton ("bawełna chłonie wilgoć") doesn't make sense for a bonnet (nobody makes cotton bonnets). Description rewritten to frame as nightly routine: apply products → put on bonnet → products work all night. No material comparison (card 4 handles that). Cotton comparison removed entirely.
+- **Final description:** "Nakładasz olejek albo maskę i zakładasz czepek - jedwab otacza włosy ze wszystkich stron, więc kosmetyki pracują przez całą noc zamiast wsiąkać w poduszkę. Rano efekt jest na włosach, nie na pościeli."
+- **Legal:** PASS (0 issues). All claims are physical/mechanical or observational.
+- **No overlap** with cards 1-4, 6, buybox, or below-fold content.
 
 ## Media
 

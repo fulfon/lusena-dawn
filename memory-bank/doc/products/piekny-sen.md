@@ -68,21 +68,23 @@ Progressive disclosure: Step 1 = poszewka color, Step 2 = maska auto-selected (C
 
 **Approved 2026-03-22.** Follows pattern established by Nocna Rutyna session.
 
-**UNIVERSAL bundle cards (positions 2, 4, 5, 6 - locked, same across all bundles):**
+**UNIVERSAL bundle cards (positions 2, 4, 6 - locked, same across all bundles):**
 
 | Pos | Icon | Title | Description |
 |-----|------|-------|-------------|
 | 2 | `layers` | Dlaczego 22 momme? | Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy. |
 | 4 | `shield-check` | Jedwab, nie satyna z poliestru | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. |
-| 5 | `sparkles` | Certyfikowany OEKO-TEX® 100 | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. |
 | 6 | `gift` | Gotowe do wręczenia | Każdy zestaw LUSENA przychodzi w eleganckim opakowaniu prezentowym - idealny upominek, który robi wrażenie. Bez dodatkowego pakowania. |
 
-**PER-BUNDLE cards (positions 1, 3 - unique per bundle):**
+> Card 5 was previously universal (OEKO-TEX). Now product-specific (2026-03-28): "Nic nowego w Twojej rutynie" - zero-effort material swap angle.
+
+**PER-BUNDLE cards (positions 1, 3, 5 - unique per bundle):**
 
 | Pos | Angle for Piękny Sen | Status |
 |-----|---------------------|--------|
 | 1 | Complete facial coverage - poszewka covers face skin, mask covers eye area | Done |
 | 3 | Morning payoff - the combined result you see in the mirror | Done |
+| 5 | Zero-effort material swap - nothing changes in your routine except the material | Done (2026-03-28) |
 
 ## LUSENA metafields
 
@@ -126,21 +128,21 @@ Progressive disclosure: Step 1 = poszewka color, Step 2 = maska auto-selected (C
 
 | Metafield | Value | Status |
 |-----------|-------|--------|
-| `lusena.pdp_feature_1_icon` | moon | Done |
+| `lusena.pdp_feature_1_icon` | heart | **UPDATED** (icon consistency: "full face protection" = gentle on body; echoes both component C1s) |
 | `lusena.pdp_feature_1_title` | Od policzka po powieki | Done |
 | `lusena.pdp_feature_1_description` | Poszewka chroni skórę twarzy przed tarciem - policzki, czoło, brodę. Maska 3D otula okolice oczu bez nacisku na powieki. Razem pokrywają całą twarz - żadna skóra nie zostaje bez ochrony. | Done |
 | `lusena.pdp_feature_2_icon` | layers | Pre-filled (universal) |
 | `lusena.pdp_feature_2_title` | Dlaczego 22 momme? | Pre-filled (universal) |
 | `lusena.pdp_feature_2_description` | Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy. | Pre-filled (universal) |
-| `lusena.pdp_feature_3_icon` | heart | Done |
+| `lusena.pdp_feature_3_icon` | sparkles | **UPDATED** (icon consistency: "beautiful morning" = radiant result; echoes Poszewka C5) |
 | `lusena.pdp_feature_3_title` | Ranek po pięknym śnie | Done |
 | `lusena.pdp_feature_3_description` | Mniej zagnieceń na policzku, okolice oczu odciążone, twarz otulona jedwabiem przez osiem godzin. Poszewka ogranicza tarcie na skórze, maska daje oczom ciemność i spokój - efekt widać rano w lustrze. | Done |
 | `lusena.pdp_feature_4_icon` | shield-check | Pre-filled (universal) |
 | `lusena.pdp_feature_4_title` | Jedwab, nie satyna z poliestru | Pre-filled (universal) |
 | `lusena.pdp_feature_4_description` | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. | Pre-filled (universal) |
-| `lusena.pdp_feature_5_icon` | sparkles | Pre-filled (universal) |
-| `lusena.pdp_feature_5_title` | Certyfikowany OEKO-TEX® 100 | Pre-filled (universal) |
-| `lusena.pdp_feature_5_description` | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. | Pre-filled (universal) |
+| `lusena.pdp_feature_5_icon` | clock | Done (2026-03-28) |
+| `lusena.pdp_feature_5_title` | Nic nowego w Twojej rutynie | Done (2026-03-28, 27 chars) |
+| `lusena.pdp_feature_5_description` | Twój wieczór się nie zmienia. Poszewka trafia na tę samą poduszkę. Maskę zakładasz w pięć sekund. Zmienia się jedno - materiał, który dotyka Twojej twarzy przez całą noc. | Done (2026-03-28, 170 chars) |
 | `lusena.pdp_feature_6_icon` | gift | Pre-filled (universal) |
 | `lusena.pdp_feature_6_title` | Gotowe do wręczenia | Pre-filled (universal) |
 | `lusena.pdp_feature_6_description` | Każdy zestaw LUSENA przychodzi w eleganckim opakowaniu prezentowym - idealny upominek, który robi wrażenie. Bez dodatkowego pakowania. | Pre-filled (universal) |
@@ -149,11 +151,11 @@ Progressive disclosure: Step 1 = poszewka color, Step 2 = maska auto-selected (C
 
 | Card | Icon | Animation spec |
 |------|------|---------------|
-| 1 | moon | Crescent moon with a very slow, gentle orbital drift (translate 0->1px->0) over 8 seconds. Subtle glow pulse on the inner curve (opacity 0.7->1->0.7). Calm, protective nighttime feeling. Easing: ease-in-out. |
+| 1 | heart | Heart shape with a very slow, gentle scale pulse (1.0→1.02→1.0) over 7 seconds. The heart seems to "breathe" - calm, protective feeling toward the entire face. Easing: ease-in-out. Barely perceptible. |
 | 2 | layers | 3 stacked horizontal layers. Bottom layer gently shifts down 1px then back, middle stays still, top shifts up 1px then back - a slow "breathing" of the stack over 8 seconds. Reinforces the feeling of density and substance. Easing: ease-in-out. |
-| 3 | heart | Heart shape with a very slow, gentle scale pulse (1.0->1.02->1.0) over 7 seconds. The heart seems to "breathe" - calm, the feeling of waking up refreshed and cared for. Easing: ease-in-out. Barely perceptible. |
+| 3 | sparkles | Three sparkle elements with sequential opacity pulse (0.4→1.0→0.4), staggered by 2.3s, over 7 seconds. Clean, radiant feeling. Easing: ease-in-out. Reinforces the beautiful, radiant morning result. |
 | 4 | shield-check | Shield outline with a checkmark inside. Checkmark draws itself once via stroke-dashoffset animation over 1.5s on first viewport entry, then stays static permanently. Reinforces "verified, authentic" feeling. No looping. |
-| 5 | sparkles | 3 small diamond-shaped stars in a cluster. Stars gently twinkle in sequence (opacity 0.4->1->0.4), one star at a time, left to right. 7-second full cycle. Easing: ease-in-out. Subtle shimmer of quality and certification. |
+| 5 | clock | Clock face with two hands. Minute hand makes a slow, smooth 30-degree sweep over 10 seconds, then pauses 6 seconds before repeating. Hour hand barely shifts (1-2 degrees per cycle). Calm, steady passage of time - nothing rushed, nothing disrupted. Easing: linear for the sweep (steady time flow), smooth ease-in-out for start/stop. Reinforces "your routine stays the same, only the material changes." |
 | 6 | gift | Gift box with ribbon on top. Very subtle "unwrap" motion - lid shifts up 1px then back down over 6 seconds. The ribbon bow has a tiny wiggle (rotate +/-1 deg). Playful but restrained. Reinforces the excitement of receiving a beautifully wrapped gift. |
 
 ## Validation results
@@ -191,6 +193,30 @@ Progressive disclosure: Step 1 = poszewka color, Step 2 = maska auto-selected (C
 - **Zuzia's intent (6/10):** Capped by product-market fit — she's a CGM/hair customer, Piękny Sen targets skin/sleep customers. "Żaden copywriting nie sprawi, że maska 3D stanie się czepkiem na włosy." Would prefer Nocna Rutyna (poszewka + bonnet). This is expected — different customer segment per bundle strategy.
 - **Ewa's premium (6.5/10):** Capped by missing packaging visuals: "wrażenie premium przy prezentach buduje się głównie WIZUALNIE." Copy quality is not the blocker.
 - **Final decision:** Copy finalized after Run 2. All averages above 7.0 (Trust 7.6, Intent 7.0, Premium 7.25).
+
+### Card 5 creative session (2026-03-28)
+
+**Scope:** Feature card 5 only (icon + title + description). Previously universal OEKO-TEX card, freed up for product-specific content.
+
+**Angle:** Zero-effort material swap - the set doesn't add new habits, it replaces what's already there (cotton with silk, light with darkness). Distinct from card 1 (zone coverage) and card 3 (morning result).
+
+**Legal check:** PASS (0 issues, 0 advisories). All statements factual/verifiable. No efficacy or beauty claims.
+
+**Customer validation (3 runs + composite):**
+
+| Criteria | Run 1 (ritual) | Run 2 (zero-effort) | Run 3 (polished) | Composite |
+|----------|---------------|--------------------|--------------------|-----------|
+| Trust | 3.75 | **7.75** | 6.75 | 7.75 (v2) |
+| Intent | 2.5 | **6.5** | 5.5 | 6.5 (v2) |
+| Premium | 5.5 | **6.0** | 5.75 | 6.0 (v2) |
+
+- **Run 1 (ritual angle) FAILED:** "Wieczorny rytuał dla siebie" rejected 4/4 - "rytuał" is a dead word in beauty marketing, poetic tone broke the page's factual trust pattern. All scores below 4.
+- **Run 2 (zero-effort angle) BEST:** "Nic nowego w Twojej rutynie" passed trust threshold (7.75). 4/4 confirmed the angle adds genuine value. "Zmienia się jedno - materiał..." praised by 3/4 as strongest element. "Maska zakłada się w pięć sekund" criticized 4/4 as "instruction manual language."
+- **Run 3 (polished) REGRESSED:** Replacing "pięć sekund" with "ostatni gest" and title with "Ten sam wieczór, lepszy sen" hurt all scores. The concrete "pięć sekund" grounded the card better than the poetic replacement, despite vocal criticism.
+- **Composite decision:** v2 copy verbatim (highest scoring) + clock icon from v3 (Maja's icon/text alignment observation was valid - sparkles contradicted "nothing changes" message, clock matches "same routine").
+- **Premium feel ceiling (6.0):** Structural with this angle - "nothing changes" is inherently anti-aspirational. Cards 1 and 3 handle aspiration; card 5's role is barrier removal. 6.0 is acceptable for that role.
+- **Kasia's intent (5/10):** Her purchase barrier is "is this real silk?" not "is this complicated?" - card 4 addresses her actual objection. Card 5 targets different personas.
+- **Zuzia's intent (7/10 in Run 2):** The zero-effort message resonated - "changes my question from 'can I afford a new habit' to 'can I afford better material'."
 
 ## Media
 

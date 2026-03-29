@@ -5,7 +5,7 @@
 
   For icons not in the animated set, falls back to the static lusena-icon snippet.
 
-  @param {string} name - Icon name (heart, layers, droplets, wind, shield-check, sparkles, gift, clock)
+  @param {string} name - Icon name (heart, layers, droplets, wind, shield-check, sparkles, gift, clock, moon, feather, palette)
   @param {string} [class] - Optional CSS classes applied to the <svg>
   @param {number} [stroke_width] - Optional stroke width (default: 1.5)
   @param {string} [aria_label] - Optional accessible label; when blank, icon is aria-hidden
@@ -19,7 +19,7 @@
   assign icon_aria_label = aria_label | default: ''
   assign icon_stagger = stagger | default: 0
 
-  assign animated_icons = ',heart,layers,droplets,wind,shield-check,sparkles,gift,clock,'
+  assign animated_icons = ',heart,layers,droplets,wind,shield-check,sparkles,gift,clock,moon,feather,palette,'
   assign check_name = ',' | append: icon_name | append: ','
 -%}
 
@@ -111,6 +111,30 @@
         </g>
         <g class="lusena-anim-clock-hour">
           <line x1="12" y1="12" x2="12" y2="7.5"></line>
+        </g>
+
+      {%- when 'moon' -%}
+        <g class="lusena-anim-moon">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </g>
+
+      {%- when 'feather' -%}
+        <g class="lusena-anim-feather">
+          <path d="M3 21h3.5C14 21 21 14 21 6v-3h-3.5C10 3 3 10 3 18v3z"></path>
+          <path d="M3 21l18-18"></path>
+          <path d="M9 15h4"></path>
+          <path d="M15 9v-4"></path>
+        </g>
+
+      {%- when 'palette' -%}
+        <g class="lusena-anim-palette-1">
+          <circle cx="7" cy="15" r="2.5"></circle>
+        </g>
+        <g class="lusena-anim-palette-2">
+          <circle cx="12" cy="9" r="2.5"></circle>
+        </g>
+        <g class="lusena-anim-palette-3">
+          <circle cx="17" cy="15" r="2.5"></circle>
         </g>
 
     {%- endcase -%}

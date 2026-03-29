@@ -161,6 +161,8 @@
     border-radius: var(--lusena-radius-sm);
     overflow: hidden;
     cursor: pointer;
+    contain: layout style;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .lusena-pdp-quality-evidence__toggle {
@@ -175,6 +177,7 @@
     transition: background-color 0.15s ease;
     color: inherit;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .lusena-pdp-quality-evidence__toggle:hover {
@@ -237,15 +240,18 @@
   }
 
   .lusena-pdp-quality-evidence__panel {
-    max-height: 0;
-    opacity: 0;
+    height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease, opacity 0.3s ease;
+    transition: height 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
+    will-change: height;
   }
 
   .lusena-pdp-quality-evidence__panel-inner {
     /* 20px padding + 40px icon + 16px gap = 76px */
     padding: 0 20px 20px 76px;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.18s ease, transform 0.18s ease;
   }
 
   .lusena-pdp-quality-evidence__detail {
@@ -272,12 +278,26 @@
     outline-offset: 2px;
   }
 
-  .lusena-pdp-quality-evidence__item.is-open .lusena-pdp-quality-evidence__chevron {
+  .lusena-pdp-quality-evidence__item[data-state='open'] .lusena-pdp-quality-evidence__chevron {
     transform: rotate(180deg);
   }
 
-  .lusena-pdp-quality-evidence__item.is-open .lusena-pdp-quality-evidence__panel {
-    opacity: 1;
+  .lusena-pdp-quality-evidence__item[data-state='closed'] .lusena-pdp-quality-evidence__panel-inner,
+  .lusena-pdp-quality-evidence__item[data-state='closing'] .lusena-pdp-quality-evidence__panel-inner {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lusena-pdp-quality-evidence__panel {
+      transition: none;
+      will-change: auto;
+    }
+    .lusena-pdp-quality-evidence__panel-inner {
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
   }
 
   @media (min-width: 768px) {
@@ -299,85 +319,141 @@
 
 {% javascript %}
   (() => {
-    const initRoot = (root) => {
+    var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function getPanel(item) { return item.querySelector('[data-lusena-quality-evidence-panel]'); }
+    function getInner(panel) { return panel.querySelector('.lusena-pdp-quality-evidence__panel-inner') || panel.firstElementChild; }
+    function clearPendingEnd(panel) {
+      if (typeof panel._lusenaQeOnEnd === 'function') {
+        panel.removeEventListener('transitionend', panel._lusenaQeOnEnd);
+        panel._lusenaQeOnEnd = null;
+      }
+    }
+    function setExpanded(item, expanded) {
+      var toggle = item.querySelector('[data-lusena-quality-evidence-toggle]');
+      if (toggle) toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    }
+
+    var initRoot = function(root) {
       if (!root) return;
       if (root.hasAttribute('data-lusena-quality-evidence-init')) return;
-
       root.setAttribute('data-lusena-quality-evidence-init', 'true');
-      const items = Array.from(root.querySelectorAll('[data-lusena-quality-evidence-item]'));
 
-      const setExpanded = (item, expanded) => {
-        const toggle = item.querySelector('[data-lusena-quality-evidence-toggle]');
-        if (!toggle) return;
-        toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-      };
+      var items = Array.from(root.querySelectorAll('[data-lusena-quality-evidence-item]'));
 
-      const closeItem = (item) => {
-        const panel = item.querySelector('[data-lusena-quality-evidence-panel]');
-        if (panel) panel.style.maxHeight = '0';
-        item.classList.remove('is-open');
-        setExpanded(item, false);
-      };
+      function closeItem(item) {
+        var panel = getPanel(item);
+        if (!panel) return;
+        clearPendingEnd(panel);
 
-      const openItem = (item) => {
-        items.forEach((otherItem) => {
-          if (otherItem !== item) {
-            closeItem(otherItem);
-          }
+        if (prefersReducedMotion) {
+          item.dataset.state = 'closed';
+          panel.style.height = '0px';
+          setExpanded(item, false);
+          return;
+        }
+
+        var h = panel.offsetHeight;
+        panel.style.height = h + 'px';
+        item.dataset.state = 'closing';
+
+        requestAnimationFrame(function() {
+          panel.style.height = '0px';
         });
-        const panel = item.querySelector('[data-lusena-quality-evidence-panel]');
-        if (panel) panel.style.maxHeight = panel.scrollHeight + 'px';
-        item.classList.add('is-open');
+
+        var onEnd = function(e) {
+          if (e.target !== panel || e.propertyName !== 'height') return;
+          panel.removeEventListener('transitionend', onEnd);
+          panel._lusenaQeOnEnd = null;
+          item.dataset.state = 'closed';
+          panel.style.height = '0px';
+        };
+        panel._lusenaQeOnEnd = onEnd;
+        panel.addEventListener('transitionend', onEnd);
+        setExpanded(item, false);
+      }
+
+      function openItem(item) {
+        var panel = getPanel(item);
+        if (!panel) return;
+        clearPendingEnd(panel);
+
+        // Accordion: close all others
+        items.forEach(function(other) {
+          if (other !== item && other.dataset.state !== 'closed') closeItem(other);
+        });
+
+        if (prefersReducedMotion) {
+          item.dataset.state = 'open';
+          panel.style.height = 'auto';
+          setExpanded(item, true);
+          return;
+        }
+
+        panel.style.height = '0px';
+        item.dataset.state = 'open';
+
+        var inner = getInner(panel);
+        var targetH = inner ? inner.scrollHeight : panel.scrollHeight;
+
+        requestAnimationFrame(function() {
+          panel.style.height = targetH + 'px';
+        });
+
         setExpanded(item, true);
-      };
+      }
 
-      items.forEach((item) => {
-        item.addEventListener('click', (e) => {
-          // Let CTA links work normally
+      // Init state
+      items.forEach(function(item) {
+        var panel = getPanel(item);
+        if (!panel) return;
+        item.dataset.state = 'closed';
+        panel.style.height = '0px';
+      });
+
+      // Event handlers
+      items.forEach(function(item) {
+        item.addEventListener('click', function(e) {
           if (e.target.closest('.lusena-pdp-quality-evidence__cta')) return;
-
-          if (item.classList.contains('is-open')) {
-            closeItem(item);
-            return;
-          }
-          openItem(item);
+          if (item.dataset.state === 'open') closeItem(item);
+          else openItem(item);
         });
       });
     };
 
-    const initAll = (scope) => {
-      const searchRoot = scope || document;
-      const roots = searchRoot.querySelectorAll('[data-lusena-quality-evidence]');
-      roots.forEach((root) => initRoot(root));
+    var initAll = function(scope) {
+      var searchRoot = scope || document;
+      var roots = searchRoot.querySelectorAll('[data-lusena-quality-evidence]');
+      roots.forEach(function(root) { initRoot(root); });
     };
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => initAll(document));
+      document.addEventListener('DOMContentLoaded', function() { initAll(document); });
     } else {
       initAll(document);
     }
 
     if (window.Shopify && window.Shopify.designMode) {
-      document.addEventListener('shopify:section:load', (event) => {
+      document.addEventListener('shopify:section:load', function(event) {
         initAll(event.target);
       });
 
-      document.addEventListener('shopify:block:select', (event) => {
-        const selectedItem = event.target.closest('[data-lusena-quality-evidence-item]');
+      document.addEventListener('shopify:block:select', function(event) {
+        var selectedItem = event.target.closest('[data-lusena-quality-evidence-item]');
         if (!selectedItem) return;
-
-        const root = selectedItem.closest('[data-lusena-quality-evidence]');
+        var root = selectedItem.closest('[data-lusena-quality-evidence]');
         if (!root) return;
-
-        const items = Array.from(root.querySelectorAll('[data-lusena-quality-evidence-item]'));
-        items.forEach((item) => {
-          const toggle = item.querySelector('[data-lusena-quality-evidence-toggle]');
+        var items = Array.from(root.querySelectorAll('[data-lusena-quality-evidence-item]'));
+        items.forEach(function(item) {
+          var panel = getPanel(item);
           if (item === selectedItem) {
-            item.classList.add('is-open');
-            if (toggle) toggle.setAttribute('aria-expanded', 'true');
+            item.dataset.state = 'open';
+            if (panel) panel.style.height = 'auto';
+            setExpanded(item, true);
           } else {
-            item.classList.remove('is-open');
-            if (toggle) toggle.setAttribute('aria-expanded', 'false');
+            item.dataset.state = 'closed';
+            if (panel) panel.style.height = '0px';
+            setExpanded(item, false);
           }
         });
       });

@@ -1,6 +1,6 @@
 # Scrunchie Trio (Silk Scrunchie Trio)
 
-*Last updated: 2026-03-22*
+*Last updated: 2026-03-28*
 
 ## Basic info
 
@@ -65,31 +65,33 @@ Unlike Nocna Rutyna and Piękny Sen, there is no color selection UI. The bundle 
 
 ## Feature card strategy
 
-**Approved 2026-03-22.** Follows universal pattern (positions 2/4/5/6 locked).
+**Approved 2026-03-22.** Follows universal pattern (positions 2/4/6 locked).
 
-**UNIVERSAL bundle cards (positions 2, 4, 5, 6 - locked, same across all bundles):**
+**UNIVERSAL bundle cards (positions 2, 4, 6 - locked, same across all bundles):**
 
 | Pos | Icon | Title | Description |
 |-----|------|-------|-------------|
 | 2 | `layers` | Dlaczego 22 momme? | Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy. |
 | 4 | `shield-check` | Jedwab, nie satyna z poliestru | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. |
-| 5 | `sparkles` | Certyfikowany OEKO-TEX® 100 | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. |
 | 6 | `gift` | Gotowe do wręczenia | Każdy zestaw LUSENA przychodzi w eleganckim opakowaniu prezentowym - idealny upominek, który robi wrażenie. Bez dodatkowego pakowania. |
 
-**PER-BUNDLE cards (positions 1, 3 - unique per bundle):**
+> Card 5 was previously universal (OEKO-TEX). Now product-specific (2026-03-28): "Po prostu jedwab" — silk as new normal, positive framing of the 1→3 habit shift.
+
+**PER-BUNDLE cards (positions 1, 3, 5 - unique per bundle):**
 
 | Pos | Angle for Scrunchie Trio | Status |
 |-----|------------------------|--------|
 | 1 | Color variety - capsule palette that works with everything | Done |
 | 3 | Always silk at hand - micro-moments where silk is your default | Done |
+| 5 | Silk as your new normal - the 1→3 shift from exception to default | Done (2026-03-28) |
 
 **All per-bundle cards across bundles (for reference - must not repeat):**
 
-| Bundle | Card 1 | Card 3 |
-|--------|--------|--------|
-| Nocna Rutyna | "Inna ochrona, ten sam jedwab" (complementary mechanisms) | "Rutyna na każdą noc" (nightly ritual) |
-| Piękny Sen | "Od policzka po powieki" (complete facial coverage) | "Ranek po pięknym śnie" (morning payoff) |
-| Scrunchie Trio | "Kolor pod nastrój" (capsule palette variety) | "Jedwab zawsze pod ręką" (always-available silk) |
+| Bundle | Card 1 | Card 3 | Card 5 |
+|--------|--------|--------|--------|
+| Nocna Rutyna | "Inna ochrona, ten sam jedwab" (complementary mechanisms) | "Rutyna na każdą noc" (nightly ritual) | "Poranek bez porannej rutyny" (morning payoff of both items) |
+| Piękny Sen | "Od policzka po powieki" (complete facial coverage) | "Ranek po pięknym śnie" (morning payoff) | {pending creative session} |
+| Scrunchie Trio | "Kolor pod nastrój" (capsule palette variety) | "Jedwab zawsze pod ręką" (always-available silk) | "Po prostu jedwab" (silk as new normal) |
 
 ## LUSENA metafields
 
@@ -124,7 +126,7 @@ Unlike Nocna Rutyna and Piękny Sen, there is no color selection UI. The bundle 
 
 | Metafield | Value | Status |
 |-----------|-------|--------|
-| `lusena.pdp_specs_*` | (N/A for bundles - no specs accordion on bundle template. Universal feature cards 2/4/5 cover material education.) | N/A |
+| `lusena.pdp_specs_*` | (N/A for bundles - no specs accordion on bundle template. Universal feature cards 2/4 and quality evidence section cover material education.) | N/A |
 
 ### Care & Badge
 
@@ -139,21 +141,21 @@ Unlike Nocna Rutyna and Piękny Sen, there is no color selection UI. The bundle 
 
 | Metafield | Value | Status |
 |-----------|-------|--------|
-| `lusena.pdp_feature_1_icon` | droplets | Done |
+| `lusena.pdp_feature_1_icon` | palette | **UPDATED** (icon consistency: "color variety" requires dedicated icon, not moisture-retention droplets) |
 | `lusena.pdp_feature_1_title` | Kolor pod nastrój | Done |
 | `lusena.pdp_feature_1_description` | Czarny, brudny róż i szampan - trzy klasyki, które pasują do siebie i do wszystkiego w szafie. Dobierasz do stroju, do nastroju albo po prostu sięgasz po najbliższą. Każda opcja jest dobra. | Done |
 | `lusena.pdp_feature_2_icon` | layers | Pre-filled (universal) |
 | `lusena.pdp_feature_2_title` | Dlaczego 22 momme? | Pre-filled (universal) |
 | `lusena.pdp_feature_2_description` | Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy. | Pre-filled (universal) |
-| `lusena.pdp_feature_3_icon` | wind | Done |
+| `lusena.pdp_feature_3_icon` | clock | **UPDATED** (icon consistency: "always at hand" = everyday routine, not breathability) |
 | `lusena.pdp_feature_3_title` | Jedwab zawsze pod ręką | Done |
 | `lusena.pdp_feature_3_description` | Rano w pośpiechu, w trakcie treningu, wieczorem przed snem - moment, w którym sięgasz po gumkę, jest przypadkowy. Kiedy każda pod ręką jest jedwabna, nie musisz o tym myśleć. | Done |
 | `lusena.pdp_feature_4_icon` | shield-check | Pre-filled (universal) |
 | `lusena.pdp_feature_4_title` | Jedwab, nie satyna z poliestru | Pre-filled (universal) |
 | `lusena.pdp_feature_4_description` | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. | Pre-filled (universal) |
-| `lusena.pdp_feature_5_icon` | sparkles | Pre-filled (universal) |
-| `lusena.pdp_feature_5_title` | Certyfikowany OEKO-TEX® 100 | Pre-filled (universal) |
-| `lusena.pdp_feature_5_description` | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. | Pre-filled (universal) |
+| `lusena.pdp_feature_5_icon` | sparkles | Done (2026-03-28) |
+| `lusena.pdp_feature_5_title` | Po prostu jedwab | Done (2026-03-28, 16 chars) |
+| `lusena.pdp_feature_5_description` | Jedna jedwabna gumka to przyjemny wyjątek. Kiedy masz trzy, nie zastanawiasz się, po którą sięgnąć - każda jest jedwabna. I właśnie tak wyjątek staje się oczywistością. | Done (2026-03-28, 168 chars) |
 | `lusena.pdp_feature_6_icon` | gift | Pre-filled (universal) |
 | `lusena.pdp_feature_6_title` | Gotowe do wręczenia | Pre-filled (universal) |
 | `lusena.pdp_feature_6_description` | Każdy zestaw LUSENA przychodzi w eleganckim opakowaniu prezentowym - idealny upominek, który robi wrażenie. Bez dodatkowego pakowania. | Pre-filled (universal) |
@@ -162,11 +164,11 @@ Unlike Nocna Rutyna and Piękny Sen, there is no color selection UI. The bundle 
 
 | Card | Icon | Animation spec |
 |------|------|---------------|
-| 1 | droplets | Three small droplets in a cluster. Each droplet gently pulses opacity in sequence (0.6->1->0.6), one at a time, left to right. 7-second full cycle. Easing: ease-in-out. The three drops represent three colors - calm, playful variety. |
+| 1 | palette | Three circles (color swatches) in a gentle arc. Each circle pulses opacity in sequence (0.5→1.0→0.5), staggered by 2.3s, over 7 seconds. Three swatches echo three scrunchies. Calm, playful variety. Easing: ease-in-out. |
 | 2 | layers | 3 stacked horizontal layers. Bottom layer gently shifts down 1px then back, middle stays still, top shifts up 1px then back - a slow "breathing" of the stack over 8 seconds. Reinforces the feeling of density and substance. Easing: ease-in-out. |
-| 3 | wind | Three curved wind lines. Lines gently wave from left to right in sequence (translateX 0->2px->0), staggered start times, over 6 seconds total. Feels like a soft breeze - lightness and freedom of always having silk at hand. Easing: ease-in-out. |
+| 3 | clock | Clock face with hour and minute hands. Minute hand performs a gentle tick-tock motion (rotate 60→65deg), hour hand static at 300deg. 7-second cycle. Easing: ease-in-out. Reinforces silk being part of every moment of your day. |
 | 4 | shield-check | Shield outline with a checkmark inside. Checkmark draws itself once via stroke-dashoffset animation over 1.5s on first viewport entry, then stays static permanently. Reinforces "verified, authentic" feeling. No looping. |
-| 5 | sparkles | 3 small diamond-shaped stars in a cluster. Stars gently twinkle in sequence (opacity 0.4->1->0.4), one star at a time, left to right. 7-second full cycle. Easing: ease-in-out. Subtle shimmer of quality and certification. |
+| 5 | sparkles | Three sparkle elements (main star, small cross, small circle). Each gently pulses opacity in sequence (0.5->1.0->0.5), staggered by 2s, over 8-second cycle. Represents the quiet, gradual transformation from exception to default - not a sudden flash, but a gentle brightening. Three sparkles echo three scrunchies. Easing: ease-in-out. |
 | 6 | gift | Gift box with ribbon on top. Very subtle "unwrap" motion - lid shifts up 1px then back down over 6 seconds. The ribbon bow has a tiny wiggle (rotate +/-1 deg). Playful but restrained. Reinforces the excitement of receiving a beautifully wrapped gift. |
 
 ## Validation results
@@ -205,6 +207,37 @@ Unlike Nocna Rutyna and Piękny Sen, there is no color selection UI. The bundle 
 - **Ewa's trust (6):** Capped by missing social proof and packaging visuals: "strona mówi 'uwierz nam', a nie 'sprawdź sama'." Copy quality is not the blocker.
 - **Minor repetition noted (4/4):** "syntetyczna" appears in tagline + B2 + Card 3. All personas noted but none called it critical — different contexts (declaration / logistics / micro-moments). Acceptable thematic thread for the anti-synthetic value proposition.
 - **Final decision:** Copy finalized after Run 2. Premium crosses 7.0. Trust and Intent moderated by site-level factors (no photos, no reviews, budget segment) — same pattern as individual scrunchie session. Copy optimized to the limit of what text alone can achieve for this product category and price point.
+
+### Card 5 creative session
+- **Date:** 2026-03-28
+- **Scope:** Card 5 only (icon, title, description) — freed from universal OEKO-TEX slot
+- **Angle:** "Silk as your new normal" — positive framing of the 1→3 habit shift, no anti-synthetic language
+- **Legal check:** PASS (0 issues, 0 advisories). Zero product efficacy claims — purely lifestyle/habit observation.
+
+**Card 5 validation — Run 1 (v1: "Koniec z syntetycznymi"):**
+
+| Criteria | Kasia (34) | Ewa (47) | Zuzia (23) | Maja (38) | Average |
+|----------|-----------|---------|-----------|---------|---------|
+| Trust | 5/10 | 5/10 | 4/10 | 4/10 | 4.5/10 |
+| Purchase intent | 3/10 | 3/10 | 2/10 | 3/10 | 2.75/10 |
+| Premium feel | 4/10 | 3/10 | 5/10 | 4/10 | 4.0/10 |
+
+Run 1 failed: 4/4 flagged anti-synthetic repetition (4th instance on page), aggressive title tone, no new value. "Zwykłe gumki wciąż wygrywają" flagged as manipulative (3/4). Only "staje się oczywistością" praised unanimously.
+
+**Card 5 validation — Run 2 (v2: "Po prostu jedwab"):**
+
+| Criteria | Kasia (34) | Ewa (47) | Zuzia (23) | Maja (38) | Average |
+|----------|-----------|---------|-----------|---------|---------|
+| Trust | 7/10 | 8/10 | 6/10 | 7/10 | 7.0/10 |
+| Purchase intent | 5/10 | 7/10 | 3/10 | 7/10 | 5.5/10 |
+| Premium feel | 8/10 | 9/10 | 7/10 | 8/10 | 8.0/10 |
+
+- **Key improvements:** Trust +2.5, Intent +2.75, Premium +4.0. Complete rewrite to positive framing resolved all Run 1 issues.
+- **Title "Po prostu jedwab":** Unanimously praised (4/4). Ewa: "ma tę nonszalancję, którą mają drogie rzeczy." Maja: "tytuł, który w końcu oddycha."
+- **"Wyjątek → oczywistość" arc:** Unanimously strongest (4/4). Maja: "podstępnie skuteczna karta."
+- **Intent 5.5:** Structurally capped by Zuzia's price sensitivity (3/10, same pattern as full product intent 5.5) and Kasia wanting sensory hair details (5/10, but adding them would overlap individual scrunchie cards 1/3/5). Ewa + Maja both at 7/10.
+- **Post-validation polish:** "Po cichu, bez wysiłku" cut (Kasia: try-hard double closing). "Każda jest jedwabna" kept — only 1/4 personas flagged it (below REFINE threshold of 2+), and owner confirmed it sounds natural.
+- **Final decision:** Card 5 finalized. Premium 8.0 exceeds threshold. Trust 7.0 meets threshold. Intent moderated by same structural factors as full product session (no photos, no reviews, price sensitivity). Copy optimized to the limit of what a single reinforcing card can achieve.
 
 ## Media
 

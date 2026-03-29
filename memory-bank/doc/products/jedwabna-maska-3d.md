@@ -1,6 +1,6 @@
 # Jedwabna maska 3D do spania
 
-*Last updated: 2026-03-22*
+*Last updated: 2026-03-28*
 
 ## Basic info
 
@@ -139,9 +139,9 @@ Single color (A only per §7.3): Black is the #1 eye mask color (~40-45% of glob
 | `lusena.pdp_feature_4_icon` | shield-check | Pre-filled (universal) |
 | `lusena.pdp_feature_4_title` | Jedwab, nie satyna z poliestru | Pre-filled (universal) |
 | `lusena.pdp_feature_4_description` | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. | Pre-filled (universal) |
-| `lusena.pdp_feature_5_icon` | sparkles | Pre-filled (universal) |
-| `lusena.pdp_feature_5_title` | Certyfikowany OEKO-TEX® 100 | Pre-filled (universal) |
-| `lusena.pdp_feature_5_description` | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. | Pre-filled (universal) |
+| `lusena.pdp_feature_5_icon` | feather | Done (2026-03-28) |
+| `lusena.pdp_feature_5_title` | Nawet gumka jest jedwabna | Done (2026-03-28) |
+| `lusena.pdp_feature_5_description` | Zwykła gumka zostawia czerwone ślady na skroniach i ciągnie włosy. Tu jest pokryta jedwabiem - delikatnie przylega, nie wgniata się, nie ciągnie. Zapominasz, że ją masz. | Done (2026-03-28) |
 | `lusena.pdp_feature_6_icon` | gift | Pre-filled (universal) |
 | `lusena.pdp_feature_6_title` | Gotowa do wręczenia | Pre-filled (universal) |
 | `lusena.pdp_feature_6_description` | Każda maska LUSENA przychodzi w eleganckim pudełku prezentowym - idealny upominek, który robi wrażenie. Bez dodatkowego pakowania. | Pre-filled (swap "maska") |
@@ -156,7 +156,7 @@ Single color (A only per §7.3): Black is the #1 eye mask color (~40-45% of glob
 | 2 | layers | 3 stacked horizontal layers. Bottom layer gently shifts down 1px then back, middle stays still, top shifts up 1px then back - a slow "breathing" of the stack over 8 seconds. Reinforces the feeling of density and substance. Easing: ease-in-out. |
 | 3 | wind | Soft wavy lines suggesting air flow. The lines gently undulate (translateX 0→2px→0) in sequence, left to right, creating a gentle breeze effect over 7 seconds. Reinforces feeling of fresh, cool air against skin. Easing: ease-in-out. |
 | 4 | shield-check | Shield outline with a checkmark inside. Checkmark draws itself once via stroke-dashoffset animation over 1.5s on first viewport entry, then stays static permanently. Reinforces "verified, authentic" feeling. No looping. |
-| 5 | sparkles | 3 small diamond-shaped stars in a cluster. Stars gently twinkle in sequence (opacity 0.4→1→0.4), one star at a time, left to right. 7-second full cycle. Easing: ease-in-out. Subtle shimmer of quality and certification. |
+| 5 | feather | Single feather shape. Very slow, gentle float - subtle vertical drift (translateY 0→-2px→0) with a barely perceptible rotation (±1°) over 8 seconds. The feather seems to hover weightlessly, reinforcing the lightness of the silk-covered elastic. Easing: ease-in-out. Barely perceptible - viewer should feel "refined" without consciously noticing the movement. |
 | 6 | gift | Gift box with ribbon on top. Very subtle "unwrap" motion - lid shifts up 1px then back down over 6 seconds. The ribbon bow has a tiny wiggle (rotate ±1°). Playful but restrained. Reinforces the excitement of receiving a beautifully wrapped gift. |
 
 ## Validation results
@@ -205,6 +205,40 @@ Single color (A only per §7.3): Black is the #1 eye mask color (~40-45% of glob
 **Polish copywriter verdict:** Copy is natural, well-crafted Polish. 1 punctuation fix (tagline comma), 2 optional style suggestions. No translated or awkward phrasing detected.
 
 **Verdict: CONFIRMED — no changes needed.** All fields pass current rules. Copy confirmed as-is.
+
+### Card 5 creative session (2026-03-28)
+
+**Angle:** Silk-covered elastic band — product-specific detail not covered by any other card or benefit. The elastic strap is covered with silk (listed in specs as fact but never explained to the customer). Addresses real pain point: raw elastic leaves red marks on temples, catches/pulls hair.
+
+**Process:** Full creative workflow — Polish copywriter agent (3 options per field) → legal check → customer validation (4 personas, 2 runs) → refinement → finalization.
+
+**Legal check:** PASS (0 issues, 0 warnings). All claims physical/mechanical (elastic marks, hair pulling, pressure distribution). No beauty or medical claims.
+
+**Validation Run 1 scores:**
+
+| Criterion | Kasia (34) | Ewa (47) | Zuzia (23) | Maja (38) | Average |
+|-----------|-----------|---------|-----------|---------|---------|
+| Trust | 7/10 | 8/10 | 7/10 | 8/10 | 7.5/10 |
+| Purchase intent | 6/10 | 7/10 | 6/10 | 7/10 | 6.5/10 |
+| Premium feel | 8/10 | 9/10 | 8/10 | 7/10 | 8.0/10 |
+
+**Run 1 feedback:** Title "Nawet gumka jest jedwabna" unanimously praised (4/4 LOCK). Closing sentence "Budzisz się bez odcisków na twarzy" unanimously criticized (4/4 REFINE) — overlaps with card 1's no-pressure promise, redundant with sentence 1. Refined closing: "Zapominasz, że ją masz."
+
+**Validation Run 2 scores (after closing sentence fix):**
+
+| Criterion | Kasia (34) | Ewa (47) | Zuzia (23) | Maja (38) | Average |
+|-----------|-----------|---------|-----------|---------|---------|
+| Trust | 8/10 | 8/10 | 8/10 | 7.5/10 | 7.9/10 |
+| Purchase intent | 7/10 | 7/10 | 7/10 | 7/10 | 7.0/10 |
+| Premium feel | 7/10 | 8/10 | 7/10 | 7.5/10 | 7.4/10 |
+
+**All averages ≥ 7.0 — finalized.** Intent (7.0) at threshold because all 4 personas noted card 5 is a "confirmation" card (confirms quality/attention to detail) not a primary purchase driver — structural to the card type.
+
+**Key persona quotes:**
+- Kasia: "'Nawet' — ten sygnał jest ważniejszy niż kolejna specyfikacja techniczna"
+- Ewa: "To jak z dobrą torebką — kupujesz ją za to, że zamek chodzi gładko"
+- Zuzia: "Mówi o problemie, który ZNAM — nie muszą mnie przekonywać, że istnieje"
+- Maja: "'Zapominasz, że ją masz' — to jest język premium. Cichy, pewny."
 
 ## Media
 

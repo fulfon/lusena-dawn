@@ -112,7 +112,20 @@ The PDP has 6 feature cards below the buybox. Defaults are configured in the the
 
 Replace `N` with 1-6 for each card position.
 
-**Available icon names:** `sparkles`, `wind`, `shield-check`, `gift`, `droplets`, `heart`, `map-pin`, `layers`, `package`, `truck`, `clock`, `file-text`
+**Available icon names:** `sparkles`, `wind`, `shield-check`, `gift`, `droplets`, `heart`, `map-pin`, `layers`, `package`, `truck`, `clock`, `file-text`, `feather`, `scale`, `leaf`, `hourglass`, `smile`, `moon`, `palette`
+
+**Icon semantic definitions (variable cards 1/3/5 - one meaning per icon, no exceptions):**
+
+| Icon | Meaning | Use for |
+|------|---------|---------|
+| `heart` | Gentle on your body | Silk reduces friction/pressure on skin, hair, or eyes |
+| `wind` | Cool & gentle | Breathes, thermoregulates, no heat, smooth surface |
+| `droplets` | Locks moisture in | Oils, serums, masks stay on you, not absorbed |
+| `sparkles` | Radiant & fresh | Purity, clean surface, beautiful morning result |
+| `moon` | All night, every night | Overnight benefit, stays on while you sleep |
+| `clock` | Fits your routine | Zero effort, time does the work, everyday habit |
+| `feather` | Weightless & traceless | No pressure, ultralight, forget you're wearing it |
+| `palette` | Your colors | Color variety, personal choice |
 
 ## D. Upsell Configuration
 

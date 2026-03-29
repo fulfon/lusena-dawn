@@ -1,10 +1,10 @@
 # Progress
 
-*Last updated: 2026-03-25*
+*Last updated: 2026-03-29*
 
 ## LUSENA-styled pages (14 of ~21 total)
 
-- [x] **Homepage** (`index.json`) — 9 sections: hero, trust bar, problem/solution, bestsellers, testimonials, bundles (card grid), heritage, FAQ, final CTA. Full UX audit completed 2026-03-08 (copy, flow, visual rhythm, value anchors, spacing). Newsletter removed (footer handles it).
+- [x] **Homepage** (`index.json`) — 10 sections: hero, trust bar, benefit bridge (NEW 2026-03-28), bestsellers, testimonials, problem/solution (moved to pos 6), bundles (card grid), heritage, FAQ, final CTA. Full UX audit completed 2026-03-08. Benefit bridge added 2026-03-28 (3 benefit cards, legally checked, persona-validated). P/S copy refreshed. Newsletter removed (footer handles it).
 - [x] **Product page** (`product.json`) — 6 sections: main-product, feature highlights (animated icons), quality evidence, truth table, FAQ (shared `lusena-faq`), final CTA (shared `lusena-final-cta`). Full UX audit completed 2026-03-09 (visual rhythm, content rewrite, legal compliance, FAQ consolidation, conversion CTA). Per-product metafield overrides for headline/tagline/per-night. Returns deep-link. PDP buy-box spacing overhauled. Animated icons added 2026-03-15.
 - [x] **Collection page** (`collection.json`) — 1 section: main-collection + product card snippet
 - [x] **Quality page** (`page.nasza-jakosc.json`) — 10 sections: hero, trust bar, origin, momme, certificates, fire test, qc, comparison table, FAQ, final CTA. 6A section removed (content merged into momme). Spacing audit completed 2026-03-10 (3 off-grid fixes + 1 tier upgrade).
@@ -42,7 +42,7 @@ Full plan: `memory-bank/doc/features/dawn-pages-migration-plan.md`
 - [x] Hero standalone CSS (`assets/lusena-hero.css`) — extracted from section {% stylesheet %} (2026-03-05)
 - [x] Footer standalone CSS (`assets/lusena-footer.css`) — extracted from section {% stylesheet %} (2026-03-05)
 - [x] Icon system (`snippets/lusena-icon.liquid`)
-- [x] Animated icon system (`snippets/lusena-icon-animated.liquid` + `assets/lusena-icon-animations.css`) — 8 animated SVG icons with CSS keyframes, stagger delays, prefers-reduced-motion fallback (2026-03-15)
+- [x] Animated icon system (`snippets/lusena-icon-animated.liquid` + `assets/lusena-icon-animations.css`) — 11 animated SVG icons (heart, layers, droplets, wind, shield-check, sparkles, gift, clock, moon, feather, palette) with CSS keyframes, stagger delays, prefers-reduced-motion fallback (2026-03-15, expanded 2026-03-28 with moon/feather/palette)
 - [x] Section gap detector (`snippets/lusena-section-gap-detector.liquid`)
 - [x] Header (`sections/lusena-header.liquid`) — migrated to foundations
 - [x] Footer (`sections/lusena-footer.liquid`) — migrated to foundations (2026-03-04)
@@ -64,11 +64,19 @@ Full plan: `memory-bank/doc/features/dawn-pages-migration-plan.md`
 - [x] Cart merge (#13) — detects both bundle components in cart, shows merge card with two "W koszyku" tiles. Removes both items, adds bundle via `LusenaBundle.swap()`. Pre-filled Simple Bundles color properties. Mapping: poszewka+bonnet → Nocna Rutyna (109 zl), poszewka+maska → Piekny Sen (89 zl). Higher savings wins. (2026-03-28)
 - [x] Cart drawer per-item loading state — opacity fade + button disable during qty changes (2026-03-26)
 - [x] Documentation reorganization — 30+ obsolete docs/ files deleted, key references relocated to memory-bank/doc/ (brand, product refs, templates). Path references updated across all agent instruction files and skills. (2026-03-27)
+- [x] Claude Code hooks (`.claude/hooks/`, 5 scripts) — guard-dawn-edit (PreToolUse), session-context (SessionStart), post-compact-rules (PostCompact), theme-check-on-edit (PostToolUse), task-quality-gate (TaskCompleted). Configured in `.claude/settings.json`. (2026-03-28)
+- [x] Claude Code rules (`.claude/rules/`, 7 files) — animations, bundle-system, cart-system, css-and-assets, css-cascade, product-metafields, section-catalog. Auto-load by file path patterns. (2026-03-28)
+- [x] Icon semantic system — defined in `product-setup-checklist.md`. 8 variable icons (heart, wind, droplets, sparkles, moon, clock, feather, palette) each with one semantic meaning. (2026-03-28)
+- [x] Card 5 creative sessions (all 8 products) — freed from universal OEKO-TEX, each product has unique product-specific angle. Full creative workflow (copywriter + legal + validation) for each. Universal cards reduced from 4 to 3 (positions 2/4/6). (2026-03-28)
+- [x] Quality evidence accordion rewrite — `max-height`/opacity → explicit `height` transitions, `data-state` attribute, `prefers-reduced-motion` support. (2026-03-28)
+- [x] Homepage benefit bridge section — "Co zmieni się po pierwszej nocy?" + 3 benefit cards. P/S moved to pos 6, P/S copy refreshed. (2026-03-28)
 - [x] Reusable page audit skill (`.claude/skills/lusena-page-audit/`) — standardized UX audit checklist (2026-03-08)
 - [x] Customer validation skill (`.claude/skills/lusena-customer-validation/`) — 4-persona copy evaluation (2026-03-14, expanded 2026-03-15)
 - [x] Legal check skill (`.claude/skills/lusena-legal-check/`) — EU/UOKiK compliance check (2026-03-14)
 - [x] Spacing audit skill (`.claude/skills/lusena-spacing-audit/`) — automated spacing measurement + validation (2026-03-10)
 - [x] Pre-commit sync skill (`.claude/skills/lusena-pre-commit-sync/`) — memory bank documentation sync before commits (2026-03-15)
+- [x] New section scaffolding skill (`.claude/skills/lusena-new-section/`) — boilerplate + spacing tier + CSS decision + schema (2026-03-28)
+- [x] Product copy session skill (`.claude/skills/lusena-product-copy-session/`) — orchestrates full creative workflow from research through finalization (2026-03-28)
 - [x] Product metafields reference (`memory-bank/doc/products/product-metafields-reference.md`) — field-by-field PDP mapping + creative process (2026-03-14)
 - [x] Product setup checklist (`memory-bank/doc/products/product-setup-checklist.md`) — metafield definitions + example values (2026-03-14)
 - [x] Product catalog docs (`memory-bank/doc/products/`) — per-product admin data tracking (2026-03-14)
@@ -198,9 +206,9 @@ Full implementation tracker: `memory-bank/doc/bundle-implementation.md`
 **Phase 2A testing (PASSED 2026-03-28):**
 - [x] End-to-end manual test matrix — bundle nudge cards (4 triggers), regular cross-sell (walek), all 4 bundle swaps, smart suppress logic, cart page AJAX re-rendering, bidirectional cart sync
 
-**Phase 2A remaining (not yet built):**
-- [ ] #13 Cart merge (NEXT TASK) — detect both bundle components in cart, suggest "Zamien na zestaw". Mapping: poszewka+bonnet → Nocna Rutyna (109 zl), poszewka+maska → Piekny Sen (89 zl). Use existing cart nudge UI + LusenaBundle.swap().
-- [~] #12 PDP bundle detection banner — ABANDONED (2026-03-28). Fully built and tested but doesn't fit the PDP buy-box flow (too dense). Reverted. Decision: use #13 cart merge instead. Spec/plan docs in `docs/superpowers/specs/` and `docs/superpowers/plans/` for reference.
+**Phase 2A remaining:**
+- [x] #13 Cart merge — DONE (2026-03-28). Detects both bundle components in cart, shows merge card with "W koszyku" tiles. Removes both + adds bundle via `LusenaBundle.swap()`. Mapping: poszewka+bonnet → Nocna Rutyna (109 zl), poszewka+maska → Piekny Sen (89 zl). Higher savings wins.
+- [~] #12 PDP bundle detection banner — ABANDONED (2026-03-28). Fully built and tested but doesn't fit the PDP buy-box flow (too dense). Reverted. Decision: use #13 cart merge instead.
 
 **Phase D: Cross-sell:**
 - [ ] PDP cross-sell checkbox (scrunchie at 39 zł) — needs dev implementation

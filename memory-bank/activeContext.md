@@ -1,6 +1,6 @@
 # Active Context
 
-*Last updated: 2026-03-28*
+*Last updated: 2026-03-29*
 
 ## Current focus
 
@@ -8,117 +8,77 @@
 
 ## Recent completed work
 
-### #13 Cart merge - DONE (2026-03-28)
+### Card 5 creative sessions — all 8 products DONE (2026-03-28)
 
-Detects when both bundle components are in cart separately, shows "Zamien na zestaw i zaoszczedz X zl" merge card. Uses existing bundle nudge card UI and `LusenaBundle.swap()` with multiple removeKeys.
+Feature card 5 freed from universal OEKO-TEX (already covered by quality evidence section + specs accordion). Each product now has a product-specific card 5 with unique angle:
 
-**What was built:**
-- Liquid-side merge detection in both cart drawer and cart page (loops cart items for component handles)
-- Merge card HTML reusing `lusena-upsell-card__bn-*` classes with two "W koszyku" tiles
-- JS handler extended with merge path (pre-filled properties, multiple removeKeys)
-- Pre-built Simple Bundles color properties from cart items (no JS-side color matching needed)
-- Direct cross-surface sync (belt-and-suspenders alongside pubsub) for reliable drawer/page sync
-- Tiles centered with `justify-content: center` for equal "have" tile layout
+| Product | Title | Icon | Angle |
+|---------|-------|------|-------|
+| Poszewka | Czysty jedwab, czysta skóra | sparkles | Material purity / 8h face contact |
+| Bonnet | Olejek zostaje we włosach | droplets | Product retention (oils/masks work overnight) |
+| Maska 3D | Nawet gumka jest jedwabna | feather | Silk-covered elastic band detail |
+| Scrunchie | Bez śladu po gumce | feather | Crease-free / no visible marks |
+| Heatless Curlers | Miękki - nie uciska w nocy | feather | Open-crown sleep comfort |
+| Nocna Rutyna | Poranek bez porannej rutyny | sparkles | Morning result of both products |
+| Piękny Sen | Nic nowego w Twojej rutynie | clock | Zero-effort material swap |
+| Scrunchie Trio | Po prostu jedwab | sparkles | Silk as new normal (1→3 shift) |
 
-**Mapping:** poszewka+bonnet → Nocna Rutyna (109 zl), poszewka+maska → Piekny Sen (89 zl). Conflict: higher savings wins. Merge card shows even if bundle already in cart (customer may want multiple bundles).
+All 8 went through full creative workflow: Polish copywriter agent → legal check → customer validation (2-3 runs each) → refinement → finalization. Detailed session logs in each product MD file.
 
-**Files modified:** `snippets/cart-drawer.liquid`, `sections/lusena-cart-items.liquid`, `assets/lusena-cart-page.css`
+**Universal cards reduced from 4 to 3:** positions 2, 4, 6 (was 2, 4, 5, 6). Updated across all product docs, metafields reference, setup checklist, import script, re-evaluation prompts, AGENTS.md, copilot-instructions.md.
 
-### Homepage benefit bridge + reorder (2026-03-28)
+### Icon consistency overhaul + 3 new animated icons (2026-03-28)
 
-**New section: `lusena-benefit-bridge`:**
-- "Co zmieni się po pierwszej nocy?" heading + 3 benefit cards
-- Cards: "Gładka skóra o poranku" (sparkles), "Włosy bez porannego chaosu" (star), "Krem pracuje całą noc" (droplets)
-- Copy written by Polish copywriter subagent, legally checked, persona-validated
-- Standard spacing tier, brand background, teal icon circles, scroll animations
-- Mobile: stacked with separators between cards
+**New semantic icon system** defined in `product-setup-checklist.md`:
+- `heart` = gentle on body, `wind` = cool & gentle, `droplets` = locks moisture in
+- `sparkles` = radiant & fresh, `moon` = all night/every night, `clock` = fits your routine
+- `feather` = weightless & traceless, `palette` = your colors
 
-**Homepage reorder:**
-- Benefit bridge at position 3 (NEW)
-- Bestsellers stays at 4, Testimonials at 5
-- Problem/Solution moved from 3 to 6 (evaluation-mode section)
-- P/S background changed from `brand` to `surface-1` for clean alternation
+**Icons reassigned** across products to match semantic meanings (e.g., Bonnet C3 `wind`→`moon` for "stays on all night", Scrunchie Trio C1 `droplets`→`palette` for "color variety").
 
-**P/S copy refresh (4 items rewritten):**
-- Removed "roztocza" and unsubstantiated "białka jedwabiu" claims
-- Shortened all items to 1 sentence
-- Kept "rzep" metaphor (strongest per all 4 personas) and "krem pracuje dla poduszki" reframe
-- Added proper hedging ("sprzyja redukcji", "pomaga zachować")
+**3 new animated SVGs** added to `lusena-icon-animated.liquid` + `lusena-icon-animations.css`:
+- `moon` — gentle glow pulse (scale 1→1.04→1, opacity 1→0.82→1), 8s
+- `feather` — subtle float (translateY 0→-2px→0, rotate ±1°), 8s
+- `palette` — sequential swatch opacity pulse across 3 circles, 7s
 
-**Research backing:**
-- 4 independent customer personas evaluated original P/S section (avg scores: persuasion 6.0, emotion 4.5, premium 5.5)
-- CRO research: social proof in positions 3-4 delivers +18-27% conversion lift
-- No successful silk brand (Slip, Blissy, Fishers Finery) leads with problem/solution after hero
+All with `prefers-reduced-motion` fallback. Schema dropdown in `lusena-pdp-feature-highlights` updated.
 
+### Quality evidence accordion rewrite (2026-03-28)
 
-### #12 PDP bundle detection banner — ABANDONED (2026-03-28)
+Rewrote `lusena-pdp-quality-evidence.liquid` accordion JS and CSS:
+- **Animation:** `max-height`/opacity → explicit `height` transitions with `requestAnimationFrame` for smooth open/close
+- **State management:** `.is-open` class → `data-state` attribute (`open`/`closed`/`closing`)
+- **Accessibility:** `prefers-reduced-motion` → instant open/close (no transitions)
+- **CSS:** `contain: layout style` on items, `-webkit-tap-highlight-color: transparent`, `will-change: height`
+- **Cleanup:** Arrow functions → `function` declarations (consistent with Dawn's JS style)
 
-**What we tried:** A banner between variant picker and ATC on the PDP buy-box that detects cart complement via `fetch('/cart.js')` and offers one-click swap to bundle. Fully implemented (snippet + CSS + JS), committed, and tested on preview theme.
+### Claude Code infrastructure (2026-03-28)
 
-**Why abandoned:** The PDP buy-box is already dense (summary, chips, variant picker, ATC, guarantee, payment, benefits, accordion). Adding any element between variant picker and ATC — even a compact card without zone wrapper — disrupts the purchase flow and adds visual noise at the critical decision point. Tested both a full zone layout and a stripped-down inline card; neither fit.
+**Hooks** (`.claude/hooks/`, 5 scripts):
+- `guard-dawn-edit.sh` — PreToolUse: blocks editing Dawn originals when lusena-* counterpart exists
+- `session-context.sh` — SessionStart: injects activeContext.md focus/next/issues
+- `post-compact-rules.sh` — PostCompact: re-injects critical LUSENA rules after context compaction
+- `theme-check-on-edit.sh` — PostToolUse: runs `shopify theme check` on edited .liquid files
+- `task-quality-gate.sh` — TaskCompleted: runs theme check on recently modified lusena-* files
 
-**Decision:** Use #13 (cart merge) instead. The cart is where the customer reviews their purchase — a "combine these into a bundle and save" message fits naturally there. The existing cart nudge card system is already proven. All code was cleanly reverted (snippet deleted, section render line removed, CSS removed). Spec and plan docs remain in `docs/superpowers/specs/` and `docs/superpowers/plans/` as decision history.
+**Rules** (`.claude/rules/`, 6 files):
+- `animations.md`, `bundle-system.md`, `cart-system.md`, `css-and-assets.md`, `css-cascade.md`, `product-metafields.md`
+- Auto-load by file path patterns (e.g., css-cascade loads when editing `assets/*.css`)
 
-**Bundle mapping (still valid for #13):** poszewka + bonnet → Nocna Rutyna (saves 109 zl), poszewka + maska → Piekny Sen (saves 89 zl). Scrunchie Trio not applicable (same-product bundle). Conflict: higher savings wins.
+**Skills** (2 new):
+- `lusena-new-section` — scaffolds a new LUSENA section with correct boilerplate
+- `lusena-product-copy-session` — orchestrates full creative copy workflow
 
-### End-to-end manual testing — ALL PASSED (2026-03-28)
+**Settings** (`.claude/settings.json`): shared settings with all hook configurations + deny rules.
 
-Full test matrix executed manually, all scenarios passing:
-- **Bundle nudge cards:** Poszewka → Nocna Rutyna, Bonnet → Nocna Rutyna, Maska 3D → Piekny Sen, Scrunchie → Scrunchie Trio — correct pricing and savings on all
-- **Regular cross-sell:** Walek → Scrunchie at 59 zl (only product with non-bundle primary)
-- **Bundle swaps:** All 4 swap directions working (poszewka, bonnet, maska, scrunchie triggers)
-- **Smart suppress:** Nocna Rutyna/Piekny Sen in cart suppresses all upsells. Scrunchie Trio does not suppress. 2 distinct items suppresses regular cross-sell but allows bundle nudge through.
-- **Cart page AJAX:** Re-renders without full page reload for swaps, quantity changes, removes
-- **Bidirectional sync:** Cart page ↔ drawer sync working
+**CLAUDE.md refactored:** CSS architecture, compiled_assets guard, product metafields, and animation rules moved to `.claude/rules/` (auto-loaded). Added Bash command restrictions ($(), backticks, grep/cat/sed).
 
-### Cart AJAX re-rendering + CSS extraction + polish (2026-03-26/27)
+### Minor fixes (2026-03-28)
 
-**CSS extraction (compiled_assets truncation fix):**
-- Extracted cart items/footer/quantity CSS from `{% stylesheet %}` → `assets/lusena-cart-page.css` (634 lines)
-- Extracted search page CSS from `{% stylesheet %}` → `assets/lusena-search.css` (156 lines)
-- compiled_assets reduced from ~85KB (truncated) to ~59KB (safe margin)
-- All original `{% stylesheet %}` blocks replaced with `/* CSS extracted to ... */` comments
-
-**Cart page AJAX section re-rendering (replaces full-page reloads):**
-- Added `reRenderSections()` with `getSectionConfigs()` and `getSectionNames()` helpers
-- Bundle swap and cross-sell add now use Shopify section rendering API (`sections` param)
-- Override of `cart-items.onCartUpdate()` for full re-render: items + footer + empty state toggle
-- Cart page publishes `PUB_SUB_EVENTS.cartUpdate` for bidirectional sync with drawer
-
-**Cart drawer → section promotion:**
-- `theme.liquid`: changed `render 'cart-drawer'` to `section 'cart-drawer'` — enables section rendering API
-
-**Cart drawer improvements:**
-- Per-item loading state: `.lusena-cart-drawer__item--loading` with opacity fade during qty changes
-- `enableItemLoading()` / `disableItemLoading()` helpers with button disable/enable
-- Bidirectional sync: drawer re-renders when cart page changes cart (pubsub subscriber)
-- Fixed `pubsub.js` race condition — wrapped subscribers in `DOMContentLoaded` handler
-- Scoped all upsell CSS selectors to `.lusena-cart-drawer__upsell` (prevents bleed to cart page)
-- CSS refinements: item info `justify-content: flex-start`, item name font-family/letter-spacing, price `display: block`/`line-height`, remove button `min-height: auto`, shipping bar selector specificity
-
-**Cart item properties enhancement:**
-- Properties wrapped in `.lusena-cart-item__properties` container with pre-check for visibility
-- Property labels cleaned up: split on ` - ` and ` (` to remove bundle suffixes
-- Values escaped for XSS safety
-
-**Money filter & copy normalization:**
-- `money`/`money_with_currency` → `money_without_trailing_zeros` across cart (footer, items)
-- Price-per-night suffix: `" / noc"` → `"/noc"` (PDP section, sticky ATC, product card, product.json)
-- Typo fix: "zaoszczedz" → "zaoszczędź" (proper Polish ę) in cart drawer and cart items
-
-**PDP fixes:**
-- Removed scroll-trigger animation from payment badges (should render statically)
-- Proof chips: `requestAnimationFrame(balance)` → `balance()` (synchronous)
-
-**Button system & animations:**
-- Spinner uses opacity cross-fade instead of display toggle; overrides Dawn's `.hidden {display:none!important}`
-- `animations.js`: children of `[data-cascade]` containers get stagger order via `closest()` check
-
-**Documentation reorganization:**
-- 30+ files deleted from `docs/` (completed parity plans, old references, migration plans)
-- Key docs relocated: brand → `memory-bank/doc/brand/`, product refs → `memory-bank/doc/products/`, templates → `memory-bank/doc/patterns/`
-- Changelog deleted: `memory-bank/doc/changelog/theme-changes.md`
-- Path references updated in CLAUDE.md, AGENTS.md, copilot-instructions.md, all skill files
+- `assets/cart.js` — null guard on `trapFocus` when `.drawer__inner-empty` missing
+- `snippets/lusena-pdp-scripts.liquid` — `is-gesturing` class toggle on lightbox image during touch
+- `templates/index.json` — benefit bridge hair card icon `star` → `wind`
+- `memory-bank/doc/products/imports/generate_import_from_export.py` — all 8 products updated with card 5 values
 
 ## Next steps
 

@@ -61,6 +61,21 @@
   50% { transform: rotate(65deg); }
 }
 
+@keyframes lusena-moon-glow {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.04); opacity: 0.82; }
+}
+
+@keyframes lusena-feather-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-2px) rotate(1deg); }
+}
+
+@keyframes lusena-palette-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
 /* ---------- Common: transform-box for all animated SVG elements ---------- */
 
 .lusena-anim-heart,
@@ -75,7 +90,12 @@
 .lusena-anim-sparkles-2,
 .lusena-anim-sparkles-3,
 .lusena-anim-gift-lid,
-.lusena-anim-gift-bow {
+.lusena-anim-gift-bow,
+.lusena-anim-moon,
+.lusena-anim-feather,
+.lusena-anim-palette-1,
+.lusena-anim-palette-2,
+.lusena-anim-palette-3 {
   transform-box: fill-box;
   transform-origin: center;
 }
@@ -172,6 +192,37 @@
   animation-delay: calc(var(--lusena-anim-stagger, 0s) + 0.3s);
 }
 
+/* ---------- Moon: gentle glow pulse, 8s ---------- */
+
+.lusena-anim-moon {
+  animation: lusena-moon-glow 8s ease-in-out infinite;
+  animation-delay: var(--lusena-anim-stagger, 0s);
+}
+
+/* ---------- Feather: gentle float + micro-rotation, 8s ---------- */
+
+.lusena-anim-feather {
+  animation: lusena-feather-float 8s ease-in-out infinite;
+  animation-delay: var(--lusena-anim-stagger, 0s);
+}
+
+/* ---------- Palette: sequential opacity pulse across 3 swatches, 7s ---------- */
+
+.lusena-anim-palette-1 {
+  animation: lusena-palette-pulse 7s ease-in-out infinite;
+  animation-delay: var(--lusena-anim-stagger, 0s);
+}
+
+.lusena-anim-palette-2 {
+  animation: lusena-palette-pulse 7s ease-in-out infinite;
+  animation-delay: calc(var(--lusena-anim-stagger, 0s) + 2.3s);
+}
+
+.lusena-anim-palette-3 {
+  animation: lusena-palette-pulse 7s ease-in-out infinite;
+  animation-delay: calc(var(--lusena-anim-stagger, 0s) + 4.6s);
+}
+
 /* ---------- Clock: 10:10 pose, minute hand gentle tick-tock, hour hand static ---------- */
 
 .lusena-anim-clock-minute {
@@ -199,6 +250,11 @@
   .lusena-anim-sparkles-3,
   .lusena-anim-gift-lid,
   .lusena-anim-gift-bow,
+  .lusena-anim-moon,
+  .lusena-anim-feather,
+  .lusena-anim-palette-1,
+  .lusena-anim-palette-2,
+  .lusena-anim-palette-3,
   .lusena-anim-clock-minute {
     animation: none !important;
   }

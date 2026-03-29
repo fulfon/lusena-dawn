@@ -55,7 +55,7 @@ it, several rules were added/tightened:
 3. **Feature card description length** — 150-210 chars target. Count NR's card 1 and
    card 3 descriptions.
 
-4. **Per-bundle card uniqueness** — NR's cards 1 and 3 must be distinct from Piękny
+4. **Per-bundle card uniqueness** — NR's cards 1, 3, and 5 must be distinct from Piękny
    Sen's and Scrunchie Trio's cards.
 
 5. **Nocna Rutyna scored the HIGHEST of any LUSENA session** (Trust 8.25, Intent 7.75,
@@ -82,11 +82,11 @@ rules. For each field, systematically check:
 - [ ] Everyday language: No technical/clinical terms?
 - [ ] Hyphens only, sentence case, no exclamation marks?
 
-**Feature cards 1 and 3 (per-bundle):**
+**Feature cards 1, 3, and 5 (per-bundle):**
 - [ ] Title: max 28 characters? Count them.
 - [ ] Description: 150-210 characters? Count them.
 - [ ] Conversion-worthy: "Would this card make someone spend 399 zł?"
-- [ ] No overlap with universal cards 2/4/5/6?
+- [ ] No overlap with universal cards 2/4/6?
 - [ ] No overlap with Piękny Sen or Scrunchie Trio per-bundle cards?
 
 **SEO:**
@@ -218,7 +218,8 @@ and understand the full outcome without reading the detailed report.
 - DO NO HARM — NR has the highest scores of any LUSENA product. Protect them.
 - Minimize changes — only fix genuine Polish quality issues or hard rule violations
 - The orchestrator NEVER writes Polish text directly
-- Universal fields (cards 2/4/5/6) are LOCKED
+- Universal fields (cards 2/4/6) are LOCKED
+- Card 5 is product-specific — review it alongside cards 1 and 3
 - Hyphens only, never em dashes
 - Tagline ≈ benefits is NOT overlap (they are desktop/mobile alternative views)
 - Update the product file with results (re-evaluation date + verdict)

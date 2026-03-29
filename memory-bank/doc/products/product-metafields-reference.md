@@ -33,10 +33,10 @@ constraints. Lesson learned during the Piekny Sen session (2026-03-22).
    - Read completed product files for reference (copy, scores, lessons learned)
 
 2. BRIEF THE POLISH COPYWRITER (orchestrator → copywriter agent)
-   IMPORTANT: Check the "Universal fields" section below FIRST. Cards 2, 4, 5, 6
+   IMPORTANT: Check the "Universal fields" section below FIRST. Cards 2, 4, 6
    and all specs/care are pre-filled and must NOT be modified. Only brief for:
    a. Buybox: emotional headline, tagline, 3 benefits (5 fields)
-   b. Feature highlights: cards 1 and 3 ONLY - icon + title + description (6 fields)
+   b. Feature highlights: cards 1, 3, and 5 - icon + title + description (9 fields)
    c. Icon animation specs: 6 briefs for SVG agent (6 specs)
    d. SEO: page title (max 70 chars), meta description (max 160 chars) (2 fields)
 
@@ -65,7 +65,7 @@ constraints. Lesson learned during the Piekny Sen session (2026-03-22).
    INFORMATION ARCHITECTURE GUARD (mandatory):
    The PDP has multiple content layers. The buybox (headline, tagline, benefits)
    is the FIRST layer the customer reads. Below the fold, the customer sees:
-   - 6 feature cards (cards 2/4/5/6 are universal - see below)
+   - 6 feature cards (cards 2/4/6 are universal - see below)
    - Specs accordion (material, 22 momme, Grade 6A, OEKO-TEX, dimensions)
    - Quality evidence section ("Dlaczego LUSENA?")
    - Truth table ("Jedwab vs satyna")
@@ -89,7 +89,7 @@ constraints. Lesson learned during the Piekny Sen session (2026-03-22).
    EXCLUSION LIST - these topics MUST NOT appear in headline, tagline, or
    benefit bullets because they are already covered elsewhere on the PDP:
    x "22 momme" / momme density -> feature card 2 + specs accordion
-   x "OEKO-TEX" / certification -> feature card 5 + specs accordion
+   x "OEKO-TEX" / certification -> quality evidence section + specs accordion
    x Silk vs polyester/satin distinction -> feature card 4 + truth table
    x Gift packaging/box -> feature card 6 + packaging accordion
    x "Grade 6A" / silk grade -> specs accordion
@@ -243,14 +243,14 @@ don't over-value operational information (guarantee, savings) that's already dis
 - Scrunchie Trio (139 zł): gifting + color variety - 3 colors, 1 set
 
 **Feature cards for bundles:**
-- Universal cards 2, 4, 5, 6 still apply (silk quality story is shared)
-- Cards 1 and 3: bundle-specific angles (why together > separately, complementary mechanisms, nightly ritual)
+- Universal cards 2, 4, 6 still apply (silk quality story is shared)
+- Cards 1, 3, and 5: bundle-specific angles (why together > separately, complementary mechanisms, nightly ritual)
 - Do not repeat individual product-specific card content from component PDPs
 - Cards must be CONVERSION-WORTHY for the price point — FAQ-level details (washing instructions, color selection) are too weak for premium bundles. Ask: "Would this card make someone spend 399 zł?" If not, find a stronger angle.
 
 **Metafields that do NOT apply to bundles:**
 - `pdp_packaging_items` — skip. Bundle has no packaging accordion. "W zestawie" lists products, card 6 covers gift packaging, FAQ covers packaging details, gallery photos will provide visual proof. Adding a packaging accordion would repeat "W zestawie" content (50% overlap).
-- `pdp_specs_*` — skip. Bundle has no specs accordion. Reason: (1) shared specs (momme, grade, cert) are better covered by universal feature cards 2/4/5 which explain WHY they matter, not just state values; (2) product-specific specs (dimensions, closure) differ per component and create a messy split table; (3) bundle buybox is already long (W zestawie + color selector + ATC + guarantee + benefits + care) — adding specs adds friction before ATC; (4) no competitor (Slip, Brooklinen, Spadiora) has spec accordions on bundle pages.
+- `pdp_specs_*` — skip. Bundle has no specs accordion. Reason: (1) shared specs (momme, grade, cert) are better covered by universal feature cards 2/4 and quality evidence section which explain WHY they matter, not just state values; (2) product-specific specs (dimensions, closure) differ per component and create a messy split table; (3) bundle buybox is already long (W zestawie + color selector + ATC + guarantee + benefits + care) — adding specs adds friction before ATC; (4) no competitor (Slip, Brooklinen, Spadiora) has spec accordions on bundle pages.
 - `pdp_show_price_per_night` — set to `false`. Savings badge serves the same reframing purpose.
 
 **Bundle buybox accordion structure:**
@@ -270,7 +270,7 @@ Full bundle strategy, pricing, and economics: `memory-bank/doc/bundle-strategy.m
 
 These metafields are **identical across all LUSENA silk products** (pillowcase, scrunchie, bonnet, 3D eye mask). They were validated once and must be copy-pasted as-is. **Do not rewrite, "improve", or customize them** - they are shared defaults, not creative fields.
 
-**Exception:** Heatless curlers use the same 22 momme 6A silk but have a PP cotton filling inside. All 4 universal cards apply. Care steps need custom values due to the filling. See `memory-bank/doc/products/heatless-curlers.md` for details.
+**Exception:** Heatless curlers use the same 22 momme 6A silk but have a PP cotton filling inside. All 3 universal cards apply. Care steps need custom values due to the filling. See `memory-bank/doc/products/heatless-curlers.md` for details.
 
 ### Universal specs (same for all standard silk products)
 
@@ -283,16 +283,17 @@ These metafields are **identical across all LUSENA silk products** (pillowcase, 
 | `lusena.pdp_specs_certification` | OEKO-TEX® Standard 100 |
 | `lusena.pdp_care_steps` | (leave empty - theme defaults apply) |
 
-### Universal feature cards (positions 2, 4, 5, 6)
+### Universal feature cards (positions 2, 4, 6)
 
 | Position | Icon | Title | Description |
 |----------|------|-------|-------------|
 | **2** | `layers` | Dlaczego 22 momme? | Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy. |
 | **4** | `shield-check` | Jedwab, nie satyna z poliestru | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. |
-| **5** | `sparkles` | Certyfikowany OEKO-TEX® 100 | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. |
 | **6** | `gift` | Gotowa do wręczenia | *(swap product name per product - see product file)* |
 
-Feature card positions **1** and **3** are product-specific and REQUIRE a creative session.
+Feature card positions **1**, **3**, and **5** are product-specific and REQUIRE a creative session.
+
+> **Card 5 history:** Was previously the universal OEKO-TEX card ("Certyfikowany OEKO-TEX® 100"). Removed from universal cards (2026-03-28) because the quality evidence section ("Dlaczego LUSENA?") already covers the certificate with a verification link to oeko-tex.com, and the specs accordion also lists the certification. The freed slot is now product-specific - each product gets an extra benefit card tailored to what makes it worth buying.
 
 ### What the creative session SHOULD craft (per product)
 
@@ -303,6 +304,7 @@ Feature card positions **1** and **3** are product-specific and REQUIRE a creati
 | `pdp_benefit_1-3` | Different purchase motivations per product type |
 | `pdp_feature_1_*` | Product-specific primary benefit card |
 | `pdp_feature_3_*` | Product-specific secondary benefit card |
+| `pdp_feature_5_*` | Product-specific tertiary benefit card (was universal OEKO-TEX, now freed) |
 | SEO (page title, meta description) | Different keywords and benefit hooks per product |
 
 ### Punctuation rule: hyphens only, never em dashes

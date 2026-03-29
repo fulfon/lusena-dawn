@@ -14,6 +14,7 @@ lusena-shop/
 .tmp-remote-check-1/
 .playwright-cli/
 .playwright-mcp/
+.superpowers/
 
 # Temporary debugging screenshots/snapshots (Playwright CLI, etc.)
 *.png

@@ -1,6 +1,6 @@
 # Nocna Rutyna (Night Routine Bundle)
 
-*Last updated: 2026-03-22*
+*Last updated: 2026-03-28*
 
 ## Basic info
 
@@ -68,21 +68,23 @@ Colors can be matched or mixed. Bundle strategy recommends matching (A+A, B+B).
 
 **Approved 2026-03-21.** First bundle processed - establishes the pattern for all 3 bundles.
 
-**UNIVERSAL bundle cards (positions 2, 4, 5, 6 - locked, same across all bundles):**
+**UNIVERSAL bundle cards (positions 2, 4, 6 - locked, same across all bundles):**
 
 | Pos | Icon | Title | Description |
 |-----|------|-------|-------------|
 | 2 | `layers` | Dlaczego 22 momme? | Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy. |
 | 4 | `shield-check` | Jedwab, nie satyna z poliestru | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. |
-| 5 | `sparkles` | Certyfikowany OEKO-TEX® 100 | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. |
 | 6 | `gift` | Gotowe do wręczenia | Każdy zestaw LUSENA przychodzi w eleganckim opakowaniu prezentowym - idealny upominek, który robi wrażenie. Bez dodatkowego pakowania. |
 
-**PER-BUNDLE cards (positions 1, 3 - unique per bundle):**
+> Card 5 was previously universal (OEKO-TEX). Now product-specific - see product-metafields-reference.md.
+
+**PER-BUNDLE cards (positions 1, 3, 5 - unique per bundle):**
 
 | Pos | Angle for Nocna Rutyna | Status |
 |-----|----------------------|--------|
 | 1 | Complementary mechanisms - how each product protects differently | Done |
 | 3 | Nightly ritual - daily use positioning + cumulative benefit | Done |
+| 5 | Morning result - what changes when you wake up (bundle-specific gap argument + lifestyle payoff) | Done (2026-03-28) |
 
 ## LUSENA metafields
 
@@ -132,15 +134,15 @@ Colors can be matched or mixed. Bundle strategy recommends matching (A+A, B+B).
 | `lusena.pdp_feature_2_icon` | layers | Pre-filled (universal) |
 | `lusena.pdp_feature_2_title` | Dlaczego 22 momme? | Pre-filled (universal) |
 | `lusena.pdp_feature_2_description` | Momme to gęstość jedwabiu - im wyższe, tym grubszy i trwalszy materiał. Standard rynkowy to 16-19 momme. Nasze 22 momme to gęstszy splot, który lepiej trzyma kształt i dłużej służy. | Pre-filled (universal) |
-| `lusena.pdp_feature_3_icon` | clock | Done |
+| `lusena.pdp_feature_3_icon` | moon | **UPDATED** (icon consistency: "every night ritual" = overnight; echoes Bonnet C3) |
 | `lusena.pdp_feature_3_title` | Rutyna na każdą noc | Done |
 | `lusena.pdp_feature_3_description` | Zakładasz poszewkę, naciągasz czepek - gotowe. Przez 8 godzin gładki jedwab ogranicza tarcie na twarzy i we włosach jednocześnie. Im dłużej, tym lepiej widać różnicę. | Done |
 | `lusena.pdp_feature_4_icon` | shield-check | Pre-filled (universal) |
 | `lusena.pdp_feature_4_title` | Jedwab, nie satyna z poliestru | Pre-filled (universal) |
 | `lusena.pdp_feature_4_description` | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. | Pre-filled (universal) |
-| `lusena.pdp_feature_5_icon` | sparkles | Pre-filled (universal) |
-| `lusena.pdp_feature_5_title` | Certyfikowany OEKO-TEX® 100 | Pre-filled (universal) |
-| `lusena.pdp_feature_5_description` | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. | Pre-filled (universal) |
+| `lusena.pdp_feature_5_icon` | sparkles | **UPDATED** (icon consistency: "effortless morning" = radiant result; echoes Poszewka C5) |
+| `lusena.pdp_feature_5_title` | Poranek bez porannej rutyny | Done (2026-03-28, 27 chars) |
+| `lusena.pdp_feature_5_description` | Sama poszewka nie ochroni włosów. Sam czepek nie ochroni twarzy. Dopiero razem dają Ci poranek, który zaczyna się od kawy, nie od szczotki. | Done (2026-03-28, 142 chars) |
 | `lusena.pdp_feature_6_icon` | gift | Pre-filled (universal) |
 | `lusena.pdp_feature_6_title` | Gotowe do wręczenia | Pre-filled (universal) |
 | `lusena.pdp_feature_6_description` | Każdy zestaw LUSENA przychodzi w eleganckim opakowaniu prezentowym - idealny upominek, który robi wrażenie. Bez dodatkowego pakowania. | Pre-filled (universal) |
@@ -151,9 +153,9 @@ Colors can be matched or mixed. Bundle strategy recommends matching (A+A, B+B).
 |------|------|---------------|
 | 1 | heart | Heart shape with a very slow, gentle scale pulse (1.0→1.02→1.0) over 7 seconds. The heart seems to "breathe" - calm, protective feeling toward both skin and hair. Easing: ease-in-out. Barely perceptible. |
 | 2 | layers | 3 stacked horizontal layers. Bottom layer gently shifts down 1px then back, middle stays still, top shifts up 1px then back - a slow "breathing" of the stack over 8 seconds. Reinforces the feeling of density and substance. Easing: ease-in-out. |
-| 3 | clock | Clock face with hour and minute hands. Hands perform a gentle tick-tock motion - minute hand advances by a tiny increment then settles, hour hand barely moves. 8-second cycle. Easing: ease-in-out. Reinforces the nightly ritual and the 8-hour protection window. Calm, measured, never rushed. |
+| 3 | moon | Crescent moon with a very slow glow pulse (scale 1→1.04→1, opacity 1→0.82→1) over 8 seconds. Calm, protective nighttime feeling. Easing: ease-in-out. Reinforces the every-night ritual. |
 | 4 | shield-check | Shield outline with a checkmark inside. Checkmark draws itself once via stroke-dashoffset animation over 1.5s on first viewport entry, then stays static permanently. Reinforces "verified, authentic" feeling. No looping. |
-| 5 | sparkles | 3 small diamond-shaped stars in a cluster. Stars gently twinkle in sequence (opacity 0.4→1→0.4), one star at a time, left to right. 7-second full cycle. Easing: ease-in-out. Subtle shimmer of quality and certification. |
+| 5 | sparkles | Three sparkle elements with sequential opacity pulse (0.4→1.0→0.4), staggered by 2.3s, over 7 seconds. Clean, radiant feeling. Easing: ease-in-out. Reinforces the radiant, effortless morning result. |
 | 6 | gift | Gift box with ribbon on top. Very subtle "unwrap" motion - lid shifts up 1px then back down over 6 seconds. The ribbon bow has a tiny wiggle (rotate ±1°). Playful but restrained. Reinforces the excitement of receiving a beautifully wrapped gift. |
 
 ## Re-evaluation (2026-03-22)
@@ -198,6 +200,30 @@ Initial runs tested buybox copy with operational benefits (60-day guarantee, 109
 - **Core tension:** Zuzia's intent (7/10) capped by price sensitivity (399 zł on student budget), not copy quality. Kasia: "trwałość dalej brakuje" (site-level, not copy).
 - **Site-level improvements flagged (not copy issues):** product photos (4/4), reviews (4/4), packaging photos (Ewa), Allegro comparison (Kasia, Zuzia), curly hair/CGM info (Zuzia), durability data (Kasia, Zuzia)
 - **Final decision:** Copy finalized after rework. All averages above 7.0 (Trust 8.25, Intent 7.75, Premium 7.5). Highest scores of any LUSENA product creative session.
+
+### Card 5 creative session (2026-03-28)
+
+**Scope:** Feature card 5 only (icon + title + description). Previously universal OEKO-TEX card, freed up for product-specific content.
+
+**Angle:** Morning result — what changes when you wake up after both products worked overnight. Distinct from card 1 (mechanism) and card 3 (nightly process).
+
+**Legal check:** PASS (0 issues, 0 advisories). All claims factual/experiential. No absolutes in final version.
+
+**Customer validation (3 runs):**
+
+| Criteria | Run 1 | Run 2 | Run 3 |
+|----------|-------|-------|-------|
+| Trust | 6.0 | 7.0 | **7.0** |
+| Intent | 6.0 | 6.0 | **7.25** |
+| Premium | 6.5 | 6.6 | **6.75** |
+
+- **Run 1 → 2 fix:** Description restated headline (4/4 flagged). Rewrote with "Sama poszewka nie... Sam czepek nie... Dopiero razem" structure. Trust jumped +1.0.
+- **Run 2 → 3 fix:** "mniejszą listą rzeczy do poprawienia" too abstract (4/4 flagged). Replaced with "bez poprawek przed lustrem - i porankiem, który zaczyna się od kawy, nie od szczotki." Intent jumped +1.25.
+- **Unanimously strongest element (4/4 in Run 3):** "Od kawy, nie od szczotki." Kasia: "najlepsza fraza na całej stronie zestawu." Maja: "ekonomia słów godna japandi."
+- **Premium gap (6.75 vs 7.0):** Driven by Maja (6/10) preferring higher register. Her own strongest element pick ("od kawy, nie od szczotki") contradicts the concern. No composite needed — v3 is best across all dimensions.
+- **Zuzia's intent (6/10) capped by price sensitivity** (399 zł on student budget), consistent with prior sessions.
+- **Post-Run-3 owner edit:** Owner flagged "bez poprawek przed lustrem" as unnatural Polish ("poprawek" sounds like document corrections, "gotowa do lustra" also rejected). Restructured to drop the "budzisz się bez X" pattern entirely: "Dopiero razem dają Ci poranek, który zaczyna się od kawy, nie od szczotki." Cleaner, punchier, preserves the unanimously praised closer.
+- **Final decision:** Finalized after Run 3 + owner edit. Trust and intent above threshold (7.0, 7.25). Premium 0.25 short — acceptable given single-card scope and structural price ceiling.
 
 ## Media
 

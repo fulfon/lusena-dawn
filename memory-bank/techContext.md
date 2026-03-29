@@ -34,7 +34,7 @@
 ### Global components
 - `snippets/lusena-button-system.liquid` — Button primitives
 - `snippets/lusena-icon.liquid` — SVG icon system (includes `share` icon)
-- `snippets/lusena-icon-animated.liquid` — Animated SVG icon system (heart, layers, droplets, wind, shield-check, sparkles, gift, clock) with CSS class hooks and stagger delay support. Falls back to static `lusena-icon` for unknown icon names.
+- `snippets/lusena-icon-animated.liquid` — Animated SVG icon system (heart, layers, droplets, wind, shield-check, sparkles, gift, clock, moon, feather, palette) with CSS class hooks and stagger delay support. Falls back to static `lusena-icon` for unknown icon names.
 - `snippets/lusena-section-gap-detector.liquid` — Same-bg section gap detection (JS)
 - `snippets/lusena-breadcrumbs.liquid` — Breadcrumbs (supports: product, collection, blog, article, page). Has `breadcrumb_label` param to override `page.title` (e.g., "Kontakt" instead of English "Contact")
 - `snippets/lusena-article-card.liquid` — Blog listing card (16:9 image, hover zoom, date, excerpt)
@@ -70,14 +70,40 @@
 - **Playwright CLI (`/playwright-cli` skill):** The **only** way to interact with the browser. Use for ALL browser tasks: screenshots, debugging CSS, checking network resources, testing interactions, comparing before/after, anything that needs a live page. **CRITICAL: NEVER use Playwright MCP browser tools directly** (`browser_navigate`, `browser_snapshot`, `browser_click`, etc.) — they bypass the project workflow. **ALWAYS use `-s=<unique-name>`** to isolate your browser session from other concurrent Claude Code instances (e.g., `playwright-cli -s=pdp-fix open http://...`). Each instance MUST pick a DIFFERENT name — never use generic names like `-s=audit` or `-s=test`. Without a named session, all instances share the default browser and will navigate each other's pages.
 - **Shopify Dev MCP:** MUST call `learn_shopify_api` with `api: "liquid"` before editing Liquid
 
+## Hooks, rules, and settings
+
+**Hooks** (`.claude/hooks/`, 5 scripts — configured in `.claude/settings.json`):
+| Hook | Event | Purpose |
+|------|-------|---------|
+| `guard-dawn-edit.sh` | PreToolUse (Edit\|Write) | Blocks editing Dawn originals when lusena-* counterpart exists |
+| `session-context.sh` | SessionStart | Injects activeContext.md focus/next/issues |
+| `post-compact-rules.sh` | PostCompact | Re-injects critical LUSENA rules after context compaction |
+| `theme-check-on-edit.sh` | PostToolUse (Edit\|Write) | Runs `shopify theme check` on edited .liquid files |
+| `task-quality-gate.sh` | TaskCompleted | Runs theme check on recently modified lusena-* files |
+
+**Rules** (`.claude/rules/`, 7 files — auto-load by path pattern):
+| Rule | Triggers on |
+|------|-------------|
+| `animations.md` | `sections/*.liquid`, `snippets/*.liquid` |
+| `bundle-system.md` | `sections/*bundle*`, `snippets/*bundle*`, `assets/*bundle*` |
+| `cart-system.md` | `sections/*cart*`, `snippets/*cart*`, `assets/*cart*` |
+| `css-and-assets.md` | `assets/*.css`, `sections/*.liquid`, `snippets/*.liquid` |
+| `css-cascade.md` | `assets/*.css`, `sections/*.liquid`, `snippets/*.liquid` |
+| `product-metafields.md` | `memory-bank/doc/products/**`, PDP sections/snippets |
+| `section-catalog.md` | (always loaded — no path filter) |
+
+**Settings:** `.claude/settings.json` (shared, checked in) + `.claude/settings.local.json` (local permissions).
+
 ## Skills inventory
 
-14 skills in `.claude/` (subset mirrored in `.agent/`, `.codex/`, `.opencode/`):
+16 skills in `.claude/` (subset mirrored in `.agent/`, `.codex/`, `.opencode/`):
 
 | Skill | Purpose |
 |-------|---------|
 | `lusena-update-memory-bank` | Post-work memory bank update |
 | `lusena-pre-commit-sync` | Pre-commit documentation sync (replaces lusena-theme-changelog) |
+| `lusena-new-section` | Scaffolds new LUSENA section with correct boilerplate, spacing, CSS decision, schema |
+| `lusena-product-copy-session` | Orchestrates full creative copy workflow (research → legal → validation → finalization) |
 | `lusena-v2-page-migration` | Page migration to brandbook v2 |
 | `lusena-draftshop-fragment-parity` | Copy UI from React prototype to theme |
 | `lusena-page-audit` | Reusable page UX audit checklist |

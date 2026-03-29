@@ -934,6 +934,7 @@
         'touchstart',
         (event) => {
           if (!lightboxState.open) return;
+          if (lightboxImage) lightboxImage.classList.add('is-gesturing');
           if (event.touches.length === 2) {
             lightboxState.pinch = {
               startDist: getTouchDistance(event.touches),
@@ -1000,6 +1001,7 @@
         'touchend',
         (event) => {
           if (!lightboxState.open) return;
+          if (lightboxImage) lightboxImage.classList.remove('is-gesturing');
 
           if (lightboxState.pinch && event.touches.length < 2) {
             lightboxState.pinch = null;

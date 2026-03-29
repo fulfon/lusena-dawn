@@ -1,8 +1,9 @@
 # Jedwabny wałek do loków (Heatless Curlers)
 
-*Last updated: 2026-03-22*
+*Last updated: 2026-03-28*
 *Copy finalized: 2026-03-15 (creative session complete - material correction: 22 momme 6A silk confirmed)*
 *Re-evaluated: 2026-03-22 (orchestrator + Polish copywriter flow - 2 fields updated, scores unchanged)*
+*Card 5 crafted: 2026-03-28 (freed from universal OEKO-TEX, now product-specific sleep comfort angle)*
 
 > **Note:** This product uses the same 22 momme, 6A grade mulberry silk as all other LUSENA
 > products, but has a PP cotton filling inside. It needs custom care instructions due to
@@ -93,7 +94,7 @@ Single color (B only per §7.3): Pink/rose is the dominant #1 curler color globa
 > **UNIVERSAL FIELDS - DO NOT MODIFY.** Fields marked "Pre-filled (universal)" are shared
 > across ALL LUSENA silk products. They were validated once and must not be rewritten or
 > "improved" during creative sessions. See `memory-bank/doc/products/product-metafields-reference.md` → "Universal fields".
-> All 4 universal feature cards apply to this product (momme, satyna, OEKO-TEX, gift).
+> All 3 universal feature cards apply to this product (momme, satyna, gift). Card 5 is product-specific (crafted 2026-03-28).
 
 ### Buybox content
 
@@ -133,7 +134,7 @@ Single color (B only per §7.3): Pink/rose is the dominant #1 curler color globa
 
 | Metafield | Value | Status |
 |-----------|-------|--------|
-| `lusena.pdp_packaging_items` | ["Jedwabny wałek LUSENA", "Eleganckie pudełko prezentowe LUSENA", "Karta z instrukcją użytkowania"] | Updated (product name aligned) |
+| `lusena.pdp_packaging_items` | ["Jedwabny wałek LUSENA", "Jedwabne scrunchies do mocowania (22 momme)", "Eleganckie pudełko prezentowe LUSENA", "Karta z instrukcją użytkowania"] | Updated (scrunchies added 2026-03-28) |
 
 ### Care & Badge
 
@@ -144,7 +145,7 @@ Single color (B only per §7.3): Pink/rose is the dominant #1 curler color globa
 
 ### Feature highlights (6 cards)
 
-> **All 4 universal cards apply** (momme, satyna education, OEKO-TEX, gift). Cards 1 and 3 are product-specific.
+> **All 3 universal cards apply** (momme, satyna education, gift). Cards 1, 3, and 5 are product-specific.
 
 | Metafield | Value | Status |
 |-----------|-------|--------|
@@ -160,9 +161,9 @@ Single color (B only per §7.3): Pink/rose is the dominant #1 curler color globa
 | `lusena.pdp_feature_4_icon` | shield-check | Pre-filled (universal) |
 | `lusena.pdp_feature_4_title` | Jedwab, nie satyna z poliestru | Pre-filled (universal) |
 | `lusena.pdp_feature_4_description` | Satyna to nazwa splotu, nie materiału - najczęściej kryje się za nią poliester. LUSENA to 100% jedwab morwowy: naturalne włókno białkowe, które oddycha i nie elektryzuje. | Pre-filled (universal) |
-| `lusena.pdp_feature_5_icon` | sparkles | Pre-filled (universal) |
-| `lusena.pdp_feature_5_title` | Certyfikowany OEKO-TEX® 100 | Pre-filled (universal) |
-| `lusena.pdp_feature_5_description` | Niezależny certyfikat potwierdza, że nasz jedwab jest bezpieczny dla skóry i wolny od szkodliwych substancji. Pewność, którą możesz zweryfikować. | Pre-filled (universal) |
+| `lusena.pdp_feature_5_icon` | feather | **UPDATED** (icon consistency: "soft, no pressure" = weightless comfort, not body protection) |
+| `lusena.pdp_feature_5_title` | Miękki - nie uciska w nocy | Done (2026-03-28, 26 chars) |
+| `lusena.pdp_feature_5_description` | Wiele wałków ma sztywny rdzeń z pianki - taki, który czujesz przez całą noc. Nasz ma wolną przestrzeń na środku - nic nie uciska góry głowy i możesz wygodnie spać. Miękkie wypełnienie jest tylko po bokach, tam gdzie formują się loki. | Done (2026-03-28, 203 chars) |
 | `lusena.pdp_feature_6_icon` | gift | Pre-filled (universal) |
 | `lusena.pdp_feature_6_title` | Gotowa do wręczenia | Pre-filled (universal) |
 | `lusena.pdp_feature_6_description` | Każdy jedwabny wałek LUSENA przychodzi w eleganckim pudełku prezentowym - idealny upominek, który robi wrażenie. Bez dodatkowego pakowania. | Pre-filled (product name swapped) |
@@ -177,7 +178,7 @@ Single color (B only per §7.3): Pink/rose is the dominant #1 curler color globa
 | 2 | layers | Three stacked horizontal layers. Top layer gently floats up 1px then settles back, followed by middle, then bottom - wave-like "breathing" motion over 7 seconds. Reinforces density/thickness concept of momme. Easing: ease-in-out. Calm, substantial. |
 | 3 | clock | Clock face with hour and minute hands. Minute hand slowly rotates 360° over 8 seconds with linear easing, hour hand barely moves (rotates ~3°). Smooth, continuous motion reinforcing the "time does the work for you" concept. Calm, unhurried feeling. |
 | 4 | shield-check | Shield outline with a checkmark inside. Checkmark draws itself once via stroke-dashoffset animation over 1.5s on first viewport entry, then stays static permanently. Reinforces "verified, authentic" feeling. No looping. |
-| 5 | sparkles | 3 small diamond-shaped stars arranged in a cluster. Stars gently twinkle in sequence (opacity 0.4→1→0.4), one at a time, left to right. 6-second full cycle. Easing: ease-in-out. Gentle shimmer reinforcing certification quality. |
+| 5 | feather | Single feather shape. Very slow, gentle float - subtle vertical drift (translateY 0→-2px→0) with barely perceptible rotation (±1°) over 8 seconds. The feather seems to hover weightlessly. Easing: ease-in-out. Reinforces the soft, pressure-free comfort of sleeping with the curler. |
 | 6 | gift | Gift box with ribbon on top. Very subtle "unwrap" motion - lid shifts up 1px then back down over 6 seconds. The ribbon bow has a tiny wiggle (rotate ±1°). Playful but restrained. Reinforces the excitement of receiving a beautifully wrapped gift. |
 
 ## Validation results
@@ -198,7 +199,7 @@ Single color (B only per §7.3): Pink/rose is the dominant #1 curler color globa
   - Issue 1: benefit_3 "bez szarpania" (absolute negation) → fixed to "mniej szarpania i plątaniny przy zdejmowaniu"
   - Warning 1: headline "loki gotowe" implies guaranteed results → kept (same as previous session), balanced by tagline "efekt zależy od typu i długości włosów"
   - Warning 2: card_3_title "gotowe fale" - same pattern as headline, acceptable in context
-  - Note: OEKO-TEX card (universal card 5) says "nasz jedwab" - refers to silk material, not assembled product. Verify certificate covers this product's silk batch.
+  - Note: OEKO-TEX is covered by quality evidence section and specs accordion. Verify certificate covers this product's silk batch.
   - All "22 momme" claims are factual specs - require COA documentation on file
   - No medical claims, no fabricated social proof, no forbidden patterns
 
@@ -265,6 +266,49 @@ Re-evaluated using orchestrator + Polish copywriter flow. Checked all creative f
 - All objections remain site-level (photos, reviews, hair type guide, usage video, price justification vs Allegro) — same as original validation
 
 **Verdict:** UPDATED — 2 fields adjusted (B2 exclusion list fix + meta description trim). Copy confirmed with changes. Product file updated.
+
+### Card 5 creative session (2026-03-28)
+
+Card 5 freed from universal OEKO-TEX (already covered by quality evidence section + specs accordion). Now product-specific: **sleep comfort** angle — open-crown design (13 cm gap with no filling at center of rod, crown lies flat on pillow).
+
+**Design detail:** The rod has ~13 cm of empty space in the center (no PP cotton filling). This section sits on the crown of the head. When lying down, nothing is between head and pillow. Filling is only on the ends, where hair wraps. Hair secured with included silk scrunchies (22 momme).
+
+**Legal check (2026-03-28):** PASS (0 issues — all claims are factual product design descriptions)
+
+**Customer validation (2026-03-28) — 3 rounds across 2 angle versions:**
+
+V1 Run 1 (soft filling angle: "Dla wielu to zupełnie inna noc"):
+
+| Criteria | Kasia | Ewa | Zuzia | Maja | Avg |
+|----------|-------|-----|-------|------|-----|
+| Trust | 7 | 7 | 6 | 7 | 6.75 |
+| Intent | 7 | 7 | 5 | 7 | 6.50 |
+| Premium | 5 | 5 | 5 | 7 | 5.50 |
+
+- 4/4 criticized "Dla wielu" as empty social proof → REFINED to "Po kilkunastu minutach przestajesz go czuć"
+- V1 Run 2: Trust 7.75, Intent 6.75, Premium 6.50 (all improved)
+
+**Owner input:** Product has open-crown design (13 cm gap) — stronger angle than generic "soft filling". Angle revised.
+
+V2 Run 1 (open-crown design angle: "pustą sekcję na środku - korona leży wprost na poduszce"):
+
+| Criteria | Kasia | Ewa | Zuzia | Maja | Avg |
+|----------|-------|-----|-------|------|-----|
+| Trust | 8 | 7 | 7 | 8 | 7.50 |
+| Intent | 7 | 7 | 7 | 7 | 7.00 |
+| Premium | 7 | 6 | 5 | 6 | 6.00 |
+
+- Intent hit 7.0 for first time (open-crown more convincing than soft filling)
+- 4/4 praised "korona leży wprost na poduszce" as strongest (LOCK)
+- 3/4 criticized "pustą sekcję na środku" as too technical/Allegro-like (REFINE)
+- 3/4 said sentence 1 assumes prior roller experience (REFINE)
+
+**Final composite (best-validated elements + owner review):**
+- Sentence 1: "Wiele wałków ma sztywny rdzeń z pianki - taki, który czujesz przez całą noc." (LOCK: 4/4 praised across 3 rounds)
+- Middle: "Nasz ma wolną przestrzeń na środku - nic nie uciska góry głowy i możesz wygodnie spać." (Owner-approved after multiple iterations — frames empty section as intentional design, natural Polish)
+- Sentence 3: "Miękkie wypełnienie jest tylko po bokach, tam gdzie formują się loki." (OK in V2 Run 1)
+
+**Verdict:** FINALIZED — composite of validated elements + owner language review. Trust 7.50 ✅, Intent 7.00 ✅.
 
 ### Site-level improvements flagged by validation (still relevant)
 

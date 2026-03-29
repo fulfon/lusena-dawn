@@ -57,24 +57,11 @@ When the owner asks to update product copy in Shopify or generate import files:
 
 Full docs: `memory-bank/doc/products/README.md`
 
-### CSS architecture
+### CSS, compiled assets, product metafields
 
-`assets/lusena-foundations.css` is the single source of truth for all CSS tokens, spacing, typography, components, and global body/main rules. The old Tailwind files (`lusena-shop.css`, `lusena-spacing.css`, `lusena-missing-utilities.liquid`) were deleted on 2026-03-04 after full migration.
-
-**When editing sections:** Use `lusena-foundations.css` classes. See `memory-bank/doc/patterns/spacing-system.md` for the class API.
-
-### compiled_assets truncation guard (MANDATORY)
-
-Shopify compiles all `{% stylesheet %}` blocks into one `compiled_assets/styles.css` file that **silently truncates at ~73KB**. Rules after the cut-off are lost with no error.
-
-- **≤50 lines of section-scoped CSS** → OK in `{% stylesheet %}`
-- **>50 lines or shared CSS** → must go in a standalone `assets/lusena-*.css` file
-- **After adding CSS to any `{% stylesheet %}` block:** check compiled_assets size in DevTools Network tab — it must stay **under 55KB**
-- If over 55KB: extract the largest block into a standalone asset (see `memory-bank/doc/patterns/css-architecture.md` for the extraction steps)
-
-### Product metafields
-
-Before creating or modifying product metafields, read `memory-bank/doc/products/product-metafields-reference.md` — it contains **universal fields** (specs, feature cards 2/4/5/6, care) that are shared across ALL products and must NOT be modified per product. Only fields marked "REQUIRES CREATIVE SESSION" in the product file should be crafted. Never use percentage claims for momme comparisons (e.g., "30% gęstszy") — use qualitative language only.
+These rules are in `.claude/rules/` and load automatically when you edit relevant files:
+- **CSS architecture & compiled_assets guard** → `.claude/rules/css-and-assets.md` (loads for `assets/*.css`, `sections/*.liquid`, `snippets/*.liquid`)
+- **Product metafields** → `.claude/rules/product-metafields.md` (loads for `memory-bank/doc/products/**`, PDP sections/snippets)
 
 ## Key Conventions
 
@@ -85,6 +72,8 @@ Before creating or modifying product metafields, read `memory-bank/doc/products/
 - Sentence case for all headings and button labels
 - **Hyphens only, never em dashes** — all customer-facing copy uses `-` (hyphen/minus), never `—` (em dash). Em dashes look AI-generated. This applies to metafield values, section defaults, and any text visible to customers.
 - **Feature card titles: max 28 characters** — guarantees single-line rendering at the tightest breakpoint (288px column at 20px font). Reference: "Jedwab, nie satyna z poliestru" (30 chars) barely fits.
+- **NEVER use `$()` or backticks in Bash commands** — command substitution triggers permission prompts that break auto-accept flow. Instead: read files with the Read tool first, then pass content inline. Use pipes (`echo "..." | cmd`) or temp-file approaches that don't require substitution. There is ALWAYS an alternative. No exceptions.
+- **NEVER use `grep`, `rg`, `cat`, `head`, `tail`, `sed`, or `awk` via Bash** — use the dedicated Read, Grep, Glob, and Edit tools instead. They never trigger permission prompts and provide better output.
 - Conventional Commits: `feat(lusena):`, `fix(lusena):`, `docs:`, `chore:`
 
 ## Implementation Principles
@@ -129,11 +118,7 @@ The `/playwright-cli` skill is the **only** way to interact with the browser. Us
 
 ## Animations (consistency)
 
-Dawn's `scroll-trigger` classes gated by `settings.animations_reveal_on_scroll`:
-- New section/block: add `scroll-trigger animate--slide-in` conditionally:
-  `{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}`
-- Repeated items: `data-cascade` on container for stagger effect.
-- If element needs `transform` for layout, put scroll-trigger on a wrapper.
+Animation rules are in `.claude/rules/animations.md` (loads for `sections/*.liquid`, `snippets/*.liquid`).
 
 ## Theme Check Warnings (known baseline)
 

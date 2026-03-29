@@ -19,7 +19,7 @@
 |---|---------|-----------|-------------|--------|
 | 1 | `lusena-main-product` | surface-1 | custom (inline overrides) | Done |
 | 2 | `lusena-pdp-feature-highlights` | surface-2 | standard | Done (heading "Co zyskujesz", bg_style, white icon-wrap, border-top removed, animated icons via `lusena-icon-animated` + `lusena-icon-animations.css` 2026-03-15) |
-| 3 | `lusena-pdp-quality-evidence` | brand-bg | standard | Done (white cards, cream icon circles, no hover, scrollHeight accordion, funnel CTAs removed, content rewritten "why LUSENA?" angle, certificate verification URL from metafield, panel text alignment fix 76/80px, `rotate-ccw` icon added) |
+| 3 | `lusena-pdp-quality-evidence` | brand-bg | standard | Done (white cards, cream icon circles, no hover, explicit height accordion with `data-state` + `prefers-reduced-motion` (rewritten 2026-03-28), funnel CTAs removed, content rewritten "why LUSENA?" angle, certificate verification URL from metafield, panel text alignment fix 76/80px, `rotate-ccw` icon added) |
 | 4 | `lusena-pdp-truth-table` | surface-1 | standard | Done (5 rows, legally safe copy, lusena-icon, cream mobile cards) |
 | 5 | `lusena-faq` (shared) | surface-2 | standard | Done (6 items, anchor_id=details, is_returns_target) |
 | 6 | `lusena-final-cta` (shared) | brand-bg | spacious | Done ("Sprawdź kolekcję" → /collections/all) |
@@ -50,8 +50,16 @@ Separate template for bundle products. Uses `lusena-main-bundle` section (custom
 **Shared PDP snippets used by bundle (4):**
 - `lusena-pdp-media.liquid`, `lusena-pdp-proof-chips.liquid`, `lusena-pdp-guarantee.liquid`, `lusena-pdp-payment.liquid`
 
-## Recent changes (2026-03-21)
+## Recent changes (2026-03-28)
 
+- **Card 5 freed from universal OEKO-TEX** — all 8 products now have product-specific card 5 (creative sessions documented in each product MD file)
+- **3 new animated icons** — moon (glow pulse), feather (float), palette (swatch pulse) added to animated icon system
+- **Icon semantic system** — 8 variable icons each with fixed meaning. Icons reassigned across products.
+- **Quality evidence accordion rewrite** — `max-height`/opacity → explicit `height` transitions, `data-state` attribute, `prefers-reduced-motion` support, `contain: layout style`, webkit tap highlight fix
+- **Feature highlights schema** — 4 new icon options added to dropdown (palette, feather, moon, clock)
+- **Lightbox gestures** — `is-gesturing` class toggle on image during touch interactions
+
+### Older changes (2026-03-21)
 - **Proof chips:** reordered ("Na prezent" first), JS row balancer added for optimal chip layout
 - **Quality evidence:** click area expanded to full item (not just toggle), icon color → gold
 - **PDP title:** desktop font-size reduced 4rem → 3.2rem
