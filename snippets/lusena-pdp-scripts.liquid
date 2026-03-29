@@ -1391,6 +1391,42 @@
       updateGalleryForVariant(variant);
     };
 
+    /* ── Cross-sell checkbox: update variant on color change ── */
+    function updateCrossSellVariant(variant) {
+      var row = root.querySelector('[data-lusena-cross-sell-row]');
+      if (!row) return;
+      var checkbox = row.querySelector('[data-lusena-cross-sell-checkbox]');
+      if (!checkbox) return;
+
+      var mainColorIndex = parseInt(row.dataset.mainColorIndex) || 0;
+      var selectedColor = mainColorIndex > 0 ? variant['option' + mainColorIndex] : null;
+
+      var jsonEl = row.querySelector('[data-lusena-cross-sell-variants]');
+      if (!jsonEl) return;
+      var variants = JSON.parse(jsonEl.textContent);
+
+      var matched = null;
+      var highestInv = null;
+
+      for (var i = 0; i < variants.length; i++) {
+        var v = variants[i];
+        if (!v.available) continue;
+        if (selectedColor && v.color === selectedColor && !matched) matched = v;
+        if (!highestInv || v.inventory > highestInv.inventory) highestInv = v;
+      }
+
+      var chosen = matched || highestInv || variants[0];
+      if (!chosen) return;
+
+      checkbox.dataset.variantId = String(chosen.id);
+
+      var colorLabel = row.querySelector('[data-lusena-cross-sell-color-label]');
+      if (colorLabel) colorLabel.textContent = 'Kolor: ' + chosen.color;
+
+      var img = row.querySelector('[data-lusena-cross-sell-image]');
+      if (img && chosen.image) img.src = chosen.image;
+    }
+
     root.addEventListener('change', (e) => {
       const target = e.target;
       if (!(target instanceof HTMLInputElement)) return;
@@ -1401,7 +1437,72 @@
       const options = getSelectedOptions();
       const variant = findVariant(options);
       updateUIForVariant(variant);
+      updateCrossSellVariant(variant);
     });
+
+    /* ── Cross-sell checkbox: intercept ATC to add both items ── */
+    if (addToCartFormEl) {
+      addToCartFormEl.addEventListener('submit', function(event) {
+        var checkbox = root.querySelector('[data-lusena-cross-sell-checkbox]');
+        if (!checkbox || !checkbox.checked) return;
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        var mainId = parseInt(variantIdInput.value);
+        var crossSellId = parseInt(checkbox.dataset.variantId);
+        if (!mainId || !crossSellId) return;
+
+        var productFormEl = addToCartFormEl.closest('product-form');
+        if (productFormEl) productFormEl.classList.add('loading');
+        setStickyLoadingState(true);
+        stickyLoadingStartedAt = performance.now();
+
+        fetch(window.routes.cart_add_url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: JSON.stringify({
+            items: [
+              { id: mainId, quantity: 1 },
+              { id: crossSellId, quantity: 1 }
+            ]
+          })
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+          if (data.status) {
+            publish(PUB_SUB_EVENTS.cartError, {
+              source: 'product-form',
+              productVariantId: mainId,
+              errors: data.description || data.message
+            });
+            if (productFormEl) productFormEl.classList.remove('loading');
+            setStickyLoadingState(false);
+            return;
+          }
+          publish(PUB_SUB_EVENTS.cartUpdate, {
+            source: 'product-form',
+            productVariantId: mainId,
+            cartData: data
+          });
+          var elapsed = performance.now() - stickyLoadingStartedAt;
+          var minMs = parseInt(addToCartFormEl.dataset.loadingMinMs) || 500;
+          var holdMs = parseInt(addToCartFormEl.dataset.loadingHoldMs) || 350;
+          var remaining = Math.max(0, (minMs + holdMs) - elapsed);
+          setTimeout(function() {
+            if (productFormEl) productFormEl.classList.remove('loading');
+            setStickyLoadingState(false);
+          }, remaining);
+        })
+        .catch(function() {
+          if (productFormEl) productFormEl.classList.remove('loading');
+          setStickyLoadingState(false);
+        });
+      }, { capture: true });
+    }
 
     if (addToCartFormEl) {
       addToCartFormEl.addEventListener('submit', () => {
@@ -1455,16 +1556,35 @@
         setButtonLoadingState(buyNowButton, true, { disableControl: false });
 
         try {
-          const formData = addToCartFormEl ? new FormData(addToCartFormEl) : new FormData();
-          formData.set('id', variantId);
-          if (!formData.has('quantity')) {
-            formData.set('quantity', '1');
-          }
+          const crossSellCheckbox = root.querySelector('[data-lusena-cross-sell-checkbox]');
+          const crossSellChecked = crossSellCheckbox && crossSellCheckbox.checked;
+          const crossSellVariantId = crossSellChecked ? crossSellCheckbox.dataset.variantId : null;
 
-          const config = fetchConfig('javascript');
-          config.headers['X-Requested-With'] = 'XMLHttpRequest';
-          delete config.headers['Content-Type'];
-          config.body = formData;
+          let config;
+          if (crossSellChecked && crossSellVariantId) {
+            config = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+              },
+              body: JSON.stringify({
+                items: [
+                  { id: parseInt(variantId), quantity: 1 },
+                  { id: parseInt(crossSellVariantId), quantity: 1 }
+                ]
+              })
+            };
+          } else {
+            config = fetchConfig('javascript');
+            config.headers['X-Requested-With'] = 'XMLHttpRequest';
+            delete config.headers['Content-Type'];
+
+            const formData = addToCartFormEl ? new FormData(addToCartFormEl) : new FormData();
+            formData.set('id', variantId);
+            if (!formData.get('quantity')) formData.set('quantity', '1');
+            config.body = formData;
+          }
 
           const response = await fetch(window.routes.cart_add_url, config);
           const data = await response.json();
