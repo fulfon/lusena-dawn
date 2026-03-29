@@ -138,6 +138,8 @@
 .lusena-pdp-cross-sell-cb__info {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .lusena-pdp-cross-sell-cb__title {

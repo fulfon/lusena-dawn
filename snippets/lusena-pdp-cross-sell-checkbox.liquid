@@ -112,8 +112,8 @@
     >
     <span class="lusena-pdp-cross-sell-cb__check" aria-hidden="true"></span>
 
-    {%- if cs_image -%}
-      <span class="lusena-pdp-cross-sell-cb__image">
+    <span class="lusena-pdp-cross-sell-cb__image">
+      {%- if cs_image -%}
         <img
           src="{{ cs_image | image_url: width: 80 }}"
           alt="{{ cross_sell_product.title | escape }}"
@@ -122,8 +122,8 @@
           loading="lazy"
           data-lusena-cross-sell-image
         >
-      </span>
-    {%- endif -%}
+      {%- endif -%}
+    </span>
 
     <span class="lusena-pdp-cross-sell-cb__info">
       <span class="lusena-pdp-cross-sell-cb__title">
