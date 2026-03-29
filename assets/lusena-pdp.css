@@ -172,10 +172,10 @@
 }
 
 .lusena-pdp-cross-sell-cb__was {
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   color: var(--lusena-text-2);
   text-decoration: line-through;
-  opacity: 0.45;
+  font-variant-numeric: tabular-nums;
 }
 
 .lusena-pdp .lusena-pdp-buy-box__proof {
