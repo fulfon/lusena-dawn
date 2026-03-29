@@ -42,7 +42,7 @@
   /* ---- Build education elements ---- */
   var eduRow = document.createElement('div');
   eduRow.className = 'lusena-pdp-summary__education-row';
-  eduRow.hidden = true;
+  eduRow.style.display = 'none';
 
   var eduCompare = document.createElement('span');
   eduCompare.className = 'lusena-pdp-summary__education-compare';
@@ -56,7 +56,7 @@
 
   var hintEl = document.createElement('span');
   hintEl.className = 'lusena-pdp-summary__education-hint';
-  hintEl.hidden = true;
+  hintEl.style.display = 'none';
 
   priceRow.after(eduRow);
   eduRow.after(hintEl);
@@ -91,24 +91,27 @@
     stickyGuard = false;
   }
 
-  /* ---- Activate / Deactivate ---- */
+  /* ---- Activate / Deactivate ----
+     Uses style.display instead of hidden attribute because
+     .lusena-pdp .lusena-pdp-summary__price-row { display: flex }
+     at specificity 0-2-0 overrides the browser [hidden] rule. */
   function activate(label) {
     isActive = true;
     eduCompare.textContent = priceEl.textContent;
-    priceRow.hidden = true;
-    eduRow.hidden = false;
+    priceRow.style.display = 'none';
+    eduRow.style.display = '';
+    hintEl.style.display = '';
     hintEl.textContent = label;
-    hintEl.hidden = false;
-    if (perNightEl) perNightEl.hidden = true;
+    if (perNightEl) perNightEl.style.display = 'none';
     applyStickyEducation();
   }
 
   function deactivate() {
     isActive = false;
-    priceRow.hidden = false;
-    eduRow.hidden = true;
-    hintEl.hidden = true;
-    if (perNightEl) perNightEl.hidden = false;
+    priceRow.style.display = '';
+    eduRow.style.display = 'none';
+    hintEl.style.display = 'none';
+    if (perNightEl) perNightEl.style.display = '';
     revertStickyEducation();
   }
 

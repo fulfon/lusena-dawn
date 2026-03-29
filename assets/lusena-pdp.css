@@ -380,7 +380,9 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* --- Scrunchie PDP education (price swap when qualifying product in cart) --- */
+/* --- Scrunchie PDP education (price swap when qualifying product in cart) ---
+   Mirrors __price-row / __price / __compare-at styles for visual consistency
+   with bundle PDP pricing (same crossed-out + current pattern). */
 .lusena-pdp .lusena-pdp-summary__education-row {
   display: flex;
   align-items: baseline;
@@ -388,14 +390,15 @@
 }
 
 .lusena-pdp .lusena-pdp-summary__education-compare {
-  font-size: 1.6rem;
-  line-height: 1.4;
-  color: var(--lusena-text-2);
+  font-size: 1.8rem;
+  color: color-mix(in srgb, var(--lusena-text-2) 50%, transparent);
   text-decoration: line-through;
   font-variant-numeric: tabular-nums;
 }
 
 .lusena-pdp .lusena-pdp-summary__education-current {
+  font-size: 2rem;
+  font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
 
@@ -1337,6 +1340,14 @@
   }
 
   .lusena-pdp .lusena-pdp-summary__price {
+    font-size: 2.4rem;
+  }
+
+  .lusena-pdp .lusena-pdp-summary__education-row {
+    gap: 1.2rem;
+  }
+
+  .lusena-pdp .lusena-pdp-summary__education-current {
     font-size: 2.4rem;
   }
 }
