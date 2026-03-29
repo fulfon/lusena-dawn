@@ -18,9 +18,10 @@ These were discussed and approved during brainstorming:
 ## Pricing mechanism
 
 - **Shopify admin:** Automatic BXGY discount — "Buy any LUSENA product, get 1 scrunchie at 39 zl"
-- **Theme:** Global theme setting `lusena_cross_sell_price` (3900 groszy) for display on PDP and cart upsell
+- **Theme:** Section setting `cross_sell_price` (3900 groszy) on `lusena-main-product` for PDP display only
 - **Cart display:** Shopify shows scrunchie at 59 zl with -20 zl line-item discount = 39 zl effective
-- **Sync requirement:** Theme setting and Shopify discount must show the same price. Documented in section schema `info` text.
+- **Sync requirement:** Section setting and Shopify discount must show the same price. Documented in schema `info` text.
+- **Cart upsell:** No theme changes needed. Cart upsell shows regular 59 zl; once added, Shopify BXGY applies the discount on the line item automatically.
 
 ## UI design
 
@@ -117,22 +118,6 @@ Show the checkbox when ALL of these are true:
 
 ## Settings
 
-### Theme settings (`settings_schema.json`)
-
-Added to the LUSENA cart/upsell settings group:
-
-```json
-{
-  "type": "number",
-  "id": "lusena_cross_sell_price",
-  "label": "Cena cross-sell (grosze)",
-  "default": 3900,
-  "info": "Musi odpowiadac rabatowi BXGY w Shopify admin (np. 3900 = 39 zl). Uzywane na PDP i w koszyku."
-}
-```
-
-Single source of truth for the discounted price — used by PDP checkbox, cart drawer upsell, and cart page upsell.
-
 ### Section schema additions (`lusena-main-product.liquid`)
 
 ```json
@@ -150,10 +135,17 @@ Single source of truth for the discounted price — used by PDP checkbox, cart d
   "type": "product",
   "id": "cross_sell_product",
   "label": "Produkt cross-sell"
+},
+{
+  "type": "number",
+  "id": "cross_sell_price",
+  "label": "Cena cross-sell (grosze)",
+  "default": 3900,
+  "info": "Cena wyswietlana na PDP. Musi odpowiadac rabatowi BXGY w Shopify admin (np. 3900 = 39 zl)."
 }
 ```
 
-The price is read from the global theme setting `settings.lusena_cross_sell_price`, not duplicated here.
+Liquid cannot read Shopify automatic discount values — this setting is needed for PDP display only. The actual pricing is handled by the BXGY discount at cart/checkout.
 
 ## Files
 
@@ -167,13 +159,9 @@ The price is read from the global theme setting `settings.lusena_cross_sell_pric
 - `snippets/lusena-pdp-scripts.liquid` — intercept ATC submit + Buy Now click to add scrunchie when checked; update scrunchie variant on color change
 - `assets/lusena-pdp.css` — checkbox row styles; adjust `order` values for buy-box slots
 
-### Cart upsell price sync
+### No cart changes needed
 
-Update both cart upsell surfaces to display the cross-sell price (39 zl with 59 zl crossed out) instead of just the product price, for consistency with the PDP:
-- `snippets/cart-drawer.liquid` — cross-sell card price area
-- `sections/lusena-cart-items.liquid` — cross-sell card price area
-
-Both read `settings.lusena_cross_sell_price` (the same global theme setting used by the PDP checkbox). When the cross-sell product matches the upsell product, show the discounted price with original crossed out.
+Cart upsell surfaces (`cart-drawer.liquid`, `lusena-cart-items.liquid`) continue showing the scrunchie at regular 59 zl. Once the customer adds it, Shopify's BXGY automatic discount applies the -20 zl on the line item. The cart renders the discounted price from `line_item.final_price` automatically.
 
 ## Testing matrix
 
