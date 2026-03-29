@@ -380,6 +380,35 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* --- Scrunchie PDP education (price swap when qualifying product in cart) --- */
+.lusena-pdp .lusena-pdp-summary__education-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.lusena-pdp .lusena-pdp-summary__education-compare {
+  font-size: 1.6rem;
+  line-height: 1.4;
+  color: var(--lusena-text-2);
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+
+.lusena-pdp .lusena-pdp-summary__education-current {
+  font-variant-numeric: tabular-nums;
+}
+
+.lusena-pdp .lusena-pdp-summary__education-hint {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: var(--lusena-font-ui);
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--lusena-accent-cta);
+}
+
 /* Summary price-wrap gap: replaces mt-3 md:mt-6 */
 .lusena-pdp .lusena-pdp-buy-box__summary [data-lusena-price-wrap] {
   margin-top: 0.8rem;
