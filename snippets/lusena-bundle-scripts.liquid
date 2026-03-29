@@ -527,10 +527,16 @@
       updateCrossSellColor();
       csRevealTimer = setTimeout(function() {
         csWrapper.classList.remove('lusena-bundle-cross-sell--hidden');
+        csWrapper.style.marginTop = '1.6rem';
+        openWrap(csWrapper);
         csRevealTimer = null;
       }, STAGGER_MS);
     } else {
-      csWrapper.classList.add('lusena-bundle-cross-sell--hidden');
+      if (!csWrapper.classList.contains('lusena-bundle-cross-sell--hidden')) {
+        csWrapper.classList.add('lusena-bundle-cross-sell--hidden');
+        csWrapper.style.marginTop = '0';
+        closeWrap(csWrapper);
+      }
       if (csCheckbox) csCheckbox.checked = false;
     }
   }
@@ -551,6 +557,8 @@
     csCheckbox.dataset.variantId = String(chosen.id);
     var img = csWrapper.querySelector('[data-lusena-cross-sell-image]');
     if (img && chosen.image) img.src = chosen.image;
+    var indicator = csWrapper.querySelector('[data-lusena-cross-sell-color-indicator]');
+    if (indicator && chosen.color) indicator.textContent = chosen.color;
   }
 
   function getBundleCartProperties() {

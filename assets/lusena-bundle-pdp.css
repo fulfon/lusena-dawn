@@ -313,20 +313,31 @@
   order: 4;
 }
 
-/* Cross-sell checkbox: hidden until all colors picked, then revealed with animation */
+/* Cross-sell checkbox: hidden until all colors picked, then revealed with animation.
+   Uses LUSENA signature translateY(-6px) slide + opacity fade, matching step reveal. */
 .lusena-pdp--bundle .lusena-pdp-buy-box__cross-sell-checkbox {
   order: 5;
-  max-height: 20rem;
   margin-top: 1.6rem;
   overflow: hidden;
-  transition: max-height var(--lusena-transition-base), opacity var(--lusena-transition-base), margin-top var(--lusena-transition-base);
+  will-change: height;
+  transition: height 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.lusena-pdp--bundle .lusena-pdp-buy-box__cross-sell-checkbox .lusena-pdp-cross-sell-cb {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .lusena-pdp--bundle .lusena-bundle-cross-sell--hidden {
-  max-height: 0;
-  opacity: 0;
+  height: 0px;
   margin-top: 0;
   pointer-events: none;
+}
+
+.lusena-pdp--bundle .lusena-bundle-cross-sell--hidden .lusena-pdp-cross-sell-cb {
+  opacity: 0;
+  transform: translateY(-6px);
 }
 
 .lusena-pdp--bundle .lusena-pdp-buy-box__atc {
@@ -412,7 +423,8 @@
     transition: none;
   }
 
-  .lusena-pdp--bundle .lusena-pdp-buy-box__cross-sell-checkbox {
+  .lusena-pdp--bundle .lusena-pdp-buy-box__cross-sell-checkbox,
+  .lusena-pdp--bundle .lusena-pdp-buy-box__cross-sell-checkbox .lusena-pdp-cross-sell-cb {
     transition: none;
   }
 }
