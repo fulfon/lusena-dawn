@@ -4,11 +4,31 @@
 
 ## Current focus
 
-**Phase 1B: PDP cross-sell checkbox — IN PROGRESS (polishing).** Core feature works: checkbox renders on all individual PDPs, ATC adds both items, cart drawer opens with correct BXGY-discounted price (39 zl with 59 zl crossed out). Remaining: visual/UX polish, interaction edge cases, scope verification, Buy Now testing, documentation.
+**Phase 1B: PDP cross-sell checkbox — IN PROGRESS (final polish + testing).** Core feature works, UI redesigned and polished. Remaining: interaction testing, scope verification, bundle PDP expansion, cart explanation label.
 
 ## Recent completed work
 
-### PDP cross-sell checkbox — core implementation (2026-03-29)
+### PDP cross-sell checkbox — UI/UX redesign (2026-03-29, session 2)
+
+Full visual redesign of the cross-sell card to match LUSENA's premium aesthetic:
+
+**Design decisions:**
+- **White card** with 3px teal left accent (`color-mix(... accent-cta 40% ...)`, full on hover/check)
+- **Compact single row:** checkbox (16px) + image (40px) + title/hint + pricing
+- **"Taniej w komplecie"** educational hint instead of "Kolor:" text
+- **Image-only color communication** — no color text label; image auto-matches when main product color changes
+- **Image placeholder** always renders (`surface-2` bg + dashed border, matching cart drawer upsell pattern)
+- **Strikethrough price** matches cart drawer style (1.2rem, `text-2`, no opacity reduction)
+- **Scroll animation** — `scroll-trigger animate--slide-in` gated by `animations_reveal_on_scroll`
+- **Spacing** — `margin-top: 1.6rem` on wrapper, matching buy-box rhythm
+
+**Bug fixes (same session):**
+- **Button loading animation** — `setBtnLoading()` helper targets actual `<button>` (was targeting `<product-form>` wrapper, no animation played)
+- **Double-add bug** — removed duplicate cross-sell handler from `lusena-pdp-scripts.liquid` `{% javascript %}` block (code was NOT dead as assumed — compiled_assets JS included it)
+- **Double-click guard** — `aria-disabled` check at top of both ATC and Buy Now handlers
+- **Idempotency guard** — `data-lusena-cross-sell-init` prevents re-initialization on hot reload
+
+### PDP cross-sell checkbox — core implementation (2026-03-29, session 1)
 
 Cross-sell checkbox on all individual product PDPs offering scrunchie at 39 zl (BXGY discount in Shopify admin).
 
@@ -17,30 +37,12 @@ Cross-sell checkbox on all individual product PDPs offering scrunchie at 39 zl (
 - **Free shipping threshold 275 zl** (was 289) — bonnet (239) + scrunchie (39) = 278 > 275 clears threshold
 - **Shopify BXGY automatic discount** handles real pricing; theme displays preview price via section setting
 
-**Files created/modified:**
-- `snippets/lusena-pdp-cross-sell-checkbox.liquid` — checkbox row + color matching + inline `<script>` (all JS is here, NOT in `{% javascript %}`)
-- `sections/lusena-main-product.liquid` — render slot between variant/ATC + schema settings (`cross_sell_enabled`, `cross_sell_handle`, `cross_sell_price`)
-- `assets/lusena-pdp.css` — checkbox row styles + order value bumps (atc 5→6, guarantee 6→7, payment 7→8 mobile; atc 7→8, guarantee 8→9, payment 9→10 desktop)
-- `snippets/cart-drawer.liquid` — line-item discount display (`original_line_price > final_line_price` → crossed-out original)
-- `templates/product.json` — cross_sell_handle: "silk-scrunchie", cross_sell_price: 3900
-- `config/settings_data.json` — free shipping threshold 269→275
-- `config/settings_schema.json` — threshold default 269→275
-
 **Key technical decisions (discovered during implementation):**
 - `all_products[handle]` instead of product picker setting — Shopify dev server doesn't resolve product picker GIDs from file sync
-- Inline `<script>` instead of `{% javascript %}` — the compiled_assets JS is truncated (same ~73KB limit as CSS), so the PDP scripts `{% javascript %}` block was never compiled
+- Inline `<script>` instead of `{% javascript %}` — compiled_assets JS truncation (same ~73KB limit as CSS)
 - `/cart/add.js` instead of `/cart/add` — dev server returns 302 without `.js` extension
-- ATC intercept on parent `<product-form>` element with `{ capture: true }` — at the target element, capture doesn't help (listeners fire in registration order), so we register on the parent
-- Cart drawer re-render via direct section fetch (`/cart?section_id=cart-drawer`) + `DOMParser` + `drawer.open()` — bypasses `renderContents()` which has complex section ID mapping
-
-**Known remaining items for polish:**
-- Color change → scrunchie variant update (needs testing)
-- Scope rules verification (scrunchie PDP hidden, bundle PDPs hidden)
-- Buy Now button with checkbox checked
-- Sticky ATC with checkbox checked
-- Visual polish of checkbox row (spacing, mobile, etc.)
-- Revert dead code from `snippets/lusena-pdp-scripts.liquid` (Task 4 subagent added code to `{% javascript %}` block that was never compiled)
-- Documentation updates (memory bank, bundle-system rule, bundle-strategy doc — threshold 289→275 references)
+- ATC intercept on parent `<product-form>` element with `{ capture: true }` — at the target element, capture doesn't help
+- Cart drawer re-render via direct section fetch + `DOMParser` + `drawer.open()`
 
 
 
@@ -108,7 +110,12 @@ New skill `.claude/skills/lusena-section-design-loop/SKILL.md` — autonomous de
 
 ## Next steps
 
-1. **Phase 1B: PDP cross-sell checkbox (NEXT TASK)** — scrunchie at 39 zl on poszewka PDP
+1. **Cross-sell: Buy Now + Sticky ATC testing** — verify both work with checkbox checked
+2. **Cross-sell: Scope verification** — confirm hidden on scrunchie PDP + bundle PDPs
+3. **Cross-sell: Bundle PDP expansion** — add render slot to `lusena-main-bundle.liquid` + verify BXGY admin covers bundles
+4. **Cross-sell: Cart discount explanation** — "Rabat za zakup w zestawie" label on discounted line items (option B)
+5. **Cross-sell: Scrunchie PDP education** — show discount info when qualifying product is in cart
+6. **Documentation updates** — threshold 289→275 refs in bundle-strategy.md
 
 ## Known issues
 
