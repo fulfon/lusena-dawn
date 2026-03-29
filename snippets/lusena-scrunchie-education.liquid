@@ -1,0 +1,146 @@
+{%- comment -%}
+  Scrunchie PDP education — shows discounted price when qualifying product is in cart.
+  Parameters: product (product object), education_price (integer, cents)
+{%- endcomment -%}
+
+{%- if product.handle == 'silk-scrunchie' and education_price != blank -%}
+<span data-lusena-scrunchie-education
+      data-education-price="{{ education_price | money_without_trailing_zeros }}"
+      hidden></span>
+<script>
+(function lusenaScrunchieEducation() {
+  var root = document.querySelector('[data-lusena-product-section]');
+  if (!root) return;
+  if (root.dataset.lusenaEducationInit) return;
+  root.dataset.lusenaEducationInit = '1';
+
+  /* ---- Config from Liquid ---- */
+  var configEl = root.querySelector('[data-lusena-scrunchie-education]');
+  if (!configEl) return;
+  var eduPriceText = configEl.dataset.educationPrice;
+
+  /* ---- Handle-to-label map (Polish instrumental case) ---- */
+  var LABELS = {
+    'poszewka-jedwabna': 'Taniej z poszewk\u0105 jedwabn\u0105 w koszyku',
+    'silk-bonnet': 'Taniej z czepkiem jedwabnym w koszyku',
+    'jedwabna-maska-do-spania-3d': 'Taniej z mask\u0105 do spania w koszyku',
+    'jedwabny-walek-do-lokow': 'Taniej z wa\u0142kiem do lok\u00f3w w koszyku',
+    'nocna-rutyna': 'Taniej z zestawem Nocna Rutyna w koszyku',
+    'piekny-sen': 'Taniej z zestawem Pi\u0119kny Sen w koszyku'
+  };
+  var FALLBACK_LABEL = 'Taniej w komplecie';
+
+  /* ---- DOM refs ---- */
+  var priceEl = root.querySelector('[data-lusena-price]');
+  var priceRow = priceEl ? priceEl.closest('.lusena-pdp-summary__price-row') : null;
+  var perNightEl = root.querySelector('[data-lusena-price-per-night]');
+  var stickyPrices = document.querySelectorAll('[data-lusena-sticky-price]');
+  var stickyPerNights = document.querySelectorAll('[data-lusena-sticky-price-per-night]');
+
+  if (!priceRow) return;
+
+  /* ---- Build education elements ---- */
+  var eduRow = document.createElement('div');
+  eduRow.className = 'lusena-pdp-summary__education-row';
+  eduRow.hidden = true;
+
+  var eduCompare = document.createElement('span');
+  eduCompare.className = 'lusena-pdp-summary__education-compare';
+
+  var eduCurrent = document.createElement('span');
+  eduCurrent.className = 'lusena-pdp-summary__education-current';
+  eduCurrent.textContent = eduPriceText;
+
+  eduRow.appendChild(eduCompare);
+  eduRow.appendChild(eduCurrent);
+
+  var hintEl = document.createElement('span');
+  hintEl.className = 'lusena-pdp-summary__education-hint';
+  hintEl.hidden = true;
+
+  priceRow.after(eduRow);
+  eduRow.after(hintEl);
+
+  /* ---- State ---- */
+  var isActive = false;
+  var stickyGuard = false;
+
+  /* ---- Sticky MutationObserver ---- */
+  var stickyObs = null;
+  if (stickyPrices.length > 0) {
+    stickyObs = new MutationObserver(function() {
+      if (stickyGuard || !isActive) return;
+      applyStickyEducation();
+    });
+    stickyObs.observe(stickyPrices[0], { childList: true, characterData: true, subtree: true });
+  }
+
+  function applyStickyEducation() {
+    stickyGuard = true;
+    stickyPrices.forEach(function(el) { el.textContent = eduPriceText; });
+    stickyPerNights.forEach(function(el) { el.hidden = true; });
+    stickyGuard = false;
+  }
+
+  function revertStickyEducation() {
+    stickyGuard = true;
+    stickyPrices.forEach(function(el) { el.textContent = priceEl.textContent; });
+    stickyPerNights.forEach(function(el) { el.hidden = false; });
+    stickyGuard = false;
+  }
+
+  /* ---- Activate / Deactivate ---- */
+  function activate(label) {
+    isActive = true;
+    eduCompare.textContent = priceEl.textContent;
+    priceRow.hidden = true;
+    eduRow.hidden = false;
+    hintEl.textContent = label;
+    hintEl.hidden = false;
+    if (perNightEl) perNightEl.hidden = true;
+    applyStickyEducation();
+  }
+
+  function deactivate() {
+    isActive = false;
+    priceRow.hidden = false;
+    eduRow.hidden = true;
+    hintEl.hidden = true;
+    if (perNightEl) perNightEl.hidden = false;
+    revertStickyEducation();
+  }
+
+  /* ---- Cart check ---- */
+  function checkCart() {
+    fetch('/cart.js', { credentials: 'same-origin' })
+      .then(function(r) { return r.json(); })
+      .then(function(cart) {
+        var label = null;
+        for (var i = 0; i < cart.items.length; i++) {
+          var handle = cart.items[i].handle;
+          if (handle.indexOf('scrunchie') === -1) {
+            label = LABELS[handle] || FALLBACK_LABEL;
+            break;
+          }
+        }
+        if (label) {
+          activate(label);
+        } else if (isActive) {
+          deactivate();
+        }
+      })
+      .catch(function() { /* network error — silently ignore */ });
+  }
+
+  /* ---- PubSub subscriber (live cart sync) ---- */
+  if (typeof subscribe === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+    subscribe(PUB_SUB_EVENTS.cartUpdate, function() {
+      checkCart();
+    });
+  }
+
+  /* ---- Init ---- */
+  checkCart();
+})();
+</script>
+{%- endif -%}
