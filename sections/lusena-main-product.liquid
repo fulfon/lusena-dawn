@@ -2,6 +2,37 @@
   assign product_form_id = 'LusenaProductForm-' | append: section.id
   assign current_variant = product.selected_or_first_available_variant
   assign price_per_night_cents = current_variant.price | divided_by: 365.0 | round
+
+  assign edu_active = false
+  assign edu_label = ''
+  if product.handle == 'silk-scrunchie' and section.settings.scrunchie_education_price != blank
+    for item in cart.items
+      assign item_handle = item.product.handle
+      if item_handle contains 'scrunchie'
+        continue
+      endif
+      case item_handle
+        when 'poszewka-jedwabna'
+          assign edu_label = 'Taniej z poszewką jedwabną w koszyku'
+        when 'silk-bonnet'
+          assign edu_label = 'Taniej z czepkiem jedwabnym w koszyku'
+        when 'jedwabna-maska-do-spania-3d'
+          assign edu_label = 'Taniej z maską do spania w koszyku'
+        when 'jedwabny-walek-do-lokow'
+          assign edu_label = 'Taniej z wałkiem do loków w koszyku'
+        when 'nocna-rutyna'
+          assign edu_label = 'Taniej z zestawem Nocna Rutyna w koszyku'
+        when 'piekny-sen'
+          assign edu_label = 'Taniej z zestawem Piękny Sen w koszyku'
+        else
+          assign edu_label = 'Taniej w komplecie'
+      endcase
+      break
+    endfor
+    if edu_label != ''
+      assign edu_active = true
+    endif
+  endif
 -%}
 {%- liquid
   assign override_style = ''
@@ -23,6 +54,7 @@
 <section
   class="lusena-pdp lusena-spacing--compact"
   data-lusena-product-section
+  data-product-handle="{{ product.handle }}"
   {% if override_style != blank %}
     style="{{ override_style }}"
   {% endif %}
@@ -41,7 +73,7 @@
 
       <div class="lusena-pdp-buy-box">
         <div class="lusena-pdp-buy-box__summary">
-          {% render 'lusena-pdp-summary', product: product, current_variant: current_variant, section: section, price_per_night_cents: price_per_night_cents %}
+          {% render 'lusena-pdp-summary', product: product, current_variant: current_variant, section: section, price_per_night_cents: price_per_night_cents, education_active: edu_active, education_price: section.settings.scrunchie_education_price, education_label: edu_label %}
         </div>
 
         <div class="lusena-pdp-buy-box__proof">

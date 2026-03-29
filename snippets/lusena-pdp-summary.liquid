@@ -56,7 +56,7 @@
   {%- endif -%}
 
   <div data-lusena-price-wrap>
-    <div class="lusena-pdp-summary__price-row">
+    <div class="lusena-pdp-summary__price-row"{% if education_active %} style="display:none"{% endif %}>
       <span class="lusena-pdp-summary__price" data-lusena-price>
         {{ current_variant.price | money_without_trailing_zeros }}
       </span>
@@ -68,12 +68,22 @@
         <span class="lusena-pdp-summary__compare-at hidden" data-lusena-compare-at></span>
       {%- endif -%}
     </div>
+    {%- if education_price -%}
+      <div class="lusena-pdp-summary__education-row" data-lusena-education-row{% unless education_active %} style="display:none"{% endunless %}>
+        <span class="lusena-pdp-summary__education-current">{{ education_price | money_without_trailing_zeros }}</span>
+        <span class="lusena-pdp-summary__education-compare">{{ current_variant.price | money_without_trailing_zeros }}</span>
+      </div>
+      <span class="lusena-pdp-summary__education-hint" data-lusena-education-hint{% unless education_active %} style="display:none"{% endunless %}>
+        {{- education_label -}}
+      </span>
+    {%- endif -%}
     {%- if show_per_night -%}
       <span
         class="lusena-pdp-summary__per-night"
         data-lusena-price-per-night
         data-prefix="{{ section.settings.price_per_night_prefix | escape }}"
         data-suffix="{{ section.settings.price_per_night_suffix | escape }}"
+        {% if education_active %}style="display:none"{% endif %}
       >
         {{ section.settings.price_per_night_prefix | escape }}&nbsp;{{ price_per_night_cents | money_without_trailing_zeros }}
         {{ section.settings.price_per_night_suffix | escape }}
