@@ -72,7 +72,9 @@
       if (stickyGuard || !isActive) return;
       applyStickyEducation();
     });
-    stickyObs.observe(stickyPrices[0], { childList: true, characterData: true, subtree: true });
+    stickyPrices.forEach(function(el) {
+      stickyObs.observe(el, { childList: true, characterData: true, subtree: true });
+    });
   }
 
   function applyStickyEducation() {
