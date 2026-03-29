@@ -525,12 +525,15 @@
     if (csRevealTimer) { clearTimeout(csRevealTimer); csRevealTimer = null; }
     if (allSelected()) {
       updateCrossSellColor();
-      csRevealTimer = setTimeout(function() {
-        csWrapper.classList.remove('lusena-bundle-cross-sell--hidden');
-        csWrapper.style.marginTop = '1.6rem';
-        openWrap(csWrapper);
-        csRevealTimer = null;
-      }, STAGGER_MS);
+      // Only animate reveal when transitioning from hidden; stay put on re-edits
+      if (csWrapper.classList.contains('lusena-bundle-cross-sell--hidden')) {
+        csRevealTimer = setTimeout(function() {
+          csWrapper.classList.remove('lusena-bundle-cross-sell--hidden');
+          csWrapper.style.marginTop = '1.6rem';
+          openWrap(csWrapper);
+          csRevealTimer = null;
+        }, STAGGER_MS);
+      }
     } else {
       if (!csWrapper.classList.contains('lusena-bundle-cross-sell--hidden')) {
         csWrapper.classList.add('lusena-bundle-cross-sell--hidden');
