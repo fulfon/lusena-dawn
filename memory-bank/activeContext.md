@@ -4,9 +4,45 @@
 
 ## Current focus
 
-**Phase 1B: PDP cross-sell checkbox** - scrunchie at 39 zl on poszewka PDP. This is the last remaining item from the bundle/upsell system.
+**Phase 1B: PDP cross-sell checkbox — IN PROGRESS (polishing).** Core feature works: checkbox renders on all individual PDPs, ATC adds both items, cart drawer opens with correct BXGY-discounted price (39 zl with 59 zl crossed out). Remaining: visual/UX polish, interaction edge cases, scope verification, Buy Now testing, documentation.
 
 ## Recent completed work
+
+### PDP cross-sell checkbox — core implementation (2026-03-29)
+
+Cross-sell checkbox on all individual product PDPs offering scrunchie at 39 zl (BXGY discount in Shopify admin).
+
+**Strategic decisions (changed from original plan):**
+- **All individual PDPs** (not poszewka-only) — consistent pricing builds trust for new brand
+- **Free shipping threshold 275 zl** (was 289) — bonnet (239) + scrunchie (39) = 278 > 275 clears threshold
+- **Shopify BXGY automatic discount** handles real pricing; theme displays preview price via section setting
+
+**Files created/modified:**
+- `snippets/lusena-pdp-cross-sell-checkbox.liquid` — checkbox row + color matching + inline `<script>` (all JS is here, NOT in `{% javascript %}`)
+- `sections/lusena-main-product.liquid` — render slot between variant/ATC + schema settings (`cross_sell_enabled`, `cross_sell_handle`, `cross_sell_price`)
+- `assets/lusena-pdp.css` — checkbox row styles + order value bumps (atc 5→6, guarantee 6→7, payment 7→8 mobile; atc 7→8, guarantee 8→9, payment 9→10 desktop)
+- `snippets/cart-drawer.liquid` — line-item discount display (`original_line_price > final_line_price` → crossed-out original)
+- `templates/product.json` — cross_sell_handle: "silk-scrunchie", cross_sell_price: 3900
+- `config/settings_data.json` — free shipping threshold 269→275
+- `config/settings_schema.json` — threshold default 269→275
+
+**Key technical decisions (discovered during implementation):**
+- `all_products[handle]` instead of product picker setting — Shopify dev server doesn't resolve product picker GIDs from file sync
+- Inline `<script>` instead of `{% javascript %}` — the compiled_assets JS is truncated (same ~73KB limit as CSS), so the PDP scripts `{% javascript %}` block was never compiled
+- `/cart/add.js` instead of `/cart/add` — dev server returns 302 without `.js` extension
+- ATC intercept on parent `<product-form>` element with `{ capture: true }` — at the target element, capture doesn't help (listeners fire in registration order), so we register on the parent
+- Cart drawer re-render via direct section fetch (`/cart?section_id=cart-drawer`) + `DOMParser` + `drawer.open()` — bypasses `renderContents()` which has complex section ID mapping
+
+**Known remaining items for polish:**
+- Color change → scrunchie variant update (needs testing)
+- Scope rules verification (scrunchie PDP hidden, bundle PDPs hidden)
+- Buy Now button with checkbox checked
+- Sticky ATC with checkbox checked
+- Visual polish of checkbox row (spacing, mobile, etc.)
+- Revert dead code from `snippets/lusena-pdp-scripts.liquid` (Task 4 subagent added code to `{% javascript %}` block that was never compiled)
+- Documentation updates (memory bank, bundle-system rule, bundle-strategy doc — threshold 289→275 references)
+
+
 
 ### Benefit bridge redesign (2026-03-29)
 
