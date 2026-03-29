@@ -65,7 +65,10 @@
         "guarantee_body": "Przetestuj przez 60 nocy. Jeśli nie poczujesz różnicy - zwróć, nawet używaną. Pełny zwrot bez pytań.",
         "secure_payment_label": "Bezpieczna płatność",
         "video_placeholder": "Video Preview",
-        "cross_sell_heading": "Pasuje do"
+        "cross_sell_heading": "Pasuje do",
+        "cross_sell_enabled": true,
+        "cross_sell_handle": "silk-scrunchie",
+        "cross_sell_price": 3900
       }
     },
     "17739496097255ea88": {

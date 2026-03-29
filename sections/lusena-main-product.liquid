@@ -55,10 +55,12 @@
         </div>
 
         {%- comment -%} Cross-sell checkbox (between variant picker and ATC) {%- endcomment -%}
-        {%- assign cs_product = section.settings.cross_sell_product -%}
+        {%- assign cs_handle = section.settings.cross_sell_handle -%}
+        {%- assign cs_product = all_products[cs_handle] -%}
         {%- if section.settings.cross_sell_enabled
+              and cs_handle != blank
               and cs_product != blank
-              and product.handle != cs_product.handle
+              and product.handle != cs_handle
               and template.suffix != 'bundle'
               and cs_product.available -%}
           <div class="lusena-pdp-buy-box__cross-sell-checkbox">
@@ -401,9 +403,11 @@
       "default": true
     },
     {
-      "type": "product",
-      "id": "cross_sell_product",
-      "label": "Produkt cross-sell"
+      "type": "text",
+      "id": "cross_sell_handle",
+      "label": "Handle produktu cross-sell",
+      "default": "silk-scrunchie",
+      "info": "URL handle produktu (np. silk-scrunchie). Znajdziesz go w Shopify admin > Products > SEO."
     },
     {
       "type": "number",
