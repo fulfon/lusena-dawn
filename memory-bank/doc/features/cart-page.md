@@ -13,7 +13,7 @@ Full-page cart (`/cart`) with visual parity to the cart drawer. Two LUSENA secti
 | `sections/lusena-cart-items.liquid` | Items list, upsell cross-sell zone, cart header, empty state, AJAX re-render JS |
 | `snippets/lusena-cart-quantity.liquid` | Quantity stepper (bordered group, icon buttons, "Usuń" text remove) |
 | `sections/lusena-cart-footer.liquid` | Totals, free shipping bar, CTA, trust row, continue shopping |
-| `assets/lusena-cart-page.css` | All cart page CSS (634 lines — extracted from `{% stylesheet %}` blocks 2026-03-26) |
+| `assets/lusena-cart-page.css` | All cart page CSS (625 lines — extracted from `{% stylesheet %}` blocks 2026-03-26) |
 | `templates/cart.json` | Wires the two sections; block order: `["subtotal", "buttons"]` |
 
 ## JS architecture
@@ -81,7 +81,28 @@ Triggered for products with `lusena.upsell_primary` metafield. Fallback chain: p
 
 ### CSS placement
 - Cart drawer: `<style>` tag in `snippets/cart-drawer.liquid` (~150 lines, not in compiled_assets). Selectors scoped under `.lusena-cart-drawer__upsell`.
-- Cart page: `assets/lusena-cart-page.css` (standalone file, 634 lines — extracted 2026-03-26). Selectors scoped under `.lusena-cart-upsell`.
+- Cart page: `assets/lusena-cart-page.css` (standalone file, 625 lines — extracted 2026-03-26). Selectors scoped under `.lusena-cart-upsell`.
+
+## Cart merge (#13) — 2026-03-28
+
+Detects when both components of a bundle are separately in the cart and offers to combine them into the bundle at a discount.
+
+### Detection logic (Liquid)
+- Scans `cart.items` for handle combinations: `poszewka-jedwabna` + `silk-bonnet` → Nocna Rutyna (109 zl savings), `poszewka-jedwabna` + `jedwabna-maska-3d` → Piekny Sen (89 zl savings)
+- Higher savings wins if multiple merges are possible
+- Merge detection runs before regular bundle nudge — merge card takes priority
+
+### Merge card UI
+- Two "W koszyku" tiles showing the items already in cart (product images, titles, colors)
+- Gain-framed headline: "Kup razem i zaoszczędź {X} zł"
+- Single CTA button to merge into bundle
+- Present in both `sections/lusena-cart-items.liquid` and `snippets/cart-drawer.liquid`
+
+### Merge JS
+- Removes both individual items (quantity 0 via `/cart/change.js`)
+- Adds bundle via `LusenaBundle.swap()` with pre-filled Simple Bundles color properties from the individual items
+- AJAX section re-render after swap completes
+- Bidirectional sync: merge on cart page updates drawer, merge on drawer updates cart page
 
 ## Cart footer features
 

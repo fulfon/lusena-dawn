@@ -17,7 +17,8 @@
 - **Footer:** `sections/lusena-footer.liquid`
 - **Cart page:** `sections/lusena-cart-items.liquid` + `snippets/lusena-cart-quantity.liquid` + `sections/lusena-cart-footer.liquid`
 - **Product page:** `sections/lusena-main-product.liquid` + `snippets/lusena-pdp-*.liquid` (13 PDP snippets)
-- **Bundle product page:** `sections/lusena-main-bundle.liquid` + `snippets/lusena-bundle-*.liquid` (6 bundle snippets: summary, contents, options, atc, care, scripts, sticky-atc) — shares 4 PDP snippets (media, proof-chips, guarantee, payment). Progressive disclosure color selector, sticky ATC (mobile+desktop), `assets/lusena-bundle-pdp.css`
+- **Bundle product page:** `sections/lusena-main-bundle.liquid` + `snippets/lusena-bundle-*.liquid` (7 bundle snippets: summary, contents, options, atc, care, scripts, sticky-atc) — shares 4 PDP snippets (media, proof-chips, guarantee, payment). Progressive disclosure color selector, sticky ATC (mobile+desktop), `assets/lusena-bundle-pdp.css`
+- **Scrunchie education:** `snippets/lusena-scrunchie-education.liquid` — server-side price swap + live JS cart sync (PubSub + MutationObserver)
 - **Collection:** `sections/lusena-main-collection.liquid` + `snippets/lusena-product-card.liquid`
 - **Search:** `sections/lusena-search.liquid` — predictive search, product grid, empty state with bestsellers
 - **Blog listing:** `sections/lusena-blog.liquid` — 2-col grid, pagination, rich empty state
@@ -48,7 +49,7 @@
 - `assets/lusena-hero.css` — Hero section styles (extracted from section {% stylesheet %})
 - `assets/lusena-footer.css` — Footer section styles (extracted from section {% stylesheet %})
 - `assets/lusena-pdp.css` — All PDP-specific CSS (~34KB), loaded per-page
-- `assets/lusena-cart-page.css` — Cart page styles: items, footer, quantity stepper, upsell (634 lines, extracted from `{% stylesheet %}` blocks 2026-03-26)
+- `assets/lusena-cart-page.css` — Cart page styles: items, footer, quantity stepper, upsell (625 lines, extracted from `{% stylesheet %}` blocks 2026-03-26)
 - `assets/lusena-search.css` — Search page styles: layout, grid, empty state (156 lines, extracted from `{% stylesheet %}` block 2026-03-26)
 - `assets/lusena-bundles.css` — Bundle card grid styles (loaded per-section in lusena-bundles.liquid)
 - `assets/lusena-bundle-pdp.css` — Bundle PDP buy box styles (loaded in lusena-main-bundle.liquid)

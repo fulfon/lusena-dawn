@@ -15,7 +15,7 @@
    - `lusena-footer.css` — footer section styles
 5. **Page-specific assets** (loaded per-page/section via `<link>` in their section):
    - `lusena-pdp.css` (~34KB) — PDP styles (loaded in lusena-main-product.liquid and lusena-main-bundle.liquid)
-   - `lusena-cart-page.css` (624 lines) — cart items + footer + quantity styles (loaded in lusena-cart-items.liquid)
+   - `lusena-cart-page.css` (625 lines) — cart items + footer + quantity styles (loaded in lusena-cart-items.liquid)
    - `lusena-search.css` (156 lines) — search page styles (loaded in lusena-search.liquid)
    - `lusena-bundle-pdp.css` — bundle PDP buy box styles (loaded in lusena-main-bundle.liquid)
    - `lusena-bundles.css` — bundle card grid (loaded in lusena-bundles.liquid)

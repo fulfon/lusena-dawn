@@ -80,6 +80,7 @@ After adding or expanding CSS in any `{% stylesheet %}` block:
 | `lusena-search.css` | Search page | lusena-search.liquid |
 | `lusena-bundles.css` | Bundle card grid | lusena-bundles.liquid (per-section) |
 | `lusena-benefit-bridge.css` | Benefit bridge section | lusena-benefit-bridge.liquid (per-section) |
+| `lusena-bundle-pdp.css` | Bundle PDP buy box | lusena-main-bundle.liquid (per-section) |
 | `lusena-icon-animations.css` | Animated icon keyframes | lusena-pdp-feature-highlights.liquid (per-section) |
 
 ## Naming conventions
