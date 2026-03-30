@@ -677,8 +677,17 @@
   .lusena-cart-drawer__upsell .lusena-upsell-card__bn-pricing {
     display: flex;
     align-items: baseline;
-    gap: 0.6rem;
+    column-gap: 0.6rem;
+    row-gap: 0.15rem;
     flex-wrap: wrap;
+  }
+
+  .lusena-cart-drawer__upsell .lusena-upsell-card__bn-price-label {
+    flex-basis: 100%;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--lusena-text-2);
+    line-height: 1;
   }
 
   .lusena-cart-drawer__upsell .lusena-upsell-card__bn-price {
@@ -912,10 +921,8 @@
       font-size: 0.9rem;
     }
 
-    .lusena-cart-drawer__upsell .lusena-upsell-card__bn-have-status::before {
-      content: '·';
-      color: #888;
-      margin-right: 0.3rem;
+    .lusena-cart-drawer__upsell .lusena-upsell-card__bn-have-status {
+      margin-top: 0.1rem;
     }
 
     /* Hide "+" separator on mobile (stacked layout) */
@@ -1377,6 +1384,7 @@
               </div>
               <div class="lusena-upsell-card__bn-bottom">
                 <div class="lusena-upsell-card__bn-pricing">
+                  <span class="lusena-upsell-card__bn-price-label">Za oba produkty:</span>
                   <span class="lusena-upsell-card__bn-price">{{ merge_bundle_price | money_without_trailing_zeros }}</span>
                   <span class="lusena-upsell-card__bn-was">{{ merge_original_cents | money_without_trailing_zeros }}</span>
                 </div>
@@ -1571,7 +1579,7 @@
                    {%- if nudge_prop_map != blank %} data-property-map="{{ nudge_prop_map | escape }}"{% endif -%}
                    aria-label="Propozycja zestawu">
                 <p class="lusena-upsell-card__bn-headline">
-                  Dodaj {{ added_label }} i zaoszczędź {{ savings_cents | money_without_trailing_zeros }}
+                  Dołącz {{ added_label }} i zaoszczędź {{ savings_cents | money_without_trailing_zeros }}
                 </p>
                 <div class="lusena-upsell-card__bn-tiles">
                   <div class="lusena-upsell-card__bn-have">
@@ -1612,13 +1620,14 @@
                 </div>
                 <div class="lusena-upsell-card__bn-bottom">
                   <div class="lusena-upsell-card__bn-pricing">
+                    <span class="lusena-upsell-card__bn-price-label">Za oba produkty:</span>
                     <span class="lusena-upsell-card__bn-price">{{ bundle_price_cents | money_without_trailing_zeros }}</span>
                     <span class="lusena-upsell-card__bn-was">{{ original_total_cents | money_without_trailing_zeros }}</span>
                   </div>
                   <button type="button"
                           class="lusena-btn lusena-btn--outline lusena-btn--size-xs"
                           data-bundle-nudge-action>
-                    <span class="lusena-btn__content">Dodaj do zestawu</span>
+                    <span class="lusena-btn__content">Dołącz do zestawu</span>
                     <span class="loading__spinner hidden">
                       <span class="lusena-btn__loading-dots" aria-hidden="true">
                         <span></span><span></span><span></span>

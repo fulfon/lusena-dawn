@@ -3,10 +3,6 @@
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
 
-{%- if settings.lusena_cart_upsell_product != blank -%}
-  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
-{%- endif -%}
-
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -52,56 +48,6 @@
     background: rgb(var(--color-button));
     font-size: 0;
     line-height: 0;
-  }
-
-  .lusena-cart-upsell {
-    padding: 1.2rem;
-    border-radius: var(--buttons-radius-outset);
-    background: rgba(var(--color-foreground), 0.04);
-    display: grid;
-    gap: 0.8rem;
-  }
-
-  .lusena-cart-upsell__title {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    margin: 0;
-  }
-
-  .lusena-cart-upsell__title strong {
-    font-weight: 600;
-  }
-
-  .lusena-cart-upsell__body {
-    display: grid;
-    grid-template-columns: 6rem 1fr;
-    gap: 1rem;
-    align-items: center;
-  }
-
-  .lusena-cart-upsell__media {
-    width: 6rem;
-    aspect-ratio: 1;
-    border-radius: calc(var(--buttons-radius-outset) - 2px);
-    overflow: hidden;
-    background: rgba(var(--color-foreground), 0.06);
-  }
-
-  .lusena-cart-upsell__media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .lusena-cart-upsell__content {
-    display: grid;
-    gap: 0.4rem;
-  }
-
-  .lusena-cart-upsell__product {
-    margin: 0;
   }
 
   .lusena-cart-gift details {
@@ -215,61 +161,6 @@
               </div>
             {%- endif -%}
 
-            {%- liquid
-              assign lusena_upsell_product = settings.lusena_cart_upsell_product
-              assign lusena_upsell_variant = nil
-              assign lusena_upsell_in_cart = false
-
-              if lusena_upsell_product != blank
-                assign lusena_upsell_variant = lusena_upsell_product.selected_or_first_available_variant
-                for item in cart.items
-                  if item.product_id == lusena_upsell_product.id
-                    assign lusena_upsell_in_cart = true
-                    break
-                  endif
-                endfor
-              endif
-            -%}
-
-            {%- if lusena_upsell_product != blank and lusena_upsell_variant != nil and lusena_upsell_variant.available and lusena_upsell_in_cart == false -%}
-              <div class="lusena-cart-upsell" role="region" aria-label="{{ 'lusena.cart.upsell_add' | t }}">
-                <p class="lusena-cart-upsell__title caption">
-                  <strong>{{ settings.lusena_cart_upsell_label | default: 'lusena.cart.upsell_title' | t | escape }}</strong>
-                  <span>{{ lusena_upsell_variant.price | money_without_trailing_zeros }}</span>
-                </p>
-                <div class="lusena-cart-upsell__body">
-                  <div class="lusena-cart-upsell__media">
-                    {%- if lusena_upsell_product.featured_image -%}
-                      <img
-                        src="{{ lusena_upsell_product.featured_image | image_url: width: 160 }}"
-                        alt="{{ lusena_upsell_product.featured_image.alt | escape }}"
-                        loading="lazy"
-                        width="80"
-                        height="{{ 80 | divided_by: lusena_upsell_product.featured_image.aspect_ratio | ceil }}"
-                      >
-                    {%- endif -%}
-                  </div>
-                  <div class="lusena-cart-upsell__content">
-                    <p class="lusena-cart-upsell__product caption">{{ lusena_upsell_product.title | escape }}</p>
-                  </div>
-                </div>
-                <product-form class="product-form" data-hide-errors="true">
-                  {%- form 'product',
-                    lusena_upsell_product,
-                    id: 'Cart-Upsell-Form',
-                    class: 'form',
-                    novalidate: 'novalidate',
-                    data-type: 'add-to-cart-form'
-                  -%}
-                    <input type="hidden" name="id" value="{{ lusena_upsell_variant.id }}" class="product-variant-id">
-                    <button type="submit" class="button button--secondary button--full-width">
-                      <span>{{ 'lusena.cart.upsell_add' | t }}</span>
-                      {%- render 'loading-spinner' -%}
-                    </button>
-                  {%- endform -%}
-                </product-form>
-              </div>
-            {%- endif -%}
           </div>
         {%- endif -%}
 
