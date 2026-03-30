@@ -321,7 +321,7 @@ cart-items .loading__spinner svg { width: 2rem; height: 2rem; animation: lusena-
 .lusena-cart-upsell .lusena-upsell-card__bn-pricing { display: flex; align-items: baseline; column-gap: 0.6rem; row-gap: 0.15rem; flex-wrap: wrap; }
 .lusena-cart-upsell .lusena-upsell-card__bn-price-label { flex-basis: 100%; font-size: 1rem; font-weight: 400; color: var(--lusena-text-2); line-height: 1; }
 .lusena-cart-upsell .lusena-upsell-card__bn-price { font-size: 1.4rem; font-weight: 500; color: var(--lusena-text-1); font-variant-numeric: tabular-nums; }
-.lusena-cart-upsell .lusena-upsell-card__bn-was { font-size: 1.4rem; color: var(--lusena-text-2); text-decoration: line-through; }
+.lusena-cart-upsell .lusena-upsell-card__bn-was { font-size: 1.2rem; color: var(--lusena-text-2); text-decoration: line-through; }
 
 
 /* --- Responsive - desktop image larger for page proportions --- */

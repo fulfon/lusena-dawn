@@ -1048,7 +1048,7 @@ textarea:focus-visible {
   color: var(--lusena-text-1);
   margin-top: var(--lusena-space-1);
 }
-.lusena-line-item__compare-price { text-decoration: line-through; color: var(--lusena-text-2); opacity: 0.6; }
+.lusena-line-item__compare-price { font-size: 1.2rem; text-decoration: line-through; color: var(--lusena-text-2); opacity: 0.6; }
 
 /* ==========================================================================
    PAGE HEADER (Shared title + optional breadcrumbs for system pages)
