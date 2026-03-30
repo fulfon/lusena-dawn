@@ -2,6 +2,10 @@
 
 **Status:** Full UX audit completed 2026-03-09, production-ready
 
+## Desktop layout
+
+Two-column CSS Grid (`lusena-grid--pdp`): gallery 7/12, buybox 5/12. **Gallery is sticky** (`position: sticky; top: 12.8rem` on `.lusena-pdp .lusena-gallery` at `≥768px`). Buybox scrolls naturally. Applies to both standard and bundle PDPs.
+
 ## Visual rhythm (alternating backgrounds)
 
 ```
@@ -59,7 +63,11 @@ Separate template for bundle products. Uses `lusena-main-bundle` section (custom
 **Scrunchie education snippet (1):**
 - `lusena-scrunchie-education.liquid` — Server-side price swap (~~59 zl~~ 39 zl) when qualifying product is in cart. Dynamic Polish hint text. Live cart sync via `PUB_SUB_EVENTS.cartUpdate`. MutationObserver syncs sticky ATC price.
 
-## Recent changes (2026-03-29)
+## Recent changes (2026-03-30)
+
+- **Sticky gallery** — desktop gallery column is now `position: sticky` (was buybox). Gallery stays pinned while user scrolls through buybox content. Changed in `assets/lusena-pdp.css`.
+
+## Changes (2026-03-29)
 
 - **PDP cross-sell checkbox** — all individual PDPs + bundle PDPs offer scrunchie at 39 zl (BXGY discount). UI: white card with teal accent, compact row, "Taniej w komplecie" hint, color-matched image. Bundle PDPs: progressive disclosure reveal after all colors picked, LUSENA signature `translateY(-6px)` slide-in. Schema: `cross_sell_enabled`, `cross_sell_handle`, `cross_sell_price`. Cross-sell JS in `lusena-pdp-scripts.liquid` (individual) and `lusena-bundle-scripts.liquid` (bundles, `skip_js: true`). **Buy Now button also respects the cross-sell checkbox** — sends both items as JSON `items` array to `/cart/add` before redirecting to checkout (individual PDPs + bundle PDPs).
 - **Scrunchie PDP education** — server-side render + live JS sync. `lusena-main-product.liquid` checks `cart.items`, maps handle to Polish instrumental case label, passes flags to `lusena-pdp-summary.liquid`. Live sync via `lusena-scrunchie-education.liquid` inline script subscribing to `PUB_SUB_EVENTS.cartUpdate`. Sticky ATC synced via MutationObserver on `[data-lusena-sticky-price]`.

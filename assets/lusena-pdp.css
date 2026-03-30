@@ -620,8 +620,6 @@
   }
 
   .lusena-pdp .lusena-pdp-buy-box {
-    position: sticky;
-    top: 12.8rem;
     align-self: flex-start;
   }
 
@@ -728,6 +726,11 @@
 }
 
 @media screen and (min-width: 768px) {
+  .lusena-pdp .lusena-gallery {
+    position: sticky;
+    top: 12.8rem;
+  }
+
   .lusena-pdp .lusena-gallery__desktop {
     display: block;
   }

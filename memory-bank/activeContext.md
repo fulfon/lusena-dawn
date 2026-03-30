@@ -8,6 +8,10 @@
 
 ## Recent completed work
 
+### PDP sticky gallery (2026-03-30)
+
+Swapped desktop sticky behavior: gallery (left column) is now `position: sticky` instead of buybox (right column). Gallery stays pinned at `top: 12.8rem` while user scrolls through the taller buybox content. Applies to both standard and bundle PDPs via shared `.lusena-pdp .lusena-gallery` selector. One CSS file changed: `assets/lusena-pdp.css`.
+
 ### Phase D cross-sell (2026-03-29) — all 4 sessions consolidated
 
 All PDP cross-sell touchpoints shipped in one day:

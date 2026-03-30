@@ -144,24 +144,25 @@ The `shopify theme dev` server watches the **main repo only** — it does NOT se
 When the task is complete:
 
 1. **Commit your work** on the worktree branch with a clear Conventional Commit message
-2. **Check that the main repo is clean** before merging:
+2. **Run `/lusena-worktree-sync`** — updates memory bank to reflect the branch's work. No exceptions, even for small changes.
+3. **Check that the main repo is clean** before merging:
    ```
    git -C "C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-dawn" status
    ```
    If there are uncommitted changes, **STOP and tell the owner**. Those changes may be from another session or manual work. Do not discard or stash them without approval.
-3. **Squash-merge into `main`** by running git commands against the main repo (because `main` is checked out there, not in your worktree):
+4. **Squash-merge into `main`** by running git commands against the main repo (because `main` is checked out there, not in your worktree):
    ```
    git -C "C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-dawn" merge --squash <your-branch>
    git -C "C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-dawn" commit -m "feat(lusena): description"
    ```
    **Why `git -C`?** You cannot `git checkout main` in a worktree because `main` is already checked out in the main repo. `git -C <path>` runs the command in that directory without changing your cwd.
-4. **If there are merge conflicts: STOP.** Do NOT resolve them yourself. Instead:
+5. **If there are merge conflicts: STOP.** Do NOT resolve them yourself. Instead:
    - Analyze what files conflict and why (e.g., another instance edited the same section)
    - Explain the conflict to the user clearly
    - Recommend a resolution strategy
    - Wait for user approval before making any changes
-5. **Tell the user** the work is merged to `main` and they can close the session (`Ctrl+C` or `/exit`)
-6. The launcher cleanup script will remove the worktree and free the slot on next startup
+6. **Tell the user** the work is merged to `main` and they can close the session (`Ctrl+C` or `/exit`)
+7. The launcher cleanup script will remove the worktree and free the slot on next startup
 
 **Do NOT:**
 - Auto-resolve merge conflicts without user approval
