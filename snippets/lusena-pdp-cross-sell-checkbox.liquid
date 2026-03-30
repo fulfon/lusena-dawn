@@ -100,8 +100,7 @@
 {%- assign cs_display_price = cross_sell_price | default: cs_original_price -%}
 
 <div class="lusena-pdp-cross-sell-cb"
-     data-lusena-cross-sell-row
-     data-main-color-index="{{ main_color_index }}">
+     data-lusena-cross-sell-row>
   <label class="lusena-pdp-cross-sell-cb__label">
     <input
       type="checkbox"
@@ -320,24 +319,16 @@
     var variantsJson = row.querySelector('[data-lusena-cross-sell-variants]');
     if (variantsJson && section) {
       var csVariants = JSON.parse(variantsJson.textContent);
-      var mainColorIndex = parseInt(row.dataset.mainColorIndex) || 0;
 
       section.addEventListener('change', function(e) {
         if (!(e.target instanceof HTMLInputElement) || e.target.type !== 'radio') return;
 
+        /* Read color directly from the checked radio — immune to handler order */
         var selectedColor = null;
-        if (mainColorIndex > 0 && variantInput) {
-          var productJson = section.querySelector('[data-lusena-product-json]');
-          if (productJson) {
-            var product = JSON.parse(productJson.textContent);
-            var currentId = parseInt(variantInput.value);
-            for (var i = 0; i < product.variants.length; i++) {
-              if (product.variants[i].id === currentId) {
-                selectedColor = product.variants[i]['option' + mainColorIndex];
-                break;
-              }
-            }
-          }
+        var colorFieldset = section.querySelector('[data-lusena-option-type="color"]');
+        if (colorFieldset) {
+          var checked = colorFieldset.querySelector('input[type="radio"]:checked');
+          if (checked) selectedColor = checked.value;
         }
 
         var matched = null;
@@ -355,6 +346,8 @@
         checkbox.dataset.variantId = String(chosen.id);
         var img = row.querySelector('[data-lusena-cross-sell-image]');
         if (img && chosen.image) img.src = chosen.image;
+        var indicator = row.querySelector('[data-lusena-cross-sell-color-indicator]');
+        if (indicator && chosen.color) indicator.textContent = chosen.color;
       });
     }
   }
