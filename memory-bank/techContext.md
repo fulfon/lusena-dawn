@@ -26,7 +26,7 @@
 - **404 page:** `sections/lusena-404.liquid` — centered error message, bestseller grid, viewport-fill
 - **Generic page:** `sections/lusena-main-page.liquid` — breadcrumbs, title, richtext, viewport-fill, compact spacing
 - **Contact page:** `sections/lusena-contact-form.liquid` — breadcrumbs, heading, LUSENA form system, viewport-fill, full-width mobile button
-- **Homepage:** `sections/lusena-hero.liquid`, `lusena-bestsellers.liquid`, `lusena-trust-bar.liquid`, etc. (9 sections)
+- **Homepage:** `sections/lusena-hero.liquid`, `lusena-trust-bar.liquid`, `lusena-benefit-bridge.liquid`, `lusena-bestsellers.liquid`, `lusena-testimonials.liquid`, `lusena-problem-solution.liquid`, `lusena-bundles.liquid`, `lusena-heritage.liquid`, `lusena-faq.liquid`, `lusena-final-cta.liquid` (10 sections)
 
 ### Translations
 - `locales/en.default.json` — **Polish strings override English defaults** (store is PL-first). Search-related keys (`templates.search.*`, `accessibility.search.*`, `accessibility.loading`) translated to Polish. Polish quotation marks „..." use Unicode `\u201E` + `\u201D` (not ASCII `"`) to avoid breaking JSON.
@@ -74,9 +74,10 @@
 
 ## Hooks, rules, and settings
 
-**Hooks** (`.claude/hooks/`, 5 scripts — configured in `.claude/settings.json`):
+**Hooks** (`.claude/hooks/`, 6 scripts — configured in `.claude/settings.json`):
 | Hook | Event | Purpose |
 |------|-------|---------|
+| `branch-guard.sh` | PreToolUse (Bash) | Blocks `git commit` on main/master branches |
 | `guard-dawn-edit.sh` | PreToolUse (Edit\|Write) | Blocks editing Dawn originals when lusena-* counterpart exists |
 | `session-context.sh` | SessionStart | Injects activeContext.md focus/next/issues |
 | `post-compact-rules.sh` | PostCompact | Re-injects critical LUSENA rules after context compaction |
@@ -87,19 +88,19 @@
 | Rule | Triggers on |
 |------|-------------|
 | `animations.md` | `sections/*.liquid`, `snippets/*.liquid` |
-| `bundle-system.md` | `sections/*bundle*`, `snippets/*bundle*`, `assets/*bundle*` |
-| `cart-system.md` | `sections/*cart*`, `snippets/*cart*`, `assets/*cart*` |
+| `bundle-system.md` | `sections/*bundle*`, `snippets/*bundle*`, `assets/*bundle*`, `memory-bank/doc/bundle*`, `templates/product.bundle*` |
+| `cart-system.md` | `sections/*cart*`, `snippets/*cart*`, `assets/*cart*`, `assets/*bundle*`, `assets/lusena-bundle*` |
 | `css-and-assets.md` | `assets/*.css`, `sections/*.liquid`, `snippets/*.liquid` |
 | `css-cascade.md` | `assets/*.css`, `sections/*.liquid`, `snippets/*.liquid` |
 | `no-inline-scripts.md` | `**/*.liquid`, `**/*.css`, `**/*.js`, `assets/**`, `sections/**`, `snippets/**`, `templates/**`, `layout/**` |
-| `product-metafields.md` | `memory-bank/doc/products/**`, PDP sections/snippets |
+| `product-metafields.md` | `memory-bank/doc/products/**`, `sections/lusena-main-product*`, `snippets/lusena-pdp*` |
 | `section-catalog.md` | (always loaded — no path filter) |
 
 **Settings:** `.claude/settings.json` (shared, checked in) + `.claude/settings.local.json` (local permissions).
 
 ## Skills inventory
 
-17 skills in `.claude/` (subset mirrored in `.agent/`, `.codex/`, `.opencode/`):
+18 skills in `.claude/` (subset mirrored in `.agent/`, `.codex/`, `.opencode/`):
 
 | Skill | Purpose |
 |-------|---------|
@@ -113,6 +114,7 @@
 | `lusena-page-audit` | Reusable page UX audit checklist |
 | `lusena-customer-validation` | 4-persona copy evaluation (Polish) |
 | `lusena-legal-check` | EU/UOKiK compliance check for marketing claims |
+| `lusena-spacing` | Spacing review & adjustment (content-flow + section tier padding) |
 | `lusena-spacing-audit` | Automated spacing measurement + validation |
 | `shopify-dev-mcp` | Shopify Dev MCP tool usage |
 | `shopify-expert` | Shopify theme development |

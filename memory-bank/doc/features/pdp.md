@@ -61,11 +61,12 @@ Separate template for bundle products. Uses `lusena-main-bundle` section (custom
 
 ## Recent changes (2026-03-29)
 
-- **PDP cross-sell checkbox** — all individual PDPs + bundle PDPs offer scrunchie at 39 zl (BXGY discount). UI: white card with teal accent, compact row, "Taniej w komplecie" hint, color-matched image. Bundle PDPs: progressive disclosure reveal after all colors picked, LUSENA signature `translateY(-6px)` slide-in. Schema: `cross_sell_enabled`, `cross_sell_handle`, `cross_sell_price`. Cross-sell JS in `lusena-pdp-scripts.liquid` (individual) and `lusena-bundle-scripts.liquid` (bundles, `skip_js: true`).
+- **PDP cross-sell checkbox** — all individual PDPs + bundle PDPs offer scrunchie at 39 zl (BXGY discount). UI: white card with teal accent, compact row, "Taniej w komplecie" hint, color-matched image. Bundle PDPs: progressive disclosure reveal after all colors picked, LUSENA signature `translateY(-6px)` slide-in. Schema: `cross_sell_enabled`, `cross_sell_handle`, `cross_sell_price`. Cross-sell JS in `lusena-pdp-scripts.liquid` (individual) and `lusena-bundle-scripts.liquid` (bundles, `skip_js: true`). **Buy Now button also respects the cross-sell checkbox** — sends both items as JSON `items` array to `/cart/add` before redirecting to checkout (individual PDPs + bundle PDPs).
 - **Scrunchie PDP education** — server-side render + live JS sync. `lusena-main-product.liquid` checks `cart.items`, maps handle to Polish instrumental case label, passes flags to `lusena-pdp-summary.liquid`. Live sync via `lusena-scrunchie-education.liquid` inline script subscribing to `PUB_SUB_EVENTS.cartUpdate`. Sticky ATC synced via MutationObserver on `[data-lusena-sticky-price]`.
 - **`lusena-link-arrow` adoption** — quality evidence accordion CTAs and PDP media certificate CTA now use `lusena-link-arrow` class instead of hardcoded `→` characters
 - **Bundle options initial state** — first step renders open, subsequent steps collapsed with pending chips
 - **Bundle PDP chip dot** — pending state dot changed from filled to transparent outline
+- **Bundle gift feature card copy** — "Gotowe do wręczenia" → "Gotowe do wręczenia osobno" with extended description (each product has its own gift box, can be given separately or together)
 
 ## Changes (2026-03-28)
 
