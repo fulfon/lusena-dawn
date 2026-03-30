@@ -80,7 +80,7 @@
           {% render 'lusena-pdp-proof-chips', section: section %}
         </div>
 
-        <div class="lusena-pdp-buy-box__desktop-divider"></div>
+        <div class="lusena-pdp-buy-box__desktop-divider{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"></div>
 
         <div class="lusena-pdp-buy-box__variant">
           {% render 'lusena-pdp-variant-picker', product: product, current_variant: current_variant, section: section %}
