@@ -67,7 +67,8 @@
 
 ## Development tools
 
-- **Shopify CLI:** `shopify theme dev` → `http://127.0.0.1:9292/`
+- **Shopify CLI:** Owner runs `shopify theme dev -e dev` (config in `shopify.theme.toml`). This syncs files to the dev theme.
+- **Preview URL (for ALL Playwright testing):** `https://lusena-dev.myshopify.com/?preview_theme_id=144618684603` — store password: `paufro`. NEVER use `127.0.0.1:9292` with Playwright — localhost blocks cart AJAX and causes other restrictions.
 - **Theme check:** `shopify theme check` (only known baseline warnings should remain)
 - **Playwright CLI (`/playwright-cli` skill):** The **only** way to interact with the browser. Use for ALL browser tasks: screenshots, debugging CSS, checking network resources, testing interactions, comparing before/after, anything that needs a live page. **CRITICAL: NEVER use Playwright MCP browser tools directly** (`browser_navigate`, `browser_snapshot`, `browser_click`, etc.) — they bypass the project workflow. **ALWAYS use `-s=<unique-name>`** to isolate your browser session from other concurrent Claude Code instances (e.g., `playwright-cli -s=pdp-fix open http://...`). Each instance MUST pick a DIFFERENT name — never use generic names like `-s=audit` or `-s=test`. Without a named session, all instances share the default browser and will navigate each other's pages.
 - **Shopify Dev MCP:** MUST call `learn_shopify_api` with `api: "liquid"` before editing Liquid

@@ -3,7 +3,7 @@
 # that has a lusena-* counterpart. Blocks the edit with exit code 2.
 
 INPUT=$(cat)
-FILE_PATH=$(echo "$INPUT" | python3 -c "
+FILE_PATH=$(echo "$INPUT" | python -c "
 import sys, json
 try:
     d = json.load(sys.stdin)

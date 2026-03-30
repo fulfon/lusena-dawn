@@ -77,11 +77,34 @@ These rules are in `.claude/rules/` and load automatically when you edit relevan
 - **NEVER use inline scripts via Bash** (`node -e "..."`, `python -c "..."`, `ruby -e "..."`) to search, analyze, or count things in files. These multi-line scripts with `&&` separators trigger Windows security prompts that require manual approval. Use the dedicated tools instead: **Grep** for pattern searching across files, **Glob** for finding files by name, **Read** for reading file contents. If you need to aggregate results (e.g., count total CSS size), do the Grep/Read calls first, then compute in a simple Bash arithmetic expression. Subagents must follow this rule too.
 - Conventional Commits: `feat(lusena):`, `fix(lusena):`, `docs:`, `chore:`
 
+## Git Workflow
+
+### Worktree-based parallel instances
+
+The owner runs multiple Claude Code instances in parallel. Each instance is launched via `Desktop\Claude-LUSENA.bat`, which creates an **isolated git worktree** (script: `scripts/launch-claude-worktree.ps1`). This means:
+
+- **You are NOT in the main repo.** Your working directory is something like `..\lusena-worktrees\lusena-2`, not `lusena-dawn`. This is intentional — it gives you an isolated copy so you don't interfere with other running instances.
+- **Your branch is pre-created** with a generic name like `work/1`, `work/2`, etc. The launcher script did this for you.
+- **Rename the branch immediately** once you understand the task. Use `git branch -m <new-name>` with the standard prefixes: `feat/`, `fix/`, `docs/`, `chore/`. Example: `git branch -m feat/remove-legacy-upsell`.
+- **Do NOT run `git checkout -b`** — you're already on your own branch. Just rename it.
+- **The main repo lives at:** `C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-dawn`. Never cd there or modify it directly.
+- If your current branch is literally `main`, you were launched directly in the main repo (not via the worktree launcher). In that case, create a branch before any changes: `git checkout -b feat/<short-description>`.
+
+### Branch rules
+
+- **Never commit directly to `main`** — a PreToolUse hook enforces this
+- Branch naming: `feat/`, `fix/`, `docs/`, `chore/` — matching Conventional Commits
+- Commit freely on the branch (small steps are good — they give you checkpoints)
+- When the feature is complete and verified, tell the owner. They will handle the squash-merge to main:
+  ```
+  git checkout main && git merge --squash feat/<branch> && git commit -m "feat(lusena): description"
+  ```
+
 ## Implementation Principles
 
 ### Progressive development
 - Implement one section/change at a time. Confirm before moving on.
-- Batch small iterations locally; commit when meaningfully complete.
+- Batch small iterations locally; commit when meaningfully complete on the feature branch.
 
 ### Scope management
 - Implement only what is explicitly requested.
@@ -115,7 +138,12 @@ The `/playwright-cli` skill is the **only** way to interact with the browser. Us
 - **ALWAYS use the `/playwright-cli` skill** — NEVER use Playwright MCP browser tools directly (`browser_navigate`, `browser_snapshot`, `browser_click`, etc.). The MCP tools bypass the project workflow.
 - **ALWAYS use a named session** with `-s=<unique-name>` to isolate your browser from other concurrent Claude Code instances. Multiple instances share the default browser and will navigate each other's pages, causing failures. **Each instance MUST pick a DIFFERENT name** — use the specific page or feature you're working on (e.g., `-s=pdp-fix`, `-s=homepage-check`, `-s=about-migrate`, `-s=cart-debug`). NEVER use generic names like `-s=audit` or `-s=test` — another instance will pick the same name. Example: `playwright-cli -s=quality-spacing open http://...`
 - When not sure about a UI/layout issue, use `/playwright-cli` — don't guess.
-- Dev server: `http://127.0.0.1:9292/` (start with `shopify theme dev` if not running).
+- **ALWAYS use the preview URL for ALL Playwright testing:**
+  - `https://lusena-dev.myshopify.com/?preview_theme_id=144618684603`
+  - This is the **only** URL for Playwright — never use `127.0.0.1:9292` with Playwright. Localhost blocks cart AJAX (cross-origin cookie issue + CLI bug since v3.89.0) and causes other restrictions.
+  - The preview URL is pinned in `shopify.theme.toml` and stays stable between restarts.
+  - **Store password:** `paufro` — handle it on first navigation (fill the password field, click Enter).
+  - The owner runs `shopify theme dev -e dev` separately — it syncs file changes to the dev theme, which the preview URL serves. Localhost is only for the owner's manual browser use, not for Claude Code.
 
 ## Animations (consistency)
 

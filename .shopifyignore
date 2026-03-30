@@ -1,4 +1,5 @@
 # Prevent non-theme files from being pushed to Shopify
+shopify.theme.toml
 lusena-shop/*
 docs/*
 memory-bank/*

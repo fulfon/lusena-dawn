@@ -66,7 +66,7 @@
 }
 
 .lusena-pdp-cross-sell-cb:hover {
-  border-left-color: var(--lusena-accent-cta);
+  border-left-color: color-mix(in srgb, var(--lusena-accent-cta) 70%, transparent);
 }
 
 .lusena-pdp-cross-sell-cb:has(.lusena-pdp-cross-sell-cb__input:checked) {
