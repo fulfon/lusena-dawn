@@ -1,5 +1,7 @@
-# LUSENA - Launch Claude Code in an isolated git worktree
+﻿# LUSENA - Launch Claude Code in an isolated git worktree
 # Double-click the .bat wrapper on your Desktop to use this.
+
+try {
 
 $mainRepo = "C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-dawn"
 $worktreeBase = "C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-worktrees"
@@ -64,12 +66,12 @@ foreach ($wt in $existingWorktrees) {
     if (Test-Path $lockFile) {
         try {
             $testStream = [System.IO.File]::Open($lockFile, [System.IO.FileMode]::Open, [System.IO.FileAccess]::ReadWrite, [System.IO.FileShare]::None)
-            # Got exclusive access — lock is stale (owning process died), clean it up
+            # Got exclusive access - lock is stale (owning process died), clean it up
             $testStream.Close()
             Remove-Item $lockFile -ErrorAction SilentlyContinue
         } catch {
-            # Can't open — another launcher holds the lock, worktree is in use
-            Write-Host "  Skipping $($wt.Name) — in use" -ForegroundColor DarkGray
+            # Can't open - another launcher holds the lock, worktree is in use
+            Write-Host "  Skipping $($wt.Name) - in use" -ForegroundColor DarkGray
             continue
         }
     }
@@ -122,7 +124,7 @@ Write-Host "  Branch: $branchName" -ForegroundColor Green
 Write-Host ""
 
 # Lock the worktree so other launcher instances don't clean it up.
-# Hold the file open with an exclusive handle — Windows auto-releases on crash/kill.
+# Hold the file open with an exclusive handle - Windows auto-releases on crash/kill.
 $lockStream = [System.IO.File]::Open("$worktreePath\.claude-lock", [System.IO.FileMode]::Create, [System.IO.FileAccess]::Write, [System.IO.FileShare]::None)
 
 # Launch Claude Code in the worktree
@@ -137,11 +139,11 @@ Remove-Item "$worktreePath\.claude-lock" -ErrorAction SilentlyContinue
 Write-Host ""
 Write-Host "  Claude Code exited." -ForegroundColor Yellow
 
-# Check if the worktree still exists — Claude may have already cleaned it up
+# Check if the worktree still exists - Claude may have already cleaned it up
 if (-not (Test-Path $worktreePath)) {
     Write-Host "  Worktree already cleaned up by Claude. Nothing to do." -ForegroundColor Green
 } elseif (-not (Test-Path "$worktreePath\.git")) {
-    # Orphaned directory — .git file missing, so git commands would resolve to a parent repo
+    # Orphaned directory - .git file missing, so git commands would resolve to a parent repo
     Write-Host "  Worktree .git file missing (orphaned directory). Removing..." -ForegroundColor Yellow
     Remove-Item -Recurse -Force $worktreePath -ErrorAction SilentlyContinue
     Write-Host "  Cleaned up." -ForegroundColor Green
@@ -156,7 +158,7 @@ if (-not (Test-Path $worktreePath)) {
     $commits = git log "main..$currentBranch" --oneline 2>$null
 
     if ($uncommitted) {
-        # Uncommitted changes — cannot auto-merge safely
+        # Uncommitted changes - cannot auto-merge safely
         Write-Host ""
         Write-Host "  WARNING: Worktree has uncommitted changes." -ForegroundColor Red
         Write-Host "  Claude should have committed before exiting. Manual cleanup needed:" -ForegroundColor Yellow
@@ -168,7 +170,7 @@ if (-not (Test-Path $worktreePath)) {
         Write-Host "    git worktree remove $worktreePath"
         Write-Host "    git branch -d $currentBranch"
     } elseif ($commits) {
-        # Committed but not merged — Claude exited before merging
+        # Committed but not merged - Claude exited before merging
         Write-Host ""
         Write-Host "  Unmerged commits found. Merging into main..." -ForegroundColor Cyan
 
@@ -192,7 +194,7 @@ if (-not (Test-Path $worktreePath)) {
             Write-Host "  Worktree cleaned up. Slot $num is free." -ForegroundColor Green
         } else {
             git merge --abort 2>$null
-            Write-Host "  MERGE CONFLICT — could not auto-merge." -ForegroundColor Red
+            Write-Host "  MERGE CONFLICT - could not auto-merge." -ForegroundColor Red
             Write-Host "  The worktree is preserved. Resolve manually:" -ForegroundColor Yellow
             Write-Host ""
             Write-Host "    cd $mainRepo"
@@ -203,7 +205,7 @@ if (-not (Test-Path $worktreePath)) {
             Write-Host "    git branch -d $currentBranch"
         }
     } else {
-        # No changes — clean up silently
+        # No changes - clean up silently
         Write-Host "  No changes detected. Cleaning up..." -ForegroundColor Green
         Set-Location $mainRepo
         git worktree remove $worktreePath 2>$null
@@ -212,5 +214,18 @@ if (-not (Test-Path $worktreePath)) {
     }
 }
 
+} catch {
+    Write-Host ""
+    Write-Host "  ===== SCRIPT ERROR =====" -ForegroundColor Red
+    Write-Host "  $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host ""
+    Write-Host "  Location: $($_.InvocationInfo.ScriptName):$($_.InvocationInfo.ScriptLineNumber)" -ForegroundColor Yellow
+    Write-Host "  Line:     $($_.InvocationInfo.Line.Trim())" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "  Full error:" -ForegroundColor DarkGray
+    Write-Host "  $($_.Exception.ToString())" -ForegroundColor DarkGray
+}
+
 Write-Host ""
 Read-Host "  Press Enter to close"
+
