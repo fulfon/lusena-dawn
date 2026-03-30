@@ -11,6 +11,7 @@
       "Bash(mkdir *)",
       "Bash(cp *)",
       "Bash(cd *)",
+      "Bash(git *)",
       "Bash(python *)",
       "Bash(python3 *)",
       "Bash(powershell *)",
@@ -35,7 +36,14 @@
       "Bash(bash \"C:/Users/Karol/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.6/skills/brainstorming/scripts/stop-server.sh\" \"C:/Users/Karol/Documents/BusinessIdeas/SilkStore/sklepOnline/shopify-lusena-dev/lusena-dawn/.superpowers/brainstorm/1075-1774701874\")",
       "Bash(bash \"C:/Users/Karol/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.6/skills/brainstorming/scripts/start-server.sh\" --project-dir \"C:/Users/Karol/Documents/BusinessIdeas/SilkStore/sklepOnline/shopify-lusena-dev/lusena-dawn\")",
       "Bash(playwright-cli:*)",
-      "Bash(claude mcp:*)"
+      "Bash(claude mcp:*)",
+      "Bash(tasklist)",
+      "Bash(bash C:UsersKarol.claudepluginscacheclaude-plugins-officialsuperpowers5.0.6skillsbrainstormingscriptsstop-server.sh .superpowers/brainstorm/13397-1774798155)",
+      "Bash(bash C:UsersKarol.claudepluginscacheclaude-plugins-officialsuperpowers5.0.6skillsbrainstormingscriptsstop-server.sh .superpowers/brainstorm/1185-1774720102)",
+      "Bash(netstat -ano)",
+      "Bash(kill 4488)",
+      "Bash(bash .claude/hooks/branch-guard.sh)",
+      "Bash(echo \"Exit code: $?\")"
     ]
   }
 }

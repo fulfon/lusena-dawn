@@ -239,6 +239,24 @@
       const isHistoryNavigation = event.persisted || navigationEntry?.type === 'back_forward';
       if (isHistoryNavigation) {
         resetTouchIconFocus();
+        fetch('/cart?section_id=cart-icon-bubble')
+          .then(function(r) { return r.text(); })
+          .then(function(html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var fresh = doc.querySelector('.shopify-section');
+            var bubble = document.getElementById('cart-icon-bubble');
+            if (fresh && bubble) bubble.innerHTML = fresh.innerHTML;
+          })
+          .catch(function() {});
+        fetch('/cart?section_id=cart-drawer')
+          .then(function(r) { return r.text(); })
+          .then(function(html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var fresh = doc.querySelector('#CartDrawer');
+            var drawer = document.getElementById('CartDrawer');
+            if (fresh && drawer) drawer.innerHTML = fresh.innerHTML;
+          })
+          .catch(function() {});
       }
     });
 

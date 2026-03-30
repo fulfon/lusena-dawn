@@ -67,8 +67,8 @@
 
 ## Development tools
 
-- **Shopify CLI:** Owner runs `shopify theme dev -e dev` (config in `shopify.theme.toml`). This syncs files to the dev theme.
-- **Preview URL (for ALL Playwright testing):** `https://lusena-dev.myshopify.com/?preview_theme_id=144618684603` — store password: `paufro`. NEVER use `127.0.0.1:9292` with Playwright — localhost blocks cart AJAX and causes other restrictions.
+- **Shopify CLI:** Owner runs `shopify theme dev -e dev` (config in `shopify.theme.toml`). Syncs files to dev theme. Localhost (`127.0.0.1:9292`) is for the owner's manual browser use only.
+- **Preview URL (for ALL Playwright testing):** NEVER use localhost with Playwright — it blocks cart AJAX. Main repo: `https://lusena-dev.myshopify.com/?preview_theme_id=144618684603`. Worktrees: use theme ID from `config/worktree-themes.json`. Store password: `paufro`.
 - **Theme check:** `shopify theme check` (only known baseline warnings should remain)
 - **Playwright CLI (`/playwright-cli` skill):** The **only** way to interact with the browser. Use for ALL browser tasks: screenshots, debugging CSS, checking network resources, testing interactions, comparing before/after, anything that needs a live page. **CRITICAL: NEVER use Playwright MCP browser tools directly** (`browser_navigate`, `browser_snapshot`, `browser_click`, etc.) — they bypass the project workflow. **ALWAYS use `-s=<unique-name>`** to isolate your browser session from other concurrent Claude Code instances (e.g., `playwright-cli -s=pdp-fix open http://...`). Each instance MUST pick a DIFFERENT name — never use generic names like `-s=audit` or `-s=test`. Without a named session, all instances share the default browser and will navigate each other's pages.
 - **Shopify Dev MCP:** MUST call `learn_shopify_api` with `api: "liquid"` before editing Liquid
@@ -123,6 +123,76 @@
 | `react-expert` | React 19+ patterns |
 | `graphql-architect` | GraphQL schema design |
 | `api-designer` | REST/GraphQL API design |
+
+## Worktree theme mapping
+
+Each git worktree has a dedicated unpublished Shopify theme for browser testing via `shopify theme push`. The main repo uses `shopify theme dev` on port 9292 (pinned in `shopify.theme.toml`).
+
+**Pool config:** `config/worktree-themes.json` maps slot numbers to theme IDs:
+```json
+{
+  "store": "lusena-dev.myshopify.com",
+  "themes": {
+    "1": { "id": "146574082235", "name": "lusena-worktree-1" },
+    "2": { "id": "146574115003", "name": "lusena-worktree-2" },
+    "3": { "id": "146574147771", "name": "lusena-worktree-3" },
+    "4": { "id": "146574180539", "name": "lusena-worktree-4" }
+  }
+}
+```
+
+| Context | Theme ID | URL |
+|---------|----------|-----|
+| Main repo (`lusena-dawn/`) | `144618684603` | `http://127.0.0.1:9292/` (live dev server) |
+| Worktree slot N | from `config/worktree-themes.json` | `https://lusena-dev.myshopify.com/?preview_theme_id=<ID>` |
+
+**How Claude Code uses this:** The instance detects its slot number from the cwd path (`lusena-worktrees/lusena-N` → slot N), reads the theme ID from `config/worktree-themes.json`, and runs:
+```bash
+shopify theme push --theme <THEME_ID> --store lusena-dev.myshopify.com --nodelete
+```
+Then uses `https://lusena-dev.myshopify.com/?preview_theme_id=<THEME_ID>` for Playwright.
+
+**One-time setup (owner must do):** Create 4 unpublished themes and record their IDs in the JSON file. From the main repo, run 4 times:
+```bash
+shopify theme push --unpublished --json --store lusena-dev.myshopify.com
+```
+Rename each theme in Shopify admin to `lusena-worktree-1` through `lusena-worktree-4` and note the IDs.
+
+**Why push instead of dev?** Shopify CLI shares auth state machine-globally (OAuth port 3456 hardcoded). Multiple `shopify theme dev` instances steal each other's tokens. Cart API also rate-limits aggressively on localhost — preview URLs on the real domain avoid this.
+
+## Store URL reference (for Playwright testing)
+
+**Store password:** `paufro` (enter on password page before testing).
+
+Base URL for worktrees: `https://lusena-dev.myshopify.com{path}?preview_theme_id=<THEME_ID>`
+Base URL for main repo: `http://127.0.0.1:9292{path}`
+
+### Products
+
+| Handle | Name | Type | Path |
+|--------|------|------|------|
+| `poszewka-jedwabna` | Poszewka jedwabna 50x60 | Standard PDP | `/products/poszewka-jedwabna` |
+| `silk-bonnet` | Jedwabny czepek do spania | Standard PDP | `/products/silk-bonnet` |
+| `silk-scrunchie` | Scrunchie jedwabny | Standard PDP | `/products/silk-scrunchie` |
+| `jedwabna-maska-3d` | Jedwabna maska 3D do spania | Standard PDP | `/products/jedwabna-maska-3d` |
+| `heatless-curlers` | Jedwabny walek do lokow | Standard PDP | `/products/heatless-curlers` |
+| `nocna-rutyna` | Nocna Rutyna | Bundle PDP | `/products/nocna-rutyna` |
+| `piekny-sen` | Piekny Sen | Bundle PDP | `/products/piekny-sen` |
+| `scrunchie-trio` | Scrunchie Trio | Bundle PDP | `/products/scrunchie-trio` |
+
+### Pages
+
+| Page | Path |
+|------|------|
+| Homepage | `/` |
+| Collection (all) | `/collections/all` |
+| Cart | `/cart` |
+| Quality | `/pages/nasza-jakosc` |
+| About | `/pages/o-nas` |
+| Returns | `/pages/zwroty` |
+| Contact | `/pages/kontakt` |
+| Search | `/search` |
+| Blog | `/blogs/blog` |
 
 ## Known theme check warnings (baseline — do not fix)
 

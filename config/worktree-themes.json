@@ -1,0 +1,9 @@
+{
+  "store": "lusena-dev.myshopify.com",
+  "themes": {
+    "1": { "id": "146574082235", "name": "lusena-worktree-1" },
+    "2": { "id": "146574115003", "name": "lusena-worktree-2" },
+    "3": { "id": "146574147771", "name": "lusena-worktree-3" },
+    "4": { "id": "146574180539", "name": "lusena-worktree-4" }
+  }
+}

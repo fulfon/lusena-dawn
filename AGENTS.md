@@ -124,6 +124,41 @@ The owner runs multiple Claude Code instances in parallel. Each instance is laun
 
 Call `learn_shopify_api` with `api: "liquid"` ONCE before editing any Liquid files.
 
+## Worktree Development
+
+You may be running inside a **git worktree** (`lusena-worktrees/lusena-N/`) rather than the main repo (`lusena-dawn/`). Check your cwd — if it contains `lusena-worktrees/lusena-`, you are in a worktree on branch `work/N`. Your slot number is N (the digit at the end of the directory name).
+
+### Browser testing in a worktree
+
+The `shopify theme dev` server watches the **main repo only** — it does NOT see your worktree files. To test your changes with Playwright:
+
+1. **Look up your theme ID** from `config/worktree-themes.json` (key = your slot number N)
+2. **Push your changes:** `shopify theme push --theme <THEME_ID> --store lusena-dev.myshopify.com --nodelete`
+3. **Use the preview URL for Playwright:** `https://lusena-dev.myshopify.com/?preview_theme_id=<THEME_ID>`
+4. **Re-push after each code change** that needs browser verification (~15-30s per push, no hot reload)
+5. **Store password:** `paufro` — the dev store is password-protected. Enter this on the password page before testing.
+6. **All product handles and page paths** are in `memory-bank/techContext.md` § "Store URL reference".
+
+### Finishing work in a worktree
+
+When the task is complete:
+
+1. **Commit your work** on the worktree branch (`work/N`) with a clear Conventional Commit message
+2. **Tell the user** the work is done and they can close the session (`Ctrl+C` or `/exit`)
+3. **The launch script handles the rest** — it auto-squash-merges into `main`, removes the worktree, and frees the slot
+
+**Do NOT:**
+- Merge to `main` yourself
+- Remove the worktree or delete branches
+- `cd` to the main repo directory
+- Run `git worktree` commands
+
+If the user asks to merge, commit, or finish: commit your changes, summarize what was done, and tell them to close the session.
+
+### When running in the main repo
+
+If your cwd is `lusena-dawn/` (not a worktree): use `https://lusena-dev.myshopify.com/?preview_theme_id=144618684603` for Playwright. The owner runs `shopify theme dev -e dev` which syncs file changes to this theme.
+
 ## Browser Interactions (Playwright CLI)
 
 The `/playwright-cli` skill is the **only** way to interact with the browser. Use it for ALL browser tasks — not just visual verification:
@@ -138,12 +173,11 @@ The `/playwright-cli` skill is the **only** way to interact with the browser. Us
 - **ALWAYS use the `/playwright-cli` skill** — NEVER use Playwright MCP browser tools directly (`browser_navigate`, `browser_snapshot`, `browser_click`, etc.). The MCP tools bypass the project workflow.
 - **ALWAYS use a named session** with `-s=<unique-name>` to isolate your browser from other concurrent Claude Code instances. Multiple instances share the default browser and will navigate each other's pages, causing failures. **Each instance MUST pick a DIFFERENT name** — use the specific page or feature you're working on (e.g., `-s=pdp-fix`, `-s=homepage-check`, `-s=about-migrate`, `-s=cart-debug`). NEVER use generic names like `-s=audit` or `-s=test` — another instance will pick the same name. Example: `playwright-cli -s=quality-spacing open http://...`
 - When not sure about a UI/layout issue, use `/playwright-cli` — don't guess.
-- **ALWAYS use the preview URL for ALL Playwright testing:**
-  - `https://lusena-dev.myshopify.com/?preview_theme_id=144618684603`
-  - This is the **only** URL for Playwright — never use `127.0.0.1:9292` with Playwright. Localhost blocks cart AJAX (cross-origin cookie issue + CLI bug since v3.89.0) and causes other restrictions.
-  - The preview URL is pinned in `shopify.theme.toml` and stays stable between restarts.
+- **ALWAYS use preview URLs for Playwright testing** — never use `127.0.0.1:9292`. Localhost blocks cart AJAX (cross-origin cookie issue + CLI bug since v3.89.0).
+  - **Main repo:** `https://lusena-dev.myshopify.com/?preview_theme_id=144618684603`
+  - **Worktrees:** see the "Worktree Development" section above for your theme ID.
   - **Store password:** `paufro` — handle it on first navigation (fill the password field, click Enter).
-  - The owner runs `shopify theme dev -e dev` separately — it syncs file changes to the dev theme, which the preview URL serves. Localhost is only for the owner's manual browser use, not for Claude Code.
+  - The owner runs `shopify theme dev -e dev` separately — it syncs file changes to the dev theme. Localhost is only for the owner's manual browser use.
 
 ## Animations (consistency)
 
