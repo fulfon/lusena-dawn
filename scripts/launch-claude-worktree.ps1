@@ -48,6 +48,32 @@ Pop-Location
 $existingWorktrees = Get-ChildItem -Path $worktreeBase -Directory -Filter "lusena-*" -ErrorAction SilentlyContinue
 foreach ($wt in $existingWorktrees) {
     $wtPath = $wt.FullName
+
+    # Guard: if .git file is missing, this is an orphaned directory, not a valid worktree.
+    # Without .git, git commands resolve to a parent repo and report false uncommitted changes.
+    if (-not (Test-Path "$wtPath\.git")) {
+        Remove-Item -Recurse -Force $wtPath -ErrorAction SilentlyContinue
+        Write-Host "  Removed orphaned directory: $($wt.Name)" -ForegroundColor DarkGray
+        continue
+    }
+
+    # Guard: skip worktrees actively used by another launcher instance.
+    # The lock file is held open with an exclusive handle by the owning launcher.
+    # If we can't open it exclusively, the worktree is in use. If we can, it's stale.
+    $lockFile = "$wtPath\.claude-lock"
+    if (Test-Path $lockFile) {
+        try {
+            $testStream = [System.IO.File]::Open($lockFile, [System.IO.FileMode]::Open, [System.IO.FileAccess]::ReadWrite, [System.IO.FileShare]::None)
+            # Got exclusive access — lock is stale (owning process died), clean it up
+            $testStream.Close()
+            Remove-Item $lockFile -ErrorAction SilentlyContinue
+        } catch {
+            # Can't open — another launcher holds the lock, worktree is in use
+            Write-Host "  Skipping $($wt.Name) — in use" -ForegroundColor DarkGray
+            continue
+        }
+    }
+
     Push-Location $wtPath
 
     $wtBranch = git rev-parse --abbrev-ref HEAD 2>$null
@@ -95,9 +121,17 @@ Write-Host "  Path:   $worktreePath" -ForegroundColor Green
 Write-Host "  Branch: $branchName" -ForegroundColor Green
 Write-Host ""
 
+# Lock the worktree so other launcher instances don't clean it up.
+# Hold the file open with an exclusive handle — Windows auto-releases on crash/kill.
+$lockStream = [System.IO.File]::Open("$worktreePath\.claude-lock", [System.IO.FileMode]::Create, [System.IO.FileAccess]::Write, [System.IO.FileShare]::None)
+
 # Launch Claude Code in the worktree
 Set-Location $worktreePath
 claude --effort max
+
+# Release the lock now that Claude has exited
+$lockStream.Close()
+Remove-Item "$worktreePath\.claude-lock" -ErrorAction SilentlyContinue
 
 # --- Claude Code exited ---
 Write-Host ""
@@ -106,6 +140,11 @@ Write-Host "  Claude Code exited." -ForegroundColor Yellow
 # Check if the worktree still exists — Claude may have already cleaned it up
 if (-not (Test-Path $worktreePath)) {
     Write-Host "  Worktree already cleaned up by Claude. Nothing to do." -ForegroundColor Green
+} elseif (-not (Test-Path "$worktreePath\.git")) {
+    # Orphaned directory — .git file missing, so git commands would resolve to a parent repo
+    Write-Host "  Worktree .git file missing (orphaned directory). Removing..." -ForegroundColor Yellow
+    Remove-Item -Recurse -Force $worktreePath -ErrorAction SilentlyContinue
+    Write-Host "  Cleaned up." -ForegroundColor Green
 } else {
     Set-Location $worktreePath
 
