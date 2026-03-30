@@ -29,7 +29,7 @@ description: Quick-reference catalog of all LUSENA sections — page, tier, CSS,
 ## PDP — Standard (`product.json`)
 | Section | Tier | CSS | Notes |
 |---------|------|-----|-------|
-| `lusena-main-product` | compact | YES (lusena-pdp.css) | Delegates to 8+ snippets |
+| `lusena-main-product` | compact | YES (lusena-pdp.css) | Delegates to 13 snippets |
 | `lusena-pdp-feature-highlights` | standard | YES | 6 feature cards from metafields |
 | `lusena-pdp-quality-evidence` | standard | - | JS: `{% javascript %}` |
 | `lusena-pdp-truth-table` | standard | - | Uses `.lusena-truth-table` from foundations |
@@ -49,7 +49,7 @@ description: Quick-reference catalog of all LUSENA sections — page, tier, CSS,
 ## Cart (`cart.json`)
 | Section | Tier | CSS | Notes |
 |---------|------|-----|-------|
-| `lusena-cart-items` | compact | YES (lusena-cart-page.css, 634 lines) | AJAX re-render, upsell |
+| `lusena-cart-items` | compact | YES (lusena-cart-page.css, 625 lines) | AJAX re-render, upsell |
 | `lusena-cart-footer` | - | - | Totals + checkout button |
 
 ## Collection (`collection.json`)

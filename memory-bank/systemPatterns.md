@@ -8,13 +8,13 @@
 2. **Dawn base:** `assets/base.css` — Foundation styles
 3. **Cart CSS** (conditional — `cart_type == 'drawer'`)
 4. **Standalone LUSENA assets** (loaded globally via `<link>` in `theme.liquid`):
-   - `lusena-foundations.css` (~40KB) — tokens, spacing, typography, components, body/main rules
+   - `lusena-foundations.css` (~50KB) — tokens, spacing, typography, components, body/main rules
    - `lusena-button-system.css` — button/icon-button primitives
    - `lusena-header.css` — header section styles
    - `lusena-hero.css` — hero section styles
    - `lusena-footer.css` — footer section styles
 5. **Page-specific assets** (loaded per-page/section via `<link>` in their section):
-   - `lusena-pdp.css` (~34KB) — PDP styles (loaded in lusena-main-product.liquid and lusena-main-bundle.liquid)
+   - `lusena-pdp.css` (~42KB) — PDP styles + cross-sell checkbox + education price (loaded in lusena-main-product.liquid and lusena-main-bundle.liquid)
    - `lusena-cart-page.css` (625 lines) — cart items + footer + quantity styles (loaded in lusena-cart-items.liquid)
    - `lusena-search.css` (156 lines) — search page styles (loaded in lusena-search.liquid)
    - `lusena-bundle-pdp.css` — bundle PDP buy box styles (loaded in lusena-main-bundle.liquid)
@@ -100,6 +100,8 @@ Modifier: `lusena-spacing--snug-top` — reduces top to 32/48px for heroes shari
 - **Final CTA:** `sections/lusena-final-cta.liquid` — generic reusable section (replaces per-page copies)
 - **Upsell cards:** `.lusena-upsell-card` — unified container for cross-sell (`__xs-row`, `__xs-img`, `__xs-info`, `__xs-bottom`, `__xs-price`) and bundle two-tile (`__bn-headline`, `__bn-tiles`, `__bn-have`, `__bn-add`, `__bn-bottom`, `__bn-pricing`). `__bn-tiles` uses `justify-content: center` for balanced tile positioning. Checkmark badges use `lusena-icon` snippet (not inline SVG). CSS scoped per-surface: drawer selectors under `.lusena-cart-drawer__upsell` (inline `<style>`), cart page selectors under `.lusena-cart-upsell` (`assets/lusena-cart-page.css`). Gain-framed headlines, real product titles/images via `bundle_nudge_map` handles. Image placeholders use `:empty { display: block }` to override Dawn's `div:empty { display: none }` rule.
 - **Link arrows:** `.lusena-link-arrow` — CSS-only chevron via SVG mask (`::after` pseudo-element), inherits `currentColor`, hover slides 2px right. Defined in `lusena-foundations.css`. Replaces hardcoded `→` characters across all CTAs and links.
+- **PDP cross-sell checkbox:** `snippets/lusena-pdp-cross-sell-checkbox.liquid` — white card with teal accent border, custom checkbox indicator, product image, color-matched variant. CSS in `assets/lusena-pdp.css` (`.lusena-pdp-cross-sell-cb`). Two JS modes: individual PDPs (inline `<script>` with ATC intercept + Buy Now + variant change in `lusena-pdp-scripts.liquid`) and bundle PDPs (`skip_js: true` param, bundle scripts handle reveal after `allSelected()` + color matching in `lusena-bundle-scripts.liquid`). Schema: `cross_sell_enabled`, `cross_sell_handle`, `cross_sell_price`.
+- **Scrunchie education:** Server-side price swap on scrunchie PDP when qualifying product is in cart. `lusena-main-product.liquid` checks `cart.items` via Liquid, passes education state to `lusena-pdp-summary.liquid` (renders both price rows with initial visibility). Live sync via `lusena-scrunchie-education.liquid` inline script (PubSub subscriber + cart check + sticky MutationObserver). No FOUC — correct price on first paint.
 
 ## Page migration workflow
 

@@ -33,6 +33,13 @@ All cart mutations (bundle swap, cross-sell add, qty change) use Shopify's secti
 ### Dawn patches
 - `assets/cart.js` — null guard on `trapFocus` when `.drawer__inner-empty` is absent from DOM (prevents JS error when cart empties after AJAX re-render removes the element)
 
+### Cart interaction locking during bundle swap (2026-03-29)
+Bundle swaps (add bundle + remove individual) are multi-step operations. To prevent concurrent mutations:
+- **Cart page:** `.cart__items--disabled` class on `#main-cart-items` — disables pointer events and reduces opacity on all cart items during swap.
+- **Cart drawer:** `.lusena-cart-drawer__item--loading` class on all `[data-cart-item]` elements — same visual treatment.
+- Cross-sell "Dodaj" button is NOT locked (independent single-add, doesn't conflict with swap).
+- Lock applied at swap start, removed after AJAX section re-render completes.
+
 ### Cart drawer BXGY discount display
 Cart drawer item prices check `item.original_line_price > item.final_line_price` first (automatic/BXGY discounts), then fall back to `item.variant.compare_at_price > item.variant.price` (permanent sale pricing). This ensures the cross-sell scrunchie at 39 zl (vs 59 zl) shows the correct strikethrough in the cart.
 

@@ -23,6 +23,7 @@
 | Compare-at price | (none) | |
 | Cost per item | - | **PENDING** (fill when import cost is known) |
 | Charge tax | Yes (23% VAT, tax-inclusive) | Done |
+| `lusena.upsell_role` | (none) | Done |
 
 ## Variants
 

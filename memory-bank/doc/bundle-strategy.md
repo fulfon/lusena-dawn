@@ -93,23 +93,24 @@ COGS estimated at ~4.05 PLN/USD based on brandbook § 7.2 unit costs.
 
 ---
 
-## Free shipping threshold: 289 zł
+## Free shipping threshold: 275 zł
 
-> **Updated 2026-03-18:** Changed from 299 to 289 zł based on upsell strategy research.
-> 299 zł had a critical flaw: bonnet (239) + scrunchie (59) = 298 = 1 zł short.
+> **Updated 2026-03-29:** Changed from 289 to 275 zł. With BXGY cross-sell pricing (scrunchie at 39 zł), the 289 threshold was unnecessarily high. At 275: poszewka alone is just 6 zł short (easy upsell), curlers + scrunchie (278) now clears (was the "accepted limitation" at 289), and all other combos still clear comfortably.
+> **History:** 299 → 289 (2026-03-18, bonnet+scrunchie near-miss fix) → 275 (2026-03-29, cross-sell pricing adjustment).
 > Full analysis in `memory-bank/doc/upsell-strategy.md`.
 
 | Scenario | Cart total | Qualifies? | Upsell mechanism |
 |----------|-----------|------------|------------------|
-| Poszewka alone | 269 zł | No (-20 zł) | "Dodaj scrunchie" (39 zł with BXGY) → 308 zł ✓ |
-| Bonnet alone | 239 zł | No (-50 zł) | "Dodaj scrunchie" (59 zł) → 298 zł ✓ |
-| Maska alone | 169 zł | No (-120 zł) | Needs second product |
-| Curlers alone | 219 zł | No (-70 zł) | "Dodaj scrunchie" → 278 zł (still short) |
+| Poszewka alone | 269 zł | No (-6 zł) | "Dodaj scrunchie" (39 zł with BXGY) → 308 zł ✓ |
+| Bonnet alone | 239 zł | No (-36 zł) | "Dodaj scrunchie" (59 zł) → 298 zł ✓ |
+| Maska alone | 169 zł | No (-106 zł) | Needs second product |
+| Curlers alone | 219 zł | No (-56 zł) | "Dodaj scrunchie" (59 zł) → 278 zł ✓ |
 | Any bundle (349-499 zł) | 349+ zł | Yes ✓ | No upsell needed |
 | Poszewka + cross-sell scrunchie (39 zł) | 308 zł | Yes ✓ | Already cleared |
 | Bonnet + scrunchie (59 zł) | 298 zł | Yes ✓ | Already cleared |
+| Curlers + cross-sell scrunchie (39 zł) | 258 zł | No (-17 zł) | Needs full-price scrunchie (59 zł) to clear |
 
-Research: 81% of shoppers increase spending to qualify for free shipping (FedEx/Morning Consult 2024). The 289 zł threshold creates a 20 zł gap for poszewka buyers (MIT "magnet effect" sweet spot) and fixes the bonnet+scrunchie near-miss.
+Research: 81% of shoppers increase spending to qualify for free shipping (FedEx/Morning Consult 2024). The 275 zł threshold creates a 6 zł gap for poszewka buyers (trivial add) and eliminates the curlers limitation from the 289 era.
 
 ---
 
@@ -128,7 +129,7 @@ Research: 81% of shoppers increase spending to qualify for free shipping (FedEx/
 | **COGS** | ~140 zł |
 | **Gross margin** | 65% (259 zł profit) |
 | **vs. poszewka alone** | +60 zł more profit per order (+30%) |
-| **Free shipping** | Clears 289 zł ✓ |
+| **Free shipping** | Clears 275 zł ✓ |
 | **Psychological threshold** | Under 400 zł ✓ |
 | **Color matching** | Same color for both items (A+A, B+B) |
 | **Inventory per sale** | 1 poszewka + 1 bonnet |
@@ -162,7 +163,7 @@ Research: 81% of shoppers increase spending to qualify for free shipping (FedEx/
 | **COGS** | ~111 zł |
 | **Gross margin** | 68% (238 zł profit) |
 | **vs. poszewka alone** | +39 zł more profit per order (+20%) |
-| **Free shipping** | Clears 289 zł ✓ |
+| **Free shipping** | Clears 275 zł ✓ |
 | **Psychological threshold** | Under 350 zł ✓ |
 | **Color matching** | Poszewka in customer's chosen color; maska in color A (only 1 color available) |
 | **Inventory per sale** | 1 poszewka + 1 maska |
@@ -194,7 +195,7 @@ Research: 81% of shoppers increase spending to qualify for free shipping (FedEx/
 | **Discount** | 38 zł (21.5%) |
 | **COGS** | ~36 zł |
 | **Gross margin** | 74% (103 zł profit) |
-| **Free shipping** | Does NOT clear 289 zł - may trigger "dodaj poszewkę" upsell |
+| **Free shipping** | Does NOT clear 275 zł - may trigger "dodaj poszewkę" upsell |
 | **Inventory per sale** | 3 scrunchies (1 per color) |
 | **Max before stock pressure** | ~16 trios from 150 units (rest reserved for cross-sell + individual) |
 
@@ -226,12 +227,11 @@ The original brandbook proposed a "Starter Kit" (Poszewka + Scrunchie = 298/269 
 | **Scrunchie price in cross-sell** | 39 zł (34% off the 59 zł standalone price) |
 | **BXGY qualifying product** | Poszewka only (not bonnet - see upsell strategy for reasoning) |
 | **Combined cart (poszewka + scrunchie)** | 269 + 39 = 308 zł |
-| **Free shipping** | Clears 289 zł ✓ |
+| **Free shipping** | Clears 275 zł ✓ |
 | **Why 34% discount** | Khan & Dhar (2010): discount on the hedonic (fun/fashion) item increases purchase of the utilitarian item. Scrunchie = hedonic, poszewka = utilitarian. |
 
-> **Updated 2026-03-18:** Checkbox scope narrowed to poszewka only. Bonnet excluded because
-> bonnet (239) + scrunchie at 39 zł = 278 zł, which doesn't clear the 289 zł free shipping
-> threshold. Bonnet buyers get scrunchie at full 59 zł via cart upsell (239 + 59 = 298 > 289 ✓).
+> **Updated 2026-03-29:** Cross-sell checkbox now on ALL individual PDPs + bundle PDPs (not just poszewka).
+> With 275 zł threshold: bonnet (239) + scrunchie at 39 zł = 278 zł clears it. Curlers (219) + scrunchie 59 zł = 278 also clears.
 > Full analysis in `memory-bank/doc/upsell-strategy.md`.
 
 **Why this is better than a formal Starter Kit bundle:**
@@ -399,7 +399,7 @@ Bundles generate ~15% more gross profit per 100 customers even with 15% cannibal
 Scrunchie only generates profit when:
 - Cross-sold to an existing customer (zero incremental CAC)
 - Sold as a trio to a gift buyer (barely profitable after CAC)
-- Used as the free-shipping-threshold product ("add scrunchie to reach 289 zł")
+- Used as the free-shipping-threshold product ("add scrunchie to reach 275 zł")
 
 This confirms the brandbook's positioning: scrunchie is a derivative product, not a traffic driver.
 

@@ -43,12 +43,12 @@
 - `snippets/lusena-date-pl.liquid` — Polish date formatting (bypasses English store locale)
 
 ### Styles
-- `assets/lusena-foundations.css` — Single source of truth for design tokens, utilities, containers, components, body/main global rules, preflight resets (~40KB)
+- `assets/lusena-foundations.css` — Single source of truth for design tokens, utilities, containers, components, body/main global rules, preflight resets (~50KB)
 - `assets/lusena-button-system.css` — Button/icon-button primitives (extracted from snippet {% stylesheet %})
 - `assets/lusena-header.css` — Header section styles (extracted from section {% stylesheet %})
 - `assets/lusena-hero.css` — Hero section styles (extracted from section {% stylesheet %})
 - `assets/lusena-footer.css` — Footer section styles (extracted from section {% stylesheet %})
-- `assets/lusena-pdp.css` — All PDP-specific CSS (~34KB), loaded per-page
+- `assets/lusena-pdp.css` — All PDP-specific CSS (~42KB), loaded per-page
 - `assets/lusena-cart-page.css` — Cart page styles: items, footer, quantity stepper, upsell (625 lines, extracted from `{% stylesheet %}` blocks 2026-03-26)
 - `assets/lusena-search.css` — Search page styles: layout, grid, empty state (156 lines, extracted from `{% stylesheet %}` block 2026-03-26)
 - `assets/lusena-bundles.css` — Bundle card grid styles (loaded per-section in lusena-bundles.liquid)

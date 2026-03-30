@@ -31,7 +31,10 @@
 | `lusena.bundle_nudge_map` | `{"poszewka-jedwabna":{"label":"czepek jedwabny","handle":"silk-bonnet"},"silk-bonnet":{"label":"poszewke jedwabna","handle":"poszewka-jedwabna"}}` | Done |
 | Savings | 109 zł (21.5%) | Done |
 | Charge tax | Yes (23% VAT, tax-inclusive) | Done |
-| Free shipping | Yes (399 > 289 zł threshold) | Done |
+| `lusena.upsell_role` | bundle | Done |
+| `lusena.upsell_message` | Kompletna ochrona na noc - twarz i włosy | Done |
+| `lusena.upsell_primary` | (set manually) | Done |
+| Free shipping | Yes (399 > 275 zł threshold) | Done |
 | Psychological threshold | Under 400 zł | Done |
 
 ## Variants / Colors
@@ -54,7 +57,7 @@ Colors can be matched or mixed. Bundle strategy recommends matching (A+A, B+B).
 | Field | Value | Status |
 |-------|-------|--------|
 | Physical product | Yes | Done |
-| Free shipping | Yes (399 > 289 zł threshold) | Done |
+| Free shipping | Yes (399 > 275 zł threshold) | Done |
 
 ## SEO
 
@@ -176,7 +179,7 @@ Re-evaluated using orchestrator + Polish e-commerce copywriter flow (introduced 
 - **Date:** 2026-03-22 (final)
 - **Verdict:** PASS (0 issues, 2 advisories)
 - **Checks:** Initial check (2026-03-21) on buybox copy + SEO. Rework check (2026-03-22) on revised benefits + card 3. Three fixes applied: "nie wchłania" → "wchłania znacznie mniej" (B2), "nie czekasz na rezultaty" → "bez okresu oczekiwania" (B3), "kumulują się" → "sprzyja widocznym efektom" (card 3).
-- **Notes:** All claims are physical/mechanical (friction, absorption, creases) or factual (care instructions). No medical claims, no fabricated social proof. Advisory 1: OEKO-TEX® trademark symbol in SEO meta. Advisory 2: verify free shipping threshold (289 zł) configured in Shopify admin before publishing.
+- **Notes:** All claims are physical/mechanical (friction, absorption, creases) or factual (care instructions). No medical claims, no fabricated social proof. Advisory 1: OEKO-TEX® trademark symbol in SEO meta. Advisory 2: verify free shipping threshold (275 zł) configured in Shopify admin before publishing.
 
 ### Customer validation
 - **Date:** 2026-03-21 to 2026-03-22
@@ -241,4 +244,4 @@ Initial runs tested buybox copy with operational benefits (60-day guarantee, 109
 3. **Media** - upload product photos when available; include packaging/unboxing shots (Ewa critical)
 4. **Homepage bundles section** - wire up in `templates/index.json`
 5. **Reviews system** - enable before launch (4/4 personas flagged)
-6. **Free shipping threshold** - configure 289 zł in Shopify admin before publishing (legal advisory)
+6. **Free shipping threshold** - configure 275 zł in Shopify admin before publishing (legal advisory)

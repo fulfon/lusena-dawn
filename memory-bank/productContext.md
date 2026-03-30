@@ -9,8 +9,8 @@ LUSENA exists to make premium silk accessories accessible and trustworthy in the
 ### Customer-facing pages (LUSENA-styled)
 1. **Homepage** (`index.json`) — Brand first impression, trust signals, benefit bridge, hero product showcase, social proof
 2. **Collection page** (`collection.json`) — Browse products, filter, tier-based ordering
-3. **Product page** (`product.json`) — Detailed evidence, proof blocks, buy flow
-3b. **Bundle product page** (`product.bundle.json`) — Separate template: progressive disclosure color selector (step-by-step, GPU-only animations, pending placeholders, progress counter), sticky ATC (mobile+desktop, two-state: guide or convert), care accordion, savings display. Shared PDP sections (feature highlights, quality evidence, truth table, FAQ, final CTA). Assigned to Nocna Rutyna, Piękny Sen, Scrunchie Trio.
+3. **Product page** (`product.json`) — Detailed evidence, proof blocks, buy flow. Cross-sell checkbox offers scrunchie at 39 zl (BXGY) on all individual PDPs. Scrunchie PDP shows education price (39 zl instead of 59 zl) when a qualifying product is already in cart.
+3b. **Bundle product page** (`product.bundle.json`) — Separate template: progressive disclosure color selector (step-by-step, GPU-only animations, pending placeholders, progress counter), sticky ATC (mobile+desktop, two-state: guide or convert), care accordion, savings display. Cross-sell checkbox reveals after all colors are picked (sunk-cost timing). Shared PDP sections (feature highlights, quality evidence, truth table, FAQ, final CTA). Assigned to Nocna Rutyna, Piękny Sen, Scrunchie Trio.
 4. **Quality page** (`page.nasza-jakosc.json`) — Deep proof: momme, origin, certificates, fire test, comparison
 5. **Returns page** (`page.zwroty.json`) — Frictionless returns messaging, trust building
 6. **About page** (`page.o-nas.json`) — Brand story, heritage, values
@@ -44,7 +44,11 @@ LUSENA exists to make premium silk accessories accessible and trustworthy in the
 Awareness          → Interest            → Decision           → Action
 Homepage hero      → Trust bar           → PDP evidence       → Buybox CTA
 Problem/solution   → Testimonials        → Comparison tables  → Sticky ATC
-                   → Heritage tiles      → Quality page       → Cart drawer
+Benefit bridge     → Heritage tiles      → Quality page       → Cart drawer
+
+Cross-sell path (scrunchie at 39 zl via BXGY):
+PDP checkbox       → Cart drawer upsell  → Cart merge (#13)  → Scrunchie PDP education
+(all PDPs)           (nudge/cross-sell)    (combine into bundle)  (price swap when qualifying item in cart)
 ```
 
 ## Reusable sections (shared across pages)

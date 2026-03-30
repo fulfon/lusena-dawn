@@ -76,7 +76,7 @@ Slip uses premium restraint: single curated recommendation in cart ("You'll also
 
 ---
 
-## Free shipping threshold: 289 zl
+## Free shipping threshold: 275 zl (was 289, was 299)
 
 ### Why 299 zl is wrong
 
@@ -101,21 +101,17 @@ This is the worst possible customer experience. The shopper adds a bonnet, sees 
 | Piekny Sen (349) | 349 | YES (+60) | Clears easily. |
 | Scrunchie Trio + any product | 198+ | Varies | Most combos clear. |
 
-### Curlers: accepted limitation
+### Curlers: no longer a limitation
 
-Curlers (219) + scrunchie (59) = 278, which is 11 zl short of 289. This is accepted because:
-1. Curlers serve a different customer need (daytime styling) than the nighttime routine core
-2. Curlers are not a primary traffic driver
-3. Fixing this (threshold 269 or lower) would eliminate the upsell lever for the flagship poszewka
-4. The curler buyer's natural path is toward a bundle (Jedwabny Styling contingency bundle, Phase 2) or a second scrunchie (278 + 59 = 337, well over threshold)
+> **Updated 2026-03-29:** With the threshold at 275, curlers (219) + scrunchie (59) = 278, which now CLEARS the threshold. This was the "accepted limitation" at 289 — resolved by the threshold reduction.
 
-### Psychological advantage
+### Historical analysis (289 threshold era)
 
-"Darmowa dostawa od 289 zl" reads as "under 300" in the customer's mind. This feels more accessible than "od 299 zl" (which reads as "basically 300").
+> The sections below document reasoning from the 289 zl threshold decision. Kept for reference. The threshold was lowered to 275 on 2026-03-29 after cross-sell BXGY pricing finalization.
 
-### Economics of 289 vs 299
+**Psychological advantage (at 289):** "Darmowa dostawa od 289 zl" reads as "under 300". At 275: even lower psychological barrier.
 
-At 289, additional orders qualify (primarily bonnet + scrunchie = 298 zl). Absorbing ~18 zl shipping on these orders is far cheaper than:
+**Economics (289 vs 299):** At 289, additional orders qualified (bonnet + scrunchie = 298 zl). At 275, even more combos qualify (curlers + scrunchie = 278). Absorbing ~18 zl shipping on these orders is far cheaper than:
 - Losing the entire 298 zl order to abandonment (loss: ~216 zl profit)
 - Customer paying shipping and rating the experience poorly (retention risk)
 
@@ -129,7 +125,7 @@ At 289, additional orders qualify (primarily bonnet + scrunchie = 298 zl). Absor
 
 ### Implementation
 
-Update theme setting `lusena_free_shipping_threshold` to `289` before launch (currently defaults to 269 in code, planned at 299 in bundle strategy).
+Theme setting `lusena_free_shipping_threshold` is set to `275` (updated 2026-03-29, was 289 before cross-sell pricing finalization, originally 269 default).
 
 ---
 
@@ -266,10 +262,10 @@ Bundle upgrades consistently deliver the highest absolute profit. The scrunchie 
 
 | Field | Value |
 |---|---|
-| Mechanism | Checkbox below "Dodaj do koszyka" on poszewka PDP only |
-| Scrunchie price | 39 zl (34% off 59 zl) |
+| Mechanism | Checkbox on ALL individual PDPs + bundle PDPs (updated 2026-03-29, was poszewka-only) |
+| Scrunchie price | 39 zl (34% off 59 zl) — via Shopify BXGY automatic discount |
 | Implementation | PDP checkbox adds via Cart API + Shopify BXGY automatic discount |
-| Combined (poszewka + scrunchie) | 269 + 39 = 308 zl (clears 289 free shipping) |
+| Combined (poszewka + scrunchie) | 269 + 39 = 308 zl (clears 275 free shipping) |
 
 The checkbox uses a Shopify BXGY automatic discount: buying a poszewka triggers 34% off one scrunchie. The checkbox provides the UX (auto-add); the discount provides the price reduction at checkout.
 
@@ -283,19 +279,9 @@ The scrunchie is 39 zl whenever it appears as a cross-sell alongside a qualifyin
 
 The Shopify BXGY automatic discount handles this: "buy poszewka -> 34% off 1 scrunchie." This triggers regardless of how the scrunchie was added to cart (PDP checkbox or cart upsell button), ensuring consistent pricing within the poszewka buyer's journey.
 
-**BXGY qualifying product: poszewka only (not bonnet).** This is deliberate:
-- Poszewka (269) + scrunchie at 39 = 308 -> clears 289 free shipping threshold ✓
-- Bonnet (239) + scrunchie at 39 would = 278 -> does NOT clear 289 ✗
-- Bonnet (239) + scrunchie at 59 = 298 -> clears 289 ✓
+> **SUPERSEDED 2026-03-29:** The analysis below was for the original poszewka-only scope. Cross-sell checkbox is now on ALL individual PDPs + bundle PDPs. Free shipping threshold lowered from 289 to 275. At 275: bonnet (239) + scrunchie at 39 = 278, which clears the threshold. The BXGY discount scope in Shopify admin should be verified/expanded to match.
 
-Restricting the BXGY to poszewka solves both the free shipping math AND the consistency problem. Each customer journey has one consistent scrunchie price:
-- **Poszewka buyer** sees 39 zl everywhere (PDP checkbox + cart upsell)
-- **Bonnet buyer** sees 59 zl everywhere (no checkbox, cart upsell at full price)
-- **Other products** see 59 zl everywhere (no BXGY applies)
-
-The poszewka gets the exclusive cross-sell deal because it's the flagship (Tier 1). This reinforces its premium status and gives the flagship buyer an extra reason to feel rewarded.
-
-**PDP checkbox: poszewka only.** The bonnet PDP does NOT get a cross-sell checkbox. The bonnet buyer's upsell path is the cart drawer/page scrunchie at 59 zl (which naturally bridges the 289 free shipping threshold).
+**Cross-sell checkbox: all PDPs.** Every individual product PDP and bundle PDP shows the scrunchie cross-sell checkbox (except scrunchie's own PDP and scrunchie-containing bundles). All buyers see 39 zl scrunchie offer.
 
 **Reference price protection:** The standalone 59 zl price anchors the scrunchie's value. The 39 zl "with purchase" price is framed as a poszewka-exclusive benefit, not as the "real" price. This follows the bundle strategy principle: "Scrunchie standalone reference price stays at 59 zl (39 zl is 'with purchase' price, not the 'real' price)."
 
@@ -394,9 +380,9 @@ AfterSell or ReConvert (both have free plans, native Checkout Extensibility inte
 
 ### Per-order contribution (realistic CAC = 100 zl)
 
-| Scenario | Revenue | Gross profit | After CAC | vs poszewka alone | Free ship (289)? |
+| Scenario | Revenue | Gross profit | After CAC | vs poszewka alone | Free ship (275)? |
 |---|---|---|---|---|---|
-| Poszewka alone | 269 zl | 199 zl | 99 zl | baseline | NO |
+| Poszewka alone | 269 zl | 199 zl | 99 zl | baseline | NO (-6 zl) |
 | Poszewka + scrunchie (39 "with purchase") | 308 zl | 226 zl | 126 zl | +27% | YES |
 | **Poszewka -> Nocna Rutyna** | **399 zl** | **259 zl** | **159 zl** | **+61%** | **YES** |
 | Bonnet alone | 239 zl | 169 zl | 69 zl | -30% | NO |
@@ -406,7 +392,7 @@ AfterSell or ReConvert (both have free plans, native Checkout Extensibility inte
 | Maska + scrunchie (59) | 228 zl | 175 zl | 75 zl | -24% | NO |
 | **Maska -> Piekny Sen** | **349 zl** | **238 zl** | **138 zl** | **+39%** | **YES** |
 | Curlers alone | 219 zl | 168 zl | 68 zl | -31% | NO |
-| Curlers + scrunchie (59) | 278 zl | 215 zl | 115 zl | +16% | NO |
+| Curlers + scrunchie (59) | 278 zl | 215 zl | 115 zl | +16% | **YES** (was NO at 289) |
 | Scrunchie alone | 59 zl | 47 zl | **-53 zl** | loss | NO |
 | Scrunchie + poszewka | 328 zl | 246 zl | 146 zl | +47% | YES |
 
@@ -444,7 +430,7 @@ Both are profitable. The 39 zl "with purchase" price trades margin for higher co
 **Prerequisites:** Products exist in Shopify admin (even as drafts).
 
 **Actions:**
-1. Set `lusena_free_shipping_threshold` to `289` in theme settings
+1. Set `lusena_free_shipping_threshold` to `275` in theme settings (DONE 2026-03-29)
 2. Set `lusena_cart_upsell_global_fallback` to scrunchie product
 3. Set `lusena_cart_upsell_message_fallback` to "Idealne uzupelnienie z jedwabiu"
 4. For each product, set metafield values per the matrix above:
@@ -481,10 +467,10 @@ Both are profitable. The 39 zl "with purchase" price trades margin for higher co
 2. Add `data-upsell-replaces="{cart-item-key}"` attribute to bundle upsell forms
 3. Modify cart drawer JS: detect bundle upsell, chain add-bundle + remove-individual API calls
 4. Add conditional label: "Uzupelnij do zestawu" when upsell is a bundle
-5. Set `upsell_role = 'bundle'` on Nocna Rutyna and Piekny Sen only (suppresses upsell when these complete-routine bundles are in cart). **Scrunchie Trio does NOT get `upsell_role = 'bundle'`** - it's a low-value multi-pack (139 zl) that doesn't clear the 289 zl free shipping threshold. Scrunchie Trio gets `upsell_primary = poszewka` so the buyer sees poszewka as upsell (139 + 269 = 408, free shipping cleared).
+5. Set `upsell_role = 'bundle'` on Nocna Rutyna and Piekny Sen only (suppresses upsell when these complete-routine bundles are in cart). **Scrunchie Trio does NOT get `upsell_role = 'bundle'`** - it's a low-value multi-pack (139 zl) that doesn't clear the 275 zl free shipping threshold. Scrunchie Trio gets `upsell_primary = poszewka` so the buyer sees poszewka as upsell (139 + 269 = 408, free shipping cleared).
 6. **BXGY for bundles:** Create additional BXGY rules: "Buy Nocna Rutyna OR Piekny Sen bundle -> 34% off 1 scrunchie." This prevents the scrunchie price from jumping 39 -> 59 zl when a poszewka is swapped for a bundle (the original BXGY qualifying product disappears from cart, so a new rule is needed for bundles).
 7. **Smart suppress rule:** Adjust the 2-distinct-product suppress rule: show bundle upgrade even with 2 items in cart, BUT only if the bundle contains the trigger product. This prevents incorrect suggestions (e.g., Scrunchie Trio shown when poszewka + scrunchie are in cart).
-8. **Discount code + free shipping:** When creating any discount codes for the store, always bundle free shipping into the discount (Shopify supports combining order discounts with free shipping). This prevents a discount code from dropping the cart below the 289 zl threshold and frustrating customers who already qualified.
+8. **Discount code + free shipping:** When creating any discount codes for the store, always bundle free shipping into the discount (Shopify supports combining order discounts with free shipping). This prevents a discount code from dropping the cart below the 275 zl threshold and frustrating customers who already qualified.
 
 9. **PDP bundle detection ("Masz poszewke w koszyku?"):** When a customer views a PDP for product B and their cart already contains product A, and both A+B are components of the same bundle, show a banner near the buy box:
 
@@ -598,8 +584,8 @@ These may already be defined from the cart drawer development. Verify in Shopify
 
 | Phase | What | When | Effort |
 |-------|------|------|--------|
-| **1A** | Metafield config + free shipping 289 zl + remove dev-only code + color matching | Immediately (when products exist in admin) | 1-2 hours |
-| **1B** | PDP cross-sell checkbox (scrunchie 39 zl, poszewka only) | Before launch | 2-4 hours |
-| **2A** | Bundle upgrade upsell + PDP bundle detection + cart bundle merge + BXGY rules + smart suppress | Before launch (after bundles created in Shopify) | 8-12 hours |
+| **1A** | Metafield config + free shipping 275 zl + remove dev-only code + color matching | DONE (2026-03-24) | — |
+| **1B** | PDP cross-sell checkbox (scrunchie 39 zl, all PDPs + bundles) + scrunchie education | DONE (2026-03-29) | — |
+| **2A** | Bundle upgrade upsell + cart bundle merge + BXGY rules + smart suppress | DONE (2026-03-28) | — |
 | **2B** | Post-purchase upsell (AfterSell/ReConvert) | After 8+ weeks of order data | 2 hours |
 | **3** | Tiered progress bar (shipping + gift) | After 3+ months, if data supports | 3-4 hours |

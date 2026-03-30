@@ -32,7 +32,8 @@
 | `lusena.bundle_nudge_map` | `{"silk-scrunchie":{"label":"dwie kolejne jedwabne gumki","handle":"silk-scrunchie","tile_label":"2x Scrunchie jedwabny"}}` | Done |
 | Savings | 38 zł (21.5%) | Done |
 | Charge tax | Yes (23% VAT, tax-inclusive) | Done |
-| Free shipping | No (139 < 289 zł threshold) | Done |
+| `lusena.upsell_role` | (none) | Done |
+| Free shipping | No (139 < 275 zł threshold) | Done |
 | Psychological threshold | Under 140 zł | Done |
 
 ## Variants / Colors
@@ -53,7 +54,7 @@ Unlike Nocna Rutyna and Piękny Sen, there is no color selection UI. The bundle 
 | Field | Value | Status |
 |-------|-------|--------|
 | Physical product | Yes | Done |
-| Free shipping | No (139 < 289 zł threshold - may trigger "dodaj poszewkę" upsell) | Done |
+| Free shipping | No (139 < 275 zł threshold - may trigger "dodaj poszewkę" upsell) | Done |
 
 ## SEO
 

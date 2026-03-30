@@ -31,7 +31,10 @@
 | `lusena.bundle_nudge_map` | `{"poszewka-jedwabna":{"label":"maske 3D","handle":"jedwabna-maska-3d"},"jedwabna-maska-3d":{"label":"poszewke jedwabna","handle":"poszewka-jedwabna"}}` | Done |
 | Savings | 89 zł (20.3%) | Done |
 | Charge tax | Yes (23% VAT, tax-inclusive) | Done |
-| Free shipping | Yes (349 > 289 zł threshold) | Done |
+| `lusena.upsell_role` | bundle | Done |
+| `lusena.upsell_message` | Jedwabna ochrona twarzy i oczu | Done |
+| `lusena.upsell_primary` | (set manually) | Done |
+| Free shipping | Yes (349 > 275 zł threshold) | Done |
 | Psychological threshold | Under 350 zł | Done |
 
 ## Variants / Colors
@@ -54,7 +57,7 @@ Progressive disclosure: Step 1 = poszewka color, Step 2 = maska auto-selected (C
 | Field | Value | Status |
 |-------|-------|--------|
 | Physical product | Yes | Done |
-| Free shipping | Yes (349 > 289 zł threshold) | Done |
+| Free shipping | Yes (349 > 275 zł threshold) | Done |
 
 ## SEO
 
@@ -163,7 +166,7 @@ Progressive disclosure: Step 1 = poszewka color, Step 2 = maska auto-selected (C
 ### Legal check
 - **Date:** 2026-03-22
 - **Verdict:** PASS (0 issues, 3 advisories)
-- **Notes:** All claims are physical/mechanical (friction, absorption, light blocking, pressure) or subjective experience. No medical claims, no fabricated social proof. Advisory 1: B2 "pracują do rana" implies skincare efficacy retention (low risk, standard inference from silk absorption). Advisory 2: B3 "czujesz różnicę" + Card 3 "efekt widać rano w lustrze" are subjective perception claims (pre-approved by brandbook §2.1 rule 2 for poszewka category). Advisory 3: Card 1 "żadna skóra nie zostaje bez ochrony" is mild marketing hyperbole (understood in context). OEKO-TEX® trademark symbol in SEO meta. Verify free shipping threshold (289 zł) configured in Shopify admin before publishing.
+- **Notes:** All claims are physical/mechanical (friction, absorption, light blocking, pressure) or subjective experience. No medical claims, no fabricated social proof. Advisory 1: B2 "pracują do rana" implies skincare efficacy retention (low risk, standard inference from silk absorption). Advisory 2: B3 "czujesz różnicę" + Card 3 "efekt widać rano w lustrze" are subjective perception claims (pre-approved by brandbook §2.1 rule 2 for poszewka category). Advisory 3: Card 1 "żadna skóra nie zostaje bez ochrony" is mild marketing hyperbole (understood in context). OEKO-TEX® trademark symbol in SEO meta. Verify free shipping threshold (275 zł) configured in Shopify admin before publishing.
 
 ### Customer validation
 - **Date:** 2026-03-22
@@ -234,4 +237,4 @@ Progressive disclosure: Step 1 = poszewka color, Step 2 = maska auto-selected (C
 3. **Homepage bundles section** - wire up in `templates/index.json`
 4. **Update Simple Bundles option names** - rename to Polish color names
 5. **Reviews system** - enable before launch (4/4 personas flagged)
-6. **Free shipping threshold** - configure 289 zł in Shopify admin before publishing (legal advisory)
+6. **Free shipping threshold** - configure 275 zł in Shopify admin before publishing (legal advisory)

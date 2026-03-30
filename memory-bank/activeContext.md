@@ -1,68 +1,52 @@
 # Active Context
 
-*Last updated: 2026-03-29*
+*Last updated: 2026-03-30*
 
 ## Current focus
 
-**Phase 1B: PDP cross-sell — COMPLETE.** All cross-sell touchpoints are live: PDP checkbox (all individual + bundle PDPs), scrunchie PDP education, cart drawer upsell. Remaining: documentation sweep (threshold 289->275 refs).
+**Phase 1B: PDP cross-sell — COMPLETE.** All cross-sell touchpoints are live. Next: content polish, homepage bundles wiring, product media.
 
 ## Recent completed work
 
-### Scrunchie PDP education (2026-03-29, session 4)
+### Phase D cross-sell (2026-03-29) — all 4 sessions consolidated
 
-When a qualifying product is in the cart, the scrunchie PDP shows the discounted price (39 zl instead of 59 zl) with a personalized Polish hint.
+All PDP cross-sell touchpoints shipped in one day:
+1. **PDP cross-sell checkbox** — scrunchie at 39 zl (BXGY) on all individual PDPs + bundle PDPs. White card, teal accent, custom checkbox, color-matched image.
+2. **Bundle PDP cross-sell timing** — checkbox reveals after all colors are picked (sunk-cost psychology), with LUSENA signature `translateY(-6px)` slide-in animation.
+3. **Scrunchie PDP education** — server-side price swap (39 zl instead of 59 zl) when qualifying product is in cart. Dynamic Polish hint. No FOUC via Liquid-rendered initial state. Live sync via PubSub + MutationObserver.
+4. **Cart interaction locking** — full-cart lock during bundle swaps prevents concurrent mutations.
 
-**Architecture — server-side rendering + live JS sync:**
-- **Server-side (no flash):** `lusena-main-product.liquid` checks `cart.items` via Liquid, maps handle to Polish instrumental case label, passes `education_active`, `education_price`, `education_label` to `lusena-pdp-summary.liquid`. Summary renders both price states (regular hidden or education hidden) on first paint.
-- **Live sync:** `lusena-scrunchie-education.liquid` inline `<script>` subscribes to `PUB_SUB_EVENTS.cartUpdate`. On cart change, fetches `/cart.js`, re-evaluates qualifying items, toggles price display. Deferred subscription retry (`window.load`) handles PubSub not being loaded when inline script runs.
-- **Sticky ATC:** MutationObserver on all `[data-lusena-sticky-price]` elements re-applies education price when `updateUIForVariant()` overwrites sticky text.
+Full architecture details: `memory-bank/doc/features/pdp.md` (cross-sell, education) and `memory-bank/doc/features/cart-page.md` (locking, merge).
 
-**Key decisions:**
-- **Inline price swap (option C)** — no banners/cards, price itself IS the education. Premium brands adjust prices, not announce discounts.
-- **Dynamic Polish text** — handle-to-label map with instrumental case (6 products + fallback). "Taniej z poszewka jedwabna w koszyku" feels curated, not generic.
-- **Server-side rendering** — eliminates FOUC entirely. JS only for live cart sync.
-- **Price order:** current (39 zl) left, compare (59 zl strikethrough) right — matches bundle PDP pattern.
+### Documentation sweep (2026-03-30)
 
-**Files:**
-- `snippets/lusena-scrunchie-education.liquid` — JS live sync (PubSub + cart check + sticky observer)
-- `snippets/lusena-pdp-summary.liquid` — server-rendered education elements (data-lusena-education-row, data-lusena-education-hint)
-- `sections/lusena-main-product.liquid` — server-side cart check + data-product-handle attribute + schema setting
-- `assets/lusena-pdp.css` — education price CSS (mirrors __price + __compare-at styles)
+Comprehensive memory bank audit covering 67 commits. Updated:
+- Free shipping threshold 289 -> 275 across all strategy docs, product docs, rules (18 stale refs fixed)
+- Cross-sell checkbox + scrunchie education added to systemPatterns.md component systems
+- Cross-sell flow added to productContext.md customer journey
+- Cart interaction locking added to cart-page.md
+- PDP CSS size ~34KB -> ~42KB, foundations ~40KB -> ~50KB across all references
+- Upsell strategy roadmap phases marked DONE with actual completion dates
+- activeContext consolidated from 4 sessions to summary + architecture pointers
 
-### Bundle PDP cross-sell expansion (2026-03-29, session 3)
+### Earlier in commit range (2026-03-28)
 
-Extended the cross-sell checkbox to bundle PDPs (Nocna Rutyna, Piekny Sen). Scrunchie trio excluded (handle contains 'scrunchie').
-
-**Key design decision:** Cross-sell appears AFTER all colors are picked (not immediately). Progressive disclosure: customer commits to bundle colors first, then sees the scrunchie offer as a final mini-step before ATC. This leverages sunk-cost psychology - they've invested time picking colors, so a 39 zl add feels trivial.
-
-**Implementation:**
-- Reused `lusena-pdp-cross-sell-checkbox` snippet with `skip_js: true` param (bundle scripts handle JS)
-- Hidden initially (`lusena-bundle-cross-sell--hidden` class), revealed after `allSelected()` returns true
-- 250ms stagger delay after last step collapse (matches step-to-step timing)
-- LUSENA signature `translateY(-6px)` content fade on reveal
-- JS-driven `openWrap()`/`closeWrap()` height animation (matching bundle step pattern)
-- Color-matches scrunchie to last-picked bundle item color
-- Stays visible during re-edits (only animates on initial reveal)
-- Color indicator in placeholder when no variant images exist
-- `submitBundleCartWithCrossSell()` sends JSON `items` array with bundle properties preserved
-- `submitBundleBuyNowWithCrossSell()` for Buy Now + cross-sell -> checkout redirect
-- Schema: `cross_sell_enabled`, `cross_sell_handle`, `cross_sell_price` (same as single PDP)
-
-### PDP cross-sell checkbox — UI/UX redesign (2026-03-29, session 2)
-
-Full visual redesign of the cross-sell card to match LUSENA's premium aesthetic.
-
-### PDP cross-sell checkbox — core implementation (2026-03-29, session 1)
-
-Cross-sell checkbox on all individual product PDPs offering scrunchie at 39 zl (BXGY discount in Shopify admin).
+- Benefit bridge, cart merge (#13), card 5 sessions, accordion rewrite, 3 icons, link-arrow, Claude Code infra, migration lessons #55-61
+- Full details in `progress.md`
 
 ## Next steps
 
-1. **Documentation sweep** — threshold 289->275 refs across bundle-strategy.md, upsell-strategy.md, product docs (50+ references)
+1. Homepage bundles section — wire up real products (Phase C remaining)
+2. Bundle product media (when physical products arrive)
+3. Content polish — review all page copy for consistency
+4. UX backlog items (mobile header icons, bonnet naming, value anchors expansion)
 
-## Decided: skip cart discount explanation
+## Key decisions (reference)
 
-Cart line-item label ("Rabat za zakup w zestawie") is unnecessary because every path into the cart already explains the discounted price: PDP checkbox, cart upsell card, and scrunchie PDP education. A cart label would add visual noise for zero benefit.
+- **Skip cart discount explanation** — every path into cart already explains the 39 zl price. Cart label adds noise for zero benefit.
+- **Cross-sell on bundles: post-color timing** — appears after `allSelected()`, not immediately. Sunk-cost > impulsive.
+- **Scrunchie education: inline price swap** — no banners/cards, price itself IS the education. Premium brands adjust prices, not announce discounts.
+- **Free shipping threshold: 275 zl** (was 289, originally 269. Updated in settings_schema, settings_data, and all strategy/product docs)
 
 ## Known issues
 
@@ -72,27 +56,12 @@ Cart line-item label ("Rabat za zakup w zestawie") is unnecessary because every 
 - **Trigger item quantity > 1:** Swap removes all units (quantity 0), not just 1.
 - **Cart color editing:** Bundle added via nudge auto-matches colors. Customer cannot change colors in cart — must use bundle PDP.
 
-## Architecture note
+## Architecture notes (quick reference)
 
-**Cart drawer is now a section** (not a snippet render). `theme.liquid` uses `{%- section 'cart-drawer' -%}`. This enables Shopify's section rendering API for AJAX updates.
-
-**Cross-sell checkbox architecture:**
-- **Shared snippet:** `lusena-pdp-cross-sell-checkbox.liquid` renders HTML + variant data JSON for both single PDPs and bundles
-- **Single PDP JS:** inline `<script>` in the snippet (ATC intercept on `<product-form>`, variant change listener)
-- **Bundle PDP JS:** `lusena-bundle-scripts.liquid` handles everything (reveal on `allSelected()`, color match, `submitBundleCartWithCrossSell()`)
-- **`skip_js` param:** when `true`, snippet skips inline script (bundle provides its own JS)
-
-**Scrunchie PDP education architecture:**
-- **Server-side:** `lusena-main-product.liquid` checks `cart.items`, passes education state to `lusena-pdp-summary.liquid`
-- **Summary snippet:** renders both price rows (regular + education) with initial visibility from server state
-- **Education script:** `lusena-scrunchie-education.liquid` handles live sync only (PubSub subscriber + cart check + sticky MutationObserver)
-- **No FOUC:** correct price rendered on first paint, JS only for dynamic cart changes
-
-**Upsell card CSS scoping:**
-- Cart drawer: `<style>` tag in `snippets/cart-drawer.liquid`. All upsell selectors scoped under `.lusena-cart-drawer__upsell`.
-- Cart page: `assets/lusena-cart-page.css` (standalone file). Upsell selectors scoped under `.lusena-cart-upsell`.
-
-**Bidirectional cart sync:**
-- Cart page -> drawer: publishes `PUB_SUB_EVENTS.cartUpdate`, drawer subscriber fetches fresh section HTML
-- Drawer -> cart page: publishes `PUB_SUB_EVENTS.cartUpdate`, cart page `onCartUpdate()` override fetches sections
-- Both use `DOMParser` to swap inner HTML of target containers
+Architecture details live in the feature docs. Quick pointers for orientation:
+- **Cross-sell checkbox architecture:** `systemPatterns.md` § Component systems
+- **Scrunchie education architecture:** `systemPatterns.md` § Component systems
+- **Cart upsell/merge/sync:** `memory-bank/doc/features/cart-page.md`
+- **Cart drawer = section** (not snippet render): `theme.liquid` uses `{%- section 'cart-drawer' -%}` for section rendering API
+- **Upsell CSS scoping:** drawer under `.lusena-cart-drawer__upsell`, cart page under `.lusena-cart-upsell`
+- **Bidirectional cart sync:** PubSub + DOMParser innerHTML swap (details in cart-page.md)

@@ -23,6 +23,9 @@
 | Compare-at price | (none) | Skipped |
 | Cost per item | - | **PENDING** (fill when import cost is known) |
 | Charge tax | Yes (23% VAT, tax-inclusive) | Done |
+| `lusena.upsell_role` | hero | Done |
+| `lusena.upsell_message` | Jedwab na noc - obudź się bez zagnieceń | Done |
+| `lusena.upsell_primary` | (set manually - scrunchie) | Done |
 
 ## Variants
 

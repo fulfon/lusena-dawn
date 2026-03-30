@@ -25,6 +25,9 @@
 | Compare-at price | (none) | Done |
 | Cost per item | - | **PENDING** (fill when import cost is known) |
 | Charge tax | Yes (23% VAT, tax-inclusive) | Done |
+| `lusena.upsell_role` | hero | Done |
+| `lusena.upsell_message` | Kompletna ochrona włosów na noc | Done |
+| `lusena.upsell_primary` | (set manually) | Done |
 
 > **Pricing research (2026-03-14):** 239 zł positions LUSENA in the upper-premium Polish tier - between ALMANIA (230 zł) and Spadiora (279 zł), far below Slip (355+ zł). No compare-at price - strikethrough pricing undermines premium positioning (LoveSilk's constant -50% promos are a cautionary example). Price-per-night (0,65 zł/noc) enabled for value reframing.
 

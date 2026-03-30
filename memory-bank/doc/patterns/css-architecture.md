@@ -21,14 +21,14 @@
    ├── component-cart.css / component-totals.css / component-price.css / component-discounts.css
 
 4. Standalone LUSENA assets (loaded globally via <link> in theme.liquid)
-   ├── lusena-foundations.css (~40KB) — single source of truth for tokens, spacing, typography, components
+   ├── lusena-foundations.css (~50KB) — single source of truth for tokens, spacing, typography, components
    ├── lusena-button-system.css — button/icon-button primitives
    ├── lusena-header.css — header section (fixed positioning, nav, mobile menu, cart badge)
    ├── lusena-hero.css — hero section (layout, animations, buttons, content positioning)
    └── lusena-footer.css — footer section (dark bg, grid, newsletter, bottom bar)
 
 5. Page-specific assets (loaded per-page via <link> in their section)
-   ├── lusena-pdp.css (~34KB) — PDP + sticky ATC styles (loaded in lusena-main-product.liquid)
+   ├── lusena-pdp.css (~42KB) — PDP + sticky ATC + cross-sell checkbox + education price (loaded in lusena-main-product.liquid, lusena-main-bundle.liquid)
    ├── lusena-cart-page.css — cart items + footer + quantity styles (loaded in lusena-cart-items.liquid)
    └── lusena-search.css — search page styles (loaded in lusena-search.liquid)
 
