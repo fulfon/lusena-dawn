@@ -16,9 +16,9 @@ Your memory resets every session. This project uses a persistent memory bank for
 - `memory-bank/doc/products/README.md` — product catalog index, store-wide settings (currency, tax, shipping)
 - `memory-bank/doc/products/{handle}.md` — per-product Shopify admin data (metafields, pricing, variants, SEO, status)
 
-**After completing substantial work, update:**
-- `memory-bank/activeContext.md` — what changed, new decisions, shifted next steps
-- `memory-bank/progress.md` — if milestones or page status changed
+**After completing substantial work (worktree workflow):**
+- Run `/lusena-worktree-sync` before squash-merging your branch to main — it analyzes the branch diff, reads memory bank from current main, and updates only affected docs
+- Periodically (~10 merges), run `/lusena-memory-bank-audit` on main for a deep review — content verification + structural evaluation of the entire memory bank
 
 ## Project Identity
 
