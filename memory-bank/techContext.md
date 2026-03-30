@@ -101,22 +101,19 @@
 
 ## Skills inventory
 
-19 skills in `.claude/` (subset mirrored in `.agent/`, `.codex/`, `.opencode/`):
+16 skills in `.claude/skills/` (mirrored in `.codex/skills/`):
 
 | Skill | Purpose |
 |-------|---------|
-| `lusena-update-memory-bank` | Post-work memory bank update |
-| `lusena-pre-commit-sync` | Pre-commit documentation sync (replaces lusena-theme-changelog) |
+| `lusena-worktree-sync` | Branch-level memory bank update before squash-merge to main |
+| `lusena-memory-bank-audit` | Periodic deep audit of entire memory bank (~every 10 merges) |
 | `lusena-new-section` | Scaffolds new LUSENA section with correct boilerplate, spacing, CSS decision, schema |
 | `lusena-product-copy-session` | Orchestrates full creative copy workflow (research → legal → validation → finalization) |
-| `lusena-section-design-loop` | Autonomous design iteration loop: prototype in React draft shop, 5-agent review panel, up to 5 rounds |
-| `lusena-v2-page-migration` | Page migration to brandbook v2 |
-| `lusena-draftshop-fragment-parity` | Copy UI from React prototype to theme |
-| `lusena-page-audit` | Reusable page UX audit checklist |
+| `lusena-section-design-loop` | Autonomous design iteration: edit in worktree, push, Playwright capture, 5-agent review panel, up to 5 rounds |
+| `lusena-page-audit` | Full page UX audit from customer perspective |
 | `lusena-customer-validation` | 4-persona copy evaluation (Polish) |
 | `lusena-legal-check` | EU/UOKiK compliance check for marketing claims |
-| `lusena-spacing` | Spacing review & adjustment (content-flow + section tier padding) |
-| `lusena-spacing-audit` | Automated spacing measurement + validation |
+| `lusena-spacing-audit` | Automated spacing measurement + validation via Playwright |
 | `lusena-preview-check` | Delegates browser testing to a Sonnet subagent (measure, verify, screenshot, debug) |
 | `shopify-dev-mcp` | Shopify Dev MCP tool usage |
 | `shopify-expert` | Shopify theme development |
@@ -215,4 +212,4 @@ Base URL for main repo: `http://127.0.0.1:9292{path}`
 
 ## React prototype status
 
-The `lusena-shop/` directory contains a React + TypeScript prototype that was used as design reference during initial development. It is **no longer actively used** — all new design work happens directly in the Shopify theme. The prototype remains as historical reference only.
+The `lusena-shop/` React prototype was used during initial development but has been **removed from the repo**. All design iteration now happens directly in the Shopify theme via the `lusena-section-design-loop` skill (worktree push + Playwright capture + 5-agent review panel).

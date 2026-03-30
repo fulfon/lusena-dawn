@@ -43,7 +43,9 @@
       "Bash(netstat -ano)",
       "Bash(kill 4488)",
       "Bash(bash .claude/hooks/branch-guard.sh)",
-      "Bash(echo \"Exit code: $?\")"
+      "Bash(echo \"Exit code: $?\")",
+      "Bash(rm -rf .codex/skills)",
+      "Bash(cp -r .claude/skills .codex/skills)"
     ]
   }
 }
