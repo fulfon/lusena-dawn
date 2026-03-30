@@ -1,6 +1,7 @@
 #!/bin/bash
-# PreToolUse hook (Edit|Write): warns when editing a Dawn original file
-# that has a lusena-* counterpart. Blocks the edit with exit code 2.
+# PreToolUse hook (Edit|Write):
+# 1. Blocks edits to the main repo (lusena-dawn/) when running from a worktree
+# 2. Warns when editing a Dawn original file that has a lusena-* counterpart
 
 INPUT=$(cat)
 FILE_PATH=$(echo "$INPUT" | python -c "
@@ -12,6 +13,14 @@ except:
     pass
 " 2>/dev/null)
 
+# --- Guard 1: Block main-repo edits from worktrees ---
+CWD=$(pwd)
+if [[ "$CWD" == *"lusena-worktrees"* ]] && [[ "$FILE_PATH" == *"lusena-dawn"* ]]; then
+  echo "BLOCKED: You are in a worktree but targeting a file in the main repo (lusena-dawn/). Use your worktree path instead. Every file exists in your worktree — use relative paths or your worktree absolute path." >&2
+  exit 2
+fi
+
+# --- Guard 2: Block Dawn originals when lusena-* override exists ---
 # Only check sections/ and snippets/ directories
 BASENAME=$(basename "$FILE_PATH" 2>/dev/null)
 DIRNAME=$(dirname "$FILE_PATH" 2>/dev/null)

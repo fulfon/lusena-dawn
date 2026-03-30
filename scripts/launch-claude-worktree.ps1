@@ -7,6 +7,67 @@ $worktreeBase = "C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\sh
 # Ensure worktree parent directory exists
 New-Item -ItemType Directory -Force -Path $worktreeBase | Out-Null
 
+# --- Ensure Shopify dev server is running (syncs main repo to dev theme) ---
+$devServerRunning = $false
+try {
+    $conn = Get-NetTCPConnection -LocalPort 9292 -State Listen -ErrorAction SilentlyContinue
+    if ($conn) { $devServerRunning = $true }
+} catch {}
+
+if (-not $devServerRunning) {
+    Write-Host ""
+    Write-Host "  Starting Shopify dev server..." -ForegroundColor Cyan
+    Start-Process powershell -ArgumentList "-NoExit", "-Command", "`$Host.UI.RawUI.WindowTitle = 'LUSENA Dev Server'; cd '$mainRepo'; shopify theme dev -e dev"
+    Write-Host "  Dev server launching in new window." -ForegroundColor Green
+} else {
+    Write-Host ""
+    Write-Host "  Dev server already running (port 9292)." -ForegroundColor DarkGray
+}
+
+# --- Startup cleanup: prune stale worktrees and orphaned work branches ---
+Push-Location $mainRepo
+git worktree prune 2>$null
+
+# Delete work/* and feat/* branches whose worktree directories no longer exist
+foreach ($prefix in @('work/', 'feat/', 'fix/', 'docs/', 'chore/')) {
+    $branches = git branch --list "$prefix*" 2>$null | ForEach-Object { $_.Trim().TrimStart('* ') }
+    foreach ($br in $branches) {
+        # Check if any active worktree uses this branch
+        $inUse = git worktree list --porcelain 2>$null | Select-String -Pattern "branch refs/heads/$br$"
+        if (-not $inUse) {
+            git branch -d $br 2>$null
+            if ($LASTEXITCODE -eq 0) {
+                Write-Host "  Cleaned up stale branch: $br" -ForegroundColor DarkGray
+            }
+        }
+    }
+}
+Pop-Location
+
+# --- Clean up empty worktrees (no commits, no uncommitted changes) ---
+$existingWorktrees = Get-ChildItem -Path $worktreeBase -Directory -Filter "lusena-*" -ErrorAction SilentlyContinue
+foreach ($wt in $existingWorktrees) {
+    $wtPath = $wt.FullName
+    Push-Location $wtPath
+
+    $wtBranch = git rev-parse --abbrev-ref HEAD 2>$null
+    if (-not $wtBranch) { Pop-Location; continue }
+
+    $wtUncommitted = git status --porcelain 2>$null
+    $wtCommits = git log "main..$wtBranch" --oneline 2>$null
+
+    if (-not $wtUncommitted -and -not $wtCommits) {
+        Pop-Location
+        Push-Location $mainRepo
+        git worktree remove $wtPath --force 2>$null
+        git branch -d $wtBranch 2>$null
+        Write-Host "  Cleaned up empty worktree: $($wt.Name)" -ForegroundColor DarkGray
+        Pop-Location
+    } else {
+        Pop-Location
+    }
+}
+
 # Find next available slot (1, 2, 3, ...)
 $num = 1
 while (Test-Path "$worktreeBase\lusena-$num") { $num++ }
@@ -36,74 +97,80 @@ Write-Host ""
 
 # Launch Claude Code in the worktree
 Set-Location $worktreePath
-claude
+claude --effort max
 
 # --- Claude Code exited ---
 Write-Host ""
 Write-Host "  Claude Code exited." -ForegroundColor Yellow
 
-Set-Location $worktreePath
-$uncommitted = git status --porcelain
-$commits = git log "main..$branchName" --oneline 2>$null
-
-if ($uncommitted) {
-    # Uncommitted changes — cannot auto-merge safely
-    Write-Host ""
-    Write-Host "  WARNING: Worktree has uncommitted changes." -ForegroundColor Red
-    Write-Host "  Claude should have committed before exiting. Manual cleanup needed:" -ForegroundColor Yellow
-    Write-Host ""
-    Write-Host "    cd $worktreePath"
-    Write-Host "    git add -A && git commit -m `"feat(lusena): ...`""
-    Write-Host "    cd $mainRepo"
-    Write-Host "    git merge --squash $branchName && git commit -m `"feat(lusena): ...`""
-    Write-Host "    git worktree remove $worktreePath"
-    Write-Host "    git branch -d $branchName"
-} elseif ($commits) {
-    # Committed changes — auto-squash-merge into main
-    Write-Host ""
-    Write-Host "  Merging into main..." -ForegroundColor Cyan
-
-    # Show what's being merged
-    Write-Host ""
-    git log "main..$branchName" --oneline | ForEach-Object { Write-Host "    $_" -ForegroundColor DarkGray }
-    Write-Host ""
-
-    Set-Location $mainRepo
-    git merge --squash $branchName 2>$null
-    $mergeOk = $LASTEXITCODE -eq 0
-
-    if ($mergeOk) {
-        # Build commit message from the worktree branch commits
-        $commitMsg = (git log "main..$branchName" --format="%s" 2>$null) -join "; "
-        if (-not $commitMsg) { $commitMsg = "feat(lusena): worktree $num changes" }
-        git commit -m $commitMsg 2>$null
-
-        Write-Host "  Merged into main." -ForegroundColor Green
-
-        # Clean up worktree and branch
-        git worktree remove $worktreePath --force 2>$null
-        git branch -D $branchName 2>$null
-        Write-Host "  Worktree cleaned up. Slot $num is free." -ForegroundColor Green
-    } else {
-        # Merge conflict — abort and leave for manual resolution
-        git merge --abort 2>$null
-        Write-Host "  MERGE CONFLICT — could not auto-merge." -ForegroundColor Red
-        Write-Host "  The worktree is preserved. Resolve manually:" -ForegroundColor Yellow
-        Write-Host ""
-        Write-Host "    cd $mainRepo"
-        Write-Host "    git merge --squash $branchName"
-        Write-Host "    # resolve conflicts, then:"
-        Write-Host "    git commit -m `"feat(lusena): ...`""
-        Write-Host "    git worktree remove $worktreePath"
-        Write-Host "    git branch -d $branchName"
-    }
+# Check if the worktree still exists — Claude may have already cleaned it up
+if (-not (Test-Path $worktreePath)) {
+    Write-Host "  Worktree already cleaned up by Claude. Nothing to do." -ForegroundColor Green
 } else {
-    # No changes at all — clean up silently
-    Write-Host "  No changes detected. Cleaning up..." -ForegroundColor Green
-    Set-Location $mainRepo
-    git worktree remove $worktreePath 2>$null
-    git branch -d $branchName 2>$null
-    Write-Host "  Worktree removed." -ForegroundColor Green
+    Set-Location $worktreePath
+
+    # Detect the current branch (Claude may have renamed work/N to feat/...)
+    $currentBranch = git rev-parse --abbrev-ref HEAD 2>$null
+    if (-not $currentBranch) { $currentBranch = $branchName }
+
+    $uncommitted = git status --porcelain
+    $commits = git log "main..$currentBranch" --oneline 2>$null
+
+    if ($uncommitted) {
+        # Uncommitted changes — cannot auto-merge safely
+        Write-Host ""
+        Write-Host "  WARNING: Worktree has uncommitted changes." -ForegroundColor Red
+        Write-Host "  Claude should have committed before exiting. Manual cleanup needed:" -ForegroundColor Yellow
+        Write-Host ""
+        Write-Host "    cd $worktreePath"
+        Write-Host "    git add -A && git commit -m `"feat(lusena): ...`""
+        Write-Host "    cd $mainRepo"
+        Write-Host "    git merge --squash $currentBranch && git commit -m `"feat(lusena): ...`""
+        Write-Host "    git worktree remove $worktreePath"
+        Write-Host "    git branch -d $currentBranch"
+    } elseif ($commits) {
+        # Committed but not merged — Claude exited before merging
+        Write-Host ""
+        Write-Host "  Unmerged commits found. Merging into main..." -ForegroundColor Cyan
+
+        Write-Host ""
+        git log "main..$currentBranch" --oneline | ForEach-Object { Write-Host "    $_" -ForegroundColor DarkGray }
+        Write-Host ""
+
+        Set-Location $mainRepo
+        git merge --squash $currentBranch 2>$null
+        $mergeOk = $LASTEXITCODE -eq 0
+
+        if ($mergeOk) {
+            $commitMsg = (git log "main..$currentBranch" --format="%s" 2>$null) -join "; "
+            if (-not $commitMsg) { $commitMsg = "feat(lusena): worktree $num changes" }
+            git commit -m $commitMsg 2>$null
+
+            Write-Host "  Merged into main." -ForegroundColor Green
+
+            git worktree remove $worktreePath --force 2>$null
+            git branch -D $currentBranch 2>$null
+            Write-Host "  Worktree cleaned up. Slot $num is free." -ForegroundColor Green
+        } else {
+            git merge --abort 2>$null
+            Write-Host "  MERGE CONFLICT — could not auto-merge." -ForegroundColor Red
+            Write-Host "  The worktree is preserved. Resolve manually:" -ForegroundColor Yellow
+            Write-Host ""
+            Write-Host "    cd $mainRepo"
+            Write-Host "    git merge --squash $currentBranch"
+            Write-Host "    # resolve conflicts, then:"
+            Write-Host "    git commit -m `"feat(lusena): ...`""
+            Write-Host "    git worktree remove $worktreePath"
+            Write-Host "    git branch -d $currentBranch"
+        }
+    } else {
+        # No changes — clean up silently
+        Write-Host "  No changes detected. Cleaning up..." -ForegroundColor Green
+        Set-Location $mainRepo
+        git worktree remove $worktreePath 2>$null
+        git branch -d $currentBranch 2>$null
+        Write-Host "  Worktree removed." -ForegroundColor Green
+    }
 }
 
 Write-Host ""

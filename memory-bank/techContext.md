@@ -101,7 +101,7 @@
 
 ## Skills inventory
 
-18 skills in `.claude/` (subset mirrored in `.agent/`, `.codex/`, `.opencode/`):
+19 skills in `.claude/` (subset mirrored in `.agent/`, `.codex/`, `.opencode/`):
 
 | Skill | Purpose |
 |-------|---------|
@@ -117,6 +117,7 @@
 | `lusena-legal-check` | EU/UOKiK compliance check for marketing claims |
 | `lusena-spacing` | Spacing review & adjustment (content-flow + section tier padding) |
 | `lusena-spacing-audit` | Automated spacing measurement + validation |
+| `lusena-preview-check` | Delegates browser testing to a Sonnet subagent (measure, verify, screenshot, debug) |
 | `shopify-dev-mcp` | Shopify Dev MCP tool usage |
 | `shopify-expert` | Shopify theme development |
 | `frontend-design` | Production-grade frontend UI |
