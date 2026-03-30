@@ -16,6 +16,7 @@ lusena-shop/
 .playwright-cli/
 .playwright-mcp/
 .superpowers/
+.claude/settings.local.json
 
 # Temporary debugging screenshots/snapshots (Playwright CLI, etc.)
 *.png

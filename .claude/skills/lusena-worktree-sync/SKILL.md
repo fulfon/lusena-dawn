@@ -1,6 +1,6 @@
 ---
 name: lusena-worktree-sync
-description: Branch-level memory bank sync before squash-merging a worktree branch to main. Analyzes the branch diff, reads memory bank from current main, updates only affected docs, and commits on the branch so updates are included in the squash-merge.
+description: MANDATORY before finishing any worktree branch. Run this when work is done, before committing final changes or squash-merging to main. Updates memory bank to reflect the branch's work so the next session has accurate context.
 ---
 
 # Worktree sync (branch-level memory bank update)
