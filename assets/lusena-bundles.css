@@ -94,6 +94,7 @@
   font-size: 1.4rem;
   color: var(--lusena-text-2);
   text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, currentColor 50%, transparent);
 }
 
 /* Savings badge */

@@ -197,6 +197,7 @@
   font-size: 1.05rem;
   color: var(--lusena-text-2);
   text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, currentColor 50%, transparent);
   font-variant-numeric: tabular-nums;
 }
 
@@ -391,8 +392,9 @@
 
 .lusena-pdp .lusena-pdp-summary__education-compare {
   font-size: 1.8rem;
-  color: color-mix(in srgb, var(--lusena-text-2) 50%, transparent);
+  color: var(--lusena-text-2);
   text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, currentColor 50%, transparent);
   font-variant-numeric: tabular-nums;
 }
 
@@ -1298,8 +1300,9 @@
 
 .lusena-pdp .lusena-pdp-summary__compare-at {
   font-size: 1.8rem;
-  color: color-mix(in srgb, var(--lusena-text-2) 50%, transparent);
+  color: var(--lusena-text-2);
   text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, currentColor 50%, transparent);
 }
 
 .lusena-pdp .lusena-pdp-summary__per-night {
