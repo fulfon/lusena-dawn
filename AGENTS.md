@@ -143,17 +143,26 @@ The `shopify theme dev` server watches the **main repo only** — it does NOT se
 
 When the task is complete:
 
-1. **Commit your work** on the worktree branch (`work/N`) with a clear Conventional Commit message
-2. **Tell the user** the work is done and they can close the session (`Ctrl+C` or `/exit`)
-3. **The launch script handles the rest** — it auto-squash-merges into `main`, removes the worktree, and frees the slot
+1. **Commit your work** on the worktree branch with a clear Conventional Commit message
+2. **Squash-merge into `main` yourself** from the worktree:
+   ```
+   git checkout main
+   git merge --squash <your-branch>
+   git commit -m "feat(lusena): description"
+   git checkout <your-branch>
+   ```
+3. **If there are merge conflicts: STOP.** Do NOT resolve them yourself. Instead:
+   - Analyze what files conflict and why (e.g., another instance edited the same section)
+   - Explain the conflict to the user clearly
+   - Recommend a resolution strategy
+   - Wait for user approval before making any changes
+4. **Tell the user** the work is merged to `main` and they can close the session (`Ctrl+C` or `/exit`)
+5. The cleanup script will remove the worktree and free the slot — it has nothing left to merge
 
 **Do NOT:**
-- Merge to `main` yourself
 - Remove the worktree or delete branches
-- `cd` to the main repo directory
 - Run `git worktree` commands
-
-If the user asks to merge, commit, or finish: commit your changes, summarize what was done, and tell them to close the session.
+- Auto-resolve merge conflicts without user approval
 
 ### When running in the main repo
 
