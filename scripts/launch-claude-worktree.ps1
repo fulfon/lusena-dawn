@@ -1,216 +1,390 @@
-﻿# LUSENA - Launch Claude Code in an isolated git worktree
+# LUSENA - Interactive Claude Code Worktree Launcher
 # Double-click the .bat wrapper on your Desktop to use this.
 
 try {
 
 $mainRepo = "C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-dawn"
 $worktreeBase = "C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-worktrees"
+$maxSlots = 4
 
 # Ensure worktree parent directory exists
 New-Item -ItemType Directory -Force -Path $worktreeBase | Out-Null
 
-# --- Ensure Shopify dev server is running (syncs main repo to dev theme) ---
-$devServerRunning = $false
-try {
-    $conn = Get-NetTCPConnection -LocalPort 9292 -State Listen -ErrorAction SilentlyContinue
-    if ($conn) { $devServerRunning = $true }
-} catch {}
-
-if (-not $devServerRunning) {
-    Write-Host ""
-    Write-Host "  Starting Shopify dev server..." -ForegroundColor Cyan
-    Start-Process powershell -ArgumentList "-NoExit", "-Command", "`$Host.UI.RawUI.WindowTitle = 'LUSENA Dev Server'; cd '$mainRepo'; shopify theme dev -e dev"
-    Write-Host "  Dev server launching in new window." -ForegroundColor Green
-} else {
-    Write-Host ""
-    Write-Host "  Dev server already running (port 9292)." -ForegroundColor DarkGray
+# --- Helper: Derive commit message from branch name ---
+function Get-CommitMessage {
+    param([string]$branch)
+    if ($branch -match '^(feat|fix|docs|chore|work)/(.+)$') {
+        $prefix = $Matches[1]
+        $rest = $Matches[2] -replace '-', ' '
+        switch ($prefix) {
+            'feat'  { return "feat(lusena): $rest" }
+            'fix'   { return "fix(lusena): $rest" }
+            'docs'  { return "docs: $rest" }
+            'chore' { return "chore: $rest" }
+            'work'  { return "feat(lusena): worktree $rest changes" }
+        }
+    }
+    return "feat(lusena): $branch"
 }
 
-# --- Startup cleanup: prune stale worktrees and orphaned work branches ---
-Push-Location $mainRepo
-git worktree prune 2>$null
+# --- Helper: Scan all slots and return status array ---
+function Get-SlotStatus {
+    # Prune stale worktree references
+    git -C $mainRepo worktree prune 2>$null
 
-# Delete work/* and feat/* branches whose worktree directories no longer exist
-foreach ($prefix in @('work/', 'feat/', 'fix/', 'docs/', 'chore/')) {
-    $branches = git branch --list "$prefix*" 2>$null | ForEach-Object { $_.Trim().TrimStart('* ') }
-    foreach ($br in $branches) {
-        # Check if any active worktree uses this branch
-        $inUse = git worktree list --porcelain 2>$null | Select-String -Pattern "branch refs/heads/$br$"
-        if (-not $inUse) {
-            git branch -d $br 2>$null
-            if ($LASTEXITCODE -eq 0) {
-                Write-Host "  Cleaned up stale branch: $br" -ForegroundColor DarkGray
+    $slots = @()
+    for ($i = 1; $i -le $maxSlots; $i++) {
+        $path = "$worktreeBase\lusena-$i"
+        $slot = [PSCustomObject]@{
+            Num         = $i
+            Path        = $path
+            Exists      = $false
+            Orphaned    = $false
+            Branch      = ""
+            Commits     = 0
+            Uncommitted = $false
+        }
+
+        if (Test-Path $path) {
+            $slot.Exists = $true
+
+            # Parent repo hazard: only run git commands if .git file exists
+            if (-not (Test-Path "$path\.git")) {
+                $slot.Orphaned = $true
+            } else {
+                Push-Location $path
+                $slot.Branch = git rev-parse --abbrev-ref HEAD 2>$null
+                if ($slot.Branch) {
+                    $uncommitted = git status --porcelain 2>$null
+                    if ($uncommitted) { $slot.Uncommitted = $true }
+                    $commitLog = git log "main..$($slot.Branch)" --oneline 2>$null
+                    if ($commitLog) { $slot.Commits = ($commitLog | Measure-Object).Count }
+                }
+                Pop-Location
             }
         }
+
+        $slots += $slot
     }
-}
-Pop-Location
-
-# --- Clean up empty worktrees (no commits, no uncommitted changes) ---
-$existingWorktrees = Get-ChildItem -Path $worktreeBase -Directory -Filter "lusena-*" -ErrorAction SilentlyContinue
-foreach ($wt in $existingWorktrees) {
-    $wtPath = $wt.FullName
-
-    # Guard: if .git file is missing, this is an orphaned directory, not a valid worktree.
-    # Without .git, git commands resolve to a parent repo and report false uncommitted changes.
-    if (-not (Test-Path "$wtPath\.git")) {
-        Remove-Item -Recurse -Force $wtPath -ErrorAction SilentlyContinue
-        Write-Host "  Removed orphaned directory: $($wt.Name)" -ForegroundColor DarkGray
-        continue
-    }
-
-    # Guard: skip worktrees actively used by another launcher instance.
-    # The lock file is held open with an exclusive handle by the owning launcher.
-    # If we can't open it exclusively, the worktree is in use. If we can, it's stale.
-    $lockFile = "$wtPath\.claude-lock"
-    if (Test-Path $lockFile) {
-        try {
-            $testStream = [System.IO.File]::Open($lockFile, [System.IO.FileMode]::Open, [System.IO.FileAccess]::ReadWrite, [System.IO.FileShare]::None)
-            # Got exclusive access - lock is stale (owning process died), clean it up
-            $testStream.Close()
-            Remove-Item $lockFile -ErrorAction SilentlyContinue
-        } catch {
-            # Can't open - another launcher holds the lock, worktree is in use
-            Write-Host "  Skipping $($wt.Name) - in use" -ForegroundColor DarkGray
-            continue
-        }
-    }
-
-    Push-Location $wtPath
-
-    $wtBranch = git rev-parse --abbrev-ref HEAD 2>$null
-    if (-not $wtBranch) { Pop-Location; continue }
-
-    $wtUncommitted = git status --porcelain 2>$null
-    $wtCommits = git log "main..$wtBranch" --oneline 2>$null
-
-    if (-not $wtUncommitted -and -not $wtCommits) {
-        Pop-Location
-        Push-Location $mainRepo
-        git worktree remove $wtPath --force 2>$null
-        git branch -d $wtBranch 2>$null
-        Write-Host "  Cleaned up empty worktree: $($wt.Name)" -ForegroundColor DarkGray
-        Pop-Location
-    } else {
-        Pop-Location
-    }
+    return $slots
 }
 
-# Find next available slot (1, 2, 3, ...)
-$num = 1
-while (Test-Path "$worktreeBase\lusena-$num") { $num++ }
-
-$worktreePath = "$worktreeBase\lusena-$num"
-$branchName = "work/$num"
-
-# Create worktree from current main
-Write-Host ""
-Write-Host "  Creating worktree #$num ..." -ForegroundColor Cyan
-Push-Location $mainRepo
-git worktree add $worktreePath -b $branchName main 2>&1 | Out-Null
-$created = $LASTEXITCODE -eq 0
-Pop-Location
-
-if (-not $created) {
-    Write-Host "  Failed to create worktree. Is branch '$branchName' already in use?" -ForegroundColor Red
-    Write-Host "  Try: git branch -d $branchName" -ForegroundColor Yellow
+# --- Helper: Display the menu ---
+function Show-Menu {
+    param($slots)
+    Clear-Host
     Write-Host ""
-    Read-Host "  Press Enter to close"
-    exit 1
+    Write-Host "  LUSENA Claude Code" -ForegroundColor Cyan
+    Write-Host "  ----------------------------------------"
+    Write-Host ""
+    Write-Host "  Worktrees:"
+
+    foreach ($s in $slots) {
+        $label = "  "
+        if (-not $s.Exists) {
+            $label += " $($s.Num)  --"
+            Write-Host $label -ForegroundColor DarkGray
+        } elseif ($s.Orphaned) {
+            $label += " $($s.Num)  (orphaned)"
+            Write-Host $label -ForegroundColor Red
+        } elseif (-not $s.Branch) {
+            $label += " $($s.Num)  (unknown state)"
+            Write-Host $label -ForegroundColor Yellow
+        } elseif ($s.Uncommitted) {
+            $label += " $($s.Num)  $($s.Branch)"
+            Write-Host $label -ForegroundColor White -NoNewline
+            Write-Host "  uncommitted changes!" -ForegroundColor Red
+        } elseif ($s.Commits -gt 0) {
+            $label += " $($s.Num)  $($s.Branch)"
+            Write-Host $label -ForegroundColor White -NoNewline
+            Write-Host "  $($s.Commits) commits" -ForegroundColor Green
+        } else {
+            $label += " $($s.Num)  (empty)"
+            Write-Host $label -ForegroundColor DarkGray
+        }
+    }
+
+    Write-Host ""
+    Write-Host "  [N] New instance         [R] Resume instance" -ForegroundColor White
+    Write-Host "  [C] Clean instance       [M] Merge to main" -ForegroundColor White
+    Write-Host "  [D] Dev server status    [Q] Quit" -ForegroundColor White
+    Write-Host ""
 }
 
-Write-Host "  Path:   $worktreePath" -ForegroundColor Green
-Write-Host "  Branch: $branchName" -ForegroundColor Green
-Write-Host ""
+# --- Action: [N] New instance ---
+function Invoke-NewInstance {
+    param($slots)
 
-# Lock the worktree so other launcher instances don't clean it up.
-# Hold the file open with an exclusive handle - Windows auto-releases on crash/kill.
-$lockStream = [System.IO.File]::Open("$worktreePath\.claude-lock", [System.IO.FileMode]::Create, [System.IO.FileAccess]::Write, [System.IO.FileShare]::None)
+    # Find first free slot
+    $freeSlot = $null
+    foreach ($s in $slots) {
+        if (-not $s.Exists) { $freeSlot = $s; break }
+    }
 
-# Launch Claude Code in the worktree
-Set-Location $worktreePath
-claude --effort max
-
-# Release the lock now that Claude has exited
-$lockStream.Close()
-Remove-Item "$worktreePath\.claude-lock" -ErrorAction SilentlyContinue
-
-# --- Claude Code exited ---
-Write-Host ""
-Write-Host "  Claude Code exited." -ForegroundColor Yellow
-
-# Check if the worktree still exists - Claude may have already cleaned it up
-if (-not (Test-Path $worktreePath)) {
-    Write-Host "  Worktree already cleaned up by Claude. Nothing to do." -ForegroundColor Green
-} elseif (-not (Test-Path "$worktreePath\.git")) {
-    # Orphaned directory - .git file missing, so git commands would resolve to a parent repo
-    Write-Host "  Worktree .git file missing (orphaned directory). Removing..." -ForegroundColor Yellow
-    Remove-Item -Recurse -Force $worktreePath -ErrorAction SilentlyContinue
-    Write-Host "  Cleaned up." -ForegroundColor Green
-} else {
-    Set-Location $worktreePath
-
-    # Detect the current branch (Claude may have renamed work/N to feat/...)
-    $currentBranch = git rev-parse --abbrev-ref HEAD 2>$null
-    if (-not $currentBranch) { $currentBranch = $branchName }
-
-    $uncommitted = git status --porcelain
-    $commits = git log "main..$currentBranch" --oneline 2>$null
-
-    if ($uncommitted) {
-        # Uncommitted changes - cannot auto-merge safely
+    if (-not $freeSlot) {
         Write-Host ""
-        Write-Host "  WARNING: Worktree has uncommitted changes." -ForegroundColor Red
-        Write-Host "  Claude should have committed before exiting. Manual cleanup needed:" -ForegroundColor Yellow
-        Write-Host ""
-        Write-Host "    cd $worktreePath"
-        Write-Host "    git add -A && git commit -m `"feat(lusena): ...`""
-        Write-Host "    cd $mainRepo"
-        Write-Host "    git merge --squash $currentBranch && git commit -m `"feat(lusena): ...`""
-        Write-Host "    git worktree remove $worktreePath"
-        Write-Host "    git branch -d $currentBranch"
-    } elseif ($commits) {
-        # Committed but not merged - Claude exited before merging
-        Write-Host ""
-        Write-Host "  Unmerged commits found. Merging into main..." -ForegroundColor Cyan
+        Write-Host "  All $maxSlots slots in use. Clean one first." -ForegroundColor Red
+        return
+    }
 
-        Write-Host ""
-        git log "main..$currentBranch" --oneline | ForEach-Object { Write-Host "    $_" -ForegroundColor DarkGray }
-        Write-Host ""
+    $num = $freeSlot.Num
+    $path = $freeSlot.Path
+    $branchName = "work/$num"
 
-        Set-Location $mainRepo
-        git merge --squash $currentBranch 2>$null
-        $mergeOk = $LASTEXITCODE -eq 0
-
-        if ($mergeOk) {
-            $commitMsg = (git log "main..$currentBranch" --format="%s" 2>$null) -join "; "
-            if (-not $commitMsg) { $commitMsg = "feat(lusena): worktree $num changes" }
-            git commit -m $commitMsg 2>$null
-
-            Write-Host "  Merged into main." -ForegroundColor Green
-
-            git worktree remove $worktreePath --force 2>$null
-            git branch -D $currentBranch 2>$null
-            Write-Host "  Worktree cleaned up. Slot $num is free." -ForegroundColor Green
-        } else {
-            git merge --abort 2>$null
-            Write-Host "  MERGE CONFLICT - could not auto-merge." -ForegroundColor Red
-            Write-Host "  The worktree is preserved. Resolve manually:" -ForegroundColor Yellow
-            Write-Host ""
-            Write-Host "    cd $mainRepo"
-            Write-Host "    git merge --squash $currentBranch"
-            Write-Host "    # resolve conflicts, then:"
-            Write-Host "    git commit -m `"feat(lusena): ...`""
-            Write-Host "    git worktree remove $worktreePath"
-            Write-Host "    git branch -d $currentBranch"
+    # Clean up stale branch if it exists without a worktree
+    Push-Location $mainRepo
+    $existingBranch = git branch --list $branchName 2>$null
+    if ($existingBranch) {
+        git branch -d $branchName 2>$null
+        if ($LASTEXITCODE -ne 0) {
+            git branch -D $branchName 2>$null
         }
+    }
+
+    # Create worktree
+    Write-Host ""
+    Write-Host "  Creating worktree #$num ..." -ForegroundColor Cyan
+    git worktree add $path -b $branchName main 2>&1 | Out-Null
+    $created = $LASTEXITCODE -eq 0
+    Pop-Location
+
+    if (-not $created) {
+        Write-Host "  Failed to create worktree." -ForegroundColor Red
+        return
+    }
+
+    Write-Host "  Slot:   $num" -ForegroundColor Green
+    Write-Host "  Path:   $path" -ForegroundColor Green
+    Write-Host "  Branch: $branchName" -ForegroundColor Green
+    Write-Host ""
+
+    # Launch Claude Code
+    Set-Location $path
+    claude --name "lusena-$num"
+    Set-Location $mainRepo
+}
+
+# --- Action: [R] Resume instance ---
+function Invoke-ResumeInstance {
+    param($slots)
+
+    $occupied = $slots | Where-Object { $_.Exists -and -not $_.Orphaned }
+
+    if (-not $occupied -or ($occupied | Measure-Object).Count -eq 0) {
+        Write-Host ""
+        Write-Host "  No active worktrees." -ForegroundColor Yellow
+        return
+    }
+
+    Write-Host ""
+    Write-Host "  Resume which slot? " -ForegroundColor Cyan -NoNewline
+    $pick = Read-Host
+    $pick = $pick.Trim()
+
+    $target = $occupied | Where-Object { $_.Num -eq $pick }
+    if (-not $target) {
+        Write-Host "  Invalid slot." -ForegroundColor Red
+        return
+    }
+
+    Write-Host ""
+    Write-Host "  Resuming in slot $($target.Num) ($($target.Branch)) ..." -ForegroundColor Cyan
+    Write-Host ""
+
+    Set-Location $target.Path
+    claude --resume
+    Set-Location $mainRepo
+}
+
+# --- Action: [C] Clean instance ---
+function Invoke-CleanInstance {
+    param($slots)
+
+    $occupied = $slots | Where-Object { $_.Exists }
+
+    if (-not $occupied -or ($occupied | Measure-Object).Count -eq 0) {
+        Write-Host ""
+        Write-Host "  No worktrees to clean." -ForegroundColor Yellow
+        return
+    }
+
+    Write-Host ""
+    Write-Host "  Clean which slot? " -ForegroundColor Cyan -NoNewline
+    $pick = Read-Host
+    $pick = $pick.Trim()
+
+    $target = $occupied | Where-Object { $_.Num -eq $pick }
+    if (-not $target) {
+        Write-Host "  Invalid slot." -ForegroundColor Red
+        return
+    }
+
+    # Orphaned: just remove the directory
+    if ($target.Orphaned) {
+        Remove-Item -Recurse -Force $target.Path -ErrorAction SilentlyContinue
+        Write-Host "  Slot $($target.Num) cleaned (orphaned directory removed)." -ForegroundColor Green
+        return
+    }
+
+    # Warn if there's work
+    if ($target.Uncommitted -or $target.Commits -gt 0) {
+        Write-Host ""
+        if ($target.Uncommitted -and $target.Commits -gt 0) {
+            Write-Host "  WARNING: This worktree has uncommitted changes AND $($target.Commits) unmerged commits." -ForegroundColor Red
+        } elseif ($target.Uncommitted) {
+            Write-Host "  WARNING: This worktree has uncommitted changes." -ForegroundColor Red
+        } else {
+            Write-Host "  WARNING: This worktree has $($target.Commits) unmerged commits." -ForegroundColor Red
+        }
+        Write-Host "  Work will be lost." -ForegroundColor Red
+        Write-Host ""
+        Write-Host "  Are you sure? [Y/N] " -ForegroundColor Yellow -NoNewline
+        $confirm = Read-Host
+        if ($confirm.Trim().ToUpper() -ne 'Y') {
+            Write-Host "  Cancelled." -ForegroundColor DarkGray
+            return
+        }
+    }
+
+    # Cleanup
+    $branch = $target.Branch
+    Push-Location $mainRepo
+    git worktree remove $target.Path --force 2>$null
+    if ($branch) {
+        git branch -D $branch 2>$null
+    }
+    Pop-Location
+
+    Write-Host "  Slot $($target.Num) cleaned." -ForegroundColor Green
+}
+
+# --- Action: [M] Merge to main ---
+function Invoke-MergeToMain {
+    param($slots)
+
+    $mergeable = $slots | Where-Object { $_.Exists -and -not $_.Orphaned -and $_.Commits -gt 0 }
+
+    if (-not $mergeable -or ($mergeable | Measure-Object).Count -eq 0) {
+        Write-Host ""
+        Write-Host "  No worktrees with commits to merge." -ForegroundColor Yellow
+        return
+    }
+
+    Write-Host ""
+    Write-Host "  Merge which slot? " -ForegroundColor Cyan -NoNewline
+    $pick = Read-Host
+    $pick = $pick.Trim()
+
+    $target = $mergeable | Where-Object { $_.Num -eq $pick }
+    if (-not $target) {
+        Write-Host "  Invalid slot (must have commits ahead of main)." -ForegroundColor Red
+        return
+    }
+
+    # Block if uncommitted changes
+    if ($target.Uncommitted) {
+        Write-Host ""
+        Write-Host "  Cannot merge - uncommitted changes in slot $($target.Num)." -ForegroundColor Red
+        Write-Host "  Commit or clean first." -ForegroundColor Yellow
+        return
+    }
+
+    # Show commits
+    Write-Host ""
+    Write-Host "  Commits to merge ($($target.Branch)):" -ForegroundColor Cyan
+    Push-Location $target.Path
+    git log "main..$($target.Branch)" --oneline | ForEach-Object { Write-Host "    $_" -ForegroundColor DarkGray }
+    Pop-Location
+    Write-Host ""
+
+    # Check main repo is clean
+    $mainDirty = git -C $mainRepo status --porcelain 2>$null
+    if ($mainDirty) {
+        Write-Host "  Main repo has uncommitted changes. Resolve before merging." -ForegroundColor Red
+        return
+    }
+
+    # Derive commit message
+    $commitMsg = Get-CommitMessage $target.Branch
+    Write-Host "  Commit message: $commitMsg" -ForegroundColor White
+    Write-Host ""
+
+    # Execute merge
+    git -C $mainRepo merge --squash $target.Branch 2>$null
+    if ($LASTEXITCODE -ne 0) {
+        git -C $mainRepo merge --abort 2>$null
+        Write-Host "  MERGE CONFLICT - could not auto-merge." -ForegroundColor Red
+        Write-Host "  Resolve manually." -ForegroundColor Yellow
+        return
+    }
+
+    git -C $mainRepo commit -m $commitMsg 2>$null
+    Write-Host "  Merged into main." -ForegroundColor Green
+    Write-Host ""
+    Write-Host "  Note: memory bank may not reflect this work" -ForegroundColor Yellow
+    Write-Host "  (agent didn't run /lusena-worktree-sync)." -ForegroundColor Yellow
+    Write-Host ""
+
+    # Offer cleanup
+    Write-Host "  Clean up worktree now? [Y/N] " -ForegroundColor Cyan -NoNewline
+    $cleanup = Read-Host
+    if ($cleanup.Trim().ToUpper() -eq 'Y') {
+        Push-Location $mainRepo
+        git worktree remove $target.Path --force 2>$null
+        git branch -D $target.Branch 2>$null
+        Pop-Location
+        Write-Host "  Slot $($target.Num) cleaned." -ForegroundColor Green
+    }
+}
+
+# --- Action: [D] Dev server status ---
+function Invoke-DevServerStatus {
+    $running = $false
+    try {
+        $conn = Get-NetTCPConnection -LocalPort 9292 -State Listen -ErrorAction SilentlyContinue
+        if ($conn) { $running = $true }
+    } catch {}
+
+    Write-Host ""
+    if ($running) {
+        Write-Host "  Dev server running on port 9292." -ForegroundColor Green
     } else {
-        # No changes - clean up silently
-        Write-Host "  No changes detected. Cleaning up..." -ForegroundColor Green
-        Set-Location $mainRepo
-        git worktree remove $worktreePath 2>$null
-        git branch -d $currentBranch 2>$null
-        Write-Host "  Worktree removed." -ForegroundColor Green
+        Write-Host "  Dev server not running." -ForegroundColor Yellow
+        Write-Host "  Start it? [Y/N] " -ForegroundColor Cyan -NoNewline
+        $start = Read-Host
+        if ($start.Trim().ToUpper() -eq 'Y') {
+            Start-Process powershell -ArgumentList "-NoExit", "-Command", "`$Host.UI.RawUI.WindowTitle = 'LUSENA Dev Server'; cd '$mainRepo'; shopify theme dev -e dev"
+            Write-Host "  Dev server launching in new window." -ForegroundColor Green
+        }
+    }
+}
+
+# --- Main loop ---
+while ($true) {
+    $slots = Get-SlotStatus
+    Show-Menu $slots
+
+    $choice = Read-Host "  Choice"
+    $choice = $choice.Trim().ToUpper()
+
+    # Track whether Claude was launched (skip "Press Enter" after)
+    $launchedClaude = $false
+
+    switch ($choice) {
+        'N' { Invoke-NewInstance $slots; $launchedClaude = $true }
+        'R' { Invoke-ResumeInstance $slots; $launchedClaude = $true }
+        'C' { Invoke-CleanInstance $slots }
+        'M' { Invoke-MergeToMain $slots }
+        'D' { Invoke-DevServerStatus }
+        'Q' { break }
+        default { Write-Host "  Invalid choice." -ForegroundColor Red }
+    }
+
+    if ($choice -eq 'Q') { break }
+
+    if (-not $launchedClaude) {
+        Write-Host ""
+        Read-Host "  Press Enter to continue"
     }
 }
 
@@ -221,11 +395,7 @@ if (-not (Test-Path $worktreePath)) {
     Write-Host ""
     Write-Host "  Location: $($_.InvocationInfo.ScriptName):$($_.InvocationInfo.ScriptLineNumber)" -ForegroundColor Yellow
     Write-Host "  Line:     $($_.InvocationInfo.Line.Trim())" -ForegroundColor Yellow
-    Write-Host ""
-    Write-Host "  Full error:" -ForegroundColor DarkGray
-    Write-Host "  $($_.Exception.ToString())" -ForegroundColor DarkGray
 }
 
 Write-Host ""
 Read-Host "  Press Enter to close"
-
