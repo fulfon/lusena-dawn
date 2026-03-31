@@ -43,6 +43,7 @@ function Get-SlotStatus {
             Branch      = ""
             Commits     = 0
             Uncommitted = $false
+            Merged      = $false
         }
 
         if (Test-Path $path) {
@@ -58,7 +59,12 @@ function Get-SlotStatus {
                     $uncommitted = git status --porcelain 2>$null
                     if ($uncommitted) { $slot.Uncommitted = $true }
                     $commitLog = git log "main..$($slot.Branch)" --oneline 2>$null
-                    if ($commitLog) { $slot.Commits = ($commitLog | Measure-Object).Count }
+                    if ($commitLog) {
+                        $slot.Commits = ($commitLog | Measure-Object).Count
+                        # Check if branch content is already on main (squash-merged)
+                        git diff main $slot.Branch --quiet 2>$null
+                        if ($LASTEXITCODE -eq 0) { $slot.Merged = $true }
+                    }
                 }
                 Pop-Location
             }
@@ -94,6 +100,10 @@ function Show-Menu {
             $label += " $($s.Num)  $($s.Branch)"
             Write-Host $label -ForegroundColor White -NoNewline
             Write-Host "  uncommitted changes!" -ForegroundColor Red
+        } elseif ($s.Commits -gt 0 -and $s.Merged) {
+            $label += " $($s.Num)  $($s.Branch)"
+            Write-Host $label -ForegroundColor White -NoNewline
+            Write-Host "  merged" -ForegroundColor DarkCyan
         } elseif ($s.Commits -gt 0) {
             $label += " $($s.Num)  $($s.Branch)"
             Write-Host $label -ForegroundColor White -NoNewline
@@ -226,10 +236,11 @@ function Invoke-CleanInstance {
         return
     }
 
-    # Warn if there's work
-    if ($target.Uncommitted -or $target.Commits -gt 0) {
+    # Warn if there's unmerged work
+    $hasUnmergedCommits = $target.Commits -gt 0 -and -not $target.Merged
+    if ($target.Uncommitted -or $hasUnmergedCommits) {
         Write-Host ""
-        if ($target.Uncommitted -and $target.Commits -gt 0) {
+        if ($target.Uncommitted -and $hasUnmergedCommits) {
             Write-Host "  WARNING: This worktree has uncommitted changes AND $($target.Commits) unmerged commits." -ForegroundColor Red
         } elseif ($target.Uncommitted) {
             Write-Host "  WARNING: This worktree has uncommitted changes." -ForegroundColor Red
@@ -262,7 +273,7 @@ function Invoke-CleanInstance {
 function Invoke-MergeToMain {
     param($slots)
 
-    $mergeable = $slots | Where-Object { $_.Exists -and -not $_.Orphaned -and $_.Commits -gt 0 }
+    $mergeable = $slots | Where-Object { $_.Exists -and -not $_.Orphaned -and $_.Commits -gt 0 -and -not $_.Merged }
 
     if (-not $mergeable -or ($mergeable | Measure-Object).Count -eq 0) {
         Write-Host ""
