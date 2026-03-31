@@ -118,7 +118,7 @@ The owner runs multiple Claude Code instances in parallel. Each instance is laun
 
 ### Quality assurance
 - Run `shopify theme check` — only known baseline warnings should remain.
-- Use `/playwright-cli` skill for any browser interaction — visual checks, debugging, testing interactions.
+- Use `/lusena-preview-check` skill for any browser interaction — visual checks, debugging, testing interactions. It delegates to a subagent so browser noise stays out of the main conversation.
 
 ## MANDATORY: Shopify Dev MCP
 
@@ -171,9 +171,9 @@ When the task is complete:
 
 If your cwd is `lusena-dawn/` (not a worktree): use `https://lusena-dev.myshopify.com/?preview_theme_id=144618684603` for Playwright. The owner runs `shopify theme dev -e dev` which syncs file changes to this theme.
 
-## Browser Interactions (Playwright CLI)
+## Browser Interactions
 
-The `/playwright-cli` skill is the **only** way to interact with the browser. Use it for ALL browser tasks — not just visual verification:
+Use `/lusena-preview-check` for **ALL** browser interactions. It delegates to a subagent, keeping browser noise (snapshots, accessibility trees, navigation) out of the main conversation. Use cases:
 - Screenshots & visual verification (layout, spacing, colors)
 - Debugging CSS issues (checking computed styles, element sizes)
 - Checking network resources (compiled_assets size, asset loading)
@@ -182,10 +182,10 @@ The `/playwright-cli` skill is the **only** way to interact with the browser. Us
 - Any situation where you need to see or interact with the live site
 
 **CRITICAL RULES:**
-- **ALWAYS use the `/playwright-cli` skill** — NEVER use Playwright MCP browser tools directly (`browser_navigate`, `browser_snapshot`, `browser_click`, etc.). The MCP tools bypass the project workflow.
-- **ALWAYS use a named session** with `-s=<unique-name>` to isolate your browser from other concurrent Claude Code instances. Multiple instances share the default browser and will navigate each other's pages, causing failures. **Each instance MUST pick a DIFFERENT name** — use the specific page or feature you're working on (e.g., `-s=pdp-fix`, `-s=homepage-check`, `-s=about-migrate`, `-s=cart-debug`). NEVER use generic names like `-s=audit` or `-s=test` — another instance will pick the same name. Example: `playwright-cli -s=quality-spacing open http://...`
-- When not sure about a UI/layout issue, use `/playwright-cli` — don't guess.
-- **ALWAYS use preview URLs for Playwright testing** — never use `127.0.0.1:9292`. Localhost blocks cart AJAX (cross-origin cookie issue + CLI bug since v3.89.0).
+- **ALWAYS use `/lusena-preview-check`** — NEVER run `playwright-cli` commands or invoke `/playwright-cli` directly in the main conversation. The `/playwright-cli` skill is internal tooling for the subagent — the subagent reads it to learn the CLI commands.
+- NEVER use Playwright MCP browser tools directly (`browser_navigate`, `browser_snapshot`, `browser_click`, etc.).
+- When not sure about a UI/layout issue, use `/lusena-preview-check` — don't guess.
+- **Preview URLs only** — never use `127.0.0.1:9292`. Localhost blocks cart AJAX (cross-origin cookie issue + CLI bug since v3.89.0).
   - **Main repo:** `https://lusena-dev.myshopify.com/?preview_theme_id=144618684603`
   - **Worktrees:** see the "Worktree Development" section above for your theme ID.
   - **Store password:** `paufro` — handle it on first navigation (fill the password field, click Enter).

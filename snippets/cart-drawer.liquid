@@ -1735,12 +1735,16 @@
             </div>
           {%- endif -%}
 
-          <a
-            href="{{ routes.checkout_url }}"
+          <button
+            type="button"
+            data-lusena-drawer-checkout
             class="lusena-btn lusena-btn--primary lusena-btn--size-lg lusena-btn--full-width"
           >
-            Przejd&#378; do kasy
-          </a>
+            <span class="lusena-btn__content">Przejd&#378; do kasy</span>
+            <span class="loading__spinner hidden">
+              <span class="lusena-btn__loading-text">Przekierowuj&#281;...</span>
+            </span>
+          </button>
           <div class="lusena-cart-drawer__trust">
             {% render 'lusena-icon', name: 'shield-check', class: 'lusena-icon-sm lusena-shrink-0', stroke_width: 2 %}
             <span class="lusena-cart-drawer__trust-text">60 dni na zwrot &middot; Bezpieczna p&#322;atno&#347;&#263;</span>
@@ -2104,6 +2108,35 @@
 
       if (nextQty === currentQty) return;
       updateLine(qtyBtn, key, nextQty);
+    });
+
+    /* ── Checkout button: loading animation + navigate ── */
+    const CHECKOUT_HOLD_MS = 400;
+    const checkoutUrl = window.routes?.checkout_url || '/checkout';
+
+    drawer.addEventListener('click', (event) => {
+      const btn = event.target.closest('[data-lusena-drawer-checkout]');
+      if (!btn) return;
+      if (btn.classList.contains('loading')) return;
+
+      btn.classList.add('loading');
+      btn.setAttribute('aria-busy', 'true');
+      const spinner = btn.querySelector('.loading__spinner');
+      if (spinner) spinner.classList.remove('hidden');
+
+      setTimeout(() => {
+        window.location.href = checkoutUrl;
+      }, CHECKOUT_HOLD_MS);
+    });
+
+    window.addEventListener('pageshow', (event) => {
+      if (!event.persisted) return;
+      const btn = drawer.querySelector('[data-lusena-drawer-checkout].loading');
+      if (!btn) return;
+      btn.classList.remove('loading');
+      btn.removeAttribute('aria-busy');
+      const spinner = btn.querySelector('.loading__spinner');
+      if (spinner) spinner.classList.add('hidden');
     });
   })();
 </script>

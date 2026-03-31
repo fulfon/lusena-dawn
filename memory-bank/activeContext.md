@@ -8,6 +8,14 @@
 
 ## Recent completed work
 
+### Checkout button fix + loading animation (2026-03-30)
+
+- **Root cause:** `routes.checkout_url` is not a valid Shopify Liquid property — rendered to empty string, making cart drawer `<a href="">` reload current page instead of navigating to checkout
+- **Cart drawer:** Replaced `<a>` with `<button data-lusena-drawer-checkout>` + JS `window.location.href = '/checkout'` + loading animation (shimmer + "Przekierowuję..." text swap) + bfcache reset
+- **Cart page:** Added loading animation markup + JS to existing submit button
+- **theme.liquid:** Hardcoded `/checkout` in `window.routes.checkout_url`
+- **Workflow:** CLAUDE.md Browser Interactions section now points to `/lusena-preview-check`. Skill updated to instruct subagent to load `/playwright-cli` first.
+
 ### PDP sticky gallery (2026-03-30)
 
 Swapped desktop sticky behavior: gallery (left column) is now `position: sticky` instead of buybox (right column). Gallery stays pinned at `top: 12.8rem` while user scrolls through the taller buybox content. Applies to both standard and bundle PDPs via shared `.lusena-pdp .lusena-gallery` selector. One CSS file changed: `assets/lusena-pdp.css`.

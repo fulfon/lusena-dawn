@@ -171,9 +171,13 @@
                   name="checkout"
                   form="cart"
                   class="lusena-btn lusena-btn--primary lusena-btn--size-lg lusena-btn--full-width"
+                  data-lusena-page-checkout
                   {% if cart == empty %}disabled{% endif %}
                 >
-                  Przejdź do kasy
+                  <span class="lusena-btn__content">Przejdź do kasy</span>
+                  <span class="loading__spinner hidden">
+                    <span class="lusena-btn__loading-text">Przekierowuję...</span>
+                  </span>
                 </button>
 
                 {%- if cart != empty -%}
@@ -207,6 +211,30 @@
 {% stylesheet %}
   /* CSS extracted to assets/lusena-cart-page.css */
 {% endstylesheet %}
+
+<script>
+  (() => {
+    const btn = document.querySelector('[data-lusena-page-checkout]');
+    if (!btn) return;
+
+    btn.addEventListener('click', () => {
+      if (btn.disabled) return;
+      btn.classList.add('loading');
+      btn.setAttribute('aria-busy', 'true');
+      const spinner = btn.querySelector('.loading__spinner');
+      if (spinner) spinner.classList.remove('hidden');
+    });
+
+    window.addEventListener('pageshow', (event) => {
+      if (!event.persisted) return;
+      if (!btn.classList.contains('loading')) return;
+      btn.classList.remove('loading');
+      btn.removeAttribute('aria-busy');
+      const spinner = btn.querySelector('.loading__spinner');
+      if (spinner) spinner.classList.add('hidden');
+    });
+  })();
+</script>
 
 {% schema %}
 {
