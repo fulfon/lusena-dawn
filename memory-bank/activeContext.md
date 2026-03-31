@@ -1,12 +1,18 @@
 # Active Context
 
-*Last updated: 2026-03-30*
+*Last updated: 2026-03-31*
 
 ## Current focus
 
 **Phase 1B: PDP cross-sell — COMPLETE.** All cross-sell touchpoints are live. Next: content polish, homepage bundles wiring, product media.
 
 ## Recent completed work
+
+### Primary button loading state fix (2026-03-31)
+
+- `.lusena-btn--primary.loading` rule added to `lusena-button-system.css` — preserves teal background when `aria-disabled` and `.loading` coexist
+- Affected: PDP ATC, bundle ATC, both sticky ATC bars (all went gray during shimmer due to CSS specificity: disabled state at 0-2-0 overrode loading state)
+- Upsell/nudge outline buttons audited — already correct (outline loading `!important` handles it)
 
 ### Checkout button fix + loading animation (2026-03-30)
 

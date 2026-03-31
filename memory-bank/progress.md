@@ -37,7 +37,7 @@ Full plan: `memory-bank/doc/features/dawn-pages-migration-plan.md`
 - [x] CSS foundations file (`assets/lusena-foundations.css`) — designer-generated, 7 fixes applied, production-ready
 - [x] PDP standalone CSS (`assets/lusena-pdp.css`) — PDP styles + sticky ATC styles (avoids compiled_assets truncation)
 - [x] CSS foundations brief (`docs/css-foundations-brief.md`) — self-contained spec for the designer
-- [x] Button system standalone CSS (`assets/lusena-button-system.css`) — extracted from snippet {% stylesheet %} to avoid compiled_assets truncation (2026-03-05)
+- [x] Button system standalone CSS (`assets/lusena-button-system.css`) — extracted from snippet {% stylesheet %} to avoid compiled_assets truncation (2026-03-05), primary loading state fix (2026-03-31)
 - [x] Header standalone CSS (`assets/lusena-header.css`) — extracted from section {% stylesheet %} (2026-03-05)
 - [x] Hero standalone CSS (`assets/lusena-hero.css`) — extracted from section {% stylesheet %} (2026-03-05)
 - [x] Footer standalone CSS (`assets/lusena-footer.css`) — extracted from section {% stylesheet %} (2026-03-05)
