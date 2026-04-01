@@ -1730,6 +1730,10 @@
   -webkit-backdrop-filter: blur(4px);
 }
 
+body.overflow-hidden .lusena-sticky-atc {
+  right: var(--scrollbar-width, 0px);
+}
+
 .lusena-sticky-atc--hidden {
   transform: translateY(100%);
 }

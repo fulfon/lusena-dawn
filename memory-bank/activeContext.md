@@ -8,6 +8,12 @@
 
 ## Recent completed work
 
+### Sticky ATC scrollbar shift fix (2026-04-01)
+
+- Fixed sticky ATC bar shifting ~15px right when cart drawer opens (scrollbar disappearance widens viewport for `position: fixed` elements)
+- Added `body.overflow-hidden .lusena-sticky-atc { right: var(--scrollbar-width, 0px); }` to `lusena-pdp.css` — consumes the CSS variable Dawn's `cart-drawer.js` already sets
+- One file changed: `assets/lusena-pdp.css` (+4 lines)
+
 ### PDP sticky gallery boundary fix (2026-04-01)
 
 - Gallery bottom now aligns with the care card (Pielegnacja) bottom border instead of the grid/section edge
