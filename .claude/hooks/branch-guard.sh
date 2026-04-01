@@ -5,7 +5,7 @@
 INPUT=$(cat)
 
 # Only act on git commit commands (grep the raw JSON input)
-if ! echo "$INPUT" | grep -q "git commit"; then
+if ! echo "$INPUT" | grep -q "git.*commit"; then
   exit 0
 fi
 
