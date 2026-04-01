@@ -1887,6 +1887,7 @@ body.overflow-hidden .lusena-sticky-atc {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-decoration-color: color-mix(in srgb, currentColor 50%, transparent);
 }
 
 .lusena-sticky-atc__button {
