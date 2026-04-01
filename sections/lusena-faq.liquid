@@ -92,9 +92,18 @@
     width: 1.6rem;
     height: 1.6rem;
     flex-shrink: 0;
+    transition: transform 0.2s ease;
   }
 
-  .lusena-faq__item[data-state='open'] .lusena-faq__chevron {
+  /* Override foundation .lusena-accordion[open] .lusena-accordion__icon (0-3-0)
+     which keeps chevron rotated until details.open is removed on transitionend.
+     These selectors at 0-4-0 ensure chevron follows data-state immediately. */
+  .lusena-faq .lusena-faq__item[data-state='closed'] .lusena-faq__chevron,
+  .lusena-faq .lusena-faq__item[data-state='closing'] .lusena-faq__chevron {
+    transform: rotate(0deg);
+  }
+
+  .lusena-faq .lusena-faq__item[data-state='open'] .lusena-faq__chevron {
     transform: rotate(180deg);
   }
 
@@ -102,7 +111,7 @@
   .lusena-faq__content {
     overflow: hidden;
     height: 0;
-    transition: height 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transition: height 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
     will-change: height;
   }
 

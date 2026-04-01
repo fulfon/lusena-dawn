@@ -174,14 +174,18 @@
     text-align: left;
     background-color: var(--lusena-surface-1);
     border: 0;
-    transition: background-color 0.15s ease;
+    transition: none;
     color: inherit;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
   }
 
-  .lusena-pdp-quality-evidence__toggle:hover {
-    background-color: var(--lusena-surface-1);
+  .lusena-pdp-quality-evidence__toggle:hover .lusena-pdp-quality-evidence__title {
+    color: var(--lusena-accent-cta);
+  }
+
+  .lusena-pdp-quality-evidence__toggle:hover .lusena-pdp-quality-evidence__chevron {
+    color: var(--lusena-accent-cta);
   }
 
   .lusena-pdp-quality-evidence__toggle:focus-visible {
@@ -221,6 +225,7 @@
     font-size: 20px;
     line-height: 28px;
     color: var(--lusena-text-1);
+    transition: color var(--lusena-transition-fast);
   }
 
   .lusena-pdp-quality-evidence__summary {
@@ -236,13 +241,13 @@
     color: color-mix(in srgb, var(--lusena-text-2) 50%, transparent);
     flex-shrink: 0;
     margin-top: 4px;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, color var(--lusena-transition-fast);
   }
 
   .lusena-pdp-quality-evidence__panel {
     height: 0;
     overflow: hidden;
-    transition: height 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transition: height 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
     will-change: height;
   }
 
