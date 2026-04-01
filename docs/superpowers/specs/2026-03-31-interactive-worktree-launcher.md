@@ -70,7 +70,7 @@ Claude Code now has native `--resume` (session persistence) and `--name` (named 
 
 Orphaned slots are treatable by [C] (clean) - the cleanup just removes the directory since there's no git state to unwind.
 
-**Parent repo hazard:** `C:\Users\Karol\Documents\BusinessIdeas\SilkStore\` is itself a git repo. The worktrees directory (`lusena-worktrees/`) sits inside its tree. When a worktree's `.git` file is missing, git commands resolve upward to this parent repo and return wrong results. **Rule: never run git commands inside a worktree directory without first confirming `<slot>/.git` exists.** For orphaned slots, skip all git inspection and only allow directory removal.
+**Parent repo hazard (resolved):** The repo was moved from `BusinessIdeas\SilkStore\` (which was itself a git repo) to `C:\Users\Karol\Documents\projekty_VSCode\shopify-lusena-dev\`. The parent-repo-swallowing-worktrees problem no longer applies. The `.git` file check is still good practice but no longer critical.
 
 ### Pre-scan housekeeping
 

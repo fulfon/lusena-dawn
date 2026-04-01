@@ -3,8 +3,8 @@
 
 try {
 
-$mainRepo = "C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-dawn"
-$worktreeBase = "C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-worktrees"
+$mainRepo = "C:\Users\Karol\Documents\projekty_VSCode\shopify-lusena-dev\lusena-dawn"
+$worktreeBase = "C:\Users\Karol\Documents\projekty_VSCode\shopify-lusena-dev\lusena-worktrees"
 $maxSlots = 4
 
 # Ensure worktree parent directory exists

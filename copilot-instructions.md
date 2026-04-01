@@ -87,7 +87,7 @@ The owner runs multiple Claude Code instances in parallel via `Desktop\Claude-LU
 - **Your branch is pre-created** with a generic name like `work/1`, `work/2`, etc. The launcher did this for you.
 - **Rename the branch immediately** once you understand the task. Use `git branch -m <new-name>` with the standard prefixes: `feat/`, `fix/`, `docs/`, `chore/`. Example: `git branch -m feat/remove-legacy-upsell`.
 - **Do NOT run `git checkout -b`** — you're already on your own branch. Just rename it.
-- **The main repo lives at:** `C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-dawn`. **NEVER read, edit, or write files using the main repo path.** A PreToolUse hook blocks Edit/Write to `lusena-dawn/` from worktrees. Every file you need exists in your worktree copy — always use relative paths (e.g., `scripts/launch-claude-worktree.ps1`) or your worktree absolute path (e.g., `C:\...\lusena-worktrees\lusena-1\scripts\...`). If you Glob/Grep and find a file at both paths, pick the worktree path.
+- **The main repo lives at:** `C:\Users\Karol\Documents\projekty_VSCode\shopify-lusena-dev\lusena-dawn`. **NEVER read, edit, or write files using the main repo path.** A PreToolUse hook blocks Edit/Write to `lusena-dawn/` from worktrees. Every file you need exists in your worktree copy — always use relative paths (e.g., `scripts/launch-claude-worktree.ps1`) or your worktree absolute path (e.g., `C:\...\lusena-worktrees\lusena-1\scripts\...`). If you Glob/Grep and find a file at both paths, pick the worktree path.
 - **When you exit, the worktree persists.** The user can resume your session later via the launcher menu's [R] option, which uses `claude --resume` to restore your full conversation history.
 - If your current branch is literally `main`, you were launched directly in the main repo (not via the worktree launcher). In that case, create a branch before any changes: `git checkout -b feat/<short-description>`.
 
@@ -148,13 +148,13 @@ When the task is complete:
 2. **Run `/lusena-worktree-sync`** — updates memory bank to reflect the branch's work. No exceptions, even for small changes.
 3. **Check that the main repo is clean** before merging:
    ```
-   git -C "C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-dawn" status
+   git -C "C:\Users\Karol\Documents\projekty_VSCode\shopify-lusena-dev\lusena-dawn" status
    ```
    If there are uncommitted changes, **STOP and tell the owner**. Those changes may be from another session or manual work. Do not discard or stash them without approval.
 4. **Squash-merge into `main`** by running git commands against the main repo (because `main` is checked out there, not in your worktree):
    ```
-   git -C "C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-dawn" merge --squash <your-branch>
-   git -C "C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-dawn" commit -m "feat(lusena): description"
+   git -C "C:\Users\Karol\Documents\projekty_VSCode\shopify-lusena-dev\lusena-dawn" merge --squash <your-branch>
+   git -C "C:\Users\Karol\Documents\projekty_VSCode\shopify-lusena-dev\lusena-dawn" commit -m "feat(lusena): description"
    ```
    **Why `git -C`?** You cannot `git checkout main` in a worktree because `main` is already checked out in the main repo. `git -C <path>` runs the command in that directory without changing your cwd.
 5. **If there are merge conflicts: STOP.** Do NOT resolve them yourself. Instead:

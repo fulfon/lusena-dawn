@@ -27,8 +27,8 @@ Replace the entire contents of `scripts/launch-claude-worktree.ps1` with:
 
 try {
 
-$mainRepo = "C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-dawn"
-$worktreeBase = "C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-worktrees"
+$mainRepo = "C:\Users\Karol\Documents\projekty_VSCode\shopify-lusena-dev\lusena-dawn"
+$worktreeBase = "C:\Users\Karol\Documents\projekty_VSCode\shopify-lusena-dev\lusena-worktrees"
 $maxSlots = 4
 
 # Ensure worktree parent directory exists
@@ -688,7 +688,7 @@ The owner runs multiple Claude Code instances in parallel. Each instance is laun
 - **Your branch is pre-created** with a generic name like `work/1`, `work/2`, etc. The launcher script did this for you.
 - **Rename the branch immediately** once you understand the task. Use `git branch -m <new-name>` with the standard prefixes: `feat/`, `fix/`, `docs/`, `chore/`. Example: `git branch -m feat/remove-legacy-upsell`.
 - **Do NOT run `git checkout -b`** — you're already on your own branch. Just rename it.
-- **The main repo lives at:** `C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-dawn`. **NEVER read, edit, or write files using the main repo path.** A PreToolUse hook blocks Edit/Write to `lusena-dawn/` from worktrees. Every file you need exists in your worktree copy — always use relative paths (e.g., `scripts/launch-claude-worktree.ps1`) or your worktree absolute path (e.g., `C:\...\lusena-worktrees\lusena-1\scripts\...`). If you Glob/Grep and find a file at both paths, pick the worktree path.
+- **The main repo lives at:** `C:\Users\Karol\Documents\projekty_VSCode\shopify-lusena-dev\lusena-dawn`. **NEVER read, edit, or write files using the main repo path.** A PreToolUse hook blocks Edit/Write to `lusena-dawn/` from worktrees. Every file you need exists in your worktree copy — always use relative paths (e.g., `scripts/launch-claude-worktree.ps1`) or your worktree absolute path (e.g., `C:\...\lusena-worktrees\lusena-1\scripts\...`). If you Glob/Grep and find a file at both paths, pick the worktree path.
 - If your current branch is literally `main`, you were launched directly in the main repo (not via the worktree launcher). In that case, create a branch before any changes: `git checkout -b feat/<short-description>`.
 ```
 
@@ -703,7 +703,7 @@ The owner runs multiple Claude Code instances in parallel via `Desktop\Claude-LU
 - **Your branch is pre-created** with a generic name like `work/1`, `work/2`, etc. The launcher did this for you.
 - **Rename the branch immediately** once you understand the task. Use `git branch -m <new-name>` with the standard prefixes: `feat/`, `fix/`, `docs/`, `chore/`. Example: `git branch -m feat/remove-legacy-upsell`.
 - **Do NOT run `git checkout -b`** — you're already on your own branch. Just rename it.
-- **The main repo lives at:** `C:\Users\Karol\Documents\BusinessIdeas\SilkStore\sklepOnline\shopify-lusena-dev\lusena-dawn`. **NEVER read, edit, or write files using the main repo path.** A PreToolUse hook blocks Edit/Write to `lusena-dawn/` from worktrees. Every file you need exists in your worktree copy — always use relative paths (e.g., `scripts/launch-claude-worktree.ps1`) or your worktree absolute path (e.g., `C:\...\lusena-worktrees\lusena-1\scripts\...`). If you Glob/Grep and find a file at both paths, pick the worktree path.
+- **The main repo lives at:** `C:\Users\Karol\Documents\projekty_VSCode\shopify-lusena-dev\lusena-dawn`. **NEVER read, edit, or write files using the main repo path.** A PreToolUse hook blocks Edit/Write to `lusena-dawn/` from worktrees. Every file you need exists in your worktree copy — always use relative paths (e.g., `scripts/launch-claude-worktree.ps1`) or your worktree absolute path (e.g., `C:\...\lusena-worktrees\lusena-1\scripts\...`). If you Glob/Grep and find a file at both paths, pick the worktree path.
 - **When you exit, the worktree persists.** The user can resume your session later via the launcher menu's [R] option, which uses `claude --resume` to restore your full conversation history.
 - If your current branch is literally `main`, you were launched directly in the main repo (not via the worktree launcher). In that case, create a branch before any changes: `git checkout -b feat/<short-description>`.
 ```
