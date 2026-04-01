@@ -1880,6 +1880,12 @@ body.overflow-hidden .lusena-sticky-atc {
   text-overflow: ellipsis;
 }
 
+.lusena-sticky-atc__compare {
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  color: var(--lusena-text-2);
+}
+
 .lusena-sticky-atc__variant {
   font-size: 1.2rem;
   line-height: 1.6rem;

@@ -106,6 +106,7 @@
         <span class="lusena-sticky-atc__price" data-lusena-sticky-price>
           {{ current_variant.price | money_without_trailing_zeros }}
         </span>
+        <s class="lusena-sticky-atc__compare" data-lusena-sticky-compare hidden></s>
         {%- if sticky_show_per_night -%}
           <span
             class="lusena-sticky-atc__per-night"
@@ -162,6 +163,7 @@
       <span class="lusena-sticky-atc__price" data-lusena-sticky-price>
         {{ current_variant.price | money_without_trailing_zeros }}
       </span>
+      <s class="lusena-sticky-atc__compare" data-lusena-sticky-compare hidden></s>
       {%- if sticky_show_per_night -%}
         <span
           class="lusena-sticky-atc__per-night"

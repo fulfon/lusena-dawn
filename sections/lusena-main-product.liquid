@@ -219,9 +219,9 @@
 
   {% render 'lusena-pdp-cross-sell', section: section %}
 
-  {% render 'lusena-scrunchie-education', product: product, education_price: section.settings.scrunchie_education_price %}
-
   {% render 'lusena-pdp-sticky-atc', product: product, current_variant: current_variant, section: section, product_form_id: product_form_id %}
+
+  {% render 'lusena-scrunchie-education', product: product, education_price: section.settings.scrunchie_education_price %}
 </section>
 
 {% render 'lusena-pdp-scripts' %}

@@ -30,6 +30,7 @@
   var hintEl = root.querySelector('[data-lusena-education-hint]');
   var perNightEl = root.querySelector('[data-lusena-price-per-night]');
   var stickyPrices = document.querySelectorAll('[data-lusena-sticky-price]');
+  var stickyCompares = document.querySelectorAll('[data-lusena-sticky-compare]');
   var stickyPerNights = document.querySelectorAll('[data-lusena-sticky-price-per-night]');
 
   if (!priceRow || !eduRow || !hintEl) return;
@@ -37,6 +38,7 @@
   /* ---- Read initial state from server-rendered DOM ---- */
   var isActive = priceRow.style.display === 'none';
   var eduPriceText = eduRow.querySelector('.lusena-pdp-summary__education-current').textContent.trim();
+  var eduCompareText = eduRow.querySelector('.lusena-pdp-summary__education-compare').textContent.trim();
 
   /* ---- Sticky guard ---- */
   var stickyGuard = false;
@@ -56,16 +58,18 @@
   function applyStickyEducation() {
     stickyGuard = true;
     stickyPrices.forEach(function(el) { el.textContent = eduPriceText; });
+    stickyCompares.forEach(function(el) { el.textContent = eduCompareText; el.hidden = false; });
     stickyPerNights.forEach(function(el) { el.hidden = true; });
-    stickyGuard = false;
+    setTimeout(function() { stickyGuard = false; }, 0);
   }
 
   function revertStickyEducation() {
     stickyGuard = true;
     var priceEl = root.querySelector('[data-lusena-price]');
     stickyPrices.forEach(function(el) { el.textContent = priceEl ? priceEl.textContent : ''; });
+    stickyCompares.forEach(function(el) { el.hidden = true; });
     stickyPerNights.forEach(function(el) { el.hidden = false; });
-    stickyGuard = false;
+    setTimeout(function() { stickyGuard = false; }, 0);
   }
 
   /* ---- Activate / Deactivate ---- */
