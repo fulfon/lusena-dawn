@@ -231,8 +231,16 @@ function Invoke-CleanInstance {
 
     # Orphaned: just remove the directory
     if ($target.Orphaned) {
-        Remove-Item -Recurse -Force $target.Path -ErrorAction SilentlyContinue
-        Write-Host "  Slot $($target.Num) cleaned (orphaned directory removed)." -ForegroundColor Green
+        git -C $mainRepo worktree prune 2>$null
+        try {
+            Remove-Item -Recurse -Force $target.Path -ErrorAction Stop
+            Write-Host "  Slot $($target.Num) cleaned (orphaned directory removed)." -ForegroundColor Green
+        } catch {
+            Write-Host ""
+            Write-Host "  Cannot delete directory - files are locked." -ForegroundColor Red
+            Write-Host "  Close any Claude Code / editor windows using slot $($target.Num)," -ForegroundColor Yellow
+            Write-Host "  then try again." -ForegroundColor Yellow
+        }
         return
     }
 
@@ -265,6 +273,18 @@ function Invoke-CleanInstance {
         git branch -D $branch 2>$null
     }
     Pop-Location
+
+    # git worktree remove may unregister but fail to delete the directory (file locks)
+    if (Test-Path $target.Path) {
+        try {
+            Remove-Item -Recurse -Force $target.Path -ErrorAction Stop
+        } catch {
+            Write-Host ""
+            Write-Host "  Worktree unregistered but directory could not be deleted (files locked)." -ForegroundColor Yellow
+            Write-Host "  Close any processes using slot $($target.Num), then clean again." -ForegroundColor Yellow
+            return
+        }
+    }
 
     Write-Host "  Slot $($target.Num) cleaned." -ForegroundColor Green
 }
