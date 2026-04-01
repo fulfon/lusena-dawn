@@ -1,12 +1,20 @@
 # Active Context
 
-*Last updated: 2026-03-31*
+*Last updated: 2026-04-01*
 
 ## Current focus
 
 **Phase 1B: PDP cross-sell — COMPLETE.** All cross-sell touchpoints are live. Next: content polish, homepage bundles wiring, product media.
 
 ## Recent completed work
+
+### PDP sticky gallery boundary fix (2026-04-01)
+
+- Gallery bottom now aligns with the care card (Pielegnacja) bottom border instead of the grid/section edge
+- Added `contain: layout` to `.lusena-grid--pdp` (ensures grid is the sticky containing block)
+- Added `padding-bottom: var(--lusena-space-4)` to `.lusena-gallery` on desktop — invisible padding offsets the sticky stop point by 32px to match the last accordion item's `margin-bottom`
+- Applies to both standard and bundle PDPs (shared `.lusena-pdp` ancestor)
+- One file changed: `assets/lusena-pdp.css` (+10 lines)
 
 ### Primary button loading state fix (2026-03-31)
 

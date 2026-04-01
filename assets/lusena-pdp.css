@@ -726,9 +726,19 @@
 }
 
 @media screen and (min-width: 768px) {
+  /* contain: layout establishes a BFC so the sticky gallery stops at the
+     grid boundary (= buy-box / care-card bottom) instead of the section edge */
+  .lusena-pdp .lusena-grid--pdp {
+    contain: layout;
+  }
+
   .lusena-pdp .lusena-gallery {
     position: sticky;
     top: 12.8rem;
+    /* Invisible padding offsets the sticky stop point upward so the image
+       bottom aligns with the care-card bottom, not the grid bottom.
+       Matches the last accordion item's margin-bottom (--lusena-space-4). */
+    padding-bottom: var(--lusena-space-4);
   }
 
   .lusena-pdp .lusena-gallery__desktop {
