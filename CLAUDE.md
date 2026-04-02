@@ -145,7 +145,7 @@ The `shopify theme dev` server watches the **main repo only** — it does NOT se
 When the task is complete:
 
 1. **Commit your work** on the worktree branch with a clear Conventional Commit message
-2. **Run `/lusena-worktree-sync`** — updates memory bank to reflect the branch's work. No exceptions, even for small changes.
+2. **GATE: Run `/lusena-worktree-sync`** — updates memory bank to reflect the branch's work. **Do NOT proceed to step 3 until this is done.** The skill scales automatically: small fixes get minimal updates, large features get full treatment. No exceptions — every branch goes through this gate.
 3. **Check that the main repo is clean** before merging:
    ```
    git -C "C:\Users\Karol\Documents\projekty_VSCode\shopify-lusena-dev\lusena-dawn" status
