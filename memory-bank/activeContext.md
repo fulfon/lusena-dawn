@@ -8,6 +8,15 @@
 
 ## Recent completed work
 
+### Cart/ATC error handling hardening (2026-04-02)
+
+- **User-visible error feedback** on all ATC failure paths: Polish error text ("Coś poszło nie tak") shown on button for 3s with red `.lusena-btn--error` state, then auto-restores. Covers: bundle ATC (4 paths), cross-sell checkbox ATC+Buy Now (4 paths), cart page upsell add, cart page bundle swap, cart drawer bundle swap.
+- **`response.ok` check** added to cart-drawer `updateLine` - was silently passing Shopify 422/5xx responses to `renderContents`. Now throws to catch block, consistent with `lusena-bundle-swap.js` pattern.
+- **`.catch()` added** to 4 secondary fetch calls (cart-drawer + icon-bubble re-renders in cross-sell-checkbox and bundle-scripts) that had no error handling.
+- **Sticky ATC coverage** - single PDP sticky buttons (mobile + desktop) now show error feedback alongside main ATC, matching bundle PDP behavior.
+- `.lusena-btn--error` CSS class added to `lusena-button-system.css`.
+- 5 files changed (+88 lines): `lusena-button-system.css`, `lusena-cart-items.liquid`, `cart-drawer.liquid`, `lusena-bundle-scripts.liquid`, `lusena-pdp-cross-sell-checkbox.liquid`.
+
 ### Worktree launcher: smart resume + auto-cleanup (2026-04-02)
 
 - **Smart resume:** [R] now launches `claude --name` (fresh) for empty worktrees (0 commits, no changes) instead of broken `claude --resume`. Non-empty worktrees still use `--resume`.

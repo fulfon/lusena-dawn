@@ -1881,6 +1881,9 @@
 
       try {
         const response = await fetch(window.routes.cart_change_url, config);
+        if (!response.ok) {
+          throw new Error(`Cart change failed: ${response.status}`);
+        }
         const state = await response.json();
 
         if (typeof drawer.renderContents === 'function') {
@@ -1892,6 +1895,7 @@
           publish(PUB_SUB_EVENTS.cartUpdate, { source: 'cart-drawer', cartData: state });
         }
       } catch (err) {
+        console.error('Cart drawer updateLine error:', err);
         disableItemLoading(itemEl);
       }
     };
@@ -2058,6 +2062,12 @@
           btn.disabled = false;
           btn.classList.remove('loading');
           if (spinner) spinner.classList.add('hidden');
+          var textEl = btn.querySelector('.lusena-btn__content');
+          if (textEl) {
+            var orig = textEl.textContent;
+            textEl.textContent = 'Coś poszło nie tak';
+            setTimeout(function() { textEl.textContent = orig; }, 3000);
+          }
         });
     });
 

@@ -987,6 +987,12 @@
         btn.disabled = false;
         btn.classList.remove('loading');
         if (spinnerEl) spinnerEl.classList.add('hidden');
+        var textEl = btn.querySelector('.lusena-btn__content');
+        if (textEl) {
+          var orig = textEl.textContent;
+          textEl.textContent = 'Coś poszło nie tak';
+          setTimeout(function() { textEl.textContent = orig; }, 3000);
+        }
       }
     });
 
@@ -1013,9 +1019,16 @@
         var state = await addRes.json();
         reRenderSections(state);
       } catch (err) {
+        console.error('Upsell add failed:', err);
         btn.disabled = false;
         btn.classList.remove('loading');
         if (spinnerEl) spinnerEl.classList.add('hidden');
+        var textEl = btn.querySelector('.lusena-btn__content');
+        if (textEl) {
+          var orig = textEl.textContent;
+          textEl.textContent = 'Błąd';
+          setTimeout(function() { textEl.textContent = orig; }, 3000);
+        }
       }
     });
 

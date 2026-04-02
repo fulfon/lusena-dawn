@@ -187,6 +187,7 @@
     var variantInput = section.querySelector('[data-lusena-variant-id]');
     var productFormEl = form ? form.closest('product-form') : null;
     var atcBtn = form ? form.querySelector('[type="submit"]') : null;
+    var stickyBtns = Array.from(document.querySelectorAll('[data-lusena-sticky-atc-button]'));
 
     /* ── Button loading state helper (mirrors product-form.js behavior) ── */
     function setBtnLoading(btn, isLoading) {
@@ -202,6 +203,19 @@
         btn.removeAttribute('aria-busy');
         if (spinner) spinner.classList.add('hidden');
       }
+    }
+
+    function showBtnError(btn) {
+      if (!btn) return;
+      var textEl = btn.querySelector('.lusena-btn__content');
+      if (!textEl) return;
+      var original = textEl.textContent;
+      textEl.textContent = 'Coś poszło nie tak';
+      btn.classList.add('lusena-btn--error');
+      setTimeout(function() {
+        textEl.textContent = original;
+        btn.classList.remove('lusena-btn--error');
+      }, 3000);
     }
 
     /* ── ATC intercept: add both items when checkbox is checked ── */
@@ -235,7 +249,10 @@
         .then(function(res) { return res.json(); })
         .then(function(data) {
           if (data.status) {
+            console.error('Cross-sell ATC error:', data.description || data.message);
             setBtnLoading(atcBtn, false);
+            showBtnError(atcBtn);
+            stickyBtns.forEach(function(b) { showBtnError(b); });
             return;
           }
           /* Re-render cart drawer with fresh section HTML, then open it */
@@ -250,7 +267,8 @@
                 if (fresh && current) current.innerHTML = fresh.innerHTML;
                 drawer.classList.remove('is-empty');
                 drawer.open();
-              });
+              })
+              .catch(function(err) { console.error('Drawer re-render failed:', err); });
             /* Update cart icon bubble count */
             fetch('/cart?section_id=cart-icon-bubble')
               .then(function(r) { return r.text(); })
@@ -259,14 +277,18 @@
                 var fresh = doc.querySelector('.shopify-section');
                 var current = document.getElementById('cart-icon-bubble');
                 if (fresh && current) current.innerHTML = fresh.innerHTML;
-              });
+              })
+              .catch(function(err) { console.error('Icon bubble re-render failed:', err); });
           }
           setTimeout(function() {
             setBtnLoading(atcBtn, false);
           }, 800);
         })
-        .catch(function() {
+        .catch(function(err) {
+          console.error('Cross-sell ATC fetch error:', err);
           setBtnLoading(atcBtn, false);
+          showBtnError(atcBtn);
+          stickyBtns.forEach(function(b) { showBtnError(b); });
         });
       }, { capture: true });
     }
@@ -306,11 +328,15 @@
           if (!data.status) {
             window.location.href = window.routes.checkout_url || '/checkout';
           } else {
+            console.error('Cross-sell buy-now error:', data.description || data.message);
             setBtnLoading(buyNowBtn, false);
+            showBtnError(buyNowBtn);
           }
         })
-        .catch(function() {
+        .catch(function(err) {
+          console.error('Cross-sell buy-now fetch error:', err);
           setBtnLoading(buyNowBtn, false);
+          showBtnError(buyNowBtn);
         });
       }, { capture: true });
     }

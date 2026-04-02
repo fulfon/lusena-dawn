@@ -359,6 +359,16 @@
   min-height: 36px;
 }
 
+/* Error state — brief visual feedback on ATC/swap failure */
+.lusena-btn.lusena-btn--error {
+  border-color: rgb(180 60 60 / 0.4);
+}
+
+.lusena-btn--primary.lusena-btn--error {
+  background: rgb(180 60 60);
+  color: rgb(255 255 255);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .lusena-btn,
   .lusena-btn__content,

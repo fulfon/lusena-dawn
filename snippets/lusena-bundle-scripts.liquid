@@ -605,6 +605,7 @@
       if (data.status) {
         console.error('Bundle+cross-sell ATC error:', data.description || data.message);
         finalize();
+        loadingBtns.forEach(function(b) { showBtnError(b); });
         return;
       }
       var drawer = document.querySelector('cart-drawer');
@@ -618,7 +619,8 @@
             if (fresh && current) current.innerHTML = fresh.innerHTML;
             drawer.classList.remove('is-empty');
             drawer.open();
-          });
+          })
+          .catch(function(err) { console.error('Drawer re-render failed:', err); });
         fetch('/cart?section_id=cart-icon-bubble')
           .then(function(r) { return r.text(); })
           .then(function(html) {
@@ -626,13 +628,15 @@
             var fresh = doc.querySelector('.shopify-section');
             var current = document.getElementById('cart-icon-bubble');
             if (fresh && current) current.innerHTML = fresh.innerHTML;
-          });
+          })
+          .catch(function(err) { console.error('Icon bubble re-render failed:', err); });
       }
       finalize();
     })
     .catch(function(err) {
       console.error('Bundle+cross-sell fetch error:', err);
       finalize();
+      loadingBtns.forEach(function(b) { showBtnError(b); });
     });
 
     function finalize() {
@@ -669,6 +673,7 @@
       if (data.status) {
         console.error('Bundle+cross-sell buy-now error:', data.description || data.message);
         setBtnLoading(buyNowBtn, false);
+        showBtnError(buyNowBtn);
         return;
       }
       window.location.href = window.routes.checkout_url || '/checkout';
@@ -676,6 +681,7 @@
     .catch(function(err) {
       console.error('Bundle+cross-sell buy-now fetch error:', err);
       setBtnLoading(buyNowBtn, false);
+      showBtnError(buyNowBtn);
     });
   }
 
@@ -686,7 +692,6 @@
   function setBtnLoading(btn, isLoading) {
     if (!btn) return;
     var spinner = btn.querySelector('.loading__spinner');
-    var content = btn.querySelector('.lusena-btn__content');
     if (isLoading) {
       btn.classList.add('loading');
       btn.setAttribute('aria-disabled', 'true');
@@ -698,6 +703,19 @@
       btn.removeAttribute('aria-busy');
       if (spinner) spinner.classList.add('hidden');
     }
+  }
+
+  function showBtnError(btn) {
+    if (!btn) return;
+    var textEl = btn.querySelector('.lusena-btn__content');
+    if (!textEl) return;
+    var original = textEl.textContent;
+    textEl.textContent = 'Coś poszło nie tak';
+    btn.classList.add('lusena-btn--error');
+    setTimeout(function() {
+      textEl.textContent = original;
+      btn.classList.remove('lusena-btn--error');
+    }, 3000);
   }
 
   // ==========================================================================
@@ -745,6 +763,7 @@
         if (state.status) {
           console.error('Bundle ATC error:', state.description || state.message);
           finalize();
+          loadingBtns.forEach(function(b) { showBtnError(b); });
           return;
         }
 
@@ -765,6 +784,7 @@
       .catch(function(err) {
         console.error('Bundle ATC fetch error:', err);
         finalize();
+        loadingBtns.forEach(function(b) { showBtnError(b); });
       });
 
     function finalize() {
@@ -822,6 +842,7 @@
           if (state.status) {
             console.error('Bundle buy-now error:', state.description || state.message);
             setBtnLoading(buyNowBtn, false);
+            showBtnError(buyNowBtn);
             return;
           }
           window.location.href = window.routes.checkout_url || '/checkout';
@@ -829,6 +850,7 @@
         .catch(function(err) {
           console.error('Bundle buy-now fetch error:', err);
           setBtnLoading(buyNowBtn, false);
+          showBtnError(buyNowBtn);
         });
     });
 
