@@ -127,7 +127,7 @@ Setting a metafield that doesn't belong to the product's category causes the imp
 | En-dash in "16–19 momme" | `–` (U+2013) | `-` (U+002D) |
 | Booleans (LUSENA) | `TRUE` / `FALSE` | `true` / `false` |
 | Booleans (Shopify) | `true` / `false` | `TRUE` / `FALSE` |
-| List fields (packaging, care) | Newlines within quoted cell | Semicolons |
+| List fields (packaging, care) | Semicolons (`; `) | Newlines (Shopify exports newlines but rejects them on import) |
 
 ### Export vs MD discrepancies
 

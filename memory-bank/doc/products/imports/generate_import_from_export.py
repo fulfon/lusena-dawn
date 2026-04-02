@@ -283,6 +283,14 @@ for row in rows:
 
 print(f'Updated {len(seen_handles)} products, {changes} cell changes')
 
+# Post-process: convert newlines to semicolons in list.single_line_text_field columns.
+# Shopify exports these with newlines but rejects them on import — requires semicolons.
+LIST_COLS = [42, 62]  # pdp_care_steps, pdp_packaging_items
+for row in rows:
+    for col in LIST_COLS:
+        if row[col] and '\n' in row[col]:
+            row[col] = '; '.join(line.strip() for line in row[col].split('\n') if line.strip())
+
 # Write to imports folder
 filename = 'products_import_updated.csv'
 output = io.StringIO()
