@@ -1,12 +1,19 @@
 # Active Context
 
-*Last updated: 2026-04-01*
+*Last updated: 2026-04-02*
 
 ## Current focus
 
 **Phase 1B: PDP cross-sell — COMPLETE.** All cross-sell touchpoints are live. Next: content polish, homepage bundles wiring, product media.
 
 ## Recent completed work
+
+### Worktree launcher: smart resume + auto-cleanup (2026-04-02)
+
+- **Smart resume:** [R] now launches `claude --name` (fresh) for empty worktrees (0 commits, no changes) instead of broken `claude --resume`. Non-empty worktrees still use `--resume`.
+- **Auto-cleanup:** After Claude exits, `Invoke-AutoCleanup` checks if the branch was squash-merged to main (has commits + content matches main + no uncommitted changes). If all conditions met, worktree and branch are removed automatically. Otherwise does nothing.
+- CLAUDE.md updated to document both behaviors.
+- One file changed: `scripts/launch-claude-worktree.ps1` (+50 lines)
 
 ### Sticky ATC scrollbar shift fix (2026-04-01)
 

@@ -121,6 +121,49 @@ function Show-Menu {
     Write-Host ""
 }
 
+# --- Helper: Auto-cleanup merged worktree after Claude exits ---
+function Invoke-AutoCleanup {
+    param([int]$slotNum, [string]$slotPath)
+
+    # Guard: worktree must exist and be valid
+    if (-not (Test-Path $slotPath)) { return }
+    if (-not (Test-Path "$slotPath\.git")) { return }
+
+    $branch = git -C $slotPath rev-parse --abbrev-ref HEAD 2>$null
+    if (-not $branch) { return }
+
+    # Guard: no uncommitted changes
+    $uncommitted = git -C $slotPath status --porcelain 2>$null
+    if ($uncommitted) { return }
+
+    # Guard: must have commits ahead of main (actual work was done)
+    $commitLog = git -C $slotPath log "main..$branch" --oneline 2>$null
+    if (-not $commitLog -or ($commitLog | Measure-Object).Count -eq 0) { return }
+
+    # Guard: branch content must match main (squash-merged)
+    git -C $slotPath diff main $branch --quiet 2>$null
+    if ($LASTEXITCODE -ne 0) { return }
+
+    # All conditions met - safe to clean
+    Write-Host ""
+    Write-Host "  Branch '$branch' is fully merged to main." -ForegroundColor DarkCyan
+    Write-Host "  Auto-cleaning slot $slotNum ..." -ForegroundColor DarkCyan
+
+    git -C $mainRepo worktree remove $slotPath --force 2>$null
+    git -C $mainRepo branch -D $branch 2>$null
+
+    if (Test-Path $slotPath) {
+        try {
+            Remove-Item -Recurse -Force $slotPath -ErrorAction Stop
+        } catch {
+            Write-Host "  Worktree unregistered but directory locked. Clean via [C] next time." -ForegroundColor Yellow
+            return
+        }
+    }
+
+    Write-Host "  Slot $slotNum cleaned." -ForegroundColor Green
+}
+
 # --- Action: [N] New instance ---
 function Invoke-NewInstance {
     param($slots)
@@ -172,6 +215,7 @@ function Invoke-NewInstance {
     Set-Location $path
     claude --name "lusena-$num"
     Set-Location $mainRepo
+    Invoke-AutoCleanup -slotNum $num -slotPath $path
 }
 
 # --- Action: [R] Resume instance ---
@@ -202,8 +246,13 @@ function Invoke-ResumeInstance {
     Write-Host ""
 
     Set-Location $target.Path
-    claude --resume
+    if ($target.Commits -eq 0 -and -not $target.Uncommitted) {
+        claude --name "lusena-$($target.Num)"
+    } else {
+        claude --resume
+    }
     Set-Location $mainRepo
+    Invoke-AutoCleanup -slotNum $target.Num -slotPath $target.Path
 }
 
 # --- Action: [C] Clean instance ---
