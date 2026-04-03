@@ -533,6 +533,15 @@
     font-variant-numeric: tabular-nums;
   }
 
+  .lusena-cart-drawer__upsell .lusena-upsell-card__xs-compare {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--lusena-text-2);
+    text-decoration: line-through;
+    text-decoration-color: color-mix(in srgb, currentColor 50%, transparent);
+    margin-left: 0.4rem;
+  }
+
   /* --- Bundle card (two-tile layout, scoped to drawer upsell zone) --- */
   .lusena-cart-drawer__upsell .lusena-upsell-card__bn-headline {
     font-size: 1.35rem;
@@ -1496,6 +1505,13 @@
             assign upsell_display_message = upsell_message
             assign upsell_display_color = upsell_color_label
             assign upsell_display_price = upsell_variant_1.price | money_without_trailing_zeros
+            assign upsell_is_cross_sell = false
+            if upsell_product_1.handle == 'silk-scrunchie' and settings.lusena_cart_cross_sell_price != blank
+              assign upsell_is_cross_sell = true
+              assign upsell_original_price = upsell_variant_1.price | money_without_trailing_zeros
+              assign upsell_display_price = settings.lusena_cart_cross_sell_price | money_without_trailing_zeros
+              assign upsell_display_message = 'Taniej w komplecie'
+            endif
           -%}
           <div class="lusena-cart-drawer__upsell" data-cart-upsell-zone aria-live="polite">
             <p class="lusena-cart-drawer__upsell-label">
@@ -1665,7 +1681,12 @@
                   </div>
                 </div>
                 <div class="lusena-upsell-card__xs-bottom">
-                  <p class="lusena-upsell-card__xs-price">{{ upsell_display_price | escape }}</p>
+                  <p class="lusena-upsell-card__xs-price">
+                    {{ upsell_display_price | escape }}
+                    {%- if upsell_is_cross_sell -%}
+                      <span class="lusena-upsell-card__xs-compare">{{ upsell_original_price }}</span>
+                    {%- endif -%}
+                  </p>
                   <product-form class="product-form" data-hide-errors="true" data-cart-upsell>
                     {%- form 'product',
                       upsell_product_1,
@@ -1966,13 +1987,16 @@
     });
 
     // Bundle nudge: click handler using shared LusenaBundle.swap()
+    var drawerSwapInProgress = false;
     drawer.addEventListener('click', function(e) {
       var btn = e.target.closest('[data-bundle-nudge-action]');
       if (!btn) return;
+      if (drawerSwapInProgress) return;
 
       var nudge = btn.closest('[data-bundle-nudge]');
       if (!nudge) return;
 
+      drawerSwapInProgress = true;
       btn.disabled = true;
       btn.classList.add('loading');
       var spinner = btn.querySelector('.loading__spinner');
@@ -2043,6 +2067,7 @@
 
       LusenaBundle.swap(nudge.dataset.bundleVariantId, removeKeys, swapOpts)
         .then(function(state) {
+          drawerSwapInProgress = false;
           drawer.renderContents(state);
           if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
             publish(PUB_SUB_EVENTS.cartUpdate, { source: 'cart-drawer', cartData: state });
@@ -2055,6 +2080,7 @@
         })
         .catch(function(err) {
           console.error('Bundle swap failed:', err);
+          drawerSwapInProgress = false;
           allItems.forEach(function(el) {
             el.classList.remove('lusena-cart-drawer__item--loading');
             el.querySelectorAll('button').forEach(function(b) { b.disabled = false; });

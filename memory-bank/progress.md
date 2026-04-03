@@ -91,6 +91,7 @@ Full plan: `memory-bank/doc/features/dawn-pages-migration-plan.md`
 - [x] Product CSV import/export tooling (`memory-bank/doc/products/imports/`, `exports/`) — Shopify CSV import files + generator script (2026-03-15)
 - [x] Bundle strategy (`memory-bank/doc/bundle-strategy.md`) — research-backed bundle architecture, economics, decision triggers (2026-03-15)
 - [x] Spacing audit tooling (`docs/spacing-audit/`) — measurement JS scripts + spec schemas (2026-03-10)
+- [x] QA test plan (`docs/qa-test-plan.md`) — 84 automated+manual tests covering upsell, bundles, cross-sell, cart merge, free shipping bar. All passing at commit `9713f83`. (2026-04-03)
 - [x] Preflight resets in foundations — button, anchor, img/video (2026-03-05)
 - [x] compiled_assets truncation guard pattern documented (2026-03-05)
 - [x] Memory bank architecture

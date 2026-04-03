@@ -301,6 +301,7 @@ cart-items .loading__spinner svg { width: 2rem; height: 2rem; animation: lusena-
 .lusena-cart-upsell .lusena-upsell-card__xs-color span { color: var(--lusena-text-1); font-weight: 500; }
 .lusena-cart-upsell .lusena-upsell-card__xs-bottom { display: flex; align-items: center; justify-content: space-between; gap: var(--lusena-space-1); margin-top: var(--lusena-space-1); padding-top: var(--lusena-space-1); border-top: 1px solid color-mix(in srgb, var(--lusena-text-2) 5%, transparent); }
 .lusena-cart-upsell .lusena-upsell-card__xs-price { font-size: 1.4rem; font-weight: 500; color: var(--lusena-text-1); font-variant-numeric: tabular-nums; }
+.lusena-cart-upsell .lusena-upsell-card__xs-compare { font-size: 1.2rem; font-weight: 400; color: var(--lusena-text-2); text-decoration: line-through; text-decoration-color: color-mix(in srgb, currentColor 50%, transparent); margin-left: 0.4rem; }
 
 /* --- Bundle card (two-tile) --- */
 .lusena-cart-upsell .lusena-upsell-card__bn-headline { font-size: 1.35rem; font-weight: 500; color: var(--lusena-text-1); line-height: 1.35; margin-bottom: var(--lusena-space-1); }

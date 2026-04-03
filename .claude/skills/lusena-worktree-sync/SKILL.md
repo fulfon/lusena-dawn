@@ -95,20 +95,25 @@ No changes needed:
   - systemPatterns.md — still accurate
 ```
 
-### Phase 4 — Write updates
+### Phase 4 — Apply updates with Edit tool (NEVER Write)
 
-**Important:** Write each file's content based on what you read from main in Phase 2, not the worktree's stale copy. The worktree files will be overwritten with the updated content.
+**CRITICAL: Use the Edit tool for all memory bank updates, not Write.** The Write tool replaces the entire file, which causes merge conflicts during squash-merge because Git sees a full-file rewrite instead of a surgical addition. The Edit tool produces clean diffs that Git can auto-merge.
+
+**Workflow:**
+1. First, ensure the worktree copy matches main: `git checkout main -- memory-bank/<file>` for each file you need to update. This gives you the current main version to edit against.
+2. Then use the Edit tool to make targeted changes (insert new sections, modify specific lines).
+3. Never rewrite an entire file — only touch the lines that need changing.
 
 #### `activeContext.md` (always update)
-- Set `*Last updated:` to today's date
-- `## Current focus` — update if the project focus shifted
-- `## Recent completed work` — **ADD** this branch's entry. Keep all existing entries. Use format: `### Branch-name (date)` followed by bullet list
-- `## Next steps` — update if priorities changed
-- `## Known issues` — add any discovered during this branch, remove any resolved
+- Edit `*Last updated:` date to today
+- Edit `## Current focus` — only if the project focus shifted
+- **INSERT** this branch's entry at the top of `## Recent completed work` (before existing entries). Use format: `### Branch-name (date)` followed by bullet list
+- Edit `## Next steps` — only if priorities changed
+- Edit `## Known issues` — add new or remove resolved, leave others untouched
 
 #### `progress.md` (if milestones changed)
-- Check/uncheck page status items
-- Update infrastructure completed list
+- Edit specific checkbox lines to check/uncheck
+- Insert new infrastructure items at the appropriate position
 
 #### Other files (only if directly affected)
 - `systemPatterns.md` — new patterns, CSS architecture changes

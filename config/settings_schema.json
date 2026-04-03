@@ -1537,6 +1537,13 @@
         "default": "Complete your night set"
       },
       {
+        "type": "number",
+        "id": "lusena_cart_cross_sell_price",
+        "label": "Cena scrunchie cross-sell w koszyku (grosze)",
+        "default": 3900,
+        "info": "Wyswietlana na karcie upsell zamiast ceny katalogowej. 3900 = 39 zl."
+      },
+      {
         "type": "header",
         "content": "CTA na PDP"
       },

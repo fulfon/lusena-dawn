@@ -1,12 +1,22 @@
 # Active Context
 
-*Last updated: 2026-04-02*
+*Last updated: 2026-04-03*
 
 ## Current focus
 
-**Phase 1B: PDP cross-sell — COMPLETE.** All cross-sell touchpoints are live. Next: content polish, homepage bundles wiring, product media.
+**Phase 1B: PDP cross-sell — COMPLETE.** All cross-sell touchpoints are live and QA-tested. Next: content polish, homepage bundles wiring, product media.
 
 ## Recent completed work
+
+### QA fixes — upsell/bundle test findings (2026-04-03)
+
+Comprehensive QA test plan executed (84 tests, all passing). 7 findings documented, 4 fixed:
+- **F1+F7:** Scrunchie education handle mismatches — `jedwabna-maska-do-spania-3d` → `jedwabna-maska-3d`, `jedwabny-walek-do-lokow` → `heatless-curlers` in both Liquid case statement (`lusena-main-product.liquid`) and JS label map (`lusena-scrunchie-education.liquid`).
+- **F5:** Cart cross-sell card showed scrunchie at 59 zl instead of 39 zl. Added `lusena_cart_cross_sell_price` theme setting (default 3900). Cart drawer and cart page now show current price first, crossed-out original second, with "Taniej w komplecie" education text.
+- **F6:** Bundle swap nudge button stopped working after first successful swap. Added `swapInProgress` guard flag in both cart drawer and cart page — resets on both success and error paths.
+- **Compare price styling unified** — cross-sell card now matches bundle/cart-item pattern: 1.2rem, `--lusena-text-2`, 50% opacity strikethrough. Price order standardized: [current] [~~original~~] across all 8 locations.
+- **F3+F4:** Confirmed intentional per bundle strategy docs (scrunchie→Trio nudge, no nudge after re-add post-swap).
+- Test plan: `docs/qa-test-plan.md`
 
 ### Cart/ATC error handling hardening (2026-04-02)
 
@@ -95,6 +105,7 @@ Comprehensive memory bank audit covering 67 commits. Updated:
 - **Cross-sell on bundles: post-color timing** — appears after `allSelected()`, not immediately. Sunk-cost > impulsive.
 - **Scrunchie education: inline price swap** — no banners/cards, price itself IS the education. Premium brands adjust prices, not announce discounts.
 - **Free shipping threshold: 275 zl** (was 289, originally 269. Updated in settings_schema, settings_data, and all strategy/product docs)
+- **Compare price order: [current] [~~original~~]** — consistent across all 8 locations (PDP, cart items, upsell cards, product cards). Established as theme standard.
 
 ## Known issues
 

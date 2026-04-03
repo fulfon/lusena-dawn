@@ -631,6 +631,13 @@
                 assign upsell_message = upsell_message_metafield.value | default: settings.lusena_cart_upsell_message_fallback
                 assign upsell_display_title = upsell_product.title
                 assign upsell_display_price = upsell_variant.price | money_without_trailing_zeros
+                assign upsell_is_cross_sell = false
+                if upsell_product.handle == 'silk-scrunchie' and settings.lusena_cart_cross_sell_price != blank
+                  assign upsell_is_cross_sell = true
+                  assign upsell_original_price = upsell_variant.price | money_without_trailing_zeros
+                  assign upsell_display_price = settings.lusena_cart_cross_sell_price | money_without_trailing_zeros
+                  assign upsell_message = 'Taniej w komplecie'
+                endif
               -%}
 
               {%- if upsell_is_bundle -%}
@@ -800,7 +807,12 @@
                       </div>
                     </div>
                     <div class="lusena-upsell-card__xs-bottom">
-                      <p class="lusena-upsell-card__xs-price">{{ upsell_display_price | escape }}</p>
+                      <p class="lusena-upsell-card__xs-price">
+                        {{ upsell_display_price | escape }}
+                        {%- if upsell_is_cross_sell -%}
+                          <span class="lusena-upsell-card__xs-compare">{{ upsell_original_price }}</span>
+                        {%- endif -%}
+                      </p>
                       <button
                         type="button"
                         class="lusena-btn lusena-btn--outline lusena-btn--size-xs"
@@ -892,12 +904,16 @@
     }
 
     // Bundle nudge: click handler using shared LusenaBundle.swap()
+    var pageSwapInProgress = false;
     container.addEventListener('click', async function(e) {
       var btn = e.target.closest('[data-bundle-nudge-action]');
       if (!btn) return;
+      if (pageSwapInProgress) return;
 
       var nudge = btn.closest('[data-bundle-nudge]');
       if (!nudge) return;
+
+      pageSwapInProgress = true;
 
       btn.disabled = true;
       btn.classList.add('loading');
@@ -967,6 +983,7 @@
 
       try {
         var state = await LusenaBundle.swap(nudge.dataset.bundleVariantId, removeKeys, swapOpts);
+        pageSwapInProgress = false;
         reRenderSections(state);
         if (cartItemsEl) cartItemsEl.classList.remove('cart__items--disabled');
         // Direct drawer sync (belt-and-suspenders — don't rely solely on pubsub)
@@ -983,6 +1000,7 @@
           .catch(function() {});
       } catch (err) {
         console.error('Bundle swap failed:', err);
+        pageSwapInProgress = false;
         if (cartItemsEl) cartItemsEl.classList.remove('cart__items--disabled');
         btn.disabled = false;
         btn.classList.remove('loading');
