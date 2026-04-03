@@ -13,7 +13,7 @@ and writes the result. Upsell product references (cols 75, 77) must be set
 manually in Shopify admin (CSV can't set product_reference metafields).
 All other columns (variants, prices, inventory, images) are preserved as-is.
 
-Updated: 2026-03-28
+Updated: 2026-04-03
 """
 import csv
 import io
@@ -195,11 +195,11 @@ updates['nocna-rutyna'] = {
     47: 'Momme to g\u0119sto\u015b\u0107 jedwabiu \u2013 im wy\u017csze, tym grubszy i trwalszy materia\u0142. Standard rynkowy to 16\u201319 momme. Nasze 22 momme to g\u0119stszy splot, kt\u00f3ry lepiej trzyma kszta\u0142t i d\u0142u\u017cej s\u0142u\u017cy.',
     48: 'layers', 49: 'Dlaczego 22 momme?',
     50: 'Zak\u0142adasz poszewk\u0119, naci\u0105gasz czepek - gotowe. Przez 8 godzin g\u0142adki jedwab ogranicza tarcie na twarzy i we w\u0142osach jednocze\u015bnie. Im d\u0142u\u017cej, tym lepiej wida\u0107 r\u00f3\u017cnic\u0119.',
-    51: 'clock', 52: 'Rutyna na ka\u017cd\u0105 noc',
+    51: 'moon', 52: 'Rutyna na ka\u017cd\u0105 noc',
     53: 'Satyna to nazwa splotu, nie materia\u0142u \u2013 najcz\u0119\u015bciej kryje si\u0119 za ni\u0105 poliester. LUSENA to 100% jedwab morwowy: naturalne w\u0142\u00f3kno bia\u0142kowe, kt\u00f3re oddycha i nie elektryzuje.',
     54: 'shield-check', 55: 'Jedwab, nie satyna z poliestru',
     56: 'Sama poszewka nie ochroni w\u0142os\u00f3w. Sam czepek nie ochroni twarzy. Dopiero razem daj\u0105 Ci poranek, kt\u00f3ry zaczyna si\u0119 od kawy, nie od szczotki.',
-    57: 'wind', 58: 'Poranek bez porannej rutyny',
+    57: 'sparkles', 58: 'Poranek bez porannej rutyny',
     59: 'Ka\u017cdy zestaw LUSENA przychodzi w eleganckim opakowaniu prezentowym - idealny upominek, kt\u00f3ry robi wra\u017cenie. Bez dodatkowego pakowania.',
     60: 'gift', 61: 'Gotowe do wr\u0119czenia',
     63: 'FALSE',
@@ -220,11 +220,11 @@ updates['piekny-sen'] = {
     41: 'Policzek na g\u0142adkim jedwabiu, oczy w pe\u0142nym mroku - czujesz r\u00f3\u017cnic\u0119 od pierwszej nocy',
     43: 'Pi\u0119kniejszy poranek zaczyna si\u0119 wieczorem.',
     44: 'Poszewka chroni sk\u00f3r\u0119 twarzy przed tarciem - policzki, czo\u0142o, brod\u0119. Maska 3D otula okolice oczu bez nacisku na powieki. Razem pokrywaj\u0105 ca\u0142\u0105 twarz - \u017cadna sk\u00f3ra nie zostaje bez ochrony.',
-    45: 'moon', 46: 'Od policzka po powieki',
+    45: 'heart', 46: 'Od policzka po powieki',
     47: 'Momme to g\u0119sto\u015b\u0107 jedwabiu \u2013 im wy\u017csze, tym grubszy i trwalszy materia\u0142. Standard rynkowy to 16\u201319 momme. Nasze 22 momme to g\u0119stszy splot, kt\u00f3ry lepiej trzyma kszta\u0142t i d\u0142u\u017cej s\u0142u\u017cy.',
     48: 'layers', 49: 'Dlaczego 22 momme?',
     50: 'Mniej zagniece\u0144 na policzku, okolice oczu odci\u0105\u017cone, twarz otulona jedwabiem przez osiem godzin. Poszewka ogranicza tarcie na sk\u00f3rze, maska daje oczom ciemno\u015b\u0107 i spok\u00f3j - efekt wida\u0107 rano w lustrze.',
-    51: 'heart', 52: 'Ranek po pi\u0119knym \u015bnie',
+    51: 'sparkles', 52: 'Ranek po pi\u0119knym \u015bnie',
     53: 'Satyna to nazwa splotu, nie materia\u0142u \u2013 najcz\u0119\u015bciej kryje si\u0119 za ni\u0105 poliester. LUSENA to 100% jedwab morwowy: naturalne w\u0142\u00f3kno bia\u0142kowe, kt\u00f3re oddycha i nie elektryzuje.',
     54: 'shield-check', 55: 'Jedwab, nie satyna z poliestru',
     56: 'Tw\u00f3j wiecz\u00f3r si\u0119 nie zmienia. Poszewka trafia na t\u0119 sam\u0105 poduszk\u0119. Mask\u0119 zak\u0142adasz w pi\u0119\u0107 sekund. Zmienia si\u0119 jedno - materia\u0142, kt\u00f3ry dotyka Twojej twarzy przez ca\u0142\u0105 noc.',
@@ -249,11 +249,11 @@ updates['scrunchie-trio'] = {
     41: 'Trzy w rotacji - ka\u017cda odpoczywa mi\u0119dzy u\u017cyciami, wi\u0119c jedwab d\u0142u\u017cej zachowuje spr\u0119\u017cysto\u015b\u0107 i kszta\u0142t',
     43: 'Trzy kolory jedwabiu - jeden na ka\u017cdy moment.',
     44: 'Czarny, brudny r\u00f3\u017c i szampan - trzy klasyki, kt\u00f3re pasuj\u0105 do siebie i do wszystkiego w szafie. Dobierasz do stroju, do nastroju albo po prostu si\u0119gasz po najbli\u017csz\u0105. Ka\u017cda opcja jest dobra.',
-    45: 'droplets', 46: 'Kolor pod nastr\u00f3j',
+    45: 'palette', 46: 'Kolor pod nastr\u00f3j',
     47: 'Momme to g\u0119sto\u015b\u0107 jedwabiu \u2013 im wy\u017csze, tym grubszy i trwalszy materia\u0142. Standard rynkowy to 16\u201319 momme. Nasze 22 momme to g\u0119stszy splot, kt\u00f3ry lepiej trzyma kszta\u0142t i d\u0142u\u017cej s\u0142u\u017cy.',
     48: 'layers', 49: 'Dlaczego 22 momme?',
     50: 'Rano w po\u015bpiechu, w trakcie treningu, wieczorem przed snem - moment, w kt\u00f3rym si\u0119gasz po gumk\u0119, jest przypadkowy. Kiedy ka\u017cda pod r\u0119k\u0105 jest jedwabna, nie musisz o tym my\u015ble\u0107.',
-    51: 'wind', 52: 'Jedwab zawsze pod r\u0119k\u0105',
+    51: 'clock', 52: 'Jedwab zawsze pod r\u0119k\u0105',
     53: 'Satyna to nazwa splotu, nie materia\u0142u \u2013 najcz\u0119\u015bciej kryje si\u0119 za ni\u0105 poliester. LUSENA to 100% jedwab morwowy: naturalne w\u0142\u00f3kno bia\u0142kowe, kt\u00f3re oddycha i nie elektryzuje.',
     54: 'shield-check', 55: 'Jedwab, nie satyna z poliestru',
     56: 'Jedna jedwabna gumka to przyjemny wyj\u0105tek. Kiedy masz trzy, nie zastanawiasz si\u0119, po kt\u00f3r\u0105 si\u0119gn\u0105\u0107 - ka\u017cda jest jedwabna. I w\u0142a\u015bnie tak wyj\u0105tek staje si\u0119 oczywisto\u015bci\u0105.',

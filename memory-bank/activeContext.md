@@ -8,11 +8,15 @@
 
 ## Recent completed work
 
+### Packaging list fix + CSV icon sync (2026-04-03)
+
+Fixed "Co zawiera opakowanie" accordion rendering all items on one line instead of separate `<li>` entries. Root cause: CSV import stored `list.single_line_text_field` metafield as a single semicolon-separated string. Fix: defensive split in `lusena-pdp-buybox-panels.liquid` (checks if array has 1 entry containing `'; '`, splits it). Same fix applied to `pdp_care_steps` for safety. Also synced 6 feature card icon changes from product MD docs into the import script and regenerated CSV (nocna-rutyna C3/C5, piekny-sen C1/C3, scrunchie-trio C1/C3). Shopify product data now fully in sync with codebase. Handle renames applied in Shopify admin, `bundle_nudge_map` set for all 3 bundles.
+
 ### Bundle contents component links (2026-04-03)
 
 Component product names in the "W zestawie" checklist on bundle PDPs are now clickable links to their individual product pages. Uses `all_products` lookup with the 5 known product handles, matched by title against Simple Bundles `variant_options.optionName`. Graceful fallback to plain text if no match. Subtle hover styling (teal + underline). 3 files: `lusena-bundle-contents.liquid`, `lusena-main-bundle.liquid` (passes `product`), `lusena-bundle-pdp.css`.
 
-**Note:** Links for czepek and scrunchie won't work until the Shopify admin handle rename is applied (see "Product handle standardization" below).
+**Note:** All links now work — handle renames applied in Shopify admin (see "Product handle standardization" below).
 
 ### Bundle mobile sticky ATC pricing fix (2026-04-03)
 
@@ -27,7 +31,7 @@ Standardized 3 English product handles to Polish for SEO consistency:
 
 35 files updated: theme code (Liquid/JSON), memory bank, product docs (renamed), skills, CSV/Python imports, specs/plans. 5 existing Polish handles unchanged. Product doc files renamed accordingly (`czepek-jedwabny.md`, `scrunchie-jedwabny.md`, `walek-do-lokow.md`).
 
-**Shopify admin action required:** Change URL handles for these 3 products + update `bundle_nudge_map` metafield values for Nocna Rutyna and Scrunchie Trio. Shopify auto-creates 301 redirects.
+**Shopify admin action: DONE.** Handles renamed, `bundle_nudge_map` set for all 3 bundles, CSV reimported. Shopify auto-created 301 redirects.
 
 ### QA fixes — upsell/bundle test findings (2026-04-03)
 

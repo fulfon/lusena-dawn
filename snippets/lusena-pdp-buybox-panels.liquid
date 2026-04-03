@@ -118,11 +118,17 @@
     assign mf_packaging_items = product.metafields.lusena.pdp_packaging_items
     if mf_packaging_items != blank and mf_packaging_items.value != blank
       assign packaging_items = mf_packaging_items.value
+      if packaging_items.size == 1 and packaging_items.first contains '; '
+        assign packaging_items = packaging_items.first | split: '; '
+      endif
     endif
 
     assign mf_care_steps = product.metafields.lusena.pdp_care_steps
     if mf_care_steps != blank and mf_care_steps.value != blank
       assign care_steps = mf_care_steps.value
+      if care_steps.size == 1 and care_steps.first contains '; '
+        assign care_steps = care_steps.first | split: '; '
+      endif
     endif
   endif
 
