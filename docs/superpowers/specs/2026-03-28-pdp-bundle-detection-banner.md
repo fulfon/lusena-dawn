@@ -24,8 +24,8 @@ This eliminates the need for #13 (cart merge) — by intercepting at the PDP, th
 
 | PDP product (handle) | Cart has (handle) | Bundle (handle) | Bundle price | Original total | Savings |
 |---|---|---|---|---|---|
-| `silk-bonnet` | `poszewka-jedwabna` | `nocna-rutyna` | 399 zl | 508 zl | 109 zl |
-| `poszewka-jedwabna` | `silk-bonnet` | `nocna-rutyna` | 399 zl | 508 zl | 109 zl |
+| `czepek-jedwabny` | `poszewka-jedwabna` | `nocna-rutyna` | 399 zl | 508 zl | 109 zl |
+| `poszewka-jedwabna` | `czepek-jedwabny` | `nocna-rutyna` | 399 zl | 508 zl | 109 zl |
 | `jedwabna-maska-3d` | `poszewka-jedwabna` | `piekny-sen` | 349 zl | 438 zl | 89 zl |
 | `poszewka-jedwabna` | `jedwabna-maska-3d` | `piekny-sen` | 349 zl | 438 zl | 89 zl |
 
@@ -78,10 +78,10 @@ Liquid snippet renders the map based on current product handle. The mapping is s
 {%- case product.handle -%}
   {%- when 'poszewka-jedwabna' -%}
     {%- assign bundle_complements = '[
-      {"cart_handle":"silk-bonnet","bundle_handle":"nocna-rutyna","complement_label":"poszewke","savings_priority":1},
+      {"cart_handle":"czepek-jedwabny","bundle_handle":"nocna-rutyna","complement_label":"poszewke","savings_priority":1},
       {"cart_handle":"jedwabna-maska-3d","bundle_handle":"piekny-sen","complement_label":"poszewke","savings_priority":0}
     ]' -%}
-  {%- when 'silk-bonnet' -%}
+  {%- when 'czepek-jedwabny' -%}
     {%- assign bundle_complements = '[
       {"cart_handle":"poszewka-jedwabna","bundle_handle":"nocna-rutyna","complement_label":"czepek","savings_priority":1}
     ]' -%}

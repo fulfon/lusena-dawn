@@ -347,13 +347,13 @@ git commit -m "feat(lusena): add palette, feather, moon, clock to icon schema se
 ### Task 5: Update product metafield docs — Bonnet, Scrunchie, Heatless Curlers
 
 **Files:**
-- Modify: `memory-bank/doc/products/silk-bonnet.md` — C3 icon: `wind` -> `moon`, animation spec C3
-- Modify: `memory-bank/doc/products/silk-scrunchie.md` — C5 icon: `moon` -> `feather`, animation spec C5
-- Modify: `memory-bank/doc/products/heatless-curlers.md` — C5 icon: `heart` -> `feather`, animation spec C5
+- Modify: `memory-bank/doc/products/czepek-jedwabny.md` — C3 icon: `wind` -> `moon`, animation spec C3
+- Modify: `memory-bank/doc/products/scrunchie-jedwabny.md` — C5 icon: `moon` -> `feather`, animation spec C5
+- Modify: `memory-bank/doc/products/walek-do-lokow.md` — C5 icon: `heart` -> `feather`, animation spec C5
 
 - [ ] **Step 1: Update Bonnet C3 icon**
 
-In `memory-bank/doc/products/silk-bonnet.md`, in the Feature highlights table, change:
+In `memory-bank/doc/products/czepek-jedwabny.md`, in the Feature highlights table, change:
 
 ```
 | `lusena.pdp_feature_3_icon` | wind | Done |
@@ -379,7 +379,7 @@ to:
 
 - [ ] **Step 2: Update Scrunchie C5 icon**
 
-In `memory-bank/doc/products/silk-scrunchie.md`, in the Feature highlights table, change:
+In `memory-bank/doc/products/scrunchie-jedwabny.md`, in the Feature highlights table, change:
 
 ```
 | `lusena.pdp_feature_5_icon` | moon | **COMPLETED** (2026-03-28) |
@@ -405,7 +405,7 @@ to:
 
 - [ ] **Step 3: Update Heatless Curlers C5 icon**
 
-In `memory-bank/doc/products/heatless-curlers.md`, in the Feature highlights table, change:
+In `memory-bank/doc/products/walek-do-lokow.md`, in the Feature highlights table, change:
 
 ```
 | `lusena.pdp_feature_5_icon` | heart | Done (2026-03-28) |
@@ -432,7 +432,7 @@ to:
 - [ ] **Step 4: Commit**
 
 ```
-git add memory-bank/doc/products/silk-bonnet.md memory-bank/doc/products/silk-scrunchie.md memory-bank/doc/products/heatless-curlers.md
+git add memory-bank/doc/products/czepek-jedwabny.md memory-bank/doc/products/scrunchie-jedwabny.md memory-bank/doc/products/walek-do-lokow.md
 git commit -m "docs: update icon assignments for bonnet, scrunchie, heatless curlers"
 ```
 

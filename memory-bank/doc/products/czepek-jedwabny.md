@@ -72,7 +72,7 @@ Equal split per §7.2 MOQ (60 / 2 = 30 each). Bonnet gets A+B only (§7.3) — e
 |-------|-------|--------|
 | Page title | Jedwabny czepek do spania 22 momme - ochrona włosów · LUSENA | Done |
 | Meta description | Jedwabny czepek z regulacją obwodu - 22 momme, Grade 6A z Suzhou. Ściągacz pokryty jedwabiem chroni linię włosów. Mniej tarcia, mniej plątania. OEKO-TEX®. | **UPDATED** (2026-03-22: trimmed "Standard 100" — 167→154 chars, under 160 limit) |
-| URL handle | silk-bonnet | Done |
+| URL handle | czepek-jedwabny | Done |
 
 ## Category metafields (Shopify standard)
 

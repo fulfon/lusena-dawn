@@ -50,7 +50,7 @@ Create `snippets/lusena-scrunchie-education.liquid` with the following content:
   Parameters: product (product object), education_price (integer, cents)
 {%- endcomment -%}
 
-{%- if product.handle == 'silk-scrunchie' and education_price != blank -%}
+{%- if product.handle == 'scrunchie-jedwabny' and education_price != blank -%}
 <span data-lusena-scrunchie-education
       data-education-price="{{ education_price | money_without_trailing_zeros }}"
       hidden></span>
@@ -69,7 +69,7 @@ Create `snippets/lusena-scrunchie-education.liquid` with the following content:
   /* ---- Handle-to-label map (Polish instrumental case) ---- */
   var LABELS = {
     'poszewka-jedwabna': 'Taniej z poszewk\u0105 jedwabn\u0105 w koszyku',
-    'silk-bonnet': 'Taniej z czepkiem jedwabnym w koszyku',
+    'czepek-jedwabny': 'Taniej z czepkiem jedwabnym w koszyku',
     'jedwabna-maska-do-spania-3d': 'Taniej z mask\u0105 do spania w koszyku',
     'jedwabny-walek-do-lokow': 'Taniej z wa\u0142kiem do lok\u00f3w w koszyku',
     'nocna-rutyna': 'Taniej z zestawem Nocna Rutyna w koszyku',
@@ -266,7 +266,7 @@ git commit -m "feat(lusena): add scrunchie education price CSS"
 **Files:**
 - Modify: `sections/lusena-main-product.liquid:190` (render call) and `:418` (schema setting)
 
-**Context:** The render call goes just before the sticky ATC render (line 190). The snippet handles its own product-handle guard internally (`product.handle == 'silk-scrunchie'`), so no outer conditional is needed. The schema setting follows the same pattern as the cross-sell price setting at line 412-418.
+**Context:** The render call goes just before the sticky ATC render (line 190). The snippet handles its own product-handle guard internally (`product.handle == 'scrunchie-jedwabny'`), so no outer conditional is needed. The schema setting follows the same pattern as the cross-sell price setting at line 412-418.
 
 - [ ] **Step 1: Add render call**
 
@@ -338,12 +338,12 @@ git commit -m "feat(lusena): wire scrunchie education into PDP section"
 
 **Files:** None (browser testing only)
 
-**Context:** The dev server must be running (`shopify theme dev`). Use `playwright-cli` with a named session for all browser work. The scrunchie product URL is `/products/silk-scrunchie`.
+**Context:** The dev server must be running (`shopify theme dev`). Use `playwright-cli` with a named session for all browser work. The scrunchie product URL is `/products/scrunchie-jedwabny`.
 
 - [ ] **Step 1: Verify default state (empty cart)**
 
 1. Clear the cart (or open incognito)
-2. Navigate to `/products/silk-scrunchie`
+2. Navigate to `/products/scrunchie-jedwabny`
 3. Confirm: price shows **59 zl**, no hint text visible, no education overlay
 4. Confirm: sticky ATC bar shows **59 zl** when scrolling down
 
@@ -351,7 +351,7 @@ git commit -m "feat(lusena): wire scrunchie education into PDP section"
 
 1. Navigate to a qualifying product PDP (e.g., `/products/poszewka-jedwabna`)
 2. Add it to cart
-3. Navigate to `/products/silk-scrunchie`
+3. Navigate to `/products/scrunchie-jedwabny`
 4. Confirm: price shows ~~59 zl~~ **39 zl** with education overlay
 5. Confirm: teal hint reads **"Taniej z poszewka jedwabna w koszyku"** (with diacritics)
 6. Confirm: sticky ATC bar shows **39 zl**

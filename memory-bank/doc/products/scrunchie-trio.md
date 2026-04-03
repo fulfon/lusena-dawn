@@ -29,7 +29,7 @@
 |-------|-------|--------|
 | Price | 139 zł (VAT inclusive) | Done |
 | `lusena.bundle_original_price` | 177 | Done |
-| `lusena.bundle_nudge_map` | `{"silk-scrunchie":{"label":"dwie kolejne jedwabne gumki","handle":"silk-scrunchie","tile_label":"2x Scrunchie jedwabny"}}` | Done |
+| `lusena.bundle_nudge_map` | `{"scrunchie-jedwabny":{"label":"dwie kolejne jedwabne gumki","handle":"scrunchie-jedwabny","tile_label":"2x Scrunchie jedwabny"}}` | Done |
 | Savings | 38 zł (21.5%) | Done |
 | Charge tax | Yes (23% VAT, tax-inclusive) | Done |
 | `lusena.upsell_role` | (none) | Done |

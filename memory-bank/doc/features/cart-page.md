@@ -101,7 +101,7 @@ Triggered for products with `lusena.upsell_primary` metafield. Fallback chain: p
 Detects when both components of a bundle are separately in the cart and offers to combine them into the bundle at a discount.
 
 ### Detection logic (Liquid)
-- Scans `cart.items` for handle combinations: `poszewka-jedwabna` + `silk-bonnet` → Nocna Rutyna (109 zl savings), `poszewka-jedwabna` + `jedwabna-maska-3d` → Piekny Sen (89 zl savings)
+- Scans `cart.items` for handle combinations: `poszewka-jedwabna` + `czepek-jedwabny` → Nocna Rutyna (109 zl savings), `poszewka-jedwabna` + `jedwabna-maska-3d` → Piekny Sen (89 zl savings)
 - Higher savings wins if multiple merges are possible
 - Merge detection runs before regular bundle nudge — merge card takes priority
 

@@ -1,7 +1,7 @@
 # Re-evaluate single product copy — autonomous flow
 
 Paste this prompt into a new session. Replace `{PRODUCT_HANDLE}` with one of:
-`poszewka-jedwabna`, `silk-scrunchie`, `silk-bonnet`, `jedwabna-maska-3d`, `heatless-curlers`
+`poszewka-jedwabna`, `scrunchie-jedwabny`, `czepek-jedwabny`, `jedwabna-maska-3d`, `walek-do-lokow`
 
 ---
 

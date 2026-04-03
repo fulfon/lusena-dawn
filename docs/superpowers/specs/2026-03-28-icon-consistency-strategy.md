@@ -181,10 +181,10 @@ Bundle echo score: 0/3 echoed — correct. The Trio tells a lifestyle story, not
 ### 3. Update product metafield docs (6 files)
 
 Update icon values in the feature highlights tables + animation spec tables:
-- `memory-bank/doc/products/silk-bonnet.md` — C3 icon: wind -> moon, animation spec C3
-- `memory-bank/doc/products/silk-scrunchie.md` — C5 icon: moon -> feather, animation spec C5
+- `memory-bank/doc/products/czepek-jedwabny.md` — C3 icon: wind -> moon, animation spec C3
+- `memory-bank/doc/products/scrunchie-jedwabny.md` — C5 icon: moon -> feather, animation spec C5
 - `memory-bank/doc/products/nocna-rutyna.md` — C3 icon: clock -> moon, C5 icon: wind -> sparkles, animation specs C3+C5
-- `memory-bank/doc/products/heatless-curlers.md` — C5 icon: heart -> feather, animation spec C5
+- `memory-bank/doc/products/walek-do-lokow.md` — C5 icon: heart -> feather, animation spec C5
 - `memory-bank/doc/products/scrunchie-trio.md` — C1 icon: droplets -> palette, C3 icon: wind -> clock, animation specs C1+C3
 - `memory-bank/doc/products/piekny-sen.md` — C1 icon: moon -> heart, C3 icon: heart -> sparkles, animation specs C1+C3
 

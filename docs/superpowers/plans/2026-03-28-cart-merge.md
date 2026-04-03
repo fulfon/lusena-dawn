@@ -51,7 +51,7 @@ Insert the following after line 29 (after the `endfor` of the suppress loop, bef
       when 'poszewka-jedwabna'
         assign merge_has_poszewka = true
         assign merge_poszewka_item = item
-      when 'silk-bonnet'
+      when 'czepek-jedwabny'
         assign merge_has_bonnet = true
         assign merge_bonnet_item = item
       when 'jedwabna-maska-3d'
@@ -512,7 +512,7 @@ Insert the following after line 39 (after the `endfor` of the suppress loop, bef
       when 'poszewka-jedwabna'
         assign merge_has_poszewka = true
         assign merge_poszewka_item = item
-      when 'silk-bonnet'
+      when 'czepek-jedwabny'
         assign merge_has_bonnet = true
         assign merge_bonnet_item = item
       when 'jedwabna-maska-3d'

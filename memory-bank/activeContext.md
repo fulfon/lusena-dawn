@@ -8,10 +8,21 @@
 
 ## Recent completed work
 
+### Product handle standardization (2026-04-03)
+
+Standardized 3 English product handles to Polish for SEO consistency:
+- `silk-bonnet` → `czepek-jedwabny` (research confirmed "czepek" is the dominant PL search term)
+- `silk-scrunchie` → `scrunchie-jedwabny` (matches product title, "scrunchie" is the PL market standard)
+- `heatless-curlers` → `walek-do-lokow` (research confirmed "wałek do loków" is the entire market convention)
+
+35 files updated: theme code (Liquid/JSON), memory bank, product docs (renamed), skills, CSV/Python imports, specs/plans. 5 existing Polish handles unchanged. Product doc files renamed accordingly (`czepek-jedwabny.md`, `scrunchie-jedwabny.md`, `walek-do-lokow.md`).
+
+**Shopify admin action required:** Change URL handles for these 3 products + update `bundle_nudge_map` metafield values for Nocna Rutyna and Scrunchie Trio. Shopify auto-creates 301 redirects.
+
 ### QA fixes — upsell/bundle test findings (2026-04-03)
 
 Comprehensive QA test plan executed (84 tests, all passing). 7 findings documented, 4 fixed:
-- **F1+F7:** Scrunchie education handle mismatches — `jedwabna-maska-do-spania-3d` → `jedwabna-maska-3d`, `jedwabny-walek-do-lokow` → `heatless-curlers` in both Liquid case statement (`lusena-main-product.liquid`) and JS label map (`lusena-scrunchie-education.liquid`).
+- **F1+F7:** Scrunchie education handle mismatches — `jedwabna-maska-do-spania-3d` → `jedwabna-maska-3d`, `jedwabny-walek-do-lokow` → `walek-do-lokow` in both Liquid case statement (`lusena-main-product.liquid`) and JS label map (`lusena-scrunchie-education.liquid`).
 - **F5:** Cart cross-sell card showed scrunchie at 59 zl instead of 39 zl. Added `lusena_cart_cross_sell_price` theme setting (default 3900). Cart drawer and cart page now show current price first, crossed-out original second, with "Taniej w komplecie" education text.
 - **F6:** Bundle swap nudge button stopped working after first successful swap. Added `swapInProgress` guard flag in both cart drawer and cart page — resets on both success and error paths.
 - **Compare price styling unified** — cross-sell card now matches bundle/cart-item pattern: 1.2rem, `--lusena-text-2`, 50% opacity strikethrough. Price order standardized: [current] [~~original~~] across all 8 locations.

@@ -14,7 +14,7 @@ When both bundle components are in the cart as separate items (e.g., poszewka + 
 
 | Components in cart | Target bundle | Handle | Savings |
 |---|---|---|---|
-| `poszewka-jedwabna` + `silk-bonnet` | Nocna Rutyna | `nocna-rutyna` | 109 zl |
+| `poszewka-jedwabna` + `czepek-jedwabny` | Nocna Rutyna | `nocna-rutyna` | 109 zl |
 | `poszewka-jedwabna` + `jedwabna-maska-3d` | Piekny Sen | `piekny-sen` | 89 zl |
 
 Scrunchie Trio is excluded (same-product bundle - can't detect "3 scrunchies" since they share a product handle).

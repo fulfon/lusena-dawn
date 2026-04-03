@@ -55,7 +55,7 @@ This snippet does three things: (A) maps the current product to its bundle compl
     when 'poszewka-jedwabna'
       assign has_complements = true
       assign pdp_product_label = 'poszewke jedwabna'
-      assign complement_1_cart = 'silk-bonnet'
+      assign complement_1_cart = 'czepek-jedwabny'
       assign complement_1_bundle = 'nocna-rutyna'
       assign complement_1_priority = 1
       assign complement_2_cart = 'jedwabna-maska-3d'
@@ -63,7 +63,7 @@ This snippet does three things: (A) maps the current product to its bundle compl
       assign complement_2_priority = 0
       assign complement_count = 2
 
-    when 'silk-bonnet'
+    when 'czepek-jedwabny'
       assign has_complements = true
       assign pdp_product_label = 'czepek jedwabny'
       assign complement_1_cart = 'poszewka-jedwabna'

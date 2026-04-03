@@ -400,7 +400,7 @@ Before Task 6 verification, the owner must create the `lusena.bundle_nudge_map` 
 
 **Nocna Rutyna:**
 ```json
-{"poszewka-jedwabna": "czepek jedwabny", "silk-bonnet": "poszewkę jedwabną"}
+{"poszewka-jedwabna": "czepek jedwabny", "czepek-jedwabny": "poszewkę jedwabną"}
 ```
 
 **Piekny Sen:**
@@ -410,7 +410,7 @@ Before Task 6 verification, the owner must create the `lusena.bundle_nudge_map` 
 
 **Scrunchie Trio:**
 ```json
-{"silk-scrunchie": "dwie kolejne jedwabne gumki"}
+{"scrunchie-jedwabny": "dwie kolejne jedwabne gumki"}
 ```
 
 After setting metafields, update `memory-bank/doc/products/product-metafields-reference.md` with the new `lusena.bundle_nudge_map` definition (type: json, purpose: maps trigger product handle to added item label for nudge card).

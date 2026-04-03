@@ -27,11 +27,11 @@
 |----|----------|-------------|
 | F1 | ~~Low~~ FIXED | **A6.4 — Maska handle mismatch in scrunchie education Liquid.** Fixed: `jedwabna-maska-do-spania-3d` → `jedwabna-maska-3d` in both Liquid case statement and JS label map. Verified on live preview. |
 | F2 | Info | **A4.2 — Discount type is `fixed_amount`, not BXGY.** No fix needed — terminology only. |
-| F3 | ~~Needs review~~ Intentional | **A7.5 — Scrunchie triggers Scrunchie Trio bundle nudge.** Confirmed intentional per bundle strategy: `bundle_nudge_map` metafield on Scrunchie Trio explicitly maps `silk-scrunchie` as trigger. Upsell matrix in `upsell-strategy.md` lists this pairing. A7.5 reclassified as PASS. |
+| F3 | ~~Needs review~~ Intentional | **A7.5 — Scrunchie triggers Scrunchie Trio bundle nudge.** Confirmed intentional per bundle strategy: `bundle_nudge_map` metafield on Scrunchie Trio explicitly maps `scrunchie-jedwabny` as trigger. Upsell matrix in `upsell-strategy.md` lists this pairing. A7.5 reclassified as PASS. |
 | F4 | Intentional | **B6.6 — No nudge after re-adding individual post-swap.** Confirmed intentional per strategy: two suppression rules cover this (bundle in cart → suppress; 2+ distinct products → suppress). Strategy explicitly rejected "upselling when bundle is in cart". |
 | F5 | ~~Medium~~ FIXED | **A7.4 / Manual — Walek cross-sell card shows scrunchie at 59 zl, not 39 zl.** Fixed: added `lusena_cart_cross_sell_price` theme setting (default 3900). Cart drawer and cart page now show crossed-out 59 zl + 39 zl with "Taniej w komplecie" education text. Verified on live preview. |
 | F6 | ~~Medium~~ FIXED | **Manual — Scrunchie Trio nudge CTA error on quick click.** Fixed: added `swapInProgress` boolean guard in both cart drawer and cart page swap handlers to prevent double-execution on quick/double clicks. |
-| F7 | ~~Low~~ FIXED | **Manual / A6.4 — Scrunchie education generic fallback for maska + walek.** Fixed together with F1: `jedwabny-walek-do-lokow` → `heatless-curlers` in both Liquid and JS. Verified on live preview. |
+| F7 | ~~Low~~ FIXED | **Manual / A6.4 — Scrunchie education generic fallback for maska + walek.** Fixed together with F1: `jedwabny-walek-do-lokow` → `walek-do-lokow` in both Liquid and JS. Verified on live preview. |
 
 ---
 
@@ -48,10 +48,10 @@ These tests verify facts: prices, element presence, card logic, threshold math. 
 | # | Product | Handle | Expected Price | Result |
 |---|---------|--------|---------------|--------|
 | A1.1 | Poszewka jedwabna 50x60 | `poszewka-jedwabna` | **269 zl** | PASS |
-| A1.2 | Jedwabny czepek do spania | `silk-bonnet` | **239 zl** | PASS |
+| A1.2 | Jedwabny czepek do spania | `czepek-jedwabny` | **239 zl** | PASS |
 | A1.3 | Jedwabna maska 3D do spania | `jedwabna-maska-3d` | **169 zl** | PASS |
-| A1.4 | Jedwabny walek do lokow | `heatless-curlers` | **219 zl** | PASS |
-| A1.5 | Scrunchie jedwabny | `silk-scrunchie` | **59 zl** | PASS |
+| A1.4 | Jedwabny walek do lokow | `walek-do-lokow` | **219 zl** | PASS |
+| A1.5 | Scrunchie jedwabny | `scrunchie-jedwabny` | **59 zl** | PASS |
 
 ---
 
@@ -115,10 +115,10 @@ These tests verify facts: prices, element presence, card logic, threshold math. 
 
 | # | Setup | Visit scrunchie PDP | Expected Price | Result |
 |---|-------|-------------------|---------------|--------|
-| A6.1 | Empty cart | `/products/silk-scrunchie` | **59 zl** (no strikethrough) | PASS — 59 zl, education row hidden |
-| A6.2 | Add poszewka first | `/products/silk-scrunchie` | **~~59 zl~~ 39 zl** + hint text | PASS — "Taniej z poszewka jedwabna w koszyku" |
-| A6.3 | Add bonnet first | `/products/silk-scrunchie` | **~~59 zl~~ 39 zl** + hint text | PASS — "Taniej z czepkiem jedwabnym w koszyku" |
-| A6.4 | Add maska first | `/products/silk-scrunchie` | **~~59 zl~~ 39 zl** + hint text | PASS — price correct, but generic "Taniej w komplecie" (see F1) |
+| A6.1 | Empty cart | `/products/scrunchie-jedwabny` | **59 zl** (no strikethrough) | PASS — 59 zl, education row hidden |
+| A6.2 | Add poszewka first | `/products/scrunchie-jedwabny` | **~~59 zl~~ 39 zl** + hint text | PASS — "Taniej z poszewka jedwabna w koszyku" |
+| A6.3 | Add bonnet first | `/products/scrunchie-jedwabny` | **~~59 zl~~ 39 zl** + hint text | PASS — "Taniej z czepkiem jedwabnym w koszyku" |
+| A6.4 | Add maska first | `/products/scrunchie-jedwabny` | **~~59 zl~~ 39 zl** + hint text | PASS — price correct, but generic "Taniej w komplecie" (see F1) |
 | A6.5 | Check sticky ATC price | Scroll down | Sticky bar also shows 39 zl | PASS — sticky shows "39 zl" |
 
 ---

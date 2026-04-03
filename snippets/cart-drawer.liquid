@@ -44,7 +44,7 @@
       when 'poszewka-jedwabna'
         assign merge_has_poszewka = true
         assign merge_poszewka_item = item
-      when 'silk-bonnet'
+      when 'czepek-jedwabny'
         assign merge_has_bonnet = true
         assign merge_bonnet_item = item
       when 'jedwabna-maska-3d'
@@ -1503,7 +1503,7 @@
             assign upsell_display_color = upsell_color_label
             assign upsell_display_price = upsell_variant_1.price | money_without_trailing_zeros
             assign upsell_is_cross_sell = false
-            if upsell_product_1.handle == 'silk-scrunchie' and settings.lusena_cart_cross_sell_price != blank
+            if upsell_product_1.handle == 'scrunchie-jedwabny' and settings.lusena_cart_cross_sell_price != blank
               assign upsell_is_cross_sell = true
               assign upsell_original_price = upsell_variant_1.price | money_without_trailing_zeros
               assign upsell_display_price = settings.lusena_cart_cross_sell_price | money_without_trailing_zeros

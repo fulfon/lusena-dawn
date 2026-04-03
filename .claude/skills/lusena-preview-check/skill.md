@@ -92,10 +92,10 @@ Before doing ANY browser work, invoke the `/playwright-cli` skill using the Skil
 | Name | Path |
 |------|------|
 | Pillowcase (Poszewka) | /products/poszewka-jedwabna |
-| Bonnet (Czepek) | /products/silk-bonnet |
-| Scrunchie | /products/silk-scrunchie |
+| Bonnet (Czepek) | /products/czepek-jedwabny |
+| Scrunchie | /products/scrunchie-jedwabny |
 | Eye mask (Maska 3D) | /products/jedwabna-maska-3d |
-| Curlers (Walek) | /products/heatless-curlers |
+| Curlers (Walek) | /products/walek-do-lokow |
 | Bundle: Nocna Rutyna | /products/nocna-rutyna |
 | Bundle: Piekny Sen | /products/piekny-sen |
 | Bundle: Scrunchie Trio | /products/scrunchie-trio |

@@ -78,7 +78,7 @@ Single color (B only per §7.3): Pink/rose is the dominant #1 curler color globa
 |-------|-------|--------|
 | Page title | Jedwabny wałek do loków 22 momme - loki bez ciepła · LUSENA | Copy finalized |
 | Meta description | Jedwabny wałek do loków LUSENA 22 momme. Owijasz wilgotne włosy na noc - rano gotowe loki. Jedwab ogranicza tarcie i chroni pielęgnację. | **UPDATED** (2026-03-22: trimmed from ~186 to ~136 chars, within 160 limit) |
-| URL handle | heatless-curlers | |
+| URL handle | walek-do-lokow | |
 
 ## Category metafields (Shopify standard)
 

@@ -67,7 +67,7 @@ Equal split per §7.2 MOQ (150 / 3 = 50 each). Trio bundle uses one of each (A+B
 |-------|-------|--------|
 | Page title | Jedwabny scrunchie 22 momme - mniej łamania włosów · LUSENA | |
 | Meta description | Scrunchie z prawdziwego jedwabiu morwowego 22 momme. Mniej tarcia, mniej łamania - włosy poczują różnicę. Certyfikat OEKO-TEX® Standard 100. | |
-| URL handle | silk-scrunchie | |
+| URL handle | scrunchie-jedwabny | |
 
 ## Category metafields (Shopify standard)
 

@@ -741,10 +741,10 @@ Navigate to each PDP and verify checkbox visibility:
 | URL | Expected |
 |-----|----------|
 | `/products/poszewka-jedwabna` | Checkbox visible |
-| `/products/silk-bonnet` | Checkbox visible |
+| `/products/czepek-jedwabny` | Checkbox visible |
 | `/products/jedwabna-maska-3d` | Checkbox visible |
-| `/products/heatless-curlers` | Checkbox visible |
-| `/products/silk-scrunchie` | Checkbox HIDDEN (self-exclusion) |
+| `/products/walek-do-lokow` | Checkbox visible |
+| `/products/scrunchie-jedwabny` | Checkbox HIDDEN (self-exclusion) |
 | `/products/nocna-rutyna` | Checkbox HIDDEN (bundle template) |
 | `/products/piekny-sen` | Checkbox HIDDEN (bundle template) |
 | `/products/scrunchie-trio` | Checkbox HIDDEN (bundle template) |

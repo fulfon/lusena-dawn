@@ -5,7 +5,7 @@
 
   assign edu_active = false
   assign edu_label = ''
-  if product.handle == 'silk-scrunchie' and section.settings.scrunchie_education_price != blank
+  if product.handle == 'scrunchie-jedwabny' and section.settings.scrunchie_education_price != blank
     for item in cart.items
       assign item_handle = item.product.handle
       if item_handle contains 'scrunchie'
@@ -14,11 +14,11 @@
       case item_handle
         when 'poszewka-jedwabna'
           assign edu_label = 'Taniej z poszewką jedwabną w koszyku'
-        when 'silk-bonnet'
+        when 'czepek-jedwabny'
           assign edu_label = 'Taniej z czepkiem jedwabnym w koszyku'
         when 'jedwabna-maska-3d'
           assign edu_label = 'Taniej z maską do spania w koszyku'
-        when 'heatless-curlers'
+        when 'walek-do-lokow'
           assign edu_label = 'Taniej z wałkiem do loków w koszyku'
         when 'nocna-rutyna'
           assign edu_label = 'Taniej z zestawem Nocna Rutyna w koszyku'
@@ -440,8 +440,8 @@
       "type": "text",
       "id": "cross_sell_handle",
       "label": "Handle produktu cross-sell",
-      "default": "silk-scrunchie",
-      "info": "URL handle produktu (np. silk-scrunchie). Znajdziesz go w Shopify admin > Products > SEO."
+      "default": "scrunchie-jedwabny",
+      "info": "URL handle produktu (np. scrunchie-jedwabny). Znajdziesz go w Shopify admin > Products > SEO."
     },
     {
       "type": "number",

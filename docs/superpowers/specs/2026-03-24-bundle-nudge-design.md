@@ -27,7 +27,7 @@ Nocna Rutyna:
 ```json
 {
   "poszewka-jedwabna": "czepek jedwabny",
-  "silk-bonnet": "poszewkę jedwabną"
+  "czepek-jedwabny": "poszewkę jedwabną"
 }
 ```
 
@@ -42,7 +42,7 @@ Piekny Sen:
 Scrunchie Trio:
 ```json
 {
-  "silk-scrunchie": "dwie kolejne jedwabne gumki"
+  "scrunchie-jedwabny": "dwie kolejne jedwabne gumki"
 }
 ```
 

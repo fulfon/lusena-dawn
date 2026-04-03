@@ -270,7 +270,7 @@ Full bundle strategy, pricing, and economics: `memory-bank/doc/bundle-strategy.m
 
 These metafields are **identical across all LUSENA silk products** (pillowcase, scrunchie, bonnet, 3D eye mask). They were validated once and must be copy-pasted as-is. **Do not rewrite, "improve", or customize them** - they are shared defaults, not creative fields.
 
-**Exception:** Heatless curlers use the same 22 momme 6A silk but have a PP cotton filling inside. All 3 universal cards apply. Care steps need custom values due to the filling. See `memory-bank/doc/products/heatless-curlers.md` for details.
+**Exception:** Heatless curlers use the same 22 momme 6A silk but have a PP cotton filling inside. All 3 universal cards apply. Care steps need custom values due to the filling. See `memory-bank/doc/products/walek-do-lokow.md` for details.
 
 ### Universal specs (same for all standard silk products)
 
@@ -571,9 +571,9 @@ These metafields are only used on bundle products (assigned to `product.bundle` 
 
 | Bundle | JSON value |
 |--------|-----------|
-| Nocna Rutyna | `{"poszewka-jedwabna":{"label":"czepek jedwabny","handle":"silk-bonnet"},"silk-bonnet":{"label":"poszewkę jedwabną","handle":"poszewka-jedwabna"}}` |
+| Nocna Rutyna | `{"poszewka-jedwabna":{"label":"czepek jedwabny","handle":"czepek-jedwabny"},"czepek-jedwabny":{"label":"poszewkę jedwabną","handle":"poszewka-jedwabna"}}` |
 | Piekny Sen | `{"poszewka-jedwabna":{"label":"maskę 3D","handle":"jedwabna-maska-3d"},"jedwabna-maska-3d":{"label":"poszewkę jedwabną","handle":"poszewka-jedwabna"}}` |
-| Scrunchie Trio | `{"silk-scrunchie":{"label":"dwie kolejne jedwabne gumki","handle":"silk-scrunchie","tile_label":"2x Scrunchie jedwabny"}}` |
+| Scrunchie Trio | `{"scrunchie-jedwabny":{"label":"dwie kolejne jedwabne gumki","handle":"scrunchie-jedwabny","tile_label":"2x Scrunchie jedwabny"}}` |
 
 ### Setup in Shopify admin
 

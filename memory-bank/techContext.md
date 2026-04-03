@@ -170,10 +170,10 @@ Base URL for main repo: `http://127.0.0.1:9292{path}`
 | Handle | Name | Type | Path |
 |--------|------|------|------|
 | `poszewka-jedwabna` | Poszewka jedwabna 50x60 | Standard PDP | `/products/poszewka-jedwabna` |
-| `silk-bonnet` | Jedwabny czepek do spania | Standard PDP | `/products/silk-bonnet` |
-| `silk-scrunchie` | Scrunchie jedwabny | Standard PDP | `/products/silk-scrunchie` |
+| `czepek-jedwabny` | Jedwabny czepek do spania | Standard PDP | `/products/czepek-jedwabny` |
+| `scrunchie-jedwabny` | Scrunchie jedwabny | Standard PDP | `/products/scrunchie-jedwabny` |
 | `jedwabna-maska-3d` | Jedwabna maska 3D do spania | Standard PDP | `/products/jedwabna-maska-3d` |
-| `heatless-curlers` | Jedwabny walek do lokow | Standard PDP | `/products/heatless-curlers` |
+| `walek-do-lokow` | Jedwabny walek do lokow | Standard PDP | `/products/walek-do-lokow` |
 | `nocna-rutyna` | Nocna Rutyna | Bundle PDP | `/products/nocna-rutyna` |
 | `piekny-sen` | Piekny Sen | Bundle PDP | `/products/piekny-sen` |
 | `scrunchie-trio` | Scrunchie Trio | Bundle PDP | `/products/scrunchie-trio` |

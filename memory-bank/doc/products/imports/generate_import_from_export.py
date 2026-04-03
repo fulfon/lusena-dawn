@@ -66,7 +66,7 @@ updates['poszewka-jedwabna'] = {
 # ============================================================
 # SILK BONNET (re-evaluated 2026-03-22)
 # ============================================================
-updates['silk-bonnet'] = {
+updates['czepek-jedwabny'] = {
     35: 'Jedwabny czepek do spania 22 momme - ochrona w\u0142os\u00f3w \u00b7 LUSENA',
     36: 'Jedwabny czepek z regulacj\u0105 obwodu - 22 momme, Grade 6A z Suzhou. \u015aci\u0105gacz pokryty jedwabiem chroni lini\u0119 w\u0142os\u00f3w. Mniej tarcia, mniej pl\u0105tania. OEKO-TEX\u00ae.',
     37: 'FALSE',
@@ -125,7 +125,7 @@ updates['jedwabna-maska-3d'] = {
 # ============================================================
 # SILK SCRUNCHIE (re-evaluated 2026-03-22)
 # ============================================================
-updates['silk-scrunchie'] = {
+updates['scrunchie-jedwabny'] = {
     35: 'Jedwabny scrunchie 22 momme - mniej \u0142amania w\u0142os\u00f3w \u00b7 LUSENA',
     36: 'Scrunchie z prawdziwego jedwabiu morwowego 22 momme. Mniej tarcia, mniej \u0142amania - w\u0142osy poczuj\u0105 r\u00f3\u017cnic\u0119. Certyfikat OEKO-TEX\u00ae Standard 100.',
     37: 'FALSE',
@@ -154,7 +154,7 @@ updates['silk-scrunchie'] = {
 # ============================================================
 # HEATLESS CURLERS (re-evaluated 2026-03-22)
 # ============================================================
-updates['heatless-curlers'] = {
+updates['walek-do-lokow'] = {
     35: 'Jedwabny wa\u0142ek do lok\u00f3w 22 momme - loki bez ciep\u0142a \u00b7 LUSENA',
     36: 'Jedwabny wa\u0142ek do lok\u00f3w LUSENA 22 momme. Owijasz wilgotne w\u0142osy na noc - rano gotowe loki. Jedwab ogranicza tarcie i chroni piel\u0119gnacj\u0119.',
     37: 'FALSE',

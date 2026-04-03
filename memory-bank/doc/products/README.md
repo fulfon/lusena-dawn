@@ -9,10 +9,10 @@ products/
 ├── README.md               ← this file
 ├── _template.md             ← blank template for new products
 ├── poszewka-jedwabna.md     ← product docs (one per product, named by URL handle)
-├── silk-bonnet.md
-├── silk-scrunchie.md
+├── czepek-jedwabny.md
+├── scrunchie-jedwabny.md
 ├── jedwabna-maska-3d.md
-├── heatless-curlers.md
+├── walek-do-lokow.md
 ├── exports/                 ← fresh CSV exported FROM Shopify (overwrite each time)
 │   └── products_export.csv              (all products — export before every update)
 └── imports/                 ← generated CSVs to import INTO Shopify
@@ -47,10 +47,10 @@ products/
 | Handle | Product | Tier | Status |
 |--------|---------|------|--------|
 | `poszewka-jedwabna` | Poszewka jedwabna 50×60 | 1 (flagship) | Re-evaluated 2026-03-22 |
-| `silk-scrunchie` | Scrunchie jedwabny | 2 | Re-evaluated 2026-03-22 |
-| `silk-bonnet` | Jedwabny czepek do spania | 2 | Re-evaluated 2026-03-22 |
+| `scrunchie-jedwabny` | Scrunchie jedwabny | 2 | Re-evaluated 2026-03-22 |
+| `czepek-jedwabny` | Jedwabny czepek do spania | 2 | Re-evaluated 2026-03-22 |
 | `jedwabna-maska-3d` | Jedwabna maska 3D do spania | 3 | Re-evaluated 2026-03-22 |
-| `heatless-curlers` | Jedwabny wałek do loków | 2 | Re-evaluated 2026-03-22 |
+| `walek-do-lokow` | Jedwabny wałek do loków | 2 | Re-evaluated 2026-03-22 |
 | `nocna-rutyna` | Nocna Rutyna (bundle) | - | Re-evaluated 2026-03-22 |
 | `piekny-sen` | Piękny Sen (bundle) | - | Copywriter flow 2026-03-22 |
 | `scrunchie-trio` | Scrunchie Trio (bundle) | - | Copywriter flow 2026-03-22 |
@@ -144,7 +144,7 @@ The export CSVs in `exports/` were exported from Shopify and may contain **older
 
 ### Heatless curlers: expected deviations
 
-The heatless curler is the only product with PP cotton filling inside the silk. This causes 8 legitimate deviations from the standard template (custom care steps, custom material spec, different feature icons, "użytkowania" not "pielęgnacji" in packaging, etc.). See `heatless-curlers.md` for details. These are correct and intentional — do not "fix" them to match other products.
+The heatless curler is the only product with PP cotton filling inside the silk. This causes 8 legitimate deviations from the standard template (custom care steps, custom material spec, different feature icons, "użytkowania" not "pielęgnacji" in packaging, etc.). See `walek-do-lokow.md` for details. These are correct and intentional — do not "fix" them to match other products.
 
 ### Post-import checklist
 

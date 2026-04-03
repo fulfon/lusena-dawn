@@ -5,7 +5,7 @@
   Parameters: product (product object), education_price (integer, cents)
 {%- endcomment -%}
 
-{%- if product.handle == 'silk-scrunchie' and education_price != blank -%}
+{%- if product.handle == 'scrunchie-jedwabny' and education_price != blank -%}
 <script>
 (function lusenaScrunchieEducation() {
   var root = document.querySelector('[data-lusena-product-section]');
@@ -16,9 +16,9 @@
   /* ---- Handle-to-label map (Polish instrumental case) ---- */
   var LABELS = {
     'poszewka-jedwabna': 'Taniej z poszewk\u0105 jedwabn\u0105 w koszyku',
-    'silk-bonnet': 'Taniej z czepkiem jedwabnym w koszyku',
+    'czepek-jedwabny': 'Taniej z czepkiem jedwabnym w koszyku',
     'jedwabna-maska-3d': 'Taniej z mask\u0105 do spania w koszyku',
-    'heatless-curlers': 'Taniej z wa\u0142kiem do lok\u00f3w w koszyku',
+    'walek-do-lokow': 'Taniej z wa\u0142kiem do lok\u00f3w w koszyku',
     'nocna-rutyna': 'Taniej z zestawem Nocna Rutyna w koszyku',
     'piekny-sen': 'Taniej z zestawem Pi\u0119kny Sen w koszyku'
   };

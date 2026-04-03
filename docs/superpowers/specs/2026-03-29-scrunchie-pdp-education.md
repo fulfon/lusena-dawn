@@ -36,7 +36,7 @@ The hint line names the specific qualifying product using Polish instrumental ca
 | Handle | Hint text |
 |--------|-----------|
 | `poszewka-jedwabna` | Taniej z poszewką jedwabną w koszyku |
-| `silk-bonnet` | Taniej z czepkiem jedwabnym w koszyku |
+| `czepek-jedwabny` | Taniej z czepkiem jedwabnym w koszyku |
 | `jedwabna-maska-do-spania-3d` | Taniej z maską do spania w koszyku |
 | `jedwabny-walek-do-lokow` | Taniej z wałkiem do loków w koszyku |
 | `nocna-rutyna` | Taniej z zestawem Nocna Rutyna w koszyku |

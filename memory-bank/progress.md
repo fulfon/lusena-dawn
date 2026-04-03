@@ -169,10 +169,10 @@ Body/main Tailwind classes moved to `lusena-foundations.css` global rules (body 
 
 **Products:**
 - [~] **Poszewka jedwabna 50×60** — basic info, pricing (269 zł), shipping, SEO, most metafields done. Colors FINALIZED: A-Czarny (40) + B-Brudny róż (40) + C-Szampan (40). Pending: cost per item, rename Shopify variants, media, feature highlights, collections. Full status: `memory-bank/doc/products/poszewka-jedwabna.md`
-- [x] **Scrunchie jedwabny** — Copy finalized (2026-03-14). Colors FINALIZED: A-Czarny (50) + B-Brudny róż (50) + C-Szampan (50). Full status: `memory-bank/doc/products/silk-scrunchie.md`
-- [x] **Bonnet jedwabny (czepek do spania)** — Copy finalized (2026-03-14). Price: 239 zł. Colors FINALIZED: A-Czarny (30) + B-Brudny róż (30). Full status: `memory-bank/doc/products/silk-bonnet.md`
+- [x] **Scrunchie jedwabny** — Copy finalized (2026-03-14). Colors FINALIZED: A-Czarny (50) + B-Brudny róż (50) + C-Szampan (50). Full status: `memory-bank/doc/products/scrunchie-jedwabny.md`
+- [x] **Bonnet jedwabny (czepek do spania)** — Copy finalized (2026-03-14). Price: 239 zł. Colors FINALIZED: A-Czarny (30) + B-Brudny róż (30). Full status: `memory-bank/doc/products/czepek-jedwabny.md`
 - [x] **Jedwabna maska 3D do spania** — Copy finalized (2026-03-14). Price: 169 zł. Color FINALIZED: A-Czarny (40). Full status: `memory-bank/doc/products/jedwabna-maska-3d.md`
-- [x] **Heatless curlers (Jedwabny wałek do loków)** — Copy finalized (2026-03-15). Price: 219 zł. Color FINALIZED: B-Brudny róż (50). Full status: `memory-bank/doc/products/heatless-curlers.md`
+- [x] **Heatless curlers (Jedwabny wałek do loków)** — Copy finalized (2026-03-15). Price: 219 zł. Color FINALIZED: B-Brudny róż (50). Full status: `memory-bank/doc/products/walek-do-lokow.md`
 
 ## Bundle Strategy & Implementation
 
