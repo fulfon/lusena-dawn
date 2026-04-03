@@ -8,6 +8,10 @@
 
 ## Recent completed work
 
+### Wide container tier for trust bar (2026-04-03)
+
+Added `.lusena-container--wide` (max-width: 180rem / 1800px) to `lusena-foundations.css` as a third container tier between standard (120rem) and full-bleed. Applied to trust bar section so items spread further apart on wide screens. Explored applying to bestsellers but reverted — product card grids need fixed proportions; wide containers only suit utility strips with discrete, evenly-spaced items.
+
 ### Packaging list fix + CSV icon sync (2026-04-03)
 
 Fixed "Co zawiera opakowanie" accordion rendering all items on one line instead of separate `<li>` entries. Root cause: CSV import stored `list.single_line_text_field` metafield as a single semicolon-separated string. Fix: defensive split in `lusena-pdp-buybox-panels.liquid` (checks if array has 1 entry containing `'; '`, splits it). Same fix applied to `pdp_care_steps` for safety. Also synced 6 feature card icon changes from product MD docs into the import script and regenerated CSV (nocna-rutyna C3/C5, piekny-sen C1/C3, scrunchie-trio C1/C3). Shopify product data now fully in sync with codebase. Handle renames applied in Shopify admin, `bundle_nudge_map` set for all 3 bundles.

@@ -91,7 +91,7 @@ After adding or expanding CSS in any `{% stylesheet %}` block:
 | `lusena-content-flow*` | `lusena-content-flow--tight` | Container rhythm |
 | `lusena-gap-*` | `lusena-gap-heading` | Element margins |
 | `lusena-type-*` | `lusena-type-h1` | Typography classes |
-| `lusena-container*` | `lusena-container--narrow` | Layout containers |
+| `lusena-container*` | `lusena-container--narrow`, `--wide` | Layout containers |
 | `lusena-grid--*` | `lusena-grid--3` | Grid layouts |
 | `lusena-stack*` | `lusena-stack--tight` | Flex-col + spacing |
 | `lusena-btn*` | `lusena-btn--primary` | Button variants |

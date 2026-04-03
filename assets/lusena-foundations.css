@@ -377,6 +377,9 @@ textarea:focus-visible {
   margin-inline: auto;
   padding-inline: var(--lusena-space-2);
 }
+.lusena-container--wide {
+  max-width: 180rem;
+}
 
 @media (min-width: 768px) {
   .lusena-container { padding-inline: var(--lusena-space-4); }

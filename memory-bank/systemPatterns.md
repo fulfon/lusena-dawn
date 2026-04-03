@@ -52,6 +52,15 @@
 
 Modifier: `lusena-spacing--snug-top` — reduces top to 32/48px for heroes sharing bg with header.
 
+### Container width tiers
+| Class | Max-width | Usage |
+|-------|-----------|-------|
+| `lusena-container--narrow` | 80rem (800px) | Text-focused (FAQ, CTA, articles) |
+| `lusena-container` | 120rem (1200px) | Most content sections |
+| `lusena-container--wide` | 180rem (1800px) | Utility strips (trust bar) — not for product grids |
+
+Note: `--wide` suits discrete, evenly-spaced items only. Product cards/grids break at this width (images grow too tall or gaps become excessive).
+
 ### Container rhythm: content-flow utilities
 - `lusena-content-flow` — 24px (standard)
 - `lusena-content-flow--tight` — 16px (kicker + heading pairs)
