@@ -28,7 +28,7 @@
 |-------|-------|--------|
 | Price | 349 zł (VAT inclusive) | Done |
 | `lusena.bundle_original_price` | 438 | Done |
-| `lusena.bundle_nudge_map` | `{"poszewka-jedwabna":{"label":"maske 3D","handle":"jedwabna-maska-3d"},"jedwabna-maska-3d":{"label":"poszewke jedwabna","handle":"poszewka-jedwabna"}}` | Done |
+| `lusena.bundle_nudge_map` | `{"poszewka-jedwabna":{"label":"maskę 3D","handle":"jedwabna-maska-3d"},"jedwabna-maska-3d":{"label":"poszewkę jedwabną","handle":"poszewka-jedwabna"}}` | Done |
 | Savings | 89 zł (20.3%) | Done |
 | Charge tax | Yes (23% VAT, tax-inclusive) | Done |
 | `lusena.upsell_role` | bundle | Done |

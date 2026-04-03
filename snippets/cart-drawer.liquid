@@ -1499,10 +1499,7 @@
               endif
             endif
 
-            assign upsell_message_metafield = upsell_product_1.metafields.lusena.upsell_message
-            assign upsell_message = upsell_message_metafield.value | default: settings.lusena_cart_upsell_message_fallback
             assign upsell_display_title = upsell_product_1.title
-            assign upsell_display_message = upsell_message
             assign upsell_display_color = upsell_color_label
             assign upsell_display_price = upsell_variant_1.price | money_without_trailing_zeros
             assign upsell_is_cross_sell = false
@@ -1510,7 +1507,6 @@
               assign upsell_is_cross_sell = true
               assign upsell_original_price = upsell_variant_1.price | money_without_trailing_zeros
               assign upsell_display_price = settings.lusena_cart_cross_sell_price | money_without_trailing_zeros
-              assign upsell_display_message = 'Taniej w komplecie'
             endif
           -%}
           <div class="lusena-cart-drawer__upsell" data-cart-upsell-zone aria-live="polite">
@@ -1672,7 +1668,9 @@
                   </div>
                   <div class="lusena-upsell-card__xs-info">
                     <p class="lusena-upsell-card__xs-title">{{ upsell_display_title | escape }}</p>
-                    <p class="lusena-upsell-card__xs-msg">{{ upsell_display_message | escape }}</p>
+                    {%- if upsell_is_cross_sell -%}
+                      <p class="lusena-upsell-card__xs-msg">Taniej w komplecie</p>
+                    {%- endif -%}
                     {%- if upsell_display_color != blank -%}
                       <p class="lusena-upsell-card__xs-color">
                         Kolor: <span>{{ upsell_display_color | escape }}</span>

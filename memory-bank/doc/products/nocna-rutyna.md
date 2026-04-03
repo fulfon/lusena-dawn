@@ -28,7 +28,7 @@
 |-------|-------|--------|
 | Price | 399 zł (VAT inclusive) | Done |
 | `lusena.bundle_original_price` | 508 | Done |
-| `lusena.bundle_nudge_map` | `{"poszewka-jedwabna":{"label":"czepek jedwabny","handle":"silk-bonnet"},"silk-bonnet":{"label":"poszewke jedwabna","handle":"poszewka-jedwabna"}}` | Done |
+| `lusena.bundle_nudge_map` | `{"poszewka-jedwabna":{"label":"czepek jedwabny","handle":"silk-bonnet"},"silk-bonnet":{"label":"poszewkę jedwabną","handle":"poszewka-jedwabna"}}` | Done |
 | Savings | 109 zł (21.5%) | Done |
 | Charge tax | Yes (23% VAT, tax-inclusive) | Done |
 | `lusena.upsell_role` | bundle | Done |

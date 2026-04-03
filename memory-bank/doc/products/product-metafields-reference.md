@@ -571,8 +571,8 @@ These metafields are only used on bundle products (assigned to `product.bundle` 
 
 | Bundle | JSON value |
 |--------|-----------|
-| Nocna Rutyna | `{"poszewka-jedwabna":{"label":"czepek jedwabny","handle":"silk-bonnet"},"silk-bonnet":{"label":"poszewke jedwabna","handle":"poszewka-jedwabna"}}` |
-| Piekny Sen | `{"poszewka-jedwabna":{"label":"maske 3D","handle":"jedwabna-maska-3d"},"jedwabna-maska-3d":{"label":"poszewke jedwabna","handle":"poszewka-jedwabna"}}` |
+| Nocna Rutyna | `{"poszewka-jedwabna":{"label":"czepek jedwabny","handle":"silk-bonnet"},"silk-bonnet":{"label":"poszewkę jedwabną","handle":"poszewka-jedwabna"}}` |
+| Piekny Sen | `{"poszewka-jedwabna":{"label":"maskę 3D","handle":"jedwabna-maska-3d"},"jedwabna-maska-3d":{"label":"poszewkę jedwabną","handle":"poszewka-jedwabna"}}` |
 | Scrunchie Trio | `{"silk-scrunchie":{"label":"dwie kolejne jedwabne gumki","handle":"silk-scrunchie","tile_label":"2x Scrunchie jedwabny"}}` |
 
 ### Setup in Shopify admin
