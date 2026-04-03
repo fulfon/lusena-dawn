@@ -61,9 +61,10 @@ function Get-SlotStatus {
                     $commitLog = git log "main..$($slot.Branch)" --oneline 2>$null
                     if ($commitLog) {
                         $slot.Commits = ($commitLog | Measure-Object).Count
-                        # Check if branch content is already on main (squash-merged)
-                        git diff main $slot.Branch --quiet 2>$null
-                        if ($LASTEXITCODE -eq 0) { $slot.Merged = $true }
+                    }
+                    # Detect merged: renamed branch, at main, nothing uncommitted
+                    if ($slot.Branch -notmatch '^work/\d+$' -and $slot.Commits -eq 0 -and -not $slot.Uncommitted) {
+                        $slot.Merged = $true
                     }
                 }
                 Pop-Location
@@ -100,7 +101,7 @@ function Show-Menu {
             $label += " $($s.Num)  $($s.Branch)"
             Write-Host $label -ForegroundColor White -NoNewline
             Write-Host "  uncommitted changes!" -ForegroundColor Red
-        } elseif ($s.Commits -gt 0 -and $s.Merged) {
+        } elseif ($s.Merged) {
             $label += " $($s.Num)  $($s.Branch)"
             Write-Host $label -ForegroundColor White -NoNewline
             Write-Host "  merged" -ForegroundColor DarkCyan
@@ -132,17 +133,17 @@ function Invoke-AutoCleanup {
     $branch = git -C $slotPath rev-parse --abbrev-ref HEAD 2>$null
     if (-not $branch) { return }
 
+    # Guard: branch must have been renamed (work was started)
+    if ($branch -match '^work/\d+$') { return }
+
     # Guard: no uncommitted changes
     $uncommitted = git -C $slotPath status --porcelain 2>$null
     if ($uncommitted) { return }
 
-    # Guard: must have commits ahead of main (actual work was done)
+    # Guard: branch must be at main (merged + reset)
     $commitLog = git -C $slotPath log "main..$branch" --oneline 2>$null
-    if (-not $commitLog -or ($commitLog | Measure-Object).Count -eq 0) { return }
-
-    # Guard: branch content must match main (squash-merged)
-    git -C $slotPath diff main $branch --quiet 2>$null
-    if ($LASTEXITCODE -ne 0) { return }
+    $commitsAhead = if ($commitLog) { ($commitLog | Measure-Object).Count } else { 0 }
+    if ($commitsAhead -gt 0) { return }
 
     # All conditions met - safe to clean
     Write-Host ""
@@ -400,6 +401,10 @@ function Invoke-MergeToMain {
 
     git -C $mainRepo commit -m $commitMsg 2>$null
     Write-Host "  Merged into main." -ForegroundColor Green
+
+    # Reset worktree branch to main so auto-cleanup detects the merge
+    git -C $target.Path reset --hard main 2>$null
+
     Write-Host ""
     Write-Host "  Note: memory bank may not reflect this work" -ForegroundColor Yellow
     Write-Host "  (agent didn't run /lusena-worktree-sync)." -ForegroundColor Yellow

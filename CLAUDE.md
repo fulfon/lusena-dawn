@@ -157,6 +157,11 @@ When the task is complete:
    git -C "C:\Users\Karol\Documents\projekty_VSCode\shopify-lusena-dev\lusena-dawn" commit -m "feat(lusena): description"
    ```
    **Why `git -C`?** You cannot `git checkout main` in a worktree because `main` is already checked out in the main repo. `git -C <path>` runs the command in that directory without changing your cwd.
+   
+   **Then reset your worktree branch to main** so the launcher detects the merge and auto-cleans on exit:
+   ```
+   git reset --hard main
+   ```
 5. **If there are merge conflicts: STOP.** Do NOT resolve them yourself. Instead:
    - Analyze what files conflict and why (e.g., another instance edited the same section)
    - Explain the conflict to the user clearly
