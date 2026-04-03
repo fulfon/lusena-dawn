@@ -8,6 +8,10 @@
 
 ## Recent completed work
 
+### Bundle mobile sticky ATC pricing fix (2026-04-03)
+
+Replaced "Oszczędzasz X zł" savings text with strikethrough original price (`<s>`) on mobile bundle sticky bar - now matches desktop pattern. Added image placeholder divs for bundles without product images yet. Fixed Dawn `div:empty` trap hiding placeholders (bumped `.lusena-sticky-atc__image` to 0-2-0 specificity + `display: block`). 2 files: `lusena-bundle-sticky-atc.liquid`, `lusena-pdp.css`.
+
 ### Product handle standardization (2026-04-03)
 
 Standardized 3 English product handles to Polish for SEO consistency:

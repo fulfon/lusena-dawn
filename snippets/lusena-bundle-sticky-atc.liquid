@@ -49,15 +49,17 @@
           width="44"
           height="44"
         >
+      {%- else -%}
+        <div class="lusena-sticky-atc__image lusena-sticky-atc__image--mobile"></div>
       {%- endif -%}
       <div class="lusena-sticky-atc__meta">
         <span class="lusena-sticky-atc__price">
           {{ current_variant.price | money_without_trailing_zeros }}
         </span>
         {%- if has_savings -%}
-          <span class="lusena-sticky-atc__variant">
-            {{ section.settings.savings_label | default: 'Oszczędzasz' | escape }} {{ original_price_cents | minus: current_variant.price | money_without_trailing_zeros }}
-          </span>
+          <s class="lusena-sticky-atc__variant">
+            {{ original_price_cents | money_without_trailing_zeros }}
+          </s>
         {%- endif -%}
       </div>
       <button
@@ -87,6 +89,8 @@
           width="40"
           height="40"
         >
+      {%- else -%}
+        <div class="lusena-sticky-atc__image lusena-sticky-atc__image--desktop"></div>
       {%- endif -%}
       <span class="lusena-sticky-atc__desktop-title">{{ product.title | escape }}</span>
     </div>

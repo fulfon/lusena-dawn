@@ -1816,11 +1816,12 @@ body.overflow-hidden .lusena-sticky-atc {
   gap: 1.2rem;
 }
 
-.lusena-sticky-atc__image {
+.lusena-sticky-atc .lusena-sticky-atc__image {
   border-radius: var(--lusena-radius-xs, 2px);
   object-fit: cover;
   flex-shrink: 0;
   background: var(--lusena-surface-2);
+  display: block;
 }
 
 .lusena-sticky-atc__image--mobile {
