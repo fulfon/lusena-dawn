@@ -8,6 +8,12 @@
 
 ## Recent completed work
 
+### Bundle contents component links (2026-04-03)
+
+Component product names in the "W zestawie" checklist on bundle PDPs are now clickable links to their individual product pages. Uses `all_products` lookup with the 5 known product handles, matched by title against Simple Bundles `variant_options.optionName`. Graceful fallback to plain text if no match. Subtle hover styling (teal + underline). 3 files: `lusena-bundle-contents.liquid`, `lusena-main-bundle.liquid` (passes `product`), `lusena-bundle-pdp.css`.
+
+**Note:** Links for czepek and scrunchie won't work until the Shopify admin handle rename is applied (see "Product handle standardization" below).
+
 ### Bundle mobile sticky ATC pricing fix (2026-04-03)
 
 Replaced "Oszczędzasz X zł" savings text with strikethrough original price (`<s>`) on mobile bundle sticky bar - now matches desktop pattern. Added image placeholder divs for bundles without product images yet. Fixed Dawn `div:empty` trap hiding placeholders (bumped `.lusena-sticky-atc__image` to 0-2-0 specificity + `display: block`). 2 files: `lusena-bundle-sticky-atc.liquid`, `lusena-pdp.css`.

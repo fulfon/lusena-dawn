@@ -1,9 +1,10 @@
 {% doc %}
   Bundle "What's included" list. Reads Simple Bundles variant_options metafield
-  to extract component product names.
+  to extract component product names. Links each component to its product page.
 
   @param {variant} current_variant
   @param {section} section
+  @param {product} [product] - The bundle product, used for component link lookup
 {% enddoc %}
 
 {%- liquid
@@ -17,6 +18,31 @@
 -%}
 
 {%- if has_contents -%}
+  {%- liquid
+    comment
+      Build component title-to-URL lookup.
+      Known individual product handles — same handles used across
+      cart-drawer.liquid, lusena-cart-items.liquid, lusena-main-product.liquid,
+      and lusena-scrunchie-education.liquid for cross-sell/upsell routing.
+    endcomment
+    assign _component_handles = 'poszewka-jedwabna,czepek-jedwabny,jedwabna-maska-3d,scrunchie-jedwabny,walek-do-lokow' | split: ','
+    assign _component_titles = ''
+    assign _component_urls = ''
+    for _h in _component_handles
+      assign _p = all_products[_h]
+      if _p != blank
+        if _component_titles != ''
+          assign _component_titles = _component_titles | append: '||'
+          assign _component_urls = _component_urls | append: '||'
+        endif
+        assign _component_titles = _component_titles | append: _p.title
+        assign _component_urls = _component_urls | append: _p.url
+      endif
+    endfor
+    assign _title_list = _component_titles | split: '||'
+    assign _url_list = _component_urls | split: '||'
+  -%}
+
   <div class="lusena-bundle-contents{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
     <h3 class="lusena-bundle-contents__heading">
       {{ section.settings.contents_heading | default: 'W zestawie' | escape }}
@@ -42,19 +68,37 @@
               endif
             endfor
             assign seen_products = seen_products | append: product_name | append: '||'
+
+            assign component_url = blank
+            for _title in _title_list
+              if _title == product_name
+                assign component_url = _url_list[forloop.index0]
+                break
+              endif
+            endfor
           -%}
           <li class="lusena-bundle-contents__item">
             {% render 'lusena-icon',
               name: 'check',
               class: 'lusena-bundle-contents__icon'
             %}
-            <span>
-              {%- if count > 1 -%}
-                {{ count }}x {{ product_name | escape }}
-              {%- else -%}
-                {{ product_name | escape }}
-              {%- endif -%}
-            </span>
+            {%- if component_url != blank -%}
+              <a href="{{ component_url }}" class="lusena-bundle-contents__link">
+                {%- if count > 1 -%}
+                  {{ count }}x {{ product_name | escape }}
+                {%- else -%}
+                  {{ product_name | escape }}
+                {%- endif -%}
+              </a>
+            {%- else -%}
+              <span>
+                {%- if count > 1 -%}
+                  {{ count }}x {{ product_name | escape }}
+                {%- else -%}
+                  {{ product_name | escape }}
+                {%- endif -%}
+              </span>
+            {%- endif -%}
           </li>
         {%- endunless -%}
       {%- endfor -%}
