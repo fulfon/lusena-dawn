@@ -68,6 +68,19 @@
     </nav>
 
     <div class="lusena-header__actions">
+      {%- if section.settings.enable_trust_anchor -%}
+        {%- liquid
+          assign trust_url = section.settings.trust_anchor_page.url
+          if trust_url == blank
+            assign trust_url = '/pages/zwroty'
+          endif
+        -%}
+        <a href="{{ trust_url }}" class="lusena-header__trust-anchor lusena-header__desktop-only">
+          {% render 'lusena-icon', name: 'rotate-ccw', class: 'lusena-icon-xs', stroke_width: 1.5 %}
+          {{- section.settings.trust_anchor_text | default: '60 dni na zwrot' -}}
+        </a>
+      {%- endif -%}
+
       {%- if section.settings.enable_search -%}
         <a href="{{ routes.search_url }}" class="lusena-header__desktop-only lusena-icon-button lusena-icon-button--ghost lusena-icon-button--md" aria-label="Search">
           {% render 'lusena-icon', name: 'search', class: 'lusena-icon-base', stroke_width: 1.5 %}
@@ -111,6 +124,35 @@
             {%- endfor -%}
           {%- endif -%}
         </nav>
+
+        <div class="lusena-header__mobile-utilities">
+          {%- if section.settings.enable_search -%}
+            <a href="{{ routes.search_url }}" class="lusena-header__mobile-utility-link">
+              {% render 'lusena-icon', name: 'search', class: 'lusena-icon-sm', stroke_width: 1.5 %}
+              <span>Szukaj</span>
+            </a>
+          {%- endif -%}
+
+          {%- if section.settings.enable_account and shop.customer_accounts_enabled -%}
+            <a href="{{ routes.account_url }}" class="lusena-header__mobile-utility-link">
+              {% render 'lusena-icon', name: 'user', class: 'lusena-icon-sm', stroke_width: 2 %}
+              <span>Konto</span>
+            </a>
+          {%- endif -%}
+
+          {%- if section.settings.enable_trust_anchor -%}
+            {%- liquid
+              assign trust_url = section.settings.trust_anchor_page.url
+              if trust_url == blank
+                assign trust_url = '/pages/zwroty'
+              endif
+            -%}
+            <a href="{{ trust_url }}" class="lusena-header__mobile-trust">
+              {% render 'lusena-icon', name: 'rotate-ccw', class: 'lusena-icon-sm', stroke_width: 1.5 %}
+              <span>{{ section.settings.trust_anchor_text | default: '60 dni na zwrot' }}</span>
+            </a>
+          {%- endif -%}
+        </div>
       </div>
     </div>
   </div>
@@ -392,6 +434,27 @@
       "id": "enable_cart",
       "label": "Show cart icon",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Trust anchor"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_trust_anchor",
+      "label": "Show trust anchor (e.g. 60 dni na zwrot)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trust_anchor_text",
+      "label": "Trust anchor text",
+      "default": "60 dni na zwrot"
+    },
+    {
+      "type": "page",
+      "id": "trust_anchor_page",
+      "label": "Trust anchor page"
     },
     {
       "type": "header",

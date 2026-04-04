@@ -8,6 +8,10 @@
 
 ## Recent completed work
 
+### Header: trust anchor + mobile menu utilities (2026-04-04)
+
+Added "60 dni na zwrot" trust anchor to desktop header — teal color (per brand token: teal = trust/guarantees), rotate-ccw icon, border-left separator, positioned between nav links and action icons. Desktop-only in header bar. On mobile: removed from header bar (stays clean: hamburger | logo | cart), added to hamburger menu utilities row (right-aligned, teal). Also added search (Szukaj) and account (Konto) links with icons to mobile hamburger menu — previously completely inaccessible on mobile. Schema settings for trust anchor text, page, and toggle. Design rationale: Zwroty page repositioned from utility nav link to passive trust signal, reducing purchase friction without adding nav clutter. 2 files changed (+132 lines): `lusena-header.css`, `lusena-header.liquid`.
+
 ### Bundle sticky ATC class fix (2026-04-04)
 
 Fixed `lusena-bundle-sticky-atc.liquid` using `lusena-sticky-atc__variant` class for the crossed-out original price — should have been `lusena-sticky-atc__compare` (matching the standard PDP sticky and the app-wide convention). Semantic fix only, no visual change. Reviewed price display patterns across all 10+ locations — confirmed order (new first, old second) and layout (row for evaluation contexts, stacked for tight/cart contexts) are already consistent and optimal.
@@ -130,7 +134,7 @@ Comprehensive memory bank audit covering 67 commits. Updated:
 1. Homepage bundles section — wire up real products (Phase C remaining)
 2. Bundle product media (when physical products arrive)
 3. Content polish — review all page copy for consistency
-4. UX backlog items (mobile header icons, bonnet naming, value anchors expansion)
+4. UX backlog items (bonnet naming, value anchors expansion)
 
 ## Key decisions (reference)
 

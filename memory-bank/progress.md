@@ -234,7 +234,7 @@ Full implementation tracker: `memory-bank/doc/bundle-implementation.md`
 
 ## UX backlog (evaluate during polish phase)
 
-- **Mobile header icons** — Currently only cart icon visible on mobile. Consider adding search icon and account/login icon to the mobile header for better discoverability.
+- ~~**Mobile header icons**~~ — DONE (2026-04-04). Search + account added to hamburger menu. Trust anchor ("60 dni na zwrot") added to header bar (desktop) and hamburger menu (mobile). Zwroty page repositioned as trust signal, not nav link.
 - **Cross-site percentage claim cleanup** — COMPLETE (2026-03-14). All percentage-based momme claims (30%, 15%) removed site-wide, from brandbook, and from all docs. Replaced with qualitative "gęstszy i trwalszy niż standard". Rule added to brandbook: never use percentages for momme without own test documentation.
 - **Bonnet naming** — Apply Polish-first naming ("jedwabny czepek na noc (bonnet)") on all customer-facing pages. Homepage done, other pages pending.
 - **Value anchors expansion** — Homepage bestsellers done (`lusena-product-card__per-night`, `show_value_anchor` param). Expand to collection/search pages when ready.
