@@ -4,7 +4,16 @@
   >
     {%- comment -%} Column 1: Brand {%- endcomment -%}
     <div class="lusena-footer__col">
-      <div class="lusena-footer__brand">{{ section.settings.brand_heading | escape }}</div>
+      <a href="{{ routes.root_url }}" class="lusena-footer__brand" aria-label="{{ shop.name | escape }}">
+        <img
+          src="{{ 'lusena-logo.svg' | asset_url }}"
+          alt="{{ shop.name | escape }}"
+          class="lusena-footer__logo"
+          width="120"
+          height="22"
+          loading="lazy"
+        >
+      </a>
       <div class="lusena-footer__brand-text">
         {{ section.settings.brand_text }}
       </div>

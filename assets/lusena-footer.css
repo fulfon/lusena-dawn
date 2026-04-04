@@ -33,9 +33,15 @@
 }
 
 .lusena-footer .lusena-footer__brand {
-  font-family: var(--lusena-font-brand);
-  font-size: 2.4rem;
-  color: var(--lusena-color-n0);
+  display: inline-block;
+  text-decoration: none;
+}
+
+.lusena-footer .lusena-footer__logo {
+  display: block;
+  width: 120px;
+  height: auto;
+  filter: invert(1);
 }
 
 .lusena-footer .lusena-footer__brand-text {
