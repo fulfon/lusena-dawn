@@ -20,7 +20,7 @@ description: Quick-reference catalog of all LUSENA sections — page, tier, CSS,
 | `lusena-bestsellers` | spacious | - | Uses `lusena-product-card` snippet |
 | `lusena-testimonials` | spacious | - | |
 | `lusena-problem-solution` | spacious | - | Moved to pos 6 for evaluation flow |
-| `lusena-bundles` | spacious | YES | |
+| `lusena-bundles` | spacious | YES | Product-driven full-card links, mobile compact rows, shared badge overlay, savings badge, hover underline |
 | `lusena-heritage` | spacious | - | |
 | `lusena-faq` | standard | - | Reused on 5 pages |
 | `lusena-final-cta` | spacious | - | Reused on 5 pages |

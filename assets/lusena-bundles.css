@@ -1,36 +1,74 @@
 /* ==========================================================================
-   LUSENA Bundles — Bundle card grid
+   LUSENA Bundles — Bundle card grid + mobile compact rows
    Standalone CSS (loaded per-section to avoid compiled_assets truncation).
    ========================================================================== */
 
-/* Kicker color — matches gold accent used by all other section kickers */
+/* --------------------------------------------------------------------------
+   Section kicker
+   -------------------------------------------------------------------------- */
 .lusena-bundles .lusena-kicker {
   color: var(--lusena-accent-2);
 }
 
-/* Grid: 1-col mobile → 3-col desktop */
+/* --------------------------------------------------------------------------
+   Grid wrapper
+   Mobile: single column — full card (first) + compact rows stack vertically
+   Desktop (768px+): 3 equal columns — all full cards, compact rows hidden
+   -------------------------------------------------------------------------- */
 .lusena-bundles__grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--lusena-space-5);
+  gap: var(--lusena-space-3);
   margin-top: var(--lusena-space-6);
 }
 
 @media (min-width: 768px) {
   .lusena-bundles__grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: var(--lusena-space-5);
+    align-items: start;
   }
 }
 
-/* Card */
+/* --------------------------------------------------------------------------
+   Full card — visibility rules
+   -------------------------------------------------------------------------- */
+
+/* Non-first cards hidden on mobile, shown as flex column on desktop.
+   Doubled selector (0-2-0) beats .lusena-bundles__card (0-1-0) regardless of source order. */
+.lusena-bundles__card.lusena-bundles__card--desktop-only {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .lusena-bundles__card.lusena-bundles__card--desktop-only {
+    display: flex;
+  }
+}
+
+/* All full cards are flex columns */
 .lusena-bundles__card {
   display: flex;
   flex-direction: column;
+  text-decoration: none;
+  color: inherit;
 }
 
-/* Card media */
+/* --------------------------------------------------------------------------
+   Full card + compact row — hover
+   -------------------------------------------------------------------------- */
+@media (hover: hover) {
+  .lusena-bundles__card:hover .lusena-bundles__card-title { text-decoration: underline; text-underline-offset: 4px; }
+  .lusena-bundles__compact-row:hover .lusena-bundles__compact-title { text-decoration: underline; text-underline-offset: 4px; }
+}
+
+/* --------------------------------------------------------------------------
+   Full card — media
+   -------------------------------------------------------------------------- */
 .lusena-bundles__card-media {
+  position: relative;
   overflow: hidden;
+  border-radius: var(--lusena-btn-radius);
 }
 
 .lusena-bundles__card-media img {
@@ -38,6 +76,7 @@
   height: auto;
   aspect-ratio: 4 / 5;
   object-fit: cover;
+  display: block;
 }
 
 .lusena-bundles__card-placeholder {
@@ -53,85 +92,232 @@
   opacity: 0.3;
 }
 
-/* Card info */
+/* --------------------------------------------------------------------------
+   Full card — info block
+   -------------------------------------------------------------------------- */
 .lusena-bundles__card-info {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  gap: var(--lusena-space-1);
-  padding-top: var(--lusena-space-3);
+  gap: 0.2rem;
+  padding-top: var(--lusena-space-2);
 }
 
 .lusena-bundles__card-title {
-  font-family: var(--lusena-font-heading);
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 500;
   color: var(--lusena-text-1);
   margin: 0;
 }
 
 .lusena-bundles__card-contents {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: var(--lusena-text-2);
   margin: 0;
 }
 
-/* Pricing row */
+.lusena-bundles__card-editorial {
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--lusena-accent-cta);
+  margin-top: 0.4rem;
+  margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Full card — pricing row (price + compare + savings on one line)
+   -------------------------------------------------------------------------- */
 .lusena-bundles__card-pricing {
   display: flex;
   align-items: baseline;
-  gap: var(--lusena-space-2);
-  margin-top: var(--lusena-space-1);
+  gap: 0.8rem;
+  margin-top: 0.4rem;
 }
 
 .lusena-bundles__card-price {
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: 600;
-  color: var(--lusena-text-1);
+  color: var(--lusena-text-2);
 }
 
 .lusena-bundles__card-compare-price {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: var(--lusena-text-2);
   text-decoration: line-through;
   text-decoration-color: color-mix(in srgb, currentColor 50%, transparent);
 }
 
-/* Savings badge */
-.lusena-bundles__card-savings {
-  font-size: 1.3rem;
+/* --------------------------------------------------------------------------
+   Full card — savings badge (gold chip, bottom-right of image)
+   -------------------------------------------------------------------------- */
+.lusena-bundles__savings-badge {
+  position: absolute;
+  bottom: var(--lusena-space-1);
+  right: var(--lusena-space-1);
+  z-index: 2;
+  padding: 0.3rem 0.8rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--lusena-accent-2);
+  background: rgba(140, 106, 60, 0.08);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: var(--lusena-btn-radius);
+}
+
+/* --------------------------------------------------------------------------
+   Full card — OOS state
+   -------------------------------------------------------------------------- */
+.lusena-bundles__card--oos .lusena-bundles__card-media img,
+.lusena-bundles__card--oos .lusena-bundles__card-placeholder {
+  opacity: 0.5;
+  filter: grayscale(100%);
+}
+
+/* --------------------------------------------------------------------------
+   Compact rows — mobile only, non-first blocks
+   -------------------------------------------------------------------------- */
+
+/* Hidden on desktop; visible on mobile by default */
+.lusena-bundles__compact-row {
+  display: flex;
+  align-items: center;
+  gap: var(--lusena-space-2);
+  background: var(--lusena-surface-1);
+  border-radius: var(--lusena-btn-radius);
+  padding: var(--lusena-space-2);
+  border: 1px solid var(--lusena-color-n300);
+  text-decoration: none;
+  color: inherit;
+}
+
+@media (min-width: 768px) {
+  .lusena-bundles__compact-row {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Compact row — thumbnail (56×56)
+   -------------------------------------------------------------------------- */
+.lusena-bundles__compact-thumb {
+  flex-shrink: 0;
+  width: 5.6rem;
+  height: 5.6rem;
+  border-radius: var(--lusena-btn-radius);
+  overflow: hidden;
+  background: var(--lusena-color-n200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lusena-bundles__compact-thumb img {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  display: block;
+}
+
+.lusena-bundles__compact-thumb-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lusena-bundles__compact-thumb-placeholder svg {
+  width: 60%;
+  opacity: 0.3;
+}
+
+/* --------------------------------------------------------------------------
+   Compact row — info (CSS grid: title left, pricing right on row 1)
+   -------------------------------------------------------------------------- */
+.lusena-bundles__compact-info {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: var(--lusena-space-2);
+  row-gap: 0.2rem;
+  align-items: baseline;
+}
+
+/* Title: left column, row 1 */
+.lusena-bundles__compact-title {
+  grid-column: 1;
+  grid-row: 1;
+  font-family: var(--lusena-font-ui);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--lusena-text-1);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Pricing: right column, row 1 */
+.lusena-bundles__compact-pricing {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  flex-shrink: 0;
+}
+
+.lusena-bundles__compact-price {
+  font-family: var(--lusena-font-ui);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--lusena-text-1);
+}
+
+.lusena-bundles__compact-compare-price {
+  font-family: var(--lusena-font-ui);
+  font-size: 1.2rem;
+  color: var(--lusena-text-2);
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, currentColor 50%, transparent);
+}
+
+/* Contents: spans full width */
+.lusena-bundles__compact-contents {
+  grid-column: 1 / -1;
+  font-family: var(--lusena-font-ui);
+  font-size: 1.2rem;
+  color: var(--lusena-text-2);
+  margin: 0;
+}
+
+@media (max-width: 383px) {
+  .lusena-bundles__compact-contents {
+    font-size: 1.1rem;
+  }
+}
+
+/* Savings — spans full width now that CTA is removed */
+.lusena-bundles__compact-savings {
+  grid-column: 1 / -1;
+  margin-top: 0.2rem;
+  font-family: var(--lusena-font-ui);
+  font-size: 1.2rem;
   font-weight: 500;
   color: var(--lusena-accent-2);
 }
 
-/* Card CTA */
-.lusena-bundles__card-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-  font-family: var(--lusena-font-ui);
-  font-size: 1.4rem;
-  font-weight: 500;
-  height: 4rem;
-  padding: 0 var(--lusena-space-4);
-  background: transparent;
-  color: var(--lusena-accent-cta);
-  border: 1px solid var(--lusena-accent-cta);
-  border-radius: var(--lusena-btn-radius);
-  text-decoration: none;
-  transition: background var(--lusena-transition-fast), color var(--lusena-transition-fast);
-  margin-top: auto;
+/* --------------------------------------------------------------------------
+   Compact row — OOS state
+   -------------------------------------------------------------------------- */
+.lusena-bundles__compact-row--oos .lusena-bundles__compact-thumb {
+  opacity: 0.5;
+  filter: grayscale(100%);
 }
 
-@media (hover: hover) {
-  .lusena-bundles__card-cta:hover {
-    background: var(--lusena-accent-cta);
-    color: var(--lusena-color-n0);
-  }
-}
-
-.lusena-bundles__card-cta:focus-visible {
-  outline: 2px solid var(--lusena-accent-cta);
-  outline-offset: 2px;
+.lusena-bundles__compact-row--oos .lusena-bundles__compact-title,
+.lusena-bundles__compact-row--oos .lusena-bundles__compact-price {
+  opacity: 0.6;
 }

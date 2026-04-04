@@ -17,7 +17,9 @@
 
 ### 1. Bundles section — full product-card redesign
 
-- [x] **Done (2026-03-07).** Rebuilt as 3-card grid with bundle image, name, CTA. Standalone CSS extracted to `assets/lusena-bundles.css`. Price display deferred until real bundle products are configured in Shopify admin.
+- [x] **Done (2026-03-07).** Rebuilt as 3-card grid with bundle image, name, CTA. Standalone CSS extracted to `assets/lusena-bundles.css`.
+- [x] **Product-driven rewrite (2026-04-03).** Section now uses product pickers, pulls real prices/URLs from Shopify, editorial copy in block settings. Desktop 3-col grid + mobile hero+compact rows. Savings from `bundle_original_price` metafield. Bestseller badge. OOS handling. Spec: `docs/superpowers/specs/2026-04-03-homepage-bundles-section-design.md`.
+- [x] **Card standardization (2026-04-04).** Unified with product cards: shared `.lusena-badge--overlay`, full-card `<a>` links (CTA buttons removed), type hierarchy (1.6/1.4/1.3/1.2), savings as gold-tinted badge overlay on image, title underline hover, 0.8rem pricing gap.
 - **Ref:** `memory-bank/doc/brand/LUSENA_BrandBook_v2.md:1245` (homepage item 7), `memory-bank/doc/brand/LUSENA_BrandBook_v2.md:1687` (Phase 1 bundle table).
 
 ### 2. Bestsellers — price anchors under product cards

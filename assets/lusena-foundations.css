@@ -487,14 +487,11 @@ textarea:focus-visible {
 }
 .lusena-product-card--oos .lusena-product-card__media { opacity: 0.5; filter: grayscale(100%); }
 .lusena-product-card--oos:hover .lusena-product-card__image--secondary { transform: none; }
-.lusena-product-card__badge {
-  position: absolute; top: 0.8rem; left: 0.8rem; z-index: 2;
-  background: rgb(255 255 255 / 0.9); backdrop-filter: blur(4px);
-  padding: 0.4rem 0.8rem; font-size: 1rem; text-transform: uppercase;
-  letter-spacing: 0.05em; font-weight: 500; color: var(--lusena-text-1);
+@media (hover: hover) {
+  .lusena-product-card:hover .lusena-product-card__title { text-decoration: underline; text-underline-offset: 4px; }
 }
 .lusena-product-card__info { text-align: left; }
-.lusena-product-card__title { font-size: 1.4rem; font-weight: 500; color: var(--lusena-text-1); margin-bottom: 0.4rem; }
+.lusena-product-card__title { font-size: 1.6rem; font-weight: 500; color: var(--lusena-text-1); margin-bottom: 0.4rem; }
 .lusena-product-card__prices { display: flex; align-items: center; justify-content: flex-start; gap: 0.8rem; font-size: 1.4rem; }
 .lusena-product-card__price { color: var(--lusena-text-2); }
 .lusena-product-card__compare-price { color: var(--lusena-text-2); text-decoration: line-through; text-decoration-color: color-mix(in srgb, currentColor 50%, transparent); font-size: 1.2rem; }
@@ -566,7 +563,11 @@ textarea:focus-visible {
   text-transform: uppercase;
 }
 .lusena-badge--gold { color: var(--lusena-accent-2); border-color: var(--lusena-accent-2); }
-.lusena-badge--overlay { position: absolute; top: var(--lusena-space-1); left: var(--lusena-space-1); z-index: var(--lusena-z-badge); }
+.lusena-badge--overlay {
+  position: absolute; top: var(--lusena-space-1); left: var(--lusena-space-1); z-index: var(--lusena-z-badge);
+  background: rgb(255 255 255 / 0.9); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  border-color: transparent;
+}
 
 /* 5. Trust Bar (Compact Strip) */
 .lusena-trust-bar {

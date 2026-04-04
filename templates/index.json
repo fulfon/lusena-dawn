@@ -228,52 +228,46 @@
     "gift": {
       "type": "lusena-bundles",
       "blocks": {
-        "bundle-0": {
+        "bundle-nocna-rutyna": {
           "type": "bundle_card",
           "settings": {
-            "title": "Nocna Rutyna",
-            "contents": "Poszewka + Czepek na noc + Scrunchie",
-            "original_price": "",
-            "bundle_price": "",
-            "savings_text": "",
-            "button_label": "Sprawdź zestaw",
-            "button_link": "shopify://collections/all"
+            "product": "nocna-rutyna",
+            "contents": "Poszewka jedwabna + Czepek do spania",
+            "editorial_line": "Twarz i włosy - kompletna ochrona na noc",
+            "mobile_svg": "",
+            "cta_label": "Zobacz zestaw"
           }
         },
-        "bundle-1": {
+        "bundle-piekny-sen": {
           "type": "bundle_card",
           "settings": {
-            "title": "Starter Kit",
-            "contents": "Poszewka + Scrunchie",
-            "original_price": "",
-            "bundle_price": "",
-            "savings_text": "",
-            "button_label": "Sprawdź zestaw",
-            "button_link": "shopify://collections/all"
+            "product": "piekny-sen",
+            "contents": "Poszewka jedwabna + Maska 3D do spania",
+            "editorial_line": "Gładkość dla skóry, ciemność dla oczu",
+            "mobile_svg": "lusena-bundle-piekny-sen.svg",
+            "cta_label": "Zobacz zestaw"
           }
         },
-        "bundle-2": {
+        "bundle-scrunchie-trio": {
           "type": "bundle_card",
           "settings": {
-            "title": "Scrunchie Trio",
-            "contents": "3× Scrunchie w różnych kolorach",
-            "original_price": "",
-            "bundle_price": "",
-            "savings_text": "",
-            "button_label": "Sprawdź zestaw",
-            "button_link": "shopify://collections/all"
+            "product": "scrunchie-trio",
+            "contents": "3× Scrunchie jedwabny w trzech kolorach",
+            "editorial_line": "Kolor pod nastrój - idealny prezent",
+            "mobile_svg": "lusena-bundle-scrunchie-trio.svg",
+            "cta_label": "Zobacz zestaw"
           }
         }
       },
       "block_order": [
-        "bundle-0",
-        "bundle-1",
-        "bundle-2"
+        "bundle-nocna-rutyna",
+        "bundle-piekny-sen",
+        "bundle-scrunchie-trio"
       ],
       "settings": {
         "kicker": "Zestawy Premium",
-        "heading": "Nocna Rutyna\nw zestawie.",
-        "body": "Kompletna pielęgnacja snu i włosów w jednym zamówieniu. Kupując zestaw, oszczędzasz i budujesz swoją nocną rutynę."
+        "heading": "Zbuduj swoją nocną rutynę",
+        "body": "Każdy zestaw to gotowy pomysł - na nocną rutynę albo idealny prezent."
       }
     },
     "heritage": {

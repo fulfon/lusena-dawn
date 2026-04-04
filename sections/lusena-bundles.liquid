@@ -43,17 +43,52 @@
     {%- if section.blocks.size > 0 -%}
       <div class="lusena-bundles__grid" data-cascade>
         {%- for block in section.blocks -%}
-          <div
-            class="lusena-bundles__card{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {%- liquid
+            assign bundle_product = block.settings.product
+          -%}
+          {%- if bundle_product == blank -%}
+            {%- continue -%}
+          {%- endif -%}
+
+          {%- liquid
+            assign mf_original = bundle_product.metafields.lusena.bundle_original_price
+            assign original_price_cents = 0
+            assign savings_cents = 0
+            assign has_savings = false
+            if mf_original != blank
+              if mf_original.value != blank
+                assign original_price_cents = mf_original.value | times: 100
+                assign savings_cents = original_price_cents | minus: bundle_product.price
+                if savings_cents > 0
+                  assign has_savings = true
+                endif
+              endif
+            endif
+
+            assign mf_badge = bundle_product.metafields.lusena.badge_bestseller
+            assign show_badge = false
+            if mf_badge != blank
+              if mf_badge.value == true
+                assign show_badge = true
+              endif
+            endif
+
+            assign is_first_block = forloop.first
+          -%}
+
+          {%- comment -%} Full card — always shown on desktop; on mobile only for first block {%- endcomment -%}
+          <a
+            href="{{ bundle_product.url }}"
+            class="lusena-bundles__card{% unless is_first_block %} lusena-bundles__card--desktop-only{% endunless %}{% unless bundle_product.available %} lusena-bundles__card--oos{% endunless %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
             {{ block.shopify_attributes }}
             {% if settings.animations_reveal_on_scroll %}
               style="animation-delay: {{ forloop.index0 | times: 100 }}ms;"
             {% endif %}
           >
             <div class="lusena-bundles__card-media">
-              {%- if block.settings.image != blank -%}
+              {%- if bundle_product.featured_image -%}
                 {{
-                  block.settings.image
+                  bundle_product.featured_image
                   | image_url: width: 800
                   | image_tag:
                     loading: 'lazy',
@@ -65,11 +100,19 @@
                   {{ 'product-1' | placeholder_svg_tag }}
                 </div>
               {%- endif -%}
+              {%- if show_badge -%}
+                <span class="lusena-badge lusena-badge--overlay">Bestseller</span>
+              {%- endif -%}
+              {%- if has_savings -%}
+                <span class="lusena-bundles__savings-badge">
+                  Oszczędzasz {{ savings_cents | money_without_trailing_zeros }}
+                </span>
+              {%- endif -%}
             </div>
 
             <div class="lusena-bundles__card-info">
               <h3 class="lusena-bundles__card-title">
-                {{ block.settings.title | escape }}
+                {{ bundle_product.title | escape }}
               </h3>
 
               {%- if block.settings.contents != blank -%}
@@ -78,37 +121,78 @@
                 </p>
               {%- endif -%}
 
-              {%- if block.settings.bundle_price != blank or block.settings.original_price != blank -%}
-                <div class="lusena-bundles__card-pricing">
-                  {%- if block.settings.bundle_price != blank -%}
-                    <span class="lusena-bundles__card-price">
-                      {{ block.settings.bundle_price | escape }}
-                    </span>
-                  {%- endif -%}
-                  {%- if block.settings.original_price != blank -%}
-                    <span class="lusena-bundles__card-compare-price">
-                      {{ block.settings.original_price | escape }}
+              {%- if block.settings.editorial_line != blank -%}
+                <p class="lusena-bundles__card-editorial">
+                  {{ block.settings.editorial_line | escape }}
+                </p>
+              {%- endif -%}
+
+              <div class="lusena-bundles__card-pricing">
+                <span class="lusena-bundles__card-price">
+                  {{ bundle_product.price | money_without_trailing_zeros }}
+                </span>
+                {%- if has_savings -%}
+                  <span class="lusena-bundles__card-compare-price">
+                    {{ original_price_cents | money_without_trailing_zeros }}
+                  </span>
+                {%- endif -%}
+              </div>
+            </div>
+          </a>
+
+          {%- comment -%} Compact row — mobile only, non-first blocks {%- endcomment -%}
+          {%- unless is_first_block -%}
+            <a
+              href="{{ bundle_product.url }}"
+              class="lusena-bundles__compact-row{% unless bundle_product.available %} lusena-bundles__compact-row--oos{% endunless %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+              {{ block.shopify_attributes }}
+              {% if settings.animations_reveal_on_scroll %}
+                style="animation-delay: {{ forloop.index0 | times: 100 }}ms;"
+              {% endif %}
+            >
+              <div class="lusena-bundles__compact-thumb">
+                {%- if block.settings.mobile_svg != blank -%}
+                  <img
+                    src="{{ block.settings.mobile_svg | asset_url }}"
+                    alt="{{ bundle_product.title | escape }}"
+                    loading="lazy"
+                    width="56"
+                    height="56"
+                  >
+                {%- else -%}
+                  <div class="lusena-bundles__compact-thumb-placeholder">
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  </div>
+                {%- endif -%}
+              </div>
+
+              <div class="lusena-bundles__compact-info">
+                <p class="lusena-bundles__compact-title">{{ bundle_product.title | escape }}</p>
+
+                <div class="lusena-bundles__compact-pricing">
+                  <span class="lusena-bundles__compact-price">
+                    {{ bundle_product.price | money_without_trailing_zeros }}
+                  </span>
+                  {%- if has_savings -%}
+                    <span class="lusena-bundles__compact-compare-price">
+                      {{ original_price_cents | money_without_trailing_zeros }}
                     </span>
                   {%- endif -%}
                 </div>
-              {%- endif -%}
 
-              {%- if block.settings.savings_text != blank -%}
-                <span class="lusena-bundles__card-savings">
-                  {{ block.settings.savings_text | escape }}
-                </span>
-              {%- endif -%}
+                {%- if block.settings.contents != blank -%}
+                  <p class="lusena-bundles__compact-contents">{{ block.settings.contents | escape }}</p>
+                {%- endif -%}
 
-              {%- if block.settings.button_label != blank and block.settings.button_link != blank -%}
-                <a
-                  href="{{ block.settings.button_link }}"
-                  class="lusena-bundles__card-cta"
-                >
-                  {{ block.settings.button_label | escape }}
-                </a>
-              {%- endif -%}
-            </div>
-          </div>
+                {%- if has_savings -%}
+                  <span class="lusena-bundles__compact-savings">
+                    Oszczędzasz {{ savings_cents | money_without_trailing_zeros }}
+                  </span>
+                {%- endif -%}
+              </div>
+            </a>
+          {%- endunless -%}
+
         {%- endfor -%}
       </div>
     {%- endif -%}
@@ -174,13 +258,13 @@
       "type": "textarea",
       "id": "heading",
       "label": "Heading",
-      "default": "Nocna Rutyna\nw zestawie."
+      "default": "Zbuduj swoją nocną rutynę"
     },
     {
       "type": "text",
       "id": "body",
       "label": "Body",
-      "default": "Kompletna pielęgnacja snu i włosów w jednym zamówieniu. Kupując zestaw, oszczędzasz i budujesz swoją nocną rutynę."
+      "default": "Każdy zestaw to gotowy pomysł - na nocną rutynę albo idealny prezent."
     }
   ],
   "blocks": [
@@ -189,91 +273,62 @@
       "name": "Bundle card",
       "settings": [
         {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Bundle image"
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Bundle name",
-          "default": "Zestaw"
+          "type": "product",
+          "id": "product",
+          "label": "Bundle product"
         },
         {
           "type": "text",
           "id": "contents",
           "label": "What's inside",
-          "default": "Poszewka + Scrunchie"
+          "default": "Poszewka jedwabna + Czepek do spania"
         },
         {
           "type": "text",
-          "id": "original_price",
-          "label": "Original price (crossed out)",
-          "info": "Leave blank to hide"
+          "id": "editorial_line",
+          "label": "Why together (italic teal line)",
+          "default": "Twarz i włosy - kompletna ochrona na noc"
         },
         {
           "type": "text",
-          "id": "bundle_price",
-          "label": "Bundle price"
-        },
-        {
-          "type": "text",
-          "id": "savings_text",
-          "label": "Savings text",
-          "default": "Oszczędzasz 10%"
-        },
-        {
-          "type": "text",
-          "id": "button_label",
-          "label": "Button label",
-          "default": "Sprawdź zestaw"
-        },
-        {
-          "type": "url",
-          "id": "button_link",
-          "label": "Button link"
+          "id": "mobile_svg",
+          "label": "Mobile SVG filename (in assets/)",
+          "info": "e.g. lusena-bundle-piekny-sen.svg. Leave blank for first block (hero card on mobile)."
         }
       ]
     }
   ],
+  "max_blocks": 3,
   "presets": [
     {
       "name": "LUSENA Bundles",
       "settings": {
         "kicker": "Zestawy Premium",
-        "heading": "Nocna Rutyna\nw zestawie.",
-        "body": "Kompletna pielęgnacja snu i włosów w jednym zamówieniu. Kupując zestaw, oszczędzasz i budujesz swoją nocną rutynę."
+        "heading": "Zbuduj swoją nocną rutynę",
+        "body": "Każdy zestaw to gotowy pomysł - na nocną rutynę albo idealny prezent."
       },
       "blocks": [
         {
           "type": "bundle_card",
           "settings": {
-            "title": "Nocna Rutyna",
-            "contents": "Poszewka + Czepek na noc + Scrunchie",
-            "savings_text": "Oszczędzasz ~15%",
-            "button_label": "Sprawdź zestaw"
+            "contents": "Poszewka jedwabna + Czepek do spania",
+            "editorial_line": "Twarz i włosy - kompletna ochrona na noc"
           }
         },
         {
           "type": "bundle_card",
           "settings": {
-            "title": "Starter Kit",
-            "contents": "Poszewka + Scrunchie",
-            "original_price": "298 zł",
-            "bundle_price": "269 zł",
-            "savings_text": "Oszczędzasz 29 zł (10%)",
-            "button_label": "Sprawdź zestaw"
+            "contents": "Poszewka jedwabna + Maska 3D do spania",
+            "editorial_line": "Gładkość dla skóry, ciemność dla oczu",
+            "mobile_svg": "lusena-bundle-piekny-sen.svg"
           }
         },
         {
           "type": "bundle_card",
           "settings": {
-            "title": "Scrunchie Trio",
-            "contents": "3× Scrunchie w różnych kolorach",
-            "original_price": "147 zł",
-            "bundle_price": "119 zł",
-            "savings_text": "Oszczędzasz 28 zł (19%)",
-            "button_label": "Sprawdź zestaw"
+            "contents": "3× Scrunchie jedwabny w trzech kolorach",
+            "editorial_line": "Kolor pod nastrój - idealny prezent",
+            "mobile_svg": "lusena-bundle-scrunchie-trio.svg"
           }
         }
       ]

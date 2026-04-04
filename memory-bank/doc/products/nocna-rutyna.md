@@ -242,6 +242,6 @@ Initial runs tested buybox copy with operational benefits (60-day guarantee, 109
 1. **Fill metafields in Shopify admin** - all creative fields finalized, pending owner approval
 2. **Update product.bundle.json** - update template feature card blocks with new card 1+3 content, reorder to match positions 1-6
 3. **Media** - upload product photos when available; include packaging/unboxing shots (Ewa critical)
-4. **Homepage bundles section** - wire up in `templates/index.json`
+4. ~~**Homepage bundles section**~~ - DONE (2026-04-03), product-driven rewrite with product picker
 5. **Reviews system** - enable before launch (4/4 personas flagged)
 6. **Free shipping threshold** - configure 275 zł in Shopify admin before publishing (legal advisory)

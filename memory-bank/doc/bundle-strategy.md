@@ -428,9 +428,9 @@ Review these metrics weekly (every Monday):
 - **Method:** Use Shopify's built-in Bundles app (free) for Phase 1. Upgrade to a third-party app (Fast Bundle, Simple Bundles) only if mix-and-match or subscription bundles are needed later.
 - **Inventory sync:** Shopify Bundles automatically deducts component inventory. Critical with limited bonnet (60) and maska (40) stock.
 - **Bundle products:** Each bundle is created as a separate product in Shopify admin with its own title, description, metafields, SEO, and media.
-- **Theme display:** Bundles use the same PDP template (`product.json`) as individual products. Metafield copy needs creative sessions (headline, tagline, 3 benefits per bundle).
-- **Homepage section:** The existing `lusena-bundles` section (card grid, `assets/lusena-bundles.css`) displays bundles. Update `templates/index.json` with bundle products when ready.
-- **Cross-sell checkbox:** Requires implementation in `lusena-main-product.liquid` buybox - see PDP backlog item 1 in `memory-bank/doc/features/pdp-migration-backlog.md`.
+- **Theme display:** Bundles use `product.bundle.json` template with `lusena-main-bundle` section. Creative sessions complete for all 3 bundles (2026-03-22).
+- **Homepage section:** `lusena-bundles` section rewritten to product-driven editorial cards (2026-04-03). Card standardization (2026-04-04): shared badge, full-card links, type hierarchy, savings badge overlay. SVG thumbnails (2026-04-04): monochrome gold illustrations for mobile compact rows. Product pickers in `index.json`, savings from metafields, desktop 3-col grid + mobile hero+compact rows. Design spec: `docs/superpowers/specs/2026-04-03-homepage-bundles-section-design.md`.
+- **Cross-sell checkbox:** COMPLETE (2026-03-29). Scrunchie at 39 zl via BXGY on all PDPs.
 
 ---
 

@@ -234,7 +234,7 @@ Progressive disclosure: Step 1 = poszewka color, Step 2 = maska auto-selected (C
 
 1. **Fill metafields in Shopify admin** - all creative fields finalized, pending owner approval
 2. **Media** - upload product photos when available; include packaging/unboxing shots (Ewa critical)
-3. **Homepage bundles section** - wire up in `templates/index.json`
+3. ~~**Homepage bundles section**~~ - DONE (2026-04-03), product-driven rewrite with product picker
 4. **Update Simple Bundles option names** - rename to Polish color names
 5. **Reviews system** - enable before launch (4/4 personas flagged)
 6. **Free shipping threshold** - configure 275 zł in Shopify admin before publishing (legal advisory)

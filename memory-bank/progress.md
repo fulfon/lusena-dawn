@@ -1,10 +1,10 @@
 # Progress
 
-*Last updated: 2026-03-29*
+*Last updated: 2026-04-04*
 
 ## LUSENA-styled pages (14 of ~21 total)
 
-- [x] **Homepage** (`index.json`) — 10 sections: hero, trust bar, benefit bridge (NEW 2026-03-28), bestsellers, testimonials, problem/solution (moved to pos 6), bundles (card grid), heritage, FAQ, final CTA. Full UX audit completed 2026-03-08. Benefit bridge added 2026-03-28 (3 benefit cards, legally checked, persona-validated). P/S copy refreshed. Newsletter removed (footer handles it).
+- [x] **Homepage** (`index.json`) — 10 sections: hero, trust bar, benefit bridge (NEW 2026-03-28), bestsellers, testimonials, problem/solution (moved to pos 6), bundles (product-driven cards), heritage, FAQ, final CTA. Full UX audit completed 2026-03-08. Benefit bridge added 2026-03-28. Bundles rewritten 2026-04-03 (product pickers), card standardization 2026-04-04 (shared badge, full-card links, type hierarchy, savings badge overlay, hover underline). Newsletter removed (footer handles it).
 - [x] **Product page** (`product.json`) — 6 sections: main-product, feature highlights (animated icons), quality evidence, truth table, FAQ (shared `lusena-faq`), final CTA (shared `lusena-final-cta`). Full UX audit completed 2026-03-09 (visual rhythm, content rewrite, legal compliance, FAQ consolidation, conversion CTA). Per-product metafield overrides for headline/tagline/per-night. Returns deep-link. PDP buy-box spacing overhauled. Animated icons added 2026-03-15.
 - [x] **Collection page** (`collection.json`) — 1 section: main-collection + product card snippet
 - [x] **Quality page** (`page.nasza-jakosc.json`) — 10 sections: hero, trust bar, origin, momme, certificates, fire test, qc, comparison table, FAQ, final CTA. 6A section removed (content merged into momme). Spacing audit completed 2026-03-10 (3 off-grid fixes + 1 tier upgrade).
@@ -17,7 +17,7 @@
 - [x] **404 page** (`404.json`) — 1 section: lusena-404 (centered error message, bestseller grid, viewport-fill)
 - [x] **Generic page** (`page.json`) — 1 section: lusena-main-page (breadcrumbs, title, richtext via `.lusena-richtext`, viewport-fill, compact spacing)
 - [x] **Contact page** (`page.contact.json`) — 2 sections: lusena-contact-form (breadcrumbs, heading, LUSENA form system, customer pre-fill, viewport-fill, full-width mobile button) + lusena-newsletter
-- [x] **Bundle product page** (`product.bundle.json`) — 6 sections: lusena-main-bundle (progressive disclosure color selector with GPU-only animations, sticky ATC with scroll+highlight, ATC + Buy Now, care accordion, savings display), feature highlights, quality evidence, truth table, FAQ, final CTA. Phase B complete (2026-03-21). Pending: Phase C creative sessions + product media.
+- [x] **Bundle product page** (`product.bundle.json`) — 6 sections: lusena-main-bundle (progressive disclosure color selector with GPU-only animations, sticky ATC with scroll+highlight, ATC + Buy Now, care accordion, savings display), feature highlights, quality evidence, truth table, FAQ, final CTA. Phase B complete (2026-03-21). Phase C creative sessions complete (2026-03-22). Pending: product media.
 
 ## Dawn → LUSENA page migration — COMPLETE (all customer-facing pages branded)
 
@@ -51,7 +51,7 @@ Full plan: `memory-bank/doc/features/dawn-pages-migration-plan.md`
 - [x] Product card (`snippets/lusena-product-card.liquid`)
 - [x] Breadcrumbs (`snippets/lusena-breadcrumbs.liquid`)
 - [x] Generic final CTA (`sections/lusena-final-cta.liquid`) — reusable across all pages
-- [x] Bundles standalone CSS (`assets/lusena-bundles.css`) — bundle card grid styles (loaded per-section) (2026-03-07)
+- [x] Bundles standalone CSS (`assets/lusena-bundles.css`) — homepage bundles section: desktop 3-col card grid + mobile compact rows with SVG thumbnails, savings badge overlay, OOS states, hover underlines (2026-03-07, expanded 2026-04-03/04)
 - [x] Bundle PDP standalone CSS (`assets/lusena-bundle-pdp.css`) — bundle buy box styles (loaded in lusena-main-bundle) (2026-03-21)
 - [x] Bundle swap JS (`assets/lusena-bundle-swap.js`) — shared `LusenaBundle.swap()` for add bundle + remove individual (2026-03-24)
 - [x] Unified upsell card system (`.lusena-upsell-card`) — cross-sell + bundle two-tile layout, gain-framed copy, real product titles/images via `bundle_nudge_map` handles, scrollable positioning, cross-sell bottom-row layout matching bundle pattern. CSS scoped per-surface (drawer: `<style>` tag, cart page: `assets/lusena-cart-page.css`). Desktop cart page: card right-aligned at max-width 48rem. (2026-03-24, polished 2026-03-25)
@@ -198,7 +198,7 @@ Full implementation tracker: `memory-bank/doc/bundle-implementation.md`
 - [x] **Piękny Sen** creative session — COMPLETE (2026-03-22). Product doc: `memory-bank/doc/products/piekny-sen.md`
 - [x] **Scrunchie Trio** creative session — COMPLETE (2026-03-22). Product doc: `memory-bank/doc/products/scrunchie-trio.md`
 - [x] Fill bundle metafields in Shopify admin — CSV imported + upsell metafields set manually (2026-03-24)
-- [ ] Homepage bundles section — wire up real products
+- [x] Homepage bundles section — product-driven rewrite (2026-04-03) + card standardization (2026-04-04) + SVG thumbnails (2026-04-04). Product pickers, editorial copy, desktop 3-col grid + mobile hero+compact rows, OOS handling. Card standardization: shared `.lusena-badge--overlay` (replaces 3 custom badges), full-card `<a>` links (no CTA buttons), type hierarchy (title 1.6 > price 1.4 > editorial 1.3 > contents 1.2), savings as gold-tinted badge overlay on image, title underline hover, pricing gap 0.8rem. Badge text "Bestseller" unified across site. SVG thumbnails: monochrome gold (#8C6A3C) illustrations for compact rows, vertical centering, small-phone font reduction (1.1rem below 383px), spacing hierarchy (2px identity / 4px commercial). Design spec: `docs/superpowers/specs/2026-04-03-homepage-bundles-section-design.md`. Pending: product photography.
 - [ ] Bundle product media (when physical products arrive)
 
 **Phase 2A: Bundle upgrade upsell (COMPLETE 2026-03-24):**

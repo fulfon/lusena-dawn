@@ -253,7 +253,7 @@ Run 1 failed: 4/4 flagged anti-synthetic repetition (4th instance on page), aggr
 
 1. **Fill metafields in Shopify admin** - all creative fields finalized, pending owner approval
 2. **Media** - upload product photos when available; include packaging/unboxing shots (Ewa critical)
-3. **Homepage bundles section** - wire up in `templates/index.json`
+3. ~~**Homepage bundles section**~~ - DONE (2026-04-03), product-driven rewrite with product picker
 4. **Update Simple Bundles option names** - rename to Polish color names
 5. **Reviews system** - enable before launch (4/4 personas flagged)
 6. **Add `droplets` icon to animated icon system** - new icon needed for Card 1 (not currently in `lusena-icon-animated.liquid`)

@@ -37,7 +37,7 @@
 <a href="{{ product.url }}" class="lusena-product-card{% unless product.available %} lusena-product-card--oos{% endunless %} {{ card_class }}">
   <div class="lusena-product-card__media">
     {%- if card_badge != blank -%}
-      <span class="lusena-product-card__badge">
+      <span class="lusena-badge lusena-badge--overlay">
         {{ card_badge | escape }}
       </span>
     {%- endif -%}

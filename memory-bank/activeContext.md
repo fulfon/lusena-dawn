@@ -4,7 +4,7 @@
 
 ## Current focus
 
-**Phase 1B: PDP cross-sell — COMPLETE.** All cross-sell touchpoints are live and QA-tested. Next: content polish, homepage bundles wiring, product media.
+**Homepage bundles — SVG thumbnails + compact row polish COMPLETE.** Monochrome gold SVG illustrations added for bundle compact rows, plus vertical centering, small-phone font reduction, and spacing hierarchy. Next: bundle product media, content polish.
 
 ## Recent completed work
 
@@ -12,9 +12,31 @@
 
 Added "60 dni na zwrot" trust anchor to desktop header — teal color (per brand token: teal = trust/guarantees), rotate-ccw icon, border-left separator, positioned between nav links and action icons. Desktop-only in header bar. On mobile: removed from header bar (stays clean: hamburger | logo | cart), added to hamburger menu utilities row (right-aligned, teal). Also added search (Szukaj) and account (Konto) links with icons to mobile hamburger menu — previously completely inaccessible on mobile. Schema settings for trust anchor text, page, and toggle. Design rationale: Zwroty page repositioned from utility nav link to passive trust signal, reducing purchase friction without adding nav clutter. 2 files changed (+132 lines): `lusena-header.css`, `lusena-header.liquid`.
 
+### Homepage card standardization (2026-04-04)
+
+Unified visual patterns across bestsellers product cards and bundle cards:
+
+1. **Badge consolidation** — 3 custom badge implementations (`.lusena-product-card__badge`, `.lusena-bundles__badge`, `.lusena-media-stage__bestseller`) replaced by shared `.lusena-badge--overlay` in foundations. Frosted glass (white 90% + blur 4px). PDP keeps position overrides for larger gallery context. Badge text standardized to "Bestseller" (was "Best Seller" on PDP).
+
+2. **Full-card links** — Bundle cards changed from `<div>` with CTA button to full `<a>` links (matching product card pattern). CTA button + `cta_label` schema setting removed. Both compact rows and full cards are now clickable links.
+
+3. **Typography hierarchy** — Title bumped to 1.6rem on both product cards and bundle cards (was 1.4rem). Bundle card type scale: title 1.6 > price 1.4 > editorial 1.3 > contents/savings 1.2. Redundant `font-family` declarations removed (inherit from body).
+
+4. **Savings badge** — Moved from inline text in pricing row to gold-tinted chip overlay on bottom-right of card image. Style matches bundle PDP savings chip: `rgba(140, 106, 60, 0.08)` + `backdrop-filter: blur(4px)` + `border-radius`. Bestseller badge top-left (white), savings bottom-right (gold) — distinct visual roles.
+
+5. **Spacing** — Pricing gap aligned to 0.8rem (matching product card + PDP). Card info grouped by function: identity tight (title+contents 0.2rem), editorial breathes (0.6rem above), commercial tight (price+compare 0.2rem).
+
+6. **Hover** — Title underline on hover (`text-underline-offset: 4px`) added to both product cards and bundle cards. Wrapped in `@media (hover: hover)`.
+
+6 files changed across 5 commits. Net -118 lines (cleanup of custom implementations).
+
 ### Bundle sticky ATC class fix (2026-04-04)
 
 Fixed `lusena-bundle-sticky-atc.liquid` using `lusena-sticky-atc__variant` class for the crossed-out original price — should have been `lusena-sticky-atc__compare` (matching the standard PDP sticky and the app-wide convention). Semantic fix only, no visual change. Reviewed price display patterns across all 10+ locations — confirmed order (new first, old second) and layout (row for evaluation contexts, stacked for tight/cart contexts) are already consistent and optimal.
+
+### Homepage bundles section — product-driven rewrite (2026-04-03)
+
+Rewrote `lusena-bundles` section from static text placeholders to product-driven editorial cards. Section now pulls real data from Shopify bundle products (prices, URLs, images via product picker) while keeping hand-crafted editorial copy in block settings. Desktop: equal 3-column grid with Bestseller badge on Nocna Rutyna. Mobile: hero card (Nocna Rutyna full card) + 2 compact rows (Piękny Sen, Scrunchie Trio) with SVG thumbnail slots. Savings calculated from `lusena.bundle_original_price` metafield. OOS handling on both card types. Section intro copy: "Zbuduj swoją nocną rutynę" / "Każdy zestaw to gotowy pomysł - na nocną rutynę albo idealny prezent." CSS cascade bug (desktop-only cards not hiding on mobile) caught in QA and fixed via specificity bump. 5 files: `lusena-bundles.liquid` (rewrite), `lusena-bundles.css` (rewrite), `index.json` (3 bundle products wired). Design spec: `docs/superpowers/specs/2026-04-03-homepage-bundles-section-design.md`. SVG thumbnails done (2026-04-04, monochrome gold illustrations + compact row polish). Pending: bundle product photography.
 
 ### Wide container tier for trust bar (2026-04-03)
 
@@ -131,8 +153,8 @@ Comprehensive memory bank audit covering 67 commits. Updated:
 
 ## Next steps
 
-1. Homepage bundles section — wire up real products (Phase C remaining)
-2. Bundle product media (when physical products arrive)
+1. Bundle product media (when physical products arrive)
+2. Verify product picker handles resolve in theme editor (may need manual re-selection)
 3. Content polish — review all page copy for consistency
 4. UX backlog items (bonnet naming, value anchors expansion)
 

@@ -29,6 +29,9 @@
 
 5. Page-specific assets (loaded per-page via <link> in their section)
    ├── lusena-pdp.css (~42KB) — PDP + sticky ATC + cross-sell checkbox + education price (loaded in lusena-main-product.liquid, lusena-main-bundle.liquid)
+   ├── lusena-bundle-pdp.css — bundle PDP buy box styles (loaded in lusena-main-bundle.liquid)
+   ├── lusena-bundles.css — homepage bundle card grid + mobile compact rows (loaded in lusena-bundles.liquid)
+   ├── lusena-benefit-bridge.css — benefit bridge section styles (loaded in lusena-benefit-bridge.liquid)
    ├── lusena-cart-page.css — cart items + footer + quantity styles (loaded in lusena-cart-items.liquid)
    └── lusena-search.css — search page styles (loaded in lusena-search.liquid)
 

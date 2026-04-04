@@ -1,6 +1,6 @@
 # Bundle Implementation Tracker
 
-*Last updated: 2026-03-19*
+*Last updated: 2026-04-04*
 *Strategy: `memory-bank/doc/bundle-strategy.md`*
 
 ## Architecture decision
@@ -245,33 +245,25 @@ Simple Bundles operates entirely server-side via Cart Transform (V2) or Order Ed
 
 Build the full page top-to-bottom as the customer would scroll it. Everything renders and looks premium. Nothing is clickable yet.
 
-**Template + section shell:**
-- [ ] Create `templates/product.bundle.json` — wire all 6 sections in order
-- [ ] Create `sections/lusena-main-bundle.liquid` — section shell with schema, shared snippet slots, placeholder slots for new snippets
-- [ ] Create section schema with bundle-specific settings (savings label, "what's included" heading, component labels)
-- [ ] Assign 3 bundle products to `product.bundle` template in Shopify admin
+**Template + section shell:** ALL COMPLETE (2026-03-21)
+- [x] Create `templates/product.bundle.json` — 6 sections wired
+- [x] Create `sections/lusena-main-bundle.liquid` — section shell with schema
+- [x] Create section schema with bundle-specific settings
+- [x] Assign 3 bundle products to `product.bundle` template in Shopify admin
 
-**New snippets (visual/HTML only, no JS):**
-- [ ] `snippets/lusena-bundle-summary.liquid` — headline (metafield), title, tagline (metafield), price row with crossed-out compare-at + savings badge, delivery row
-- [ ] `snippets/lusena-bundle-contents.liquid` — "What's included" icon + text list of component products
-- [ ] `snippets/lusena-bundle-options.liquid` — render swatch fieldsets with correct Polish labels ("Kolor poszewki", "Kolor czepka") and correct color swatches using shared `lusena-option__swatch` CSS classes. Swatches display correctly but clicking does nothing yet. Single-option components (maska) show pre-selected.
-- [ ] ATC button area — render button visually (disabled placeholder). No form, no hidden inputs.
-- [ ] Wire shared snippets: media, proof chips, guarantee, payment, benefits (3 metafield-driven bullets)
+**New snippets:** ALL COMPLETE (2026-03-21)
+- [x] `snippets/lusena-bundle-summary.liquid`
+- [x] `snippets/lusena-bundle-contents.liquid`
+- [x] `snippets/lusena-bundle-options.liquid`
+- [x] ATC button area
+- [x] Shared snippets wired
 
-**Below-fold content (in `product.bundle.json`):**
-- [ ] Feature highlights: 6 bundle-specific cards (why buy as set, matching colors, quality, OEKO-TEX, care, gift-ready)
-- [ ] Quality evidence: same content as individual (copy section config from `product.json`)
-- [ ] Truth table: same content as individual (copy section config)
-- [ ] FAQ: bundle-specific questions (Co zawiera zestaw? / Różne kolory? / Zwrot jednego produktu? / Wysyłka / Gwarancja / Dlaczego zestaw?)
-- [ ] Final CTA: bundle-appropriate copy
+**Below-fold content:** ALL COMPLETE (2026-03-21)
+- [x] Feature highlights, quality evidence, truth table, FAQ, final CTA
 
-**CSS (all of it):**
-- [ ] Add bundle-specific styles to `assets/lusena-pdp.css` (preferred) or create `assets/lusena-bundle.css` if size warrants
-- [ ] Savings badge styling (subtle, secondary)
-- [ ] "What's included" component styling
-- [ ] Multi-fieldset color selector spacing and grouping
-- [ ] Responsive: 2-col → 1-col grid, swatch sizing, component list layout
-- [ ] Verify: no compiled_assets truncation (check size < 55KB)
+**CSS:** ALL COMPLETE (2026-03-21)
+- [x] `assets/lusena-bundle-pdp.css` created (separate file, not in lusena-pdp.css)
+- [x] All bundle-specific styles shipped
 
 **Gate:** Playwright screenshots confirm all 3 bundle URLs look complete and premium on both mobile and desktop. All 6 sections render with real content. Swatches display with correct colors. Page is visually finished — just not interactive.
 
@@ -357,19 +349,26 @@ Production-ready. Every edge case covered, mobile enhancement added.
 
 ## Phase C: Content & polish
 
-### C1. Bundle creative sessions
-- [ ] **Nocna Rutyna** — headline, tagline, 3 benefits
-- [ ] **Piękny Sen** — headline, tagline, 3 benefits
-- [ ] **Scrunchie Trio** — headline, tagline, 3 benefits
+### C1. Bundle creative sessions (COMPLETE 2026-03-22)
+- [x] **Nocna Rutyna** — headline, tagline, 3 benefits. Product doc: `memory-bank/doc/products/nocna-rutyna.md`
+- [x] **Piękny Sen** — headline, tagline, 3 benefits. Product doc: `memory-bank/doc/products/piekny-sen.md`
+- [x] **Scrunchie Trio** — headline, tagline, 3 benefits. Product doc: `memory-bank/doc/products/scrunchie-trio.md`
 
-### C2. Bundle metafields
-- [ ] Fill LUSENA metafields on bundle products (same PDP template as individual products)
-- [ ] Bundle-specific feature highlight cards (1-2 unique + reused universal cards)
-- [ ] `lusena.pdp_packaging_items` — what's in the bundle box
+### C2. Bundle metafields (COMPLETE 2026-03-24)
+- [x] Fill LUSENA metafields on bundle products — CSV imported + upsell metafields set manually
+- [x] Bundle-specific feature highlight cards (per-bundle cards 1/3/5 + universal cards 2/4/6)
+- [x] `lusena.pdp_packaging_items` — N/A for bundles (no packaging accordion on bundle template)
 
-### C3. Homepage bundles section
-- [ ] Wire up real bundle products in `templates/index.json` bundles section
-- [ ] Verify bundle cards display with correct pricing, savings badge, images
+### C3. Homepage bundles section (COMPLETE 2026-04-03)
+- [x] Rewrote `lusena-bundles` section from static placeholders to product-driven editorial cards
+- [x] Product pickers replace hardcoded text, savings from `bundle_original_price` metafield
+- [x] Desktop: 3-col equal grid, Bestseller badge on Nocna Rutyna
+- [x] Mobile: hero card (first block) + 2 compact rows with SVG thumbnail slots
+- [x] Editorial copy per block: contents text + "why together" italic teal line
+- [x] OOS handling on both card types
+- [x] Verified desktop + mobile via Playwright QA
+- [x] SVG mobile thumbnails — monochrome gold (#8C6A3C) illustrations in `assets/`. Compact row: vertical centering, `object-fit: contain` at 90% fill, small-phone font reduction (1.1rem below 383px), spacing hierarchy (2px identity / 4px commercial).
+- [ ] Verify product picker handles resolve in theme editor (may need manual re-selection)
 
 ### C4. Media
 - [ ] Bundle product images (when physical products arrive)
@@ -377,12 +376,12 @@ Production-ready. Every edge case covered, mobile enhancement added.
 
 ---
 
-## Phase D: Cross-sell checkbox (separate from bundles)
+## Phase D: Cross-sell checkbox (COMPLETE 2026-03-29)
 
-- [ ] Implement PDP checkbox: "Dodaj jedwabną scrunchie - 39 zł zamiast 59 zł"
-- [ ] Create Shopify BXGY automatic discount (poszewka = qualifier, scrunchie = 39 zł)
-- [ ] Build checkbox UI in `lusena-main-product.liquid` buybox
-- [ ] Only show on poszewka PDP (not bonnet — see upsell strategy)
+- [x] PDP cross-sell checkbox — scrunchie at 39 zl via BXGY on all individual PDPs + bundle PDPs
+- [x] Scrunchie PDP education — server-side price swap when qualifying product in cart
+- [x] Cart interaction locking during bundle swaps
+- [x] Full QA — 84 tests, all passing
 
 ---
 

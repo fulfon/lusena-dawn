@@ -51,7 +51,7 @@
 - `assets/lusena-pdp.css` — All PDP-specific CSS (~42KB), loaded per-page
 - `assets/lusena-cart-page.css` — Cart page styles: items, footer, quantity stepper, upsell (625 lines, extracted from `{% stylesheet %}` blocks 2026-03-26)
 - `assets/lusena-search.css` — Search page styles: layout, grid, empty state (156 lines, extracted from `{% stylesheet %}` block 2026-03-26)
-- `assets/lusena-bundles.css` — Bundle card grid styles (loaded per-section in lusena-bundles.liquid)
+- `assets/lusena-bundles.css` — Homepage bundles section: desktop 3-col card grid + mobile compact rows with SVG thumbnails, savings badge overlay, OOS states, hover underlines (loaded in lusena-bundles.liquid)
 - `assets/lusena-bundle-pdp.css` — Bundle PDP buy box styles (loaded in lusena-main-bundle.liquid)
 - `assets/lusena-benefit-bridge.css` — Benefit bridge section styles (loaded in lusena-benefit-bridge.liquid)
 - `assets/lusena-icon-animations.css` — Animated icon CSS keyframes + prefers-reduced-motion (loaded per-section in lusena-pdp-feature-highlights.liquid)
