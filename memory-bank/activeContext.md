@@ -1,12 +1,16 @@
 # Active Context
 
-*Last updated: 2026-04-03*
+*Last updated: 2026-04-04*
 
 ## Current focus
 
 **Phase 1B: PDP cross-sell — COMPLETE.** All cross-sell touchpoints are live and QA-tested. Next: content polish, homepage bundles wiring, product media.
 
 ## Recent completed work
+
+### Bundle sticky ATC class fix (2026-04-04)
+
+Fixed `lusena-bundle-sticky-atc.liquid` using `lusena-sticky-atc__variant` class for the crossed-out original price — should have been `lusena-sticky-atc__compare` (matching the standard PDP sticky and the app-wide convention). Semantic fix only, no visual change. Reviewed price display patterns across all 10+ locations — confirmed order (new first, old second) and layout (row for evaluation contexts, stacked for tight/cart contexts) are already consistent and optimal.
 
 ### Wide container tier for trust bar (2026-04-03)
 

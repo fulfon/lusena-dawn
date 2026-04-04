@@ -57,7 +57,7 @@
           {{ current_variant.price | money_without_trailing_zeros }}
         </span>
         {%- if has_savings -%}
-          <s class="lusena-sticky-atc__variant">
+          <s class="lusena-sticky-atc__compare">
             {{ original_price_cents | money_without_trailing_zeros }}
           </s>
         {%- endif -%}
@@ -100,7 +100,7 @@
         {{ current_variant.price | money_without_trailing_zeros }}
       </span>
       {%- if has_savings -%}
-        <s class="lusena-sticky-atc__variant">
+        <s class="lusena-sticky-atc__compare">
           {{ original_price_cents | money_without_trailing_zeros }}
         </s>
       {%- endif -%}
