@@ -4,9 +4,17 @@
 
 ## Current focus
 
-**Homepage bundles — SVG thumbnails + compact row polish COMPLETE.** Monochrome gold SVG illustrations added for bundle compact rows, plus vertical centering, small-phone font reduction, and spacing hierarchy. Next: bundle product media, content polish.
+**Content polish in progress.** FAQ sections trimmed and improved on both PDP templates. Next: continue content review across all pages, bundle product media.
 
 ## Recent completed work
+
+### FAQ trim and improvement — bundle + single PDPs (2026-04-04)
+
+Trimmed redundant FAQ questions on both PDP templates after analysis, legal compliance check (EU 655/2013, Polish UOKiK, LUSENA brandbook), and 4-persona customer validation.
+
+**Bundle PDP** (`product.bundle.json`): 6→4 questions. Removed: "Co zawiera zestaw?" (scroll-up UX), "Jak prać?" (duplicate of buy-box care accordion), "Dlaczego zestaw?" (own 6-card section already covers it). Added: "Jak długo służy jedwab przy codziennym użytkowaniu?" (only info gap on the page). Refined: colors answer no longer hardcodes color names (future-proof), returns trimmed.
+
+**Single PDP** (`product.json`): 6→5 questions. Removed: "Wysyłka i dostawa" (redundant), "Jak prać?" (duplicate), old per-product effects list (showed all 5 products' effects on every PDP). Added: "Skąd wiem, że to prawdziwy jedwab?" (3/4 personas requested — actionable OEKO-TEX verification). Fixed 3 legal issues: Q1 title dropped "cery trądzikowej" (medical condition), Q1 body fixed absolute absorption claim ("nie wchłania" → "wchłania znacznie mniej"), Q3 rewritten with proper hedging and no unsubstantiated "2-4 tygodni" timeline. Q2 made product-neutral (removed "jednej poszewki").
 
 ### Header: trust anchor + mobile menu utilities (2026-04-04)
 

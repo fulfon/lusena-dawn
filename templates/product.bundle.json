@@ -238,57 +238,41 @@
     "pdp_details_questions": {
       "type": "lusena-faq",
       "blocks": {
-        "faq-contents": {
-          "type": "item",
-          "settings": {
-            "question": "Co dok\u0142adnie zawiera zestaw?",
-            "answer": "<p>Dok\u0142adny sk\u0142ad zestawu znajdziesz w sekcji \u201eW zestawie\u201d na g\u00f3rze strony. Ka\u017cdy produkt jest pakowany osobno w eleganckim pude\u0142ku LUSENA.</p>"
-          }
-        },
         "faq-colors": {
           "type": "item",
           "settings": {
             "question": "Czy mog\u0119 wybra\u0107 r\u00f3\u017cne kolory?",
-            "answer": "<p>Tak. Dla ka\u017cdego produktu w zestawie mo\u017cesz wybra\u0107 inny kolor - czarny, brudny r\u00f3\u017c lub szampan (w zale\u017cno\u015bci od dost\u0119pno\u015bci dla danego produktu).</p>"
+            "answer": "<p>Tak. Dla ka\u017cdego produktu w zestawie wybierasz kolor osobno - z pe\u0142nej palety dost\u0119pnej dla danego produktu.</p>"
+          }
+        },
+        "faq-buy-separately": {
+          "type": "item",
+          "settings": {
+            "question": "Czy mog\u0119 kupi\u0107 produkty osobno?",
+            "answer": "<p>Tak. Ka\u017cdy produkt z zestawu jest dost\u0119pny osobno w naszym sklepie. Kupuj\u0105c w zestawie, p\u0142acisz mniej ni\u017c za pojedyncze produkty.</p>"
+          }
+        },
+        "faq-durability": {
+          "type": "item",
+          "settings": {
+            "question": "Jak d\u0142ugo s\u0142u\u017cy jedwab przy codziennym u\u017cytkowaniu?",
+            "answer": "<p>Jedwab 22 momme to g\u0119sty, wytrzyma\u0142y splot. Przy odpowiedniej piel\u0119gnacji s\u0142u\u017cy latami - nawet przy codziennym u\u017cytkowaniu.</p>"
           }
         },
         "faq-returns": {
           "type": "item",
           "settings": {
             "question": "Zwroty i gwarancja 60 dni",
-            "answer": "<p>Masz 60 dni na test ca\u0142ego zestawu. Je\u015bli nie jeste\u015b zadowolona z kt\u00f3regokolwiek produktu - zwr\u00f3\u0107 ca\u0142y zestaw. Pe\u0142ny zwrot bez pyta\u0144. Prosty formularz online, darmowy zwrot InPost. <a href=\"/pages/zwroty\">Szczeg\u00f3\u0142y zwrot\u00f3w i gwarancji \u2192</a></p>",
+            "answer": "<p>Masz 60 dni na test ca\u0142ego zestawu. Je\u015bli nie jeste\u015b zadowolona - zwr\u00f3\u0107, nawet po u\u017cyciu. Darmowy zwrot InPost, pieni\u0105dze wracaj\u0105 w 3-5 dni roboczych. <a href=\"/pages/zwroty\">Szczeg\u00f3\u0142y zwrot\u00f3w \u2192</a></p>",
             "is_returns_target": true
-          }
-        },
-        "faq-shipping": {
-          "type": "item",
-          "settings": {
-            "question": "Wysy\u0142ka i dostawa",
-            "answer": "<p>Wysy\u0142amy z magazynu w Polsce. Zam\u00f3wienia do 14:00 wysy\u0142amy tego samego dnia. Dostawa InPost/kurier: 1-2 dni robocze. Zestawy kwalifikuj\u0105 si\u0119 do darmowej dostawy.</p>"
-          }
-        },
-        "faq-care": {
-          "type": "item",
-          "settings": {
-            "question": "Jak pra\u0107 produkty z zestawu?",
-            "answer": "<ul><li>Pra\u0107 w pralce: program delikatny, maks. 30\u00b0C</li><li>U\u017cywa\u0107 detergentu do jedwabiu lub delikatnych tkanin</li><li>Suszy\u0107 na p\u0142asko - nie u\u017cywa\u0107 suszarki b\u0119bnowej</li><li>Nie wybiela\u0107, nie pra\u0107 z chlorem</li><li>Prasowa\u0107 na najni\u017cszej temperaturze z lewej strony</li></ul>"
-          }
-        },
-        "faq-why-bundle": {
-          "type": "item",
-          "settings": {
-            "question": "Dlaczego zestaw zamiast pojedynczych produkt\u00f3w?",
-            "answer": "<p>W zestawie oszcz\u0119dzasz w por\u00f3wnaniu do zakupu produkt\u00f3w osobno. Produkty LUSENA zosta\u0142y zaprojektowane tak, by si\u0119 uzupe\u0142nia\u0107 - razem tworz\u0105 kompletn\u0105 rutyn\u0119 piel\u0119gnacji.</p>"
           }
         }
       },
       "block_order": [
-        "faq-contents",
         "faq-colors",
-        "faq-returns",
-        "faq-shipping",
-        "faq-care",
-        "faq-why-bundle"
+        "faq-buy-separately",
+        "faq-durability",
+        "faq-returns"
       ],
       "settings": {
         "anchor_id": "details",

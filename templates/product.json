@@ -295,35 +295,11 @@
     "pdp_details_questions": {
       "type": "lusena-faq",
       "blocks": {
-        "faq-shipping": {
-          "type": "item",
-          "settings": {
-            "question": "Wysyłka i dostawa",
-            "answer": "<p>Wysyłamy z naszego magazynu w Polsce. Zamówienia złożone do godziny 14:00 wysyłamy jeszcze tego samego dnia. Dostawa InPost/kurier zajmuje zazwyczaj 1-2 dni robocze. Darmowa dostawa od 199 zł.</p>",
-            "is_returns_target": false
-          }
-        },
-        "faq-returns": {
-          "type": "item",
-          "settings": {
-            "question": "Zwroty i gwarancja 60 dni",
-            "answer": "<p>60 dni na zwrot - nawet używanego produktu. Prosty formularz online, darmowy zwrot InPost. Przetestuj przez 60 nocy. Jeśli nie poczujesz różnicy, zwróć i otrzymaj pełny zwrot. Bez pytań. <a href=\"/pages/zwroty\">Szczegóły zwrotów i gwarancji</a></p>",
-            "is_returns_target": true
-          }
-        },
         "faq-allergy": {
           "type": "item",
           "settings": {
-            "question": "Czy jedwab LUSENA jest odpowiedni dla alergików i cery trądzikowej?",
-            "answer": "<p>Tak. Jedwab morwowy jest naturalnie hipoalergiczny - nie gromadzi roztoczy, kurzu ani bakterii tak łatwo jak bawełna czy syntetyki. To materiał, który <strong>oddycha i nie wchłania wilgoci ze skóry</strong>, co sprzyja komfortowi cery wrażliwej i skłonnej do podrażnień.</p><p>Każdy produkt LUSENA jest certyfikowany OEKO-TEX® Standard 100 - niezależne laboratorium potwierdza brak substancji szkodliwych. Bezpieczny kontakt ze skórą, nawet najwrażliwszą.</p>",
-            "is_returns_target": false
-          }
-        },
-        "faq-care": {
-          "type": "item",
-          "settings": {
-            "question": "Jak prać i pielęgnować jedwab?",
-            "answer": "<ul><li>Prać w pralce: program delikatny, maks. 30°C</li><li>Używać detergentu do jedwabiu lub delikatnych tkanin</li><li>Suszyć na płasko - nie używać suszarki bębnowej</li><li>Nie wybielać, nie prać z chlorem</li><li>Prasować na najniższej temperaturze z lewej strony</li></ul>",
+            "question": "Czy jedwab LUSENA jest odpowiedni dla sk\u00f3ry wra\u017cliwej i alergik\u00f3w?",
+            "answer": "<p>Tak. Jedwab morwowy jest naturalnie hipoalergiczny - nie gromadzi roztoczy, kurzu ani bakterii tak \u0142atwo jak bawe\u0142na czy syntetyki. To materia\u0142, kt\u00f3ry oddycha i wch\u0142ania znacznie mniej wilgoci ze sk\u00f3ry ni\u017c bawe\u0142na, co sprzyja komfortowi cery wra\u017cliwej i sk\u0142onnej do podra\u017cnie\u0144. Ka\u017cdy produkt LUSENA jest certyfikowany OEKO-TEX\u00ae Standard 100 - niezale\u017cne laboratorium potwierdza brak substancji szkodliwych.</p>",
             "is_returns_target": false
           }
         },
@@ -331,26 +307,41 @@
           "type": "item",
           "settings": {
             "question": "Dlaczego prawdziwy jedwab tyle kosztuje?",
-            "answer": "<p>Produkcja jedwabiu to proces wymagający ogromnej precyzji i czasu. Do stworzenia jednej poszewki LUSENA potrzeba tysięcy kokonów jedwabnika morwowego.</p><p>Używamy wyłącznie jedwabiu o gęstości <strong>22 momme</strong> (idealny balans między miękkością a trwałością) oraz najwyższej <strong>klasy 6A</strong> (najdłuższe, nieskazitelne włókna). To inwestycja w produkt, który przy odpowiedniej pielęgnacji posłuży Ci przez lata.</p>",
+            "answer": "<p>Produkcja jedwabiu 22 momme wymaga tysi\u0119cy kokon\u00f3w jedwabnika morwowego - to proces wymagaj\u0105cy ogromnej precyzji i czasu. U\u017cywamy wy\u0142\u0105cznie najwy\u017cszej klasy 6A (najd\u0142u\u017csze, nieskazitelne w\u0142\u00f3kna) w g\u0119sto\u015bci, kt\u00f3ra zapewnia idealny balans mi\u0119dzy mi\u0119kko\u015bci\u0105 a trwa\u0142o\u015bci\u0105. To inwestycja w produkt, kt\u00f3ry przy odpowiedniej piel\u0119gnacji s\u0142u\u017cy latami.</p>",
+            "is_returns_target": false
+          }
+        },
+        "faq-authenticity": {
+          "type": "item",
+          "settings": {
+            "question": "Sk\u0105d wiem, \u017ce to prawdziwy jedwab?",
+            "answer": "<p>Ka\u017cdy produkt LUSENA ma certyfikat OEKO-TEX\u00ae Standard 100 - numer znajdziesz na karcie w opakowaniu i mo\u017cesz go zweryfikowa\u0107 bezpo\u015brednio na oeko-tex.com. U\u017cywamy wy\u0142\u0105cznie jedwabiu morwowego klasy 6A z regionu Suzhou, potwierdzonego dokumentacj\u0105 dostawcy.</p>",
             "is_returns_target": false
           }
         },
         "faq-effects": {
           "type": "item",
           "settings": {
-            "question": "Kiedy zauważę pierwsze efekty?",
-            "answer": "<p>Różnicę w dotyku i komforcie poczujesz od pierwszego użycia - jedwab 22 momme jest wyraźnie gładszy i chłodniejszy niż bawełna czy syntetyki.</p><p>Konkretne korzyści zależą od produktu:</p><ul><li><strong>Poszewka</strong> - mniej zagnieceń na skórze rano, włosy mniej splątane po nocy. Długoterminowo jedwab sprzyja zachowaniu nawilżenia skóry (2-4 tygodnie).</li><li><strong>Czepek</strong> - fryzura utrzymana na miejscu, mniej puszenia i łamania po przebudzeniu.</li><li><strong>Scrunchie</strong> - brak śladu po gumce, mniej łamania i elektryzowania włosów.</li><li><strong>Maska 3D</strong> - głębszy sen dzięki pełnemu zaciemnieniu, brak odcisków na skórze wokół oczu.</li><li><strong>Wałek do loków</strong> - naturalnie wymodelowane fale po jednej nocy. Efekt zależy od typu i długości włosów.</li></ul><p>Gwarancja 60 dni pozwala Ci przetestować produkt w spokoju - jeśli nie poczujesz różnicy, zwróć bez pytań.</p>",
+            "question": "Jak szybko poczu\u0119 r\u00f3\u017cnic\u0119?",
+            "answer": "<p>R\u00f3\u017cnic\u0119 w dotyku poczujesz od pierwszego u\u017cycia - jedwab 22 momme jest wyra\u017anie g\u0142adszy ni\u017c bawe\u0142na czy syntetyki. Jedwab tworzy warunki sprzyjaj\u0105ce komfortowi sk\u00f3ry i w\u0142os\u00f3w - efekty s\u0105 indywidualne i zale\u017c\u0105 od regularno\u015bci u\u017cytkowania.</p>",
             "is_returns_target": false
+          }
+        },
+        "faq-returns": {
+          "type": "item",
+          "settings": {
+            "question": "Zwroty i gwarancja 60 dni",
+            "answer": "<p>Masz 60 dni na test. Je\u015bli nie jeste\u015b zadowolona - zwr\u00f3\u0107, nawet po u\u017cyciu. Darmowy zwrot InPost, pieni\u0105dze wracaj\u0105 w 3-5 dni roboczych. <a href=\"/pages/zwroty\">Szczeg\u00f3\u0142y zwrot\u00f3w \u2192</a></p>",
+            "is_returns_target": true
           }
         }
       },
       "block_order": [
-        "faq-shipping",
-        "faq-returns",
         "faq-allergy",
-        "faq-care",
         "faq-price",
-        "faq-effects"
+        "faq-authenticity",
+        "faq-effects",
+        "faq-returns"
       ],
       "settings": {
         "padding_top": 0,
@@ -359,7 +350,7 @@
         "padding_bottom_mobile": 0,
         "bg_style": "surface-2",
         "anchor_id": "details",
-        "heading": "Szczegóły i pytania",
+        "heading": "Szczeg\u00f3\u0142y i pytania",
         "subheading": ""
       }
     },
