@@ -101,6 +101,7 @@
   .lusena-hero {
     min-height: 0;
     height: min(85vh, var(--lusena-hero-mobile-max-height));
+    height: min(85svh, var(--lusena-hero-mobile-max-height));
   }
 
   .lusena-hero [data-lusena-hero-image] img {
@@ -289,5 +290,40 @@
     justify-content: flex-end;
     padding-top: 0;
     padding-bottom: 5rem;
+  }
+}
+
+/* ── Mobile: flex-based content layout ────────────────────────────
+   Prevents button clipping on short viewports (iPhone SE, Galaxy Fold)
+   by replacing transform-based positioning with flex-aware layout.
+   Text is vertically centered above buttons; buttons anchored at bottom. */
+@media (max-width: 767px) {
+  .lusena-hero .lusena-hero__content {
+    padding-bottom: clamp(2.4rem, 4svh, 4.8rem);
+  }
+
+  .lusena-hero .lusena-hero__stack {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-left: var(--lusena-space-2);
+    padding-right: var(--lusena-space-2);
+  }
+
+  .lusena-hero .lusena-hero__text-wrap {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  .lusena-hero .lusena-hero__buttons-wrap {
+    flex-shrink: 0;
+  }
+
+  .lusena-hero .lusena-hero__text {
+    transform: none;
+  }
+
+  .lusena-hero .lusena-hero__buttons {
+    transform: none;
   }
 }
