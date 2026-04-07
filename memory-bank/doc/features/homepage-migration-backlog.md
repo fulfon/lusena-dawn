@@ -48,12 +48,9 @@
 - **Why deferred:** Low priority — purely aesthetic enhancement with no conversion impact. Requires careful motion design and performance testing.
 - **Acceptance:** Subtle floating animation on a product element overlaid on the hero image, disabled when reduced motion is preferred.
 
-### 6. Problem/Solution — expandable accordion alternative
+### 6. ~~Problem/Solution — expandable accordion alternative~~
 
-- [ ] **What:** V2 mentions CTA option "Dlaczego to ważne? →" can either link to an educational page OR expand an inline accordion with more detail.
-- **Ref:** `memory-bank/doc/brand/LUSENA_BrandBook_v2.md:1245` (homepage item 3, "prowadzi do strony edukacyjnej lub rozwija akordeon").
-- **Why deferred:** Current link-to-page approach is functional. Accordion alternative is a nice-to-have UX enhancement.
-- **Acceptance:** CTA toggles an inline details section with deeper educational content about silk vs cotton.
+- [x] **N/A** — Problem/Solution section removed from homepage (2026-04-07). Redundant with Benefit Bridge; replaced by Visual Proof Block at position #5.
 
 ---
 

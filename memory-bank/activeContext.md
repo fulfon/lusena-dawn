@@ -1,12 +1,52 @@
 # Active Context
 
-*Last updated: 2026-04-04*
+*Last updated: 2026-04-07*
 
 ## Current focus
 
-**Content polish in progress.** FAQ sections trimmed and improved on both PDP templates. Next: continue content review across all pages, bundle product media.
+**Homepage architecture redesign — COMPLETE.** All items from the design spec implemented. Visual Proof Block scaffolded at position #5, awaiting owner's comparison photography and OEKO-TEX badge. Deferred items (trust bar reorder, UGC redesign) tracked as separate tasks.
 
 ## Recent completed work
+
+### Homepage architecture redesign — full implementation (2026-04-07)
+
+Based on the approved design spec (5 independent analyses: conversion analyst, brand strategist, persona walk-throughs, competitive benchmarking, framework mapping), implemented the complete homepage redesign across two sessions.
+
+**Background rhythm simplification (3 tones → 2 tones on homepage):**
+- Bundles section: `lusena-bg-brand` → `lusena-bg-surface-1` (cream → white)
+- Testimonials section: `lusena-bg-surface-2` → `lusena-bg-brand` (off-white → cream)
+- Heritage section: `lusena-bg-surface-2` → `lusena-bg-surface-1` (off-white → white)
+- Bundles compact row bg: `var(--lusena-surface-1)` → `var(--lusena-brand-bg)` (white → cream, fixes contrast on new white section)
+- `surface-2` no longer used on homepage (kept in CSS for other pages)
+- Final rhythm: image → white → cream → white → cream → white → cream → white → white → cream
+
+**Section order changes (10 → 10 sections with Visual Proof Block replacing Problem/Solution):**
+- Problem/Solution section CUT (redundant with Benefit Bridge, red/green visuals incompatible with premium brand)
+- Bundles moved from position 7 to position 6 (after Visual Proof Block)
+- Visual Proof Block added at position 5 (between Bestsellers and Bundles)
+- Final order: hero, trust, benefit_bridge, bestsellers, visual_proof, gift (bundles), reviews (testimonials), heritage, faq, final_cta
+
+**Copy changes (all in index.json):**
+- Bestsellers heading: "Nasze bestsellery" → "Twoja nocna rutyna zaczyna się tutaj"
+- Bundles body: StoryBrand Plan sentence naming what each product protects
+- FAQ reordered: real silk → guarantee → routine guidance → washing → origin
+- Final CTA heading/body: specific, sensory, earned language
+
+**Liquid edits:**
+- Hero: button 2 ("Dlaczego jedwab?") changed from ghost button to text link with arrow chevron
+- Benefit bridge: CTA link removed (quality page link moved to Visual Proof Block where it contextually belongs)
+
+**Visual Proof Block (NEW section at position #5):**
+- Hybrid A+C design (4-agent expert review: personas, copywriter, UX/conversion, brand strategist)
+- Split fabric comparison (standard 16 momme vs LUSENA 22 momme) + frosted OEKO-TEX proof chip
+- Compact spacing tier (32px mobile / 48px desktop) — visual interlude, not full section
+- No heading (premium restraint per Brand Strategist)
+- Copy: "Gęstość, którą poczujesz" claim + "Poznaj naszą jakość" CTA (copywriter-approved)
+- Schema: 2 image pickers for comparison photos, OEKO-TEX badge image picker, claim text, CTA label/link
+- Dawn `div:empty` trap caught and fixed (display: block at 0-2-0 specificity)
+- Awaiting owner: comparison macro photography + OEKO-TEX Standard 100 badge image
+
+Files changed: `sections/lusena-bundles.liquid`, `sections/lusena-testimonials.liquid`, `sections/lusena-heritage.liquid`, `assets/lusena-bundles.css`, `sections/lusena-hero.liquid`, `assets/lusena-hero.css`, `sections/lusena-benefit-bridge.liquid`, `assets/lusena-benefit-bridge.css`, `sections/lusena-visual-proof.liquid` (NEW), `assets/lusena-visual-proof.css` (NEW), `templates/index.json`.
 
 ### FAQ trim and improvement — bundle + single PDPs (2026-04-04)
 
@@ -161,10 +201,11 @@ Comprehensive memory bank audit covering 67 commits. Updated:
 
 ## Next steps
 
-1. Bundle product media (when physical products arrive)
-2. Verify product picker handles resolve in theme editor (may need manual re-selection)
-3. Content polish — review all page copy for consistency
-4. UX backlog items (bonnet naming, value anchors expansion)
+1. **Owner photography for Visual Proof Block** — macro comparison photos (standard silk vs 22 momme) + OEKO-TEX Standard 100 badge image. Upload via theme editor → Homepage → Visual Proof Block section.
+2. **Trust bar reorder** — lead with OEKO-TEX/guarantee, momme last (spec D2, deferred to separate task)
+3. Bundle product media (when physical products arrive)
+4. UGC section redesign (replace fabricated testimonials with real customer content before launch)
+5. UX backlog items (bonnet naming, value anchors expansion)
 
 ## Key decisions (reference)
 

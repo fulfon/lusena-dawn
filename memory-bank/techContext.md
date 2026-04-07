@@ -26,7 +26,7 @@
 - **404 page:** `sections/lusena-404.liquid` — centered error message, bestseller grid, viewport-fill
 - **Generic page:** `sections/lusena-main-page.liquid` — breadcrumbs, title, richtext, viewport-fill, compact spacing
 - **Contact page:** `sections/lusena-contact-form.liquid` — breadcrumbs, heading, LUSENA form system, viewport-fill, full-width mobile button
-- **Homepage:** `sections/lusena-hero.liquid`, `lusena-trust-bar.liquid`, `lusena-benefit-bridge.liquid`, `lusena-bestsellers.liquid`, `lusena-testimonials.liquid`, `lusena-problem-solution.liquid`, `lusena-bundles.liquid`, `lusena-heritage.liquid`, `lusena-faq.liquid`, `lusena-final-cta.liquid` (10 sections)
+- **Homepage:** `sections/lusena-hero.liquid`, `lusena-trust-bar.liquid`, `lusena-benefit-bridge.liquid`, `lusena-bestsellers.liquid`, `lusena-visual-proof.liquid`, `lusena-bundles.liquid`, `lusena-testimonials.liquid`, `lusena-heritage.liquid`, `lusena-faq.liquid`, `lusena-final-cta.liquid` (10 sections)
 
 ### Translations
 - `locales/en.default.json` — **Polish strings override English defaults** (store is PL-first). Search-related keys (`templates.search.*`, `accessibility.search.*`, `accessibility.loading`) translated to Polish. Polish quotation marks „..." use Unicode `\u201E` + `\u201D` (not ASCII `"`) to avoid breaking JSON.
@@ -54,12 +54,13 @@
 - `assets/lusena-bundles.css` — Homepage bundles section: desktop 3-col card grid + mobile compact rows with SVG thumbnails, savings badge overlay, OOS states, hover underlines (loaded in lusena-bundles.liquid)
 - `assets/lusena-bundle-pdp.css` — Bundle PDP buy box styles (loaded in lusena-main-bundle.liquid)
 - `assets/lusena-benefit-bridge.css` — Benefit bridge section styles (loaded in lusena-benefit-bridge.liquid)
+- `assets/lusena-visual-proof.css` — Visual proof block section styles (loaded in lusena-visual-proof.liquid)
 - `assets/lusena-icon-animations.css` — Animated icon CSS keyframes + prefers-reduced-motion (loaded per-section in lusena-pdp-feature-highlights.liquid)
 - `assets/base.css` — Dawn foundation (3,641 lines)
 
 ### CSS loading architecture
 - **Global assets in `theme.liquid`:** `lusena-foundations.css` → `lusena-button-system.css` → `lusena-header.css` → `lusena-hero.css` → `lusena-footer.css`
-- **Page-specific assets:** `lusena-pdp.css` loaded in `lusena-main-product.liquid` and `lusena-main-bundle.liquid`, `lusena-cart-page.css` loaded in `lusena-cart-items.liquid`, `lusena-search.css` loaded in `lusena-search.liquid`, `lusena-bundle-pdp.css` loaded in `lusena-main-bundle.liquid`, `lusena-bundles.css` loaded in `lusena-bundles.liquid`, `lusena-benefit-bridge.css` loaded in `lusena-benefit-bridge.liquid`, `lusena-icon-animations.css` loaded in `lusena-pdp-feature-highlights.liquid`
+- **Page-specific assets:** `lusena-pdp.css` loaded in `lusena-main-product.liquid` and `lusena-main-bundle.liquid`, `lusena-cart-page.css` loaded in `lusena-cart-items.liquid`, `lusena-search.css` loaded in `lusena-search.liquid`, `lusena-bundle-pdp.css` loaded in `lusena-main-bundle.liquid`, `lusena-bundles.css` loaded in `lusena-bundles.liquid`, `lusena-benefit-bridge.css` loaded in `lusena-benefit-bridge.liquid`, `lusena-visual-proof.css` loaded in `lusena-visual-proof.liquid`, `lusena-icon-animations.css` loaded in `lusena-pdp-feature-highlights.liquid`
 - **`{% stylesheet %}` compiled_assets:** All `{% stylesheet %}` blocks compile into `compiled_assets/styles.css` (73KB hard limit). Currently ~59KB after 2026-03-26 extraction (cart page + search CSS moved to standalone files). Safe margin maintained.
 - **Cart drawer:** Promoted from snippet render to section (`{%- section 'cart-drawer' -%}` in theme.liquid). CSS lives in `<style>` tag inside `snippets/cart-drawer.liquid` (~150 lines, not in compiled_assets). Upsell CSS selectors scoped under `.lusena-cart-drawer__upsell`.
 - **Bundle swap JS:** `assets/lusena-bundle-swap.js` — shared `LusenaBundle.swap()` for bundle add + individual remove.

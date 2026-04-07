@@ -1,0 +1,170 @@
+{{ 'lusena-visual-proof.css' | asset_url | stylesheet_tag }}
+
+<section class="lusena-bg-brand lusena-visual-proof lusena-spacing--compact">
+  <div class="lusena-container">
+
+    {%- comment -%} Split fabric comparison {%- endcomment -%}
+    <div class="lusena-visual-proof__comparison{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+      <div class="lusena-visual-proof__divider"></div>
+
+      {%- comment -%} Left half: standard market silk {%- endcomment -%}
+      <div class="lusena-visual-proof__half lusena-visual-proof__half--left">
+        {%- if section.settings.image_standard != blank -%}
+          {{ section.settings.image_standard | image_url: width: 1200 | image_tag:
+            class: 'lusena-visual-proof__image',
+            loading: 'lazy',
+            sizes: '50vw',
+            widths: '375, 550, 750, 1100',
+            alt: section.settings.label_standard
+          }}
+        {%- else -%}
+          <div class="lusena-visual-proof__placeholder lusena-visual-proof__placeholder--standard"></div>
+        {%- endif -%}
+
+        {%- if section.settings.label_standard != blank -%}
+          <div class="lusena-visual-proof__label">
+            <span class="lusena-visual-proof__label-main">{{ section.settings.label_standard | escape }}</span>
+            {%- if section.settings.label_standard_sub != blank -%}
+              <span class="lusena-visual-proof__label-sub">{{ section.settings.label_standard_sub | escape }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Right half: LUSENA 22 momme silk {%- endcomment -%}
+      <div class="lusena-visual-proof__half lusena-visual-proof__half--right">
+        {%- if section.settings.image_lusena != blank -%}
+          {{ section.settings.image_lusena | image_url: width: 1200 | image_tag:
+            class: 'lusena-visual-proof__image',
+            loading: 'lazy',
+            sizes: '50vw',
+            widths: '375, 550, 750, 1100',
+            alt: section.settings.label_lusena
+          }}
+        {%- else -%}
+          <div class="lusena-visual-proof__placeholder lusena-visual-proof__placeholder--lusena"></div>
+        {%- endif -%}
+
+        {%- if section.settings.label_lusena != blank -%}
+          <div class="lusena-visual-proof__label">
+            <span class="lusena-visual-proof__label-main">{{ section.settings.label_lusena | escape }}</span>
+            {%- if section.settings.label_lusena_sub != blank -%}
+              <span class="lusena-visual-proof__label-sub">{{ section.settings.label_lusena_sub | escape }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} Frosted proof chip with OEKO-TEX badge {%- endcomment -%}
+    {%- if section.settings.claim != blank or section.settings.cta_label != blank -%}
+      <div class="lusena-visual-proof__chip{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+        {%- if settings.animations_reveal_on_scroll %} style="animation-delay: 100ms;"{% endif -%}
+      >
+        <div class="lusena-visual-proof__oeko" aria-label="OEKO-TEX Standard 100">
+          {%- if section.settings.badge_image != blank -%}
+            {{ section.settings.badge_image | image_url: width: 112 | image_tag:
+              class: 'lusena-visual-proof__oeko-img',
+              loading: 'lazy',
+              alt: 'OEKO-TEX Standard 100'
+            }}
+          {%- else -%}
+            <span class="lusena-visual-proof__oeko-text">OEKO-TEX<span class="lusena-visual-proof__oeko-sub">Standard 100</span></span>
+          {%- endif -%}
+        </div>
+        <div class="lusena-visual-proof__chip-text">
+          {%- if section.settings.claim != blank -%}
+            <span class="lusena-visual-proof__claim">{{ section.settings.claim | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+            <a href="{{ section.settings.cta_link }}" class="lusena-visual-proof__link lusena-link-arrow">
+              {{ section.settings.cta_label | escape }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "LUSENA Visual Proof",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Standard silk (left)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_standard",
+      "label": "Photo (16-19 momme)"
+    },
+    {
+      "type": "text",
+      "id": "label_standard",
+      "label": "Label",
+      "default": "Jedwab 16 momme"
+    },
+    {
+      "type": "text",
+      "id": "label_standard_sub",
+      "label": "Sublabel",
+      "default": "typowa gramatura"
+    },
+    {
+      "type": "header",
+      "content": "LUSENA silk (right)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_lusena",
+      "label": "Photo (22 momme)"
+    },
+    {
+      "type": "text",
+      "id": "label_lusena",
+      "label": "Label",
+      "default": "Jedwab 22 momme"
+    },
+    {
+      "type": "text",
+      "id": "label_lusena_sub",
+      "label": "Sublabel",
+      "default": "gramatura LUSENA"
+    },
+    {
+      "type": "header",
+      "content": "Proof chip"
+    },
+    {
+      "type": "image_picker",
+      "id": "badge_image",
+      "label": "Certification badge (OEKO-TEX)"
+    },
+    {
+      "type": "text",
+      "id": "claim",
+      "label": "Claim text",
+      "default": "Gęstość, którą poczujesz"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA link label",
+      "default": "Poznaj naszą jakość"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LUSENA Visual Proof"
+    }
+  ]
+}
+{% endschema %}

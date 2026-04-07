@@ -229,6 +229,31 @@
   outline-offset: 2px;
 }
 
+/* ── Secondary text link (replaces ghost button) ── */
+.lusena-hero .lusena-hero__text-link {
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  gap: 0.4em;
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity var(--lusena-transition-fast);
+}
+
+.lusena-hero .lusena-hero__text-link:hover {
+  opacity: 1;
+}
+
+.lusena-hero .lusena-hero__text-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  opacity: 1;
+}
+
 .lusena-hero__content--m-top {
   justify-content: flex-start;
   padding-top: 7.2rem;

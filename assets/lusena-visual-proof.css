@@ -1,0 +1,235 @@
+/* ==========================================================================
+   LUSENA Visual Proof Block
+   Standalone asset — loaded via <link> to avoid compiled_assets truncation.
+   Compact proof beat: split fabric comparison + frosted OEKO-TEX chip.
+   ========================================================================== */
+
+/* ── Comparison grid ── */
+.lusena-visual-proof .lusena-visual-proof__comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+}
+
+/* ── Center divider (thin line, no "vs" circle) ── */
+/* display: block beats Dawn's div:empty { display: none } at 0-1-1 */
+.lusena-visual-proof .lusena-visual-proof__divider {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* ── Image halves ── */
+.lusena-visual-proof .lusena-visual-proof__half {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--lusena-color-n200);
+}
+
+.lusena-visual-proof .lusena-visual-proof__half--left {
+  border-radius: var(--lusena-btn-radius) 0 0 var(--lusena-btn-radius);
+}
+
+.lusena-visual-proof .lusena-visual-proof__half--right {
+  border-radius: 0 var(--lusena-btn-radius) var(--lusena-btn-radius) 0;
+}
+
+@media (min-width: 768px) {
+  .lusena-visual-proof .lusena-visual-proof__half {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* ── Image fill ── */
+.lusena-visual-proof .lusena-visual-proof__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Placeholder (no image uploaded yet) ── */
+/* display: block beats Dawn's div:empty { display: none } at 0-1-1 */
+.lusena-visual-proof .lusena-visual-proof__placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.lusena-visual-proof .lusena-visual-proof__placeholder--standard {
+  background: linear-gradient(145deg, #E5DDD0 0%, #D0C8B8 100%);
+}
+
+.lusena-visual-proof .lusena-visual-proof__placeholder--lusena {
+  background: linear-gradient(145deg, #F2EAD8 0%, #E2D4B8 100%);
+}
+
+/* ── Labels (dark chip on each half, near divider) ── */
+.lusena-visual-proof .lusena-visual-proof__label {
+  position: absolute;
+  bottom: var(--lusena-space-1);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  background: rgba(17, 17, 17, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  padding: var(--lusena-space-05) var(--lusena-space-1);
+  border-radius: 0.3rem;
+  white-space: nowrap;
+}
+
+.lusena-visual-proof .lusena-visual-proof__half--left .lusena-visual-proof__label {
+  right: var(--lusena-space-1);
+}
+
+.lusena-visual-proof .lusena-visual-proof__half--right .lusena-visual-proof__label {
+  left: var(--lusena-space-1);
+}
+
+.lusena-visual-proof .lusena-visual-proof__label-main {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.lusena-visual-proof .lusena-visual-proof__label-sub {
+  font-size: 0.9rem;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+@media (min-width: 768px) {
+  .lusena-visual-proof .lusena-visual-proof__label {
+    bottom: var(--lusena-space-2);
+    padding: var(--lusena-space-05) var(--lusena-space-2);
+  }
+
+  .lusena-visual-proof .lusena-visual-proof__half--left .lusena-visual-proof__label {
+    right: var(--lusena-space-2);
+  }
+
+  .lusena-visual-proof .lusena-visual-proof__half--right .lusena-visual-proof__label {
+    left: var(--lusena-space-2);
+  }
+
+  .lusena-visual-proof .lusena-visual-proof__label-main {
+    font-size: 1.2rem;
+  }
+
+  .lusena-visual-proof .lusena-visual-proof__label-sub {
+    font-size: 1.0rem;
+  }
+}
+
+/* ── Frosted proof chip ── */
+.lusena-visual-proof .lusena-visual-proof__chip {
+  display: flex;
+  align-items: center;
+  gap: var(--lusena-space-2);
+  max-width: 48rem;
+  margin: var(--lusena-space-3) auto 0;
+  padding: var(--lusena-space-2) var(--lusena-space-3);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid color-mix(in srgb, var(--lusena-color-n200) 60%, transparent);
+  border-radius: var(--lusena-btn-radius);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+}
+
+@media (max-width: 767px) {
+  .lusena-visual-proof .lusena-visual-proof__chip {
+    max-width: none;
+    padding: 1.2rem var(--lusena-space-2);
+  }
+}
+
+/* ── OEKO-TEX badge circle ── */
+.lusena-visual-proof .lusena-visual-proof__oeko {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.6rem;
+  height: 5.6rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--lusena-color-n200);
+  background: var(--lusena-surface-1);
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.lusena-visual-proof .lusena-visual-proof__oeko-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.lusena-visual-proof .lusena-visual-proof__oeko-text {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--lusena-text-1);
+  line-height: 1.15;
+}
+
+.lusena-visual-proof .lusena-visual-proof__oeko-sub {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--lusena-text-2);
+  margin-top: 0.15rem;
+}
+
+/* ── Chip text column ── */
+.lusena-visual-proof .lusena-visual-proof__chip-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lusena-space-05);
+  min-width: 0;
+}
+
+.lusena-visual-proof .lusena-visual-proof__claim {
+  font-family: var(--lusena-font-brand);
+  font-size: 1.6rem;
+  line-height: 2.0rem;
+  font-weight: 400;
+  color: var(--lusena-text-1);
+}
+
+@media (min-width: 768px) {
+  .lusena-visual-proof .lusena-visual-proof__claim {
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+  }
+}
+
+/* ── CTA link ── */
+.lusena-visual-proof .lusena-visual-proof__link {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--lusena-accent-cta);
+  text-decoration: none;
+}
+
+.lusena-visual-proof .lusena-visual-proof__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.lusena-visual-proof .lusena-visual-proof__link:focus-visible {
+  outline: 2px solid var(--lusena-accent-cta);
+  outline-offset: 2px;
+}

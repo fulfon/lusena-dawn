@@ -1,21 +1,21 @@
 # Homepage (index.json)
 
-**Status:** v2 copy migrated, production-ready
+**Status:** Architecture redesign COMPLETE (2026-04-07). Design spec: `docs/superpowers/specs/2026-04-06-homepage-architecture-redesign.md`.
 
 ## Section inventory (in template order)
 
-| # | Section | Spacing tier | Status |
-|---|---------|-------------|--------|
-| 1 | `lusena-hero` | hero | Done |
-| 2 | `lusena-trust-bar` | compact | Done (reused on quality, about) |
-| 3 | `lusena-benefit-bridge` | standard | Done (redesigned 2026-03-29: kicker, featured card modifier, accent bar, transition text, standalone `lusena-benefit-bridge.css`, copy rewritten) |
-| 4 | `lusena-bestsellers` | spacious | Done (value anchors added, tier ordering pending) |
-| 5 | `lusena-testimonials` | spacious | Done (UGC photo upgrade pending) |
-| 6 | `lusena-problem-solution` | spacious | Done (moved from pos 3 → 6 on 2026-03-28, bg changed brand → surface-1, copy refreshed, item-title spacing increased space-1 → space-2) |
-| 7 | `lusena-bundles` | spacious | Done (product-driven rewrite 2026-04-03, card standardization 2026-04-04: full-card links, shared badge, type hierarchy, savings badge overlay, hover underline. SVG thumbnails 2026-04-04: monochrome gold illustrations, compact row centering + small-phone font + spacing hierarchy) |
-| 8 | `lusena-heritage` | spacious | Done (redesigned as 3-tile evidence grid) |
-| 9 | `lusena-faq` | standard | Done (reused on quality page, PDP) |
-| 10 | `lusena-final-cta` (shared) | spacious | Done (replaced newsletter, 2026-03-08) |
+| # | Section | Spacing tier | Background | Status |
+|---|---------|-------------|-----------|--------|
+| 1 | `lusena-hero` | hero | image | Done. Button 2 → text link (2026-04-07) |
+| 2 | `lusena-trust-bar` | compact | white | Done (reused on quality, about) |
+| 3 | `lusena-benefit-bridge` | standard | cream | Done (redesigned 2026-03-29, CTA removed 2026-04-07) |
+| 4 | `lusena-bestsellers` | spacious | white | Done (heading → "Twoja nocna rutyna zaczyna się tutaj") |
+| 5 | `lusena-visual-proof` | compact | cream | NEW (2026-04-07). Split fabric comparison + OEKO-TEX chip. Awaiting owner photos. |
+| 6 | `lusena-bundles` | spacious | white | Done (product-driven rewrite 2026-04-03, bg cream→white 2026-04-07) |
+| 7 | `lusena-testimonials` | spacious | cream | Done (bg off-white→cream 2026-04-07, UGC replacement pending) |
+| 8 | `lusena-heritage` | spacious | white | Done (bg off-white→white 2026-04-07) |
+| 9 | `lusena-faq` | standard | white | Done (questions reordered 2026-04-07) |
+| 10 | `lusena-final-cta` (shared) | spacious | cream | Done (heading/body updated 2026-04-07) |
 
 ## Pending work
 

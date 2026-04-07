@@ -18,13 +18,12 @@ description: Quick-reference catalog of all LUSENA sections — page, tier, CSS,
 | `lusena-trust-bar` | custom padding | - | Reused on 3 pages |
 | `lusena-benefit-bridge` | standard | YES (lusena-benefit-bridge.css) | Kicker, 3 benefit cards (first featured), accent bar, transition text |
 | `lusena-bestsellers` | spacious | - | Uses `lusena-product-card` snippet |
-| `lusena-testimonials` | spacious | - | |
-| `lusena-problem-solution` | spacious | - | Moved to pos 6 for evaluation flow |
+| `lusena-visual-proof` | compact | YES (lusena-visual-proof.css) | Split fabric comparison + frosted OEKO-TEX chip, awaiting owner photos |
 | `lusena-bundles` | spacious | YES | Product-driven full-card links, mobile compact rows, shared badge overlay, savings badge, hover underline |
+| `lusena-testimonials` | spacious | - | UGC placeholder |
 | `lusena-heritage` | spacious | - | |
 | `lusena-faq` | standard | - | Reused on 5 pages |
 | `lusena-final-cta` | spacious | - | Reused on 5 pages |
-| `lusena-newsletter` | standard | - | Reused on 2 pages |
 
 ## PDP — Standard (`product.json`)
 | Section | Tier | CSS | Notes |
@@ -103,6 +102,7 @@ description: Quick-reference catalog of all LUSENA sections — page, tier, CSS,
 | Section | Notes |
 |---------|-------|
 | `lusena-comparison` | Draft/archived |
+| `lusena-problem-solution` | Removed from homepage (2026-04-07), redundant with benefit bridge |
 | `lusena-quality-6a` | Draft/archived |
 | `lusena-science` | Draft/archived |
 

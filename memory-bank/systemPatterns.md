@@ -20,6 +20,7 @@
    - `lusena-bundle-pdp.css` — bundle PDP buy box styles (loaded in lusena-main-bundle.liquid)
    - `lusena-bundles.css` — bundle card grid (loaded in lusena-bundles.liquid)
    - `lusena-benefit-bridge.css` — benefit bridge section styles (loaded in lusena-benefit-bridge.liquid)
+   - `lusena-visual-proof.css` — visual proof block styles (loaded in lusena-visual-proof.liquid)
 6. **Component `{% stylesheet %}` blocks** — small section-scoped CSS only (~59KB compiled after 2026-03-26 extraction, 73KB hard limit)
 
 ### compiled_assets truncation guard (MANDATORY)

@@ -1,10 +1,10 @@
 # Progress
 
-*Last updated: 2026-04-04*
+*Last updated: 2026-04-07*
 
 ## LUSENA-styled pages (14 of ~21 total)
 
-- [x] **Homepage** (`index.json`) — 10 sections: hero, trust bar, benefit bridge (NEW 2026-03-28), bestsellers, testimonials, problem/solution (moved to pos 6), bundles (product-driven cards), heritage, FAQ, final CTA. Full UX audit completed 2026-03-08. Benefit bridge added 2026-03-28. Bundles rewritten 2026-04-03 (product pickers), card standardization 2026-04-04 (shared badge, full-card links, type hierarchy, savings badge overlay, hover underline). Newsletter removed (footer handles it).
+- [x] **Homepage** (`index.json`) — **Architecture redesign COMPLETE (2026-04-07).** 10 sections live. Order: hero, trust, benefit bridge, bestsellers, **visual proof block**, bundles, testimonials (UGC placeholder), heritage, FAQ, final CTA. Background rhythm: 2 tones (white + cream, `surface-2` dropped). Visual Proof Block: split fabric comparison + frosted OEKO-TEX chip, compact tier, awaiting owner photography. Benefit bridge CTA removed (quality link moved to Visual Proof Block). Design spec: `docs/superpowers/specs/2026-04-06-homepage-architecture-redesign.md`. Earlier: full UX audit (2026-03-08), benefit bridge (2026-03-28), bundles product-driven rewrite + card standardization (2026-04-03-04). Newsletter removed (footer handles it).
 - [x] **Product page** (`product.json`) — 6 sections: main-product, feature highlights (animated icons), quality evidence, truth table, FAQ (shared `lusena-faq`), final CTA (shared `lusena-final-cta`). Full UX audit completed 2026-03-09 (visual rhythm, content rewrite, legal compliance, FAQ consolidation, conversion CTA). Per-product metafield overrides for headline/tagline/per-night. Returns deep-link. PDP buy-box spacing overhauled. Animated icons added 2026-03-15.
 - [x] **Collection page** (`collection.json`) — 1 section: main-collection + product card snippet
 - [x] **Quality page** (`page.nasza-jakosc.json`) — 10 sections: hero, trust bar, origin, momme, certificates, fire test, qc, comparison table, FAQ, final CTA. 6A section removed (content merged into momme). Spacing audit completed 2026-03-10 (3 off-grid fixes + 1 tier upgrade).
@@ -71,7 +71,8 @@ Full plan: `memory-bank/doc/features/dawn-pages-migration-plan.md`
 - [x] Icon semantic system — defined in `product-setup-checklist.md`. 8 variable icons (heart, wind, droplets, sparkles, moon, clock, feather, palette) each with one semantic meaning. (2026-03-28)
 - [x] Card 5 creative sessions (all 8 products) — freed from universal OEKO-TEX, each product has unique product-specific angle. Full creative workflow (copywriter + legal + validation) for each. Universal cards reduced from 4 to 3 (positions 2/4/6). (2026-03-28)
 - [x] Quality evidence accordion rewrite — `max-height`/opacity → explicit `height` transitions, `data-state` attribute, `prefers-reduced-motion` support. (2026-03-28)
-- [x] Homepage benefit bridge section — redesigned 2026-03-29: kicker ("Jedwab morwowy 22 momme"), featured card modifier, accent bar, transition text, heading "Co zobaczysz rano?", standalone CSS `lusena-benefit-bridge.css`. Original added 2026-03-28.
+- [x] Homepage benefit bridge section — redesigned 2026-03-29: kicker ("Jedwab morwowy 22 momme"), featured card modifier, accent bar, transition text, heading "Co zobaczysz rano?", standalone CSS `lusena-benefit-bridge.css`. Original added 2026-03-28. CTA link removed 2026-04-07 (quality page link moved to Visual Proof Block).
+- [x] Visual Proof Block section (`sections/lusena-visual-proof.liquid`, `assets/lusena-visual-proof.css`) — compact proof beat at homepage #5: split fabric comparison (16 vs 22 momme) + frosted OEKO-TEX chip. Hybrid A+C design from 4-agent expert review. Schema: 3 image pickers (standard silk, LUSENA silk, OEKO-TEX badge), claim text, CTA. Awaiting owner photography. (2026-04-07)
 - [x] `lusena-link-arrow` CSS component — CSS-only chevron via SVG mask in `lusena-foundations.css`. Replaces all hardcoded `→` arrows sitewide (6 sections/snippets + 4 templates). (2026-03-29)
 - [x] Bundle options initial state — first step open, others collapsed with pending chips. (2026-03-29)
 - [x] Cart cross-sell loading refactor — custom dots → standard `loading__spinner` pattern. (2026-03-29)
@@ -230,7 +231,7 @@ Full implementation tracker: `memory-bank/doc/bundle-implementation.md`
 ## Active migration backlogs
 
 - **PDP:** 4 deferred items — see `memory-bank/doc/features/pdp-migration-backlog.md`
-- **Homepage:** Items 1 (bundles) DONE. Item 2 (value anchors) DONE. Remaining: 3 (tier ordering — manual config), 4 (UGC testimonials), 5 (hero animation), 6 (P/S accordion). See `memory-bank/doc/features/homepage-migration-backlog.md`
+- **Homepage:** Items 1 (bundles) DONE. Item 2 (value anchors) DONE. Item 6 (P/S accordion) N/A — section removed. Remaining: 3 (tier ordering), 4 (UGC testimonials), 5 (hero animation). See `memory-bank/doc/features/homepage-migration-backlog.md`
 
 ## UX backlog (evaluate during polish phase)
 

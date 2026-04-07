@@ -43,7 +43,7 @@ LUSENA exists to make premium silk accessories accessible and trustworthy in the
 ```
 Awareness          → Interest            → Decision           → Action
 Homepage hero      → Trust bar           → PDP evidence       → Buybox CTA
-Problem/solution   → Testimonials        → Comparison tables  → Sticky ATC
+Visual proof block → Testimonials        → Comparison tables  → Sticky ATC
 Benefit bridge     → Heritage tiles      → Quality page       → Cart drawer
 
 Cross-sell path (scrunchie at 39 zl via BXGY):

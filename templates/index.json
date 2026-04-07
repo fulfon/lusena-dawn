@@ -130,58 +130,11 @@
       ],
       "settings": {}
     },
-    "problem_solution": {
-      "type": "lusena-problem-solution",
-      "blocks": {
-        "problem-0": {
-          "type": "problem_item",
-          "settings": {
-            "title": "Tarcie tworzy zagniecenia",
-            "text": "Włókna bawełny działają jak rzep - ciągną delikatną skórę twarzy i tworzą odciski, które z wiekiem znikają coraz wolniej."
-          }
-        },
-        "problem-1": {
-          "type": "problem_item",
-          "settings": {
-            "title": "Pielęgnacja znika w poduszce",
-            "text": "Bawełna chłonie kosmetyki i naturalne nawilżenie skóry przez całą noc - Twój drogi krem pracuje dla poszewki, nie dla Ciebie."
-          }
-        },
-        "solution-0": {
-          "type": "solution_item",
-          "settings": {
-            "title": "Gładkość bez tarcia",
-            "text": "Gładka powierzchnia jedwabiu 22 momme sprzyja redukcji porannych zagnieceń na twarzy i pomaga zachować fryzurę przez noc."
-          }
-        },
-        "solution-1": {
-          "type": "solution_item",
-          "settings": {
-            "title": "Twój krem wreszcie działa",
-            "text": "Jedwab pomaga zachować nawilżenie i kosmetyki na skórze zamiast w poszewce - pielęgnacja pracuje dla Ciebie, nie dla poduszki."
-          }
-        }
-      },
-      "block_order": [
-        "problem-0",
-        "problem-1",
-        "solution-0",
-        "solution-1"
-      ],
-      "settings": {
-        "problem_label": "Problem",
-        "problem_heading": "Bawełna chłonie.\nTarcie i suchość.",
-        "solution_label": "Rozwiązanie",
-        "solution_heading": "Jedwab chroni.\nNawilżenie i gładkość.",
-        "cta_label": "Sprawdź dowody jakości",
-        "cta_link": "shopify://pages/nasza-jakosc"
-      }
-    },
     "bestsellers": {
       "type": "lusena-bestsellers",
       "settings": {
-        "heading": "Nasze bestsellery",
-        "subheading": "Twoja nocna rutyna zaczyna się tutaj.",
+        "heading": "Twoja nocna rutyna zaczyna się tutaj",
+        "subheading": "",
         "collection": "all",
         "products_to_show": 3,
         "view_all_label": "Zobacz całą kolekcję",
@@ -267,7 +220,7 @@
       "settings": {
         "kicker": "Zestawy Premium",
         "heading": "Zbuduj swoją nocną rutynę",
-        "body": "Każdy zestaw to gotowy pomysł - na nocną rutynę albo idealny prezent."
+        "body": "Poszewka chroni skórę. Czepek - włosy. Razem: kompletna nocna rutyna - albo idealny prezent."
       }
     },
     "heritage": {
@@ -307,6 +260,14 @@
         "heading": "Z Suzhou - Stolicy Jedwabiu od XV wieku",
         "button_label": "Poznaj naszą historię",
         "button_link": "shopify://pages/o-nas"
+      }
+    },
+    "visual_proof": {
+      "type": "lusena-visual-proof",
+      "settings": {
+        "claim": "Gęstość, którą poczujesz",
+        "cta_label": "Poznaj naszą jakość",
+        "cta_link": "shopify://pages/nasza-jakosc"
       }
     },
     "faq": {
@@ -350,10 +311,10 @@
       },
       "block_order": [
         "item-0",
-        "item-1",
-        "item-2",
         "item-3",
-        "item-4"
+        "item-4",
+        "item-2",
+        "item-1"
       ],
       "settings": {
         "heading": "Najczęstsze pytania",
@@ -363,8 +324,8 @@
     "final_cta": {
       "type": "lusena-final-cta",
       "settings": {
-        "heading": "Gotowa na lepszy sen?",
-        "body": "Wybierz produkt i poczuj różnicę już pierwszej nocy.",
+        "heading": "Poczuj różnicę już pierwszej nocy",
+        "body": "Wybierz swój jedwab i zacznij nocną rutynę.",
         "cta_label": "Zacznij swoją rutynę",
         "cta_link": "shopify://collections/all"
       }
@@ -375,9 +336,9 @@
     "trust",
     "benefit_bridge",
     "bestsellers",
-    "reviews",
-    "problem_solution",
+    "visual_proof",
     "gift",
+    "reviews",
     "heritage",
     "faq",
     "final_cta"

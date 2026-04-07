@@ -32,6 +32,7 @@
    ├── lusena-bundle-pdp.css — bundle PDP buy box styles (loaded in lusena-main-bundle.liquid)
    ├── lusena-bundles.css — homepage bundle card grid + mobile compact rows (loaded in lusena-bundles.liquid)
    ├── lusena-benefit-bridge.css — benefit bridge section styles (loaded in lusena-benefit-bridge.liquid)
+   ├── lusena-visual-proof.css — visual proof block styles (loaded in lusena-visual-proof.liquid)
    ├── lusena-cart-page.css — cart items + footer + quantity styles (loaded in lusena-cart-items.liquid)
    └── lusena-search.css — search page styles (loaded in lusena-search.liquid)
 
@@ -69,7 +70,7 @@ After adding or expanding CSS in any `{% stylesheet %}` block:
 3. Add `{{ 'lusena-{section-name}.css' | asset_url | stylesheet_tag }}` to `theme.liquid` (global sections) or the section file itself (page-specific sections)
 4. Verify the page visually — CSS is identical, just loaded differently
 
-### Current inventory of standalone assets (2026-03-29)
+### Current inventory of standalone assets (2026-04-07)
 
 | File | Scope | Loaded in |
 |------|-------|-----------|
@@ -83,6 +84,7 @@ After adding or expanding CSS in any `{% stylesheet %}` block:
 | `lusena-search.css` | Search page | lusena-search.liquid |
 | `lusena-bundles.css` | Bundle card grid | lusena-bundles.liquid (per-section) |
 | `lusena-benefit-bridge.css` | Benefit bridge section | lusena-benefit-bridge.liquid (per-section) |
+| `lusena-visual-proof.css` | Visual proof block | lusena-visual-proof.liquid (per-section) |
 | `lusena-bundle-pdp.css` | Bundle PDP buy box | lusena-main-bundle.liquid (per-section) |
 | `lusena-icon-animations.css` | Animated icon keyframes | lusena-pdp-feature-highlights.liquid (per-section) |
 
